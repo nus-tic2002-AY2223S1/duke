@@ -1,5 +1,7 @@
 import java.util.Objects;
-import java.util.Scanner;  // Import the Scanner class
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
 public class Duke {
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -10,17 +12,33 @@ public class Duke {
         System.out.printf("Hello from %n%s%nWhat can I do for you?%n", logo);
         Scanner myObj = new Scanner(System.in);
         String format = "    ─────────────────────────────────────────\n    %s\n    ─────────────────────────────────────────\n";
+        String[] arr = {};
+        ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(arr));
 
         while(true){
             String input = myObj.nextLine();
             if (Objects.equals(input, "")){
                 continue;
             }
+            else if (Objects.equals(input, "list")){
+                StringBuilder output = new StringBuilder();
+                for( int i = 0; i < arr.length; i++){
+                    String suffix = "";
+                    if (i != arr.length -1){
+                        suffix = "\n    ";
+                    }
+                    output.append(i).append(1).append(". ").append(arr[i]).append(suffix);
+                }
+                System.out.format(format, output);
+                continue;
+            }
             else if (Objects.equals(input, "bye")){
                 System.out.format(format, "Bye. Hope to see you again soon!");
                 break;
             }
-            System.out.format(format, input);
+            arrayList.add(input);
+            arr = arrayList.toArray(arr);
+            System.out.format(format, "added: "+input);
         }
     }
 }
