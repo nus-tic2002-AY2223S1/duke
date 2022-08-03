@@ -17,28 +17,28 @@ public class Duke {
 
         while(true){
             String input = myObj.nextLine();
-            if (Objects.equals(input, "")){
-                continue;
-            }
-            else if (Objects.equals(input, "list")){
-                StringBuilder output = new StringBuilder();
-                for( int i = 0; i < arr.length; i++){
-                    String suffix = "";
-                    if (i != arr.length -1){
-                        suffix = "\n    ";
+            switch (input){
+                case "list":
+                    StringBuilder output = new StringBuilder();
+                    for( int i = 0; i < arr.length; i++){
+                        String suffix = "";
+                        if (i != arr.length -1){
+                            suffix = "\n    ";
+                        }
+                        output.append(i+1).append(". ").append(arr[i]).append(suffix);
                     }
-                    output.append(i).append(1).append(". ").append(arr[i]).append(suffix);
-                }
-                System.out.format(format, output);
-                continue;
+                    System.out.format(format, output);
+                    continue;
+                case "bye":
+                    System.out.format(format, "Bye. Hope to see you again soon!");
+                    break;
+                case "":
+                    continue;
+                default:
+                    arrayList.add(input);
+                    arr = arrayList.toArray(arr);
+                    System.out.format(format, "added: "+input);
             }
-            else if (Objects.equals(input, "bye")){
-                System.out.format(format, "Bye. Hope to see you again soon!");
-                break;
-            }
-            arrayList.add(input);
-            arr = arrayList.toArray(arr);
-            System.out.format(format, "added: "+input);
         }
     }
 }
