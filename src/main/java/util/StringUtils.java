@@ -59,5 +59,14 @@ public class StringUtils {
         System.out.println(blank2);
         System.out.println(blank3);
         System.out.println(blank4);
+
+        boolean empty1 = StringUtils.isEmpty("");
+        boolean empty2 = StringUtils.isEmpty(null);
+        boolean empty3 = StringUtils.isEmpty("   ");
+        boolean empty4 = StringUtils.isEmpty("   aa   ");
+        System.out.println("empty1 = " + empty1);
+        System.out.println("empty2 = " + empty2);
+        System.out.println("empty3 = " + empty3);
+        System.out.println("empty4 = " + empty4);
     }
 }
