@@ -14,7 +14,11 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
         while(line.equals("Bye") == false) {
-            bot.show(line);
+            if(line.equals("list")) {
+                bot.showList();
+            } else {
+                bot.show(line);
+            }
             line = in.nextLine();
         }
         bot.goodbye();
