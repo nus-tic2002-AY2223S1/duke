@@ -2,9 +2,9 @@ package util;
 
 import constant.CommonConstant;
 
-public class DataUtils {
+public class DataUtil {
 
-    private DataUtils() {}
+    private DataUtil() {}
 
     public static String toString(Object object) {
         try {

@@ -1,15 +1,16 @@
 package util;
 
 import constant.CommonConstant;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class StringUtils {
+public class StringUtil {
 
-    private StringUtils() {}
+    private StringUtil() {}
 
     public static boolean isEmpty(String str) {
         return str == null || str.isEmpty();
@@ -33,17 +34,17 @@ public class StringUtils {
         if (str == null) {
             return CommonConstant.BLANK;
         }
-        return str.trim();
+        return StringUtils.trim(str);
     }
 
-    public String listToString(List<?> list, String delimiter) {
-        if (CollectionUtils.isEmpty(list)) {
+    public static String listToString(List<?> list, String delimiter) {
+        if (CollectionUtil.isEmpty(list)) {
             return CommonConstant.BLANK;
         }
-        return list.stream().map(DataUtils::toString).collect(Collectors.joining(delimiter));
+        return list.stream().map(DataUtil::toString).collect(Collectors.joining(delimiter));
     }
 
-    public List<String> StringToList(String str, String delimiter) {
+    public static List<String> stringToList(String str, String delimiter) {
         if (isBlank(str)) {
             return Collections.emptyList();
         }
@@ -51,22 +52,25 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        boolean blank1 = StringUtils.isBlank("      ");
-        boolean blank2 = StringUtils.isBlank(null);
-        boolean blank3 = StringUtils.isBlank("");
-        boolean blank4 = StringUtils.isBlank(" aa ");
+        boolean blank1 = StringUtil.isBlank("      ");
+        boolean blank2 = StringUtil.isBlank(null);
+        boolean blank3 = StringUtil.isBlank("");
+        boolean blank4 = StringUtil.isBlank(" aa ");
         System.out.println(blank1);
         System.out.println(blank2);
         System.out.println(blank3);
         System.out.println(blank4);
 
-        boolean empty1 = StringUtils.isEmpty("");
-        boolean empty2 = StringUtils.isEmpty(null);
-        boolean empty3 = StringUtils.isEmpty("   ");
-        boolean empty4 = StringUtils.isEmpty("   aa   ");
+        boolean empty1 = StringUtil.isEmpty("");
+        boolean empty2 = StringUtil.isEmpty(null);
+        boolean empty3 = StringUtil.isEmpty("   ");
+        boolean empty4 = StringUtil.isEmpty("   aa   ");
         System.out.println("empty1 = " + empty1);
         System.out.println("empty2 = " + empty2);
         System.out.println("empty3 = " + empty3);
         System.out.println("empty4 = " + empty4);
+
+        List<String> strings = StringUtil.stringToList("1,2,3,4,5,10,15", ",");
+        System.out.println(strings);
     }
 }

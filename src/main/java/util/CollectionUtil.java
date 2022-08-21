@@ -3,9 +3,9 @@ package util;
 import java.util.Collection;
 import java.util.Map;
 
-public class CollectionUtils {
+public class CollectionUtil {
 
-    private CollectionUtils() {}
+    private CollectionUtil() {}
 
     public static boolean isEmpty(Collection<?> collection) {
         return collection == null || collection.size() == 0;
