@@ -14,15 +14,15 @@ public class Bot {
 
     public void welcome() {
         seperator();
-        System.out.println("\tHello! I'm LaMDA");
-        System.out.println("\tWhat can I do for you?");
+        System.out.println(appendTab("Hello! I'm "  + name));
+        System.out.println(appendTab("What can I do for you?"));
         seperator();
     }
 
     public void show(String value) {
         store(value);
         seperator();
-        System.out.println("\tadded: " + value);
+        System.out.println(appendTab("added: " + value));
         seperator();
     }
 
@@ -32,7 +32,7 @@ public class Bot {
         seperator();
         String[] stored = Arrays.copyOf(storage, index);
         for(String each : stored) {
-            System.out.println("\t"+ i+". " + each);
+            System.out.println(appendTab(i+". " + each));
             i++;
         }
         seperator();
@@ -40,7 +40,7 @@ public class Bot {
 
     public void goodbye() {
         seperator();
-        System.out.println("\tBye. Hope to see you again soon!");
+        System.out.println(appendTab("Bye. Hope to see you again soon!"));
         seperator();
     }
 
@@ -50,5 +50,9 @@ public class Bot {
     private void store(String value) {
         storage[index] = value;
         index++;
+    }
+
+    private String appendTab(String text) {
+        return "\t" + text;
     }
 }
