@@ -20,6 +20,7 @@ public class Duke {
             System.out.println(line);
             if("bye".equalsIgnoreCase(line)){
              break;
+             
             }
         }
         System.out.println("Bye. Hope to see you again soon!");
