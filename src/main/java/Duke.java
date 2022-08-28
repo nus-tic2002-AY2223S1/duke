@@ -1,6 +1,10 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Duke {
+    public static ArrayList<String> listItems = new ArrayList<>();
+
     /**
      * printLine prints line
      *
@@ -24,14 +28,34 @@ public class Duke {
     }
 
     /**
-     * echo prints item entered by user
+     * add adds and prints item added to listItems array
      *
      * @param {String} item entered by user
      * @return {void}
      */
-    public static void echo(String input) {
+    public static void add(String input) {
         printLine();
-        System.out.println(input);
+
+        listItems.add(input);
+
+        System.out.println(Constant.ADDED + input);
+        printLine();
+    }
+
+    /**
+     * list prints list of item in listItems array
+     *
+     * @return {void}
+     */
+    public static void list() {
+        printLine();
+        System.out.println(Constant.TASK_LIST);
+
+        AtomicInteger counter = new AtomicInteger(Constant.INIT_INT_VAL);
+        listItems.forEach(item -> {
+            System.out.println(counter.getAndIncrement() + Constant.PERIOD + item);
+        });
+
         printLine();
     }
 
@@ -60,8 +84,11 @@ public class Duke {
                 case Constant.BYE:
                     exit();
                     return;
+                case Constant.LIST:
+                    list();
+                    break;
                 default:
-                    echo(input);
+                    add(input);
             }
         }
     }
