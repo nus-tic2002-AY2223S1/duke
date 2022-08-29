@@ -2,12 +2,14 @@ package entity;
 
 public class Task {
 
-    protected String name;
+    protected String description;
 
     protected boolean done;
 
-    public Task(String name) {
-        this.name = name;
+    protected String type;
+
+    public Task(String description) {
+        this.description = description;
         this.done = false;
     }
 
@@ -15,12 +17,12 @@ public class Task {
         return (done ? "X" : " ");
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean isDone() {
@@ -29,5 +31,18 @@ public class Task {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "description='" + description + '\'' +
+                ", done=" + done +
+                ", type='" + type + '\'' +
+                '}';
     }
 }
