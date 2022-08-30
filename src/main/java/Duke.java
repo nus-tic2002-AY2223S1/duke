@@ -1,9 +1,11 @@
 import java.util.Scanner;
-
+import java.util.Vector;
 public class Duke {
     public static final String LONG_LINE = "____________________________________________________________";
 
     public static void main(String[] args) {
+        //data add
+        Vector<String> savedList = new Vector<>();
         greeting();
 
         Scanner in = new Scanner(System.in);
@@ -14,8 +16,18 @@ public class Duke {
             case"bye":
                 exit = true;
                 break;
+        //list
+            case"list":
+                printIndent(LONG_LINE);
+                for(int i = 0; i < savedList.size(); i+=1){
+                    printIndent(String.format("%d. %s", i+1,savedList.get(i)));
+                }
+                printIndent(LONG_LINE);
+                break;
             default:
                 printLine(line);
+                savedList.add(line);
+                printLine("added: " + line);
 
         }
 
