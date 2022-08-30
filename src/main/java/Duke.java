@@ -25,7 +25,7 @@ public class Duke {
                 printIndent(LONG_LINE);
                 break;
             default:
-                printLine(line);
+                //printLine(line);
                 savedList.add(line);
                 printLine("added: " + line);
 
