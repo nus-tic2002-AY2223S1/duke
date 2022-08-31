@@ -45,6 +45,10 @@ public class TaskManager {
         taskList.add(task);
     }
 
+    public Task getTaskByIndex(int index) {
+        return taskList.get(index);
+    }
+
     /**
      * @description remove task from list by given index
      * @author Dex
@@ -62,6 +66,10 @@ public class TaskManager {
      */
     public void removeTask() {
 
+    }
+
+    public int getTaskSize() {
+        return taskList.size();
     }
 
     public List<Task> getTaskList() {

@@ -2,7 +2,7 @@ package exception;
 
 import constant.CommonConstant;
 
-public class DukeException extends Exception {
+public class DukeException extends RuntimeException {
 
     protected int code;
 

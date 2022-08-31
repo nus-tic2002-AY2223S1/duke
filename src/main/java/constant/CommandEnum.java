@@ -4,7 +4,8 @@ import java.util.Objects;
 
 public enum CommandEnum {
 
-    LIST("list"), MARK_TASK("markTask"), UNMARK_TASK("unmarkTask"), EXIT("exit");
+    UNKNOWN("unknown"), SHOW_COMMAND("show_command"),
+    LIST("list"), MARK_TASK("mark"), UNMARK_TASK("unmark"), EXIT("bye");
 
     private final String name;
 
@@ -16,12 +17,12 @@ public enum CommandEnum {
         return name;
     }
 
-    public CommandEnum getCommandByName(String name) {
+    public static CommandEnum getCommandByName(String name) {
         for (CommandEnum value : CommandEnum.values()) {
             if (Objects.equals(value.getName(), name)) {
                 return value;
             }
         }
-        return null;
+        return UNKNOWN;
     }
 }

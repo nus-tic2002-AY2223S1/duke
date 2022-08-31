@@ -20,12 +20,13 @@ public class ListTaskCommand extends Command {
     public void execute(Form form) {
         List<Task> taskList = taskManager.getTaskList();
         if (CollectionUtil.isEmpty(taskList)) {
-            System.out.println("Current task list is empty! Please add in some tasks");
+            System.out.println("current task list is empty! please add in some tasks");
             return;
         }
 
         for (int i = 0; i < taskList.size(); i++) {
-            System.out.printf("%d: %s%n", i+1, taskList.get(i).toString());
+            String taskInfo = String.format("%d: %s", i + 1, taskList.get(i).toString());
+            System.out.println(taskInfo);
         }
     }
 }

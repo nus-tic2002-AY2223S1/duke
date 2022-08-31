@@ -6,5 +6,7 @@ public interface UI {
 
     void displayLineBreak();
 
+    void displayErrorMsg(String errorMsg);
+
     String getInput();
 }

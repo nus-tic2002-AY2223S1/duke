@@ -2,7 +2,8 @@ package entry;
 
 import constant.CommonConstant;
 import entity.Form;
-import service.Parser;
+import exception.DukeException;
+import service.ParserManager;
 import ui.ConsoleUI;
 import ui.UI;
 import service.command.Command;
@@ -14,10 +15,17 @@ public class Duke {
         UI ui = new ConsoleUI();
         ui.displayGreeting();
         while (CommonConstant.IS_RUNNING) {
-            Form form = Parser.parseForm(ui.getInput());
-            Command command = CommandManager.getCommand(form.getCommand());
-            command.execute(form);
-            ui.displayLineBreak();
+            try {
+                Form form = ParserManager.parseForm(ui.getInput());
+                Command command = CommandManager.getCommand(form.getCommand());
+                command.execute(form);
+                ui.displayLineBreak();
+            } catch (DukeException dukeException) {
+                ui.displayErrorMsg(dukeException.getMessage());
+            } catch (Exception exception) {
+                // actual error message should keep internal
+                exception.printStackTrace();
+            }
         }
     }
 
