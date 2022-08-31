@@ -2,6 +2,12 @@ package service.command;
 
 import entity.Form;
 
+/**
+ * @description singleton class
+ * perform `echo input` operation
+ * @author Dex
+ * @date 2022/08/31
+ */
 public class EchoCommand extends Command {
 
     private static final EchoCommand command = new EchoCommand();
@@ -13,7 +19,7 @@ public class EchoCommand extends Command {
     }
 
     /**
-     * @description level 1 implementation, echo the content which user inputs
+     * @description echo input which user enters
      * @author Dex
      * @date 2022/08/31
      * @param form: parsed input form from user

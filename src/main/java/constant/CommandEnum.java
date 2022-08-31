@@ -2,6 +2,11 @@ package constant;
 
 import java.util.Objects;
 
+/**
+ * @description enum class which list all possible commands in the program
+ * @author Dex
+ * @date 2022/08/31
+ */
 public enum CommandEnum {
 
     UNKNOWN("unknown"), SHOW_COMMAND("show_command"),

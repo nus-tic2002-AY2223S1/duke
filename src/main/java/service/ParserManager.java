@@ -10,10 +10,19 @@ public class ParserManager {
 
     private ParserManager() {}
 
+    /**
+     * default parser to parse the string input
+     */
     private static final DefaultCommandParser defaultCommandParser = new DefaultCommandParser();
 
+    /**
+     * parser to parse the string input for `mark` operation
+     */
     private static final MarkCommandParser markCommandParser = new MarkCommandParser();
 
+    /**
+     * parser to parse the string input for `unmark` operation
+     */
     private static final UnmarkCommandParser unmarkCommandParser = new UnmarkCommandParser();
 
     public static Form parseForm(String input) {

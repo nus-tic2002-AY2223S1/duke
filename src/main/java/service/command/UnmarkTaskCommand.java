@@ -4,6 +4,12 @@ import entity.Form;
 import entity.Task;
 import exception.CommandArgsException;
 
+/**
+ * @description singleton class
+ * perform `mark task undone` operation
+ * @author Dex
+ * @date 2022/08/31
+ */
 public class UnmarkTaskCommand extends Command {
 
     private static final UnmarkTaskCommand command = new UnmarkTaskCommand();
@@ -14,6 +20,12 @@ public class UnmarkTaskCommand extends Command {
         return command;
     }
 
+    /**
+     * @description mark task as `undone` status
+     * @author Dex
+     * @date 2022/08/31
+     * @param form: parsed input form from user
+     */
     @Override
     public void execute(Form form) {
         int taskSize = taskManager.getTaskSize();

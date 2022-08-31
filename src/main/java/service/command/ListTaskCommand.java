@@ -6,6 +6,12 @@ import util.CollectionUtil;
 
 import java.util.List;
 
+/**
+ * @description singleton class
+ * perform `list task` operation
+ * @author Dex
+ * @date 2022/08/31
+ */
 public class ListTaskCommand extends Command {
 
     private static final ListTaskCommand command = new ListTaskCommand();
@@ -16,6 +22,12 @@ public class ListTaskCommand extends Command {
         return command;
     }
 
+    /**
+     * @description list all tasks which currently stored in the program
+     * @author Dex
+     * @date 2022/08/31
+     * @param form: parsed input form from user
+     */
     @Override
     public void execute(Form form) {
         List<Task> taskList = taskManager.getTaskList();

@@ -6,6 +6,12 @@ import entity.Form;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * @description singleton class
+ * perform `list command` operation
+ * @author Dex
+ * @date 2022/08/31
+ */
 public class ShowCommand extends Command {
 
     private static final ShowCommand command = new ShowCommand();
@@ -16,6 +22,13 @@ public class ShowCommand extends Command {
         return command;
     }
 
+
+    /**
+     * @description list all supported commands in the program
+     * @author Dex
+     * @date 2022/08/31
+     * @param form: parsed input form from user
+     */
     @Override
     public void execute(Form form) {
         System.out.println("supported commands as follow:");

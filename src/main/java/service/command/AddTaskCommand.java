@@ -3,6 +3,12 @@ package service.command;
 import entity.Form;
 import entity.Task;
 
+/**
+ * @description singleton class
+ * perform `add task`operation
+ * @author Dex
+ * @date 2022/08/31
+ */
 public class AddTaskCommand extends Command {
 
     private static final AddTaskCommand command = new AddTaskCommand();
@@ -14,7 +20,7 @@ public class AddTaskCommand extends Command {
     }
 
     /**
-     * @description level 2 implementation, add task
+     * @description add task by given input form
      * @author Dex
      * @date 2022/08/31
      * @param form: parsed input form from user

@@ -4,6 +4,12 @@ import entity.Form;
 import entity.Task;
 import exception.CommandArgsException;
 
+/**
+ * @description singleton class
+ * perform `mark task as done` operation
+ * @author Dex
+ * @date 2022/08/31
+ */
 public class MarkTaskCommand extends Command {
 
     private static final MarkTaskCommand command = new MarkTaskCommand();
@@ -14,6 +20,12 @@ public class MarkTaskCommand extends Command {
         return command;
     }
 
+    /**
+     * @description mark task as `done` status
+     * @author Dex
+     * @date 2022/08/31
+     * @param form: parsed input form from user
+     */
     @Override
     public void execute(Form form) {
         int taskSize = taskManager.getTaskSize();

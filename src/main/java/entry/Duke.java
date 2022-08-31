@@ -11,6 +11,11 @@ import service.CommandManager;
 
 public class Duke {
 
+    /**
+     * @description entry of program, start chatbot
+     * @author Dex
+     * @date 2022/08/31
+     */
     public void run() {
         UI ui = new ConsoleUI();
         ui.displayGreeting();

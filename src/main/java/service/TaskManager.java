@@ -15,6 +15,9 @@ public class TaskManager {
 
     private TaskManager() {}
 
+    /**
+     * store task data
+     */
     private static final List<Task> taskList = new ArrayList<>();
 
     /**
@@ -45,6 +48,12 @@ public class TaskManager {
         taskList.add(task);
     }
 
+    /**
+     * @description get task instance by given index
+     * @author Dex
+     * @date 2022/08/31
+     * @param index: index of task in the list
+     */
     public Task getTaskByIndex(int index) {
         return taskList.get(index);
     }
@@ -56,7 +65,7 @@ public class TaskManager {
      * @param index: index of task in the list
      */
     public void removeTask(int index) {
-
+        System.out.println("remove task ...");
     }
 
     /**
@@ -65,13 +74,24 @@ public class TaskManager {
      * @date 2022/08/29
      */
     public void removeTask() {
-
+        System.out.println("remove task ...");
     }
 
+    /**
+     * @description get task size
+     * @author Dex
+     * @date 2022/08/31
+     */
     public int getTaskSize() {
         return taskList.size();
     }
 
+    /**
+     * @description get task list instance, direct access of task list is not recommended.
+     * for iteration purpose, include getIterator method (TODO)
+     * @author Dex
+     * @date 2022/08/31
+     */
     public List<Task> getTaskList() {
         return taskList;
     }

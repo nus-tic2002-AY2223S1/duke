@@ -11,10 +11,12 @@ import service.command.UnmarkTaskCommand;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class CommandManager {
 
+    /**
+     * mapping for `commandName` to `commandInstance`
+     */
     private static final Map<String, Command> commandMap = new HashMap<>();
 
     static {
@@ -27,6 +29,12 @@ public class CommandManager {
 
     private CommandManager() {}
 
+    /**
+     * @description get command instance by given command name in runtime
+     * @author Dex
+     * @date 2022/08/31
+     * @param commandName: name of command
+     */
     public static Command getCommand(String commandName) {
         Command command = commandMap.get(commandName);
         // add task if commandName is not found in the command list (level 2 implementation)

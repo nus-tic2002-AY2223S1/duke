@@ -8,7 +8,11 @@ public class CommonConstant {
 
     public static final boolean IS_RUNNING = true;
 
-
+    /**
+     * @description storing error code constant
+     * @author Dex
+     * @date 2022/08/31
+     */
     public static class ErrorCode {
         private ErrorCode() {}
 
