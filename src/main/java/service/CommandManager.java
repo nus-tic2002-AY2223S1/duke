@@ -1,10 +1,7 @@
 package service;
 
-import entity.Form;
-import service.Parser;
-import service.command.AddTaskCommand;
+import service.command.AddCommand;
 import service.command.Command;
-import service.command.EchoCommand;
 import service.command.ExitCommand;
 import service.command.ListCommand;
 
@@ -26,9 +23,8 @@ public class CommandManager {
 
     public static Command getCommand(String commandName) {
         Command command = commandMap.get(commandName);
-        // level 2 implementation, add new task 
         if (command == null) {
-            return AddTaskCommand.getInstance();
+            return AddCommand.getInstance();
         }
         return command;
     }

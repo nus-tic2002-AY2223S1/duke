@@ -3,13 +3,13 @@ package service.command;
 import entity.Form;
 import entity.Task;
 
-public class AddTaskCommand extends Command {
+public class AddCommand extends Command {
 
-    private static final AddTaskCommand command = new AddTaskCommand();
+    private static final AddCommand command = new AddCommand();
 
-    private AddTaskCommand() {}
+    private AddCommand() {}
 
-    public static AddTaskCommand getInstance() {
+    public static AddCommand getInstance() {
         return command;
     }
 
