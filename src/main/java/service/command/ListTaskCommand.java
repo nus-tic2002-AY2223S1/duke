@@ -6,13 +6,13 @@ import util.CollectionUtil;
 
 import java.util.List;
 
-public class ListCommand extends Command {
+public class ListTaskCommand extends Command {
 
-    private static final ListCommand command = new ListCommand();
+    private static final ListTaskCommand command = new ListTaskCommand();
 
-    private ListCommand() {}
+    private ListTaskCommand() {}
 
-    public static ListCommand getInstance() {
+    public static ListTaskCommand getInstance() {
         return command;
     }
 
