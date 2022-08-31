@@ -7,8 +7,5 @@ public abstract class Command {
 
     protected static TaskManager taskManager = TaskManager.getInstance();
 
-    // print service class here
-    // private xxxx
-
     public abstract void execute(Form form);
 }
