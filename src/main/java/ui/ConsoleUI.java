@@ -15,7 +15,7 @@ public class ConsoleUI implements UI {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println(logo);
         displayLineBreak();
-        System.out.println("Gentle greeting from Duke ;>");
+        System.out.println("Greeting from Duke! ;>");
         System.out.println("How may I assist you today :)");
         displayLineBreak();
     }

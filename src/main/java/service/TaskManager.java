@@ -32,7 +32,7 @@ public class TaskManager {
      * @date 2022/08/29
      */
     public void persistTask() {
-        System.out.println("persist all task data ...");
+        // System.out.println("persist all task data ...");
     }
 
     /**

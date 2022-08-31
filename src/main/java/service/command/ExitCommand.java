@@ -14,8 +14,9 @@ public class ExitCommand extends Command {
 
     @Override
     public void execute(Form form) {
-        System.out.println("exit action here ...");
-        taskManager.persistTask();
+        // System.out.println("exit action here ...");
+        // taskManager.persistTask();
+        System.out.println("It's been a pleasure to assist you, see you around!");
         System.exit(0);
     }
 }

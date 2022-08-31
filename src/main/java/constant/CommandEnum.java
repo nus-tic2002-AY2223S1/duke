@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public enum CommandEnum {
 
-
     LIST("list"), MARK_TASK("markTask"), UNMARK_TASK("unmarkTask"), EXIT("exit");
 
     private final String name;

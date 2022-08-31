@@ -3,6 +3,7 @@ package service;
 import entity.Form;
 import service.Parser;
 import service.command.Command;
+import service.command.EchoCommand;
 import service.command.ExitCommand;
 
 import java.util.HashMap;
@@ -16,16 +17,16 @@ public class CommandManager {
         // commandMap.put("list", ListCommand.getInstance());
         // commandMap.put("mark", MarkCommand.getInstance());
         // commandMap.put("unmark", UnmarkCommand.getInstance());
-        commandMap.put("exit", ExitCommand.getInstance());
+        commandMap.put("bye", ExitCommand.getInstance());
     }
 
     private CommandManager() {}
 
     public static Command getCommand(String commandName) {
         Command command = commandMap.get(commandName);
+        // level 1 implementation, echo
         if (command == null) {
-            // String errorMsg = String.format("commandName: %s is not found!%n", commandName);
-            // throw new CommandNotFoundException(errorMsg);
+            return EchoCommand.getInstance();
         }
         return command;
     }
