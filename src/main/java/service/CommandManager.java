@@ -26,7 +26,7 @@ public class CommandManager {
 
     public static Command getCommand(String commandName) {
         Command command = commandMap.get(commandName);
-        // level 2 implementation, add new task
+        // level 2 implementation, add new task 
         if (command == null) {
             return AddTaskCommand.getInstance();
         }
