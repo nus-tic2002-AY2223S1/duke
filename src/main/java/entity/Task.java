@@ -39,10 +39,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "description='" + description + '\'' +
-                ", done=" + done +
-                ", type='" + type + '\'' +
-                '}';
+        return getDescription();
     }
 }

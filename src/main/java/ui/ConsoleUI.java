@@ -27,6 +27,6 @@ public class ConsoleUI implements UI {
 
     public String getInput() {
         System.out.print("~@duke >>> ");
-        return scanner.next();
+        return scanner.nextLine();
     }
 }
