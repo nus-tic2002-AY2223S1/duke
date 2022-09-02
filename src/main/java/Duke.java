@@ -1,6 +1,7 @@
 import java.util.Scanner;
+
+
 public class Duke {
-    public static String[] list = new String[100];
     public static int listSize = 0;
     public static void main(String[] args) {
         String logo = "__           _        \n"
@@ -8,13 +9,12 @@ public class Duke {
                 + "| |   | | | | |/ / _ \\\n"
                 + "| |__ | |_| |   <  __/\n"
                 + "|____| \\__,_|_|\\_\\___|\n";
-        String line = "____________________________________________________________";
 
-        System.out.println(line);
         System.out.println(logo);
         System.out.println("Hello! I'm Luke");
         System.out.println("What can I do for you?");
-        System.out.println(line);
+
+        Task[] list = new Task[100];
 
         while(true){
             String input;
@@ -22,38 +22,51 @@ public class Duke {
             Scanner in = new Scanner(System.in);
             input = in.nextLine();
 
-            System.out.println(line);
-
             if (input.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
-                System.out.println(line);
                 break;
             }
 
-
-            switch (input){
-                case "list":
-                    printList();
-                    break;
-                default:
-                    addToList(input);
-                    break;
+            if (input.equals("list")){
+                printList(list);
+                continue;
             }
 
-            System.out.println(line);
+            if (input.contains("mark")){
+                changeStatus(list,input);
+                continue;
+            }
+
+            addToList(list,input);
         }
 
     }
 
-    public static void printList(){
+    public static void printList(Task[] list){
         for (int i = 0; i < listSize; i++) {
-            System.out.println(i+1 + ". " + list[i]);
+            System.out.print(i+1 + ". ");
+            System.out.println(list[i].getDescription());
         }
     }
 
-    public static void addToList(String input){
-        list[listSize] = input;
+    public static void addToList(Task[] list, String input){
+        list[listSize] = new Task(input);
         listSize++;
         System.out.println("added: " + input);
+    }
+
+    public static void changeStatus(Task[] list, String input){
+        int start = input.indexOf(' '); //Detect position of white space
+        String num =  input.substring(start+1); //Get the number from the end of the input
+        int selection = Integer.parseInt(num) - 1;
+
+        if(input.contains("un")){
+            System.out.println("OK, I've marked this task as not done yet:");
+            list[selection].setStatus(false);
+        } else {
+            System.out.println("Nice! I've marked this task as done:");
+            list[selection].setStatus(true);
+        }
+        System.out.println(list[selection].getDescription());
     }
 }
