@@ -1,7 +1,8 @@
 package service.command;
 
-import entity.Form;
 import entity.Task;
+import entity.form.Form;
+import entity.form.MarkingForm;
 import exception.CommandArgsException;
 
 /**
@@ -28,13 +29,14 @@ public class UnmarkTaskCommand extends Command {
      */
     @Override
     public void execute(Form form) {
+        MarkingForm markingForm = (MarkingForm) form;
         int taskSize = taskManager.getTaskSize();
         if (taskSize == 0) {
             System.out.println("empty task list! please add in some tasks first");
             return;
         }
 
-        int index = form.getOperateIndex();
+        int index = markingForm.getIndex();
         if (index > taskSize) {
             throw new CommandArgsException("given index is invalid, it should be less than current task size");
         }

@@ -1,7 +1,7 @@
 package entry;
 
 import constant.CommonConstant;
-import entity.Form;
+import entity.form.Form;
 import exception.DukeException;
 import service.ParserManager;
 import ui.ConsoleUI;

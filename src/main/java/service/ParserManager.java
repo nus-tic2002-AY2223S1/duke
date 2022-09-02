@@ -1,10 +1,14 @@
 package service;
 
 import constant.CommandEnum;
-import entity.Form;
+import entity.form.Form;
+import entity.form.MarkingForm;
 import exception.CommandArgsException;
 import util.DataUtil;
 import util.StringUtil;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ParserManager {
 
@@ -24,6 +28,7 @@ public class ParserManager {
      * parser to parse the string input for `unmark` operation
      */
     private static final UnmarkCommandParser unmarkCommandParser = new UnmarkCommandParser();
+
 
     public static Form parseForm(String input) {
         input = StringUtil.trim(input);
@@ -72,7 +77,7 @@ public class ParserManager {
                 throw new CommandArgsException("given index is invalid, it should be more than 0");
             }
 
-            return new Form(input, CommandEnum.MARK_TASK.getName(), index);
+            return new MarkingForm(input, CommandEnum.MARK_TASK.getName(), index);
         }
     }
 
@@ -91,7 +96,7 @@ public class ParserManager {
                 throw new CommandArgsException("given index is invalid, it should be more than 0");
             }
 
-            return new Form(input, CommandEnum.UNMARK_TASK.getName(), index);
+            return new MarkingForm(input, CommandEnum.UNMARK_TASK.getName(), index);
         }
     }
 }
