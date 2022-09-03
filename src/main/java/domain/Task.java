@@ -1,3 +1,5 @@
+package domain;
+
 public class Task {
     private static int count = 0;
     protected int index;
@@ -9,6 +11,10 @@ public class Task {
         this.isDone = false;
         count++;
         index = count;
+    }
+
+    public boolean isDone() {
+        return isDone;
     }
 
     public String getStatusIcon() {

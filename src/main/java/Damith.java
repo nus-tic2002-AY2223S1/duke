@@ -1,59 +1,37 @@
+import domain.Task;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static utils.CommonStrings.FIVE_SPACE;
-import static utils.CommonStrings.UNDERSCORES;
+import static domain.Mouth.speak;
+import static processor.impl.TaskProcessorImpl.*;
+import static utils.CommonStrings.*;
 
 public class Damith {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        List<Task> tasks = new ArrayList<>();
+        List<Task> taskList = new ArrayList<>();
 
-        String logo = "________                 .__  __  .__     \n" +
-                "\\______ \\ _____    _____ |__|/  |_|  |__  \n" +
-                " |    |  \\\\__  \\  /     \\|  \\   __\\  |  \\ \n" +
-                " |    `   \\/ __ \\|  Y Y  \\  ||  | |   Y  \\\n" +
-                "/_______  (____  /__|_|  /__||__| |___|  /\n" +
-                "        \\/     \\/      \\/              \\/ ";
-        System.out.println(logo);
-        speak("Damith here.\nWhat's your problem?");
+        System.out.println(LOGO);
+        speak(GREETING);
 
         while (!scanner.hasNext("bye")) {
             String userInput = scanner.nextLine();
-            if ("list".equals(userInput)) {
-                speak(tasks);
+            if (userInput.equals("list")) {
+                speak(taskList);
             } else if (userInput.contains("unmark")) {
-                int num = Integer.parseInt(userInput.replaceAll("[^0-9]", ""))-1;
-                tasks.get(num).markNotDone();
-                speak("OK, I've marked this task as not done yet:\n" + tasks.get(num));
+                unmarkTask(userInput, taskList);
+
             } else if (userInput.contains("mark")) {
-                int num = Integer.parseInt(userInput.replaceAll("[^0-9]", ""))-1;
-                tasks.get(num).markDone();
-                speak("Nice! I've marked this task as done:\n" + tasks.get(num));
+                markTask(userInput, taskList);
             }
             else {
-                tasks.add(new Task(userInput));
-                speak("added: " + userInput);
+                addTask(userInput, taskList);
             }
         }
-        speak("zzz stop wasting my time");
+        speak(GOODBYE);
 
-    }
-
-    public static void speak(String sentence) {
-        System.out.println(UNDERSCORES);
-        sentence = sentence.replace("\n", "\n     ");
-        System.out.println(FIVE_SPACE + sentence);
-        System.out.println(UNDERSCORES);
-    }
-
-    public static void speak(List<Task> tasks) {
-        System.out.println(UNDERSCORES);
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(FIVE_SPACE + tasks.get(i));
-        }
-        System.out.println(UNDERSCORES);
     }
 }
