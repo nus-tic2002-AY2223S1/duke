@@ -1,6 +1,6 @@
 package domain;
 
-import domain.Task;
+import domain.task.Task;
 
 import java.util.List;
 
@@ -17,7 +17,12 @@ public class Mouth {
 
     public static void speak(List<Task> tasks) {
         System.out.println(UNDERSCORES);
-        tasks.forEach(t -> System.out.println(FIVE_SPACE + t));
+        if (tasks.isEmpty())
+            System.out.println("Task List is Empty");
+        for (int i = 0; i < tasks.size(); i++) {
+            Task t = tasks.get(i);
+            System.out.println(FIVE_SPACE + (i+1) + ": " + t);
+        }
         System.out.println(UNDERSCORES);
     }
 }

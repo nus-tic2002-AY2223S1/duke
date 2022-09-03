@@ -1,6 +1,6 @@
 package utils;
 
-import domain.Task;
+import domain.task.Task;
 
 public class Messages {
     public static String alreadyDoneMsg(Task task) {
@@ -19,8 +19,8 @@ public class Messages {
         return "Nice! I've marked this task as not done yet:\n" + task;
     }
 
-    public static String addedTaskMsg(String task) {
-        return "added: " + task;
+    public static String addedTaskMsg(Task task) {
+        return "Got it. I've added this task:\n" + task + "\nNow you have " + (Task.getCount()) + " tasks in the list.";
     }
 
 }

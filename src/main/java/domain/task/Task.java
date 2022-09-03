@@ -1,4 +1,4 @@
-package domain;
+package domain.task;
 
 public class Task {
     private static int count = 0;
@@ -11,6 +11,10 @@ public class Task {
         this.isDone = false;
         count++;
         index = count;
+    }
+
+    public static int getCount() {
+        return count;
     }
 
     public boolean isDone() {
@@ -31,6 +35,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return index + ". [" + getStatusIcon() + "] " + description;
+        return "[" + getStatusIcon() + "] " + description;
     }
 }
