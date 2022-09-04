@@ -5,16 +5,6 @@ public class Duke {
 
     public static void main(String[] args) {
 
-        System.out.println();
-
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-//        System.out.println("Hello from\n" + logo);
-//        System.out.println("yuanyuan testing");
-
         String greeting = line + "\tHello! I'm Duke\n" +
                 "\tWhat can I do for you?\n"
                 +line;
@@ -24,15 +14,34 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         String input;
         input = in.nextLine();
+        int count = 0;
+        String[] list = new String[100];
 
         while(input!=null){
-            if(input.equals("bye")){
-                System.out.println(line + "\t Bye. Hope to see you again soon!\n"+line);
+            String output = "";
+            if(input.equalsIgnoreCase("bye")){
+                output = String.format("%s\t%s\n%s",line,"Bye. Hope to see you again soon!",line);
+                System.out.println(output);
                 break;
             }
-            System.out.println(line + "\t"+input+"\n"+line);
+
+            if(input.equalsIgnoreCase("list")){
+                for(int i = 0; i < count;i++){
+                    output += String.format("\t%d. %s\n",i+1,list[i]);
+                }
+                System.out.println(line + output+line);
+            }
+            else{
+                list[count] = input;
+                count++;
+                output = String.format("added: %s",input);
+                System.out.println(line + "\t"+output+"\n"+line);
+            }
             input = in.nextLine();
+
         }
 
     }
 }
+
+
