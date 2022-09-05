@@ -23,16 +23,10 @@ public class ErrorMessages {
     public static final String CREATE_DEADLINE_NO_BY_ERR_MSG =
             CREATE_DEADLINE_ERR_MSG + "\nDEADLINE must have \"/by\"";
 
-    public static final String CREATE_DEADLINE_NO_TEXT_AFTER_BY_ERR_MSG =
-            CREATE_DEADLINE_ERR_MSG + "\nDEADLINE must have text after \"/by\"";
-
     public static final String CREATE_EVENT_ERR_MSG =
             "EVENT was not created successfully";
 
     public static final String CREATE_EVENT_NO_AT_ERR_MSG =
             CREATE_EVENT_ERR_MSG + "\nEVENT must have \"/at\"";
-
-    public static final String CREATE_EVENT_NO_TEXT_AFTER_AT_ERR_MSG =
-            CREATE_EVENT_ERR_MSG + "\nEVENT must have text after \"/at\"";
 
 }

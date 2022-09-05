@@ -7,7 +7,7 @@ import domain.task.Todo;
 
 import java.util.Optional;
 
-import static domain.Mouth.speak;
+import static utils.Mouth.speak;
 import static utils.ErrorMessages.CREATE_DEADLINE_ERR_MSG;
 import static utils.ErrorMessages.CREATE_DEADLINE_NO_BY_ERR_MSG;
 import static utils.ErrorMessages.CREATE_EVENT_ERR_MSG;
