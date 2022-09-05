@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
-    private static ArrayList <String> wishList = new ArrayList<String>();
+    private static ArrayList <Task> wishList = new ArrayList<Task>();
 
     public static String input(){
         Scanner s = new Scanner(System.in);
@@ -28,21 +28,39 @@ public class Duke {
     }
 
     public static void storeWish(String wish){
-        wishList.add(wish);
+        Task t = new Task(wish); //Task t = new Task("read book");
+        wishList.add(t);
         System.out.print("Dobby has taken note of your wish: " + wish + ". ");
+        printWishList();
+    }
+
+    public static void markWish(String wish){ //mark as done
+        int wNumber = Integer.parseInt(wish);
+        (wishList.get(wNumber-1)).markAsDone();
+        System.out.print("Dobby has marked your wish as done");
+        printWishList();
     }
 
     public static void removeWish(String wish){
-        int idx = wishList.indexOf(wish);
-        wishList.remove(idx); // Remove wish that is currently stored at this index
+        //int idx = wishList.indexOf(wish);
+        //wishList.remove(idx); // Remove wish that is currently stored at this index
+        int wNumber = Integer.parseInt(wish);
+        wishList.remove(wNumber-1);
         System.out.print("Dobby has striked off " + wish + " from your wish list. ");
+        printWishList();
     }
 
     public static void printWishList(){
         System.out.println("Here's your wish list that Dobby kept as a secret:");
         for (int i = 0; i < wishList.size(); i++) {
-            System.out.println(wishList.get(i));
+            System.out.println("[" + wishList.get(i).getStatusIcon() + "] " + wishList.get(i).getTask());
         }
+    }
+
+    public static String substringHelper(String wish){
+        int idx = wish.indexOf(" ") + 1;
+        String w = wish.substring(idx, wish.length());
+        return w;
     }
 
     public static Boolean echo(){
@@ -51,9 +69,12 @@ public class Duke {
             bye();
             return true;
         } else if (wish.contains("remove")){ // e.g. remove wish
-            int idx = wish.indexOf(" ") + 1;
-            String w = wish.substring(idx, wish.length());
+            String w = substringHelper(wish);
             removeWish(w);
+            return false;
+        } else if (wish.contains("mark")){ // e.g. i am done returning the book
+            String w = substringHelper(wish);
+            markWish(w);
             return false;
         }else if(wish.equals("secret wish list")){ // What's my secret wish list?
             printWishList();
@@ -75,13 +96,5 @@ public class Duke {
             }
         }while(terminateDobby != true);
 
-        /*
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-
-         */
     }
 }
