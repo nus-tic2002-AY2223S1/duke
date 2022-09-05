@@ -22,6 +22,9 @@ public class Duke {
         System.out.println(print(greet));
         Scanner in= new Scanner(System.in);
         String tempMsg;
+        String[] task=new String[100];
+        int countTask=0;
+        String itemList="";
 
         while(true){
             String userInput=in.nextLine();
@@ -31,9 +34,19 @@ public class Duke {
                 System.out.println(print(tempMsg));
                 break;
             }
-            else{
+            else if(userInput.equals("list")){
+                for(int i=0; i<countTask;i++){
+                    itemList+="\t  "+(i+1)+". "+task[i]+"\n";
 
-                System.out.println(print("\t  "+userInput+"\n"));
+                }
+                System.out.println(print(itemList));
+                itemList="";
+
+            }
+            else{
+                task[countTask]=userInput;
+                countTask++;
+                System.out.println(print("\t  added: "+userInput+"\n"));
             }
 
 
