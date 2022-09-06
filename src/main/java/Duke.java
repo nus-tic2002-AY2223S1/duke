@@ -22,35 +22,52 @@ public class Duke {
         System.out.println(print(greet));
         Scanner in= new Scanner(System.in);
         String tempMsg;
-        String[] task=new String[100];
+        Task[] task=new Task[100];
+
         int countTask=0;
         String itemList="";
 
-        while(true){
-            String userInput=in.nextLine();
-
-            if(userInput.equals("bye")){
-                tempMsg="\t  Bye. Hope to see you again soon!\n";
-                System.out.println(print(tempMsg));
-                break;
+        while(true) {
+            String userInput = in.nextLine();
+            String[] sentence=userInput.split(" ");
+            int itemNo=999;
+            if(sentence.length>1){
+                itemNo=Integer.parseInt(sentence[1])-1;
             }
-            else if(userInput.equals("list")){
-                for(int i=0; i<countTask;i++){
-                    itemList+="\t  "+(i+1)+". "+task[i]+"\n";
+
+            switch (sentence[0]) {
+                case "bye":
+                    tempMsg = "\t  Bye. Hope to see you again soon!\n";
+                    System.out.println(print(tempMsg));
+                    return;
+
+            case "list":
+                for (int i = 0; i < countTask; i++) {
+                    itemList += "\t  " + (i + 1) + ".["+task[i].getStatusIcon()+"] " + task[i].getTask() + "\n";
 
                 }
                 System.out.println(print(itemList));
-                itemList="";
+                itemList = "";
+                break;
 
-            }
-            else{
-                task[countTask]=userInput;
+            case "mark":
+                task[itemNo].mark();
+                System.out.println(print("\t  Nice! I've marked this task as done:\n\t    ["+task[itemNo].getStatusIcon()+"] "+task[itemNo].getTask()+"\n"));
+                break;
+
+            case "unmark":
+                task[itemNo].unmark();
+                System.out.println(print("\t   OK, I've marked this task as not done yet:\n\t    ["+task[itemNo].getStatusIcon()+"] "+task[itemNo].getTask()+"\n"));
+                    break;
+
+            default:
+                task[countTask]=new Task(userInput);
                 countTask++;
-                System.out.println(print("\t  added: "+userInput+"\n"));
+                System.out.println(print("\t  added: " + userInput + "\n"));
+                break;
+
+
             }
-
-
-
         }
     }
 }
