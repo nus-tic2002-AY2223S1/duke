@@ -17,12 +17,20 @@ public interface UI {
     void displayLineBreak();
 
     /**
-     * @description format error message to prevent actual cause expose to user
+     * @description format duke exception message to prevent actual cause expose to user
      * @author Dex
      * @date 2022/08/31
      * @param errorMsg: program error message
      */
-    void displayErrorMsg(String errorMsg);
+    void displayDukeErrorMsg(String errorMsg);
+
+    /**
+     * @description display message for unknown exception, hide the actual root cause to user
+     * @author Dex
+     * @date 2022/09/06
+     * @param throwable: exception instance
+     */
+    void displayUnknownErrorMsg(Throwable throwable);
 
     /**
      * @description get user input in raw string

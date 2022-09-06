@@ -26,10 +26,9 @@ public class Duke {
                 command.execute(form);
                 ui.displayLineBreak();
             } catch (DukeException dukeException) {
-                ui.displayErrorMsg(dukeException.getMessage());
+                ui.displayDukeErrorMsg(dukeException.getMessage());
             } catch (Exception exception) {
-                // actual error message should keep internal
-                exception.printStackTrace();
+                ui.displayUnknownErrorMsg(exception);
             }
         }
     }

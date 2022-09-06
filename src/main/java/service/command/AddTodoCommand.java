@@ -31,6 +31,6 @@ public class AddTodoCommand extends Command {
         TodoForm todoForm = (TodoForm) form;
         Todo todo = new Todo(todoForm.getDescription());
         taskManager.addTask(todo);
-        System.out.println("Todo [%s] is added!%n");
+        System.out.printf("Todo [%s] is added!%n", todoForm.getDescription());
     }
 }

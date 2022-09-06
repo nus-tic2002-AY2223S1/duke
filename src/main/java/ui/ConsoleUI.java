@@ -1,5 +1,7 @@
 package ui;
 
+import util.ExceptionUtil;
+
 import java.util.Scanner;
 
 public class ConsoleUI implements UI {
@@ -31,10 +33,19 @@ public class ConsoleUI implements UI {
     }
 
     @Override
-    public void displayErrorMsg(String errorMsg) {
+    public void displayDukeErrorMsg(String errorMsg) {
         System.out.println(":(");
         System.out.println("cannot execute command due to error raised");
         System.out.println(errorMsg);
+        displayLineBreak();
+    }
+
+    @Override
+    public void displayUnknownErrorMsg(Throwable throwable) {
+        System.out.println(":(");
+        System.out.println("unknown error raised, please contact developer for assistance");
+        // actual error message should keep internally, prevent exposure to user. (for dev purpose, do not comment out the given code)
+        System.out.println(ExceptionUtil.getStackTraceAsString(throwable));
         displayLineBreak();
     }
 

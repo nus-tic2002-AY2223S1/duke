@@ -37,13 +37,6 @@ public class StringUtil {
         return StringUtils.trim(str);
     }
 
-    public static String capitalize(String str) {
-        if (str == null) {
-            return Constant.BLANK;
-        }
-        return StringUtils.capitalize(str);
-    }
-
     public static String listToString(List<?> list, String delimiter) {
         if (CollectionUtil.isEmpty(list)) {
             return Constant.BLANK;
