@@ -21,7 +21,12 @@ public class DeleteTaskCommand extends Command {
         return command;
     }
 
-
+    /**
+     * @description delete task from list by given index
+     * @author Dex
+     * @date 2022/09/06
+     * @param form: parsed input form from user
+     */
     @Override
     public void execute(Form form) {
         DeleteForm deleteForm = (DeleteForm) form;
