@@ -9,19 +9,31 @@ import java.util.Objects;
  */
 public enum CommandEnum {
 
-    UNKNOWN("unknown"), SHOW_COMMAND("show_command"),
-    LIST("list"), MARK_TASK("mark"), UNMARK_TASK("unmark"),
-    TODO("todo"), DEADLINE("deadline"), EVENT("event"),
-    EXIT("bye");
+    UNKNOWN("unknown", "-"),
+    SHOW_COMMAND("show_command", "display current supported command in the program, syntax: `show_command`"),
+    LIST("list", "display task list, syntax: `list`"),
+    MARK_TASK("mark", "mark task as done by given index, syntax: `mark index`"),
+    UNMARK_TASK("unmark", "mark task as undone by given index, syntax: `unmark index`"),
+    TODO("todo", "create a todo task, syntax: `todo description`"),
+    DEADLINE("deadline", "create a deadline task, syntax: `deadline description / by deadlineTime(yyyy-MM-dd HH:mm)`"),
+    EVENT("event", "create a event task, syntax: `event description / at startTime(yyyy-MM-dd HH:mm) & endTime(yyyy-MM-dd HH:mm)`"),
+    EXIT("bye", "exit program, syntax: `bye`");
 
     private final String name;
 
-    CommandEnum(String name) {
+    private final String description;
+
+    CommandEnum(String name, String description) {
         this.name = name;
+        this.description = description;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public static CommandEnum getCommandByName(String name) {

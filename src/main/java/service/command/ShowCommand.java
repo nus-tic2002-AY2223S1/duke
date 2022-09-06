@@ -34,6 +34,9 @@ public class ShowCommand extends Command {
         System.out.println("supported commands as follow:");
         Arrays.stream(CommandEnum.values())
                 .filter(o -> !Objects.equals("unknown", o.getName()))
-                .forEach(o -> System.out.println(o.getName()));
+                .forEach(o -> {
+                    String message = String.format("%s - %s",o.getName(), o.getDescription());
+                    System.out.println(message);
+                });
     }
 }
