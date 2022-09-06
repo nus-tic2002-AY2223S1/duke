@@ -44,7 +44,7 @@ public class Task {
     }
 
     private String getTypeIcon() {
-        return Objects.nonNull(type) ? getType() : "[ ]";
+        return Objects.nonNull(type) ? getType() : " ";
     }
 
     @Override
