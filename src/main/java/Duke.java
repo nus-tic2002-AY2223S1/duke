@@ -36,6 +36,9 @@ public class Duke {
             case "mark":
                 done(tasks, arguments);
                 break;
+            case "unmark":
+                 notdone(tasks, arguments);
+                 break;
             case "deadline":
                     deadline(tasks, arguments);
                     break;
@@ -102,6 +105,32 @@ public class Duke {
                 tasks.set(index - 1, task);
 
                 printIndent("Nice! I've marked this task as done:");
+                printIndent("\t" + task);
+            } catch (NumberFormatException e) {
+                printIndent("Index provided is not a proper number.");
+            } catch (IllegalArgumentException e) {
+                printIndent("Task with this index is not found in our database.");
+            }
+        }
+    }
+
+    protected static void notdone(Vector<Task> tasks, String[] arguments) {
+        if (arguments.length < 2) {
+            // An index must be provided for the task to be marked "done"
+            printIndent("You will need to give me an index, like this: `ndone 2`.");
+        } else {
+            try {
+                int index = Integer.parseInt(arguments[1]);
+                if (index > tasks.size() || index < 1) {
+                    // This index is out of the boundary of our database
+                    throw new IllegalArgumentException();
+                }
+
+                Task task = tasks.get(index - 1);
+                task.markAsnotDone();
+                tasks.set(index - 1, task);
+
+                printIndent("Nice! I've unmarked this task as ndone:");
                 printIndent("\t" + task);
             } catch (NumberFormatException e) {
                 printIndent("Index provided is not a proper number.");
