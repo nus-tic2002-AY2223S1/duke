@@ -1,37 +1,39 @@
 package entity;
 
+import constant.Constant;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task {
 
-    private String by;
-
-    private LocalDateTime time;
+    private LocalDateTime by;
 
     public Deadline(String description) {
         super(description);
-        super.type = "D";
+        setType(Constant.Task.TYPE_DEADLINE);
     }
 
-    public Deadline(String description, String by, LocalDateTime time) {
+    public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
-        this.time = time;
+        setType(Constant.Task.TYPE_DEADLINE);
     }
 
-    public String getBy() {
+    public LocalDateTime getBy() {
         return by;
     }
 
-    public void setBy(String by) {
+    public void setBy(LocalDateTime by) {
         this.by = by;
     }
 
-    public LocalDateTime getTime() {
-        return time;
+    @Override
+    public String toString() {
+        return String.format("%s (by: %s)", super.toString(), getDisplayTime());
     }
 
-    public void setTime(LocalDateTime time) {
-        this.time = time;
+    private String getDisplayTime() {
+        return by.format(DateTimeFormatter.ofPattern(Constant.Time.DISPLAY_FORMAT));
     }
 }

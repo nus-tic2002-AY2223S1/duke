@@ -10,7 +10,9 @@ import java.util.Objects;
 public enum CommandEnum {
 
     UNKNOWN("unknown"), SHOW_COMMAND("show_command"),
-    LIST("list"), MARK_TASK("mark"), UNMARK_TASK("unmark"), EXIT("bye");
+    LIST("list"), MARK_TASK("mark"), UNMARK_TASK("unmark"),
+    TODO("todo"), DEADLINE("deadline"), EVENT("event"),
+    EXIT("bye");
 
     private final String name;
 

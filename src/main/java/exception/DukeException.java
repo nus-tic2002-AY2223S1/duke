@@ -1,6 +1,6 @@
 package exception;
 
-import constant.CommonConstant;
+import constant.Constant;
 
 public class DukeException extends RuntimeException {
 
@@ -8,7 +8,7 @@ public class DukeException extends RuntimeException {
 
     public DukeException(String message) {
         super(message);
-        this.code = CommonConstant.ErrorCode.SERVICE_EXCEPTION;
+        this.code = Constant.ErrorCode.SERVICE_EXCEPTION;
     }
 
     protected void setCode(int code) {

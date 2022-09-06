@@ -1,6 +1,6 @@
 package util;
 
-import constant.CommonConstant;
+import constant.Constant;
 
 public class DataUtil {
 
@@ -11,7 +11,7 @@ public class DataUtil {
             return String.valueOf(object);
         } catch (Exception e) {
             System.out.println("DataUtils invokes toString fails");
-            return CommonConstant.BLANK;
+            return Constant.BLANK;
         }
     }
 

@@ -1,7 +1,7 @@
 package service.command;
 
 import constant.CommandEnum;
-import entity.form.Form;
+import form.Form;
 
 import java.util.Arrays;
 import java.util.Objects;

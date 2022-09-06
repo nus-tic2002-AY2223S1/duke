@@ -1,7 +1,7 @@
 package entry;
 
-import constant.CommonConstant;
-import entity.form.Form;
+import constant.Constant;
+import form.Form;
 import exception.DukeException;
 import service.ParserManager;
 import ui.ConsoleUI;
@@ -19,7 +19,7 @@ public class Duke {
     public void run() {
         UI ui = new ConsoleUI();
         ui.displayGreeting();
-        while (CommonConstant.IS_RUNNING) {
+        while (Constant.IS_RUNNING) {
             try {
                 Form form = ParserManager.parseForm(ui.getInput());
                 Command command = CommandManager.getCommand(form.getCommand());

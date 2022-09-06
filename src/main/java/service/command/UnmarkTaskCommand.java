@@ -1,8 +1,8 @@
 package service.command;
 
 import entity.Task;
-import entity.form.Form;
-import entity.form.MarkingForm;
+import form.Form;
+import form.MarkingForm;
 import exception.CommandArgsException;
 
 /**

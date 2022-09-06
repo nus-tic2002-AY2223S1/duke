@@ -1,11 +1,11 @@
 package exception;
 
-import constant.CommonConstant;
+import constant.Constant;
 
 public class CommandNotFoundException extends DukeException {
 
     public CommandNotFoundException(String message) {
         super(message);
-        setCode(CommonConstant.ErrorCode.COMMAND_NOT_FOUND);
+        setCode(Constant.ErrorCode.COMMAND_NOT_FOUND);
     }
 }

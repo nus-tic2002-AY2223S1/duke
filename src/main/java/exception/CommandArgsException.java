@@ -1,11 +1,11 @@
 package exception;
 
-import constant.CommonConstant;
+import constant.Constant;
 
 public class CommandArgsException extends DukeException {
 
     public CommandArgsException(String message) {
         super(message);
-        setCode(CommonConstant.ErrorCode.ILLEGAL_ARGUMENTS);
+        setCode(Constant.ErrorCode.ILLEGAL_ARGUMENTS);
     }
 }

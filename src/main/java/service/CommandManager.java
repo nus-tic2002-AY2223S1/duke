@@ -1,7 +1,10 @@
 package service;
 
 import constant.CommandEnum;
+import service.command.AddDeadlineCommand;
+import service.command.AddEventCommand;
 import service.command.AddTaskCommand;
+import service.command.AddTodoCommand;
 import service.command.Command;
 import service.command.ExitCommand;
 import service.command.ListTaskCommand;
@@ -24,6 +27,9 @@ public class CommandManager {
         commandMap.put("list", ListTaskCommand.getInstance());
         commandMap.put("mark", MarkTaskCommand.getInstance());
         commandMap.put("unmark", UnmarkTaskCommand.getInstance());
+        commandMap.put("todo", AddTodoCommand.getInstance());
+        commandMap.put("deadline", AddDeadlineCommand.getInstance());
+        commandMap.put("event", AddEventCommand.getInstance());
         commandMap.put("bye", ExitCommand.getInstance());
     }
 

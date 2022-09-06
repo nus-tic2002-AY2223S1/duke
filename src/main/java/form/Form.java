@@ -1,4 +1,4 @@
-package entity.form;
+package form;
 
 public class Form {
 

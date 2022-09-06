@@ -1,6 +1,6 @@
 package service.command;
 
-import entity.form.Form;
+import form.Form;
 import service.TaskManager;
 
 /**

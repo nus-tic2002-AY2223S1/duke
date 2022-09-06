@@ -1,8 +1,12 @@
-package entity.form;
+package form;
 
 public class MarkingForm extends Form {
 
     private int index;
+
+    public MarkingForm(String metaData, String command) {
+        super(metaData, command);
+    }
 
     public MarkingForm(String metaData, String command, int index) {
         super(metaData, command);

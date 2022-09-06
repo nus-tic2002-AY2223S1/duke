@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 public class Task {
 
     protected String description;
@@ -37,8 +39,16 @@ public class Task {
         return type;
     }
 
+    protected void setType(String type) {
+        this.type = type;
+    }
+
+    private String getTypeIcon() {
+        return Objects.nonNull(type) ? getType() : "[ ]";
+    }
+
     @Override
     public String toString() {
-        return String.format("[%s] %s", getStatusIcon(), getDescription());
+        return String.format("[%s][%s] %s", getTypeIcon(), getStatusIcon(), getDescription());
     }
 }
