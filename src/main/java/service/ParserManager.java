@@ -3,6 +3,7 @@ package service;
 import constant.CommandEnum;
 import constant.Constant;
 import form.DeadlineForm;
+import form.DeleteForm;
 import form.EventForm;
 import form.Form;
 import form.MarkingForm;
@@ -51,6 +52,11 @@ public class ParserManager {
      */
     private static final EventCommandParser EVENT_COMMAND_PARSER = new EventCommandParser();
 
+    /**
+     * parser to parse the string input for `delete` operation
+     */
+    private static final DeleteCommandParser DELETE_COMMAND_PARSER = new DeleteCommandParser();
+
     public static Form parseForm(String input) {
         input = StringUtil.trim(input);
         String[] args = input.split(" ");
@@ -65,6 +71,8 @@ public class ParserManager {
                 return MARK_COMMAND_PARSER;
             case UNMARK_TASK:
                 return UNMARK_COMMAND_PARSER;
+            case DELETE_TASK:
+                return DELETE_COMMAND_PARSER;
             case TODO:
                 return TODO_COMMAND_PARSER;
             case DEADLINE:
@@ -85,7 +93,7 @@ public class ParserManager {
 
         @Override
         public Form parseForm(String input) {
-            // single string input, input could command itself
+            // single string input, input could be command itself
             return new Form(input, input);
         }
     }
@@ -125,6 +133,25 @@ public class ParserManager {
             }
 
             return new MarkingForm(input, CommandEnum.UNMARK_TASK.getName(), index);
+        }
+    }
+
+    private static class DeleteCommandParser implements Parser {
+
+        @Override
+        public Form parseForm(String input) {
+            String[] args = input.split(" ");
+            if (args.length != 2) {
+                throw new CommandArgsException("[delete] command has invalid arguments, it should be in `delete index` format");
+            }
+
+            // check index
+            int index = DataUtil.toInteger(args[1]);
+            if (index < 1) {
+                throw new CommandArgsException("given index is invalid, it should be more than 0");
+            }
+
+            return new DeleteForm(input, CommandEnum.DELETE_TASK.getName(), index);
         }
     }
 

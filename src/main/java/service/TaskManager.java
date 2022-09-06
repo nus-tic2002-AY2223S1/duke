@@ -65,16 +65,8 @@ public class TaskManager {
      * @param index: index of task in the list
      */
     public void removeTask(int index) {
-        System.out.println("remove task ...");
-    }
-
-    /**
-     * @description remove task from list by given search criteria
-     * @author Dex
-     * @date 2022/08/29
-     */
-    public void removeTask() {
-        System.out.println("remove task ...");
+        // may have performance issue
+        taskList.remove(index);
     }
 
     /**
