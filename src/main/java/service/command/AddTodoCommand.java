@@ -6,7 +6,7 @@ import form.TodoForm;
 
 /**
  * @description singleton class
- * perform `echo input` operation
+ * perform `add todo task` operation
  * @author Dex
  * @date 2022/08/31
  */

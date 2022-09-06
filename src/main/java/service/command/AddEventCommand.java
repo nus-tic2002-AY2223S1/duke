@@ -6,7 +6,7 @@ import form.Form;
 
 /**
  * @description singleton class
- * perform `echo input` operation
+ * perform `add event task` operation
  * @author Dex
  * @date 2022/08/31
  */
