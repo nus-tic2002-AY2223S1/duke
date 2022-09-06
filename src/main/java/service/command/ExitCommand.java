@@ -1,5 +1,6 @@
 package service.command;
 
+import constant.Constant;
 import form.Form;
 
 /**
@@ -29,6 +30,7 @@ public class ExitCommand extends Command {
         // System.out.println("exit action here ...");
         // taskManager.persistTask();
         System.out.println("It's been a pleasure to assist you, see you around!");
+        System.out.println(Constant.ENDING_LOGO);
         System.exit(0);
     }
 }

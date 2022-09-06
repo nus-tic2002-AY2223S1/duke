@@ -1,9 +1,7 @@
 package service;
 
-import constant.CommandEnum;
 import service.command.AddDeadlineCommand;
 import service.command.AddEventCommand;
-import service.command.AddTaskCommand;
 import service.command.AddTodoCommand;
 import service.command.Command;
 import service.command.DeleteTaskCommand;
@@ -11,6 +9,7 @@ import service.command.ExitCommand;
 import service.command.ListTaskCommand;
 import service.command.MarkTaskCommand;
 import service.command.ShowCommand;
+import service.command.UndefinedCommand;
 import service.command.UnmarkTaskCommand;
 
 import java.util.HashMap;
@@ -47,7 +46,7 @@ public class CommandManager {
         Command command = commandMap.get(commandName);
         // add task if commandName is not found in the command list (level 2 implementation)
         if (command == null) {
-            return AddTaskCommand.getInstance();
+            return UndefinedCommand.getInstance();
         }
         return command;
     }
