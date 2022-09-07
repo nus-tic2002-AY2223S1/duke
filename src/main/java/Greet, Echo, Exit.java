@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 class assistant{
     //method
     public void greet() {
@@ -9,4 +7,8 @@ class assistant{
     public void exit(){
         System.out.println("Bye. Hope to see you again soon!");
     }
-};
+
+    public void echo(String input){
+        System.out.println(input);
+    }
+}
