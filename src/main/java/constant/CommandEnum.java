@@ -16,6 +16,7 @@ public enum CommandEnum {
     UNMARK_TASK("unmark", "mark task as undone by given index, syntax: `unmark index`"),
     DELETE_TASK("delete", "delete task from list, syntax: `delete index`"),
     TODO("todo", "create a todo task, syntax: `todo description`"),
+    FIND_TASK("find", "search the task by given keyword, syntax: `find keyword`"),
     DEADLINE("deadline", "create a deadline task, syntax: `deadline description / by deadlineTime(yyyy-MM-dd HH:mm)`"),
     EVENT("event", "create a event task, syntax: `event description / at startTime(yyyy-MM-dd HH:mm) & endTime(yyyy-MM-dd HH:mm)`"),
     EXIT("bye", "exit program, syntax: `bye`");

@@ -5,6 +5,7 @@ import constant.Constant;
 import form.DeadlineForm;
 import form.DeleteForm;
 import form.EventForm;
+import form.FindForm;
 import form.Form;
 import form.MarkingForm;
 import form.TodoForm;
@@ -57,6 +58,11 @@ public class ParserManager {
      */
     private static final DeleteCommandParser DELETE_COMMAND_PARSER = new DeleteCommandParser();
 
+    /**
+     * parser to parse the string input for `delete` operation
+     */
+    private static final FindCommandParser FIND_COMMAND_PARSER = new FindCommandParser();
+
     public static Form parseForm(String input) {
         input = StringUtil.trim(input);
         String[] args = input.split(" ");
@@ -73,6 +79,8 @@ public class ParserManager {
                 return UNMARK_COMMAND_PARSER;
             case DELETE_TASK:
                 return DELETE_COMMAND_PARSER;
+            case FIND_TASK:
+                return FIND_COMMAND_PARSER;
             case TODO:
                 return TODO_COMMAND_PARSER;
             case DEADLINE:
@@ -87,6 +95,7 @@ public class ParserManager {
     private interface Parser {
 
         Form parseForm(String input);
+
     }
 
     private static class DefaultCommandParser implements Parser {
@@ -152,6 +161,22 @@ public class ParserManager {
             }
 
             return new DeleteForm(input, CommandEnum.DELETE_TASK.getName(), index);
+        }
+    }
+
+    private static class FindCommandParser implements Parser {
+
+        private static final Pattern findClausePattern = Pattern.compile("find (.*)");
+
+        @Override
+        public Form parseForm(String input) {
+            Matcher matcher = findClausePattern.matcher(input);
+            if (!matcher.find()) {
+                throw new CommandArgsException("[find] command has invalid arguments, it should be in `find keyword` format");
+            }
+
+            String keyword = StringUtil.trim(matcher.group(1));
+            return new FindForm(input, CommandEnum.FIND_TASK.getName(), keyword);
         }
     }
 

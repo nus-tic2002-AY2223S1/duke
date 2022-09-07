@@ -139,6 +139,16 @@ public class TaskManager {
     }
 
     /**
+     * @description linear search for the description of task, check if it contains the given keyword
+     * @author Dex
+     * @date 2022/09/07
+     * @param keyword: keyword in the description of task
+     */
+    public List<Task> findTask(String keyword) {
+        return taskList.stream().filter(o -> o.getDescription().contains(keyword)).collect(Collectors.toList());
+    }
+
+    /**
      * @description append new task to task list
      * @author Dex
      * @date 2022/08/29

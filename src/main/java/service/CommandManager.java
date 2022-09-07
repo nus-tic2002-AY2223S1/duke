@@ -6,6 +6,7 @@ import service.command.AddTodoCommand;
 import service.command.Command;
 import service.command.DeleteTaskCommand;
 import service.command.ExitCommand;
+import service.command.FindTaskCommand;
 import service.command.ListTaskCommand;
 import service.command.MarkTaskCommand;
 import service.command.ShowCommand;
@@ -28,6 +29,7 @@ public class CommandManager {
         commandMap.put("mark", MarkTaskCommand.getInstance());
         commandMap.put("unmark", UnmarkTaskCommand.getInstance());
         commandMap.put("delete", DeleteTaskCommand.getInstance());
+        commandMap.put("find", FindTaskCommand.getInstance());
         commandMap.put("todo", AddTodoCommand.getInstance());
         commandMap.put("deadline", AddDeadlineCommand.getInstance());
         commandMap.put("event", AddEventCommand.getInstance());
