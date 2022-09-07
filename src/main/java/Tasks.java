@@ -9,7 +9,7 @@ public class Tasks{
 
     public void listTasks(){
         for(int i = 0; i < task_count; ++i){
-            System.out.println((i+1) + ". " + taskList[i].description);
+            System.out.println((i+1) + ". " + "[" +taskList[i].getStatusIcon() + "]" +" " + taskList[i].description);
         }
     }
 }
