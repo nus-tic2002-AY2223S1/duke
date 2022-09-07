@@ -26,7 +26,7 @@ public class Duke {
             }
             else {
                 Duke.addTasks(line);
-                Duke.echo(line);
+                System.out.println("added: " + line);
             }
         }
     }
