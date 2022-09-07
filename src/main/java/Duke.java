@@ -17,9 +17,17 @@ public class Duke {
 
         while(!line.equals("bye") ){
             line = in.nextLine();
-            Duke.echo(line);
-        }
 
-        Duke.exit();
+            if(line.equals("list")){
+                Duke.listTasks();
+            }
+            else if (line.equals("bye")) {
+                Duke.exit();
+            }
+            else {
+                Duke.addTasks(line);
+                Duke.echo(line);
+            }
+        }
     }
 }

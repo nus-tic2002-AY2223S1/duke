@@ -1,4 +1,4 @@
-class assistant{
+class assistant extends Tasks{
     //method
     public void greet() {
         System.out.println("Hello! I'm Duke. \nWhat can I do for you?");
