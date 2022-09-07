@@ -21,7 +21,7 @@ public class Duke {
         ui.displayGreeting();
         while (Constant.IS_RUNNING) {
             try {
-                Form form = ParserManager.parseForm(ui.getInput());
+                Form form = ParserManager.parseForm(ui.getDukeCommandInput());
                 Command command = CommandManager.getCommand(form.getCommand());
                 command.execute(form);
                 ui.displayLineBreak();

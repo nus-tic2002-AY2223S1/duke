@@ -43,6 +43,11 @@ public class Constant {
         public static final String TYPE_DEADLINE = "D";
 
         public static final String TYPE_EVENT = "E";
+
+
+        public static final String DESCRIPTION_FIELD = "description";
+
+        public static final String DONE_FIELD = "done";
     }
 
     /**

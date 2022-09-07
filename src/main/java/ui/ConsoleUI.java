@@ -90,7 +90,7 @@ public class ConsoleUI implements UI {
         displayLineBreak();
     }
 
-    public String getInput() {
+    public String getDukeCommandInput() {
         System.out.print("~@duke >>> ");
         return scanner.nextLine();
     }

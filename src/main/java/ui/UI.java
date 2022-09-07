@@ -37,5 +37,5 @@ public interface UI {
      * @author Dex
      * @date 2022/08/31
      */
-    String getInput();
+    String getDukeCommandInput();
 }
