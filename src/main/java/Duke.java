@@ -1,9 +1,9 @@
 import java.util.Scanner;
-import java.util.Arrays;
+
 public class Duke {
     public static int filterTaskID(String line) {
         String[] words = line.split(" ");
-        int ID_num = Integer.valueOf(words[1]);
+        int ID_num = Integer.parseInt(words[1]);
         return ID_num - 1;
     }
     public static void main(String[] args) {
