@@ -4,20 +4,14 @@ import java.util.Scanner;
 public class Duke {
 
     public static String print(String msg){
-        return "\t  ________________________________\n"+msg+"\t  ________________________________\n";
+        return "________________________________\n"+msg+"________________________________\n";
 
 
     }
 
 
     public static void main(String[] args) {
-        String greet ="\t\t        Hello! I'm \n"
-                +"\t\t   ____        _        \n"
-                + "\t\t  |  _ \\ _   _| | _____ \n"
-                + "\t\t  | | | | | | | |/ / _ \\\n"
-                + "\t\t  | |_| | |_| |   <  __/\n"
-                + "\t\t  |____/ \\__,_|_|\\_\\___|\n"
-                +"\t\t   What can I do for you?\n";
+        String greet ="Hello! I'm Duke\nWhat can I do for you?\n";
 
         System.out.println(print(greet));
         Scanner in= new Scanner(System.in);
@@ -26,44 +20,78 @@ public class Duke {
 
         int countTask=0;
         String itemList="";
+	int indexS;
+	int index;
+	String detailTask;
+	String detail;	
 
         while(true) {
             String userInput = in.nextLine();
             String[] sentence=userInput.split(" ");
             int itemNo=999;
-            if(sentence.length>1){
-                itemNo=Integer.parseInt(sentence[1])-1;
-            }
+            
 
             switch (sentence[0]) {
                 case "bye":
-                    tempMsg = "\t  Bye. Hope to see you again soon!\n";
+                    tempMsg = "Bye. Hope to see you again soon!\n";
                     System.out.println(print(tempMsg));
                     return;
 
             case "list":
                 for (int i = 0; i < countTask; i++) {
-                    itemList += "\t  " + (i + 1) + ".["+task[i].getStatusIcon()+"] " + task[i].getTask() + "\n";
-
+                    //itemList += "(i + 1) + ".["+task[i].getStatusIcon()+"] " + task[i].getTask() + "\n";
+		    itemList +=(i+1)+"."+task[i].toString();
                 }
                 System.out.println(print(itemList));
                 itemList = "";
                 break;
 
             case "mark":
+		itemNo=Integer.parseInt(sentence[1])-1;
                 task[itemNo].mark();
-                System.out.println(print("\t  Nice! I've marked this task as done:\n\t    ["+task[itemNo].getStatusIcon()+"] "+task[itemNo].getTask()+"\n"));
+                System.out.println(print("Nice! I've marked this task as done:\n ["+task[itemNo].getStatusIcon()+"] "+task[itemNo].getTask()+"\n"));
                 break;
 
             case "unmark":
+		itemNo=Integer.parseInt(sentence[1])-1;
                 task[itemNo].unmark();
-                System.out.println(print("\t   OK, I've marked this task as not done yet:\n\t    ["+task[itemNo].getStatusIcon()+"] "+task[itemNo].getTask()+"\n"));
-                    break;
+                System.out.println(print("OK, I've marked this task as not done yet:\n ["+task[itemNo].getStatusIcon()+"] "+task[itemNo].getTask()+"\n"));
+                break;
 
+	    case "deadline":
+		
+		index=userInput.indexOf('/');
+		indexS=userInput.indexOf(' ');
+		detail=userInput.substring(index+4);
+		detailTask=userInput.substring(indexS,index-1);
+		task[countTask]=new Deadline(detailTask,detail);		
+	
+		System.out.println(print(task[countTask].encapTask(task[countTask].toString(),countTask+1)));
+		countTask++;
+		break;
+	    
+            case "todo":
+		indexS=userInput.indexOf(' ');
+		detailTask=userInput.substring(indexS);
+		task[countTask]=new Todo(detailTask);
+		
+		System.out.println(print(task[countTask].encapTask(task[countTask].toString(),countTask+1)));
+		countTask++;
+		break;
+
+	    case "event":
+		
+		index=userInput.indexOf('/');
+		indexS=userInput.indexOf(' ');
+		detail=userInput.substring(index+4);
+		detailTask=userInput.substring(indexS,index-1);
+		task[countTask]=new Event(detailTask,detail);		
+	
+		System.out.println(print(task[countTask].encapTask(task[countTask].toString(),countTask+1)));
+		countTask++;
+		break;	
+	
             default:
-                task[countTask]=new Task(userInput);
-                countTask++;
-                System.out.println(print("\t  added: " + userInput + "\n"));
                 break;
 
 
