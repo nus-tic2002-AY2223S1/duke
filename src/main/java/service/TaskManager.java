@@ -7,6 +7,8 @@ import entity.Deadline;
 import entity.Event;
 import entity.Task;
 import entity.Todo;
+import util.DateUtil;
+import util.ExceptionUtil;
 import util.FileUtil;
 import util.StringUtil;
 
@@ -61,20 +63,41 @@ public class TaskManager {
             return;
         }
 
+        // parse to task instance, skip corrupted data
         List<String> list = StringUtil.stringToList(content, "\n");
-        list.stream().map(JSON::parseObject).filter(Objects::nonNull).map(o -> {
-            String type = StringUtil.trim(o.getString("type"));
+        list.stream().map(this::parseToJsonObj)
+                .filter(Objects::nonNull)
+                .map(this::parseToTask)
+                .filter(Objects::nonNull)
+                .forEach(taskList::add);
+    }
+
+    private JSONObject parseToJsonObj(String json) {
+        try {
+            return JSON.parseObject(json);
+        } catch (Exception exception) {
+            ExceptionUtil.getStackTraceAsString(exception);
+            return null;
+        }
+    }
+
+    private Task parseToTask(JSONObject jsonObject) {
+        try {
+            String type = StringUtil.trim(jsonObject.getString("type"));
             switch (type) {
                 case "E":
-                    return parseEventTask(o);
+                    return parseEventTask(jsonObject);
                 case "T":
-                    return parseTodoTask(o);
+                    return parseTodoTask(jsonObject);
                 case "D":
-                    return parseDeadlineTask(o);
+                    return parseDeadlineTask(jsonObject);
                 default:
-                    return parseTask(o);
+                    return parseTask(jsonObject);
             }
-        }).forEach(taskList::add);
+        } catch (Exception exception) {
+            ExceptionUtil.getStackTraceAsString(exception);
+            return null;
+        }
     }
 
     private Task parseTask(JSONObject jsonObject) {
