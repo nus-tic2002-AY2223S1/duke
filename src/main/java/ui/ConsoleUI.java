@@ -2,17 +2,15 @@ package ui;
 
 import constant.Constant;
 import util.ExceptionUtil;
+import util.InputUtil;
 import util.StringUtil;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ConsoleUI implements UI {
-
-    private final Scanner scanner = new Scanner(System.in);
 
     private int maxLineLength = 0;
 
@@ -90,6 +88,6 @@ public class ConsoleUI implements UI {
 
     public String getDukeCommandInput() {
         System.out.print("~@duke >>> ");
-        return scanner.nextLine();
+        return InputUtil.getInputString();
     }
 }
