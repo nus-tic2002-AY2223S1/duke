@@ -2,6 +2,7 @@ package service.command;
 
 import entity.Task;
 import form.Form;
+import pool.AsyncExecutor;
 
 /**
  * @description singleton class
@@ -31,5 +32,6 @@ public class AddTaskCommand extends Command {
         taskManager.addTask(task);
         System.out.println("Process to add a new task ...");
         System.out.printf("Task [%s] is added!%n", form.getMetaData());
+        AsyncExecutor.execute(() -> taskManager.persistTask());
     }
 }

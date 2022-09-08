@@ -153,10 +153,11 @@ public class TaskManager {
 
     /**
      * @description write task list data into hard disk
+     * method is called in daemon thread, resource modification can happen concurrently
      * @author Dex
      * @date 2022/08/29
      */
-    public void persistTask() {
+    public synchronized void persistTask() {
         String content = taskList.stream().map(o -> JSON.toJSONStringWithDateFormat(o, Constant.Time.INPUT_FORMAT)).collect(Collectors.joining("\n"));
         FileUtil.writeStringToFile(new File(SOURCE_FILE_PATH), content);
     }

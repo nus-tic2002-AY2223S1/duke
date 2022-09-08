@@ -3,6 +3,7 @@ package service.command;
 import entity.Event;
 import form.EventForm;
 import form.Form;
+import pool.AsyncExecutor;
 
 /**
  * @description singleton class
@@ -32,5 +33,6 @@ public class AddEventCommand extends Command {
         Event event = new Event(eventForm.getDescription(), eventForm.getStartTime(), eventForm.getEndTime());
         taskManager.addTask(event);
         System.out.printf("Event [%s] is added!%n", eventForm.getDescription());
+        AsyncExecutor.execute(() -> taskManager.persistTask());
     }
 }

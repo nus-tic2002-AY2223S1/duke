@@ -7,6 +7,7 @@ import entity.Task;
 import exception.CommandArgsException;
 import form.Form;
 import form.RescheduleForm;
+import pool.AsyncExecutor;
 import util.DateUtil;
 import util.InputUtil;
 
@@ -69,6 +70,7 @@ public class RescheduleTaskCommand extends Command {
         // print message
         System.out.println("OK, I've rescheduled task as follows:");
         System.out.println(task);
+        AsyncExecutor.execute(() -> taskManager.persistTask());
     }
 
     private void setNewScheduleForDeadline(Task task) {

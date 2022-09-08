@@ -1,8 +1,9 @@
-{"description":"task1","done":false,"type":"T"}
+{"description":"task1","done":true,"type":"T"}
 {"by":"2030-01-01 00:00","description":"task2","done":false,"type":"D"}
 {"description":"task3","done":false,"endTime":"2032-01-01 12:30","startTime":"2031-01-01 00:00","type":"E"}
 {"description":"task1","done":false,"type":"T"}
-{"description":"task2","done":false,"type":"T"}
 {"by":"2000-01-01 10:00","description":"task3","done":false,"type":"D"}
 {"description":"task123133","done":false,"endTime":"2020-12-31 00:30","startTime":"2000-01-01 00:00","type":"E"}
-{"description":"abcqwe","done":false,"type":"T"}
+{"description":"new task","done":false,"type":"T"}
+{"by":"2008-01-30 20:30","description":"new deadline","done":false,"type":"D"}
+{"description":"new event","done":false,"endTime":"2020-11-01 00:00","startTime":"2000-10-01 00:00","type":"E"}

@@ -3,6 +3,7 @@ package service.command;
 import entity.Deadline;
 import form.DeadlineForm;
 import form.Form;
+import pool.AsyncExecutor;
 
 /**
  * @description singleton class
@@ -32,5 +33,6 @@ public class AddDeadlineCommand extends Command {
         Deadline deadline = new Deadline(deadlineForm.getDescription(), deadlineForm.getBy());
         taskManager.addTask(deadline);
         System.out.printf("Deadline [%s] is added!%n", deadlineForm.getDescription());
+        AsyncExecutor.execute(() -> taskManager.persistTask());
     }
 }

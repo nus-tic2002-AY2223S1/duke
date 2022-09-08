@@ -3,6 +3,7 @@ package service.command;
 import entity.Todo;
 import form.Form;
 import form.TodoForm;
+import pool.AsyncExecutor;
 
 /**
  * @description singleton class
@@ -32,5 +33,6 @@ public class AddTodoCommand extends Command {
         Todo todo = new Todo(todoForm.getDescription());
         taskManager.addTask(todo);
         System.out.printf("Todo [%s] is added!%n", todoForm.getDescription());
+        AsyncExecutor.execute(() -> taskManager.persistTask());
     }
 }

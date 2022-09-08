@@ -4,6 +4,7 @@ import entity.Task;
 import form.Form;
 import form.MarkingForm;
 import exception.CommandArgsException;
+import pool.AsyncExecutor;
 
 /**
  * @description singleton class
@@ -49,5 +50,6 @@ public class UnmarkTaskCommand extends Command {
         // print message
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(task);
+        AsyncExecutor.execute(() -> taskManager.persistTask());
     }
 }

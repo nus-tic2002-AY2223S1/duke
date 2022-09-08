@@ -4,6 +4,7 @@ import entity.Task;
 import exception.CommandArgsException;
 import form.DeleteForm;
 import form.Form;
+import pool.AsyncExecutor;
 
 /**
  * @description singleton class
@@ -52,5 +53,6 @@ public class DeleteTaskCommand extends Command {
         System.out.println("Noted. I've removed this task:");
         System.out.println(task.toString());
         System.out.printf("Now you have %d tasks in the list%n", taskManager.getTaskSize());
+        AsyncExecutor.execute(() -> taskManager.persistTask());
     }
 }

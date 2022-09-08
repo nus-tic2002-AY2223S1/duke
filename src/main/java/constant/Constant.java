@@ -8,6 +8,8 @@ public class Constant {
 
     public static final boolean IS_RUNNING = true;
 
+    public static final int MAX_THREAD = 2;
+
     public static final String STARTING_LOGO =
     " .----------------.  .----------------.  .----------------.  .----------------. \n" +
     "| .--------------. || .--------------. || .--------------. || .--------------. |\n" +
