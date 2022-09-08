@@ -18,6 +18,7 @@ public enum CommandEnum {
     TODO("todo", "create a todo task, syntax: `todo description`"),
     FIND_TASK("find", "search the task by given keyword, syntax: `find keyword`"),
     DEADLINE("deadline", "create a deadline task, syntax: `deadline description / by deadlineTime(yyyy-MM-dd HH:mm)`"),
+    RESCHEDULE("reschedule", "reschedule the task by given index, syntax: `reschedule index`"),
     EVENT("event", "create a event task, syntax: `event description / at startTime(yyyy-MM-dd HH:mm) & endTime(yyyy-MM-dd HH:mm)`"),
     EXIT("bye", "exit program, syntax: `bye`");
 

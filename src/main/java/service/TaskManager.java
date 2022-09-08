@@ -117,7 +117,7 @@ public class TaskManager {
     private Task parseDeadlineTask(JSONObject jsonObject) {
         // convert string to localtime
         String by = StringUtil.trim(jsonObject.getString("by"));
-        LocalDateTime time = LocalDateTime.parse(by, DateTimeFormatter.ofPattern(Constant.Time.INPUT_FORMAT));
+        LocalDateTime time = DateUtil.parse(by, Constant.Time.INPUT_FORMAT);
 
         // create deadline instance
         Deadline deadline = new Deadline(jsonObject.getString(Constant.Task.DESCRIPTION_FIELD));
@@ -130,8 +130,8 @@ public class TaskManager {
         // convert string to localtime
         String startTimeStr = StringUtil.trim(jsonObject.getString("startTime"));
         String endTimeStr = StringUtil.trim(jsonObject.getString("endTime"));
-        LocalDateTime startTime = LocalDateTime.parse(startTimeStr, DateTimeFormatter.ofPattern(Constant.Time.INPUT_FORMAT));
-        LocalDateTime endTime = LocalDateTime.parse(endTimeStr, DateTimeFormatter.ofPattern(Constant.Time.INPUT_FORMAT));
+        LocalDateTime startTime = DateUtil.parse(startTimeStr, Constant.Time.INPUT_FORMAT);
+        LocalDateTime endTime = DateUtil.parse(endTimeStr, Constant.Time.INPUT_FORMAT);
 
         // create event instance
         Event event = new Event(jsonObject.getString(Constant.Task.DESCRIPTION_FIELD));

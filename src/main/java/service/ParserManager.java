@@ -8,14 +8,14 @@ import form.EventForm;
 import form.FindForm;
 import form.Form;
 import form.MarkingForm;
+import form.RescheduleForm;
 import form.TodoForm;
 import exception.CommandArgsException;
 import util.DataUtil;
+import util.DateUtil;
 import util.StringUtil;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,6 +63,11 @@ public class ParserManager {
      */
     private static final FindCommandParser FIND_COMMAND_PARSER = new FindCommandParser();
 
+    /**
+     * parser to parse the string input for `reschedule` operation
+     */
+    private static final RescheduleCommandParser RESCHEDULE_COMMAND_PARSER = new RescheduleCommandParser();
+
     public static Form parseForm(String input) {
         input = StringUtil.trim(input);
         String[] args = input.split(" ");
@@ -87,6 +92,8 @@ public class ParserManager {
                 return DEADLINE_COMMAND_PARSER;
             case EVENT:
                 return EVENT_COMMAND_PARSER;
+            case RESCHEDULE:
+                return RESCHEDULE_COMMAND_PARSER;
             default:
                 return DEFAULT_COMMAND_PARSER;
         }
@@ -180,6 +187,25 @@ public class ParserManager {
         }
     }
 
+    private static class RescheduleCommandParser implements Parser {
+
+        @Override
+        public Form parseForm(String input) {
+            String[] args = input.split(" ");
+            if (args.length != 2) {
+                throw new CommandArgsException("[reschedule] command has invalid arguments, it should be in `reschedule index` format");
+            }
+
+            // check index
+            int index = DataUtil.toInteger(args[1]);
+            if (index < 1) {
+                throw new CommandArgsException("given index is invalid, it should be more than 0");
+            }
+
+            return new RescheduleForm(input, CommandEnum.RESCHEDULE.getName(), index);
+        }
+    }
+
     private static class TodoCommandParser implements Parser {
 
         private static final Pattern todoClausePattern = Pattern.compile("todo (.*)");
@@ -210,16 +236,8 @@ public class ParserManager {
             String description = StringUtil.trim(matcher.group(1));
             String param = StringUtil.trim(matcher.group(2));
             DeadlineForm deadlineForm = new DeadlineForm(input, CommandEnum.DEADLINE.getName(), description);
-            deadlineForm.setBy(parseDate(param));
+            deadlineForm.setBy(DateUtil.parse(param, Constant.Time.INPUT_FORMAT));
             return deadlineForm;
-        }
-
-        private LocalDateTime parseDate(String param) {
-            try {
-                return LocalDateTime.parse(param, DateTimeFormatter.ofPattern(Constant.Time.INPUT_FORMAT));
-            } catch (DateTimeParseException e) {
-                throw new CommandArgsException("deadlineTime format invalid, it should be in (yyyy-MM-dd HH:mm) format");
-            }
         }
     }
 
@@ -249,19 +267,14 @@ public class ParserManager {
 
             String startTimeInput = StringUtil.trim(args[0]);
             String endTineInput = StringUtil.trim(args[1]);
-            try {
-                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(Constant.Time.INPUT_FORMAT);
-                LocalDateTime startTime = LocalDateTime.parse(startTimeInput, dateTimeFormatter);
-                LocalDateTime endTime = LocalDateTime.parse(endTineInput, dateTimeFormatter);
-                // check time validity
-                if (startTime.isAfter(endTime)) {
-                    throw new CommandArgsException("input time value is incorrect, startTime cannot be greater than endTime");
-                }
-                eventForm.setStartTime(startTime);
-                eventForm.setEndTime(endTime);
-            } catch (DateTimeParseException exception) {
-                throw new CommandArgsException("startTime or endTime format invalid, it should be in (yyyy-MM-dd HH:mm) format");
+            LocalDateTime startTime = DateUtil.parse(startTimeInput, Constant.Time.INPUT_FORMAT);
+            LocalDateTime endTime = DateUtil.parse(endTineInput, Constant.Time.INPUT_FORMAT);
+            // check time validity
+            if (startTime.isAfter(endTime)) {
+                throw new CommandArgsException("input time value is incorrect, startTime cannot be greater than endTime");
             }
+            eventForm.setStartTime(startTime);
+            eventForm.setEndTime(endTime);
         }
     }
 }
