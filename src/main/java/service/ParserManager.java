@@ -265,6 +265,7 @@ public class ParserManager {
                 throw new CommandArgsException("event must specify the startTime and endTime");
             }
 
+            // get time within a specific period
             String startTimeInput = StringUtil.trim(args[0]);
             String endTineInput = StringUtil.trim(args[1]);
             LocalDateTime startTime = DateUtil.parse(startTimeInput, Constant.Time.INPUT_FORMAT);
