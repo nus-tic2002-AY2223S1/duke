@@ -26,4 +26,9 @@ public class Task {
     public void unMarkDone() {
         this.isDone = false;
     }
+
+    // Return String
+    public String toString() {
+         return "[" + this.getStatusIcon() + "] " + this.getDescription();
+    }
 }
