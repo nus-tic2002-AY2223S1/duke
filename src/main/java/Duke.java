@@ -10,6 +10,9 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
+        System.out.println("    ---------------------------------------");
+        System.out.println("     Hello! I'm Duke\n" +
+                "     What can I do for you?");
 
         List<String> tasks = new ArrayList<>();
         while (true){
@@ -17,13 +20,15 @@ public class Duke {
             Scanner s = new Scanner(System.in);
             text = s.nextLine();
             System.out.println("    ---------------------------------------");
-            System.out.println("    " + text);
+
             if(text.equals("list")){
                 for (String task : tasks) {
-                    System.out.println("    " + task);
+                    int index = tasks.indexOf(task) + 1;
+                    System.out.println("    " + index + ". " +task);
                 }
             }
             if(!text.equals("list") && !text.equals("bye")){
+                System.out.println("    " + "added: " + text);
                 tasks.add(text);
             }
             if (text.equals("bye")) {
