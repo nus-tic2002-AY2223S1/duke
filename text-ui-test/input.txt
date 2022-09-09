@@ -1,1 +1,44 @@
-test
+======== happy path ========
+help
+list
+todo read book
+mark 1
+deadline return book /by June 6th
+event project meeting /at Aug 6th 2-4pm
+todo join sports club
+mark 4
+todo borrow book
+deadline return book /by Sunday
+event project meeting /at Mon 2-4pm
+list
+
+======== unhappy path todo ========
+todo
+todo
+
+======== unhappy path deadline ========
+deadline
+deadline /by
+deadline      /by
+deadline asdf /by
+deadline /by asdfsdf
+deadline     /by asdfsdfdsf
+deadline asdf /by asdf /by asdf
+
+======== unhappy path event ========
+event
+event /at
+event      /at
+event asdf /at
+event /at asdfsdf
+event     /at asdfsdfdsf
+event asdf /at asdf /at asdf
+
+
+
+
+
+
+
+
+bye

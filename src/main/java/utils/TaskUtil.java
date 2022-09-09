@@ -16,11 +16,10 @@ public class TaskUtil {
             return Optional.of(taskList.get(num));
         } catch (IndexOutOfBoundsException i) {
             speak(MARK_UNMARK_NUMBER_OUT_OF_RANGE_ERR_MSG);
-            return Optional.empty();
         } catch (Exception e) {
             speak(MARK_UNMARK_TASK_ERR_MSG);
-            return Optional.empty();
         }
+        return Optional.empty();
     }
 
     public static String getFirstWord(String sentence) {

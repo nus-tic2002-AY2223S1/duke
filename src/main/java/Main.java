@@ -10,7 +10,7 @@ import static utils.CommonStrings.GOODBYE;
 import static utils.CommonStrings.GREETING;
 import static utils.CommonStrings.HELP;
 import static utils.CommonStrings.LOGO;
-import static utils.ErrorMessages.WHAT_ARE_YOU_DOING_ERR_MSG;
+import static utils.ErrorMessages.whatAreYouDoingErrMsg;
 import static utils.Mouth.speak;
 import static utils.TaskUtil.getFirstWord;
 
@@ -53,7 +53,7 @@ public class Main {
                     speak(HELP);
                     break;
                 default:
-                    speak(WHAT_ARE_YOU_DOING_ERR_MSG);
+                    speak(whatAreYouDoingErrMsg(userInput));
             }
         }
         speak(GOODBYE);

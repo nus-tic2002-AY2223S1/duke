@@ -9,5 +9,164 @@ ________                 .__  __  .__
      What's your problem?
     _____________________________________________________________
     _____________________________________________________________
-     ??? You aren't making any sense. Type "help" and hit enter if you want help.
+     Everybody needs help sometimes. Just enter "help" :D
+     This is what you entered:
+     ======== happy path ========
+    _____________________________________________________________
+    _____________________________________________________________
+     commands:
+     help: ask and you shall receive
+     list: list all tasks
+     todo <task>: create a new todo
+     deadline <task> /by <deadline>: create a task with a deadline
+     event <task> /at <datetime>: create an event happening at some date and time
+     mark <number>: mark task <number> as completed
+     unmark <number>: mark task <number> as not completed
+    _____________________________________________________________
+    _____________________________________________________________
+     Task List is Empty
+    _____________________________________________________________
+    _____________________________________________________________
+     Got it. I've added this task:
+     [T][ ] read book
+     Now you have 1 tasks in the list.
+    _____________________________________________________________
+    _____________________________________________________________
+     OK, I've marked this task as done:
+     [T][X] read book
+    _____________________________________________________________
+    _____________________________________________________________
+     Got it. I've added this task:
+     [D][ ] return book (by: June 6th)
+     Now you have 2 tasks in the list.
+    _____________________________________________________________
+    _____________________________________________________________
+     Got it. I've added this task:
+     [E][ ] project meeting (at: Aug 6th 2-4pm)
+     Now you have 3 tasks in the list.
+    _____________________________________________________________
+    _____________________________________________________________
+     Got it. I've added this task:
+     [T][ ] join sports club
+     Now you have 4 tasks in the list.
+    _____________________________________________________________
+    _____________________________________________________________
+     OK, I've marked this task as done:
+     [T][X] join sports club
+    _____________________________________________________________
+    _____________________________________________________________
+     Got it. I've added this task:
+     [T][ ] borrow book
+     Now you have 5 tasks in the list.
+    _____________________________________________________________
+    _____________________________________________________________
+     Got it. I've added this task:
+     [D][ ] return book (by: Sunday)
+     Now you have 6 tasks in the list.
+    _____________________________________________________________
+    _____________________________________________________________
+     Got it. I've added this task:
+     [E][ ] project meeting (at: Mon 2-4pm)
+     Now you have 7 tasks in the list.
+    _____________________________________________________________
+    _____________________________________________________________
+     1: [T][X] read book
+     2: [D][ ] return book (by: June 6th)
+     3: [E][ ] project meeting (at: Aug 6th 2-4pm)
+     4: [T][X] join sports club
+     5: [T][ ] borrow book
+     6: [D][ ] return book (by: Sunday)
+     7: [E][ ] project meeting (at: Mon 2-4pm)
+    _____________________________________________________________
+    _____________________________________________________________
+     Everybody needs help sometimes. Just enter "help" :D
+     This is what you entered:
+     ======== unhappy path todo ========
+    _____________________________________________________________
+    _____________________________________________________________
+     TODO was NOT created successfully
+     TODO must have a description
+    _____________________________________________________________
+    _____________________________________________________________
+     TODO was NOT created successfully
+     TODO must have a description
+    _____________________________________________________________
+    _____________________________________________________________
+     Everybody needs help sometimes. Just enter "help" :D
+     This is what you entered:
+     ======== unhappy path deadline ========
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE must have "/by"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE must have description before "/by"
+     DEADLINE must have due date after "/by"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE must have description before "/by"
+     DEADLINE must have due date after "/by"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE must have description before "/by"
+     DEADLINE must have due date after "/by"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE must have description before "/by"
+     DEADLINE must have due date after "/by"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE must have description before "/by"
+     DEADLINE must have due date after "/by"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE must have ONLY ONE "/by"
+    _____________________________________________________________
+    _____________________________________________________________
+     Everybody needs help sometimes. Just enter "help" :D
+     This is what you entered:
+     ======== unhappy path event ========
+    _____________________________________________________________
+    _____________________________________________________________
+     EVENT was NOT created successfully
+     EVENT must have "/at"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     EVENT must have description before "/at"
+     EVENT must have duration after "/at"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     EVENT must have description before "/at"
+     EVENT must have duration after "/at"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     EVENT must have description before "/at"
+     EVENT must have duration after "/at"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     EVENT must have description before "/at"
+     EVENT must have duration after "/at"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     EVENT must have description before "/at"
+     EVENT must have duration after "/at"
+    _____________________________________________________________
+    _____________________________________________________________
+     EVENT was NOT created successfully
+     EVENT must have ONLY ONE "/at"
+    _____________________________________________________________
+    _____________________________________________________________
+     zzz stop wasting my time
     _____________________________________________________________

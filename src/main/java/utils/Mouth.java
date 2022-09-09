@@ -18,7 +18,7 @@ public class Mouth {
     public static void speak(List<Task> tasks) {
         System.out.println(UNDERSCORES);
         if (tasks.isEmpty())
-            System.out.println("Task List is Empty");
+            System.out.println(FIVE_SPACE + "Task List is Empty");
         for (int i = 0; i < tasks.size(); i++) {
             Task t = tasks.get(i);
             System.out.println(FIVE_SPACE + (i+1) + ": " + t);

@@ -31,7 +31,9 @@ public class ErrorMessages {
             CREATE_DEADLINE_ERR_MSG + "\n" +
                     "EVENT must have description before \"/at\"\n" +
                     "EVENT must have duration after \"/at\"";
-    public static final String WHAT_ARE_YOU_DOING_ERR_MSG =
-            "??? You aren't making any sense. Type \"help\" and hit enter if you want help.";
+    public static String whatAreYouDoingErrMsg(String input) {
+        return "Everybody needs help sometimes. Just enter \"help\" :D\n" +
+                "This is what you entered:\n" + input;
+    }
 
 }

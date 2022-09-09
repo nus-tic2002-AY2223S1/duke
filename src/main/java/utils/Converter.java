@@ -82,7 +82,7 @@ public class Converter {
 
         if (!sentence.contains(splitter)) throw new MissingSlashCommandException();
         try {
-            String[] op = sentence.split(splitter);
+            String[] op = sentence.split(" " + splitter + " ");
             if (op.length > 2) throw new MoreThanOneSlashCommandException();
             if (isNullOrEmpty(op[0]) || isNullOrEmpty(op[1])) throw new MissingSlashCommandDetailsException();
             return op;
