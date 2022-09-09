@@ -1,18 +1,12 @@
 package domain.task;
 
-import exceptions.EmptyDescriptionException;
-
-import static utils.TaskUtil.isNullOrEmpty;
-
 public class Task {
     private static int count = 0;
     protected int index;
     protected String description;
     protected boolean isDone;
 
-    public Task(String description) throws EmptyDescriptionException {
-        if (isNullOrEmpty(description))
-            throw new EmptyDescriptionException();
+    public Task(String description) {
         this.description = description;
         this.isDone = false;
         count++;

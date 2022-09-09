@@ -32,6 +32,7 @@ public class Converter {
     public static Optional<Todo> getTodoFromUserInput(String userInput) {
         String description = removeFirstWord(userInput);
         try {
+            if (isNullOrEmpty(description)) throw new EmptyDescriptionException();
             return Optional.of(new Todo(description));
         } catch (EmptyDescriptionException e) {
             speak(CREATE_TODO_NO_DESCRIPTION_ERR_MSG);
