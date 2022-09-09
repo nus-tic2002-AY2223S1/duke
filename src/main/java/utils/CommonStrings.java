@@ -17,9 +17,12 @@ public class CommonStrings {
     public static final String HELP = "commands:\n" +
             "help: ask and you shall receive\n" +
             "list: list all tasks\n" +
-            "mark 2: mark task no 2 as completed\n" +
-            "unmark 2: mark task no 2 as not completed\n" +
             "todo <task>: create a new todo\n" +
             "deadline <task> /by <deadline>: create a task with a deadline\n" +
-            "event <task> /at <datetime>: create an event happening at some date and time";
+            "event <task> /at <datetime>: create an event happening at some date and time\n" +
+            "mark <number>: mark task <number> as completed\n" +
+            "unmark <number>: mark task <number> as not completed";
+
+    public static final String AT = "/at";
+    public static final String BY = "/by";
 }

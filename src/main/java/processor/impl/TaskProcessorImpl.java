@@ -7,7 +7,6 @@ import java.util.List;
 
 import static utils.Converter.getDeadlineFromUserInput;
 import static utils.Converter.getEventFromUserInput;
-import static utils.Converter.getTaskFromUserInput;
 import static utils.Converter.getTodoFromUserInput;
 import static utils.Messages.addedTaskMsg;
 import static utils.Messages.alreadyDoneMsg;
@@ -43,31 +42,21 @@ public class TaskProcessorImpl implements TaskProcessor {
         });
     }
 
-    public void addTask(String userInput, List<Task> taskList) {
-        getTaskFromUserInput(userInput).ifPresent(task -> {
-            taskList.add(task);
-            speak(addedTaskMsg(task));
-        });
-    }
 
     public void addTodo(String userInput, List<Task> taskList) {
-        getTodoFromUserInput(userInput).ifPresent(todo -> {
-            taskList.add(todo);
-            speak(addedTaskMsg(todo));
-        });
+        getTodoFromUserInput(userInput).ifPresent(todo -> addTask(todo, taskList));
     }
 
     public void addDeadline(String userInput, List<Task> taskList) {
-        getDeadlineFromUserInput(userInput).ifPresent(deadline -> {
-            taskList.add(deadline);
-            speak(addedTaskMsg(deadline));
-        });
+        getDeadlineFromUserInput(userInput).ifPresent(deadline -> addTask(deadline, taskList));
     }
 
     public void addEvent(String userInput, List<Task> taskList) {
-        getEventFromUserInput(userInput).ifPresent(event -> {
-            taskList.add(event);
-            speak(addedTaskMsg(event));
-        });
+        getEventFromUserInput(userInput).ifPresent(event -> addTask(event, taskList));
+    }
+
+    private void addTask(Task task, List<Task> taskList) {
+        taskList.add(task);
+        speak(addedTaskMsg(task));
     }
 }

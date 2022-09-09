@@ -10,6 +10,7 @@ import static utils.CommonStrings.GOODBYE;
 import static utils.CommonStrings.GREETING;
 import static utils.CommonStrings.HELP;
 import static utils.CommonStrings.LOGO;
+import static utils.ErrorMessages.WHAT_ARE_YOU_DOING_ERR_MSG;
 import static utils.Mouth.speak;
 import static utils.TaskUtil.getFirstWord;
 
@@ -28,13 +29,11 @@ public class Main {
             // edge case where many blank \n are input by user
             if (userInput.isBlank())
                 continue;
-            if (userInput.equals("list")) {
-                // for edge case where list is the first word of the task description
-                speak(taskList);
-                continue;
-            }
             String command = getFirstWord(userInput);
             switch (command) {
+                case "list":
+                    speak(taskList);
+                    break;
                 case "unmark":
                     taskProcessor.unmarkTask(userInput, taskList);
                     break;
@@ -54,8 +53,7 @@ public class Main {
                     speak(HELP);
                     break;
                 default:
-                    taskProcessor.addTask(userInput, taskList);
-                    break;
+                    speak(WHAT_ARE_YOU_DOING_ERR_MSG);
             }
         }
         speak(GOODBYE);

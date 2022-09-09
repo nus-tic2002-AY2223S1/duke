@@ -9,8 +9,6 @@ public interface TaskProcessor {
 
     void unmarkTask(String userInput, List<Task> taskList);
 
-    void addTask(String userInput, List<Task> taskList);
-
     void addTodo(String userInput, List<Task> taskList);
 
     void addDeadline(String userInput, List<Task> taskList);
