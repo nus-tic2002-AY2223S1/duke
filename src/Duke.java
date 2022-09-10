@@ -28,7 +28,14 @@ public class Duke {
     }
 
     public static void storeWish(String wish){
-        Task t = new Task(wish); //Task t = new Task("read book");
+        Task t;
+        if (wish.contains("/by")){
+            t = new Deadline(wish); //Task t = new Task("read book");
+        } else if (wish.contains("/at")){
+            t = new Event(wish); //Task t = new Task("read book");
+        } else {
+            t = new Todo(wish); //Task t = new Task("read book");
+        }
         wishList.add(t);
         System.out.print("Dobby has taken note of your wish: " + wish + ". ");
         printWishList();
@@ -46,14 +53,14 @@ public class Duke {
         //wishList.remove(idx); // Remove wish that is currently stored at this index
         int wNumber = Integer.parseInt(wish);
         wishList.remove(wNumber-1);
-        System.out.print("Dobby has striked off " + wish + " from your wish list. ");
+        System.out.print("Dobby has struck off " + wish + " from your wish list. ");
         printWishList();
     }
 
     public static void printWishList(){
         System.out.println("Here's your wish list that Dobby kept as a secret:");
         for (int i = 0; i < wishList.size(); i++) {
-            System.out.println("[" + wishList.get(i).getStatusIcon() + "] " + wishList.get(i).getTask());
+            System.out.println( "[" + wishList.get(i).getTaskType() + "][" + wishList.get(i).getStatusIcon() + "] " + wishList.get(i).getTask());
         }
     }
 
