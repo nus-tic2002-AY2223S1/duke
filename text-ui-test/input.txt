@@ -1,0 +1,8 @@
+read
+meeting
+work
+mark read
+unmark meeting
+list
+sleep
+bye
