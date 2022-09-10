@@ -1,7 +1,18 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+								 ____        _        
+								|  _ \ _   _| | _____ 
+								| | | | | | | |/ / _ \
+								| |_| | |_| |   <  __/
+								|____/ \__,_|_|\_\___|
 
+Hello! I'm Duke! How can I help you?
+			-------------------------------------------------------------------
+			| S/N | Command       | Description              | Usage Example  |
+			|-----|---------------|--------------------------|----------------|
+			| 1   | <task>        | Add task to task list    | taskABC        |
+			| 2   | list          | List tasks in task list  | list           |
+			| 3   | mark <task>   | Mark task in task list   | mark taskABC   |
+			| 4   | unmark <task> | Unmark task in task list | unmark taskABC |
+			| 5   | bye           | Exit duke bot            | bye            |
+			-------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+bot@duke:~$ 
