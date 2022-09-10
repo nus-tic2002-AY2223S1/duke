@@ -25,9 +25,13 @@ public class MarkCommand extends Command {
         printLine();
 
         String input = getSubstringFromSentence(MARK_COMMAND, chat.getInput());
+
+        if (chat.getTaskList().contains(input)) {
+            printFormatString(NOT_EXIST_TASK_ERROR_MSG, input);
+        }
+
         chat.getTaskList().forEach(task -> {
             if (!task.getDescription().equals(input)) {
-                printFormatString(NOT_EXIST_TASK_ERROR_MSG, input);
                 return;
             }
 
