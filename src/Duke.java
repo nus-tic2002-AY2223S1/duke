@@ -48,6 +48,13 @@ public class Duke {
         printWishList();
     }
 
+    public static void unmarkWish(String wish){ //mark as done
+        int wNumber = Integer.parseInt(wish);
+        (wishList.get(wNumber-1)).markAsNotDone();
+        System.out.print("Dobby has marked your wish as done");
+        printWishList();
+    }
+
     public static void removeWish(String wish){
         //int idx = wishList.indexOf(wish);
         //wishList.remove(idx); // Remove wish that is currently stored at this index
@@ -79,7 +86,11 @@ public class Duke {
             String w = substringHelper(wish);
             removeWish(w);
             return false;
-        } else if (wish.contains("mark")){ // e.g. i am done returning the book
+        } else if (wish.contains("unmark")) {
+            String w = substringHelper(wish);
+            unmarkWish(w);
+            return false;
+        }else if (wish.contains("mark")){ // e.g. i am done returning the book
             String w = substringHelper(wish);
             markWish(w);
             return false;
