@@ -14,7 +14,7 @@ public class CommonConstant {
 
     public static final String BYE_GREETING = "Bye! Hope to see you again soon!";
 
-    public static final String DASHES = new String(new char[90]).replace("\0", "-");
+    public static final String DASHES = new String(new char[120]).replace("\0", "-");
 
     public static final String DEADLINE_BY = "by: ";
 
@@ -23,21 +23,24 @@ public class CommonConstant {
     public static final String HELLO_GREETING = "Hello! I'm Duke! How can I help you?";
 
     public static final String INPUT_OPTIONS =
-            "\t\t\t-------------------------------------------------------------------\n" +
-            "\t\t\t| S/N | Command       | Description              | Usage Example  |\n" +
-            "\t\t\t|-----|---------------|--------------------------|----------------|\n" +
-            "\t\t\t| 1   | <task>        | Add task to task list    | taskABC        |\n" +
-            "\t\t\t| 2   | list          | List tasks in task list  | list           |\n" +
-            "\t\t\t| 3   | mark <task>   | Mark task in task list   | mark taskABC   |\n" +
-            "\t\t\t| 4   | unmark <task> | Unmark task in task list | unmark taskABC |\n" +
-            "\t\t\t| 5   | bye           | Exit duke bot            | bye            |\n" +
-            "\t\t\t-------------------------------------------------------------------";
+            "\t---------------------------------------------------------------------------------------------------------\n" +
+            "\t| S/N | Command                           | Description                   | Usage Example               |\n" +
+            "\t|-----|-----------------------------------|-------------------------------|-----------------------------|\n" +
+            "\t| 1   | <task>                            | Add task                      | taskABC                     |\n" +
+            "\t| 2   | deadline <task> /by <date & time> | Add deadline with date & time | deadline taskABC /by Sunday |\n" +
+            "\t| 3   | event <task> /at <date & time>    | Add event with date & time    | event taskABC /at Mon 2-4pm |\n" +
+            "\t| 4   | todo <task>                       | Add todo task                 | todo taskABC                |\n" +
+            "\t| 5   | list                              | List existing tasks           | list                        |\n" +
+            "\t| 6   | mark <task>                       | Mark specified task           | mark taskABC                |\n" +
+            "\t| 7   | unmark <task>                     | Unmark specified task         | unmark taskABC              |\n" +
+            "\t| 8   | bye                               | Exit duke bot                 | bye                         |\n" +
+            "\t---------------------------------------------------------------------------------------------------------";
 
-    public static final String LOGO = "\t\t\t\t\t\t\t\t ____        _        \n"
-            + "\t\t\t\t\t\t\t\t|  _ \\ _   _| | _____ \n"
-            + "\t\t\t\t\t\t\t\t| | | | | | | |/ / _ \\\n"
-            + "\t\t\t\t\t\t\t\t| |_| | |_| |   <  __/\n"
-            + "\t\t\t\t\t\t\t\t|____/ \\__,_|_|\\_\\___|\n";
+    public static final String LOGO = "\t\t\t\t\t\t\t\t\t ____        _        \n"
+            + "\t\t\t\t\t\t\t\t\t|  _ \\ _   _| | _____ \n"
+            + "\t\t\t\t\t\t\t\t\t| | | | | | | |/ / _ \\\n"
+            + "\t\t\t\t\t\t\t\t\t| |_| | |_| |   <  __/\n"
+            + "\t\t\t\t\t\t\t\t\t|____/ \\__,_|_|\\_\\___|\n";
 
     public static final String MARKED_TASK = "Nice! Task %s is successfully marked.";
 
