@@ -1,8 +1,10 @@
-read
-meeting
-work
+todo read
+event meeting /at Monday 2pm-3pm
+event work /at Monday to Friday
 mark read
+deadline do homework /by Sunday 2359
 unmark meeting
+mark meeting
 list
-sleep
+todo sleep
 bye

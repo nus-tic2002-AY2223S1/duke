@@ -10,4 +10,6 @@ public class ErrorMessage {
     public static final String TASK_LIST_EMPTY_ERROR_MSG = "Task list is empty.";
 
     public static final String UNMARKED_TASK_ERROR_MSG = "Task %s has already been unmarked.";
+
+    public static final String EXCEPTION_ERROR_MSG = "Caught exception: %s";
 }

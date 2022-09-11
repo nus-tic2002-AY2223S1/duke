@@ -1,9 +1,9 @@
 package model;
 
-import static common.constant.CommonConstant.MARKED_ICON;
+import static common.constant.SymbolConstant.CLOSE_SQ_BRACKET;
+import static common.constant.SymbolConstant.OPEN_SQ_BRACKET;
 import static common.constant.CommonConstant.SPACE;
-import static common.constant.CommonConstant.CLOSE_SQ_BRACKET;
-import static common.constant.CommonConstant.OPEN_SQ_BRACKET;
+import static common.constant.ModelConstant.MARKED_ICON;
 
 public class Task {
     protected String description;
@@ -12,6 +12,10 @@ public class Task {
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDescription() {
@@ -36,6 +40,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return OPEN_SQ_BRACKET + getStatusIcon() + CLOSE_SQ_BRACKET + description;
+        return OPEN_SQ_BRACKET + getStatusIcon() + CLOSE_SQ_BRACKET + SPACE + description;
     }
 }

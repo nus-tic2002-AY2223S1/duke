@@ -1,10 +1,6 @@
 package logic.parser;
 
-import logic.commands.Command;
-import logic.commands.AddCommand;
-import logic.commands.ListCommand;
-import logic.commands.MarkCommand;
-import logic.commands.UnmarkCommand;
+import logic.commands.*;
 import model.Chat;
 import model.Task;
 
@@ -12,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static common.constant.CommonConstant.BYE_COMMAND;
-import static common.constant.CommonConstant.LIST_COMMAND;
-import static common.constant.CommonConstant.MARK_COMMAND;
-import static common.constant.CommonConstant.UNMARK_COMMAND;
+import static common.constant.CommandConstant.BYE_COMMAND;
+import static common.constant.CommandConstant.LIST_COMMAND;
+import static common.constant.CommandConstant.MARK_COMMAND;
+import static common.constant.CommandConstant.UNMARK_COMMAND;
 import static common.constant.CommonConstant.PROMPT;
+import static common.constant.ErrorMessage.EXCEPTION_ERROR_MSG;
 import static common.util.PrintUtil.printBye;
 import static common.util.PrintUtil.printEmptyTaskList;
 import static common.util.StringUtil.getFirstWord;
@@ -65,21 +62,25 @@ public class Parser {
         Scanner userInput = new Scanner(System.in);
         List<Task> taskList = new ArrayList<>();
 
-        while (userInput.hasNext()) {
-            String input = (userInput.nextLine()).toLowerCase();
-            Chat chat = new Chat(input, taskList);
+        try {
+            while (userInput.hasNext()) {
+                String input = (userInput.nextLine()).toLowerCase();
+                Chat chat = new Chat(input, taskList);
 
-            if (chat.getTaskList().isEmpty() && (
-                    getFirstWord(input).equals(LIST_COMMAND) ||
-                    getFirstWord(input).equals(MARK_COMMAND) ||
-                    getFirstWord(input).equals(UNMARK_COMMAND)
-            )) {
-                printEmptyTaskList();
-            } else {
-                parseCommand(getFirstWord(input), chat);
+                if (chat.getTaskList().isEmpty() && (
+                        getFirstWord(input).equals(LIST_COMMAND) ||
+                                getFirstWord(input).equals(MARK_COMMAND) ||
+                                getFirstWord(input).equals(UNMARK_COMMAND)
+                )) {
+                    printEmptyTaskList();
+                } else {
+                    parseCommand(getFirstWord(input), chat);
+                }
+
+                System.out.print(PROMPT);
             }
-
-            System.out.print(PROMPT);
+        } catch (Exception e) {
+            System.out.println(String.format(EXCEPTION_ERROR_MSG, e));
         }
     }
 }
