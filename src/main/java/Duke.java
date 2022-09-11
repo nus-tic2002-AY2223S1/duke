@@ -7,16 +7,20 @@ public class Duke {
         System.out.println("Hello! I'm Duke!\n" + "What can I do for you?");
         while (true) {
             String line;
-            Scanner in = new Scanner(System.in);
-            line = in.nextLine();
+            line = userInput();
             if (line.equals("bye")) {
-                System.out.println("Bye. Hope to see you again soon!");
+                System.out.println("Goodbye! Hope to see you again soon!");
                 break;
             }
             else {
                 System.out.println(line);
             }
         }
+    }
+
+    public static String userInput() {
+        Scanner in = new Scanner(System.in);
+        return in.nextLine();
     }
 }
 
