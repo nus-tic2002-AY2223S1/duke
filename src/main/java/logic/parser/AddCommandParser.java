@@ -15,6 +15,12 @@ import static common.util.StringUtil.getFirstWord;
 import static common.util.StringUtil.getTimeFromString;
 
 public class AddCommandParser {
+    /**
+     * parseAddCommand returns parse add commands such as ADD_DEADLINE_COMMAND, ADD_EVENT_COMMAND, ADD_TODO_COMMAND and default
+     *
+     * @param {Chat} chat
+     * @return {void}
+     */
     public static void parseAddCommand(Chat chat) {
         try {
             switch (getFirstWord(chat.getInput())) {
