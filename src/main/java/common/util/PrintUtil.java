@@ -1,9 +1,15 @@
 package common.util;
 
+import model.Chat;
+import model.Task;
+
+import static common.constant.CommonConstant.ADDED;
 import static common.constant.CommonConstant.BYE_GREETING;
 import static common.constant.CommonConstant.DASHES;
 import static common.constant.CommonConstant.HELLO_GREETING;
 import static common.constant.CommonConstant.INPUT_OPTIONS;
+import static common.constant.CommonConstant.TAB;
+import static common.constant.CommonConstant.TOTAL_NO_OF_TASKS;
 import static common.constant.ErrorMessage.TASK_LIST_EMPTY_ERROR_MSG;
 
 public class PrintUtil {
@@ -39,17 +45,6 @@ public class PrintUtil {
     }
 
     /**
-     * printFormatString prints string with format
-     *
-     * @param {String} printStatement
-     * @param {String} input
-     * @return {void}
-     */
-    public static void printFormatString(String printStatement, String input) {
-        System.out.println(String.format(printStatement, input));
-    }
-
-    /**
      * printEmptyTaskList prints error message of empty task list
      *
      * @return {void}
@@ -58,5 +53,21 @@ public class PrintUtil {
         printLine();
         System.out.println(TASK_LIST_EMPTY_ERROR_MSG);
         printLine();
+    }
+
+    public static void printAddedTask(String input, Chat chat) {
+        System.out.println(String.format(ADDED, chat.getInput()));
+        chat.getTaskList().forEach(task -> {
+            if (!task.getDescription().equals(input)) {
+                return;
+            }
+            System.out.println(TAB + task);
+        });
+        System.out.println(String.format(TOTAL_NO_OF_TASKS, chat.getTaskList().toArray().length));
+    }
+
+    public static void printCompletedTask(String command, String input, Task task) {
+        System.out.println(String.format(command, input));
+        System.out.println(TAB + task);
     }
 }

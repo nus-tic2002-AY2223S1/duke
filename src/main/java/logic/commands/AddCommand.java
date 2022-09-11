@@ -1,14 +1,14 @@
 package logic.commands;
 
 import model.Chat;
-import model.Task;
 
-import static common.constant.CommonConstant.ADDED;
 import static common.constant.ErrorMessage.DUPLICATED_TASK_ERROR_MSG;
-import static common.util.PrintUtil.printFormatString;
+import static common.util.PrintUtil.printAddedTask;
 import static common.util.PrintUtil.printLine;
+import static common.util.StringUtil.getDescriptionFromString;
+import static common.util.StringUtil.getFirstWord;
 import static common.util.TaskUtil.checkDuplicatedTask;
-
+import static logic.parser.AddCommandParser.parseAddCommand;
 
 public class AddCommand extends Command {
     public AddCommand(Chat chat) {
@@ -24,12 +24,13 @@ public class AddCommand extends Command {
     public void execute() {
         printLine();
 
-        Task newTask = new Task(chat.getInput());
         if (checkDuplicatedTask(chat)) {
-            printFormatString(DUPLICATED_TASK_ERROR_MSG, chat.getInput());
+            System.out.println(String.format(DUPLICATED_TASK_ERROR_MSG, chat.getInput()));
         } else {
-            chat.getTaskList().add(newTask);
-            printFormatString(ADDED, chat.getInput());
+            String input = getDescriptionFromString(getFirstWord(chat.getInput()), chat.getInput());
+
+            parseAddCommand(chat);
+            printAddedTask(input, chat);
         }
 
         printLine();

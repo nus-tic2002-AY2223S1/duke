@@ -11,7 +11,7 @@ public class TaskUtil {
      */
     public static boolean checkDuplicatedTask(Chat chat){
         for (Task task : chat.getTaskList()) {
-            if (task.getDescription().equals(chat.getInput())) {
+            if (chat.getInput().contains(task.getDescription())) {
                 return true;
             }
         }

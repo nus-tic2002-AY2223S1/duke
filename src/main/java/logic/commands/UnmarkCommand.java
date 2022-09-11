@@ -2,13 +2,13 @@ package logic.commands;
 
 import model.Chat;
 
-import static common.constant.CommonConstant.UNMARK_COMMAND;
+import static common.constant.CommandConstant.UNMARK_COMMAND;
 import static common.constant.CommonConstant.UNMARKED_TASK;
 import static common.constant.ErrorMessage.NOT_EXIST_TASK_ERROR_MSG;
 import static common.constant.ErrorMessage.UNMARKED_TASK_ERROR_MSG;
-import static common.util.PrintUtil.printFormatString;
+import static common.util.PrintUtil.printCompletedTask;
 import static common.util.PrintUtil.printLine;
-import static common.util.StringUtil.getSubstringFromSentence;
+import static common.util.StringUtil.getDescriptionFromString;
 
 public class UnmarkCommand extends Command {
     public UnmarkCommand(Chat chat) {
@@ -24,10 +24,10 @@ public class UnmarkCommand extends Command {
     public void execute() {
         printLine();
 
-        String input = getSubstringFromSentence(UNMARK_COMMAND, chat.getInput());
+        String input = getDescriptionFromString(UNMARK_COMMAND, chat.getInput());
 
         if (chat.getTaskList().contains(input)) {
-            printFormatString(NOT_EXIST_TASK_ERROR_MSG, input);
+            System.out.println(String.format(NOT_EXIST_TASK_ERROR_MSG, input));
         }
 
         chat.getTaskList().forEach(task -> {
@@ -36,11 +36,10 @@ public class UnmarkCommand extends Command {
             }
 
             if (!task.getDone()) {
-                printFormatString(UNMARKED_TASK_ERROR_MSG, input);
+                System.out.println(String.format(UNMARKED_TASK_ERROR_MSG, input));
             } else {
                 task.unmarkDone();
-                printFormatString(UNMARKED_TASK, input);
-                System.out.println(task);
+                printCompletedTask(UNMARKED_TASK, input, task);
             }
         });
 
