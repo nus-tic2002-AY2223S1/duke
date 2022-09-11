@@ -9,6 +9,7 @@ import static common.constant.CommonConstant.DASHES;
 import static common.constant.CommonConstant.HELLO_GREETING;
 import static common.constant.CommonConstant.INPUT_OPTIONS;
 import static common.constant.CommonConstant.TAB;
+import static common.constant.CommonConstant.TOTAL_NO_OF_TASKS;
 import static common.constant.ErrorMessage.TASK_LIST_EMPTY_ERROR_MSG;
 
 public class PrintUtil {
@@ -62,6 +63,7 @@ public class PrintUtil {
             }
             System.out.println(TAB + task);
         });
+        System.out.println(String.format(TOTAL_NO_OF_TASKS, chat.getTaskList().toArray().length));
     }
 
     public static void printCompletedTask(String command, String input, Task task) {

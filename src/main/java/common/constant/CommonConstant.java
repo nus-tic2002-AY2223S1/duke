@@ -49,5 +49,7 @@ public class CommonConstant {
 
     public static final String TASK_LIST = "Here are the tasks in your task list:";
 
+    public static final String TOTAL_NO_OF_TASKS = "Now you have %o task(s) in the list!";
+
     public static final String UNMARKED_TASK = "Okay, task %s is successfully unmarked.";
 }

@@ -9,12 +9,10 @@ import model.ToDo;
 import static common.constant.CommandConstant.ADD_DEADLINE_COMMAND;
 import static common.constant.CommandConstant.ADD_EVENT_COMMAND;
 import static common.constant.CommandConstant.ADD_TODO_COMMAND;
-import static common.constant.ErrorMessage.DUPLICATED_TASK_ERROR_MSG;
 import static common.constant.ErrorMessage.EXCEPTION_ERROR_MSG;
 import static common.util.StringUtil.getDescriptionFromString;
 import static common.util.StringUtil.getFirstWord;
 import static common.util.StringUtil.getTimeFromString;
-import static common.util.TaskUtil.checkDuplicatedTask;
 
 public class AddCommandParser {
     public static void parseAddCommand(Chat chat) {

@@ -18,14 +18,17 @@ Hello! I'm Duke! How can I help you?
 bot@duke:~$ ------------------------------------------------------------------------------------------
 todo read has been successfully added to the task list.
 	[T][ ] read
+Now you have 1 task(s) in the list!
 ------------------------------------------------------------------------------------------
 bot@duke:~$ ------------------------------------------------------------------------------------------
 event meeting /at monday 2pm-3pm has been successfully added to the task list.
 	[E][ ] meeting (at: monday 2pm-3pm)
+Now you have 2 task(s) in the list!
 ------------------------------------------------------------------------------------------
 bot@duke:~$ ------------------------------------------------------------------------------------------
 event work /at monday to friday has been successfully added to the task list.
 	[E][ ] work (at: monday to friday)
+Now you have 3 task(s) in the list!
 ------------------------------------------------------------------------------------------
 bot@duke:~$ ------------------------------------------------------------------------------------------
 Nice! Task read is successfully marked.
@@ -50,6 +53,7 @@ Here are the tasks in your task list:
 bot@duke:~$ ------------------------------------------------------------------------------------------
 todo sleep has been successfully added to the task list.
 	[T][ ] sleep
+Now you have 4 task(s) in the list!
 ------------------------------------------------------------------------------------------
 bot@duke:~$ ------------------------------------------------------------------------------------------
 Bye! Hope to see you again soon!

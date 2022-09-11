@@ -1,6 +1,10 @@
 package logic.parser;
 
-import logic.commands.*;
+import logic.commands.Command;
+import logic.commands.AddCommand;
+import logic.commands.ListCommand;
+import logic.commands.MarkCommand;
+import logic.commands.UnmarkCommand;
 import model.Chat;
 import model.Task;
 
@@ -69,8 +73,8 @@ public class Parser {
 
                 if (chat.getTaskList().isEmpty() && (
                         getFirstWord(input).equals(LIST_COMMAND) ||
-                                getFirstWord(input).equals(MARK_COMMAND) ||
-                                getFirstWord(input).equals(UNMARK_COMMAND)
+                        getFirstWord(input).equals(MARK_COMMAND) ||
+                        getFirstWord(input).equals(UNMARK_COMMAND)
                 )) {
                     printEmptyTaskList();
                 } else {
