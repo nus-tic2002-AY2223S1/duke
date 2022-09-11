@@ -55,6 +55,13 @@ public class PrintUtil {
         printLine();
     }
 
+    /**
+     * printAddedTask prints when task is successfully added
+     *
+     * @param {String} input
+     * @param {Chat} chat
+     * @return {void}
+     */
     public static void printAddedTask(String input, Chat chat) {
         System.out.println(String.format(ADDED, chat.getInput()));
         chat.getTaskList().forEach(task -> {
@@ -66,6 +73,14 @@ public class PrintUtil {
         System.out.println(String.format(TOTAL_NO_OF_TASKS, chat.getTaskList().toArray().length));
     }
 
+    /**
+     * printCompletedTask prints when command task is successfully performed
+     *
+     * @param {String} command
+     * @param {String} input
+     * @param {Task} task
+     * @return {void}
+     */
     public static void printCompletedTask(String command, String input, Task task) {
         System.out.println(String.format(command, input));
         System.out.println(TAB + task);
