@@ -2,6 +2,9 @@ import java.util.Scanner;
 
 public class Duke {
     public static String line = "\n----------------------------------\n";
+    static private String userInput = "";
+    static private String taskList[] = new String[100];
+    static private int taskListCount = 0;
 
     public static void main(String[] args) {
         String logo = "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠔⠋⠀⠐⠈⠉⠉⠉⠀⠀⠀⠉⠓⢄⠀⣀⠄⠚⠙⠉⠁⠀⠉⠉⠉⠁⠂⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
@@ -32,25 +35,34 @@ public class Duke {
 
         System.out.println(logo);
 
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+        Scanner scanner = new Scanner(System.in);
         System.out.println(line + "Hello! I'm Pepe\nWhat can I do for you?" + line);
 
-        String userInput = myObj.nextLine();  // Read user input
+        userInput = scanner.nextLine();
         while(!userInput.equalsIgnoreCase("bye")) {
-            if (userInput.equalsIgnoreCase("list")) {
-                list();
+            switch(userInput) {
+                case "list":
+                    list();
+                    break;
+                case "read book":
+                    readBook();
+                    break;
+                case "return book":
+                    returnBook();
+                    break;
             }
-            if (userInput.equalsIgnoreCase("blah")) {
-                blah();
-            }
+            userInput = scanner.nextLine();
         }
+        bye();
 
-        if (userInput.contains("bye")) {
-            bye();
-        }
     }
     public static void list() {
-        System.out.println(line + "list" + line);
+        System.out.println(line);
+        for(int i=0; i<taskListCount; i++) {
+            int taskNumber = i+1;
+            System.out.println(taskNumber + ". " + taskList[taskNumber]);
+        }
+        System.out.println(line);
     }
 
     public static void blah() {
@@ -61,4 +73,17 @@ public class Duke {
         System.out.println(line + "Bye. Hope to see you again soon!" + line);
     }
 
+    public static void readBook() {
+        taskListCount++;
+        System.out.println("read " + taskListCount);
+        taskList[taskListCount] = userInput;
+        System.out.println(line + "added: read book" + line);
+    }
+
+    public static void returnBook() {
+        taskListCount++;
+        System.out.println("return " + taskListCount);
+        taskList[taskListCount] = userInput;
+        System.out.println(line + "added: return book" + line);
+    }
 }
