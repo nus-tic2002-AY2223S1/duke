@@ -25,6 +25,7 @@ public class Duke {
             line = in.nextLine();
             int index = line.indexOf(" ")+1;
             int indexNum =Integer.parseInt(line.substring(index));
+
             System.out.print(indexNum);
             switch(line){
                 case"bye":
@@ -34,18 +35,34 @@ public class Duke {
                     printList();
                     continue;
                 case"mark":
-
-                    Task markTask = tasks[indexNum];
-                    System.out.println("Nice! I've marked this task as done:");
-                    markTask.markAsDone();
-                    System.out.println(markTask);
+                    if(tasks[count-1] !=null) {
+                        Task markTask = tasks[indexNum];
+                        System.out.println("Nice! I've marked this task as done:");
+                        markTask.markAsDone();
+                        System.out.println(markTask);
+                    }else{
+                        System.out.println("Task list is empty !");
+                    }
                     continue;
                 case"unmark":
-
-                    Task unmarkTask = tasks[indexNum];
-                    System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println(unmarkTask);
+                    if(tasks[count-1] !=null) {
+                        Task unmarkTask = tasks[indexNum];
+                        System.out.println("OK, I've marked this task as not done yet:");
+                        System.out.println(unmarkTask);
+                    }else{
+                        System.out.println("Task list is empty !");
+                    }
                     continue;
+                case"deadline":
+                    if(tasks[count-1] !=null) {
+                        int divPos = line.indexOf("/");
+                        Deadline deadline = (Deadline) tasks[divPos];
+                        System.out.println("Got it. I've added this task: ");
+                        System.out.println(deadline);
+                        System.out.println("Now you have " + count + " in the list");
+                    }else{
+                        System.out.println("Task list is empty !");
+                    }
                 default:
                     addList(new Task(line));
             }
