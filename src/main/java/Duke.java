@@ -14,33 +14,36 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
-        assistant Duke = new assistant();
-        Duke.greet();
+        System.out.println("Hello! I'm Duke. \nWhat can I do for you?");
 
         String line = "";
         int taskID;
         Scanner in = new Scanner(System.in);
 
+        Tasks myList = new Tasks();
+
         while(!line.equals("bye") ){
             line = in.nextLine();
 
             if(line.equals("list")){
-                Duke.listTasks();
+                myList.listTasks();
             }
             else if (line.equals("bye")) {
-                Duke.exit();
+                System.out.println("Bye. Hope to see you again soon!");
             }
             else if (line.startsWith("mark")) {
                 taskID = filterTaskID(line);
-                Duke.taskList[taskID].markAsDone();
+                myList.mytaskList[taskID].markAsDone();
             }
             else if (line.startsWith("unmark")) {
                 taskID = filterTaskID(line);
-                Duke.taskList[taskID].markAsNotDone();
+                myList.mytaskList[taskID].markAsNotDone();
             }
             else {
-                Duke.addTasks(line);
-                System.out.println("added: " + line);
+                myList.addTasks(line);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(myList.mytaskList[myList.task_count-1].toString());
+                System.out.println("Now you have " + myList.task_count + " tasks in the list.");
             }
         }
     }

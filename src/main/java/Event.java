@@ -1,14 +1,22 @@
-public class Event extends Task {
+public class Event extends ToDo {
+    protected String my_by;
 
-    protected String by;
 
     public Event(String description, String by) {
         super(description);
-        this.by = by;
+        this.my_by = by;
+    }
+
+    public void setEvent(String date) {
+        my_by = date;
+    }
+
+    public String getEvent() {
+        return my_by;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (at: " + by + ")";
+        return "[E]" + super.toString() + " (at: " + my_by + ")";
     }
 }
