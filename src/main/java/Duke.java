@@ -32,18 +32,20 @@ public class Duke {
                 }
             }
             else if (s.equalsIgnoreCase("mark")) {
-                taskNo = Integer.parseInt(tokens[1]);
-                System.out.println("Nice! I've marked this task as done:\n");
-                list[taskNo-1].mark();
+                taskNo = Integer.parseInt(tokens[1]) - 1;
+                System.out.println("Nice! I've marked this task as done:");
+                list[taskNo].mark();
                 y = list[taskNo].description.substring(3);
                 list[taskNo].description = "[" + list[taskNo].getStatusIcon() + "]" + y;
+                System.out.println(list[taskNo].description);
             }
             else if (s.equalsIgnoreCase("unmark")) {
-                taskNo = Integer.parseInt(tokens[1]);
-                System.out.println("OK, I've marked this task as not done yet:\n");
-                list[taskNo-1].unmark();
+                taskNo = Integer.parseInt(tokens[1]) - 1;
+                System.out.println("OK, I've marked this task as not done yet:");
+                list[taskNo].unmark();
                 y = list[taskNo].description.substring(3);
                 list[taskNo].description = "[" + list[taskNo].getStatusIcon() + "]" + y;
+                System.out.println(list[taskNo].description);
             }
             else {
                     list[next] = new Task("[ ] " + input);
