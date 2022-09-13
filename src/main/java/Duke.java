@@ -13,18 +13,37 @@ public class Duke {
                 + "What can I do for you?\n\n";
         System.out.print(hello);
 
-        inputCommand();
+        String[] tasksArray = new String[100];
+
+        inputCommand(tasksArray, 0);
+
+
     }
-    public static void inputCommand() {
+    public static void inputCommand(String[] tasks, int count) {
         Scanner in = new Scanner(System.in);
         String command = in.nextLine();
 
         if (command.equalsIgnoreCase("bye")) {
             System.out.println("Bye. Hope to see you again soon!");
         }
+        else if (command.equalsIgnoreCase("list")) {
+            int listNo = 0;
+
+            for (String element : tasks) {
+                listNo++;
+                if (element == null) {
+                    System.out.println();
+                    break;
+                } else
+                    System.out.println(listNo + ". " + element);
+            }
+
+            inputCommand(tasks, count);
+        }
         else {
-            System.out.println(command + System.lineSeparator());
-            inputCommand();
+            tasks[count] = command;
+            System.out.println("added: " + command + System.lineSeparator());
+            inputCommand(tasks,count + 1);
         }
     }
 }
