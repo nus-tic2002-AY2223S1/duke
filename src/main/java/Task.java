@@ -4,9 +4,9 @@ public class Task {
     protected String myTaskType;
 
     //constructor
-    public Task(String description) {
+    public Task(String description, String TaskType) {
         this.description = description;
-        this.myTaskType = description.substring(0);
+        this.myTaskType = TaskType;
     }
     public void markAsDone() {
         System.out.println("Nice! I've marked this task as done:");

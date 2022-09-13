@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Duke {
     public static int filterTaskID(String line) {
@@ -33,16 +34,16 @@ public class Duke {
             }
             else if (line.startsWith("mark")) {
                 taskID = filterTaskID(line);
-                myList.mytaskList[taskID].markAsDone();
+                myList.myTaskList[taskID].markAsDone();
             }
             else if (line.startsWith("unmark")) {
                 taskID = filterTaskID(line);
-                myList.mytaskList[taskID].markAsNotDone();
+                myList.myTaskList[taskID].markAsNotDone();
             }
             else {
                 myList.addTasks(line);
                 System.out.println("Got it. I've added this task:");
-                System.out.println(myList.mytaskList[myList.task_count-1].toString());
+                System.out.println(myList.myTaskList[myList.task_count-1].toString());
                 System.out.println("Now you have " + myList.task_count + " tasks in the list.");
             }
         }

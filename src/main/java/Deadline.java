@@ -1,8 +1,8 @@
 public class Deadline extends ToDo {
     protected String my_by;
 
-    public Deadline(String description, String by) {
-        super(description);
+    public Deadline(String description, String tasktype, String by) {
+        super(description, tasktype);
         my_by = by;
     }
 
