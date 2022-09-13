@@ -42,7 +42,7 @@ public class Duke {
                 taskNo = Integer.parseInt(tokens[1]);
                 System.out.println("OK, I've marked this task as not done yet:\n");
                 list[taskNo].unmark();
-                y = list[taskNo].description.substring(3);;
+                y = list[taskNo].description.substring(3);
                 list[taskNo].description = "[" + list[taskNo].getStatusIcon() + "]" + y;
             }
             else {
