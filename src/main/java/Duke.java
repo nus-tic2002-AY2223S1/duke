@@ -32,7 +32,7 @@ public class Duke {
                     printList();
                     continue;
                 case"mark":
-                    if(tasks[count-1] !=null) {
+                    if(tasks[count] !=null) {
 
                         int indexMark = Integer.parseInt(userInput[1]);
                         Task markTask = tasks[indexMark-1];
@@ -44,7 +44,7 @@ public class Duke {
                     }
                     continue;
                 case"unmark":
-                    if(tasks[count-1] !=null) {
+                    if(tasks[count] !=null) {
                         int indexUnmark = Integer.parseInt(userInput[1]);
                         Task unmarkTask = tasks[indexUnmark-1];
                         System.out.println("OK, I've marked this task as not done yet:");
@@ -55,18 +55,34 @@ public class Duke {
                     }
                     continue;
                 case"deadline":
-                    if(tasks[count-1] !=null) {
                         int divPos = line.indexOf("/");
                         String deadlineTask = line.substring(9,divPos);
                         String deadlineDate = line.substring(divPos+4);
-                        tasks[count] = new Deadline(deadlineTask,deadlineDate);
-                        Deadline task =(Deadline) tasks[count];
+                        Deadline taskDeadline = new Deadline(deadlineTask,deadlineDate);
+                        addList(taskDeadline);
                         System.out.println("Got it. I've added this task: ");
-                        System.out.println(task);
-                        System.out.println("Now you have " + count + " in the list");
-                    }else{
-                        System.out.println("Task list is empty !");
-                    }
+                        System.out.println(taskDeadline);
+                        System.out.println("Now you have " + count + " tasks in the list.");
+                    continue;
+                case"todo":
+                        String todoTask = line.substring(5);
+                        Todo taskTodo = new Todo(todoTask);
+                        addList(taskTodo);
+                        System.out.println("Got it. I've added this task: ");
+                        System.out.println(taskTodo);
+                        System.out.println("Now you have " + count + " tasks in the list.");
+
+                    continue;
+                case"event":
+                        int Pos = line.indexOf("/");
+                        String eventsTask = line.substring(6,Pos);
+                        String eventsDate = line.substring(Pos+4);
+                        Events taskEvent = new Events(eventsTask,eventsDate);
+                        addList(taskEvent);
+                        System.out.println("Got it. I've added this task: ");
+                        System.out.println(taskEvent);
+                        System.out.println("Now you have " + count + " tasks in the list.");
+
                     continue;
                 default:
                     addList(new Task(line));
