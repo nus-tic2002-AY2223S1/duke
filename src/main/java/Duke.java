@@ -2,6 +2,22 @@ import java.util.Scanner;
 
 public class Duke {
     public static String line = "\t____________________________________________________________\n";
+    private static Task[] tasks = new Task[100];
+    private static int taskCount = 0;
+
+    public static void addTask(Task t){
+        tasks[taskCount] = t;
+        taskCount++;
+        String output = String.format("added: %s",t.description);
+        System.out.println(line + "\t"+output+"\n"+line);
+    }
+
+    public static void printTasks(){
+        for (int i = 0; i < taskCount; i++){
+            System.out.print("\t"+(i+1)+".");
+            tasks[i].print();
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -14,7 +30,8 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         String input;
         input = in.nextLine();
-        int count = 0;
+
+
         String[] list = new String[100];
 
         while(input!=null){
@@ -26,19 +43,18 @@ public class Duke {
             }
 
             if(input.equalsIgnoreCase("list")){
-                for(int i = 0; i < count;i++){
-                    output += String.format("\t%d. %s\n",i+1,list[i]);
-                }
-                System.out.println(line + output+line);
+                printTasks();
+            }
+//            todo : 正则判断 mark && unmark
+            if(input.equalsIgnoreCase("mark")){
+//            todo: handle function
+//            handletask();
             }
             else{
-                list[count] = input;
-                count++;
-                output = String.format("added: %s",input);
-                System.out.println(line + "\t"+output+"\n"+line);
+                Task t = new Task(input);
+                addTask(t);
             }
             input = in.nextLine();
-
         }
 
     }
