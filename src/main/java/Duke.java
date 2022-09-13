@@ -7,16 +7,31 @@ public class Duke {
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
+                
         System.out.println("Hello from\n" + logo);
-       
-        try (Scanner in = new Scanner(System.in)) {
         System.out.println("\nHello! I'm Duke\nWhat can I do for you?\n");
-        String input = in.nextLine();
-        if (input.equals("bye")) {
-            System.out.println("Bye. Hope to see you again soon!");  
-            } else {
-            System.out.println(input);
-            }
-        }
+       
+        String[] list = new String[100];
+        int next = 0;
+        Scanner in = new Scanner(System.in);
+
+        while(true) {
+            String input = in.nextLine();
+            switch (input) {
+                case "bye":
+                    System.out.println("Bye. Hope to see you again soon!");
+                    in.close();
+                    return;
+                case ("list"):
+                    for (int i = 0; i < next; i++) {
+                        System.out.println(i + ". " + list[i]);
+                    }
+                    break;
+                default:
+                    list[next] = input;
+                    next++;
+                    System.out.println("added: " + input);
+            }                
+        }  
     }
 }
