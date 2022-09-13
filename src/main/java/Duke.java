@@ -23,11 +23,8 @@ public class Duke {
 
         while(true){
             line = in.nextLine();
-            int index = line.indexOf(" ")+1;
-            int indexNum =Integer.parseInt(line.substring(index));
-
-            System.out.print(indexNum);
-            switch(line){
+            String[] userInput = line.split(" ");
+            switch(userInput[0]){
                 case"bye":
                     System.out.println("Bye. Hope to see you again soon!");
                     break;
@@ -36,7 +33,9 @@ public class Duke {
                     continue;
                 case"mark":
                     if(tasks[count-1] !=null) {
-                        Task markTask = tasks[indexNum];
+
+                        int indexMark = Integer.parseInt(userInput[1]);
+                        Task markTask = tasks[indexMark-1];
                         System.out.println("Nice! I've marked this task as done:");
                         markTask.markAsDone();
                         System.out.println(markTask);
@@ -46,8 +45,10 @@ public class Duke {
                     continue;
                 case"unmark":
                     if(tasks[count-1] !=null) {
-                        Task unmarkTask = tasks[indexNum];
+                        int indexUnmark = Integer.parseInt(userInput[1]);
+                        Task unmarkTask = tasks[indexUnmark-1];
                         System.out.println("OK, I've marked this task as not done yet:");
+                        unmarkTask.markAsNotdone();
                         System.out.println(unmarkTask);
                     }else{
                         System.out.println("Task list is empty !");
@@ -56,16 +57,22 @@ public class Duke {
                 case"deadline":
                     if(tasks[count-1] !=null) {
                         int divPos = line.indexOf("/");
-                        Deadline deadline = (Deadline) tasks[divPos];
+                        String deadlineTask = line.substring(9,divPos);
+                        String deadlineDate = line.substring(divPos+4);
+                        tasks[count] = new Deadline(deadlineTask,deadlineDate);
+                        Deadline task =(Deadline) tasks[count];
                         System.out.println("Got it. I've added this task: ");
-                        System.out.println(deadline);
+                        System.out.println(task);
                         System.out.println("Now you have " + count + " in the list");
                     }else{
                         System.out.println("Task list is empty !");
                     }
+                    continue;
                 default:
                     addList(new Task(line));
+                    continue;
             }
+            break;
         }
     }
 }
