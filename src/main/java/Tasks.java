@@ -14,7 +14,7 @@ public class Tasks{
         int dateDivider = 0;
 
         for(int i = 1; i < words.length; i++){
-            if(words[i].equals("/")){
+            if(words[i].startsWith("/")){
                 dateDivider = i;
                 break;
             }
@@ -23,7 +23,7 @@ public class Tasks{
 
         String date = "";
 
-        for(int i = dateDivider; i < words.length; i++){
+        for(int i = dateDivider + 1; i < words.length; i++){
             date = date + words[i] + " ";
         }
 

@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Duke {
     public static int filterTaskID(String line) {
@@ -43,7 +42,7 @@ public class Duke {
             else {
                 myList.addTasks(line);
                 System.out.println("Got it. I've added this task:");
-                System.out.println(myList.myTaskList[myList.task_count-1].toString());
+                System.out.println("\t" + myList.myTaskList[myList.task_count-1].toString());
                 System.out.println("Now you have " + myList.task_count + " tasks in the list.");
             }
         }
