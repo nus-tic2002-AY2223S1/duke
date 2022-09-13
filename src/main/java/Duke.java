@@ -18,7 +18,7 @@ public class Duke {
             String input = in.nextLine();
             switch (input) {
                 case "bye":
-                    System.out.println("Bye. Hope to see you again sooen!");
+                    System.out.println("Bye. Hope to see you again soon!");
                     in.close();
                     return;
                 case ("list"):
