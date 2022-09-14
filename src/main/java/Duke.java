@@ -38,6 +38,31 @@ public class Duke {
                     echoText("OK, I've marked this task as not done yet:\n      "
                             + task);
                     break;
+                case "deadline":
+                    rest = text.split(" ", 2)[1];
+                    String deadline_desc = rest.split("/by", 2)[0];
+                    String deadline_by = rest.split("/by", 2)[1];
+                    Deadline deadline = new Deadline(deadline_desc, deadline_by);
+                    tasks.add(deadline);
+                    echoText("Got it. I've added this task: \n      " +
+                            deadline + "\n     Now you have "+ tasks.size()+" tasks in the list.");
+                    break;
+                case "todo":
+                    rest = text.split(" ", 2)[1];
+                    Todo todo = new Todo(rest);
+                    tasks.add(todo);
+                    echoText("Got it. I've added this task: \n      " +
+                            todo + "\n     Now you have "+ tasks.size()+" tasks in the list.");
+                    break;
+                case "event":
+                    rest = text.split(" ", 2)[1];
+                    String event_desc = rest.split("/at", 2)[0];
+                    String event_at = rest.split("/at", 2)[1];
+                    Event event = new Event(event_desc, event_at);
+                    tasks.add(event);
+                    echoText("Got it. I've added this task: \n      " +
+                            event + "\n     Now you have "+ tasks.size()+" tasks in the list.");
+                    break;
                 default:
                     tasks.add(new Task(text));
                     echoText("added: " + text);
