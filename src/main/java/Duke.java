@@ -1,36 +1,48 @@
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 
 public class Duke {
-    public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        String breakLine = "-------------------------------------------------";
-        String tab = "     ";
-        System.out.println("Hello from bowen's\n" + logo + breakLine);
-        System.out.println(tab + breakLine);
-        System.out.println(tab + "Hello! I'm Duke\n" + tab +"What can I do for you?");
-        System.out.println(tab + breakLine);
 
-        List<String> tasks = new ArrayList<>();
-        String text;
+    public static String breakLine = "     -------------------------------------------------";
+    public static void main(String[] args) {
+        // DUKE greeting message
+        DukeUtils.dukeInit();
+        List<Task> tasks = new ArrayList<>();
+        String key, text, rest;
+
         whileLoop: while (true) {
             text = inputText();
-            switch (text) {
+            key = text.split(" ", 2)[0];
+            Task task;
+            System.out.println(breakLine);
+            switch (key) {
                 case "bye":
                     echoText("Bye. Hope to see you again soon!");
                     break whileLoop;
                 case "list":
                     printList(tasks);
                     break;
+                case "mark":
+                    rest = text.split(" ", 2)[1];
+                    task = tasks.get(Integer.parseInt(rest)-1);
+                    task.markTask();
+                    echoText("Nice! I've marked this task as done:\n      "
+                            + task);
+                    break;
+                case "unmark":
+                    rest = text.split(" ", 2)[1];
+                    task = tasks.get(Integer.parseInt(rest)-1);
+                    task.unmarkTask();
+                    echoText("OK, I've marked this task as not done yet:\n      "
+                            + task);
+                    break;
                 default:
-                    tasks.add(text);
+                    tasks.add(new Task(text));
                     echoText("added: " + text);
             }
+            System.out.println(breakLine);
         }
 
     }
@@ -40,20 +52,15 @@ public class Duke {
     }
 
     public static void echoText(String text){
-        String breakLine = "-------------------------------------------------";
         String tab = "     ";
-        System.out.println(tab + breakLine);
         System.out.println(tab + text);
-        System.out.println(tab + breakLine);
     }
-    public static void printList(List<String> tasks) {
-        String breakLine = "-------------------------------------------------";
-        String tab = "     ";
-        System.out.println(tab + breakLine);
-        int counter = 0;
-        for (String task : tasks)
-            System.out.println(tab + ++counter + ". " + task);
-        System.out.println(tab + breakLine);
 
+    public static void printList(List<Task> tasks) {
+        String tab = "     ";
+        int counter = 0;
+        for (Task task : tasks)
+            System.out.println(tab + ++counter + ". " + task);
     }
+
 }
