@@ -1,3 +1,5 @@
+import jdk.jshell.spi.ExecutionControl;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -20,16 +22,17 @@ public class Task {
     public void updateStatus(boolean isDone){
         this.isDone = isDone;
         if(isDone){
-            System.out.println("\tNice! I've marked this task as done:\n");
+//            System.out.println(line);
+            System.out.println("\tNice! I've marked this task as done:");
         }else {
-            System.out.println("\tOK, I've marked this task as not done yet:\n");
+            System.out.println("\tOK, I've marked this task as not done yet:");
         }
         this.print();
     }
 
     public void print(){
-        String icon = String.format("[%s] ",this.getStatusIcon());
-        System.out.println("\t" + icon + description);
+        String icon = String.format("\t[%s] ",this.getStatusIcon());
+        System.out.println(icon + description);
     }
 
 

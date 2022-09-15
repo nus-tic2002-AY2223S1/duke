@@ -1,60 +1,74 @@
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Duke {
-    public static String line = "\t____________________________________________________________\n";
+    public static String line = "\t____________________________________________________________";
     private static Task[] tasks = new Task[100];
     private static int taskCount = 0;
+    static String markUnmarkPattern = "(mark|unmark)\\s*(\\d+)";
+
 
     public static void addTask(Task t){
         tasks[taskCount] = t;
         taskCount++;
         String output = String.format("added: %s",t.description);
-        System.out.println(line + "\t"+output+"\n"+line);
+        System.out.println("\t"+output);
     }
 
     public static void printTasks(){
+        System.out.println("\t Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++){
-            System.out.print("\t"+(i+1)+".");
+            System.out.print("\t "+(i+1)+".");
             tasks[i].print();
         }
     }
 
+    public static String inputCleaner(String input){
+        return input.trim();
+    }
+
     public static void main(String[] args) {
 
-        String greeting = line + "\tHello! I'm Duke\n" +
+        String greeting = line + "\n\tHello! I'm Duke\n" +
                 "\tWhat can I do for you?\n"
                 +line;
-
         System.out.println(greeting);
 
         Scanner in = new Scanner(System.in);
-        String input;
-        input = in.nextLine();
-
-
-        String[] list = new String[100];
+        String input = inputCleaner(in.nextLine());
 
         while(input!=null){
+            System.out.println(line);
             String output = "";
             if(input.equalsIgnoreCase("bye")){
-                output = String.format("%s\t%s\n%s",line,"Bye. Hope to see you again soon!",line);
-                System.out.println(output);
+                System.out.println("\tBye. Hope to see you again soon!");
                 break;
             }
-
-            if(input.equalsIgnoreCase("list")){
+            else if(input.equalsIgnoreCase("list")){
                 printTasks();
             }
-//            todo : 正则判断 mark && unmark
-            if(input.equalsIgnoreCase("mark")){
-//            todo: handle function
-//            handletask();
+            else if(input.startsWith("mark")|input.startsWith("unmark")){
+                Pattern r = Pattern.compile(markUnmarkPattern);
+                Matcher m = r.matcher(input);
+                if (m.find()){
+                    int taskNumber = Integer.parseInt(m.group(2));
+                    if(m.group(1).equalsIgnoreCase("mark")){
+                        tasks[taskNumber-1].updateStatus(true);
+                    }
+                    if(m.group(1).equalsIgnoreCase("unmark")) {
+                        tasks[taskNumber - 1].updateStatus(false);
+                    }
+                }else {
+                    System.out.println("NO MATCH");
+                }
             }
-            else{
+            else {
                 Task t = new Task(input);
                 addTask(t);
             }
-            input = in.nextLine();
+            System.out.println(line);
+            input = inputCleaner(in.nextLine());
         }
 
     }
