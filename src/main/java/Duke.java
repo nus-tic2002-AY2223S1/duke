@@ -39,11 +39,24 @@ public class Duke {
                 taskID = filterTaskID(line);
                 myList.myTaskList[taskID].markAsNotDone();
             }
+            else if (line.startsWith("todo") || line.startsWith("deadline") || line.startsWith("event") ) {
+                try{
+                    myList.addTasks(line);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("\t" + myList.myTaskList[myList.task_count-1].toString());
+                    System.out.println("Now you have " + myList.task_count + " tasks in the list.");
+                } catch (NoDescriptionException e){
+                    System.out.println("OOPS!!! The description of a todo cannot be empty.");
+                } catch (UnknownCommandException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             else {
-                myList.addTasks(line);
-                System.out.println("Got it. I've added this task:");
-                System.out.println("\t" + myList.myTaskList[myList.task_count-1].toString());
-                System.out.println("Now you have " + myList.task_count + " tasks in the list.");
+                try{
+                    throw new UnknownCommandException();
+                } catch (UnknownCommandException e){
+                    System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
+                }
             }
         }
     }

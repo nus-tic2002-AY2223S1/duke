@@ -7,7 +7,7 @@ public class Tasks{
         myTaskList = new Task[100];
     }
 
-    public void addTasks(String input){
+    public void addTasks(String input) throws NoDescriptionException, UnknownCommandException {
         String[] words = input.split(" ");
         String description = "";
 
@@ -27,6 +27,10 @@ public class Tasks{
             date = date + words[i] + " ";
         }
 
+        if (description.equals("")){
+            throw new NoDescriptionException();
+        }
+
         switch (words[0]) {
             case "deadline":
                 myTaskList[task_count] = new Deadline(description, "deadline", date);
@@ -38,11 +42,8 @@ public class Tasks{
                 myTaskList[task_count] = new ToDo(description, "todo");
                 break;
             default:
-                String missingTaskType = words[0] + description;
-                myTaskList[task_count] = new ToDo(missingTaskType, "todo");
-                break;
+                throw new UnknownCommandException();
         }
-
         ++task_count;
     }
 
