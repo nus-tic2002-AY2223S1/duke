@@ -27,13 +27,20 @@ public class Tasks{
             date = date + words[i] + " ";
         }
 
-
-        if (words[0].equals("deadline")) {
-            myTaskList[task_count] = new Deadline(description, "deadline", date);
-        } else if (words[0].equals("event")) {
-            myTaskList[task_count] = new Event(description, "event", date);
-        } else {
-            myTaskList[task_count] = new ToDo(description, "todo");
+        switch (words[0]) {
+            case "deadline":
+                myTaskList[task_count] = new Deadline(description, "deadline", date);
+                break;
+            case "event":
+                myTaskList[task_count] = new Event(description, "event", date);
+                break;
+            case "todo":
+                myTaskList[task_count] = new ToDo(description, "todo");
+                break;
+            default:
+                String missingTaskType = words[0] + description;
+                myTaskList[task_count] = new ToDo(missingTaskType, "todo");
+                break;
         }
 
         ++task_count;
