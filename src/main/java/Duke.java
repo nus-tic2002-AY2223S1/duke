@@ -3,8 +3,26 @@ import java.util.Scanner;
 public class Duke {
     public static String line = "\n----------------------------------\n";
     static private String userInput = "";
-    static private String taskList[] = new String[100];
+    static private Task taskList[] = new Task[100];
     static private int taskListCount = 0;
+
+    public static void list() {
+        System.out.println(line);
+        for (int i = 0; i < taskListCount; i++) {
+            System.out.println(i+1 + ". " + "[" + taskList[i].getStatusIcon() + "] " + taskList[i].description);
+        }
+        System.out.println(line);
+    }
+
+    public static void addList(Task task) {
+        taskList[taskListCount] = task;
+        taskListCount++;
+        System.out.println(line + "added: " + taskList[taskListCount-1].description + line);
+    }
+
+    public static void bye() {
+        System.out.println(line + "Bye. Hope to see you again soon!" + line);
+    }
 
     public static void main(String[] args) {
         String logo = "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠔⠋⠀⠐⠈⠉⠉⠉⠀⠀⠀⠉⠓⢄⠀⣀⠄⠚⠙⠉⠁⠀⠉⠉⠉⠁⠂⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
@@ -44,46 +62,25 @@ public class Duke {
                 case "list":
                     list();
                     break;
-                case "read book":
-                    readBook();
+                case "mark":
+                    System.out.println("Which task would you like to mark done?");
+                    String mark = scanner.nextLine();
+                    int userMark = Integer.parseInt(mark);
+                    taskList[userMark-1].markAsDone();
                     break;
-                case "return book":
-                    returnBook();
+                case "unmark":
+                    System.out.println("Which task would you like to mark as not done?");
+                    String unmark = scanner.nextLine();
+                    int userUnmark = Integer.parseInt(unmark);
+                    taskList[userUnmark-1].markAsUndone();
                     break;
+                default:
+                    Task t = new Task(userInput);
+                    t.description = userInput;
+                    addList(new Task(userInput));
             }
             userInput = scanner.nextLine();
         }
         bye();
-
-    }
-    public static void list() {
-        System.out.println(line);
-        for(int i=0; i<taskListCount; i++) {
-            int taskNumber = i+1;
-            System.out.println(taskNumber + ". " + taskList[taskNumber]);
-        }
-        System.out.println(line);
-    }
-
-    public static void blah() {
-        System.out.println(line + "blah" + line);
-    }
-
-    public static void bye() {
-        System.out.println(line + "Bye. Hope to see you again soon!" + line);
-    }
-
-    public static void readBook() {
-        taskListCount++;
-        System.out.println("read " + taskListCount);
-        taskList[taskListCount] = userInput;
-        System.out.println(line + "added: read book" + line);
-    }
-
-    public static void returnBook() {
-        taskListCount++;
-        System.out.println("return " + taskListCount);
-        taskList[taskListCount] = userInput;
-        System.out.println(line + "added: return book" + line);
     }
 }
