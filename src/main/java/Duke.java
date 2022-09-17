@@ -1,7 +1,9 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
+    public static Todo todo = new Todo();
     public static void main(String[] args) {
         intro();
     }
@@ -21,11 +23,14 @@ public class Duke {
         String inp = "";
         Scanner scanner = new Scanner(System.in);
 
-        while(!isClosing(inp = scanner.next())) {
+        while(!isClosing(inp = scanner.nextLine())) {
             if(isOpening(inp)){
                 System.out.println("\tHello again!\n");
+            } else if (isGet(inp)) {
+                printList();
             } else {
-                System.out.format("\t%s\n", inp);
+                todo.addItem(inp);
+                System.out.format("\tadded: %s\n", inp);
             }
         }
         System.out.println("\tBye. Hope to see you again soon!!");
@@ -40,5 +45,17 @@ public class Duke {
     private static boolean isClosing(String text){
         String[] closing = {"Bye","See ya"};
         return Arrays.stream(closing).anyMatch(text::equalsIgnoreCase);
+    }
+
+    private static boolean isGet(String text){
+        String[] closing = {"list","show"};
+        return Arrays.stream(closing).anyMatch(text::equalsIgnoreCase);
+    }
+
+    private static void printList(){
+        ArrayList<Item> items = todo.getItems();
+        for(int i = 0; i < items.size(); i++){
+            System.out.format("\t%d. %s\n", i+1, items.get(i).getName());
+        }
     }
 }
