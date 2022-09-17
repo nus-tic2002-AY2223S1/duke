@@ -9,15 +9,17 @@ public class Duke {
     }
 
     private static void intro(){
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
+        String logo =
+                  " _____             _   \n"
+                + "/  __ \\_   _ _  __|_| ___\n"
+                + "| |   | | | | |/ /| |/ _ \\\n"
+                + "| |__ | |_| |  /  | | |_| |\n"
+                + "\\____/ \\__,_|_|   |_|\\___/\n";
         System.out.println(logo);
-        System.out.println("Hello! I'm Duke\nWhat can i do for you?\n");
+        System.out.println("Hello! I'm Curio\nWhat can i do for you?\n");
         conversation();
     }
+
 
     private static void conversation(){
         String inp = "";

@@ -28,8 +28,12 @@ public class Todo {
     }
 
     public void showList(){
-        System.out.println("\tHere are the tasks in your list:");
-        printList();
+        if(items.size() > 0) {
+            System.out.println("\tHere are the tasks in your list:");
+            printList();
+        } else {
+            System.out.println("\tYay! You have completed all the tasks.");
+        }
     }
 
     public void updateDoneState(int n, boolean isDone){
