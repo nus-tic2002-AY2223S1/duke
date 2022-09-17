@@ -14,7 +14,7 @@ import static utils.ErrorMessages.whatAreYouDoingErrMsg;
 import static utils.Mouth.speak;
 import static utils.TaskUtil.getFirstWord;
 
-public class Main {
+public class Duke {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
