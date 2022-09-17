@@ -1,7 +1,6 @@
 public class Event extends Task {
     protected String my_by;
 
-
     public Event(String description, String taskType, String by) {
         super(description, taskType);
         this.my_by = by;

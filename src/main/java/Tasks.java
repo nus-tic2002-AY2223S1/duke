@@ -6,8 +6,7 @@ public class Tasks{
         task_count = 0;
         myTaskList = new Task[100];
     }
-
-    public void addTasks(String input) throws NoDescriptionException, UnknownCommandException {
+    public void addTasks(String input) throws DukeException {
         String[] words = input.split(" ");
         String description = "";
 
@@ -28,7 +27,7 @@ public class Tasks{
         }
 
         if (description.equals("")){
-            throw new NoDescriptionException();
+            throw new DukeException();
         }
 
         switch (words[0]) {
@@ -42,10 +41,19 @@ public class Tasks{
                 myTaskList[task_count] = new ToDo(description, "todo");
                 break;
             default:
-                throw new UnknownCommandException();
+                throw new DukeException();
         }
         ++task_count;
     }
+
+    public void removeTasks(int taskID) throws DukeException{
+        for(int i = taskID; i < task_count; i++){
+            myTaskList[i] = myTaskList[i+1];
+        }
+        myTaskList[task_count] = null;
+        --task_count;
+    }
+
 
     public void listTasks(){
         for(int i = 0; i < task_count; ++i){

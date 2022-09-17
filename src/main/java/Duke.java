@@ -45,16 +45,25 @@ public class Duke {
                     System.out.println("Got it. I've added this task:");
                     System.out.println("\t" + myList.myTaskList[myList.task_count-1].toString());
                     System.out.println("Now you have " + myList.task_count + " tasks in the list.");
-                } catch (NoDescriptionException e){
+                } catch (DukeException e){
                     System.out.println("OOPS!!! The description of a todo cannot be empty.");
-                } catch (UnknownCommandException e) {
-                    throw new RuntimeException(e);
+                }
+            }
+            else if(line.startsWith("delete")){
+                try{
+                    taskID = filterTaskID(line);
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println("\t" + myList.myTaskList[taskID].toString());
+                    myList.removeTasks(taskID);
+                    System.out.println("Now you have " + myList.task_count + " tasks in the list.");
+                } catch (DukeException e){
+                    System.out.println("OOPS!!! There is no corresponding taskID to delete.");
                 }
             }
             else {
                 try{
-                    throw new UnknownCommandException();
-                } catch (UnknownCommandException e){
+                    throw new DukeException();
+                } catch (DukeException e){
                     System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
             }
