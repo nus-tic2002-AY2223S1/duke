@@ -27,8 +27,12 @@ public class Duke {
             if(isOpening(inp)){
                 System.out.println("\tHello again!\n");
             } else if (isGet(inp)) {
-                printList();
-            } else {
+                todo.showList();
+            } else if(isUnmark(inp)){
+                todo.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), false);
+            } else if(isMark(inp)){
+                todo.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), true);
+            }else {
                 todo.addItem(inp);
                 System.out.format("\tadded: %s\n", inp);
             }
@@ -52,10 +56,14 @@ public class Duke {
         return Arrays.stream(closing).anyMatch(text::equalsIgnoreCase);
     }
 
-    private static void printList(){
-        ArrayList<Item> items = todo.getItems();
-        for(int i = 0; i < items.size(); i++){
-            System.out.format("\t%d. %s\n", i+1, items.get(i).getName());
-        }
+    private static boolean isMark(String text){
+        String[] closing = {"mark","done"};
+        return Arrays.stream(closing).anyMatch(text::contains);
     }
+
+    private static boolean isUnmark(String text){
+        String[] closing = {"unmark","not done"};
+        return Arrays.stream(closing).anyMatch(text::contains);
+    }
+
 }
