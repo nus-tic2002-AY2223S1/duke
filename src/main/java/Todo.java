@@ -14,11 +14,17 @@ public class Todo {
     }
 
     private void printItem(Integer n, Item i){
-        System.out.format("\t%d.[%s] %s\n", n, i.getIsDone() ? "X":" ", i.getName());
+        String t = i.getType();
+        System.out.format("\t%d.[%s][%s] %s %s\n", n, t, i.getIsDone() ? "X":" ", i.getName(), t == "T" ? "" : "(" + (t == "E" ? "at: " : "by: ") + i.getTime() + ")");
     }
 
-    public void addItem(String itemName){
-        items.add(new Item(itemName));
+    public void addItem(String itemName, String type){
+        System.out.println("Got it. I've added this task:");
+        Item item = new Item(itemName, type);
+        items.add(item);
+        Integer n = items.size();
+        printItem(n, item);
+        System.out.format("Now you have %d tasks in the list.\n", n);
     }
 
     public void showList(){

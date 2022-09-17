@@ -32,9 +32,14 @@ public class Duke {
                 todo.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), false);
             } else if(isMark(inp)){
                 todo.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), true);
-            }else {
-                todo.addItem(inp);
-                System.out.format("\tadded: %s\n", inp);
+            } else if(isTodo(inp)) {
+                todo.addItem(inp, "T");
+            } else if (isDeadline(inp)) {
+                todo.addItem(inp, "D");
+            } else if (isEvent(inp)) {
+                todo.addItem(inp, "E");
+            } else {
+                System.out.println("I'm sorry. What do you mean?");
             }
         }
         System.out.println("\tBye. Hope to see you again soon!!");
@@ -66,4 +71,18 @@ public class Duke {
         return Arrays.stream(closing).anyMatch(text::contains);
     }
 
+    private static boolean isTodo(String text){
+        String[] closing = {"todo"};
+        return Arrays.stream(closing).anyMatch(text::contains);
+    }
+
+    private static boolean isDeadline(String text){
+        String[] closing = {"deadline"};
+        return Arrays.stream(closing).anyMatch(text::contains);
+    }
+
+    private static boolean isEvent(String text){
+        String[] closing = {"event"};
+        return Arrays.stream(closing).anyMatch(text::contains);
+    }
 }
