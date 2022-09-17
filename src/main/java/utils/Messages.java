@@ -23,4 +23,8 @@ public class Messages {
         return "Got it. I've added this task:\n" + task + "\nNow you have " + (Task.getCount()) + " tasks in the list.";
     }
 
+    public static String taskRemovedMsg(Task task) {
+        return "The following task has been removed:\n" + task;
+    }
+
 }

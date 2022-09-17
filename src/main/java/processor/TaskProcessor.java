@@ -14,4 +14,6 @@ public interface TaskProcessor {
     void addDeadline(String userInput, List<Task> taskList);
 
     void addEvent(String userInput, List<Task> taskList);
+
+    void deleteEvent(String userInput, List<Task> taskList);
 }

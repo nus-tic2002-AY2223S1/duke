@@ -21,7 +21,8 @@ public class CommonStrings {
             "deadline <task> /by <deadline>: create a task with a deadline\n" +
             "event <task> /at <datetime>: create an event happening at some date and time\n" +
             "mark <number>: mark task <number> as completed\n" +
-            "unmark <number>: mark task <number> as not completed";
+            "unmark <number>: mark task <number> as not completed\n" +
+            "delete <number>: delete task <number>";
 
     public static final String AT = "/at";
     public static final String BY = "/by";

@@ -8,8 +8,15 @@ event project meeting /at Aug 6th 2-4pm
 todo join sports club
 mark 4
 todo borrow book
+mark 5
+unmark 4
+unmark 5
+mark 4
 deadline return book /by Sunday
 event project meeting /at Mon 2-4pm
+list
+delete 5
+delete 5
 list
 
 ======== unhappy path todo ========
@@ -34,10 +41,24 @@ event /at asdfsdf
 event     /at asdfsdfdsf
 event asdf /at asdf /at asdf
 
+======== unhappy path mark ========
+mark read book
+mark 200
+mark 99999999
+mark 4
+mark 1
 
+======== unhappy path unmark ========
+unmark read book
+unmark 200
+unmark 99999999
+unmark 2
+unmark 5
 
-
-
+======== unhappy path delete ========
+delete read book
+delete 200
+delete 99999999
 
 
 

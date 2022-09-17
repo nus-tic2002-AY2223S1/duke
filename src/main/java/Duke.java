@@ -49,6 +49,9 @@ public class Duke {
                 case "event":
                     taskProcessor.addEvent(userInput, taskList);
                     break;
+                case "delete":
+                    taskProcessor.deleteEvent(userInput, taskList);
+                    break;
                 case "help":
                     speak(HELP);
                     break;

@@ -4,7 +4,7 @@ public class ErrorMessages {
     public static final String MARK_UNMARK_TASK_ERR_MSG =
             "Please use a number to mark/unmark a task\n" +
             "e.g.: \"mark 2\"";
-    public static final String MARK_UNMARK_NUMBER_OUT_OF_RANGE_ERR_MSG =
+    public static final String NUMBER_OUT_OF_RANGE_ERR_MSG =
             "Please input a number that is within the range of tasks";
     public static final String CREATE_TODO_ERR_MSG =
             "TODO was NOT created successfully";
@@ -31,6 +31,11 @@ public class ErrorMessages {
             CREATE_DEADLINE_ERR_MSG + "\n" +
                     "EVENT must have description before \"/at\"\n" +
                     "EVENT must have duration after \"/at\"";
+    public static final String INVALID_INTEGER_ERR_MSG = "Please input a valid integer.";
+    public static final String UNKNOWN_ERR_MSG = "Something went wrong.";
+
+
+
     public static String whatAreYouDoingErrMsg(String input) {
         return "Everybody needs help sometimes. Just enter \"help\" :D\n" +
                 "This is what you entered:\n" + input;
