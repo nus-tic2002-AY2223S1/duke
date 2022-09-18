@@ -1,10 +1,16 @@
 
-package task;
+package duke.task;
+import duke.exception.InvalidInputException;
+import duke.exception.InvalidInputException.InputExceptionType;
 public class Task {
+    protected String typeIcon = "*";
     protected String description;
     protected boolean isDone;
-    protected String symbol = "*";
-    public Task(String description) {
+
+    public Task(String description) throws InvalidInputException {
+        if (description.isEmpty()) {
+            throw new InvalidInputException(InputExceptionType.EMPTY_DESCRIPTION);
+        }
         this.description = description;
         this.isDone = false;
     }
@@ -13,19 +19,19 @@ public class Task {
         return (isDone ? "\u2713" : "\u2718");
     }
     public String getTypeIcon() {
-        return symbol;
+        return typeIcon;
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
     public void markAsDone() {
-        this.isDone = true;
+        isDone = true;
     }
     public void markAsnotDone() {
         this.isDone = false;
     }
     public String toString() {
-        return String.format("[%s][%s] %s", this.getTypeIcon(), this.getStatusIcon(), this.getDescription());
+        return String.format("[%s][%s] %s", getTypeIcon(), getStatusIcon(), getDescription());
     }
 }
