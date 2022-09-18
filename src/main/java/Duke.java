@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
@@ -10,9 +13,9 @@ public class Duke {
 
         System.out.println("Hello there! I'm Duke\nWhat can I do for you?");
 
-        String list[] = new String[100];
-        Task tasks[]= new Task[100];
-
+//        String list[] = new String[100];
+//        Task tasks[]= new Task[100];
+        List<Task> taskList = new ArrayList<>();
         int count = 0;
 
         String line;
@@ -29,41 +32,40 @@ public class Duke {
 
             // to list all items
             else if (line.equals("list"))  {
-                int listCount = 0;
+                int taskCount = 0;
                 System.out.println("____________________________________________________________\n" +
                         "Here are the tasks in your list:");
-                while (listCount < count){
-                    if (list[listCount]!=null) {
-                        listCount++;
-                        System.out.println((listCount) + ": " + list[listCount-1]);
-                    }
+                for (Task taskItem : taskList){
+                    System.out.println(taskCount+1 + ":  " + taskItem.getDescription());
+                    taskCount++;
                 }
                 System.out.println("____________________________________________________________");
             }
-
-            // mark items
-            else if (line.startsWith("mark")){
-                String markString = line;
-
-                System.out.println("____________________________________________________________\n" +
-                        "Nice! I've marked this task as done:");
-                int markIndex = Integer.parseInt(markString.substring(5));
-                System.out.println(markIndex);
-                tasks[markIndex-1].markAsDone();
-                System.out.println(markIndex + ": " + tasks[markIndex-1].getStatusIcon()+ " " + tasks[markIndex-1].getDescription());
-            }
-
-            // unmarked items
-            else if (line.startsWith("unmark")){
-                String markString = line;
-                int markIndex = Integer.parseInt(markString.substring(5));
-                System.out.println(markIndex);
-            }
+//
+//            // mark items
+//            else if (line.startsWith("mark")){
+//                String markString = line;
+//
+//                System.out.println("____________________________________________________________\n" +
+//                        "Nice! I've marked this task as done:");
+//                int markIndex = Integer.parseInt(markString.substring(5));
+//                System.out.println(markIndex);
+////                tasks[markIndex-1].markAsDone();
+////                System.out.println(markIndex + ": " + tasks[markIndex-1].getStatusIcon()+ " " + tasks[markIndex-1].getDescription());
+//            }
+//
+//            // unmarked items
+//            else if (line.startsWith("unmark")){
+//                String markString = line;
+//                int markIndex = Integer.parseInt(markString.substring(7));
+//                System.out.println(markIndex);
+//            }
 
             // add to list
             else {
-                list[count]=line;
-                count++;
+                Task newTask = new Task(line);
+                taskList.add(newTask);
+
                 System.out.println("added: " + line);
             }
 
