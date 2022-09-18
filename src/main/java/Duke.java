@@ -4,7 +4,8 @@ public class Duke {
     private static int count = 0;
     private static Task[] tasks = new Task[100];
 
-    public static void addList(Task t){
+    public static void addList(Task t) {
+
         tasks[count]=t;
         count++;
     }
@@ -15,7 +16,7 @@ public class Duke {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException {
         String line;
         Scanner in = new Scanner(System.in);
         System.out.println("Hello! I'm Duke");
@@ -32,23 +33,22 @@ public class Duke {
                     printList();
                     continue;
                 case"mark":
-                    if(tasks[count] !=null) {
-
+                    if(tasks[count] !=null){
                         int indexMark = Integer.parseInt(userInput[1]);
                         Task markTask = tasks[indexMark-1];
-                        System.out.println("Nice! I've marked this task as done:");
                         markTask.markAsDone();
+                        System.out.println("Nice! I've marked this task as done:");
                         System.out.println(markTask);
                     }else{
-                        System.out.println("Task list is empty !");
+                        throw new DukeException("The task list is empty");
                     }
                     continue;
                 case"unmark":
                     if(tasks[count] !=null) {
                         int indexUnmark = Integer.parseInt(userInput[1]);
                         Task unmarkTask = tasks[indexUnmark-1];
-                        System.out.println("OK, I've marked this task as not done yet:");
                         unmarkTask.markAsNotdone();
+                        System.out.println("OK, I've marked this task as not done yet:");
                         System.out.println(unmarkTask);
                     }else{
                         System.out.println("Task list is empty !");
@@ -65,6 +65,9 @@ public class Duke {
                         System.out.println("Now you have " + count + " tasks in the list.");
                     continue;
                 case"todo":
+                    if(userInput.length<2){
+                        throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
+                    }
                         String todoTask = line.substring(5);
                         Todo taskTodo = new Todo(todoTask);
                         addList(taskTodo);
@@ -85,7 +88,11 @@ public class Duke {
 
                     continue;
                 default:
+                    if(userInput[0].equals(("blah"))){
+                        throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    }
                     addList(new Task(line));
+
                     continue;
             }
             break;
