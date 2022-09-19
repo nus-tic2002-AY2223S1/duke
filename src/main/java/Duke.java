@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
 public class Duke {
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -19,50 +20,49 @@ public class Duke {
         String line;
         Scanner in = new Scanner(System.in);
 
-        while (true){
+        while (true) {
             line = in.nextLine();
 
             // enter bye to end chat
-            if (line.equals("bye")){
+            if (line.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
                 break;
             }
 
             // to list all items
-            else if (line.equals("list"))  {
+            else if (line.equals("list")) {
                 int taskCount = 0;
                 System.out.println("____________________________________________________________\n" +
                         "Here are the tasks in your list:");
-                for (Task task : taskList){
-                    System.out.println(taskCount+1 + ". [" + task.getStatusIcon() + "]   " + task.getDescription());
+                for (Task task : taskList) {
+                    System.out.println(taskCount + 1 + ". [" + task.getStatusIcon() + "]   " + task.getDescription());
                     taskCount++;
                 }
                 System.out.println("____________________________________________________________");
             }
 
             // mark items
-            else if (line.startsWith("mark ")){
+            else if (line.startsWith("mark ")) {
                 String markedItem = line;
-                if (line.length()>5) {
+                if (line.length() > 5) {
                     int markIndex = Integer.parseInt(markedItem.substring(5));
                     Task markedTask = taskList.get(markIndex - 1);
                     markedTask.markAsDone();
                     System.out.println("____________________________________________________________\n" +
-                            "Nice! I've marked this task as done: \n[" + markedTask.getStatusIcon()+"]   "+markedTask.getDescription());
-                }
-                else
+                            "Nice! I've marked this task as done: \n[" + markedTask.getStatusIcon() + "]   " + markedTask.getDescription());
+                } else
                     System.out.println("Please enter a Task Number.(E.g. mark 1)\n____________________________________________________________");
             }
 
             // unmarked items
-            else if (line.startsWith("unmark ")){
+            else if (line.startsWith("unmark ")) {
                 String markString = line;
-                if (line.length()>7) {
+                if (line.length() > 7) {
                     int markIndex = Integer.parseInt(markString.substring(7));
                     Task markedTask = taskList.get(markIndex - 1);
                     markedTask.markAsUndone();
                     System.out.println("____________________________________________________________\n" +
-                            "OK, I've marked this task as not done yet: \n[" + markedTask.getStatusIcon()+"]   "+markedTask.getDescription());
+                            "OK, I've marked this task as not done yet: \n[" + markedTask.getStatusIcon() + "]   " + markedTask.getDescription());
 
                 }
             }
@@ -72,14 +72,9 @@ public class Duke {
                 Task newTask = new Task(line);
                 taskList.add(newTask);
 
-                System.out.println("____________________________________________________________\nadded: " + line +"\n____________________________________________________________\n");
+                System.out.println("____________________________________________________________\nadded: " + line + "\n____________________________________________________________\n");
             }
 
         }
     }
 }
-// print hello
-// prompt command, store in list
-// return what user types
-// when bye , terminate with message
-// push at every level
