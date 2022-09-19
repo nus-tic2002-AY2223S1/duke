@@ -41,22 +41,30 @@ public class Duke {
             }
 
             // mark items
-            else if (line.startsWith("mark")){
+            else if (line.startsWith("mark ")){
                 String markedItem = line;
-
-                int markIndex = Integer.parseInt(markedItem.substring(5));
-                Task markedTask = taskList.get(markIndex-1);
-                markedTask.markAsDone();
-                System.out.println(markIndex);
-                System.out.println("____________________________________________________________\n" +
-                        "Nice! I've marked this task as done:");
+                if (line.length()>5) {
+                    int markIndex = Integer.parseInt(markedItem.substring(5));
+                    Task markedTask = taskList.get(markIndex - 1);
+                    markedTask.markAsDone();
+                    System.out.println("____________________________________________________________\n" +
+                            "Nice! I've marked this task as done: \n[" + markedTask.getStatusIcon()+"]   "+markedTask.getDescription());
+                }
+                else
+                    System.out.println("Please enter a Task Number.(E.g. mark 1)\n____________________________________________________________");
             }
 
             // unmarked items
-            else if (line.startsWith("unmark")){
+            else if (line.startsWith("unmark ")){
                 String markString = line;
-                int markIndex = Integer.parseInt(markString.substring(7));
-                System.out.println(markIndex);
+                if (line.length()>7) {
+                    int markIndex = Integer.parseInt(markString.substring(7));
+                    Task markedTask = taskList.get(markIndex - 1);
+                    markedTask.markAsUndone();
+                    System.out.println("____________________________________________________________\n" +
+                            "OK, I've marked this task as not done yet: \n[" + markedTask.getStatusIcon()+"]   "+markedTask.getDescription());
+
+                }
             }
 
             // add to list
@@ -64,7 +72,7 @@ public class Duke {
                 Task newTask = new Task(line);
                 taskList.add(newTask);
 
-                System.out.println("____________________________________________________________\nadded: " + line +"____________________________________________________________\n");
+                System.out.println("____________________________________________________________\nadded: " + line +"\n____________________________________________________________\n");
             }
 
         }
