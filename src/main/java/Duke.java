@@ -13,8 +13,6 @@ public class Duke {
 
         System.out.println("Hello there! I'm Duke\nWhat can I do for you?");
 
-//        String list[] = new String[100];
-//        Task tasks[]= new Task[100];
         List<Task> taskList = new ArrayList<>();
         int count = 0;
 
@@ -35,38 +33,38 @@ public class Duke {
                 int taskCount = 0;
                 System.out.println("____________________________________________________________\n" +
                         "Here are the tasks in your list:");
-                for (Task taskItem : taskList){
-                    System.out.println(taskCount+1 + ":  " + taskItem.getDescription());
+                for (Task task : taskList){
+                    System.out.println(taskCount+1 + ". [" + task.getStatusIcon() + "]   " + task.getDescription());
                     taskCount++;
                 }
                 System.out.println("____________________________________________________________");
             }
-//
-//            // mark items
-//            else if (line.startsWith("mark")){
-//                String markString = line;
-//
-//                System.out.println("____________________________________________________________\n" +
-//                        "Nice! I've marked this task as done:");
-//                int markIndex = Integer.parseInt(markString.substring(5));
-//                System.out.println(markIndex);
-////                tasks[markIndex-1].markAsDone();
-////                System.out.println(markIndex + ": " + tasks[markIndex-1].getStatusIcon()+ " " + tasks[markIndex-1].getDescription());
-//            }
-//
-//            // unmarked items
-//            else if (line.startsWith("unmark")){
-//                String markString = line;
-//                int markIndex = Integer.parseInt(markString.substring(7));
-//                System.out.println(markIndex);
-//            }
+
+            // mark items
+            else if (line.startsWith("mark")){
+                String markedItem = line;
+
+                int markIndex = Integer.parseInt(markedItem.substring(5));
+                Task markedTask = taskList.get(markIndex-1);
+                markedTask.markAsDone();
+                System.out.println(markIndex);
+                System.out.println("____________________________________________________________\n" +
+                        "Nice! I've marked this task as done:");
+            }
+
+            // unmarked items
+            else if (line.startsWith("unmark")){
+                String markString = line;
+                int markIndex = Integer.parseInt(markString.substring(7));
+                System.out.println(markIndex);
+            }
 
             // add to list
             else {
                 Task newTask = new Task(line);
                 taskList.add(newTask);
 
-                System.out.println("added: " + line);
+                System.out.println("____________________________________________________________\nadded: " + line +"____________________________________________________________\n");
             }
 
         }
