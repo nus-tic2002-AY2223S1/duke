@@ -39,34 +39,33 @@ public class Duke {
                 if (extracted(line, userInput)) continue;
                 break;
             } catch(NullPointerException e){
-                System.out.println("☹ OOPS!!! task number is not valid");
+                System.out.println("☹ OOPS!!! task is not exist");
             } catch(DukeException e){
               System.out.println(e.getMessage());
-            } catch(NumberFormatException e){
-
-            } catch (StringIndexOutOfBoundsException e){
-
             }catch (ArrayIndexOutOfBoundsException e){
-                System.out.println("☹ OOPS!!! task is empty");
+                System.out.println("☹ OOPS!!! The input task is not valid");
+            }catch (NumberFormatException e){
+                System.out.println("☹ OOPS!!! The input is String,Pls enter number");
             }
         }
     }
 
-    private static boolean extracted(String line, String[] userInput) throws DukeException,NullPointerException {
+    private static boolean extracted(String line, String[] userInput) throws DukeException{
         switch(userInput[0]){
             case"bye":
                 System.out.println("Bye. Hope to see you again soon!");
                 break;
             case"list":
-                if(tasks[count]==null){
-                    throw new DukeException("The task list is empty");
+                if(tasks[count-1]==null){
+                    throw new DukeException("☹ OOPS!!! The task list is empty");
                 }
+
                 printList();
                 return true;
             case"mark":
-                if(userInput[1]==null){
-                    throw new DukeException("The mark task is not available,Pls re-input mark task!");
-                }
+//                if(userInput[1]==null){
+//                    throw new DukeException("The mark task is not available,Pls re-input mark task!");
+//                }
                     int indexMark = Integer.parseInt(userInput[1]);
                     Task markTask = tasks[indexMark-1];
                     markTask.markAsDone();
@@ -81,9 +80,9 @@ public class Duke {
                     unmarkTask.markAsNotdone();
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println(unmarkTask);
-                if(unmarkTask ==null) {
-                    throw new DukeException("The unmark task is not available,Pls re-input unmark task!");
-                }
+//                if(unmarkTask ==null) {
+//                    throw new DukeException("The unmark task is not available,Pls re-input unmark task!");
+//                }
                 return true;
             case"deadline":
                 if(userInput.length<2){
@@ -114,7 +113,6 @@ public class Duke {
                     System.out.println("Got it. I've added this task: ");
                     System.out.println(taskTodo);
                     System.out.println("Now you have " + count + " tasks in the list.");
-
                 return true;
             case"event":
                 if(userInput.length<2){
@@ -136,6 +134,9 @@ public class Duke {
             default:
                 if(userInput[0].equals(("blah"))){
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                }
+                if(isNumeric(userInput[0])){
+                    throw new DukeException("☹ OOPS!!! You have enter a number,Pls re-enter task !");
                 }
                 addList(new Task(line));
 
