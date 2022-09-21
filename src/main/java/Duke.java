@@ -14,6 +14,10 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
+        //load file if exist
+
+        //if dun exist create new file in a new folder
+
         System.out.println("Hello! I'm Duke. \nWhat can I do for you?");
 
         String line = "";
@@ -67,6 +71,8 @@ public class Duke {
                     System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
             }
+
+            //save task
         }
     }
 }
