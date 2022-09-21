@@ -60,10 +60,21 @@ public class Duke {
                 Task.markTask();
             }
             else if (userInput.startsWith("todo") || userInput.startsWith("deadline") || userInput.startsWith("event")) {
-                Task.addTask(userInput);
-                System.out.println(line + "Got it. I've added this task:\n");
-                System.out.println(taskList[taskListCount-1].toString());
-                System.out.println("Now you have " + taskListCount + " tasks in the list." + line);
+                try {
+                    Task.addTask(userInput);
+                    System.out.println(line + "Got it. I've added this task:\n");
+                    System.out.println(taskList[taskListCount-1].toString());
+                    System.out.println("Now you have " + taskListCount + " tasks in the list." + line);
+                } catch (DukeException e) {
+                    System.out.println(line + "\uD83D\uDE1F OOPS!!! The description of a todo cannot be empty." + line);
+                }
+            }
+            else {
+                try {
+                    throw new DukeException();
+                } catch (DukeException e) {
+                    System.out.println(line + "\uD83D\uDE1F OOPS!!! I'm sorry, but I don't know what that means" + line);
+                }
             }
 
             userInput = scanner.nextLine();

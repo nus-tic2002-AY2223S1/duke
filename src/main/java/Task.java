@@ -8,7 +8,7 @@ public class Task {
         this.isDone = false;
     }
 
-    public static void addTask (String input) throws RuntimeException {
+    public static void addTask (String input) throws DukeException {
         String des = "";
         String date = "";
         int dateIdx = 0;
@@ -22,6 +22,10 @@ public class Task {
             }
             des = des + split[i] + " ";
         }
+
+       if (des == "") {
+           throw new DukeException();
+       }
 
         for (int j=dateIdx+1; j<split.length; j++) {
             date = date + split[j] + " ";
@@ -38,8 +42,7 @@ public class Task {
                 Duke.taskList[Duke.taskListCount-1] = new Event(des, date);
                 break;
             default:
-                Duke.taskList[Duke.taskListCount-1] = new Task(input);
-                break;
+                throw new DukeException();
         }
     }
 
