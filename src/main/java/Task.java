@@ -1,11 +1,14 @@
 public class Task {
-    protected static String description = "";
+    protected String description;
     protected boolean isDone;
-    public  String[] split;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+    }
+
+    public String getTask() {
+        return this.description;
     }
 
     public static void addTask (String input) throws DukeException {
@@ -23,9 +26,9 @@ public class Task {
             des = des + split[i] + " ";
         }
 
-       if (des == "") {
-           throw new DukeException();
-       }
+        if (des == "") {
+            throw new DukeException();
+        }
 
         for (int j=dateIdx+1; j<split.length; j++) {
             date = date + split[j] + " ";
@@ -47,8 +50,7 @@ public class Task {
     }
 
     public static void list() {
-        System.out.println(Duke.line);
-        System.out.println("Here are the tasks in your list:\n");
+        System.out.println(Duke.line + "Here are the tasks in your list:\n");
         for (int i = 0; i < Duke.taskListCount; i++) {
             System.out.println(i+1 + ". " + Duke.taskList[i].toString());
         }
@@ -69,10 +71,6 @@ public class Task {
         catch (IndexOutOfBoundsException e) {
             System.out.println("Something went wrong. Please enter a valid operation. E.g. mark 1");
         }
-    }
-
-    public String getTask() {
-        return this.description;
     }
 
     public void markAsNotdone() { isDone = false;

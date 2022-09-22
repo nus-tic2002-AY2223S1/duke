@@ -1,23 +1,14 @@
 import java.util.Scanner;
 
 public class Duke {
-    public static String line = "\n--------------------------------------------------------------------\n";
+    public static String line = "\n--------------------------------------------------------\n";
     static public String userInput = "";
     static public Task taskList[] = new Task[100];
     static public int taskListCount = 0;
 
-/*    public static void list() {
-        System.out.println(line);
-        for (int i = 0; i < taskListCount; i++) {
-            System.out.println(i+1 + ". " + "[" + taskList[i].getStatusIcon() + "] " + taskList[i].description);
-        }
-        System.out.println(line);
-    }*/
-
     public static void bye() {
         System.out.println(line + "Bye. Hope to see you again soon!" + line);
     }
-
 
     public static void main(String[] args) {
         String logo = "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠔⠋⠀⠐⠈⠉⠉⠉⠀⠀⠀⠉⠓⢄⠀⣀⠄⠚⠙⠉⠁⠀⠉⠉⠉⠁⠂⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
