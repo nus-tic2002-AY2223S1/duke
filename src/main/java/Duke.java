@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Duke {
-    public static String line = "\n--------------------------------------------------------\n";
+    public static String line = "\n----------------------------------\n";
     static public String userInput = "";
     static public Task taskList[] = new Task[100];
     static public int taskListCount = 0;
@@ -59,6 +59,9 @@ public class Duke {
                 } catch (DukeException e) {
                     System.out.println(line + "\uD83D\uDE1F OOPS!!! The description of a todo cannot be empty." + line);
                 }
+            }
+            else if (userInput.startsWith("delete")) {
+                Task.deleteTask();
             }
             else {
                 try {

@@ -49,6 +49,24 @@ public class Task {
         }
     }
 
+    public static void deleteTask() {
+        try {
+            String[] split = Duke.userInput.split(" ");
+            int taskId = (Integer.parseInt(split[1])) - 1;
+            System.out.println(Duke.line + "Noted. I've remove this task: ");
+            System.out.println(Duke.taskList[taskId].toString() + Duke.line);
+
+            for (int i=taskId; i<Duke.taskListCount; i++) {
+                Duke.taskList[i] = Duke.taskList[i+1];
+            }
+            Duke.taskList[Duke.taskListCount] = null;
+            Duke.taskListCount--;
+
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Something went wrong. Please enter a valid operation. E.g. delete 1");
+        }
+    }
+
     public static void list() {
         System.out.println(Duke.line + "Here are the tasks in your list:\n");
         for (int i = 0; i < Duke.taskListCount; i++) {
