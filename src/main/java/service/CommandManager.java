@@ -47,11 +47,6 @@ public class CommandManager {
      * @param commandName: name of command
      */
     public static Command getCommand(String commandName) {
-        Command command = commandMap.get(commandName);
-        // add task if commandName is not found in the command list (level 2 implementation)
-        if (command == null) {
-            return UndefinedCommand.getInstance();
-        }
-        return command;
+        return commandMap.getOrDefault(commandName, UndefinedCommand.getInstance());
     }
 }

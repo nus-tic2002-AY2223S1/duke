@@ -29,7 +29,7 @@ public class ConsoleUI implements UI {
         // get guidance info in list
         List<String> guidance = getGuidance();
 
-        // print i
+        // print guidance in neat format
         System.out.println("Greeting from Duke! ;>");
         printGuidanceLineBreak("~", maxLineLength);
         guidance.forEach(o -> {

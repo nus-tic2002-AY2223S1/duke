@@ -18,7 +18,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,27 +32,41 @@ public class TaskManager {
 
     private static final TaskManager taskManager = new TaskManager();
 
-    private String SOURCE_FILE_PATH = "data/data.txt";
+    private static final String DEFAULT_DATA_PATH = "data/data.txt";
+
+    private static boolean initComplete = false;
+
+    private static String dataFilePath;
 
     public static TaskManager getInstance() {
         return taskManager;
     }
 
-    private TaskManager() {
-        initTask();
-    }
+    private TaskManager() {}
 
     /**
      * @description init task list from hard disk data
      * @author Dex
      * @date 2022/08/29
+     * @param dataFilePath: dest data file for storing task data
      */
-    public void initTask() {
-        File file = new File(SOURCE_FILE_PATH);
+    public static void init(String dataFilePath) {
+        if (initComplete) {
+            System.out.println("init of task manager is completed");
+            return;
+        }
+
+        // sanity check
+        if (dataFilePath == null) {
+            System.out.printf("input data file path not found, use default data path: [%s]%n", DEFAULT_DATA_PATH);
+            dataFilePath = DEFAULT_DATA_PATH;
+        }
+
+        File file = new File(dataFilePath);
 
         // check source file exists, create if it does not exist
         if (!file.exists()) {
-            createFile(SOURCE_FILE_PATH);
+            createFile(dataFilePath);
             return;
         }
 
@@ -65,14 +78,18 @@ public class TaskManager {
 
         // parse to task instance, skip corrupted data
         List<String> list = StringUtil.stringToList(content, "\n");
-        list.stream().map(this::parseToJsonObj)
+        list.stream().map(TaskManager::parseToJsonObj)
                 .filter(Objects::nonNull)
-                .map(this::parseToTask)
+                .map(TaskManager::parseToTask)
                 .filter(Objects::nonNull)
                 .forEach(taskList::add);
+
+        // set value of data path in global score
+        TaskManager.dataFilePath = dataFilePath;
+        initComplete = true;
     }
 
-    private JSONObject parseToJsonObj(String json) {
+    private static JSONObject parseToJsonObj(String json) {
         try {
             return JSON.parseObject(json);
         } catch (Exception exception) {
@@ -81,7 +98,7 @@ public class TaskManager {
         }
     }
 
-    private Task parseToTask(JSONObject jsonObject) {
+    private static Task parseToTask(JSONObject jsonObject) {
         try {
             String type = StringUtil.trim(jsonObject.getString("type"));
             switch (type) {
@@ -100,21 +117,21 @@ public class TaskManager {
         }
     }
 
-    private Task parseTask(JSONObject jsonObject) {
+    private static Task parseTask(JSONObject jsonObject) {
         // create task instance
         Task task = new Task(jsonObject.getString(Constant.Task.DESCRIPTION_FIELD));
         task.setDone(jsonObject.getBoolean(Constant.Task.DONE_FIELD));
         return task;
     }
 
-    private Task parseTodoTask(JSONObject jsonObject) {
+    private static Task parseTodoTask(JSONObject jsonObject) {
         // create todo instance
         Todo todo = new Todo(jsonObject.getString(Constant.Task.DESCRIPTION_FIELD));
         todo.setDone(jsonObject.getBoolean(Constant.Task.DONE_FIELD));
         return todo;
     }
 
-    private Task parseDeadlineTask(JSONObject jsonObject) {
+    private static Task parseDeadlineTask(JSONObject jsonObject) {
         // convert string to localtime
         String by = StringUtil.trim(jsonObject.getString("by"));
         LocalDateTime time = DateUtil.parse(by, Constant.Time.INPUT_FORMAT);
@@ -126,7 +143,7 @@ public class TaskManager {
         return deadline;
     }
 
-    private Task parseEventTask(JSONObject jsonObject) {
+    private static Task parseEventTask(JSONObject jsonObject) {
         // convert string to localtime
         String startTimeStr = StringUtil.trim(jsonObject.getString("startTime"));
         String endTimeStr = StringUtil.trim(jsonObject.getString("endTime"));
@@ -141,7 +158,7 @@ public class TaskManager {
         return event;
     }
 
-    private void createFile(String path) {
+    private static void createFile(String path) {
         Path file = Paths.get(path);
         try {
             Files.createDirectories(file.getParent());
@@ -159,7 +176,10 @@ public class TaskManager {
      */
     public synchronized void persistTask() {
         String content = taskList.stream().map(o -> JSON.toJSONStringWithDateFormat(o, Constant.Time.INPUT_FORMAT)).collect(Collectors.joining("\n"));
-        FileUtil.writeStringToFile(new File(SOURCE_FILE_PATH), content);
+        if (StringUtil.isBlank(content)) {
+            return;
+        }
+        FileUtil.writeStringToFile(new File(dataFilePath), content);
     }
 
     /**

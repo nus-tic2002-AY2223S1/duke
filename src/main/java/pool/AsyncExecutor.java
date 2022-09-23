@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
  * @date 2022/09/08
  */
 public class AsyncExecutor {
+
     private static final ExecutorService executor = Executors.newFixedThreadPool(Constant.MAX_THREAD);
 
     private AsyncExecutor() {}

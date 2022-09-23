@@ -27,4 +27,12 @@ public class FileUtil {
             System.out.println(ExceptionUtil.getStackTraceAsString(e));
         }
     }
+
+    public static void deleteFile(File file) {
+        try {
+            FileUtils.delete(file);
+        } catch (IOException e) {
+            System.out.println(ExceptionUtil.getStackTraceAsString(e));
+        }
+    }
 }
