@@ -16,13 +16,17 @@ public class Duke {
                 "     What can I do for you?");
 
         List<Task> tasks = new ArrayList<>();
-        String action, rest;
+        String action, rest = " ";
         whileLoop: while (true){
             String text;
             Scanner s = new Scanner(System.in);
             text = s.nextLine();
             Task t;
             action = text.split(" ", 2)[0];
+            if(text.matches(".*\\s.*")){
+                rest = text.split(" ", 2)[1];
+            }
+
             switch(action){
                 case "bye":
                     System.out.println("    ---------------------------------------");
@@ -34,17 +38,39 @@ public class Duke {
                     break;
 
                 case "mark":
-                    rest = text.split(" ", 2)[1];
                     t = tasks.get(Integer.parseInt(rest)-1);
                     t.updateMark(true);
                     DukeUtils.printText("Nice! I've marked this task as done:\n " + "    " + t.getStatusDescription());
                     break;
 
                 case "unmark":
-                    rest = text.split(" ", 2)[1];
                     t = tasks.get(Integer.parseInt(rest)-1);
                     t.updateMark(false);
                     DukeUtils.printText("OK, I've marked this task as not done yet:\n " + "    " + t.getStatusDescription());
+                    break;
+
+                case "todo":
+                    t = new Task(rest);
+                    t.setType('T');
+                    tasks.add(t);
+                    int countT = tasks.size();
+                    DukeUtils.printAction(t, countT);
+                    break;
+
+                case "deadline":
+                    t = new Task(rest);
+                    t.setType('D');
+                    tasks.add(t);
+                    int countD = tasks.size();
+                    DukeUtils.printAction(t ,countD);
+                    break;
+
+                case "event":
+                    t = new Task(rest);
+                    t.setType('E');
+                    tasks.add(t);
+                    int countE = tasks.size();
+                    DukeUtils.printAction(t, countE);
                     break;
 
                 default:
