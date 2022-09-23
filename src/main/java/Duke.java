@@ -85,6 +85,13 @@ public class Duke {
             else if (lineArray[0].equalsIgnoreCase("todo"))
             {
                 
+                if (lineArray.length < 2) {
+                    System.out.println("\t-----------------------------------------------------------------");
+                    System.out.println("\t " + "The description of a todo cannot be empty.");
+                    System.out.println("\t-----------------------------------------------------------------"); 
+                    continue;
+                }
+
                 // piece the task description back together
                 String descriptionLine = "";
                 for (int i = 1; i < lineArray.length; i++) {
@@ -100,6 +107,13 @@ public class Duke {
                 
             } else if (lineArray[0].equalsIgnoreCase("deadline"))
             {
+
+                if (lineArray.length < 2) {
+                    System.out.println("\t-----------------------------------------------------------------");
+                    System.out.println("\t " + "The description of a deadline cannot be empty.");
+                    System.out.println("\t-----------------------------------------------------------------"); 
+                    continue;
+                }
                 
                 // piece the task description back together
                 String descriptionLine = "";
@@ -126,6 +140,13 @@ public class Duke {
                 
             } else if (lineArray[0].equalsIgnoreCase("event"))
             {
+
+                if (lineArray.length < 2) {
+                    System.out.println("\t-----------------------------------------------------------------");
+                    System.out.println("\t " + "The description of a event cannot be empty.");
+                    System.out.println("\t-----------------------------------------------------------------"); 
+                    continue;
+                }
                 
                 // piece the task description back together
                 String descriptionLine = "";
