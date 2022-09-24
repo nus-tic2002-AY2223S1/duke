@@ -14,7 +14,7 @@ public class Task {
     public void markAsDone() {
         this.isDone = true;
         print("Nice! I've marked this task as done:\n");
-        print("       " + this.toString() + "\n");
+        print("       " + this.toString()+ "\n");
     }
 
     public void markAsUndone() {

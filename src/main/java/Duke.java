@@ -35,7 +35,9 @@ public class Duke {
         }
     }
     public static void echo(String toEcho) {
-        print(toEcho + "\n");
+        print("Got it. I've added this task:\n");
+        print("  " + toEcho + "\n");
+        print("Now you have " + listCount + " tasks in the list.\n");
     }
     public static void identifyInput(String command) {
         boolean exist = false;
@@ -64,15 +66,48 @@ public class Duke {
             if (exist) {
                 command = command + " exist";
             } else {
-                addTask(command);
+                try {
+                    addTask(command);
+                } catch (notATask e){
+                    print("Not a correct task types, please use keywords: todo, deadlines or events.\n");
+                }
             }
         }
     }
-    public static void addTask(String command){
-        list[listCount] = new Task(command);
+    public static void addTask(String command) throws notATask {
+        String[] split = command.split("/");
+        String dateAndTime;
+        String[] description = split[0].split(" ", 2);
+        switch (description[0]) {
+            case "todo":
+                list[listCount] = new Todo (description[1]);
+                break;
+            case "deadline":
+                try {
+                    dateAndTime = split[1];
+                } catch (IndexOutOfBoundsException e){
+                    print("Please enter with a specific date/time\n");
+                    return;
+                }
+                list[listCount] = new Deadline(description[1], dateAndTime);
+                break;
+            case "event":
+                try {
+                    dateAndTime = split[1];
+                    checkTimeSlot(dateAndTime);
+                } catch (IndexOutOfBoundsException e){
+                    print("Please enter with a time slot for the event\n");
+                    return;
+                } catch (notTimeSlotException e){
+                    return;
+                }
+                list[listCount] = new Event(description[1], dateAndTime);
+                break;
+            default:
+                throw new notATask();
+        }
         listCount ++;
-        command = "added: " + command;
-        echo(command);
+        echo(list[listCount - 1].toString());
     }
 
     public static void identifyMark(String[] split) {
@@ -106,6 +141,17 @@ public class Duke {
         String indentFive = "     ";
         System.out.print(indentFive + toPrint);
     }
+
+    public static void checkTimeSlot(String dateAndTime) throws notTimeSlotException{
+        if (dateAndTime.contains("-")){
+            return;
+        } else {
+            throw new notTimeSlotException();
+        }
+    }
+    public static class notTimeSlotException extends Exception{}
+
+    public static class notATask extends Exception{}
 }
 
 
