@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -6,11 +7,18 @@ public class Duke {
     private static int count = 0;
     private static Task[] tasks = new Task[100];
 
-    public static void addList(Task t) {
-
+    public static void addList(Task t){
         tasks[count]=t;
         count++;
     }
+
+//    public static ArrayList<Task> addList (ArrayList<Task> listItems,Task t){
+//        listItems.add(t);
+//        System.out.println ("\tadded: " + t);
+//        return listItems;
+//    }
+
+
     public static void printList(){
         for(int i=1;i<=count;i++){
             System.out.println(i + "." + " " + tasks[i-1]);
@@ -51,6 +59,7 @@ public class Duke {
     }
 
     private static boolean extracted(String line, String[] userInput) throws DukeException{
+       // public static ArrayList<Task> UserInput(ArrayList<Task> Lists){
         switch(userInput[0]){
             case"bye":
                 System.out.println("Bye. Hope to see you again soon!");
@@ -96,6 +105,7 @@ public class Duke {
                     String deadlineDate = line.substring(divPos+4);
                     Deadline taskDeadline = new Deadline(deadlineTask,deadlineDate);
                     addList(taskDeadline);
+
                     System.out.println("Got it. I've added this task: ");
                     System.out.println(taskDeadline);
                     System.out.println("Now you have " + count + " tasks in the list.");
