@@ -49,7 +49,8 @@ public class Duke {
                     Task markedTask = taskList.get(markIndex - 1);
                     markedTask.markAsDone();
                     System.out.println("____________________________________________________________\n" +
-                            "Nice! I've marked this task as done: \n[" + markedTask.getStatusIcon() + "]   " + markedTask.getDescription());
+                            "Nice! I've marked this task as done: \n   [" + markedTask.getStatusIcon() + "]   " + markedTask.getDescription()+
+                            "\n____________________________________________________________" );
                 } else
                     System.out.println("Please enter a Task Number.(E.g. mark 1)\n____________________________________________________________");
             }
@@ -62,7 +63,8 @@ public class Duke {
                     Task markedTask = taskList.get(markIndex - 1);
                     markedTask.markAsUndone();
                     System.out.println("____________________________________________________________\n" +
-                            "OK, I've marked this task as not done yet: \n[" + markedTask.getStatusIcon() + "]   " + markedTask.getDescription());
+                            "OK, I've marked this task as not done yet: \n   [" + markedTask.getStatusIcon() + "]   " + markedTask.getDescription()
+                    + "\n____________________________________________________________");
 
                 }
             }
