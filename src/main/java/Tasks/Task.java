@@ -1,3 +1,5 @@
+package Tasks;
+
 public class Task {
     private boolean isDone;
     private String work;
@@ -21,8 +23,9 @@ public class Task {
     @Override
     public String toString() {
         String value = isDone ? "[X]" : "[ ]";
-        value += " " + work;
+        value += work;
         return value;
     }
 
 }
+
