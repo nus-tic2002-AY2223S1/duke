@@ -15,12 +15,12 @@ public class Duke {
                     bot.showList();
                 } else if (key == Keyword.Mark) {
                     String part = line.split(" ")[1];
-                    bot.mark(part);
+                    bot.mark(part, true);
                 } else if (key == Keyword.Unmark) {
                     String part = line.split(" ")[1];
-                    bot.unmark(part);
+                    bot.mark(part, false);
                 } else {
-                    bot.show(line);
+                    bot.add(line);
                 }
             } catch (IndexOutOfBoundsException e) {
                 System.out.println(key.toString() + " on invalid task");
