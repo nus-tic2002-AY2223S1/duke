@@ -1,15 +1,15 @@
-import java.util.Arrays;
+import Tasks.Task;
+import Tasks.UnsupportedTaskType;
+
 public class Bot {
     private String name;
     private String seperator;
-    private Task[] storage;
-    private int index;
+    private TaskManager taskManager;
 
     public Bot(String name, String seperator) {
         this.name = name;
         this.seperator = seperator;
-        this.storage = new Task[100];
-        this.index = 0;
+        taskManager = new TaskManager();
     }
 
     public void welcome() {
@@ -19,48 +19,50 @@ public class Bot {
         seperator();
     }
 
-    public void show(String value) {
-        store(value);
+    public void add(String text) {
+        String firstWord = text.substring(0, text.indexOf(' '));
+        String theRest = text.substring(text.indexOf(" "));
         seperator();
-        System.out.println(appendTab("added: " + value));
+        try {
+            taskManager.addNewTask(TaskManager.TaskType.getType(firstWord), theRest);
+            int size = taskManager.getList().size();
+            System.out.println(appendTab("Got it. I've added this task:"));
+            System.out.println(appendTab(taskManager.getString()));
+            System.out.println(appendTab("Now you have "+size+" tasks in the list."));
+        } catch(UnsupportedTaskType e) {
+            System.out.println("not supported task");
+        }
         seperator();
     }
 
     public void showList() {
-        int i = 1;
         seperator();
         System.out.println(appendTab("Here are the tasks in your list:"));
-        Task[] stored = Arrays.copyOf(storage, index);
-        for(Task each : stored) {
-            System.out.println(appendTab(i+". " + each));
+        int i = 1;
+        for(String each : taskManager.getList()) {
+            System.out.println(appendTab(i+ ". " + each));
             i++;
         }
         seperator();
     }
 
-    public void mark(String i){
+    public void mark(String i,  boolean value){
         int index = Integer.parseInt(i);
         seperator();
-        if(storage[index - 1].isDone() == false) {
-            storage[index - 1].markTask(true);
-            System.out.println(appendTab("Nice! I've marked this task as done:"));
-            System.out.println(appendTab(storage[index - 1].toString()));
+        boolean success = taskManager.markTask(index - 1, value);
+        if(success) {
+            if(value == true) {
+                System.out.println(appendTab("Nice! I've marked this task as done:"));
+            } else {
+                System.out.println(appendTab("OK, I've marked this task as not done yet:"));
+            }
+            System.out.println(appendTab(taskManager.getTask(index - 1)));
         } else {
-            System.out.println(appendTab("This task is already marked as done"));
-        }
-        seperator();
-
-    }
-
-    public void unmark(String i){
-        int index = Integer.parseInt(i);
-        seperator();
-        if(storage[index - 1].isDone() == true) {
-            storage[index - 1].markTask(false);
-            System.out.println(appendTab("OK! I've marked this task as not done yet:"));
-            System.out.println(appendTab(storage[index - 1].toString()));
-        } else {
-            System.out.println(appendTab("This task is already marked as not done"));
+            if(value == true) {
+                System.out.println(appendTab("This task is already marked as done"));
+            } else {
+                System.out.println(appendTab("This task is already marked as not done"));
+            }
         }
         seperator();
     }
@@ -73,11 +75,6 @@ public class Bot {
 
     private void seperator() {
         System.out.println("\t" + seperator);
-    }
-    private void store(String value) {
-        Task newTask = new Task(value);
-        storage[index] = newTask;
-        index++;
     }
 
     private String appendTab(String text) {
