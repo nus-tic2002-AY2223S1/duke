@@ -1,15 +1,33 @@
 import java.util.Scanner;
-
 public class Duke {
-    public static void printTaskList(Task[] inputList) {
-        for (int count = 0; count < inputList.length; count++) {
-            if (inputList[count] != null) {
-                System.out.println((count + 1) + "." + "[" + inputList[count].getStatusIcon() + "] " + inputList[count].getDescription());
+    //    public static void printTaskList(Task[] inputList) {
+//        for (int count = 0; count < inputList.length; count++) {
+//            if (inputList[count] != null) {
+//                System.out.println((count + 1) + "." + "[" + inputList[count].getStatusIcon() + "] " + inputList[count].getDescription());
+//            }
+//        }
+//        System.out.println("\n");
+//    }
+    private static String checkInput(String input) throws ToDoInputException, basicInputException {
+
+        String[] keywordList = {"todo", "bye", "mark", "unmark", "deadline", "todo", "list"};
+        boolean keywordExist = false;
+        for (int keywordIndex = 0; keywordIndex < keywordList.length; keywordIndex++) {
+            if (input.contains(keywordList[keywordIndex])) {
+                keywordExist = true;
             }
         }
-        System.out.println("\n");
+        if (!keywordExist) {
+            throw new basicInputException();
+        } else {
+            if (input.indexOf("todo") != -1) {
+                if (input.split(" ").length == 1) {
+                    throw new ToDoInputException();
+                }
+            }
+            return input;
+        }
     }
-
     public static void main(String[] args) {
 
         // Create a taskList containing task object
@@ -17,8 +35,19 @@ public class Duke {
         Scanner input = new Scanner(System.in);
         System.out.print("Hello! I'm Duke\n" + "What can I do for you?:\n");
         int counter = 0;
+
         while (true) {
             String line = input.nextLine();
+            try {
+                checkInput(line);
+            } catch (ToDoInputException e) {
+                System.out.println(" ☹ OOPS!!! The description of a todo cannot be empty.");
+                continue;
+            } catch (basicInputException e) {
+                System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                continue;
+            }
+
             String[] lineList = line.split(" ");
             String firstWord = lineList[0].toLowerCase();
 
@@ -55,7 +84,7 @@ public class Duke {
                     taskList[counter] = new Deadline(deadLineTask, deadLine);
                     System.out.println(taskList[counter].toString());
                     counter++;
-                    System.out.println("Now you have "+ (counter) + " tasks in the list.");
+                    System.out.println("Now you have " + (counter) + " tasks in the list.");
                     continue;
                 case "todo":
                     System.out.println("Got it. I've added this task:");
@@ -63,7 +92,7 @@ public class Duke {
                     taskList[counter] = new ToDo(toDoTask);
                     System.out.println(taskList[counter].toString());
                     counter++;
-                    System.out.println("Now you have "+ (counter) + " tasks in the list.");
+                    System.out.println("Now you have " + (counter) + " tasks in the list.");
                     continue;
                 case "event":
                     String[] atSplitList = line.split("/at ");
@@ -73,12 +102,12 @@ public class Duke {
                     taskList[counter] = new Event(eventTask, eventDate);
                     System.out.println(taskList[counter].toString());
                     counter++;
-                    System.out.println("Now you have "+ (counter) + " tasks in the list.");
+                    System.out.println("Now you have " + (counter) + " tasks in the list.");
                     continue;
                 default:
                     taskList[counter] = new Task(line);
                     counter++;
-                    System.out.println("added: "+ line + "\n");
+                    System.out.println("added: " + line + "\n");
             }
         }
     }
