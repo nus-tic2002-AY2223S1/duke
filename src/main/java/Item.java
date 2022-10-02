@@ -3,13 +3,13 @@ import Helpers.CommonHelper;
 public class Item {
     private String name;
     private boolean isDone;
-    private String type;
+    private TaskTypeEnumeration.TaskType type;
 
     private String time;
 
     public Item(String n, TaskTypeEnumeration.TaskType t){
         this.isDone = false;
-        this.type = t.name();
+        this.type = t;
         switch (t){
             case T:
                 this.name = (n.replaceAll(t.getType(),"")).trim();
@@ -40,10 +40,10 @@ public class Item {
         this.isDone = d;
     }
 
-    public String getType(){
+    public TaskTypeEnumeration.TaskType getType(){
         return this.type;
     }
-    public void setType(String t){
+    public void setType(TaskTypeEnumeration.TaskType t){
         this.type = t;
     }
 

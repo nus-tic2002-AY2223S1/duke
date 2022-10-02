@@ -17,7 +17,7 @@ public class Task {
     }
 
     private void printItem(Integer n, Item i){
-        String t = i.getType();
+        String t = i.getType().name();
         String displayText = String.format("\t\t%d.[%s][%s] %s %s", n, t, i.getIsDone() ? "X":" ", i.getName(), t.equals("T") ? "" : "(" + (t.equals("E") ? "at: " : "by: ") + i.getTime() + ")");
         CommonHelper.printMessage(displayText);
     }
