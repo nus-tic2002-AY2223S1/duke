@@ -1,29 +1,24 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-
+import java.lang.*;
 
 public class Duke {
     private static int count = 0;
     private static Task[] tasks = new Task[100];
 
-    public static void addList(Task t){
-        tasks[count]=t;
-        count++;
+    public static ArrayList<Task> AddList (ArrayList<Task> listItems,String input){
+            listItems.add(new Task(input));
+            System.out.println("\tadded: " + input);
+        return listItems;
     }
 
-//    public static ArrayList<Task> addList (ArrayList<Task> listItems,Task t){
-//        listItems.add(t);
-//        System.out.println ("\tadded: " + t);
-//        return listItems;
-//    }
-
-
-    public static void printList(){
-        for(int i=1;i<=count;i++){
-            System.out.println(i + "." + " " + tasks[i-1]);
+    public static void printList(ArrayList<Task>listItems){
+        for(int i=1;i<=listItems.size();i++){
+            System.out.println(i + "." + listItems.get(i-1));
         }
     }
+
 
     public static boolean isNumeric(String str) {
         try {
@@ -34,17 +29,18 @@ public class Duke {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         String line;
         Scanner in = new Scanner(System.in);
+        ArrayList<Task> listItems = new ArrayList<Task>();
+
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
 
         while(true){
             try {
                 line = in.nextLine();
-                String[] userInput = line.split(" ");
-                if (extracted(line, userInput)) continue;
+                if (printUserInput(listItems, line)) continue;
                 break;
             } catch(NullPointerException e){
                 System.out.println("☹ OOPS!!! task is not exist");
@@ -54,29 +50,28 @@ public class Duke {
                 System.out.println("☹ OOPS!!! The input task is not valid");
             }catch (NumberFormatException e){
                 System.out.println("☹ OOPS!!! The input is String,Pls enter number");
+            }catch (StringIndexOutOfBoundsException e){
+                System.out.println("☹ OOPS!!! The input is out of bounds,Pls enter valid String");
             }
         }
     }
 
-    private static boolean extracted(String line, String[] userInput) throws DukeException{
-       // public static ArrayList<Task> UserInput(ArrayList<Task> Lists){
+    public static boolean printUserInput(ArrayList<Task> listItems,String Input) throws DukeException{
+            String[] userInput = Input.split(" ");
         switch(userInput[0]){
             case"bye":
                 System.out.println("Bye. Hope to see you again soon!");
                 break;
             case"list":
-                if(tasks[count-1]==null){
+                if(listItems.isEmpty()){
                     throw new DukeException("☹ OOPS!!! The task list is empty");
                 }
-
-                printList();
+                printList(listItems);
                 return true;
             case"mark":
-//                if(userInput[1]==null){
-//                    throw new DukeException("The mark task is not available,Pls re-input mark task!");
-//                }
                     int indexMark = Integer.parseInt(userInput[1]);
-                    Task markTask = tasks[indexMark-1];
+                    //Task markTask = tasks[indexUnmark-1];
+                    Task markTask = listItems.get(indexMark-1);
                     markTask.markAsDone();
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println(markTask);
@@ -85,13 +80,11 @@ public class Duke {
                 return true;
             case"unmark":
                     int indexUnmark = Integer.parseInt(userInput[1]);
-                    Task unmarkTask = tasks[indexUnmark-1];
+                   // Task unmarkTask = tasks[indexUnmark-1];
+                    Task unmarkTask = listItems.get(indexUnmark-1);
                     unmarkTask.markAsNotdone();
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println(unmarkTask);
-//                if(unmarkTask ==null) {
-//                    throw new DukeException("The unmark task is not available,Pls re-input unmark task!");
-//                }
                 return true;
             case"deadline":
                 if(userInput.length<2){
@@ -100,15 +93,15 @@ public class Duke {
                 if(isNumeric(userInput[1])){
                     throw new DukeException("☹ OOPS!!! The input of a deadline cannot be number.");
                 }
-                    int divPos = line.indexOf("/");
-                    String deadlineTask = line.substring(9,divPos);
-                    String deadlineDate = line.substring(divPos+4);
+                    int divPos = Input.indexOf("/");
+                    String deadlineTask = Input.substring(9,divPos);
+                    String deadlineDate = Input.substring(divPos+4);
                     Deadline taskDeadline = new Deadline(deadlineTask,deadlineDate);
-                    addList(taskDeadline);
+                    listItems.add(taskDeadline);
 
                     System.out.println("Got it. I've added this task: ");
                     System.out.println(taskDeadline);
-                    System.out.println("Now you have " + count + " tasks in the list.");
+                    System.out.println("Now you have " + listItems.size() + " tasks in the list.");
                 return true;
             case"todo":
                 if(userInput.length<2){
@@ -117,12 +110,12 @@ public class Duke {
                 if(isNumeric(userInput[1])){
                     throw new DukeException("☹ OOPS!!! The input of a todo cannot be number.");
                 }
-                    String todoTask = line.substring(5);
+                    String todoTask = Input.substring(5);
                     Todo taskTodo = new Todo(todoTask);
-                    addList(taskTodo);
+                    listItems.add(taskTodo);
                     System.out.println("Got it. I've added this task: ");
                     System.out.println(taskTodo);
-                    System.out.println("Now you have " + count + " tasks in the list.");
+                    System.out.println("Now you have " + listItems.size() + " tasks in the list.");
                 return true;
             case"event":
                 if(userInput.length<2){
@@ -131,15 +124,26 @@ public class Duke {
                 if(isNumeric(userInput[1])){
                     throw new DukeException("☹ OOPS!!! The input of a event cannot be number.");
                 }
-                    int Pos = line.indexOf("/");
-                    String eventsTask = line.substring(6,Pos);
-                    String eventsDate = line.substring(Pos+4);
+                    int Pos = Input.indexOf("/");
+                    String eventsTask = Input.substring(6,Pos);
+                    String eventsDate = Input.substring(Pos+4);
                     Events taskEvent = new Events(eventsTask,eventsDate);
-                    addList(taskEvent);
+                    listItems.add(taskEvent);
                     System.out.println("Got it. I've added this task: ");
                     System.out.println(taskEvent);
-                    System.out.println("Now you have " + count + " tasks in the list.");
-
+                    System.out.println("Now you have " + listItems.size() + " tasks in the list.");
+                return true;
+            case"delete":
+                try{
+                    int DeleteNum = Integer.parseInt(userInput[1]);
+                    Task t = listItems.get(DeleteNum-1);
+                    listItems.remove(DeleteNum-1);
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println(t);
+                    System.out.println("Now you have " + listItems.size() + " tasks in the list.");
+                }catch(IndexOutOfBoundsException e){
+                    System.out.println("☹ OOPS!!! The index out of arraylist length");
+                }
                 return true;
             default:
                 if(userInput[0].equals(("blah"))){
@@ -148,7 +152,7 @@ public class Duke {
                 if(isNumeric(userInput[0])){
                     throw new DukeException("☹ OOPS!!! You have enter a number,Pls re-enter task !");
                 }
-                addList(new Task(line));
+                AddList(listItems,Input);
 
                 return true;
         }
