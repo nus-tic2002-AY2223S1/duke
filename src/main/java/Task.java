@@ -1,9 +1,12 @@
+import Helpers.CommonHelper;
+import Helpers.MessageConstants;
+
 import java.util.ArrayList;
 
-public class Todo {
+public class Task {
     public ArrayList<Item> items;
 
-    public Todo(){
+    public Task(){
         items = new ArrayList<>(100);
     }
 
@@ -15,24 +18,25 @@ public class Todo {
 
     private void printItem(Integer n, Item i){
         String t = i.getType();
-        System.out.format("\t%d.[%s][%s] %s %s\n", n, t, i.getIsDone() ? "X":" ", i.getName(), t == "T" ? "" : "(" + (t == "E" ? "at: " : "by: ") + i.getTime() + ")");
+        String displayText = String.format("\t\t%d.[%s][%s] %s %s", n, t, i.getIsDone() ? "X":" ", i.getName(), t.equals("T") ? "" : "(" + (t.equals("E") ? "at: " : "by: ") + i.getTime() + ")");
+        CommonHelper.printMessage(displayText);
     }
 
-    public void addItem(String itemName, String type){
-        System.out.println("Got it. I've added this task:");
+    public void addItem(String itemName, TaskTypeEnumeration.TaskType type){
+        CommonHelper.printMessage(MessageConstants.ADD_TASK);
         Item item = new Item(itemName, type);
         items.add(item);
         Integer n = items.size();
         printItem(n, item);
-        System.out.format("Now you have %d tasks in the list.\n", n);
+        CommonHelper.printMessage(String.format(MessageConstants.SUM_TASK, n));
     }
 
     public void showList(){
         if(items.size() > 0) {
-            System.out.println("\tHere are the tasks in your list:");
+            CommonHelper.printMessage(MessageConstants.LIST_TASK);
             printList();
         } else {
-            System.out.println("\tYay! You have completed all the tasks.");
+            CommonHelper.printMessage(MessageConstants.NO_TASK);
         }
     }
 
@@ -41,13 +45,13 @@ public class Todo {
             Item item = items.get(n-1);
             item.setIsDone(isDone);
             if (isDone) {
-                System.out.println("\tNice! I've marked this task as done:");
+                CommonHelper.printMessage(MessageConstants.MARK_TASK);
             } else {
-                System.out.println("\tOK, I've marked this task as not done yet:");
+                CommonHelper.printMessage(MessageConstants.UNMARK_TASK);
             }
             printItem(n, item);
         } else {
-            System.out.println("\tOops! I could not find this task. Here are the tasks again:");
+            CommonHelper.printMessage(MessageConstants.TASK_NOT_FOUND);
             printList();
         }
     }

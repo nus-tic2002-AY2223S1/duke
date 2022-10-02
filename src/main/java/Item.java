@@ -1,3 +1,5 @@
+import Helpers.CommonHelper;
+
 public class Item {
     private String name;
     private boolean isDone;
@@ -5,19 +7,19 @@ public class Item {
 
     private String time;
 
-    public Item(String n, String t){
+    public Item(String n, TaskTypeEnumeration.TaskType t){
         this.isDone = false;
-        this.type = t;
+        this.type = t.name();
         switch (t){
-            case "T":
-                this.name = (n.replaceAll("todo","")).trim();
+            case T:
+                this.name = (n.replaceAll(t.getType(),"")).trim();
                 this.time = "";
                 break;
-            case "E":
-            case "D":
-                n = n.replaceAll("deadline","");
-                n = n.replaceAll("event","");
-                String[] f = formatPassedName(n);
+            case E:
+            case D:
+                n = n.replaceAll(t.getType(),"");
+                n = n.replaceAll(t.getType(),"");
+                String[] f = CommonHelper.formatPassedName(n);
                 this.name = f[0];
                 this.time = f[1];
                 break;
@@ -52,16 +54,5 @@ public class Item {
         this.time = t;
     }
 
-    private String[] formatPassedName(String n){
-        String[] formatted = new String[2];
-        Integer idx = n.indexOf("/");
-        formatted[0] = n.substring(0, idx-1).trim();
-        String x = n.substring(idx+1,idx+3);
-        if(x.equals("at") || x.equals("by")){
-            formatted[1] = n.substring(idx+3).trim();
-        } else {
-            formatted[1] = n.substring(idx+1).trim();
-        }
-        return formatted;
-    }
+
 }
