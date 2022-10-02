@@ -4,8 +4,8 @@ import java.util.Scanner;
 import java.lang.*;
 
 public class Duke {
-    private static int count = 0;
-    private static Task[] tasks = new Task[100];
+   // private static int count = 0;
+   // private static Task[] tasks = new Task[100];
 
     public static ArrayList<Task> AddList (ArrayList<Task> listItems,String input){
             listItems.add(new Task(input));
