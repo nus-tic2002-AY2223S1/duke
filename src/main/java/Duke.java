@@ -1,9 +1,11 @@
-import java.util.ArrayList;
+import Helpers.CommonHelper;
+import Helpers.MessageConstants;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
-    public static Todo todo = new Todo();
+    public static Task task = new Task();
     public static void main(String[] args) {
         intro();
     }
@@ -25,66 +27,28 @@ public class Duke {
         String inp = "";
         Scanner scanner = new Scanner(System.in);
 
-        while(!isClosing(inp = scanner.nextLine())) {
-            if(isOpening(inp)){
-                System.out.println("\tHello again!\n");
-            } else if (isGet(inp)) {
-                todo.showList();
-            } else if(isUnmark(inp)){
-                todo.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), false);
-            } else if(isMark(inp)){
-                todo.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), true);
-            } else if(isTodo(inp)) {
-                todo.addItem(inp, "T");
-            } else if (isDeadline(inp)) {
-                todo.addItem(inp, "D");
-            } else if (isEvent(inp)) {
-                todo.addItem(inp, "E");
+        while(!CommonHelper.isClosing(inp = scanner.nextLine())) {
+            if(CommonHelper.isOpening(inp)){
+                CommonHelper.printMessage(MessageConstants.WELCOME);
+            } else if (CommonHelper.isGet(inp)) {
+                task.showList();
+            } else if(CommonHelper.isUnmark(inp)){
+                task.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), false);
+            } else if(CommonHelper.isMark(inp)){
+                task.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), true);
+            } else if(CommonHelper.isTodo(inp)) {
+                task.addItem(inp, TaskTypeEnumeration.TaskType.T);
+            } else if (CommonHelper.isDeadline(inp)) {
+                task.addItem(inp, TaskTypeEnumeration.TaskType.D);
+            } else if (CommonHelper.isEvent(inp)) {
+                task.addItem(inp, TaskTypeEnumeration.TaskType.E);
             } else {
-                System.out.println("I'm sorry. What do you mean?");
+                CommonHelper.printMessage(MessageConstants.REPEAT);
             }
         }
-        System.out.println("\tBye. Hope to see you again soon!!");
+        CommonHelper.printMessage(MessageConstants.END);
         System.exit(1);
     }
 
-    private static boolean isOpening(String text){
-        String[] opening = {"Hello","Hi"};
-        return Arrays.stream(opening).anyMatch(text::equalsIgnoreCase);
-    }
 
-    private static boolean isClosing(String text){
-        String[] closing = {"Bye","See ya"};
-        return Arrays.stream(closing).anyMatch(text::equalsIgnoreCase);
-    }
-
-    private static boolean isGet(String text){
-        String[] closing = {"list","show"};
-        return Arrays.stream(closing).anyMatch(text::equalsIgnoreCase);
-    }
-
-    private static boolean isMark(String text){
-        String[] closing = {"mark","done"};
-        return Arrays.stream(closing).anyMatch(text::contains);
-    }
-
-    private static boolean isUnmark(String text){
-        String[] closing = {"unmark","not done"};
-        return Arrays.stream(closing).anyMatch(text::contains);
-    }
-
-    private static boolean isTodo(String text){
-        String[] closing = {"todo"};
-        return Arrays.stream(closing).anyMatch(text::contains);
-    }
-
-    private static boolean isDeadline(String text){
-        String[] closing = {"deadline"};
-        return Arrays.stream(closing).anyMatch(text::contains);
-    }
-
-    private static boolean isEvent(String text){
-        String[] closing = {"event"};
-        return Arrays.stream(closing).anyMatch(text::contains);
-    }
 }
