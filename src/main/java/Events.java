@@ -7,7 +7,7 @@ public class Events extends Task {
     }
 
     public String toString() {
-        return "[E]" + super.toString() + " (at: " + by + ")";
+        return "  [E]" + super.toString() + " (at: " + by + ")";
     }
 
 }
