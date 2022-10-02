@@ -5,7 +5,12 @@ public class Event extends Task{
         super(description);
         this.at = at;
     }
-
+    public String getDescription() {
+        return this.description;
+    }
+    public String getDateAndTime() {
+        return this.at;
+    }
     @Override
     public String toString() {
         String[] parts = this.at.split(" ", 2);

@@ -57,54 +57,65 @@ public class Duke {
                 print("Task number out of list range!\n");
             }
         } else {
-            for (int i = 0; i < listCount; i++) {
-                if (list[i].description.equals(command)) {
-                    exist = true;
-                    break;
-                }
-            }
-            if (exist) {
-                command = command + " exist";
-            } else {
-                try {
-                    addTask(command);
-                } catch (notATask e){
-                    print("Not a correct task types, please use keywords: todo, deadlines or events.\n");
-                }
+            try {
+                addTask(command);
+            } catch (DukeException.notATask e) {
+                print("OOPS!!! I'm sorry, but I dont't know what that means :-( \n" );
+                print("Please use keywords: todo, deadlines or events.\n");
             }
         }
     }
-    public static void addTask(String command) throws notATask {
+    public static void addTask(String command) throws DukeException.notATask {
         String[] split = command.split("/");
-        String dateAndTime;
-        String[] description = split[0].split(" ", 2);
+        String dateAndTime = "";
+        String[] description;
+        // Check event description is not empty.
+        try{
+            description = checkAndSplitDescription(split[0]);
+        } catch (DukeException.noTaskDescription e) {
+            print("Task description cannot be empty!\n");
+            return;
+        }
+        //check if Deadline and Event has a valid date/time.
+        try {
+            dateAndTime = split[1];
+            checkDateAndTime(description, dateAndTime);
+        } catch (IndexOutOfBoundsException e){
+            switch (description[0]){
+                case "deadline":
+                    print("Invalid command! Date and time for deadline cannot be empty.\n");
+                    return;
+                case "event":
+                    print("Invalid command! Date and time for event cannot be empty.\n");
+                    return;
+                default:
+                    break;
+            }
+        } catch (DukeException.notTimeSlotException e) {
+            print("Please enter a timeslot for the event! Or use deadline instead. \n");
+            return;
+        }
+        //check if the task to be added is existed
+        if (listCount > 0) {
+            try {
+                isDuplicate(description, dateAndTime);
+            } catch (DukeException.isDuplicateException e) {
+                print("Task exist!\n");
+                return;
+            }
+        }
         switch (description[0]) {
             case "todo":
-                list[listCount] = new Todo (description[1]);
+                    list[listCount] = new Todo (description[1]);
                 break;
             case "deadline":
-                try {
-                    dateAndTime = split[1];
-                } catch (IndexOutOfBoundsException e){
-                    print("Please enter with a specific date/time\n");
-                    return;
-                }
                 list[listCount] = new Deadline(description[1], dateAndTime);
                 break;
             case "event":
-                try {
-                    dateAndTime = split[1];
-                    checkTimeSlot(dateAndTime);
-                } catch (IndexOutOfBoundsException e){
-                    print("Please enter with a time slot for the event\n");
-                    return;
-                } catch (notTimeSlotException e){
-                    return;
-                }
                 list[listCount] = new Event(description[1], dateAndTime);
                 break;
             default:
-                throw new notATask();
+                throw new DukeException.notATask();
         }
         listCount ++;
         echo(list[listCount - 1].toString());
@@ -121,11 +132,6 @@ public class Duke {
             }
         }
     }
-    public static void exit() {
-        print("Bye. Remember!\n");
-        print("In times of crisis, the wise build bridges while the foolish build barriers.\n");
-
-    }
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
@@ -137,21 +143,81 @@ public class Duke {
         }
         return true;
     }
+
+    public static void checkDateAndTime(String[] description, String dateAndTime) throws DukeException.notTimeSlotException{
+        switch (description[0]){
+            case "todo":
+                return;
+            case "event":
+                try{
+                    checkTimeSlot(dateAndTime);
+                } catch (DukeException.notTimeSlotException e) {
+                    throw new DukeException.notTimeSlotException();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    public static void isDuplicate (String[] description, String dateAndTime) throws DukeException.isDuplicateException{
+        for (int i = 0; i < listCount; i++) {
+            switch (description[0]) {
+                case "todo":
+                    if(list[i].getDescription().equals(description[1])){
+                        throw new DukeException.isDuplicateException();
+                    }
+                    break;
+                case "deadline":
+                    if(list[i].getDescription().equals(description[1])) {
+                        if (list[i].getDateAndTime().equals(dateAndTime)) {
+                            throw new DukeException.isDuplicateException();
+                        }
+                    }
+                    break;
+                case "event":
+                    if(list[i].getDescription().equals(description[1])){
+                        if (list[i].getDateAndTime().equals(dateAndTime)) {
+                            throw new DukeException.isDuplicateException();
+                        }
+                    }
+                    break;
+                default:
+                    return;
+            }
+        }
+    }
+
+    public static void checkTimeSlot(String dateAndTime) throws DukeException.notTimeSlotException {
+        if (dateAndTime.contains("-")) {
+        } else {
+            throw new DukeException.notTimeSlotException();
+        }
+    }
+
+    public static String[] checkAndSplitDescription(String description) throws DukeException.noTaskDescription, DukeException.notATask{
+        String[] split;
+
+        split = description.split(" ", 2);
+        if (split.length < 2) {
+            if (split[0].equals("todo") || split[0].equals("deadline") || split[0].equals("event")) {
+                throw new DukeException.noTaskDescription();
+            } else {
+                throw new DukeException.notATask();
+            }
+        }
+        return split;
+    }
+
     public static void print(String toPrint){
         String indentFive = "     ";
         System.out.print(indentFive + toPrint);
     }
 
-    public static void checkTimeSlot(String dateAndTime) throws notTimeSlotException{
-        if (dateAndTime.contains("-")){
-            return;
-        } else {
-            throw new notTimeSlotException();
-        }
-    }
-    public static class notTimeSlotException extends Exception{}
+    public static void exit() {
+        print("Bye. Remember!\n");
+        print("In times of crisis, the wise build bridges while the foolish build barriers.\n");
 
-    public static class notATask extends Exception{}
+    }
 }
 
 

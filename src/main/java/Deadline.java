@@ -6,7 +6,12 @@ public class Deadline extends Task {
         super(description);
         this.by = by;
     }
-
+    public String getDescription() {
+        return this.description;
+    }
+    public String getDateAndTime() {
+        return this.by;
+    }
     @Override
     public String toString() {
         String[] parts = this.by.split(" ", 2);
