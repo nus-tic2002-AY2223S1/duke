@@ -40,7 +40,7 @@ public class Duke {
         while(true){
             try {
                 line = in.nextLine();
-                if (printUserInput(listItems, line)) continue;
+                if (UserInput(listItems, line)) continue;
                 break;
             } catch(NullPointerException e){
                 System.out.println("☹ OOPS!!! task is not exist");
@@ -56,7 +56,7 @@ public class Duke {
         }
     }
 
-    public static boolean printUserInput(ArrayList<Task> listItems,String Input) throws DukeException{
+    public static boolean UserInput(ArrayList<Task> listItems,String Input) throws DukeException{
             String[] userInput = Input.split(" ");
         switch(userInput[0]){
             case"bye":
