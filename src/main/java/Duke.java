@@ -38,19 +38,19 @@ public class Duke {
         System.out.println("What can I do for you?");
 
         while(true){
-            try {
+            try{
                 line = in.nextLine();
                 if (UserInput(listItems, line)) continue;
                 break;
-            } catch(NullPointerException e){
+            }catch(NullPointerException e){
                 System.out.println("☹ OOPS!!! task is not exist");
-            } catch(DukeException e){
+            }catch(DukeException e){
               System.out.println(e.getMessage());
-            }catch (ArrayIndexOutOfBoundsException e){
+            }catch(ArrayIndexOutOfBoundsException e){
                 System.out.println("☹ OOPS!!! The input task is not valid");
-            }catch (NumberFormatException e){
+            }catch(NumberFormatException e){
                 System.out.println("☹ OOPS!!! The input is String,Pls enter number");
-            }catch (StringIndexOutOfBoundsException e){
+            }catch(StringIndexOutOfBoundsException e){
                 System.out.println("☹ OOPS!!! The input is out of bounds,Pls enter valid String");
             }
         }
