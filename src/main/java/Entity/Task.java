@@ -1,3 +1,5 @@
+package Entity;
+
 import jdk.jshell.spi.ExecutionControl;
 
 public class Task {
