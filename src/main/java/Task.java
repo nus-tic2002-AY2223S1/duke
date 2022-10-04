@@ -7,10 +7,6 @@ public class Task {
         this.isDone = false;
     }
 
-    public void setDescription(String dis){
-        this.description= dis;
-        this.isDone=false;
-    }
 
     public String getDescription(){
         return description;
@@ -32,3 +28,4 @@ public class Task {
         System.out.println("[ ] "+ description+"\n");
     }
 }
+
