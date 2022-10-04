@@ -1,3 +1,5 @@
+import com.sun.source.util.TaskListener;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,7 +37,7 @@ public class Duke {
                 System.out.println("____________________________________________________________\n" +
                         "Here are the tasks in your list:");
                 for (Task task : taskList) {
-                    System.out.println(taskCount + 1 + ". [" + task.getStatusIcon() + "]   " + task.getDescription());
+                    System.out.println(taskCount + 1 + ". " + task);
                     taskCount++;
                 }
                 System.out.println("____________________________________________________________");
@@ -43,38 +45,47 @@ public class Duke {
 
             // mark items
             else if (line.startsWith("mark ")) {
-                String markedItem = line;
-                if (line.length() > 5) {
-                    int markIndex = Integer.parseInt(markedItem.substring(5));
-                    Task markedTask = taskList.get(markIndex - 1);
-                    markedTask.markAsDone();
-                    System.out.println("____________________________________________________________\n" +
-                            "Nice! I've marked this task as done: \n   [" + markedTask.getStatusIcon() + "]   " + markedTask.getDescription()+
-                            "\n____________________________________________________________" );
-                } else
-                    System.out.println("Please enter a Task Number.(E.g. mark 1)\n____________________________________________________________");
+
+                String[] markedItem = line.split("mark ");
+                int markedIndex = Integer.parseInt(markedItem[1]);
+                Task markedTask = taskList.get(markedIndex - 1);
+                markedTask.markAsDone();
+                System.out.println("____________________________________________________________\n" +
+                        "Nice! I've marked this task as done: \n "+markedTask+
+                        "\n____________________________________________________________" );
             }
 
             // unmarked items
             else if (line.startsWith("unmark ")) {
-                String markString = line;
-                if (line.length() > 7) {
-                    int markIndex = Integer.parseInt(markString.substring(7));
-                    Task markedTask = taskList.get(markIndex - 1);
-                    markedTask.markAsUndone();
-                    System.out.println("____________________________________________________________\n" +
-                            "OK, I've marked this task as not done yet: \n   [" + markedTask.getStatusIcon() + "]   " + markedTask.getDescription()
-                    + "\n____________________________________________________________");
+                String[] unmarkedItem = line.split("unmark ");
+                int unmarkedIndex = Integer.parseInt(unmarkedItem[1]);
+                Task unmarkedTask = taskList.get(unmarkedIndex - 1);
+                unmarkedTask.markAsUndone();
 
-                }
+                System.out.println("____________________________________________________________\n" +
+                        "OK, I've marked this task as not done yet: \n" + unmarkedTask
+                        + "\n____________________________________________________________");
             }
 
-            // add to list
-            else {
-                Task newTask = new Task(line);
-                taskList.add(newTask);
+            else if (line.startsWith("todo")) {
+                String[] todoItem = line.split("todo ");
+                System.out.println("Got it. I've added this task:");
+                String todoTask = todoItem[1];
+                Todo task = new Todo(todoTask);
+                taskList.add(task);
+                System.out.println(task);
+                System.out.println("Now you have " + taskList.size() + " tasks in the list.\n");
+            }
 
-                System.out.println("____________________________________________________________\nadded: " + line + "\n____________________________________________________________\n");
+
+            else if (line.startsWith("deadline")) {
+                String[] todoTask = line.split("deadline ");
+                System.out.println("Got it. I've added this task:\n");
+            }
+
+            // prompt user to enter valid input
+            else {
+                System.out.println("____________________________________________________________\n Please Enter a Valid Input (E.g. Todo Task 1) \n____________________________________________________________\n");
             }
 
         }
