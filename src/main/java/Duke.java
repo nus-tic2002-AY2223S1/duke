@@ -1,11 +1,10 @@
 import Helpers.CommonHelper;
 import Helpers.MessageConstants;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
-    public static Task task = new Task();
+    public static Tracker tracker = new Tracker();
     public static void main(String[] args) {
         intro();
     }
@@ -31,17 +30,17 @@ public class Duke {
             if(CommonHelper.isOpening(inp)){
                 CommonHelper.printMessage(MessageConstants.WELCOME);
             } else if (CommonHelper.isGet(inp)) {
-                task.showList();
+                tracker.showList();
             } else if(CommonHelper.isUnmark(inp)){
-                task.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), false);
+                tracker.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), false);
             } else if(CommonHelper.isMark(inp)){
-                task.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), true);
+                tracker.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), true);
             } else if(CommonHelper.isTodo(inp)) {
-                task.addItem(inp, TaskTypeEnumeration.TaskType.T);
+                tracker.addItem(inp, new Todo(inp));
             } else if (CommonHelper.isDeadline(inp)) {
-                task.addItem(inp, TaskTypeEnumeration.TaskType.D);
+                tracker.addItem(inp, new Deadline(inp));
             } else if (CommonHelper.isEvent(inp)) {
-                task.addItem(inp, TaskTypeEnumeration.TaskType.E);
+                tracker.addItem(inp, new Event(inp));
             } else {
                 CommonHelper.printMessage(MessageConstants.REPEAT);
             }
