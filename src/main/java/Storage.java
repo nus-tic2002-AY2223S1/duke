@@ -1,23 +1,14 @@
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.FileNotFoundException;
 
 public class Storage {
+    private static File f;
     //constructor
-    Storage(){
-
-    }
     public Storage(String filePath) {
-        new File(filePath); //create a File for the given File path
+        f = new File(filePath); //create a File for the given File path
     }
 
-    public static String load() throws IOException {
-        Path path = Paths.get("../TIC2002/tasks.txt"); //hardcord the path
-
-        String read = Files.readAllLines(path).get(0); //read the file
-
-        return read; //return as String
+    public static File load() throws DukeException, FileNotFoundException {
+        return f;
     }
 }

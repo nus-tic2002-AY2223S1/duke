@@ -1,4 +1,3 @@
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -29,6 +28,7 @@ public class Duke {
     }
 
     public void run() {
+
         //...
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -93,6 +93,6 @@ public class Duke {
         }
     }
     public static void main(String[] args) {
-        new Duke("../TIC2002/tasks.txt").run();
+        new Duke("data/tasks.txt").run();
     }
 }

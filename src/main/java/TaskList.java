@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -11,7 +12,7 @@ public class TaskList {
         myTaskList = new Task[100];
     }
     //constructor reading a existing file
-    TaskList(String f) throws FileNotFoundException, DukeException { //string f is a file
+    TaskList(File f) throws FileNotFoundException, DukeException { //string f is a file
         Scanner s = new Scanner(f); //create a Scanner using the File as the source
         while (s.hasNext()){ //add task to the list as long there is next line
             addTasks(s.nextLine());
