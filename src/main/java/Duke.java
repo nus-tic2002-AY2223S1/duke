@@ -10,32 +10,37 @@ public class Duke {
         // DUKE greeting message
         DukeUtils.dukeInit();
         List<Task> tasks = new ArrayList<>();
-        String key, text, rest;
+        String text, key, rest;
 
         whileLoop: while (true) {
             text = inputText();
+            try {
+                DukeUtils.validateInputText(text);
+            } catch (DukeException e) {
+                DukeUtils.echoText(e.getMessage());
+                continue;
+            }
             key = text.split(" ", 2)[0];
             Task task;
-            System.out.println(breakLine);
             switch (key) {
                 case "bye":
-                    echoText("Bye. Hope to see you again soon!");
+                    DukeUtils.echoText("Bye. Hope to see you again soon!");
                     break whileLoop;
                 case "list":
-                    printList(tasks);
+                    DukeUtils.printList(tasks);
                     break;
                 case "mark":
                     rest = text.split(" ", 2)[1];
                     task = tasks.get(Integer.parseInt(rest)-1);
                     task.markTask();
-                    echoText("Nice! I've marked this task as done:\n      "
+                    DukeUtils.echoText("Nice! I've marked this task as done:\n      "
                             + task);
                     break;
                 case "unmark":
                     rest = text.split(" ", 2)[1];
                     task = tasks.get(Integer.parseInt(rest)-1);
                     task.unmarkTask();
-                    echoText("OK, I've marked this task as not done yet:\n      "
+                    DukeUtils.echoText("OK, I've marked this task as not done yet:\n      "
                             + task);
                     break;
                 case "deadline":
@@ -44,14 +49,14 @@ public class Duke {
                     String deadline_by = rest.split("/by", 2)[1];
                     Deadline deadline = new Deadline(deadline_desc, deadline_by);
                     tasks.add(deadline);
-                    echoText("Got it. I've added this task: \n      " +
+                    DukeUtils.echoText("Got it. I've added this task: \n      " +
                             deadline + "\n     Now you have "+ tasks.size()+" tasks in the list.");
                     break;
                 case "todo":
                     rest = text.split(" ", 2)[1];
                     Todo todo = new Todo(rest);
                     tasks.add(todo);
-                    echoText("Got it. I've added this task: \n      " +
+                    DukeUtils.echoText("Got it. I've added this task: \n      " +
                             todo + "\n     Now you have "+ tasks.size()+" tasks in the list.");
                     break;
                 case "event":
@@ -60,14 +65,13 @@ public class Duke {
                     String event_at = rest.split("/at", 2)[1];
                     Event event = new Event(event_desc, event_at);
                     tasks.add(event);
-                    echoText("Got it. I've added this task: \n      " +
+                    DukeUtils.echoText("Got it. I've added this task: \n      " +
                             event + "\n     Now you have "+ tasks.size()+" tasks in the list.");
                     break;
                 default:
                     tasks.add(new Task(text));
-                    echoText("added: " + text);
+                    DukeUtils.echoText("added: " + text);
             }
-            System.out.println(breakLine);
         }
 
     }
@@ -75,17 +79,4 @@ public class Duke {
         Scanner s = new Scanner(System.in);
         return s.nextLine();
     }
-
-    public static void echoText(String text){
-        String tab = "     ";
-        System.out.println(tab + text);
-    }
-
-    public static void printList(List<Task> tasks) {
-        String tab = "     ";
-        int counter = 0;
-        for (Task task : tasks)
-            System.out.println(tab + ++counter + ". " + task);
-    }
-
 }
