@@ -1,9 +1,8 @@
 import java.util.Scanner;
-
+import java.util.ArrayList;
 
 public class Duke {
-    public static Task task[]=new Task[100];
-    public static  int countTask=0;
+    public static ArrayList<Task> task=new ArrayList<Task>();
     public static final String byeMsg="Bye. Hope to see you again soon!\n";
     public static String print(String msg) {
         return "________________________________\n" + msg + "________________________________\n";
@@ -38,10 +37,19 @@ public class Duke {
 
                 case "mark":
                 case "unmark":
-
-                    itemNo = Integer.parseInt(inputSplit[1]) - 1;
+                case "delete":
                     try{
-                        if(itemNo>=countTask || itemNo<0){
+                        if(inputSplit[1]==null){
+                            throw new DukeException();
+                        }
+                    }catch(Exception e){
+                        System.out.println(print("☹ OOPS!!! Task ID cannot be empty, please check!\n"));
+                        break;
+                    }
+                    itemNo = Integer.parseInt(inputSplit[1]) - 1;
+
+                    try{
+                        if(itemNo>=task.size() || itemNo<0){
                             throw new DukeException();
                         }
                     }catch(DukeException e){
@@ -49,9 +57,12 @@ public class Duke {
                         break;
                     }
                     if(inputSplit[0].equals("mark")){
-                        task[itemNo].mark();
-                    }else {
-                        task[itemNo].unmark();
+                        task.get(itemNo).mark();
+                    }else if(inputSplit[0].equals("unmark")) {
+                        task.get(itemNo).unmark();
+                    }else{
+                        Task.deleteTask(itemNo);
+
                     }
                     break;
 
@@ -74,7 +85,7 @@ public class Duke {
                     }catch(DukeException e){
                         System.out.println(print("☹ OOPS!!! Invalid input, please check!\n"));
                     }
-                    countTask++;
+
                     break;
 
                 default:

@@ -33,9 +33,9 @@ public class Task {
 
     public static void list(){
         String itemList="";
-        for (int i = 0; i < Duke.countTask; i++) {
+        for (int i = 0; i < Duke.task.size(); i++) {
             //itemList += "(i + 1) + ".["+task[i].getStatusIcon()+"] " + task[i].getTask() + "\n";
-            itemList += (i + 1) + "." + Duke.task[i].toString();
+            itemList += (i + 1) + "." + Duke.task.get(i).toString();
 
         }
         System.out.println(Duke.print(itemList));
@@ -55,8 +55,8 @@ public class Task {
             detail=fullInput.substring(indexSpace, indexSlash - 1);
             due=fullInput.substring(indexSlash + 4);
 
-            Duke.task[Duke.countTask] = new Deadline(detail, due);
-            System.out.println(Duke.print(Duke.task[Duke.countTask].encapTask(Duke.task[Duke.countTask].toString(), Duke.countTask + 1)));
+            Duke.task.add(new Deadline(detail, due));
+            System.out.println(Duke.print(Duke.task.get(Duke.task.size()-1).encapTask(Duke.task.get(Duke.task.size()-1).toString(), Duke.task.size() - 1)));
 
         }
         else if(taskType.equals("todo")){
@@ -65,8 +65,7 @@ public class Task {
             }
             detail = fullInput.substring(indexSpace);
 
-            Duke.task[Duke.countTask] = new Todo(detail);
-            System.out.println(Duke.print(Duke.task[Duke.countTask].encapTask(Duke.task[Duke.countTask].toString(), Duke.countTask + 1)));
+            Duke.task.add(new Todo(detail));
 
         }
         else{
@@ -76,13 +75,26 @@ public class Task {
             detail=fullInput.substring(indexSpace, indexSlash - 1);
             due=fullInput.substring(indexSlash + 4);
 
-            Duke.task[Duke.countTask] = new Event(detail, due);
-            System.out.println(Duke.print(Duke.task[Duke.countTask].encapTask(Duke.task[Duke.countTask].toString(), Duke.countTask + 1)));
+            Duke.task.add(new Event(detail, due));
+
 
         }
+        System.out.println(Duke.print(Duke.task.get(Duke.task.size()-1).encapTask(Duke.task.get(Duke.task.size()-1).toString(), Duke.task.size() - 1)));
 
     }
+    public static void deleteTask(int taskID){
+        System.out.println(Duke.print("Noted. I've removed this task:\n " +Duke.task.get(taskID).toString()+"Now you have "+ (taskID+1)+" tasks in the list.\n"));
 
+        if(taskID!=Duke.task.size()-1) {
+
+            for (int i = taskID; i < Duke.task.size()-1; i++) {
+                Duke.task.set(i,Duke.task.get(i+1));
+            }
+
+        }
+        Duke.task.remove(Duke.task.size()-1);
+
+    }
 
 
 }
