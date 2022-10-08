@@ -19,13 +19,20 @@ public class Task {
     public void markAsDone(){
         isDone=true;
         System.out.println("Awesome! The task has been marked done!\n");
-        System.out.println("["+ getStatusIcon()+"] "+ description+"\n");
+        //System.out.println("["+ getStatusIcon()+"] "+ description+"\n");
     }
 
     public void markAsUndone(){
         isDone=false;
         System.out.println("Alright! The task has been marked Undone!\n");
-        System.out.println("[ ] "+ description+"\n");
+        //System.out.println("[ ] "+ description+"\n");
+    }
+
+    @Override
+    public String toString() {
+
+        return "["+ getStatusIcon()+"] "+ description;
     }
 }
+
 
