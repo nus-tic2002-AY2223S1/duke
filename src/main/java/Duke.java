@@ -62,6 +62,8 @@ public class Duke {
                 System.out.println("☹ OOPS!!! The input is String,Pls enter number");
             }catch(StringIndexOutOfBoundsException e){
                 System.out.println("☹ OOPS!!! The input is out of bounds,Pls enter valid String");
+            }catch(IndexOutOfBoundsException e){
+                System.out.println("☹ OOPS!!! The input is out of index,Pls re-enter");
             }
         }
     }

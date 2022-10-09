@@ -1,21 +1,19 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class StoreFile {
         public static void writeToFile(String Text) {
+            File f = new File("C:\\data\\duke.txt");
             try {
-                File f = new File("C:\\data\\duke.txt");
-                PrintWriter pw = new PrintWriter(f);
+                FileWriter pw = new FileWriter(f);
                 pw.write(Text);
                 pw.close();
                 System.out.println("Save file to Hard Drive Successfully !.");
 
-            }catch(FileNotFoundException e){
-                System.out.println("Save file Error");
+            }catch(Exception e){
+                System.out.println("error");
             }
         }
 
