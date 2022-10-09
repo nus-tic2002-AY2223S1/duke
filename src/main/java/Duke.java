@@ -7,7 +7,20 @@ public class Duke {
     //public static String taskname(int num) {
 
     //}
+    static void validate(String s, String tas) throws DukeException {
+        if (s.equals(tas)) {
 
+            // throw an object of user defined exception
+            throw new DukeException(); //tas+ " cannot be empty. Please try again");
+        }
+        //else {
+          //  System.out.println("Correct input!");
+       // }
+    }
+
+    static void validateDate(int ind) throws DukeException2 {
+        if (ind==-1) {throw new DukeException2();}
+    }
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -20,76 +33,102 @@ public class Duke {
         //String[] com= new String[100];
         Task[] t= new Task[10];
         String temp;
+        String ts="null";
         int i=1;
         int j=0;
         while(i==1){
             Scanner in = new Scanner(System.in);
             temp = in.nextLine();
 
-            if(temp.equals("list")){
-                System.out.println("\nContent of your List\n");
+            try {                                           //try new
+                if (temp.equals("list")) {
+                    System.out.println("\nContent of your List\n");
 
-                for(int k=0;k<j;k++){
-                //    System.out.println(k+1 + ". ["+t[k].getStatusIcon()+"] " + t[k].getDescription() +"\n");
-                    System.out.println(k+1 + ". "+t[k]);
+                    for (int k = 0; k < j; k++) {
+                        //    System.out.println(k+1 + ". ["+t[k].getStatusIcon()+"] " + t[k].getDescription() +"\n");
+                        System.out.println(k + 1 + ". " + t[k]);
+
+                    }
+                    System.out.println("\nEnd of list\n");
+
+                } else if (temp.equals("bye")) {
+                    i = 0;
+                } else if (temp.substring(0, 3).equals("unm")) {
+                    //unmark
+                    int num = Integer.parseInt(temp.substring(7));
+                    t[num - 1].markAsUndone();
+                    System.out.println(t[num - 1] + "\n");
+                } else if (temp.substring(0, 3).equals("mar")) {
+                    //mark
+                    int num = Integer.parseInt(temp.substring(5));
+                    t[num - 1].markAsDone();
+                    System.out.println(t[num - 1] + "\n");
 
                 }
-                System.out.println("\nEnd of list\n");
 
-            }
-            else if(temp.equals("bye")){
-                i=0;
-            }
+                else if (temp.substring(0, 4).equals("todo")) {
 
-            else if (temp.substring(0,3).equals("unm")) {
-                //unmark
-                int num= Integer.parseInt(temp.substring(7));
-                t[num-1].markAsUndone();
-                System.out.println(t[num-1]+ "\n");
-            }
+                    ts="todo";
+                    validate(temp, temp.substring(0, 4)); //Check if todo is empty
 
-            else if (temp.substring(0,3).equals("mar")) {
-                //mark
-                int num= Integer.parseInt(temp.substring(5));
-                t[num-1].markAsDone();
-                System.out.println(t[num-1]+ "\n");
+                    t[j] = new Todo(temp.substring(5));
+                    j++;
+                    System.out.println("The task has been successfully added to your list!");
+                    System.out.println(t[j - 1]);
+                    System.out.println("Now you have " + j + " tasks in your list\n");
 
-            }
-            else if (temp.substring(0,4).equals("todo")){
+                }
 
-                t[j]= new Todo(temp);
-                j++;
-                System.out.println("The task has been successfully added to your list!");
-                System.out.println(t[j-1]);
-                System.out.println("Now you have "+ j +" tasks in your list\n");
+                else if (temp.substring(0, 5).equals("event")) {
 
-            }
-            else if (temp.substring(0,8).equals("deadline")){
+                    ts="event";
+                    validate(temp, temp.substring(0, 5));
 
-                int index= temp.indexOf('/');
+                    int index = temp.indexOf('/');
+                    validateDate(index);
 
-                t[j]= new Deadline(temp.substring(9,index), temp.substring(index+1));
 
-                j++;
+                    t[j] = new Event(temp.substring(6, index), temp.substring(index + 1));
 
-                System.out.println("The task has been successfully added to your list!");
-                System.out.println(t[j-1]);
-                System.out.println("Now you have "+ j +" tasks in your list\n");
-            }
-            else if (temp.substring(0,5).equals("event")){
+                    j++;
 
-                int index= temp.indexOf('/');
+                    System.out.println("The task has been successfully added to your list!");
+                    System.out.println(t[j - 1]);
+                    System.out.println("Now you have " + j + " tasks in your list\n");
+                }
 
-                t[j]= new Event(temp.substring(6,index), temp.substring(index+1));
+                else if (temp.substring(0, 8).equals("deadline")) {
 
-                j++;
+                    ts="deadline";
+                    validate(temp, temp.substring(0, 8));
 
-                System.out.println("The task has been successfully added to your list!");
-                System.out.println(t[j-1]);
-                System.out.println("Now you have "+ j +" tasks in your list\n");
+                    int index = temp.indexOf('/');
+                    validateDate(index);
+
+                    t[j] = new Deadline(temp.substring(9, index), temp.substring(index + 1));
+
+                    j++;
+
+                    System.out.println("The task has been successfully added to your list!");
+                    System.out.println(t[j - 1]);
+                    System.out.println("Now you have " + j + " tasks in your list\n");
+                }
+
+
+                else {
+                    System.out.println("Type bye to exit or check your input and try again.\n");
+                }
+
+            } catch (IndexOutOfBoundsException e){              //Catch
+                System.out.println("oopss!! Please check your input and try again or type bye to exit.\n");
+            } catch (DukeException e){
+                System.out.println("Error : "+ ts + " cannot be empty. Please try again\n");//+ e);
+            }catch (DukeException2 e){
+                System.out.println("Error : For "+ ts + " Please enter by/at after / and try again\n");//+ e);
             }
 
         }
         System.out.println("Byeee!! See you Again!!");
     }
 }
+
