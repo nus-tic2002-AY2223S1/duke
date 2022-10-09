@@ -21,9 +21,16 @@ public class Task {
         this.isDone = false;
     }
 
+
+    public String getData(){
+          if (this.isDone == true) {
+              return ("|1|" + this.description);
+          } else {
+              return ("|0|" + this.description);
+          }
+      }
       public String toString(){
           return "[" + getStatusIcon() + "]" + " " + this.description;
-         // return "added" + " " + description;
       }
 
 }

@@ -6,6 +6,7 @@ public class Events extends Task {
         this.by = by;
     }
 
+    public String getData() { return "E" + super.getData() + "|" + by;}
     public String toString() {
         return "[E]" + super.toString() + " (at: " + by + ")";
     }

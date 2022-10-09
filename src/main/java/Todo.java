@@ -4,6 +4,8 @@ public class Todo extends Task{
     public Todo(String description) {
         super(description);
     }
+
+    public String getData() { return "T" + super.getData();}
     public String toString() {
         return "[T]" + super.toString();
     }

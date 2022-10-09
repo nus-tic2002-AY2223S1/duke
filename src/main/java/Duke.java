@@ -1,4 +1,4 @@
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.*;
@@ -11,6 +11,7 @@ public class Duke {
             listItems.add(new Task(input));
             System.out.println("\tadded: " + input);
         return listItems;
+
     }
 
     public static void printList(ArrayList<Task>listItems){
@@ -29,13 +30,22 @@ public class Duke {
         }
     }
 
+
+    static void save(ArrayList<Task> listItems){
+        String list=" ";
+       for(Task listItem: listItems){
+           list+= listItem.getData()+ "\n";
+       }
+        StoreFile.writeToFile(list);
+    }
+
+
     public static void main(String[] args){
         String line;
         Scanner in = new Scanner(System.in);
         ArrayList<Task> listItems = new ArrayList<Task>();
 
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
+        UI.Greeting();
 
         while(true){
             try{
@@ -144,6 +154,10 @@ public class Duke {
                 }catch(IndexOutOfBoundsException e){
                     System.out.println("☹ OOPS!!! The index out of arraylist length");
                 }
+                return true;
+
+            case"save":
+                save(listItems);
                 return true;
             default:
                 if(userInput[0].equals(("blah"))){
