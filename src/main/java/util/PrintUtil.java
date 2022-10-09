@@ -17,6 +17,13 @@ public class PrintUtil {
         printWithIndentation(content);
     }
 
+    public static void printDeletedMessage(Task task, int total) {
+        String content = "Noted. I've removed this task: \n\t   ";
+        content += task.getDetails();
+        content += "\n\t Now you have " + total + " tasks in the list.";
+        printWithIndentation(content);
+    }
+
     public static void printByeMessage() {
         printWithIndentation("Bye. Hope to see you again soon!");
     }

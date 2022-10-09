@@ -4,9 +4,8 @@ import entity.Deadline;
 import entity.Event;
 import entity.Task;
 import entity.ToDo;
-import exception.EmptyContentException;
+import exception.IllegalContentException;
 import exception.IllegalActionException;
-import util.PrintUtil;
 
 import java.util.ArrayList;
 
@@ -37,10 +36,10 @@ public class TaskUtil {
         }
     }
 
-    public static void addTask(ArrayList<Task> taskList, String[] inputArr) throws EmptyContentException {
+    public static void addTask(ArrayList<Task> taskList, String[] inputArr) throws IllegalContentException {
 
         if (inputArr.length <= 1) {
-            throw new EmptyContentException("☹ OOPS!!! The description of a " + inputArr[0] + " cannot be empty.");
+            throw new IllegalContentException("☹ OOPS!!! The description of a " + inputArr[0] + " cannot be empty.");
         }
 
         Task task = null;
@@ -56,7 +55,7 @@ public class TaskUtil {
         if (inputArr[0].equals("deadline")) {
             String[] words = inputArr[1].split("/");
             if (words.length < 2) {
-                throw new EmptyContentException("☹ OOPS!!! The due date/time of a deadline cannot be empty.");
+                throw new IllegalContentException("☹ OOPS!!! The due date/time of a deadline cannot be empty.");
             }
             task = new Deadline(words[0], words[1]);
         }
@@ -65,7 +64,7 @@ public class TaskUtil {
         if (inputArr[0].equals("event")) {
             String[] words = inputArr[1].split("/");
             if (words.length < 2) {
-                throw new EmptyContentException("☹ OOPS!!! The date/time of a event cannot be empty.");
+                throw new IllegalContentException("☹ OOPS!!! The date/time of a event cannot be empty.");
             }
             task = new Event(words[0], words[1]);
         }
@@ -76,4 +75,24 @@ public class TaskUtil {
         }
     }
 
+    public static void deleteTask(ArrayList<Task> taskList, String[] inputArr) throws IllegalContentException {
+
+        if (inputArr.length <= 1) {
+            throw new IllegalContentException("☹ OOPS!!! The description of a " + inputArr[0] + " cannot be empty.");
+        }
+
+        Task task = null;
+        String intExpr = "/\\d+";
+
+        if (inputArr[1].matches(intExpr)) {
+            throw new IllegalContentException("☹ OOPS!!! The description of a " + inputArr[0] + " must be a number.");
+        } else if (Integer.parseInt(inputArr[1]) > taskList.size()) {
+            throw new IllegalContentException("☹ OOPS!!! The description of a " + inputArr[0] + " must be a number that is not larger than the list size.");
+        } else {
+            int index = Integer.parseInt(inputArr[1]) - 1;
+            task = taskList.get(index);
+            taskList.remove(index);
+            PrintUtil.printDeletedMessage(task, taskList.size());
+        }
+    }
 }

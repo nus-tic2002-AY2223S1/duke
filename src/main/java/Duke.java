@@ -1,7 +1,9 @@
+import entity.Deadline;
 import entity.Event;
 import entity.Task;
+import entity.ToDo;
 import exception.EmptyActionException;
-import exception.EmptyContentException;
+import exception.IllegalContentException;
 import exception.IllegalActionException;
 import util.PrintUtil;
 import util.TaskUtil;
@@ -20,6 +22,7 @@ public class Duke {
     public static final String ACTION_TODO = "todo";
     public static final String ACTION_DEADLINE = "deadline";
     public static final String ACTION_EVENT = "event";
+    public static final String ACTION_DELETE = "delete";
     public static Scanner scanner;
     public static String[] inputArr; //["action", "content"]
     public static ArrayList<Task> taskList;
@@ -47,11 +50,14 @@ public class Duke {
         scanner = new Scanner(System.in);
         inputArr = new String[]{""};
         taskList = new ArrayList<>();
-        actionList = new ArrayList<>(Arrays.asList(ACTION_LIST, ACTION_BYE, ACTION_MARK, ACTION_UNMARK, ACTION_ADD, ACTION_TODO, ACTION_DEADLINE, ACTION_EVENT));
+        actionList = new ArrayList<>(Arrays.asList(ACTION_LIST, ACTION_BYE, ACTION_MARK, ACTION_UNMARK, ACTION_ADD,
+                ACTION_TODO, ACTION_DEADLINE, ACTION_EVENT, ACTION_DELETE));
 
-        taskList.add(new Task("read book"));
-        taskList.add(new Task("return book"));
-        taskList.add(new Task("buy bread"));
+        taskList.add(new ToDo("read book", true));
+        taskList.add(new Deadline("return book", "June 6th", true));
+        taskList.add(new Event("project meeting", "Aug 6th 2-4pm"));
+        taskList.add(new ToDo("join sports club", true));
+        taskList.add(new ToDo("borrow book"));
 
         //start
         while (!inputArr[0].equals(ACTION_BYE)) {
@@ -78,13 +84,20 @@ public class Duke {
                         PrintUtil.printErrorMessage(e);
                     }
                     break;
+                case ACTION_DELETE:
+                    try {
+                        TaskUtil.deleteTask(taskList, inputArr);
+                    } catch (IllegalContentException e) {
+                        PrintUtil.printErrorMessage(e);
+                    }
+                    break;
                 case ACTION_BYE:
                     PrintUtil.printByeMessage();
                     break;
                 default:
                     try {
                         TaskUtil.addTask(taskList, inputArr);
-                    } catch (EmptyContentException e) {
+                    } catch (IllegalContentException e) {
                         PrintUtil.printErrorMessage(e);
                     }
                     break;

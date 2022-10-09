@@ -11,6 +11,11 @@ public class Task {
         this.description = name.trim();
     }
 
+    public Task(String name, boolean isDone) {
+        this.description = name.trim();
+        this.isDone = isDone;
+    }
+
     public String getDescription() {
         return description;
     }

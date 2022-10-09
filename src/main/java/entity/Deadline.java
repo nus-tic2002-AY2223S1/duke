@@ -11,6 +11,11 @@ public class Deadline extends Task {
         this.deadline = deadline.trim();
     }
 
+    public Deadline(String name, String deadline, boolean isDone) {
+        super(name, isDone);
+        this.deadline = deadline;
+    }
+
     public String getDeadline() {
         return deadline;
     }
@@ -26,6 +31,6 @@ public class Deadline extends Task {
 
     @Override
     public String getDetails() {
-        return String.format("%s%s %s (%s)", getTypeIcon(), getStatusIcon(), getDescription(), getDeadline());
+        return String.format("%s%s %s (by: %s)", getTypeIcon(), getStatusIcon(), getDescription(), getDeadline());
     }
 }

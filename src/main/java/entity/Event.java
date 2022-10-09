@@ -10,6 +10,11 @@ public class Event extends Task {
         this.time = time;
     }
 
+    public Event(String name, String time, boolean isDone) {
+        super(name, isDone);
+        this.time = time;
+    }
+
     public String getTime() {
         return time;
     }
@@ -25,6 +30,6 @@ public class Event extends Task {
 
     @Override
     public String getDetails() {
-        return String.format("%s%s %s (%s)", getTypeIcon(), getStatusIcon(), getDescription(), getTime());
+        return String.format("%s%s %s (at: %s)", getTypeIcon(), getStatusIcon(), getDescription(), getTime());
     }
 }
