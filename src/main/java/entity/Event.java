@@ -25,11 +25,16 @@ public class Event extends Task {
 
     @Override
     public String getTypeIcon() {
-        return "[E]";
+        return "E";
     }
 
     @Override
     public String getDetails() {
-        return String.format("%s%s %s (at: %s)", getTypeIcon(), getStatusIcon(), getDescription(), getTime());
+        return String.format("[%s]%s %s (at: %s)", getTypeIcon(), getStatusIcon(), getDescription(), getTime());
+    }
+
+    @Override
+    public String getSavingFormatDetails() {
+        return String.format("%s | %d | %s | %s\n", getTypeIcon(), isDone() ? 1 : 0, getDescription(), getTime());
     }
 }

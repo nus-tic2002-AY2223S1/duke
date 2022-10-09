@@ -26,11 +26,16 @@ public class Deadline extends Task {
 
     @Override
     public String getTypeIcon() {
-        return "[D]";
+        return "D";
     }
 
     @Override
     public String getDetails() {
-        return String.format("%s%s %s (by: %s)", getTypeIcon(), getStatusIcon(), getDescription(), getDeadline());
+        return String.format("[%s]%s %s (by: %s)", getTypeIcon(), getStatusIcon(), getDescription(), getDeadline());
+    }
+
+    @Override
+    public String getSavingFormatDetails() {
+        return String.format("%s | %d | %s | %s\n", getTypeIcon(), isDone() ? 1 : 0, getDescription(), getDeadline());
     }
 }

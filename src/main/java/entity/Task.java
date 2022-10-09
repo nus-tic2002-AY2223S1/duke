@@ -26,12 +26,6 @@ public class Task {
 
     public void updateStatus() {
         this.isDone = !isDone;
-
-        if (isDone) {
-            PrintUtil.printWithIndentation("Nice! I've marked this task as done:\n\t   " + getDetails());
-        } else {
-            PrintUtil.printWithIndentation("OK, I've marked this task as not done yet:\n\t   " + getDetails());
-        }
     }
 
     public boolean isDone() {
@@ -43,10 +37,14 @@ public class Task {
     }
 
     public String getTypeIcon() {
-        return "[ ]";
+        return " ";
     }
 
     public String getDetails() {
-        return String.format("%s%s %s", getTypeIcon(), getStatusIcon(), getDescription());
+        return String.format("[%s]%s %s", getTypeIcon(), getStatusIcon(), getDescription());
+    }
+
+    public String getSavingFormatDetails() {
+        return String.format("%s | %d | %s\n", getTypeIcon(), isDone ? 1 : 0, getDescription());
     }
 }
