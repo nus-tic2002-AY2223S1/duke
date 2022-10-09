@@ -1,8 +1,8 @@
 package model;
 
-import static common.constant.SymbolConstant.CLOSE_SQ_BRACKET;
-import static common.constant.SymbolConstant.OPEN_SQ_BRACKET;
-import static common.constant.ModelConstant.TODO_ICON;
+import static common.constants.SymbolConstant.CLOSE_SQ_BRACKET;
+import static common.constants.SymbolConstant.OPEN_SQ_BRACKET;
+import static common.constants.ModelConstant.TODO_ICON;
 
 public class ToDo extends Task {
 

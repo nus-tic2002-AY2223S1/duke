@@ -1,4 +1,4 @@
-package common.constant;
+package common.constants;
 
 public class ModelConstant {
     public static final String DEADLINE_ICON = "D";

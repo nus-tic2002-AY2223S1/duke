@@ -4,11 +4,10 @@ import model.Chat;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static common.constant.CommonConstant.INIT_INT_VAL;
-import static common.constant.CommonConstant.SPACE;
-import static common.constant.CommonConstant.TASK_LIST;
-import static common.constant.SymbolConstant.PERIOD;
-import static common.util.PrintUtil.printLine;
+import static common.constants.CommonConstant.INIT_INT_VAL;
+import static common.constants.CommonConstant.SPACE;
+import static common.constants.CommonConstant.TASK_LIST;
+import static common.constants.SymbolConstant.PERIOD;
 
 public class ListCommand extends Command {
     public ListCommand(Chat chat) {
@@ -22,14 +21,12 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute() {
-        printLine();
-
         System.out.println(TASK_LIST);
+
         AtomicInteger counter = new AtomicInteger(INIT_INT_VAL);
+
         chat.getTaskList().forEach(task -> {
             System.out.println(counter.getAndIncrement() + PERIOD + SPACE + task);
         });
-
-        printLine();
     }
 }

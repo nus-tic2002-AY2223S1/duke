@@ -2,13 +2,11 @@ package logic.commands;
 
 import model.Chat;
 
-import static common.constant.CommandConstant.UNMARK_COMMAND;
-import static common.constant.CommonConstant.UNMARKED_TASK;
-import static common.constant.ErrorMessage.NOT_EXIST_TASK_ERROR_MSG;
-import static common.constant.ErrorMessage.UNMARKED_TASK_ERROR_MSG;
-import static common.util.PrintUtil.printCompletedTask;
-import static common.util.PrintUtil.printLine;
-import static common.util.StringUtil.getDescriptionFromString;
+import static common.constants.CommandConstant.UNMARK_COMMAND;
+import static common.constants.CommonConstant.UNMARKED_TASK;
+import static common.constants.ErrorMessage.UNMARKED_TASK_ERROR_MSG;
+import static common.utils.PrintUtil.printCompletedTask;
+import static common.utils.StringUtil.getDescriptionFromString;
 
 public class UnmarkCommand extends Command {
     public UnmarkCommand(Chat chat) {
@@ -22,13 +20,7 @@ public class UnmarkCommand extends Command {
      */
     @Override
     public void execute() {
-        printLine();
-
         String input = getDescriptionFromString(UNMARK_COMMAND, chat.getInput());
-
-        if (chat.getTaskList().contains(input)) {
-            System.out.println(String.format(NOT_EXIST_TASK_ERROR_MSG, input));
-        }
 
         chat.getTaskList().forEach(task -> {
             if (!task.getDescription().equals(input)) {
@@ -42,7 +34,5 @@ public class UnmarkCommand extends Command {
                 printCompletedTask(UNMARKED_TASK, input, task);
             }
         });
-
-        printLine();
     }
 }

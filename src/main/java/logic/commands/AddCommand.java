@@ -2,13 +2,9 @@ package logic.commands;
 
 import model.Chat;
 
-import static common.constant.ErrorMessage.DUPLICATED_TASK_ERROR_MSG;
-import static common.util.PrintUtil.printAddedTask;
-import static common.util.PrintUtil.printLine;
-import static common.util.StringUtil.getDescriptionFromString;
-import static common.util.StringUtil.getFirstWord;
-import static common.util.TaskUtil.checkDuplicatedTask;
-import static logic.parser.AddCommandParser.parseAddCommand;
+import static common.utils.PrintUtil.printAddedTask;
+import static common.utils.StringUtil.getDescriptionFromString;
+import static logic.parsers.AddCommandParser.parseAddCommand;
 
 public class AddCommand extends Command {
     public AddCommand(Chat chat) {
@@ -22,17 +18,9 @@ public class AddCommand extends Command {
      */
     @Override
     public void execute() {
-        printLine();
+        String description = getDescriptionFromString(chat.getCommand(), chat.getInput());
 
-        if (checkDuplicatedTask(chat)) {
-            System.out.println(String.format(DUPLICATED_TASK_ERROR_MSG, chat.getInput()));
-        } else {
-            String input = getDescriptionFromString(getFirstWord(chat.getInput()), chat.getInput());
-
-            parseAddCommand(chat);
-            printAddedTask(input, chat);
-        }
-
-        printLine();
+        parseAddCommand(description, chat);
+        printAddedTask(chat);
     }
 }

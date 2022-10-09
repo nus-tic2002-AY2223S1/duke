@@ -1,12 +1,29 @@
-import static common.constant.CommonConstant.LOGO;
-import static common.util.PrintUtil.printGreet;
-import static logic.parser.Parser.parseChat;
+import model.Task;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import static common.constants.CommonConstant.LOGO;
+import static common.constants.CommonConstant.PROMPT;
+import static common.constants.ErrorMessage.EXCEPTION_ERROR_MSG;
+import static common.utils.PrintUtil.printGreet;
+import static common.utils.PrintUtil.printLine;
+import static logic.parsers.Parser.parseChat;
 
 public class Duke {
     public static void main(String[] args) {
         System.out.println(LOGO);
-
         printGreet();
-        parseChat();
+        System.out.print(PROMPT);
+
+        Scanner userInput = new Scanner(System.in);
+        List<Task> taskList = new ArrayList<>();
+
+        try {
+            parseChat(userInput, taskList);
+        } catch (Exception e) {
+            System.err.println(String.format(EXCEPTION_ERROR_MSG, e));
+        }
     }
 }

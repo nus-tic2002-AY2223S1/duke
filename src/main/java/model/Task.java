@@ -1,9 +1,9 @@
 package model;
 
-import static common.constant.SymbolConstant.CLOSE_SQ_BRACKET;
-import static common.constant.SymbolConstant.OPEN_SQ_BRACKET;
-import static common.constant.CommonConstant.SPACE;
-import static common.constant.ModelConstant.MARKED_ICON;
+import static common.constants.SymbolConstant.CLOSE_SQ_BRACKET;
+import static common.constants.SymbolConstant.OPEN_SQ_BRACKET;
+import static common.constants.CommonConstant.SPACE;
+import static common.constants.ModelConstant.MARKED_ICON;
 
 public class Task {
     protected String description;

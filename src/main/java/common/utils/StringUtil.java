@@ -1,12 +1,12 @@
-package common.util;
+package common.utils;
 
-import static common.constant.CommonConstant.AT;
-import static common.constant.CommonConstant.BY;
-import static common.constant.CommonConstant.INIT_INT_VAL;
-import static common.constant.CommonConstant.SPACE;
-import static common.constant.CommonConstant.ZERO_VAL;
-import static common.constant.ErrorMessage.EXCEPTION_ERROR_MSG;
-import static common.constant.SymbolConstant.DELIMITER;
+import static common.constants.CommonConstant.AT;
+import static common.constants.CommonConstant.BY;
+import static common.constants.CommonConstant.INIT_INT_VAL;
+import static common.constants.CommonConstant.SPACE;
+import static common.constants.CommonConstant.ZERO_VAL;
+import static common.constants.ErrorMessage.EXCEPTION_ERROR_MSG;
+import static common.constants.SymbolConstant.DELIMITER;
 
 public class StringUtil {
     /**
@@ -24,7 +24,7 @@ public class StringUtil {
                 return firstWord;
             }
         } catch (Exception e) {
-            System.out.println(String.format(EXCEPTION_ERROR_MSG, e));
+            System.err.println(String.format(EXCEPTION_ERROR_MSG, e));
         }
 
         return sentence;
@@ -71,7 +71,7 @@ public class StringUtil {
             int index = sentence.indexOf(separator);
             substring = sentence.substring(index + (separator).length());
         } catch (Exception e) {
-            System.out.println(String.format(EXCEPTION_ERROR_MSG, e));
+            System.err.println(String.format(EXCEPTION_ERROR_MSG, e));
         }
 
         return substring;

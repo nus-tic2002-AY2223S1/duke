@@ -1,4 +1,4 @@
-package common.constant;
+package common.constants;
 
 public class SymbolConstant {
     public static final String CLOSE_BRACKET = ")";

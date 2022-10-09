@@ -1,7 +1,11 @@
-package common.constant;
+package common.constants;
 
 public class ErrorMessage {
     public static final String DUPLICATED_TASK_ERROR_MSG = "Task %s is duplicated. Please enter a new task.";
+
+    public static final String EMPTY_TASK_DESCRIPTION_ERROR_MSG = "Task description cannot be empty!";
+
+    public static final String INVALID_TASK_COMMAND_MSG = "Invalid task command, please re-enter!";
 
     public static final String MARKED_TASK_ERROR_MSG = "Task %s has already been marked.";
 
@@ -11,5 +15,5 @@ public class ErrorMessage {
 
     public static final String UNMARKED_TASK_ERROR_MSG = "Task %s has already been unmarked.";
 
-    public static final String EXCEPTION_ERROR_MSG = "Caught exception: %s";
+    public static final String EXCEPTION_ERROR_MSG = "Caught common.exception: %s";
 }

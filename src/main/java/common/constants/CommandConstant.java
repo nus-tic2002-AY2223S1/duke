@@ -1,4 +1,4 @@
-package common.constant;
+package common.constants;
 
 public class CommandConstant {
     public static final String ADD_DEADLINE_COMMAND = "deadline";
