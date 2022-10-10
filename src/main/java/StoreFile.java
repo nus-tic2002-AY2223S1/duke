@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -17,23 +16,23 @@ public class StoreFile {
             }
         }
 
-        public static void readToFile(){
-
-            try{
-                File f = new File("C:\\data\\duke.txt");
-                Scanner s = new Scanner(f);
-                try{
-                    while(s.hasNext()){
-                        System.out.println(s.nextLine());
-                    }
-                }
-                catch(Exception e){
-                    System.out.println("Read file Error");
-                }
-            }
-            catch (FileNotFoundException e){
-                System.out.println("File is not found");
-            }
-        }
+//        public static void readToFile(){
+//
+//            try{
+//                File f = new File("C:\\data\\duke.txt");
+//                Scanner s = new Scanner(f);
+//                try{
+//                    while(s.hasNext()){
+//                        System.out.println(s.nextLine());
+//                    }
+//                }
+//                catch(Exception e){
+//                    System.out.println("Read file Error");
+//                }
+//            }
+//            catch (FileNotFoundException e){
+//                System.out.println("File is not found");
+//            }
+//        }
 
     }

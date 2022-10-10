@@ -2,10 +2,14 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.*;
+import TaskPackage.Events;
+import TaskPackage.Task;
+import TaskPackage.Deadline;
+import TaskPackage.Todo;
 
 public class Duke {
    // private static int count = 0;
-   // private static Task[] tasks = new Task[100];
+   // private static TaskPackage.Task[] tasks = new TaskPackage.Task[100];
 
     public static ArrayList<Task> AddList (ArrayList<Task> listItems,String input){
             listItems.add(new Task(input));
@@ -82,7 +86,7 @@ public class Duke {
                 return true;
             case"mark":
                     int indexMark = Integer.parseInt(userInput[1]);
-                    //Task markTask = tasks[indexUnmark-1];
+                    //TaskPackage.Task markTask = tasks[indexUnmark-1];
                     Task markTask = listItems.get(indexMark-1);
                     markTask.markAsDone();
                     System.out.println("Nice! I've marked this task as done:");
@@ -92,7 +96,7 @@ public class Duke {
                 return true;
             case"unmark":
                     int indexUnmark = Integer.parseInt(userInput[1]);
-                   // Task unmarkTask = tasks[indexUnmark-1];
+                   // TaskPackage.Task unmarkTask = tasks[indexUnmark-1];
                     Task unmarkTask = listItems.get(indexUnmark-1);
                     unmarkTask.markAsNotdone();
                     System.out.println("OK, I've marked this task as not done yet:");
