@@ -44,6 +44,9 @@ public class Duke {
                     case "notdone":
                         ActHandler.notdone(tasks, arguments);
                         break;
+                    case "delete":
+                        ActHandler.deleteHandler(tasks, arguments);
+                        break;
                     case "deadline":
                         ActHandler.deadlineHandler(tasks, arguments);
                         break;
