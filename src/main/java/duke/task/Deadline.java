@@ -1,15 +1,15 @@
 package duke.task;
-
+import duke.exception.InvalidInputException;
 public class Deadline extends Task{
     protected  String by;
-    public Deadline(String description,String by){
+    public Deadline(String description, String by) throws InvalidInputException{
         super(description);
-        this.symbol = "D";
+        typeIcon = "D";
         this.by = by;
     }
     
     @Override
     public String toString(){
-        return super.toString() + String.format("(by: %s)",this.by);
+        return super.toString() + String.format("(by: %s)",by);
     }
 }
