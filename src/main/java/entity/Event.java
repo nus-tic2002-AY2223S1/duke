@@ -1,4 +1,8 @@
-public class Event extends Task{
+package entity;
+
+import entity.Task;
+
+public class Event extends Task {
     protected String at;
 
     public Event(String description, String at) {
