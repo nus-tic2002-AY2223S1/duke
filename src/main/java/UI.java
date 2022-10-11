@@ -26,7 +26,7 @@ public class UI {
            Scanner s = new Scanner(file);
            while (s.hasNextLine()) {
                String line = s.nextLine();
-               if(line.charAt(2)=='0'){
+               if(line.charAt(1)=='0'){
                    System.out.println(line);
                }
            }

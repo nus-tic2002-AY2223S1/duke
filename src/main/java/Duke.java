@@ -36,7 +36,7 @@ public class Duke {
 
 
     static void save(ArrayList<Task> listItems){
-        String list=" ";
+        String list="";
        for(Task listItem: listItems){
            list+= listItem.getData()+ "\n";
        }
