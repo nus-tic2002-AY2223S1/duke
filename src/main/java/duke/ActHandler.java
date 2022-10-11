@@ -10,6 +10,7 @@ package duke;
         import duke.task.ToDo;
 
 public class ActHandler {
+    public static final String line = "____________________________________________________________";
     // Print a greeting message when the program is invoked
     protected static void greetingHandler() {
         String logo = "    =    |\\    | |     | ======   |=====\n"
@@ -18,6 +19,7 @@ public class ActHandler {
                 + " /-----\\ |   \\ |    |    ||       |   \\\n"
                 + "/       \\|    \\|    |    ======   |    \\\n";
         System.out.println( logo);
+        HelperFunction.printlnWithIndent( line);
         HelperFunction.printlnWithIndent("Hello! I'm Anyer.");
         HelperFunction.printlnWithIndent("What can I do for you?");
     }
