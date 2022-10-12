@@ -1,6 +1,8 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 public class Duke {
-    static private Task[] list = new Task[100];
+    //static private Task[] list = new Task[100];
+    static private ArrayList<Task> list = new ArrayList<Task>();
     static private int listCount = 0;
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -26,19 +28,6 @@ public class Duke {
         } while (!(command.equals("bye")));
     }
 
-    public static void printList() {
-        print("Here are the tasks in your list:\n");
-        for(int i = 0; i < listCount; i++) {
-            String count = (i + 1) + ". ";
-            print(count);
-            list[i].printTask();
-        }
-    }
-    public static void echo(String toEcho) {
-        print("Got it. I've added this task:\n");
-        print("  " + toEcho + "\n");
-        print("Now you have " + listCount + " tasks in the list.\n");
-    }
     public static void identifyInput(String command) {
         boolean exist = false;
         if (command.equals("bye")) {
@@ -47,14 +36,14 @@ public class Duke {
             print("Empty input detected, please re-enter\n");
         } else if (command.equals("list")) {
             printList();
-        } else if (command.contains("mark") || command.contains("unmark")) {
+        } else if (command.contains("mark") || command.contains("unmark") || command.contains("delete") ) {
             String[] split = command.split(" ");
             try {
-                identifyMark(split);
+                identifyTaskNumber(split);
             } catch (NullPointerException e) {
                 print("Task number not exist!\n");
-            } catch (ArrayIndexOutOfBoundsException e) {
-                print("Task number out of list range!\n");
+            } catch (IndexOutOfBoundsException e) {
+                print("Task number out of list range! Please enter number from 1 -  " + listCount + ".\n");
             }
         } else {
             try {
@@ -106,29 +95,42 @@ public class Duke {
         }
         switch (description[0]) {
             case "todo":
-                    list[listCount] = new Todo (description[1]);
+                    list.add(new Todo(description[1]));
                 break;
             case "deadline":
-                list[listCount] = new Deadline(description[1], dateAndTime);
+                list.add(new Deadline(description[1], dateAndTime));
                 break;
             case "event":
-                list[listCount] = new Event(description[1], dateAndTime);
+                list.add(new Event(description[1], dateAndTime));
                 break;
             default:
                 throw new DukeException.notATask();
         }
         listCount ++;
-        echo(list[listCount - 1].toString());
+        echo(list.get(listCount - 1).toString(), "added");
     }
 
-    public static void identifyMark(String[] split) {
+    public static void deleteTask(int taskNumber) {
+        String removedTask = list.get(taskNumber).toString();
+        list.remove(taskNumber);
+        listCount--;
+        echo(removedTask, "removed");
+    }
+    public static void identifyTaskNumber(String[] split) {
         if (isNumeric(split[1])) {
             int taskNumber = Integer.parseInt(split[1]) - 1;
-            if (split[0].equals("mark")) {
-                    list[taskNumber].markAsDone();
-            }
-            if (split[0].equals("unmark")) {
-                    list[taskNumber].markAsUndone();
+            switch (split[0]) {
+                case "mark":
+                    list.get(taskNumber).markAsDone();
+                    break;
+                case "unmark":
+                    list.get(taskNumber).markAsUndone();
+                    break;
+                case "delete":
+                    deleteTask(taskNumber);
+                    break;
+                default:
+                    return;
             }
         }
     }
@@ -163,20 +165,14 @@ public class Duke {
         for (int i = 0; i < listCount; i++) {
             switch (description[0]) {
                 case "todo":
-                    if(list[i].getDescription().equals(description[1])){
+                    if(list.get(i).getDescription().equals(description[1])){
                         throw new DukeException.isDuplicateException();
                     }
                     break;
                 case "deadline":
-                    if(list[i].getDescription().equals(description[1])) {
-                        if (list[i].getDateAndTime().equals(dateAndTime)) {
-                            throw new DukeException.isDuplicateException();
-                        }
-                    }
-                    break;
                 case "event":
-                    if(list[i].getDescription().equals(description[1])){
-                        if (list[i].getDateAndTime().equals(dateAndTime)) {
+                    if(list.get(i).getDescription().equals(description[1])){
+                        if (list.get(i).getDateAndTime().equals(dateAndTime)) {
                             throw new DukeException.isDuplicateException();
                         }
                     }
@@ -213,6 +209,19 @@ public class Duke {
         System.out.print(indentFive + toPrint);
     }
 
+    public static void printList() {
+        print("Here are the tasks in your list:\n");
+        for(int i = 0; i < listCount; i++) {
+            String count = (i + 1) + ". ";
+            print(count);
+            list.get(i).printTask();
+        }
+    }
+    public static void echo(String toEcho, String mode) {
+        print("Got it. I've " + mode + " this task:\n");
+        print("  " + toEcho + "\n");
+        print("Now you have " + listCount + " tasks in the list.\n");
+    }
     public static void exit() {
         print("Bye. Remember!\n");
         print("In times of crisis, the wise build bridges while the foolish build barriers.\n");
