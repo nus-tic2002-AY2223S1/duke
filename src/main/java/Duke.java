@@ -19,6 +19,9 @@ public class Duke {
                 } else if (key == Keyword.Unmark) {
                     String part = line.split(" ")[1];
                     bot.mark(part, false);
+                } else if (key == Keyword.Delete) {
+                    String part = line.split(" ")[1];
+                    bot.delete(part);
                 } else {
                     bot.add(line);
                 }
@@ -36,7 +39,7 @@ public class Duke {
     }
 
     public enum Keyword {
-        Bye, List, Mark, Unmark, None;
+        Bye, List, Mark, Unmark, Delete, None;
 
         public static Keyword getKeyword(String key) {
             if(key.equalsIgnoreCase("bye")) {
@@ -47,6 +50,8 @@ public class Duke {
                 return Mark;
             } else if (key.toLowerCase().startsWith("unmark")) {
                 return Unmark;
+            } else if(key.toLowerCase().startsWith("delete")) {
+                return Delete;
             } else {
                 return None;
             }

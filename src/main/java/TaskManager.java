@@ -58,6 +58,12 @@ public class TaskManager implements TaskInterface {
         return tasks.get(index).getString();
     }
 
+    public String remove(int index) {
+        TaskInterface task = tasks.get(index);
+        tasks.remove(index);
+        return task.getString();
+    }
+
     public enum TaskType {
         DEADLINE, EVENT, TODO;
 

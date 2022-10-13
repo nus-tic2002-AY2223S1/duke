@@ -69,6 +69,15 @@ public class Bot {
         seperator();
     }
 
+    public void delete(String number) {
+        int index = Integer.parseInt(number);
+        String text = taskManager.remove(index - 1);
+        System.out.println(appendTab("Noted. I've removed this task:"));
+        System.out.println(appendTab(text));
+        System.out.println(appendTab("Now you have "+taskManager.tasks.size()+" tasks in the list."));
+
+    }
+
     public void goodbye() {
         seperator();
         System.out.println(appendTab("Bye. Hope to see you again soon!"));
