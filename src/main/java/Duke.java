@@ -1,10 +1,11 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Duke {
-    private Storage storage;
+    private final Storage storage;
     private TaskList tasks;
-    private Ui ui;
+    private final Ui ui;
     private Parser parser;
 
     public static int filterTaskID(String line) {
@@ -13,17 +14,15 @@ public class Duke {
         return ID_num - 1;
     }
 
-    //load file if exist, if dun exist create new file in a new folder
-    public Duke(String filePath) {
+    //constructor for Duke
+    public Duke(String filePath) throws IOException {
         ui = new Ui();
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.load());
-        } catch (DukeException e) {
+        } catch (DukeException | FileNotFoundException e) {
             ui.showLoadingError();
             tasks = new TaskList();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -92,7 +91,7 @@ public class Duke {
             //save task
         }
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new Duke("data/tasks.txt").run();
     }
 }
