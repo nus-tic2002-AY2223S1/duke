@@ -27,8 +27,6 @@ public class Duke {
     }
 
     public void run() {
-
-        //...
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -65,7 +63,7 @@ public class Duke {
                     System.out.println("Got it. I've added this task:");
                     System.out.println("\t" + tasks.myTaskList[tasks.task_count-1].toString());
                     System.out.println("Now you have " + tasks.task_count + " tasks in the list.");
-                } catch (DukeException e){
+                } catch (DukeException | IOException e){
                     System.out.println("OOPS!!! The description of a todo cannot be empty.");
                 }
             }
@@ -87,8 +85,6 @@ public class Duke {
                     System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
             }
-
-            //save task
         }
     }
     public static void main(String[] args) throws IOException {

@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
+import java.io.FileWriter;
 
 public class TaskList {
     public int task_count;
@@ -12,13 +14,28 @@ public class TaskList {
         myTaskList = new Task[100];
     }
     //constructor reading a existing file
-    TaskList(File f) throws FileNotFoundException, DukeException { //string f is a file
+    TaskList(File f) throws IOException, DukeException { //string f is a file
         Scanner s = new Scanner(f); //create a Scanner using the File as the source
         while (s.hasNext()){ //add task to the list as long there is next line
             addTasks(s.nextLine());
         }
+        task_count = 0;
+        myTaskList = new Task[100];
     }
-    public void addTasks(String input) throws DukeException {
+
+    private static void writeToFile(String filePath, String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(textToAdd);
+        fw.close();
+    }
+
+    private static void appendToFile(String filePath, String textToAppend) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+        fw.write(textToAppend);
+        fw.close();
+    }
+
+    public void addTasks(String input) throws DukeException, IOException {
         String[] words = input.split(" ");
         String description = "";
 
@@ -55,6 +72,17 @@ public class TaskList {
             default:
                 throw new DukeException();
         }
+
+        String file = "data/tasks.txt";
+        String data = description;
+
+        //write to file
+        try{
+            writeToFile(file, data + System.lineSeparator());
+        } catch (IOException e){
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+
         ++task_count;
     }
 
