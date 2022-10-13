@@ -20,17 +20,19 @@ public class Bot {
     }
 
     public void add(String text) {
-        String firstWord = text.substring(0, text.indexOf(' '));
-        String theRest = text.substring(text.indexOf(" "));
-        seperator();
         try {
+            String firstWord = text.substring(0, text.indexOf(' '));
+            String theRest = text.substring(text.indexOf(" "));
+            seperator();
             taskManager.addNewTask(TaskManager.TaskType.getType(firstWord), theRest);
             int size = taskManager.getList().size();
             System.out.println(appendTab("Got it. I've added this task:"));
             System.out.println(appendTab(taskManager.getString()));
             System.out.println(appendTab("Now you have "+size+" tasks in the list."));
         } catch(UnsupportedTaskType e) {
-            System.out.println("not supported task");
+            System.out.println(appendTab("☹ OOPS!!! I'm sorry, but I don't know what that means :-("));
+        } catch(IndexOutOfBoundsException e) {
+            System.out.println(appendTab("☹ OOPS!!! The description of a "+text+" cannot be empty."));
         }
         seperator();
     }
