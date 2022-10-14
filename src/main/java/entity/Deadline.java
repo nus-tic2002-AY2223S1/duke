@@ -1,26 +1,30 @@
 package entity;
 
+import parser.Parser;
 import util.PrintUtil;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task {
 
-    private String deadline;
+    private LocalDateTime deadline;
 
-    public Deadline(String name, String deadline) {
+    public Deadline(String name, LocalDateTime deadline) {
         super(name);
-        this.deadline = deadline.trim();
+        this.deadline = deadline;
     }
 
-    public Deadline(String name, String deadline, boolean isDone) {
+    public Deadline(String name, LocalDateTime deadline, boolean isDone) {
         super(name, isDone);
         this.deadline = deadline;
     }
 
     public String getDeadline() {
-        return deadline;
+        return Parser.parseDateTimeToString(deadline);
     }
 
-    public void setDeadline(String deadline) {
+    public void setDeadline(LocalDateTime deadline) {
         this.deadline = deadline;
     }
 

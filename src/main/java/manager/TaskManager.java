@@ -6,6 +6,7 @@ import entity.Task;
 import entity.ToDo;
 import exception.IllegalContentException;
 import exception.IllegalActionException;
+import parser.Parser;
 import util.PrintUtil;
 
 import java.io.File;
@@ -25,18 +26,18 @@ public class TaskManager {
             convertDetailsToTaskList(fileManager.readFromFile());
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }  catch (IllegalContentException e) {
+            PrintUtil.printErrorMessage(e);
         }
-//        taskList.add(new ToDo("read book", true));
-//        taskList.add(new Deadline("return book", "June 6th", true));
-//        taskList.add(new Event("project meeting", "Aug 6th 2-4pm"));
-//        taskList.add(new ToDo("join sports club", true));
-//        taskList.add(new ToDo("borrow book"));
     }
 
     public static void newInstance() {
         instance = new TaskManager();
     }
 
+    /**
+     * @return
+     */
     public static TaskManager getInstance() {
         if (instance == null) {
             newInstance();
@@ -92,20 +93,20 @@ public class TaskManager {
         }
 
         if (inputArr[0].equals("deadline")) {
-            String[] words = inputArr[1].split("/");
+            String[] words = inputArr[1].split("/by");
             if (words.length < 2) {
                 throw new IllegalContentException("☹ OOPS!!! The due date/time of a deadline cannot be empty.");
             }
-            task = new Deadline(words[0], words[1]);
+            task = new Deadline(words[0], Parser.parseStringToDateTime(words[1]));
         }
 
 
         if (inputArr[0].equals("event")) {
-            String[] words = inputArr[1].split("/");
+            String[] words = inputArr[1].split("/at");
             if (words.length < 2) {
                 throw new IllegalContentException("☹ OOPS!!! The date/time of a event cannot be empty.");
             }
-            task = new Event(words[0], words[1]);
+            task = new Event(words[0], Parser.parseStringToDateTime(words[1]));
         }
         if (task != null) {
 
@@ -155,7 +156,7 @@ public class TaskManager {
         return result.toString();
     }
 
-    private void convertDetailsToTaskList(ArrayList<String> taskDetails) {
+    private void convertDetailsToTaskList(ArrayList<String> taskDetails) throws IllegalContentException {
         for (String detail : taskDetails) {
             String[] parts = detail.split(" \\| ");
             switch (parts[0]) {
@@ -163,10 +164,10 @@ public class TaskManager {
                     taskList.add(new ToDo(parts[2], parts[1].equals("1")));
                     break;
                 case "E":
-                    taskList.add(new Event(parts[2], parts[3], parts[1].equals("1")));
+                    taskList.add(new Event(parts[2], Parser.parseStringToDateTime(parts[3]), parts[1].equals("1")));
                     break;
                 case "D":
-                    taskList.add(new Deadline(parts[2], parts[3], parts[1].equals("1")));
+                    taskList.add(new Deadline(parts[2], Parser.parseStringToDateTime(parts[3]), parts[1].equals("1")));
                     break;
                 default:
                     taskList.add(new Task(parts[2], parts[1].equals("1")));

@@ -1,25 +1,30 @@
 package entity;
 
+import parser.Parser;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Event extends Task {
 
-    private String time;
+    private LocalDateTime time;
 //    private String endTime;
 
-    public Event(String name, String time) {
+    public Event(String name, LocalDateTime time) {
         super(name);
         this.time = time;
     }
 
-    public Event(String name, String time, boolean isDone) {
+    public Event(String name, LocalDateTime time, boolean isDone) {
         super(name, isDone);
         this.time = time;
     }
 
     public String getTime() {
-        return time;
+        return Parser.parseDateTimeToString(time);
     }
 
-    public void setTime(String time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
