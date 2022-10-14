@@ -1,3 +1,5 @@
+package task;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -13,7 +15,7 @@ public class Task {
     }
 
     // Return task description
-    public String getDescription(){
+    public String getDescription() {
         return this.description;
     }
 
@@ -29,6 +31,10 @@ public class Task {
 
     // Return String
     public String toString() {
-         return "[" + this.getStatusIcon() + "] " + this.getDescription();
+        return "[" + this.getStatusIcon() + "] " + this.getDescription();
+    }
+
+    public String stringToOutput() {
+        return " | " + (this.getStatusIcon() == "X" ? "1" : "0") + " | " + this.getDescription();
     }
 }
