@@ -15,10 +15,16 @@ public class Task {
 
     public void markAsDone(){
         this.isDone=true;
+        System.out.println("____________________________________________________________\n" +
+                "Nice! I've marked this task as done: \n "+this.getDescription()+
+                "\n____________________________________________________________" );
     }
 
     public void markAsUndone(){
         this.isDone=false;
+        System.out.println("____________________________________________________________\n" +
+                "OK, I've marked this task as not done yet: \n" + this.getDescription()
+                + "\n____________________________________________________________");
     }
 
     public String toString() {
