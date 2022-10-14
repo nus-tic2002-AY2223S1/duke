@@ -67,25 +67,46 @@ public class Duke {
                         + "\n____________________________________________________________");
             }
 
+            // to do task
             else if (line.startsWith("todo")) {
-                String[] todoItem = line.split("todo ");
+                String[] todoInput = line.split("todo ");
                 System.out.println("Got it. I've added this task:");
-                String todoTask = todoItem[1];
+                String todoTask = todoInput[1];
                 Todo task = new Todo(todoTask);
                 taskList.add(task);
                 System.out.println(task);
                 System.out.println("Now you have " + taskList.size() + " tasks in the list.\n");
             }
 
-
+            // deadline task
             else if (line.startsWith("deadline")) {
-                String[] todoTask = line.split("deadline ");
                 System.out.println("Got it. I've added this task:\n");
+                String[] deadlineItemSplit = (line.substring(9)).split(" /by ");
+                String deadlineTask = deadlineItemSplit[0];
+                String deadlineBy = deadlineItemSplit[1];
+                Deadline task = new Deadline(deadlineTask, deadlineBy);
+                taskList.add(task);
+                System.out.println(task);
+                System.out.println("Now you have " + taskList.size() + " tasks in the list.\n");
+            }
+
+            // event task
+            else if (line.startsWith("event")) {
+                System.out.println("Got it. I've added this task:\n");
+                String[] eventItemSplit = (line.substring(6)).split(" /at ");
+                String eventTask = eventItemSplit[0];
+                String eventAt = eventItemSplit[1];
+                Event task = new Event(eventTask, eventAt);
+                taskList.add(task);
+                System.out.println(task);
+                System.out.println("Now you have " + taskList.size() + " tasks in the list.\n");
             }
 
             // prompt user to enter valid input
             else {
-                System.out.println("____________________________________________________________\n Please Enter a Valid Input (E.g. Todo Task 1) \n____________________________________________________________\n");
+                System.out.println("____________________________________________________________\n" +
+                        "Please Enter a Valid Input (E.g. Todo Task 1)"+"" +
+                        "\n____________________________________________________________");
             }
 
         }
