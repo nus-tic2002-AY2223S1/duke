@@ -22,6 +22,11 @@ public class TaskList {
         }
     }
 
+    /**
+     * Method to read and process each line in task.txt to add them as task into myTaskList
+     *
+     * @param input each line in task.txt
+     */
     public void loadTasks(String input) {
         String[] inputList = input.split(" \\| ");
         switch (inputList[0]) {
@@ -59,11 +64,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Method to add task into myTaskList
+     *
+     * @param taskToAdd Task to add into the arraylist
+     */
     public void addTask(Task taskToAdd) {
         myTaskList.add(taskToAdd);
-    }
-
-    public void removeTask(Task taskToRemove) {
-        myTaskList.remove(taskToRemove);
     }
 }

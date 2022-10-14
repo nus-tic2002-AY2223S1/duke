@@ -19,9 +19,9 @@ public class Duke {
         }
     }
 
-    private static String checkInput(String input, int taskListSize) throws TodoMissingDescriptionException, BasicInputException, DeadlineMissingKeywordException, EventMissingKeywordException, DeadlineWrongFormatException, EventWrongFormatException, InputNumberFormatException, InputWrongFormatException, InputIndexOutOfBoundsException {
+    private static String checkInput(String input, int taskListSize) throws TodoMissingDescriptionException, BasicInputException, DeadlineMissingKeywordException, EventMissingKeywordException, DeadlineWrongFormatException, EventWrongFormatException, InputNumberFormatException, InputWrongFormatException, InputIndexOutOfBoundsException, FindTaskMissingDatetimeException {
 
-        String[] keywordList = {"todo", "bye", "mark", "unmark", "deadline", "todo", "list", "delete", "event"};
+        String[] keywordList = {"todo", "bye", "mark", "unmark", "deadline", "todo", "list", "delete", "event", "findtask"};
         boolean keywordExist = false;
         for (int keywordIndex = 0; keywordIndex < keywordList.length; keywordIndex++) {
             if (input.contains(keywordList[keywordIndex])) {
@@ -34,6 +34,10 @@ public class Duke {
             if (input.indexOf("todo") != -1) {
                 if (input.split(" ").length == 1) {
                     throw new TodoMissingDescriptionException();
+                }
+            } else if (input.indexOf("findtask") != -1) {
+                if (input.split(" ").length == 1) {
+                    throw new FindTaskMissingDatetimeException();
                 }
             } else if (input.indexOf("deadline") != -1) {
                 if (!input.contains("/by")) {
@@ -81,7 +85,6 @@ public class Duke {
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.load());
-
         } catch (DukeException e) {
             ui.showLoadingError();
             tasks = new TaskList();

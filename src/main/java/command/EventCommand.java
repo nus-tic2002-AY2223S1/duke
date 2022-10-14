@@ -15,6 +15,14 @@ public class EventCommand extends Command {
         this.atDate = atDate;
     }
 
+    /**
+     * Given task description and event datetime, this method will add a new event task in the tasklist.
+     * After adding the task, messages will be shown to user
+     *
+     * @param tasks   task list class
+     * @param ui      ui class to show messages
+     * @param storage storage class that has the load or save method
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         tasks.addTask(new Event(this.description, this.atDate));

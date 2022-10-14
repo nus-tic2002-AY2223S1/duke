@@ -13,6 +13,14 @@ public class ToDoCommand extends Command {
         this.description = description;
     }
 
+    /**
+     * Given task description, this method will add a new todo task in the tasklist.
+     * After adding the task, messages will be shown to user
+     *
+     * @param tasks   task list class
+     * @param ui      ui class to show messages
+     * @param storage storage class that has the load or save method
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         tasks.addTask(new ToDo(this.description));

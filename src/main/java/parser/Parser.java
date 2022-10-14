@@ -2,7 +2,18 @@ package parser;
 
 import command.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Parser {
+
+    /**
+     * This method helps to understand what user's command is trying to do.
+     *
+     * @param inputCommand User's command
+     * @return Different types of command (E.g. ToDoCommand, ListCommand, etc. )
+     */
     public static Command parse(String inputCommand) {
         String[] lineList = inputCommand.split(" ");
         String firstWord = lineList[0];
@@ -19,18 +30,45 @@ public class Parser {
             case "unmark":
                 return new UnmarkCommand(Integer.parseInt(lineList[1]) - 1);
             case "event":
-                String[] atSplitList = inputCommand.split("/at ");
-                String eventDate = atSplitList[1];
                 String eventTask = inputCommand.substring(6, inputCommand.indexOf("/at") - 1);
-                return new EventCommand(eventTask, eventDate);
+                String eventDate = inputCommand.split("/at ")[1];
+                DateTimeFormatter eventDateFormat = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
+                String eventDatetimeString;
+                try {
+                    LocalDateTime eventDatetime = LocalDateTime.parse(eventDate, eventDateFormat);
+                    eventDatetimeString = eventDatetime.format(DateTimeFormatter.ofPattern("d MMM yyyy HHmm"));
+                    return new EventCommand(eventTask, eventDatetimeString);
+                } catch (DateTimeParseException e) {
+                    return new ErrorCommand(inputCommand + "\n" + " ☹ OOPS!!! event has the wrong datetime format. " + "Event date format should be {d/MM/yyyy HHmm}");
+                }
             case "deadline":
-                String[] bySplitList = inputCommand.split("/by ");
-                String deadLine = bySplitList[1];
                 String deadLineTask = inputCommand.substring(9, inputCommand.indexOf("/by") - 1);
-                return new DeadlineCommand(deadLineTask, deadLine);
+                String deadline = inputCommand.split("/by ")[1];
+                DateTimeFormatter deadlineFormat = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
+                String deadlineString;
+                try {
+                    LocalDateTime deadlineDatetime = LocalDateTime.parse(deadline, deadlineFormat);
+                    deadlineString = deadlineDatetime.format(DateTimeFormatter.ofPattern("d MMM yyyy HHmm"));
+                    return new DeadlineCommand(deadLineTask, deadlineString);
+                } catch (DateTimeParseException e) {
+                    return new ErrorCommand(inputCommand + "\n" + " ☹ OOPS!!! deadline has the wrong datetime format. " + "Deadline format should be {d/MM/yyyy HHmm}");
+                }
             case "delete":
                 int deleteIndex = Integer.parseInt(lineList[1]) - 1;
                 return new DeleteCommand(deleteIndex);
+
+            case "findtask":
+                String taskDate = inputCommand.split("findtask ")[1];
+                DateTimeFormatter taskDateFormat = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
+                String taskDatetimeString;
+                try {
+                    LocalDateTime taskDatetime = LocalDateTime.parse(taskDate, taskDateFormat);
+                    taskDatetimeString = taskDatetime.format(DateTimeFormatter.ofPattern("d MMM yyyy HHmm"));
+                    return new FindtaskCommand(taskDatetimeString);
+                } catch (DateTimeParseException e) {
+                    return new ErrorCommand(inputCommand + "\n" + " ☹ OOPS!!! event has the wrong datetime format. " + "Event date format should be {d/MM/yyyy HHmm}");
+                }
+
             default:
                 return new ErrorCommand(inputCommand);
         }
