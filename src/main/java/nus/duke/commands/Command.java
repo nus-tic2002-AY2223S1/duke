@@ -13,39 +13,35 @@ public class Command {
         }
     }
 
-    public static void addTask(String wish) {
+    public static void addTask(String userInput) {
         Task t;
-        if (wish.contains("/by")){
-            t = new Deadline(wish);
-        } else if (wish.contains("/at")){
-            t = new Event(wish);
+        int idx = userInput.indexOf(" ") + 1;
+        String task = userInput.substring(idx, userInput.length());
+        if (userInput.contains("/by")){
+            t = new Deadline(task);
+        } else if (userInput.contains("/at")){
+            t = new Event(task);
         } else {
-            t = new Todo(wish);
+            t = new Todo(task);
         }
         taskList.add(t);
         t.incrementTotalTasks();
-        System.out.println("Added: " + wish + ". ");
+        System.out.println("Added: " + task + ". ");
     }
 
-    public static void deleteTask(String wish) {
-        int wNumber = Integer.parseInt(wish);
-        taskList.get(wNumber-1).decrementTotalTasks();
-        taskList.remove(wNumber-1);
-        System.out.println("Removed: " + wish);
-        System.out.println();
+    public static void deleteTask(int idx) {
+        taskList.get(idx-1).decrementTotalTasks();
+        taskList.remove(idx-1);
+        System.out.println("Removed");
     }
 
-    public static void markTask(String wish){ //mark as done
-        int wNumber = Integer.parseInt(wish);
-        (taskList.get(wNumber-1)).markAsDone();
-        System.out.println("marked: " + wish);
-        System.out.println();
+    public static void markTask(int idx){ //mark as done
+        (taskList.get(idx-1)).markAsDone();
+        System.out.println("marked");
     }
 
-    public static void unmarkTask(String wish){ //mark as done
-        int wNumber = Integer.parseInt(wish);
-        (taskList.get(wNumber-1)).markAsNotDone();
-        System.out.println("unmarked: " + wish);
-        System.out.println();
+    public static void unmarkTask(int idx){ //mark as done
+        (taskList.get(idx-1)).markAsNotDone();
+        System.out.println("unmarked");
     }
 }

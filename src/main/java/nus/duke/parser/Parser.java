@@ -3,6 +3,7 @@ package nus.duke.parser;
 import nus.duke.frontend.*;
 import nus.duke.commands.*;
 import nus.duke.exceptions.*;
+import nus.duke.task.Deadline;
 
 public class Parser {
     private static Ui ui;
@@ -14,10 +15,11 @@ public class Parser {
         return cmd;
     }
 
-    public static String getTask(String userInput){
-        int idx = userInput.indexOf(" ") + 1;
-        String task = userInput.substring(idx, userInput.length());
-        return task;
+    public static int getItemNumber(String userInput){
+        int idx = userInput.indexOf(" ");
+        String itemNumber = userInput.substring(idx+1, userInput.length());
+        idx = Integer.parseInt(itemNumber);
+        return idx;
     }
 
     public static boolean isValidCommand(String command){
@@ -43,18 +45,28 @@ public class Parser {
     }
 
     public static boolean hasInputErrors(String userInput) throws WrongInputSyntaxException, EmptyTaskException {
-        if (userInput.indexOf(" ") == -1){ // e.g. "TODO"
-            throw new EmptyTaskException();
+        if (userInput.indexOf(" ") == -1){ // e.g. "TODO" or "VIEW" or "EXIT"
+            if (userInput.equals("VIEW") || userInput.equals("EXIT")){
+                return false;
+            } else {
+                throw new EmptyTaskException(); // E.G. "TODO"
+            }
         } else {
             String command = getCommand(userInput); // e.g. "TODO buy lunch" --> "TODO" or "TODO     " --> "TODO"
             if (isValidCommand(command) == true) {
                 if (isEmptyTask(userInput) == true) { // e.g. "TODO     " is an empty task with alot of blank space
                     throw new EmptyTaskException();
                 } else {
-                    return false;
+                    if (command.equals("DEADLINE") && (userInput.contains("/by") == false)){
+                        throw new WrongInputSyntaxException();
+                    } else if (command.equals("EVENT") && (userInput.contains("/at") == false)){
+                        throw new WrongInputSyntaxException();
+                    } else {
+                        return false;
+                    }
                 }
             } else {
-                throw new WrongInputSyntaxException();
+                throw new WrongInputSyntaxException(); // user does not enter a valid command
             }
         }
     }
@@ -70,20 +82,21 @@ public class Parser {
         }
 
         if (hasInputErrors == false) {
-            String command = getCommand(userInput);
-            String task = getTask(userInput);
-            if (command.equals(LegalCommandEnumerations.MARK.toString())){
-                c.markTask(task);
-            } else if (command.equals(LegalCommandEnumerations.UNMARK.toString())){
-                c.unmarkTask(task);
-            } else if (command.equals(LegalCommandEnumerations.DELETE.toString())){
-                c.deleteTask(task);
-            } else if (command.equals(LegalCommandEnumerations.VIEW.toString())){
+            if (userInput.equals(LegalCommandEnumerations.VIEW.toString())){
                 c.viewTasks();
-            } else if (command.equals(LegalCommandEnumerations.EXIT.toString())){
+            } else if (userInput.equals(LegalCommandEnumerations.EXIT.toString())) {
                 ui.exit();
             } else {
-                c.addTask(task);
+                String command = getCommand(userInput);
+                if (command.equals(LegalCommandEnumerations.MARK.toString())){
+                    c.markTask(getItemNumber(userInput)); // e.g. "1. TODO buy lunch" --> 1
+                } else if (command.equals(LegalCommandEnumerations.UNMARK.toString())){
+                    c.unmarkTask(getItemNumber(userInput));
+                } else if (command.equals(LegalCommandEnumerations.DELETE.toString())){
+                    c.deleteTask(getItemNumber(userInput));
+                } else {
+                    c.addTask(userInput);
+                }
             }
         }
         return false; // i.e. do not terminate program
