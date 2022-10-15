@@ -1,3 +1,4 @@
+import Application.Helpers.ActionKeyword;
 import Domain.Aggregates.Tracker.Deadline;
 import Domain.Aggregates.Tracker.Event;
 import Domain.Aggregates.Tracker.Todo;
@@ -5,6 +6,7 @@ import Domain.Aggregates.Tracker.Tracker;
 import Application.Helpers.CommonHelper;
 import Application.Helpers.MessageConstants;
 import Domain.Exceptions.DukeException;
+import Domain.Exceptions.DukeValidationException;
 
 import java.util.Scanner;
 
@@ -31,24 +33,44 @@ public class Duke {
         String inp = "";
         Scanner scanner = new Scanner(System.in);
 
-        while(!CommonHelper.isClosing(inp = scanner.nextLine())) {
+        while(true) {
             try {
-                if (CommonHelper.isOpening(inp)) {
-                    CommonHelper.printMessage(MessageConstants.WELCOME);
-                } else if (CommonHelper.isGet(inp)) {
-                    tracker.showList();
-                } else if (CommonHelper.isUnmark(inp)) {
-                    tracker.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), false);
-                } else if (CommonHelper.isMark(inp)) {
-                    tracker.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), true);
-                } else if (CommonHelper.isTodo(inp)) {
-                    tracker.addItem(inp, new Todo(inp.replace("todo","").trim()));
-                } else if (CommonHelper.isDeadline(inp)) {
-                    tracker.addItem(inp, new Deadline(inp.replace("deadline","").trim()));
-                } else if (CommonHelper.isEvent(inp)) {
-                    tracker.addItem(inp, new Event(inp.replace("event","").trim()));
-                } else {
-                    CommonHelper.printMessage(MessageConstants.REPEAT);
+                inp = scanner.nextLine();
+                ActionKeyword action = ActionKeyword.get(inp);
+                switch (action){
+                    case LIST:
+                        tracker.showList();
+                        break;
+                    case TODO:
+                        tracker.addItem(new Todo(inp.replace("todo","").trim()));
+                        break;
+                    case EVENT:
+                        tracker.addItem(new Event(inp.replace("event","").trim()));
+                        break;
+                    case DEADLINE:
+                        tracker.addItem(new Deadline(inp.replace("deadline","").trim()));
+                        break;
+                    case MARK:
+                        tracker.updateItem(getId(inp.replaceAll("[^0-9]", "").trim()), true);
+                        break;
+                    case UNMARK:
+                        tracker.updateItem(getId(inp.replaceAll("[^0-9]", "").trim()), false);
+                        break;
+                    case DELETE:
+                        tracker.deleteItem(getId(inp.replaceAll("[^0-9]", "").trim()));
+                        break;
+                    case HI:
+                    case HELLO:
+                        CommonHelper.printMessage(MessageConstants.WELCOME);
+                        break;
+                    case BYE:
+                        CommonHelper.printMessage(MessageConstants.END);
+                        System.exit(1);
+                        break;
+                    default:
+                        CommonHelper.printMessage(MessageConstants.REPEAT);
+                        break;
+
                 }
             } catch (DukeException ex){
 
@@ -57,9 +79,12 @@ public class Duke {
                 ex.printStackTrace();
             }
         }
-        CommonHelper.printMessage(MessageConstants.END);
-        System.exit(1);
     }
 
+    private static int getId(String text) throws DukeValidationException {
+        if(CommonHelper.isEmptyOrNull(text))
+            throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Id"));
+        return Integer.parseInt(text);
+    }
 
 }

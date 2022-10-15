@@ -7,6 +7,7 @@ import Domain.Exceptions.DukeNotFoundException;
 import Domain.Exceptions.DukeValidationException;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Tracker {
     public ArrayList<Task> tasks;
@@ -21,15 +22,35 @@ public class Tracker {
         }
     }
 
-    public void addItem(String itemName, Task task) throws DukeExistedException {
-        if(!tasks.stream().filter(x -> x.getName() == task.getName()).findFirst().isEmpty())
-            throw new DukeExistedException(MessageConstants.TASK_EXISTED_ERROR);
-        CommonHelper.printMessage(MessageConstants.ADD_TASK);
-        tasks.add(task);
-        Integer n = tasks.size();
-        task.printItem(n);
-        CommonHelper.printMessage(String.format(MessageConstants.SUM_TASK, n));
+    private Task getItem(int n){
+        return tasks.get(n-1);
     }
+
+    private Optional<Task> getItem(Task task){
+        return tasks.stream().filter(x -> x.equals(task)).findFirst();
+    }
+
+    private Task validateTask(int n) throws DukeNotFoundException, DukeValidationException {
+        if(n < 0)
+            throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Index"));
+        else if(n == 0 || n > tasks.size())
+            throw new DukeValidationException(MessageConstants.TASK_VALIDATION_SIZE_ERROR);
+        Task task = getItem(n);
+        if(task == null)
+            throw new DukeNotFoundException(MessageConstants.TASK_NOT_FOUND_ERROR);
+        return task;
+    }
+
+    private void validateTask(Task task) throws DukeExistedException {
+        if(!getItem(task).isEmpty())
+            throw new DukeExistedException(MessageConstants.TASK_EXISTED_ERROR);
+    }
+
+    private void printTask(Task task, int n){
+        task.printItem(n);
+        CommonHelper.printMessage(String.format(MessageConstants.SUM_TASK, tasks.size()));
+    }
+
 
     public void showList(){
         if(tasks.size() > 0) {
@@ -40,14 +61,19 @@ public class Tracker {
         }
     }
 
-    public void updateDoneState(int n, boolean isDone) throws DukeValidationException, DukeNotFoundException {
-        if(n < 0)
-            throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Index"));
-        else if(n == 0 || n > tasks.size())
-            throw new DukeValidationException(MessageConstants.TASK_VALIDATION_SIZE_ERROR);
-        Task task = tasks.get(n-1);
-        if(task == null)
-            throw new DukeNotFoundException(MessageConstants.TASK_NOT_FOUND_ERROR);
+    public void addItem(Task task) throws DukeExistedException {
+        validateTask(task);
+        if(tasks.add(task)) {
+            CommonHelper.printMessage(MessageConstants.ADD_TASK);
+            printTask(task, tasks.size());
+        } else {
+            CommonHelper.printMessage(MessageConstants.GENERAL_ERROR);
+        }
+    }
+
+
+    public void updateItem(int n, boolean isDone) throws DukeValidationException, DukeNotFoundException {
+        Task task = validateTask(n);
         task.setIsDone(isDone);
         if (isDone) {
             CommonHelper.printMessage(MessageConstants.MARK_TASK);
@@ -55,5 +81,15 @@ public class Tracker {
             CommonHelper.printMessage(MessageConstants.UNMARK_TASK);
         }
         task.printItem(n);
+    }
+
+    public void deleteItem(int n) throws DukeValidationException, DukeNotFoundException {
+        Task task = validateTask(n);
+        if(tasks.remove(task)) {
+            CommonHelper.printMessage(MessageConstants.DELETE_TASK);
+            printTask(task, n);
+        } else {
+            CommonHelper.printMessage(MessageConstants.GENERAL_ERROR);
+        }
     }
 }

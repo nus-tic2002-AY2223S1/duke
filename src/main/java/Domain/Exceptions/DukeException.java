@@ -19,6 +19,8 @@ public class DukeException extends Exception {
             return DukeExceptionCode.Existed;
         else if(className.contains("validation"))
             return DukeExceptionCode.Validation;
+        else if(className.contains("argument"))
+            return DukeExceptionCode.Argument;
         else
             return DukeExceptionCode.Other;
 

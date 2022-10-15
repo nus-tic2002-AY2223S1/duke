@@ -16,6 +16,7 @@ public abstract class Task {
     }
 
     public abstract void printItem(Integer n);
+    public abstract boolean equals(Object t);
 
     public String getName(){
         return this.name;
