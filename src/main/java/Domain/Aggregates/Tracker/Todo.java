@@ -1,8 +1,11 @@
-import Helpers.CommonHelper;
+package Domain.Aggregates.Tracker;
+
+import Application.Helpers.CommonHelper;
+import Domain.Exceptions.DukeValidationException;
 
 public class Todo extends Task {
     protected String shortName = "T";
-    public Todo(String n) {
+    public Todo(String n) throws DukeValidationException {
         super(n);
     }
 

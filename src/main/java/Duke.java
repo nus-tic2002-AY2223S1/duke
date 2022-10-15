@@ -1,5 +1,10 @@
-import Helpers.CommonHelper;
-import Helpers.MessageConstants;
+import Domain.Aggregates.Tracker.Deadline;
+import Domain.Aggregates.Tracker.Event;
+import Domain.Aggregates.Tracker.Todo;
+import Domain.Aggregates.Tracker.Tracker;
+import Application.Helpers.CommonHelper;
+import Application.Helpers.MessageConstants;
+import Domain.Exceptions.DukeException;
 
 import java.util.Scanner;
 
@@ -27,22 +32,29 @@ public class Duke {
         Scanner scanner = new Scanner(System.in);
 
         while(!CommonHelper.isClosing(inp = scanner.nextLine())) {
-            if(CommonHelper.isOpening(inp)){
-                CommonHelper.printMessage(MessageConstants.WELCOME);
-            } else if (CommonHelper.isGet(inp)) {
-                tracker.showList();
-            } else if(CommonHelper.isUnmark(inp)){
-                tracker.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), false);
-            } else if(CommonHelper.isMark(inp)){
-                tracker.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), true);
-            } else if(CommonHelper.isTodo(inp)) {
-                tracker.addItem(inp, new Todo(inp));
-            } else if (CommonHelper.isDeadline(inp)) {
-                tracker.addItem(inp, new Deadline(inp));
-            } else if (CommonHelper.isEvent(inp)) {
-                tracker.addItem(inp, new Event(inp));
-            } else {
-                CommonHelper.printMessage(MessageConstants.REPEAT);
+            try {
+                if (CommonHelper.isOpening(inp)) {
+                    CommonHelper.printMessage(MessageConstants.WELCOME);
+                } else if (CommonHelper.isGet(inp)) {
+                    tracker.showList();
+                } else if (CommonHelper.isUnmark(inp)) {
+                    tracker.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), false);
+                } else if (CommonHelper.isMark(inp)) {
+                    tracker.updateDoneState(Integer.parseInt(inp.replaceAll("[^0-9]", "")), true);
+                } else if (CommonHelper.isTodo(inp)) {
+                    tracker.addItem(inp, new Todo(inp.replace("todo","").trim()));
+                } else if (CommonHelper.isDeadline(inp)) {
+                    tracker.addItem(inp, new Deadline(inp.replace("deadline","").trim()));
+                } else if (CommonHelper.isEvent(inp)) {
+                    tracker.addItem(inp, new Event(inp.replace("event","").trim()));
+                } else {
+                    CommonHelper.printMessage(MessageConstants.REPEAT);
+                }
+            } catch (DukeException ex){
+
+            } catch (Exception ex){
+                System.out.println(MessageConstants.ERROR);
+                ex.printStackTrace();
             }
         }
         CommonHelper.printMessage(MessageConstants.END);
