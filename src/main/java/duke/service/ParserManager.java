@@ -249,7 +249,7 @@ public class ParserManager {
         public Form parseForm(String input) {
             Matcher matcher = eventClausePattern.matcher(input);
             if (!matcher.find()) {
-                throw new CommandArgsException("[event] command has invalid arguments, it should be in `event description / at startTime(yyyy-MM-dd HH:mm & endTime(yyyy-MM-dd HH:mm)` format");
+                throw new CommandArgsException("[event] command has invalid arguments, it should be in `event description / at startTime(yyyy-MM-dd HH:mm) & endTime(yyyy-MM-dd HH:mm)` format");
             }
 
             String description = StringUtil.trim(matcher.group(1));

@@ -64,6 +64,9 @@ public class TaskManager {
 
         File file = new File(dataFilePath);
 
+        // set value of data path in global score
+        TaskManager.dataFilePath = dataFilePath;
+
         // check source file exists, create if it does not exist
         if (!file.exists()) {
             createFile(dataFilePath);
@@ -84,8 +87,6 @@ public class TaskManager {
                 .filter(Objects::nonNull)
                 .forEach(taskList::add);
 
-        // set value of data path in global score
-        TaskManager.dataFilePath = dataFilePath;
         initComplete = true;
     }
 
