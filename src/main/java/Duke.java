@@ -61,9 +61,37 @@ public class Duke {
     }
 
     public static void addToList(Task[] list, String input){
-        list[listSize] = new Task(input);
+
+        String[] inputArr = input.split(" ", 2); //To get the first word from input
+        String taskType = inputArr[0];
+        String taskDescription = inputArr[1];
+        String dueDate = "No due date"; //Due date default value
+
+        if (taskDescription.contains("/")){
+            inputArr = taskDescription.split("/", 2); //To get the due date
+            taskDescription = inputArr[0].trim();
+            dueDate = inputArr[1].replaceFirst(" ", ": "); //add ":" into due date
+        }
+
+        switch (taskType.toLowerCase()){
+            case "todo":
+                list[listSize] = new Todo(taskDescription);
+                break;
+            case "deadline":
+                list[listSize] = new Deadlines(taskDescription, dueDate);
+                break;
+            case "event":
+                list[listSize] = new Events(taskDescription, dueDate);
+                break;
+            default:
+                System.out.println("Invalid command");
+                return;
+        }
+
         listSize++;
-        System.out.println("added: " + input);
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + list[listSize-1].getDescription());
+        System.out.println("Now you have " + listSize + " tasks in the list.");
     }
 
     public static void changeStatus(Task[] list, String input){
