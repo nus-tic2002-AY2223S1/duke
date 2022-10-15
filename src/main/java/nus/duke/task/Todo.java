@@ -1,4 +1,4 @@
-package nus.duke;
+package nus.duke.task;
 
 public class Todo extends Task {
 

@@ -1,12 +1,26 @@
-package nus.duke;
+package nus.duke.task;
+
+import java.util.ArrayList;
 
 public abstract class Task {
+
+    // public classes so that they can be accessed by functions in commands class
+    private static int totalTasks = 0;
+    //public static ArrayList<Task> wishList = new ArrayList<Task>();
+
     protected String description;
     protected boolean isDone;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+    }
+
+    public void incrementTotalTasks(){
+        totalTasks = totalTasks + 1;
+    }
+    public void decrementTotalTasks(){
+        totalTasks = totalTasks - 1;
     }
 
     public String getTask(){

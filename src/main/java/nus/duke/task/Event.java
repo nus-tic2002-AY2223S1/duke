@@ -1,4 +1,4 @@
-package nus.duke;
+package nus.duke.task;
 
 public class Event extends Task {
     protected String at; // i.e. at a specific date/time
