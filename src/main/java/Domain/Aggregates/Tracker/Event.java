@@ -10,7 +10,7 @@ public class Event extends Task{
 
     public Event(String n) throws DukeValidationException {
         super(n);
-        String[] f = CommonHelper.formatPassedName(n);
+        String[] f = CommonHelper.formatPassedName(n, "at");
         if(CommonHelper.isEmptyOrNull(f[0]))
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Description"));
         else if(CommonHelper.isEmptyOrNull(f[1]))
@@ -25,6 +25,13 @@ public class Event extends Task{
         CommonHelper.printMessage(displayText);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(this.getClass() != obj.getClass())
+            return false;
+        Event e = (Event)obj;
+        return e.shortName.equals(this.shortName) && e.name.equals(this.name) && e.startDateTime.equals(this.startDateTime);
+    }
     public String getStartDateTime(){
         return this.startDateTime;
     }

@@ -10,7 +10,7 @@ public class Deadline extends Task{
 
     public Deadline(String n) throws DukeValidationException {
         super(n);
-        String[] f = CommonHelper.formatPassedName(n);
+        String[] f = CommonHelper.formatPassedName(n, "by");
         if(CommonHelper.isEmptyOrNull(f[0]))
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Description"));
         else if(CommonHelper.isEmptyOrNull(f[1]))
@@ -25,6 +25,13 @@ public class Deadline extends Task{
         CommonHelper.printMessage(displayText);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(this.getClass() != obj.getClass())
+            return false;
+        Deadline d = (Deadline) obj;
+        return d.shortName.equals(this.shortName) && d.name.equals(this.name) && d.dueDateTime.equals(this.dueDateTime);
+    }
     public String getDueDateTime(){
         return this.dueDateTime;
     }

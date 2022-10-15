@@ -14,4 +14,12 @@ public class Todo extends Task {
         String displayText = String.format("\t\t%d.[%s][%s] %s", n, this.shortName, this.isDone ? "X":" ", this.name);
         CommonHelper.printMessage(displayText);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this.getClass() != obj.getClass())
+            return false;
+        Todo t = (Todo) obj;
+        return t.shortName.equals(this.shortName) && t.name.equals(this.name);
+    }
 }
