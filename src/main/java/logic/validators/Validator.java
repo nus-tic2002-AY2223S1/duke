@@ -1,4 +1,4 @@
-package logic.parsers;
+package logic.validators;
 
 import common.exceptions.EmptyTaskListException;
 import common.exceptions.DuplicatedTaskException;
@@ -17,7 +17,7 @@ import static common.utils.TaskValidationUtil.markedTaskValidation;
 import static common.utils.TaskValidationUtil.unmarkedTaskValidation;
 import static common.utils.TaskValidationUtil.notExistTaskValidation;
 
-public class TaskValidationParser {
+public class Validator {
     /**
      * validateTodo validates todo command
      *

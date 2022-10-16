@@ -12,7 +12,7 @@ import static common.constants.CommonConstant.INIT_INT_VAL;
 import static common.constants.CommonConstant.UNMARKED_TASK;
 import static common.utils.PrintUtil.printMarkedTask;
 import static common.utils.StringUtil.getDescriptionFromString;
-import static logic.parsers.TaskValidationParser.validateUnmark;
+import static logic.validators.Validator.validateUnmark;
 
 public class UnmarkCommand extends Command {
     public UnmarkCommand(Chat chat) {

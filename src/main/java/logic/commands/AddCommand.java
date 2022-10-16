@@ -17,9 +17,9 @@ import static common.utils.PrintUtil.printAddedDeletedTask;
 import static common.utils.StringUtil.getDescriptionFromString;
 import static common.utils.StringUtil.getFirstWord;
 import static common.utils.StringUtil.getTimeFromString;
-import static logic.parsers.TaskValidationParser.validateDeadline;
-import static logic.parsers.TaskValidationParser.validateEvent;
-import static logic.parsers.TaskValidationParser.validateTodo;
+import static logic.validators.Validator.validateDeadline;
+import static logic.validators.Validator.validateEvent;
+import static logic.validators.Validator.validateTodo;
 
 public class AddCommand extends Command {
     public AddCommand(Chat chat) {

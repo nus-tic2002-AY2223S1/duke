@@ -12,7 +12,7 @@ import static common.constants.CommonConstant.INIT_INT_VAL;
 import static common.constants.CommonConstant.MARKED_TASK;
 import static common.utils.PrintUtil.printMarkedTask;
 import static common.utils.StringUtil.getDescriptionFromString;
-import static logic.parsers.TaskValidationParser.validateMark;
+import static logic.validators.Validator.validateMark;
 
 public class MarkCommand extends Command {
     public MarkCommand(Chat chat) {

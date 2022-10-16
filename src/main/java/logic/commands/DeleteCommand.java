@@ -9,7 +9,7 @@ import static common.constants.CommandConstant.DELETE_COMMAND;
 import static common.constants.CommonConstant.INIT_INT_VAL;
 import static common.utils.PrintUtil.printAddedDeletedTask;
 import static common.utils.StringUtil.getDescriptionFromString;
-import static logic.parsers.TaskValidationParser.validateDelete;
+import static logic.validators.Validator.validateDelete;
 
 public class DeleteCommand extends Command {
     public DeleteCommand(Chat chat) {
