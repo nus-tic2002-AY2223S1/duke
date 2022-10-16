@@ -11,6 +11,8 @@ public class CommandConstant {
 
     public static final String DELETE_COMMAND = "delete";
 
+    public static final String HELP_COMMAND = "help";
+
     public static final String LIST_COMMAND = "list";
 
     public static final String MARK_COMMAND = "mark";

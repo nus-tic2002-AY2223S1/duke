@@ -1,14 +1,18 @@
 package logic.commands;
 
+import common.exceptions.EmptyTaskListException;
+import common.exceptions.InvalidTaskDescriptionException;
+import common.exceptions.NotExistTaskException;
+import common.exceptions.UnmarkedTaskException;
 import model.Chat;
 import model.Task;
 
 import static common.constants.CommandConstant.UNMARK_COMMAND;
 import static common.constants.CommonConstant.INIT_INT_VAL;
 import static common.constants.CommonConstant.UNMARKED_TASK;
-import static common.constants.ErrorMessage.UNMARKED_TASK_ERROR_MSG;
-import static common.utils.PrintUtil.printCompletedTask;
+import static common.utils.PrintUtil.printMarkedTask;
 import static common.utils.StringUtil.getDescriptionFromString;
+import static logic.parsers.TaskValidationParser.validateUnmark;
 
 public class UnmarkCommand extends Command {
     public UnmarkCommand(Chat chat) {
@@ -18,18 +22,19 @@ public class UnmarkCommand extends Command {
     /**
      * execute unmarks a task
      *
+     * @throws EmptyTaskListException
+     * @throws InvalidTaskDescriptionException
+     * @throws NotExistTaskException
+     * @throws UnmarkedTaskException
      * @return {void}
      */
     @Override
-    public void execute() {
-        String input = getDescriptionFromString(UNMARK_COMMAND, chat.getInput());
-        Task task = chat.getTaskList().get(Integer.parseInt(input) - INIT_INT_VAL);
+    public void execute() throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException, UnmarkedTaskException {
+        String description = getDescriptionFromString(UNMARK_COMMAND, chat.getInput());
+        validateUnmark(description, chat);
 
-        if (!task.getDone()) {
-            System.out.println(String.format(UNMARKED_TASK_ERROR_MSG, input));
-        } else {
-            task.unmarkDone();
-            printCompletedTask(UNMARKED_TASK, input, task);
-        }
+        Task task = chat.getTaskList().get(Integer.parseInt(description) - INIT_INT_VAL);
+        task.unmarkDone();
+        printMarkedTask(UNMARKED_TASK, description, task);
     }
 }

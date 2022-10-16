@@ -1,5 +1,6 @@
 package logic.commands;
 
+import common.exceptions.*;
 import model.Chat;
 
 public abstract class Command {
@@ -9,5 +10,5 @@ public abstract class Command {
         this.chat = chat;
     }
 
-    public abstract void execute();
+    public abstract void execute() throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException, MarkedTaskException, UnmarkedTaskException;
 }

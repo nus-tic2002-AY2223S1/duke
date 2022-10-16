@@ -1,10 +1,17 @@
 package logic.commands;
 
+import common.exceptions.*;
 import model.Chat;
+import model.Deadline;
+import model.Event;
+import model.ToDo;
 
-import static common.utils.PrintUtil.printAddedTask;
-import static common.utils.StringUtil.getDescriptionFromString;
-import static logic.parsers.AddCommandParser.parseAddCommand;
+import static common.constants.CommandConstant.*;
+import static common.constants.ErrorMessage.*;
+import static common.utils.PrintUtil.printAddedDeletedTask;
+import static common.utils.StringUtil.*;
+import static common.utils.StringUtil.getTimeFromString;
+import static logic.parsers.TaskValidationParser.*;
 
 public class AddCommand extends Command {
     public AddCommand(Chat chat) {
@@ -20,7 +27,33 @@ public class AddCommand extends Command {
     public void execute() {
         String description = getDescriptionFromString(chat.getCommand(), chat.getInput());
 
-        parseAddCommand(description, chat);
-        printAddedTask(chat);
+        try {
+            switch (getFirstWord(chat.getInput())) {
+                case ADD_DEADLINE_COMMAND:
+                    validateDeadline(description, chat);
+                    Deadline newDeadline = new Deadline(description, getTimeFromString(chat.getInput()));
+                    chat.getTaskList().add(newDeadline);
+                    break;
+                case ADD_EVENT_COMMAND:
+                    validateEvent(description, chat);
+                    Event newEvent = new Event(description, getTimeFromString(chat.getInput()));
+                    chat.getTaskList().add(newEvent);
+                    break;
+                case ADD_TODO_COMMAND:
+                    validateTodo(description, chat);
+                    ToDo newToDo = new ToDo(description);
+                    chat.getTaskList().add(newToDo);
+                    break;
+                default:
+                    break;
+            }
+            printAddedDeletedTask(chat);
+        } catch (InvalidTaskDescriptionException e) {
+            System.out.println(INVALID_TASK_DESCRIPTION_ERROR_MSG);
+        } catch (DuplicatedTaskException e) {
+            System.out.println(DUPLICATED_TASK_ERROR_MSG);
+        } catch (Exception e) {
+            System.out.println(String.format(EXCEPTION_ERROR_MSG, e));
+        }
     }
 }

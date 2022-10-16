@@ -6,7 +6,7 @@ import model.Task;
 
 import static common.constants.CommandConstant.DELETE_COMMAND;
 import static common.constants.CommonConstant.*;
-import static common.constants.ErrorMessage.TASK_LIST_EMPTY_ERROR_MSG;
+import static common.constants.ErrorMessage.EMPTY_TASK_LIST_ERROR_MSG;
 
 public class PrintUtil {
     /**
@@ -24,9 +24,10 @@ public class PrintUtil {
      * @return {void}
      */
     public static void printGreet() {
+        System.out.println(LOGO);
         System.out.println(HELLO_GREETING);
-        System.out.println(INPUT_OPTIONS);
         printLine();
+        System.out.print(PROMPT);
     }
 
     /**
@@ -39,22 +40,13 @@ public class PrintUtil {
     }
 
     /**
-     * printEmptyTaskList prints error message of empty task list
-     *
-     * @return {void}
-     */
-    public static void printEmptyTaskList() {
-        System.out.println(TASK_LIST_EMPTY_ERROR_MSG);
-    }
-
-    /**
-     * printAddedTask prints when task is successfully added
+     * printAddedDeletedTask prints when task is successfully added or deleted
      *
      * @param {String} input
      * @param {Chat} chat
      * @return {void}
      */
-    public static void printAddedTask(Chat chat) {
+    public static void printAddedDeletedTask(Chat chat) {
         String commandMsg = chat.getCommand().equals(DELETE_COMMAND) ? DELETED : ADDED;
         System.out.println(String.format(commandMsg, chat.getInput()));
         chat.getTaskList().forEach(task ->
@@ -64,14 +56,14 @@ public class PrintUtil {
     }
 
     /**
-     * printCompletedTask prints when command task is successfully performed
+     * printMarkedTask prints when command task is successfully marked or unmarked
      *
      * @param {String} command
      * @param {String} input
      * @param {Task} task
      * @return {void}
      */
-    public static void printCompletedTask(String command, String input, Task task) {
+    public static void printMarkedTask(String command, String input, Task task) {
         System.out.println(String.format(command, input));
         System.out.println(TAB + task);
     }

@@ -22,27 +22,28 @@ public class CommonConstant {
 
     public static final String EVENT_AT = "at: ";
 
-    public static final String HELLO_GREETING = "Hello! I'm Duke! How can I help you?";
+    public static final String HELLO_GREETING = "Hello! I'm Duke! How can I help you? (Type 'help' for command usage)";
 
     public static final String INPUT_OPTIONS =
-            "\t---------------------------------------------------------------------------------------------------------\n" +
-            "\t| S/N | Command                           | Description                   | Usage Example               |\n" +
-            "\t|-----|-----------------------------------|-------------------------------|-----------------------------|\n" +
-            "\t| 1   | <task>                            | Add task                      | taskABC                     |\n" +
-            "\t| 2   | deadline <task> /by <date & time> | Add deadline with date & time | deadline taskABC /by Sunday |\n" +
-            "\t| 3   | event <task> /at <date & time>    | Add event with date & time    | event taskABC /at Mon 2-4pm |\n" +
-            "\t| 4   | todo <task>                       | Add todo task                 | todo taskABC                |\n" +
-            "\t| 5   | list                              | List existing tasks           | list                        |\n" +
-            "\t| 6   | mark <task>                       | Mark specified task           | mark taskABC                |\n" +
-            "\t| 7   | unmark <task>                     | Unmark specified task         | unmark taskABC              |\n" +
-            "\t| 8   | bye                               | Exit duke bot                 | bye                         |\n" +
-            "\t---------------------------------------------------------------------------------------------------------";
+            "---------------------------------------------------------------------------------------------------------\n" +
+            "| S/N | Command                           | Description                   | Usage Example               |\n" +
+            "|-----|-----------------------------------|-------------------------------|-----------------------------|\n" +
+            "| 1   | <task>                            | Add task                      | taskABC                     |\n" +
+            "| 2   | deadline <task> /by <date & time> | Add deadline with date & time | deadline taskABC /by Sunday |\n" +
+            "| 3   | event <task> /at <date & time>    | Add event with date & time    | event taskABC /at Mon 2-4pm |\n" +
+            "| 4   | todo <task>                       | Add todo task                 | todo taskABC                |\n" +
+            "| 5   | list                              | List existing tasks           | list                        |\n" +
+            "| 6   | mark <task_number>                | Mark specified task           | mark 1                      |\n" +
+            "| 7   | unmark <task_number>              | Unmark specified task         | unmark 1                    |\n" +
+            "| 8   | delete <task_number>              | Delete specified task         | delete 1                    |\n" +
+            "| 9   | bye                               | Exit duke bot                 | bye                         |\n" +
+            "---------------------------------------------------------------------------------------------------------";
 
-    public static final String LOGO = "\t\t\t\t\t\t\t\t\t ____        _        \n"
-            + "\t\t\t\t\t\t\t\t\t|  _ \\ _   _| | _____ \n"
-            + "\t\t\t\t\t\t\t\t\t| | | | | | | |/ / _ \\\n"
-            + "\t\t\t\t\t\t\t\t\t| |_| | |_| |   <  __/\n"
-            + "\t\t\t\t\t\t\t\t\t|____/ \\__,_|_|\\_\\___|\n";
+    public static final String LOGO = "____        _        \n"
+            + "|  _ \\ _   _| | _____ \n"
+            + "| | | | | | | |/ / _ \\\n"
+            + "| |_| | |_| |   <  __/\n"
+            + "|____/ \\__,_|_|\\_\\___|\n";
 
     public static final String MARKED_TASK = "Nice! Task %s is successfully marked.";
 
