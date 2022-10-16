@@ -7,4 +7,5 @@ unmark 1
 mark 2
 list
 todo sleep
+delete 3
 bye
