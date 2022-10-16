@@ -15,12 +15,12 @@ public class TaskList {
     }
     //constructor reading a existing file
     TaskList(File f) throws IOException, DukeException { //string f is a file
+        task_count = 0;
+        myTaskList = new Task[100];
         Scanner s = new Scanner(f); //create a Scanner using the File as the source
         while (s.hasNext()){ //add task to the list as long there is next line
             addTasks(s.nextLine());
         }
-        task_count = 0;
-        myTaskList = new Task[100];
     }
 
     private static void writeToFile(String filePath, String textToAdd) throws IOException {
@@ -74,7 +74,9 @@ public class TaskList {
         }
 
         String file = "data/tasks.txt";
-        String data = description;
+        String data = myTaskList[task_count].myTaskType + " | " +
+                        myTaskList[task_count].isDone + " | " +
+                        myTaskList[task_count].description;
 
         //write to file
         try{
