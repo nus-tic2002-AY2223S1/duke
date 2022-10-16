@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.file.*;
 import java.util.Scanner;
 
 public class TaskList {
@@ -48,13 +49,20 @@ public class TaskList {
             if(trimmedLine.equals(lineToRemove)){
                 continue;
             }
-            writer.write(currentLine); //write current line to temp file
+            writer.write(currentLine + System.lineSeparator()); //write current line to temp file
         }
         writer.close();
         reader.close();
 
-        inputFile.delete();
-        tempFile.renameTo(inputFile);
+        try{
+            inputFile.delete();
+            tempFile.renameTo(inputFile);
+        } catch (Exception e) {
+            System.gc();
+            inputFile.delete();
+            tempFile.renameTo(inputFile);
+            throw new RuntimeException(e);
+        }
     }
 
     public void addTasks(String input) throws DukeException, IOException {
@@ -157,12 +165,15 @@ public class TaskList {
         switch (words[0]) {
             case "deadline":
                 myTaskList[task_count] = new Deadline(description, "deadline", date);
+                myTaskList[task_count].setIsDone(Boolean.parseBoolean(words[2]));
                 break;
             case "event":
                 myTaskList[task_count] = new Event(description, "event", date);
+                myTaskList[task_count].setIsDone(Boolean.parseBoolean(words[2]));
                 break;
             case "todo":
                 myTaskList[task_count] = new ToDo(description, "todo");
+                myTaskList[task_count].setIsDone(Boolean.parseBoolean(words[2]));
                 break;
             default:
                 throw new DukeException();

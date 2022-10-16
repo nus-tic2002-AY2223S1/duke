@@ -86,6 +86,12 @@ abstract class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
+    //set method
+    public void setIsDone(boolean trueOrFalse){
+        this.isDone = trueOrFalse;
+    }
+
+    //override
     public String toString(){
         return "[" + getStatusIcon() + "] "  + description;
     }
