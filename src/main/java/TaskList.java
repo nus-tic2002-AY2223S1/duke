@@ -1,26 +1,13 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Scanner;
-import java.io.FileWriter;
+import java.io.*;
 
 public class TaskList {
     public int task_count;
     public Task[] myTaskList;
 
-    //default constructor
-    TaskList(){
+    // //constructor reading a existing file
+    TaskList(BufferedReader load){
         task_count = 0;
         myTaskList = new Task[100];
-    }
-    //constructor reading a existing file
-    TaskList(File f) throws IOException, DukeException { //string f is a file
-        task_count = 0;
-        myTaskList = new Task[100];
-        Scanner s = new Scanner(f); //create a Scanner using the File as the source
-        while (s.hasNext()){ //add task to the list as long there is next line
-            addTasks(s.nextLine());
-        }
     }
 
     private static void writeToFile(String filePath, String textToAdd) throws IOException {
@@ -34,6 +21,28 @@ public class TaskList {
         fw.write(textToAppend + System.lineSeparator());
         fw.close();
     }
+    private static void removeLineFromFile(String filePath, String textToRemove) throws  IOException {
+        File inputFile = new File(filePath);
+        File tempFile = new File("tasks_temp.txt");
+
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+        String currentLine;
+        String lineToRemove = textToRemove.trim();
+
+        while((currentLine = reader.readLine()) != null) {
+            String trimmedLine = currentLine.trim();
+            if(trimmedLine.equals(lineToRemove)) continue;
+            writer.write(currentLine + System.getProperty("line.separator"));
+        }
+        writer.close();
+        reader.close();
+
+        inputFile.delete();
+        tempFile.renameTo(inputFile);
+    }
+
 
     public void addTasks(String input) throws DukeException, IOException {
         String[] words = input.split(" ");
@@ -85,16 +94,28 @@ public class TaskList {
             writeToFile(file, data);
             System.out.println("Something went wrong: " + e.getMessage());
         }
-
         ++task_count;
     }
 
-    public void removeTasks(int taskID) throws DukeException{
-        for(int i = taskID; i < task_count; i++){
-            myTaskList[i] = myTaskList[i+1];
+    public void removeTasks(int taskID) throws DukeException, IOException {
+        try {
+            //delete the task in tasks.txt
+            String file = "data/tasks.txt";
+            String LineToRemove = myTaskList[taskID].myTaskType + " | " +
+                    myTaskList[taskID].isDone + " | " +
+                    myTaskList[taskID].description;
+            removeLineFromFile(file, LineToRemove);
+
+            for (int i = taskID; i < task_count; i++) { //replace the task with the task in front of it
+                myTaskList[i] = myTaskList[i + 1];
+            }
+            myTaskList[task_count] = null; //initialize the last task to null
+
+            //reduce the task count
+            --task_count;
+        } catch (NullPointerException e){
+            System.out.println("TaskList is empty");
         }
-        myTaskList[task_count] = null;
-        --task_count;
     }
 
 

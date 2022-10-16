@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class Storage {
     private static File f;
@@ -16,20 +15,13 @@ public class Storage {
         f = new File(filePath);
     }
 
-    public static File load() {
-        boolean result;
-        try {
-            result = f.createNewFile();
-            if(result){
-                System.out.println("file created " + f.getCanonicalPath());
-            }
-            else {
-                System.out.println("File already exist at location: "+f.getCanonicalPath());
-            }
-        } catch (IOException e) { //print exception if any
-            e.printStackTrace();
-        }
+    public static BufferedReader load() throws IOException {
+        String file ="data/tasks.txt";
 
-        return f;
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String currentLine = reader.readLine();
+        reader.close();
+
+        return reader;
     }
 }

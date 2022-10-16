@@ -20,9 +20,9 @@ public class Duke {
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.load());
-        } catch (DukeException | FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             ui.showLoadingError();
-            tasks = new TaskList();
+            tasks = new TaskList(storage.load());
         }
     }
 
@@ -76,6 +76,8 @@ public class Duke {
                     System.out.println("Now you have " + tasks.task_count + " tasks in the list.");
                 } catch (DukeException e){
                     System.out.println("OOPS!!! There is no corresponding taskID to delete.");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
             else {
