@@ -14,19 +14,23 @@ abstract class Task {
     private void markTaskFromFile(String filePath) throws IOException {
         //replace the task in the file to true
         File inputFile = new File(filePath);
-        String originalContent = "";
+        String Content = "";
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
 
         String currentLine ;
         String lineToRemove = this.myTaskType + " | " + this.isDone + " | " + this.description;
 
         while((currentLine = reader.readLine()) != null) {//read current line from tasks.txt till it null
-            originalContent = originalContent + currentLine + System.lineSeparator();
+            if(currentLine.trim().equals(lineToRemove.trim())){
+                String markLine = this.myTaskType + " | " + "true" + " | " + this.description;
+                Content = Content + markLine + System.lineSeparator();
+                continue;
+            }
+            Content = Content + currentLine + System.lineSeparator();
         }
-        String updateContent = originalContent.replace("false", "true");
 
         FileWriter writer = new FileWriter(inputFile);
-        writer.write(updateContent);
+        writer.write(Content);
         writer.close();
         reader.close();
     }
@@ -34,19 +38,23 @@ abstract class Task {
     private void unmarkTaskFromFile(String filePath) throws IOException {
         //replace the task in the file to true
         File inputFile = new File(filePath);
-        String originalContent = "";
+        String Content = "";
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
 
         String currentLine ;
         String lineToRemove = this.myTaskType + " | " + this.isDone + " | " + this.description;
 
         while((currentLine = reader.readLine()) != null) {//read current line from tasks.txt till it null
-            originalContent = originalContent + currentLine + System.lineSeparator();
+            if(currentLine.trim().equals(lineToRemove.trim())){
+                String markLine = this.myTaskType + " | " + "false" + " | " + this.description;
+                Content = Content + markLine + System.lineSeparator();
+                continue;
+            }
+            Content = Content + currentLine + System.lineSeparator();
         }
-        String updateContent = originalContent.replace("true", "false");
 
         FileWriter writer = new FileWriter(inputFile);
-        writer.write(updateContent);
+        writer.write(Content);
         writer.close();
         reader.close();
     }
