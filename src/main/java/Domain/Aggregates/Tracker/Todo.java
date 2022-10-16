@@ -5,8 +5,8 @@ import Domain.Exceptions.DukeValidationException;
 
 public class Todo extends Task {
     protected String shortName = "T";
-    public Todo(int i, String n) throws DukeValidationException {
-        super(i, n);
+    public Todo(String n) throws DukeValidationException {
+        super(n);
     }
 
     public Todo(int id, String name, boolean isDone){

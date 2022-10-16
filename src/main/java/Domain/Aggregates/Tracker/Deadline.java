@@ -8,13 +8,10 @@ public class Deadline extends Task{
     public String dueDateTime;
     protected String shortName = "D";
 
-    public Deadline(int i, String n) throws DukeValidationException {
-        super(i, n);
+    public Deadline(String n) throws DukeValidationException {
+        super(n);
         String[] f = CommonHelper.formatPassedName(n, "by");
-        if(CommonHelper.isEmptyOrNull(f[0]))
-            throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Description"));
-        else if(CommonHelper.isEmptyOrNull(f[1]))
-            throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Due Date Time"));
+        validate(f);
         this.name = f[0].trim();
         this.dueDateTime = f[1].trim();
     }
@@ -41,6 +38,13 @@ public class Deadline extends Task{
     @Override
     public String toString(){
         return String.format("%d | %s | %d | %s | %s", this.id, this.shortName, CommonHelper.boolToInt(this.isDone), this.name, this.dueDateTime);
+    }
+
+    private void validate(String[] f) throws DukeValidationException{
+        if(CommonHelper.isEmptyOrNull(f[0]))
+            throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Description"));
+        else if(CommonHelper.isEmptyOrNull(f[1]))
+            throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Due Date Time"));
     }
 
     public String getDueDateTime(){
