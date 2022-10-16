@@ -8,8 +8,8 @@ public class Event extends Task{
     protected String startDateTime;
     protected String shortName = "E";
 
-    public Event(String n) throws DukeValidationException {
-        super(n);
+    public Event(int i, String n) throws DukeValidationException {
+        super(i, n);
         String[] f = CommonHelper.formatPassedName(n, "at");
         if(CommonHelper.isEmptyOrNull(f[0]))
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Description"));
@@ -19,9 +19,14 @@ public class Event extends Task{
         this.startDateTime = f[1].trim();
     }
 
+    public Event(int id, String name, String startDateTime, boolean isDone) {
+        super(id, name, isDone);
+        this.startDateTime = startDateTime;
+    }
+
     @Override
-    public void printItem(Integer n){
-        String displayText = String.format("\t\t%d.[%s][%s] %s (at: %s)", n, this.shortName, this.isDone ? "X":" ", this.name, this.startDateTime);
+    public void printItem(){
+        String displayText = String.format("\t\t%d.[%s][%s] %s (at: %s)", this.id, this.shortName, this.isDone ? "X":" ", this.name, this.startDateTime);
         CommonHelper.printMessage(displayText);
     }
 
@@ -32,6 +37,12 @@ public class Event extends Task{
         Event e = (Event)obj;
         return e.shortName.equals(this.shortName) && e.name.equals(this.name) && e.startDateTime.equals(this.startDateTime);
     }
+
+    @Override
+    public String toString(){
+        return String.format("%d | %s | %d | %s | %s", this.id, this.shortName, CommonHelper.boolToInt(this.isDone), this.name, this.startDateTime);
+    }
+
     public String getStartDateTime(){
         return this.startDateTime;
     }
