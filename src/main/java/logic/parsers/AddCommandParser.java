@@ -44,7 +44,7 @@ public class AddCommandParser {
                     break;
             }
         } catch (Exception e) {
-            System.err.println(String.format(EXCEPTION_ERROR_MSG, e));
+            System.out.println(String.format(EXCEPTION_ERROR_MSG, e));
         }
     }
 }

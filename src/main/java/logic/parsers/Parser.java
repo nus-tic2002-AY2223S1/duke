@@ -29,7 +29,7 @@ import static logic.parsers.TaskValidationParser.validateUnmark;
 import static common.utils.TaskValidationUtil.invalidTaskCommandValidation;
 
 public class Parser {
-    public Parser() {};
+    public Parser() {}
     /**
      * parseCommand returns parse command
      *

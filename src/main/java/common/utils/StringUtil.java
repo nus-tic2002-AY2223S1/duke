@@ -24,7 +24,7 @@ public class StringUtil {
                 return firstWord;
             }
         } catch (Exception e) {
-            System.err.println(String.format(EXCEPTION_ERROR_MSG, e));
+            System.out.println(String.format(EXCEPTION_ERROR_MSG, e));
         }
 
         return sentence;
@@ -71,7 +71,7 @@ public class StringUtil {
             int index = sentence.indexOf(separator);
             substring = sentence.substring(index + (separator).length());
         } catch (Exception e) {
-            System.err.println(String.format(EXCEPTION_ERROR_MSG, e));
+            System.out.println(String.format(EXCEPTION_ERROR_MSG, e));
         }
 
         return substring;

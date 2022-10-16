@@ -8,7 +8,6 @@ import static common.constants.CommonConstant.LOGO;
 import static common.constants.CommonConstant.PROMPT;
 import static common.constants.ErrorMessage.EXCEPTION_ERROR_MSG;
 import static common.utils.PrintUtil.printGreet;
-import static common.utils.PrintUtil.printLine;
 import static logic.parsers.Parser.parseChat;
 
 public class Duke {
@@ -23,7 +22,7 @@ public class Duke {
         try {
             parseChat(userInput, taskList);
         } catch (Exception e) {
-            System.err.println(String.format(EXCEPTION_ERROR_MSG, e));
+            System.out.println(String.format(EXCEPTION_ERROR_MSG, e));
         }
     }
 }
