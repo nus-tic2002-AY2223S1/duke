@@ -1,10 +1,29 @@
 package logic.parsers;
 
-import common.exceptions.*;
-import logic.commands.*;
+import common.exceptions.EmptyTaskListException;
+import common.exceptions.InvalidTaskCommandException;
+import common.exceptions.InvalidTaskDescriptionException;
+import common.exceptions.NotExistTaskException;
+import common.exceptions.MarkedTaskException;
+import common.exceptions.UnmarkedTaskException;
+import logic.commands.Command;
+import logic.commands.AddCommand;
+import logic.commands.DeleteCommand;
+import logic.commands.HelpCommand;
+import logic.commands.ListCommand;
+import logic.commands.MarkCommand;
+import logic.commands.UnmarkCommand;
 import model.Chat;
 
-import static common.constants.CommandConstant.*;
+import static common.constants.CommandConstant.ADD_DEADLINE_COMMAND;
+import static common.constants.CommandConstant.BYE_COMMAND;
+import static common.constants.CommandConstant.ADD_EVENT_COMMAND;
+import static common.constants.CommandConstant.ADD_TODO_COMMAND;
+import static common.constants.CommandConstant.DELETE_COMMAND;
+import static common.constants.CommandConstant.HELP_COMMAND;
+import static common.constants.CommandConstant.LIST_COMMAND;
+import static common.constants.CommandConstant.MARK_COMMAND;
+import static common.constants.CommandConstant.UNMARK_COMMAND;
 import static common.utils.PrintUtil.printBye;
 
 public class Parser {

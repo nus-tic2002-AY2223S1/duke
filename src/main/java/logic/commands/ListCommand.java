@@ -2,8 +2,6 @@ package logic.commands;
 
 import common.exceptions.EmptyTaskListException;
 import common.exceptions.InvalidTaskDescriptionException;
-import common.exceptions.MarkedTaskException;
-import common.exceptions.NotExistTaskException;
 import model.Chat;
 
 import java.util.concurrent.atomic.AtomicInteger;

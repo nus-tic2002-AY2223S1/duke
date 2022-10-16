@@ -1,17 +1,25 @@
 package logic.commands;
 
-import common.exceptions.*;
+import common.exceptions.DuplicatedTaskException;
+import common.exceptions.InvalidTaskDescriptionException;
 import model.Chat;
 import model.Deadline;
 import model.Event;
 import model.ToDo;
 
-import static common.constants.CommandConstant.*;
-import static common.constants.ErrorMessage.*;
+import static common.constants.CommandConstant.ADD_DEADLINE_COMMAND;
+import static common.constants.CommandConstant.ADD_EVENT_COMMAND;
+import static common.constants.CommandConstant.ADD_TODO_COMMAND;
+import static common.constants.ErrorMessage.DUPLICATED_TASK_ERROR_MSG;
+import static common.constants.ErrorMessage.EXCEPTION_ERROR_MSG;
+import static common.constants.ErrorMessage.INVALID_TASK_DESCRIPTION_ERROR_MSG;
 import static common.utils.PrintUtil.printAddedDeletedTask;
-import static common.utils.StringUtil.*;
+import static common.utils.StringUtil.getDescriptionFromString;
+import static common.utils.StringUtil.getFirstWord;
 import static common.utils.StringUtil.getTimeFromString;
-import static logic.parsers.TaskValidationParser.*;
+import static logic.parsers.TaskValidationParser.validateDeadline;
+import static logic.parsers.TaskValidationParser.validateEvent;
+import static logic.parsers.TaskValidationParser.validateTodo;
 
 public class AddCommand extends Command {
     public AddCommand(Chat chat) {

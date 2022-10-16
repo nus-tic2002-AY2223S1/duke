@@ -1,12 +1,18 @@
 package common.utils;
 
-import logic.commands.DeleteCommand;
 import model.Chat;
 import model.Task;
 
 import static common.constants.CommandConstant.DELETE_COMMAND;
-import static common.constants.CommonConstant.*;
-import static common.constants.ErrorMessage.EMPTY_TASK_LIST_ERROR_MSG;
+import static common.constants.CommonConstant.ADDED;
+import static common.constants.CommonConstant.BYE_GREETING;
+import static common.constants.CommonConstant.DASHES;
+import static common.constants.CommonConstant.DELETED;
+import static common.constants.CommonConstant.HELLO_GREETING;
+import static common.constants.CommonConstant.LOGO;
+import static common.constants.CommonConstant.PROMPT;
+import static common.constants.CommonConstant.TAB;
+import static common.constants.CommonConstant.TOTAL_NO_OF_TASKS;
 
 public class PrintUtil {
     /**

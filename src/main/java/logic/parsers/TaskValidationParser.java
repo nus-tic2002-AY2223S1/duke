@@ -1,10 +1,21 @@
 package logic.parsers;
 
-import common.exceptions.*;
+import common.exceptions.EmptyTaskListException;
+import common.exceptions.DuplicatedTaskException;
+import common.exceptions.InvalidTaskDescriptionException;
+import common.exceptions.NotExistTaskException;
+import common.exceptions.MarkedTaskException;
+import common.exceptions.UnmarkedTaskException;
 import model.Chat;
 
-import static common.constants.CommonConstant.*;
-import static common.utils.TaskValidationUtil.*;
+import static common.constants.CommonConstant.AT;
+import static common.constants.CommonConstant.BY;
+import static common.utils.TaskValidationUtil.duplicatedTaskValidation;
+import static common.utils.TaskValidationUtil.emptyTaskListValidation;
+import static common.utils.TaskValidationUtil.regexValidation;
+import static common.utils.TaskValidationUtil.markedTaskValidation;
+import static common.utils.TaskValidationUtil.unmarkedTaskValidation;
+import static common.utils.TaskValidationUtil.notExistTaskValidation;
 
 public class TaskValidationParser {
     /**
