@@ -1,13 +1,25 @@
 import java.io.*;
+import java.util.Scanner;
 
 public class TaskList {
     public int task_count;
     public Task[] myTaskList;
 
     // //constructor reading a existing file
-    TaskList(BufferedReader load){
+    TaskList(){
         task_count = 0;
         myTaskList = new Task[100];
+    }
+
+    TaskList(String fileContent) throws DukeException, IOException {
+        task_count = 0;
+        myTaskList = new Task[100];
+
+        Scanner scan = new Scanner(fileContent);
+        //add everyLine to myTaskList
+        while(scan.hasNextLine()){
+            updateTasks(scan.nextLine());
+        }
     }
 
     private static void writeToFile(String filePath, String textToAdd) throws IOException {
@@ -42,7 +54,6 @@ public class TaskList {
         inputFile.delete();
         tempFile.renameTo(inputFile);
     }
-
 
     public void addTasks(String input) throws DukeException, IOException {
         String[] words = input.split(" ");
@@ -116,6 +127,45 @@ public class TaskList {
         } catch (NullPointerException e){
             System.out.println("TaskList is empty");
         }
+    }
+
+    public void updateTasks(String input) throws DukeException, IOException {
+        String[] words = input.split(" ");
+        String description = "";
+
+        int dateDivider = 0;
+
+        for(int i = 1; i < words.length; i++){
+            if(words[i].startsWith("/")){
+                dateDivider = i;
+                break;
+            }
+            if(words[i].startsWith("|") || words[i].startsWith("false") || words[i].startsWith("true")){
+                continue;
+            }
+            description = description + words[i] + " ";
+        }
+
+        String date = "";
+
+        for(int i = dateDivider + 1; i < words.length; i++){
+            date = date + words[i] + " ";
+        }
+
+        switch (words[0]) {
+            case "deadline":
+                myTaskList[task_count] = new Deadline(description, "deadline", date);
+                break;
+            case "event":
+                myTaskList[task_count] = new Event(description, "event", date);
+                break;
+            case "todo":
+                myTaskList[task_count] = new ToDo(description, "todo");
+                break;
+            default:
+                throw new DukeException();
+        }
+        ++task_count;
     }
 
 

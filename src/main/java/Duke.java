@@ -20,13 +20,13 @@ public class Duke {
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.load());
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | DukeException e) {
             ui.showLoadingError();
-            tasks = new TaskList(storage.load());
+            tasks = new TaskList();
         }
     }
 
-    public void run() {
+    public void run() throws IOException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"

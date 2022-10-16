@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Scanner;
 
 public class Storage {
     private static File f;
@@ -15,13 +16,13 @@ public class Storage {
         f = new File(filePath);
     }
 
-    public static BufferedReader load() throws IOException {
-        String file ="data/tasks.txt";
+    public static String load() throws IOException {
+        Scanner scan = new Scanner(f);
 
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        String currentLine = reader.readLine();
-        reader.close();
-
-        return reader;
+        String fileContent = "";
+        while(scan.hasNextLine()){ //addTask to myTaskList for every line
+            fileContent = fileContent.concat(scan.nextLine() + "\n");
+        }
+        return fileContent;
     }
 }

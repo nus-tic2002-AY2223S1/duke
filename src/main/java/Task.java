@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -8,13 +10,28 @@ abstract class Task {
         this.description = description;
         this.myTaskType = TaskType;
     }
-    public void markAsDone() {
+
+    private static void markTaskFromFile(String filePath) throws IOException {
+        //replace the task in the file to true
+    }
+
+    private static void unmarkTaskFromFile(String filePath) throws IOException {
+        //replace the task in the file to true
+    }
+
+    public void markAsDone() throws IOException {
+        //mark true in tasks.txt
+        markTaskFromFile("data/tasks.txt");
+
         System.out.println("Nice! I've marked this task as done:");
         this.isDone = true;
         System.out.println("[X] " + description);
     }
 
-    public void markAsNotDone() {
+    public void markAsNotDone() throws IOException {
+        //mark false in tasks.txt
+        unmarkTaskFromFile("data/tasks.txt");
+
         System.out.println("OK, I've marked this task as not done yet:");
         this.isDone = false;
         System.out.println("[] " + description);
