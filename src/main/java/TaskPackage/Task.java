@@ -11,21 +11,28 @@ public class Task {
           this.isDone = false;
 
       }
-      public String getStatusIcon(){
 
+      public String getStatusIcon(){
           return (isDone ? "x":" "); //mark done task with X
       }
 
-      public void markAsDone(){
+    /**
+     * the method return true if task done
+     */
+    public void markAsDone(){
           this.isDone = true;
       }
+
+    /**
+     * the method return false if task not done
+     */
       public void markAsNotdone(){
         this.isDone = false;
     }
 
 
     public String getData(){
-          if (this.isDone == true) {
+          if (this.isDone) {
               return ("|1|" + this.description);
           } else {
               return ("|0|" + this.description);
