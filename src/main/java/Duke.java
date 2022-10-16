@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 
 public class Duke {
@@ -32,6 +33,7 @@ public class Duke {
         System.out.println("Hello there! I'm Duke\nWhat's on your mind today?");
         //String[] com= new String[100];
         Task[] t= new Task[10];
+        ArrayList<Task>tasks= new ArrayList<>();
         String temp;
         String ts="null";
         int i=1;
@@ -41,28 +43,57 @@ public class Duke {
             temp = in.nextLine();
 
             try {                                           //try new
+
+
+
                 if (temp.equals("list")) {
                     System.out.println("\nContent of your List\n");
 
-                    for (int k = 0; k < j; k++) {
+            /*        for (int k = 0; k < j; k++) {
                         //    System.out.println(k+1 + ". ["+t[k].getStatusIcon()+"] " + t[k].getDescription() +"\n");
                         System.out.println(k + 1 + ". " + t[k]);
 
                     }
+                    System.out.println("\nEnd of list\n");*/
+
+                    // below new array list***************************************
+                    //System.out.println("\nBELOW IS THE NEW LIST ARRAY\n");
+                    int k=0;
+                    while(k<j){
+
+                        System.out.println(k + 1 + ". " + tasks.get(k));
+                        k++;
+                    }
                     System.out.println("\nEnd of list\n");
 
-                } else if (temp.equals("bye")) {
+                }
+
+                else if (temp.equals("bye")) {
                     i = 0;
-                } else if (temp.substring(0, 3).equals("unm")) {
+                }
+
+                else if (temp.substring(0, 3).equals("unm")) {
                     //unmark
                     int num = Integer.parseInt(temp.substring(7));
-                    t[num - 1].markAsUndone();
-                    System.out.println(t[num - 1] + "\n");
-                } else if (temp.substring(0, 3).equals("mar")) {
+                //    t[num - 1].markAsUndone();
+                //    System.out.println(t[num - 1] + "\n");
+
+                    //below array list****************************************
+
+                    tasks.get(num-1).markAsUndone();
+                    System.out.println(tasks.get(num - 1) + "\n");
+                }
+
+                else if (temp.substring(0, 3).equals("mar")) {
                     //mark
                     int num = Integer.parseInt(temp.substring(5));
-                    t[num - 1].markAsDone();
-                    System.out.println(t[num - 1] + "\n");
+                //    t[num - 1].markAsDone();
+                //    System.out.println(t[num - 1] + "\n");
+
+                    //below array list****************************************
+                //    System.out.println("\nBELOW IS THE NEW LIST ARRAY\n");
+                    tasks.get(num-1).markAsDone();
+                    System.out.println(tasks.get(num - 1) + "\n");
 
                 }
 
@@ -71,10 +102,17 @@ public class Duke {
                     ts="todo";
                     validate(temp, temp.substring(0, 4)); //Check if todo is empty
 
-                    t[j] = new Todo(temp.substring(5));
+                //    t[j] = new Todo(temp.substring(5));
                     j++;
+
+                //    System.out.println(t[j - 1]);
+
+
+                    //below array list****************************************
+                //    System.out.println("\nBELOW IS THE NEW LIST ARRAY\n");
+                    tasks.add(new Todo(temp.substring(5)));
                     System.out.println("The task has been successfully added to your list!");
-                    System.out.println(t[j - 1]);
+                    System.out.println(tasks.get(j-1));
                     System.out.println("Now you have " + j + " tasks in your list\n");
 
                 }
@@ -88,14 +126,43 @@ public class Duke {
                     validateDate(index);
 
 
-                    t[j] = new Event(temp.substring(6, index), temp.substring(index + 1));
+                    //t[j] = new Event(temp.substring(6, index), temp.substring(index + 1));
 
                     j++;
 
+                //    System.out.println("The task has been successfully added to your list!");
+                //    System.out.println(t[j - 1]);
+                //    System.out.println("Now you have " + j + " tasks in your list\n");
+
+                    //below array list****************************************
+                //    System.out.println("\nBELOW IS THE NEW LIST ARRAY\n");
+
+                    tasks.add(new Event(temp.substring(6, index), temp.substring(index + 1)));
                     System.out.println("The task has been successfully added to your list!");
-                    System.out.println(t[j - 1]);
+                    System.out.println(tasks.get(j-1));
                     System.out.println("Now you have " + j + " tasks in your list\n");
                 }
+
+                else if (temp.substring(0, 6).equals("delete")) {
+
+                    int num = Integer.parseInt(temp.substring(7));
+                    Task g= tasks.get(num-1);
+                    tasks.remove(num-1);
+                    j--;
+                    System.out.println("Noted. The task has been removed");
+                    System.out.println(g);
+                    System.out.println("Now you have " + j + " tasks in your list");
+                    System.out.println("BELOW IS THE NEW LIST after delete\n");
+                    int k=0;
+                    while(k<j){
+
+                        System.out.println(k + 1 + ". " + tasks.get(k));
+                        k++;
+                    }
+                    System.out.println("\nEnd of list\n");
+
+                }
+
 
                 else if (temp.substring(0, 8).equals("deadline")) {
 
@@ -105,12 +172,19 @@ public class Duke {
                     int index = temp.indexOf('/');
                     validateDate(index);
 
-                    t[j] = new Deadline(temp.substring(9, index), temp.substring(index + 1));
+                //    t[j] = new Deadline(temp.substring(9, index), temp.substring(index + 1));
 
                     j++;
 
+                //    System.out.println("The task has been successfully added to your list!");
+                //    System.out.println(t[j - 1]);
+                //    System.out.println("Now you have " + j + " tasks in your list\n");
+
+                    //below array list****************************************
+                //    System.out.println("\nBELOW IS THE NEW LIST ARRAY\n");
+                    tasks.add(new Deadline(temp.substring(9, index), temp.substring(index + 1)));
                     System.out.println("The task has been successfully added to your list!");
-                    System.out.println(t[j - 1]);
+                    System.out.println(tasks.get(j-1));
                     System.out.println("Now you have " + j + " tasks in your list\n");
                 }
 
