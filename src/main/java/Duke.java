@@ -42,22 +42,22 @@ public class Duke {
                         tracker.showList();
                         break;
                     case TODO:
-                        tracker.addItem(new Todo(inp.replace("todo","").trim()));
+                        tracker.addItem(new Todo(tracker.getNewId(), inp.replace("todo","").trim()));
                         break;
                     case EVENT:
-                        tracker.addItem(new Event(inp.replace("event","").trim()));
+                        tracker.addItem(new Event(tracker.getNewId(), inp.replace("event","").trim()));
                         break;
                     case DEADLINE:
-                        tracker.addItem(new Deadline(inp.replace("deadline","").trim()));
+                        tracker.addItem(new Deadline(tracker.getNewId(), inp.replace("deadline","").trim()));
                         break;
                     case MARK:
-                        tracker.updateItem(getId(inp.replaceAll("[^0-9]", "").trim()), true);
+                        tracker.updateItem(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()), true);
                         break;
                     case UNMARK:
-                        tracker.updateItem(getId(inp.replaceAll("[^0-9]", "").trim()), false);
+                        tracker.updateItem(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()), false);
                         break;
                     case DELETE:
-                        tracker.deleteItem(getId(inp.replaceAll("[^0-9]", "").trim()));
+                        tracker.deleteItem(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()));
                         break;
                     case HI:
                     case HELLO:
@@ -81,10 +81,6 @@ public class Duke {
         }
     }
 
-    private static int getId(String text) throws DukeValidationException {
-        if(CommonHelper.isEmptyOrNull(text))
-            throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Id"));
-        return Integer.parseInt(text);
-    }
+
 
 }

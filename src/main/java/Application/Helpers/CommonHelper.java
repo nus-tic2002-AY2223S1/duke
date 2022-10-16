@@ -1,5 +1,7 @@
 package Application.Helpers;
 
+import Domain.Exceptions.DukeValidationException;
+
 import java.util.Arrays;
 
 public class CommonHelper {
@@ -26,5 +28,15 @@ public class CommonHelper {
 
     public static boolean isEmptyOrNull(String text) {
         return text != null ? text.isEmpty() || text.isBlank() : true;
+    }
+
+    public static int getNumber(String text) throws DukeValidationException {
+        if(CommonHelper.isEmptyOrNull(text))
+            throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Id"));
+        return Integer.parseInt(text);
+    }
+
+    public static int boolToInt(boolean b) {
+        return Boolean.compare(b, false);
     }
 }
