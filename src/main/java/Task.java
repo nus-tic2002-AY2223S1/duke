@@ -1,4 +1,4 @@
-import java.io.IOException;
+import java.io.*;
 
 abstract class Task {
     protected String description;
@@ -11,12 +11,44 @@ abstract class Task {
         this.myTaskType = TaskType;
     }
 
-    private static void markTaskFromFile(String filePath) throws IOException {
+    private void markTaskFromFile(String filePath) throws IOException {
         //replace the task in the file to true
+        File inputFile = new File(filePath);
+        String originalContent = "";
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+
+        String currentLine ;
+        String lineToRemove = this.myTaskType + " | " + this.isDone + " | " + this.description;
+
+        while((currentLine = reader.readLine()) != null) {//read current line from tasks.txt till it null
+            originalContent = originalContent + currentLine + System.lineSeparator();
+        }
+        String updateContent = originalContent.replace("false", "true");
+
+        FileWriter writer = new FileWriter(inputFile);
+        writer.write(updateContent);
+        writer.close();
+        reader.close();
     }
 
-    private static void unmarkTaskFromFile(String filePath) throws IOException {
+    private void unmarkTaskFromFile(String filePath) throws IOException {
         //replace the task in the file to true
+        File inputFile = new File(filePath);
+        String originalContent = "";
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+
+        String currentLine ;
+        String lineToRemove = this.myTaskType + " | " + this.isDone + " | " + this.description;
+
+        while((currentLine = reader.readLine()) != null) {//read current line from tasks.txt till it null
+            originalContent = originalContent + currentLine + System.lineSeparator();
+        }
+        String updateContent = originalContent.replace("true", "false");
+
+        FileWriter writer = new FileWriter(inputFile);
+        writer.write(updateContent);
+        writer.close();
+        reader.close();
     }
 
     public void markAsDone() throws IOException {

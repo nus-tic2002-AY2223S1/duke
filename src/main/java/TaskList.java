@@ -35,7 +35,7 @@ public class TaskList {
     }
     private static void removeLineFromFile(String filePath, String textToRemove) throws  IOException {
         File inputFile = new File(filePath);
-        File tempFile = new File("tasks_temp.txt");
+        File tempFile = new File("data/tasks_temp.txt");
 
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
@@ -43,10 +43,12 @@ public class TaskList {
         String currentLine;
         String lineToRemove = textToRemove.trim();
 
-        while((currentLine = reader.readLine()) != null) {
+        while((currentLine = reader.readLine()) != null) {//read current line from tasks.txt till it null
             String trimmedLine = currentLine.trim();
-            if(trimmedLine.equals(lineToRemove)) continue;
-            writer.write(currentLine + System.getProperty("line.separator"));
+            if(trimmedLine.equals(lineToRemove)){
+                continue;
+            }
+            writer.write(currentLine); //write current line to temp file
         }
         writer.close();
         reader.close();
