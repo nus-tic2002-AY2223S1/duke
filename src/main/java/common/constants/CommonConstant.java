@@ -18,6 +18,8 @@ public class CommonConstant {
 
     public static final String DEADLINE_BY = "by: ";
 
+    public static final String DELETED = "%s has been successfully deleted to the task list.";
+
     public static final String EVENT_AT = "at: ";
 
     public static final String HELLO_GREETING = "Hello! I'm Duke! How can I help you?";

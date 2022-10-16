@@ -47,6 +47,14 @@ public class TaskValidationParser {
         regexValidation(regex, chat);
     }
 
+    // delete
+    public static void validateDelete(String description, Chat chat) {
+        String regex = chat.getCommand() + "\\s+.+";
+        emptyTaskListValidation(chat);
+        notExistTaskValidation(description, chat);
+        regexValidation(regex, chat);
+    }
+
     // list
     public static void validateList(Chat chat) {
         String regex = chat.getCommand();

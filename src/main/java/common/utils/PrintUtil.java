@@ -1,15 +1,11 @@
 package common.utils;
 
+import logic.commands.DeleteCommand;
 import model.Chat;
 import model.Task;
 
-import static common.constants.CommonConstant.ADDED;
-import static common.constants.CommonConstant.BYE_GREETING;
-import static common.constants.CommonConstant.DASHES;
-import static common.constants.CommonConstant.HELLO_GREETING;
-import static common.constants.CommonConstant.INPUT_OPTIONS;
-import static common.constants.CommonConstant.TAB;
-import static common.constants.CommonConstant.TOTAL_NO_OF_TASKS;
+import static common.constants.CommandConstant.DELETE_COMMAND;
+import static common.constants.CommonConstant.*;
 import static common.constants.ErrorMessage.TASK_LIST_EMPTY_ERROR_MSG;
 
 public class PrintUtil {
@@ -59,7 +55,8 @@ public class PrintUtil {
      * @return {void}
      */
     public static void printAddedTask(Chat chat) {
-        System.out.println(String.format(ADDED, chat.getInput()));
+        String commandMsg = chat.getCommand().equals(DELETE_COMMAND) ? DELETED : ADDED;
+        System.out.println(String.format(commandMsg, chat.getInput()));
         chat.getTaskList().forEach(task ->
             System.out.println(TAB + task)
         );

@@ -7,10 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static common.constants.CommonConstant.PROMPT;
-import static common.constants.ErrorMessage.DUPLICATED_TASK_ERROR_MSG;
-import static common.constants.ErrorMessage.EMPTY_TASK_DESCRIPTION_ERROR_MSG;
-import static common.constants.ErrorMessage.INVALID_TASK_COMMAND_MSG;
-import static common.constants.ErrorMessage.NOT_EXIST_TASK_ERROR_MSG;
+import static common.constants.ErrorMessage.*;
 import static common.utils.PrintUtil.printEmptyTaskList;
 import static common.utils.PrintUtil.printLine;
 import static logic.parsers.Parser.parseChat;
@@ -25,7 +22,7 @@ public class TaskValidationUtil {
         Matcher match = pattern.matcher(chat.getInput());
 
         if (!match.matches()) {
-            System.out.println(EMPTY_TASK_DESCRIPTION_ERROR_MSG);
+            System.out.println(INVALID_TASK_DESCRIPTION_ERROR_MSG);
             printLine();
             System.out.print(PROMPT);
             parseChat(chat.getUserInput(), chat.getTaskList());

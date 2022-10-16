@@ -1,17 +1,14 @@
 package logic.parsers;
 
-import logic.commands.Command;
-import logic.commands.AddCommand;
-import logic.commands.ListCommand;
-import logic.commands.MarkCommand;
-import logic.commands.UnmarkCommand;
+import logic.commands.*;
 import model.Chat;
 import model.Task;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static common.constants.CommandConstant.BYE_COMMAND;
+import static common.constants.CommandConstant.DELETE_COMMAND;
 import static common.constants.CommandConstant.LIST_COMMAND;
 import static common.constants.CommandConstant.MARK_COMMAND;
 import static common.constants.CommandConstant.UNMARK_COMMAND;
@@ -23,10 +20,8 @@ import static common.utils.PrintUtil.printBye;
 import static common.utils.PrintUtil.printLine;
 import static common.utils.StringUtil.getDescriptionFromString;
 import static common.utils.StringUtil.getFirstWord;
-import static logic.parsers.TaskValidationParser.validateList;
-import static logic.parsers.TaskValidationParser.validateMark;
-import static logic.parsers.TaskValidationParser.validateUnmark;
 import static common.utils.TaskValidationUtil.invalidTaskCommandValidation;
+import static logic.parsers.TaskValidationParser.*;
 
 public class Parser {
     public Parser() {}
@@ -39,6 +34,7 @@ public class Parser {
      */
     public static void parseCommand(String description, Chat chat) {
         Command addCom = new AddCommand(chat);
+        Command deleteCom = new DeleteCommand(chat);
         Command listCom = new ListCommand(chat);
         Command markCom = new MarkCommand(chat);
         Command unmarkCom = new UnmarkCommand(chat);
@@ -59,6 +55,10 @@ public class Parser {
                 validateUnmark(description, chat);
                 unmarkCom.execute();
                 break;
+            case DELETE_COMMAND:
+                validateDelete(description, chat);
+                deleteCom.execute();
+                break;
             default:
                 addCom.execute();
         }
@@ -69,7 +69,7 @@ public class Parser {
      *
      * @return {void}
      */
-    public static void parseChat(Scanner userInput, List<Task> taskList) {
+    public static void parseChat(Scanner userInput, ArrayList<Task> taskList) {
         while (userInput.hasNext()) {
             String input = (userInput.nextLine()).toLowerCase();
             String command = getFirstWord(input);
@@ -78,7 +78,7 @@ public class Parser {
 
             printLine();
 
-            if (!command.equals(BYE_COMMAND) && !command.equals(LIST_COMMAND) && !command.equals(MARK_COMMAND) && !command.equals(UNMARK_COMMAND) && !command.equals(ADD_TODO_COMMAND) && !command.equals(ADD_EVENT_COMMAND) && !command.equals(ADD_DEADLINE_COMMAND)) {
+            if (!command.equals(BYE_COMMAND) && !command.equals(DELETE_COMMAND) && !command.equals(LIST_COMMAND) && !command.equals(MARK_COMMAND) && !command.equals(UNMARK_COMMAND) && !command.equals(ADD_TODO_COMMAND) && !command.equals(ADD_EVENT_COMMAND) && !command.equals(ADD_DEADLINE_COMMAND)) {
                 invalidTaskCommandValidation();
             } else {
                 parseCommand(description, chat);

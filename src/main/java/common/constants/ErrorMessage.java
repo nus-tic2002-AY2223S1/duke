@@ -3,7 +3,7 @@ package common.constants;
 public class ErrorMessage {
     public static final String DUPLICATED_TASK_ERROR_MSG = "Task %s is duplicated. Please enter a new task.";
 
-    public static final String EMPTY_TASK_DESCRIPTION_ERROR_MSG = "Task description cannot be empty!";
+    public static final String INVALID_TASK_DESCRIPTION_ERROR_MSG = "Invalid task description!";
 
     public static final String INVALID_TASK_COMMAND_MSG = "Invalid task command, please re-enter!";
 

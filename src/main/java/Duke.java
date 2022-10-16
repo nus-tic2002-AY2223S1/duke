@@ -1,7 +1,6 @@
 import model.Task;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import static common.constants.CommonConstant.LOGO;
@@ -17,7 +16,7 @@ public class Duke {
         System.out.print(PROMPT);
 
         Scanner userInput = new Scanner(System.in);
-        List<Task> taskList = new ArrayList<>();
+        ArrayList<Task> taskList = new ArrayList<>();
 
         try {
             parseChat(userInput, taskList);

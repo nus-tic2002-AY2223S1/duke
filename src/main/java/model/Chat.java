@@ -9,9 +9,9 @@ public class Chat {
     protected static String input;
 
     protected static String command;
-    protected static List<Task> taskList = new ArrayList<>();
+    protected static ArrayList<Task> taskList = new ArrayList<>();
 
-    public Chat(Scanner userInput, String command, String input, List<Task> taskList) {
+    public Chat(Scanner userInput, String command, String input, ArrayList<Task> taskList) {
         this.userInput = userInput;
         this.command = command;
         this.input = input;
@@ -30,7 +30,7 @@ public class Chat {
         return input;
     }
 
-    public static List<Task> getTaskList() {
+    public static ArrayList<Task> getTaskList() {
         return taskList;
     }
 }
