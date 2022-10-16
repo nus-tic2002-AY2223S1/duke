@@ -40,6 +40,7 @@ public class Deadline extends Task {
 //        return this.time.format(DateTimeFormatter.ofPattern("MMM dd yyyy HHmm"));
 //    }
 
+    //need handle date format like 2/12/2018 1800 to Feb 12 2018 6pm
     public String convertToDate() throws DateTimeParseException {
 
            String strDate = by.replaceAll("/","-");
