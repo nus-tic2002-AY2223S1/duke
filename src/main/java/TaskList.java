@@ -31,7 +31,7 @@ public class TaskList {
 
     private static void appendToFile(String filePath, String textToAppend) throws IOException {
         FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
-        fw.write(textToAppend);
+        fw.write(textToAppend + System.lineSeparator());
         fw.close();
     }
 
@@ -80,8 +80,9 @@ public class TaskList {
 
         //write to file
         try{
-            writeToFile(file, data + System.lineSeparator());
+            appendToFile(file,data);
         } catch (IOException e){
+            writeToFile(file, data);
             System.out.println("Something went wrong: " + e.getMessage());
         }
 
