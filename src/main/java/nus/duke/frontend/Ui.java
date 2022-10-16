@@ -5,10 +5,12 @@ import java.util.Scanner;
 public class Ui {
 
     public static void printCommandMenu(){
-        System.out.println("____________________Command Menu____________________");
-        System.out.println("MARK | UNMARK | DELETE | VIEW | EXIT | TODO <<task>> | DEADLINE <<task>> /by <<date>>| EVENT <<TASK>> /at <<date>>");
+        showLine();
+        System.out.println("COMMAND Menu Below:");
+        System.out.println("MARK | UNMARK | DELETE | VIEW | EXIT");
+        System.out.println("TODO <<task>> | DEADLINE <<task>> /by <<date>>| EVENT <<TASK>> /at <<date>>");
         // System.out.println("Automatic Testing: /bin/bash runtest.sh");
-        System.out.println("_____________________________________________________");
+        showLine();
     }
     public static void awakeDobby(){
         System.out.println("My name is Dobby and I am a free elf!");
@@ -25,6 +27,10 @@ public class Ui {
     }
 
     public static void showLine (){
-        System.out.println("____________________");
+        System.out.println("_____________________________________________________");
+    }
+
+    public static void showHarddiskCreationMessage(){
+        System.out.println("Hard disk file created. You can now save all your tasks and it will be loaded the next time.");
     }
 }

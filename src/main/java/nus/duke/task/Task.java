@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public abstract class Task {
 
-    // public classes so that they can be accessed by functions in commands class
     private static int totalTasks = 0;
     //public static ArrayList<Task> wishList = new ArrayList<Task>();
 

@@ -1,13 +1,12 @@
 package nus.duke.parser;
 
 import nus.duke.frontend.*;
-import nus.duke.commands.*;
+import nus.duke.tasklist.*;
 import nus.duke.exceptions.*;
-import nus.duke.task.Deadline;
 
 public class Parser {
     private static Ui ui;
-    private static Command c;
+    private static TaskList tasks;
 
     public static String getCommand(String userInput){
         int idx = userInput.indexOf(" ");
@@ -83,19 +82,19 @@ public class Parser {
 
         if (hasInputErrors == false) {
             if (userInput.equals(LegalCommandEnumerations.VIEW.toString())){
-                c.viewTasks();
+                tasks.viewTasks();
             } else if (userInput.equals(LegalCommandEnumerations.EXIT.toString())) {
                 ui.exit();
             } else {
                 String command = getCommand(userInput);
                 if (command.equals(LegalCommandEnumerations.MARK.toString())){
-                    c.markTask(getItemNumber(userInput)); // e.g. "1. TODO buy lunch" --> 1
+                    tasks.markTask(getItemNumber(userInput)); // e.g. "1. TODO buy lunch" --> 1
                 } else if (command.equals(LegalCommandEnumerations.UNMARK.toString())){
-                    c.unmarkTask(getItemNumber(userInput));
+                    tasks.unmarkTask(getItemNumber(userInput));
                 } else if (command.equals(LegalCommandEnumerations.DELETE.toString())){
-                    c.deleteTask(getItemNumber(userInput));
+                    tasks.deleteTask(getItemNumber(userInput));
                 } else {
-                    c.addTask(userInput);
+                    tasks.addTask(userInput);
                 }
             }
         }

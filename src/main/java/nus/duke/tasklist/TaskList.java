@@ -1,13 +1,38 @@
-package nus.duke.commands;
+package nus.duke.tasklist;
 
 import nus.duke.task.*;
-import java.util.ArrayList;
+import nus.duke.storage.*;
+import nus.duke.frontend.*;
 
-public class Command {
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.io.File;  // Import the File class
+import java.io.IOException;  // Import the IOException class to handle errors
+
+public class TaskList {
     protected static ArrayList<Task> taskList = new ArrayList<Task>();
 
+    public TaskList(ArrayList<Task> loadedTaskList){
+        Collections.copy(this.taskList, loadedTaskList);
+    }
+
+    public ArrayList<Task> getTaskList(){
+        return this.taskList;
+    }
+
+    /*
+    public TaskList() throws IOException {
+        File f = new File("tasks.txt");
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            System.out.println("An error occurred: Java's IOException");
+            e.printStackTrace();
+        }
+    } */
+
     public static void viewTasks(){
-        System.out.println(" ");
         for (int i = 0; i < taskList.size(); i++) {
             System.out.println( "[" + taskList.get(i).getTaskType() + "][" + taskList.get(i).getStatusIcon() + "] " + taskList.get(i).getTask());
         }
@@ -44,4 +69,5 @@ public class Command {
         (taskList.get(idx-1)).markAsNotDone();
         System.out.println("unmarked");
     }
+
 }
