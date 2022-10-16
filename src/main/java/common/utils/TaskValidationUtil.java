@@ -1,63 +1,107 @@
 package common.utils;
 
+import common.exceptions.DuplicatedTaskException;
+import common.exceptions.EmptyTaskListException;
+import common.exceptions.InvalidTaskDescriptionException;
+import common.exceptions.NotExistTaskException;
+import common.exceptions.MarkedTaskException;
+import common.exceptions.UnmarkedTaskException;
 import model.Chat;
 import model.Task;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static common.constants.CommonConstant.PROMPT;
-import static common.constants.ErrorMessage.DUPLICATED_TASK_ERROR_MSG;
-import static common.constants.ErrorMessage.EMPTY_TASK_DESCRIPTION_ERROR_MSG;
-import static common.constants.ErrorMessage.INVALID_TASK_COMMAND_MSG;
-import static common.constants.ErrorMessage.NOT_EXIST_TASK_ERROR_MSG;
-import static common.utils.PrintUtil.printEmptyTaskList;
-import static common.utils.PrintUtil.printLine;
-import static logic.parsers.Parser.parseChat;
+import static common.constants.CommonConstant.INIT_INT_VAL;
 
 public class TaskValidationUtil {
-    public static void invalidTaskCommandValidation() {
-        System.out.println(INVALID_TASK_COMMAND_MSG);
-    }
-
-    public static void regexValidation(String regex, Chat chat) {
+    /**
+     * regexValidation validates the string format in regular expression
+     *
+     * @param {String} regex
+     * @param {Chat} chat
+     * @throws InvalidTaskDescriptionException
+     * @return {void}
+     */
+    public static void regexValidation(String regex, Chat chat) throws InvalidTaskDescriptionException {
         Pattern pattern = Pattern.compile(regex);
         Matcher match = pattern.matcher(chat.getInput());
 
         if (!match.matches()) {
-            System.out.println(EMPTY_TASK_DESCRIPTION_ERROR_MSG);
-            printLine();
-            System.out.print(PROMPT);
-            parseChat(chat.getUserInput(), chat.getTaskList());
+            throw new InvalidTaskDescriptionException();
         }
     }
 
-    public static void duplicatedTaskValidation(String description, Chat chat) {
+    /**
+     * duplicatedTaskValidation validates if there is duplicated task entered by user
+     *
+     * @param {String} description
+     * @param {Chat} chat
+     * @throws DuplicatedTaskException
+     * @return {void}
+     */
+    public static void duplicatedTaskValidation(String description, Chat chat) throws DuplicatedTaskException {
         for (Task task : chat.getTaskList()) {
             if (description.equals(task.getDescription())) {
-                System.out.println(String.format(DUPLICATED_TASK_ERROR_MSG, chat.getInput()));
-                printLine();
-                System.out.print(PROMPT);
-                parseChat(chat.getUserInput(), chat.getTaskList());
+                throw new DuplicatedTaskException();
             }
         }
     }
 
-    public static void emptyTaskListValidation(Chat chat) {
+    /**
+     * emptyTaskListValidation validates if the task list is empty
+     *
+     * @param {Chat} chat
+     * @throws EmptyTaskListException
+     * @return {void}
+     */
+    public static void emptyTaskListValidation(Chat chat) throws EmptyTaskListException {
         if (chat.getTaskList().isEmpty()) {
-            printEmptyTaskList();
-            printLine();
-            System.out.print(PROMPT);
-            parseChat(chat.getUserInput(), chat.getTaskList());
+            throw new EmptyTaskListException();
         }
     }
 
-    public static void notExistTaskValidation(String description, Chat chat) {
-        if (chat.getTaskList().contains(description)) {
-            System.out.println(NOT_EXIST_TASK_ERROR_MSG);
-            printLine();
-            System.out.print(PROMPT);
-            parseChat(chat.getUserInput(), chat.getTaskList());
+    /**
+     * notExistTaskValidation validates if task is existing in task list
+     *
+     * @param {String} description
+     * @param {Chat} chat
+     * @throws NotExistTaskException
+     * @return {void}
+     */
+    public static void notExistTaskValidation(String description, Chat chat) throws NotExistTaskException {
+        if ((Integer.parseInt(description) - INIT_INT_VAL) >= chat.getTaskList().size()) {
+            throw new NotExistTaskException();
+        }
+    }
+
+    /**
+     * markedTaskValidation validates if task has already been marked
+     *
+     * @param {String} description
+     * @param {Chat} chat
+     * @throws MarkedTaskException
+     * @return {void}
+     */
+    public static void markedTaskValidation(String description, Chat chat) throws MarkedTaskException {
+        Task task = chat.getTaskList().get(Integer.parseInt(description) - INIT_INT_VAL);
+        if (task.getDone()) {
+            throw new MarkedTaskException();
+        }
+    }
+
+    /**
+     * unmarkedTaskValidation validates if task has already been unmarked
+     *
+     * @param {String} description
+     * @param {Chat} chat
+     * @throws UnmarkedTaskException
+     * @return {void}
+     */
+    public static void unmarkedTaskValidation(String description, Chat chat) throws UnmarkedTaskException {
+        Task task = chat.getTaskList().get(Integer.parseInt(description) - INIT_INT_VAL);
+        if (!task.getDone()) {
+            throw new UnmarkedTaskException();
         }
     }
 }

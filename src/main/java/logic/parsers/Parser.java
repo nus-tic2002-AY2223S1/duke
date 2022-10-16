@@ -1,91 +1,77 @@
 package logic.parsers;
 
+import common.exceptions.EmptyTaskListException;
+import common.exceptions.InvalidTaskDescriptionException;
+import common.exceptions.NotExistTaskException;
+import common.exceptions.MarkedTaskException;
+import common.exceptions.UnmarkedTaskException;
+import common.exceptions.DuplicatedTaskException;
 import logic.commands.Command;
-import logic.commands.AddCommand;
+import logic.commands.AddDeadlineCommand;
+import logic.commands.AddEventCommand;
+import logic.commands.AddTodoCommand;
+import logic.commands.DeleteCommand;
+import logic.commands.HelpCommand;
 import logic.commands.ListCommand;
 import logic.commands.MarkCommand;
 import logic.commands.UnmarkCommand;
 import model.Chat;
-import model.Task;
 
-import java.util.List;
-import java.util.Scanner;
-
-import static common.constants.CommandConstant.BYE_COMMAND;
-import static common.constants.CommandConstant.LIST_COMMAND;
-import static common.constants.CommandConstant.MARK_COMMAND;
-import static common.constants.CommandConstant.UNMARK_COMMAND;
-import static common.constants.CommandConstant.ADD_TODO_COMMAND;
-import static common.constants.CommandConstant.ADD_DEADLINE_COMMAND;
-import static common.constants.CommandConstant.ADD_EVENT_COMMAND;
-import static common.constants.CommonConstant.PROMPT;
 import static common.utils.PrintUtil.printBye;
-import static common.utils.PrintUtil.printLine;
-import static common.utils.StringUtil.getDescriptionFromString;
-import static common.utils.StringUtil.getFirstWord;
-import static logic.parsers.TaskValidationParser.validateList;
-import static logic.parsers.TaskValidationParser.validateMark;
-import static logic.parsers.TaskValidationParser.validateUnmark;
-import static common.utils.TaskValidationUtil.invalidTaskCommandValidation;
 
 public class Parser {
     public Parser() {}
     /**
-     * parseCommand returns parse command
+     * parseChat returns parse chat
      *
-     * @param {String} input
-     * @param {Chat} chat
+     * @throws EmptyTaskListException
+     * @throws InvalidTaskDescriptionException
+     * @throws NotExistTaskException
+     * @throws MarkedTaskException
+     * @throws UnmarkedTaskException
+     * @throws DuplicatedTaskException
      * @return {void}
      */
-    public static void parseCommand(String description, Chat chat) {
-        Command addCom = new AddCommand(chat);
+    public static void parseChat(Chat chat) throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException, MarkedTaskException, UnmarkedTaskException, DuplicatedTaskException {
+        Command addDeadlineCom = new AddDeadlineCommand(chat);
+        Command addEventCom = new AddEventCommand(chat);
+        Command addTodoCom = new AddTodoCommand(chat);
+        Command deleteCom = new DeleteCommand(chat);
+        Command helpCom = new HelpCommand(chat);
         Command listCom = new ListCommand(chat);
         Command markCom = new MarkCommand(chat);
         Command unmarkCom = new UnmarkCommand(chat);
 
-        switch (chat.getCommand()){
-            case BYE_COMMAND:
+        switch (chat.getCommand()) {
+            case bye:
                 printBye();
                 System.exit(0);
-            case LIST_COMMAND:
-                validateList(chat);
+            case list:
                 listCom.execute();
                 break;
-            case MARK_COMMAND:
-                validateMark(description, chat);
+            case mark:
                 markCom.execute();
                 break;
-            case UNMARK_COMMAND:
-                validateUnmark(description, chat);
+            case unmark:
                 unmarkCom.execute();
                 break;
+            case delete:
+                deleteCom.execute();
+                break;
+            case help:
+                helpCom.execute();
+                break;
+            case deadline:
+                addDeadlineCom.execute();
+                break;
+            case event:
+                addEventCom.execute();
+                break;
+            case todo:
+                addTodoCom.execute();
+                break;
             default:
-                addCom.execute();
-        }
-    }
-
-    /**
-     * parseChat returns parse chat
-     *
-     * @return {void}
-     */
-    public static void parseChat(Scanner userInput, List<Task> taskList) {
-        while (userInput.hasNext()) {
-            String input = (userInput.nextLine()).toLowerCase();
-            String command = getFirstWord(input);
-            Chat chat = new Chat(userInput, command, input, taskList);
-            String description = getDescriptionFromString(command, input);
-
-            printLine();
-
-            if (!command.equals(BYE_COMMAND) && !command.equals(LIST_COMMAND) && !command.equals(MARK_COMMAND) && !command.equals(UNMARK_COMMAND) && !command.equals(ADD_TODO_COMMAND) && !command.equals(ADD_EVENT_COMMAND) && !command.equals(ADD_DEADLINE_COMMAND)) {
-                invalidTaskCommandValidation();
-            } else {
-                parseCommand(description, chat);
-            }
-
-            printLine();
-            System.out.print(PROMPT);
+                break;
         }
     }
 }

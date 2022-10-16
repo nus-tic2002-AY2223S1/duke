@@ -1,28 +1,22 @@
 package model;
 
+import common.enums.CommandEnum;
+
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class Chat {
-    protected static Scanner userInput;
     protected static String input;
 
-    protected static String command;
-    protected static List<Task> taskList = new ArrayList<>();
+    protected static CommandEnum command;
+    protected static ArrayList<Task> taskList = new ArrayList<>();
 
-    public Chat(Scanner userInput, String command, String input, List<Task> taskList) {
-        this.userInput = userInput;
+    public Chat(CommandEnum command, String input, ArrayList<Task> taskList) {
         this.command = command;
         this.input = input;
         this.taskList = taskList;
     }
 
-    public static Scanner getUserInput() {
-        return userInput;
-    }
-
-    public static String getCommand() {
+    public static CommandEnum getCommand() {
         return command;
     }
 
@@ -30,7 +24,7 @@ public class Chat {
         return input;
     }
 
-    public static List<Task> getTaskList() {
+    public static ArrayList<Task> getTaskList() {
         return taskList;
     }
 }

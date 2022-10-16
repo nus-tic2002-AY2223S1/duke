@@ -1,10 +1,11 @@
 todo read
 event meeting /at Monday 2pm-3pm
 event work /at Monday to Friday
-mark read
+mark 1
 deadline do homework /by Sunday 2359
-unmark meeting
-mark meeting
+unmark 1
+mark 2
 list
 todo sleep
+delete 3
 bye

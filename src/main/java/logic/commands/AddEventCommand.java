@@ -1,0 +1,33 @@
+package logic.commands;
+
+import common.exceptions.DuplicatedTaskException;
+import common.exceptions.InvalidTaskDescriptionException;
+import model.Chat;
+import model.Event;
+
+import static common.utils.PrintUtil.printAddedDeletedTask;
+import static common.utils.StringUtil.getDescriptionFromString;
+import static common.utils.StringUtil.getTimeFromString;
+import static logic.validators.Validator.validateEvent;
+
+public class AddEventCommand extends Command {
+    public AddEventCommand(Chat chat) {
+        super(chat);
+    }
+
+    /**
+     * execute adds event and prints event item added to taskList array
+     *
+     * @return {void}
+     */
+    @Override
+    public void execute() throws DuplicatedTaskException, InvalidTaskDescriptionException {
+        String description = getDescriptionFromString(chat.getCommand(), chat.getInput());
+        validateEvent(description, chat);
+
+        Event newEvent = new Event(description, getTimeFromString(chat.getInput()));
+        chat.getTaskList().add(newEvent);
+
+        printAddedDeletedTask(chat);
+    }
+}
