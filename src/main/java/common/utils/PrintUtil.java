@@ -3,7 +3,7 @@ package common.utils;
 import model.Chat;
 import model.Task;
 
-import static common.constants.CommandConstant.DELETE_COMMAND;
+import static common.enums.CommandEnum.delete;
 import static common.constants.CommonConstant.ADDED;
 import static common.constants.CommonConstant.BYE_GREETING;
 import static common.constants.CommonConstant.DASHES;
@@ -53,7 +53,7 @@ public class PrintUtil {
      * @return {void}
      */
     public static void printAddedDeletedTask(Chat chat) {
-        String commandMsg = chat.getCommand().equals(DELETE_COMMAND) ? DELETED : ADDED;
+        String commandMsg = chat.getCommand().equals(delete) ? DELETED : ADDED;
         System.out.println(String.format(commandMsg, chat.getInput()));
         chat.getTaskList().forEach(task ->
             System.out.println(TAB + task)

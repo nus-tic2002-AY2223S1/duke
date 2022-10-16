@@ -5,6 +5,7 @@ import common.exceptions.InvalidTaskDescriptionException;
 import common.exceptions.NotExistTaskException;
 import common.exceptions.MarkedTaskException;
 import common.exceptions.UnmarkedTaskException;
+import common.exceptions.DuplicatedTaskException;
 import model.Chat;
 
 public abstract class Command {
@@ -14,5 +15,5 @@ public abstract class Command {
         this.chat = chat;
     }
 
-    public abstract void execute() throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException, MarkedTaskException, UnmarkedTaskException;
+    public abstract void execute() throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException, MarkedTaskException, UnmarkedTaskException, DuplicatedTaskException;
 }

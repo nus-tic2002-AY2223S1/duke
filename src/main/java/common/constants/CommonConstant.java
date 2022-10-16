@@ -28,15 +28,14 @@ public class CommonConstant {
             "---------------------------------------------------------------------------------------------------------\n" +
             "| S/N | Command                           | Description                   | Usage Example               |\n" +
             "|-----|-----------------------------------|-------------------------------|-----------------------------|\n" +
-            "| 1   | <task>                            | Add task                      | taskABC                     |\n" +
-            "| 2   | deadline <task> /by <date & time> | Add deadline with date & time | deadline taskABC /by Sunday |\n" +
-            "| 3   | event <task> /at <date & time>    | Add event with date & time    | event taskABC /at Mon 2-4pm |\n" +
-            "| 4   | todo <task>                       | Add todo task                 | todo taskABC                |\n" +
-            "| 5   | list                              | List existing tasks           | list                        |\n" +
-            "| 6   | mark <task_number>                | Mark specified task           | mark 1                      |\n" +
-            "| 7   | unmark <task_number>              | Unmark specified task         | unmark 1                    |\n" +
-            "| 8   | delete <task_number>              | Delete specified task         | delete 1                    |\n" +
-            "| 9   | bye                               | Exit duke bot                 | bye                         |\n" +
+            "| 1   | deadline <task> /by <date & time> | Add deadline with date & time | deadline taskABC /by Sunday |\n" +
+            "| 2   | event <task> /at <date & time>    | Add event with date & time    | event taskABC /at Mon 2-4pm |\n" +
+            "| 3   | todo <task>                       | Add todo task                 | todo taskABC                |\n" +
+            "| 4   | list                              | List existing tasks           | list                        |\n" +
+            "| 5   | mark <task_number>                | Mark specified task           | mark 1                      |\n" +
+            "| 6   | unmark <task_number>              | Unmark specified task         | unmark 1                    |\n" +
+            "| 7   | delete <task_number>              | Delete specified task         | delete 1                    |\n" +
+            "| 8   | bye                               | Exit duke bot                 | bye                         |\n" +
             "---------------------------------------------------------------------------------------------------------";
 
     public static final String LOGO = "____        _        \n"

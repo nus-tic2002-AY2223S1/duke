@@ -7,7 +7,7 @@ import common.exceptions.UnmarkedTaskException;
 import model.Chat;
 import model.Task;
 
-import static common.constants.CommandConstant.UNMARK_COMMAND;
+import static common.enums.CommandEnum.unmark;
 import static common.constants.CommonConstant.INIT_INT_VAL;
 import static common.constants.CommonConstant.UNMARKED_TASK;
 import static common.utils.PrintUtil.printMarkedTask;
@@ -30,7 +30,7 @@ public class UnmarkCommand extends Command {
      */
     @Override
     public void execute() throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException, UnmarkedTaskException {
-        String description = getDescriptionFromString(UNMARK_COMMAND, chat.getInput());
+        String description = getDescriptionFromString(unmark, chat.getInput());
         validateUnmark(description, chat);
 
         Task task = chat.getTaskList().get(Integer.parseInt(description) - INIT_INT_VAL);

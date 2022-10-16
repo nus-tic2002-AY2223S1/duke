@@ -1,21 +1,22 @@
 package model;
 
+import common.enums.CommandEnum;
+
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Chat {
     protected static String input;
 
-    protected static String command;
+    protected static CommandEnum command;
     protected static ArrayList<Task> taskList = new ArrayList<>();
 
-    public Chat(String command, String input, ArrayList<Task> taskList) {
+    public Chat(CommandEnum command, String input, ArrayList<Task> taskList) {
         this.command = command;
         this.input = input;
         this.taskList = taskList;
     }
 
-    public static String getCommand() {
+    public static CommandEnum getCommand() {
         return command;
     }
 

@@ -7,7 +7,7 @@ import common.exceptions.MarkedTaskException;
 import model.Chat;
 import model.Task;
 
-import static common.constants.CommandConstant.MARK_COMMAND;
+import static common.enums.CommandEnum.mark;
 import static common.constants.CommonConstant.INIT_INT_VAL;
 import static common.constants.CommonConstant.MARKED_TASK;
 import static common.utils.PrintUtil.printMarkedTask;
@@ -30,7 +30,7 @@ public class MarkCommand extends Command {
      */
     @Override
     public void execute() throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException, MarkedTaskException {
-        String description = getDescriptionFromString(MARK_COMMAND, chat.getInput());
+        String description = getDescriptionFromString(mark, chat.getInput());
         validateMark(description, chat);
 
         Task task = chat.getTaskList().get(Integer.parseInt(description) - INIT_INT_VAL);

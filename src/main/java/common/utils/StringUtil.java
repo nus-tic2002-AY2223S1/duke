@@ -1,5 +1,7 @@
 package common.utils;
 
+import common.enums.CommandEnum;
+
 import static common.constants.CommonConstant.AT;
 import static common.constants.CommonConstant.BY;
 import static common.constants.CommonConstant.INIT_INT_VAL;
@@ -36,16 +38,17 @@ public class StringUtil {
      * @param {String} sentence
      * @return {String}
      */
-    public static String getDescriptionFromString(String command, String sentence) {
+    public static String getDescriptionFromString(CommandEnum command, String sentence) {
+        String commandString = command.toString();
         String substring = sentence;
-        int index = sentence.indexOf(command);
+        int index = sentence.indexOf(commandString);
 
         try {
             if (substring.contains(DELIMITER)) { // filter string with delimiter if it has
                 substring = substring.substring(0, substring.lastIndexOf(DELIMITER) - 1);
             }
-            if (index > -1 && command.length() != 0) { // filter string with command
-                substring = substring.substring(index + INIT_INT_VAL + command.length());
+            if (index > -1 && commandString.length() != 0) { // filter string with command
+                substring = substring.substring(index + INIT_INT_VAL + commandString.length());
             }
         } catch (Exception e) {}
 

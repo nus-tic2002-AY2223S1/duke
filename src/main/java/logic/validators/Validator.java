@@ -28,7 +28,7 @@ public class Validator {
      * @return {void}
      */
     public static void validateTodo(String description, Chat chat) throws InvalidTaskDescriptionException, DuplicatedTaskException {
-        String regex = chat.getCommand() + "\\s+\\w+";
+        String regex = chat.getCommand() + "\\s+.+";
         regexValidation(regex, chat);
         duplicatedTaskValidation(description, chat);
     }
@@ -127,7 +127,7 @@ public class Validator {
      * @return {void}
      */
     public static void validateList(Chat chat) throws EmptyTaskListException, InvalidTaskDescriptionException {
-        String regex = chat.getCommand();
+        String regex = chat.getCommand().toString();
         emptyTaskListValidation(chat);
         regexValidation(regex, chat);
     }
@@ -140,7 +140,7 @@ public class Validator {
      * @return {void}
      */
     public static void validateHelp(Chat chat) throws InvalidTaskDescriptionException {
-        String regex = chat.getCommand();
+        String regex = chat.getCommand().toString();
         regexValidation(regex, chat);
     }
 }
