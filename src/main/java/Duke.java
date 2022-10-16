@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.*;
@@ -6,6 +5,9 @@ import TaskPackage.Events;
 import TaskPackage.Task;
 import TaskPackage.Deadline;
 import TaskPackage.Todo;
+
+import static TaskPackage.isNumber.isNumeric;
+
 
 public class Duke {
    // private static int count = 0;
@@ -25,14 +27,7 @@ public class Duke {
     }
 
 
-    public static boolean isNumeric(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch(NumberFormatException e){
-            return false;
-        }
-    }
+
 
 
     static void save(ArrayList<Task> listItems){
@@ -114,9 +109,9 @@ public class Duke {
                     String deadlineDate = Input.substring(divPos+4);
                     Deadline taskDeadline = new Deadline(deadlineTask,deadlineDate);
                     listItems.add(taskDeadline);
-
-                    System.out.println("Got it. I've added this task: ");
+                    //System.out.println("Got it. I've added this task: ");
                     System.out.println(taskDeadline);
+                System.out.println("Got it. I've added this task: ");
                     System.out.println("Now you have " + listItems.size() + " tasks in the list.");
                 return true;
             case"todo":
