@@ -3,7 +3,13 @@ package TaskPackage;
 public class isNumber {
     public static boolean isNumeric(String str) {
         try {
-            String[] num = str.split("/");
+            String strNum=str;
+            if(str.contains(" ")){
+              String[] array = str.split(" ");
+              strNum = array[0];
+
+            }
+            String[] num = strNum.split("/");
             if(num.length==1){
                 Integer.parseInt(str);
             }
@@ -14,8 +20,9 @@ public class isNumber {
             if(num.length==3){
                 Integer.parseInt(num[0]);
                 Integer.parseInt(num[1]);
-                Integer.parseInt(num[1]);
+                Integer.parseInt(num[2]);
             }
+
             return true;
         } catch(NumberFormatException e){
             return false;

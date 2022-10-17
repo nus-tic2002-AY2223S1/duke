@@ -9,18 +9,7 @@ import static TaskPackage.isNumber.isNumeric;
 
 
 public class Deadline extends Task {
-//        protected LocalDateTime time;
-//        protected LocalDate date;
         private String by;
-//      public Deadline(String description, LocalDateTime by){
-//          super(description);
-//          this.time = by;
-//      }
-//
-//      public Deadline(String description,LocalDate by){
-//          super(description);
-//          this.date = by;
-//      }
 
     public Deadline(String description,String by){
         super(description);
@@ -32,26 +21,20 @@ public class Deadline extends Task {
           return "D" + super.getData() + "|" + by ;
       }
 
-//      public String getDate(){
-//          return this.date.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
-//      }
-//
-//    public String getTime(){
-//        return this.time.format(DateTimeFormatter.ofPattern("MMM dd yyyy HHmm"));
-//    }
+
 
     //need handle date format like 2/12/2018 1800 to Feb 12 2018 6pm
-    public String convertToDate() throws DateTimeParseException {
-
-           String strDate = by.replaceAll("/","-");
+    public String convertToDate(String inputDate) throws DateTimeParseException {
+        String strDate = dateFormat.convertToValidDate(inputDate);
+           strDate = strDate.replaceAll("/","-");
            LocalDate date = LocalDate.parse(strDate);
-           DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM-dd-yyyy");
+           DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM dd yyyy");
            return date.format(dateFormat);
     }
 
-    public String convertToTime() {
-
-            String strDate = by.replaceAll("/", "-");
+    public String convertToTime( String inputDate) {
+        String str = dateFormat.convertToValidDate(inputDate);
+          String  strDate = str.replaceAll("/", "-");
             for(char c: strDate.toCharArray()){
                 if(c==' '){
                     strDate = strDate.replace(" ","T");
@@ -61,19 +44,19 @@ public class Deadline extends Task {
                 }
             }
             LocalDateTime  date = LocalDateTime.parse(strDate);
-            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM-dd-yyyy HHmm");
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM dd yyyy hhmma");
            return date.format(dateFormat);
 
     }
 
-    public String DateAndTime(){
+    public String DateAndTime(String inputDate){
         String date=null;
         try {
-            if (isNumeric(by)) {
-                if(by.contains(" ")){
-                    date= convertToTime();
+            if (isNumeric(inputDate)) {
+                if(inputDate.contains(" ")){
+                    date= convertToTime(inputDate);
                 }else{
-                    date= convertToDate();
+                    date= convertToDate(inputDate);
                 }
             }
         }catch(NumberFormatException e){
@@ -88,7 +71,7 @@ public class Deadline extends Task {
 //          }
 
       public String toString()  {
-          return "[D]" + super.toString() + " (by: " + DateAndTime() + ")";
+          return "[D]" + super.toString() + " (by: " + DateAndTime(by) + ")";
       }
 
 }

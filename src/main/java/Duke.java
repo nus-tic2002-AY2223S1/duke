@@ -5,6 +5,7 @@ import TaskPackage.Events;
 import TaskPackage.Task;
 import TaskPackage.Deadline;
 import TaskPackage.Todo;
+import exception.DukeException;
 
 import static TaskPackage.isNumber.isNumeric;
 
@@ -111,7 +112,7 @@ public class Duke {
                     listItems.add(taskDeadline);
                     //System.out.println("Got it. I've added this task: ");
                     System.out.println(taskDeadline);
-                System.out.println("Got it. I've added this task: ");
+                    System.out.println("Got it. I've added this task: ");
                     System.out.println("Now you have " + listItems.size() + " tasks in the list.");
                 return true;
             case"todo":
