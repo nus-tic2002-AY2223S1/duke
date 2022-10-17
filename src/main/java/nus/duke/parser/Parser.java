@@ -9,17 +9,22 @@ public class Parser {
     private static TaskList tasks;
 
     public static String getCommand(String userInput){
-        int idx = userInput.indexOf(" ");
-        String cmd = userInput.substring(0, idx);
-        return cmd;
+        if (userInput.length() == 4){
+            return userInput.substring(0, 4);
+        } else {
+            int idx = userInput.indexOf(" ");
+            String command = userInput.substring(0, idx);
+            return command;
+        }
     }
 
+    /*
     public static int getItemNumber(String userInput){
         int idx = userInput.indexOf(" ");
         String itemNumber = userInput.substring(idx+1, userInput.length());
         idx = Integer.parseInt(itemNumber);
         return idx;
-    }
+    } */
 
     public static boolean isValidCommand(String command){
         if ((command.equals(LegalCommandEnumerations.MARK.toString())) || (command.equals(LegalCommandEnumerations.UNMARK.toString())) ||
@@ -53,7 +58,7 @@ public class Parser {
         } else {
             String command = getCommand(userInput); // e.g. "TODO buy lunch" --> "TODO" or "TODO     " --> "TODO"
             if (isValidCommand(command) == true) {
-                if (isEmptyTask(userInput) == true) { // e.g. "TODO     " is an empty task with alot of blank space
+                if (isEmptyTask(userInput) == true ) { // e.g. "TODO     " is an empty task with alot of blank space
                     throw new EmptyTaskException();
                 } else {
                     if (command.equals("DEADLINE") && (userInput.contains("/by") == false)){
@@ -70,6 +75,17 @@ public class Parser {
         }
     }
 
+    public static String parse(String userInput) throws WrongInputSyntaxException, EmptyTaskException {
+        try {
+            hasInputErrors(userInput);
+        } catch (EmptyTaskException ete){
+            throw new EmptyTaskException();
+        } catch (WrongInputSyntaxException wise){
+            throw new WrongInputSyntaxException();
+        }
+        return getCommand(userInput);
+    }
+    /*
     public static boolean parse(String userInput) throws WrongInputSyntaxException, EmptyTaskException {
         boolean hasInputErrors;
         try {
@@ -100,5 +116,5 @@ public class Parser {
         }
         return false; // i.e. do not terminate program
     }
-
+    */
 }

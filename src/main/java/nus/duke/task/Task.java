@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Task {
 
-    private static int totalTasks = 0;
-    //public static ArrayList<Task> wishList = new ArrayList<Task>();
+    //private static int totalTasks = 0;
 
     protected String description;
     protected boolean isDone;
@@ -13,13 +12,6 @@ public abstract class Task {
     public Task(String description) {
         this.description = description;
         this.isDone = false;
-    }
-
-    public void incrementTotalTasks(){
-        totalTasks = totalTasks + 1;
-    }
-    public void decrementTotalTasks(){
-        totalTasks = totalTasks - 1;
     }
 
     public String getTask(){
@@ -35,6 +27,11 @@ public abstract class Task {
 
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
+    }
+
+    public String getIsDone(){
+        String isDoneStr = Boolean.toString(this.isDone);
+        return isDoneStr;
     }
 
     public abstract String getTaskType();
