@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +15,8 @@ public class Duke {
         // System.out.println("Hello from\n" + logo);
 
         // instantiate a list to store strings
-        List<Task> tasks = new LinkedList<>();
+        // List<Task> tasks = new LinkedList<>();
+        List<Task> tasks = new ArrayList<>();
 
         // greetings
         System.out.println("\t-----------------------------------------------------------------");
@@ -44,6 +46,17 @@ public class Duke {
                 System.out.println("\t-----------------------------------------------------------------");
                 break;
             } 
+            else if (commandLine.equalsIgnoreCase("delete")) {
+                int inputIndex = Integer.parseInt(lineArray[1]);
+                int arrayIndex = inputIndex - 1;
+                System.out.println("\t-----------------------------------------------------------------");
+                System.out.println("\t Noted. I've removed this task:");
+                System.out.println("\t\t " + tasks.get(arrayIndex));
+                System.out.println("\t Now you have " + tasks.size() + " tasks in the list.");
+                System.out.println("\t-----------------------------------------------------------------");
+                tasks.remove(arrayIndex);
+
+            }
             else if (commandLine.equalsIgnoreCase("mark")) {
                 // get the index of the to do list to mark
                 int inputIndex = Integer.parseInt(lineArray[1]);
