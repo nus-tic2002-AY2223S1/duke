@@ -18,14 +18,6 @@ public class Parser {
         }
     }
 
-    /*
-    public static int getItemNumber(String userInput){
-        int idx = userInput.indexOf(" ");
-        String itemNumber = userInput.substring(idx+1, userInput.length());
-        idx = Integer.parseInt(itemNumber);
-        return idx;
-    } */
-
     public static boolean isValidCommand(String command){
         if ((command.equals(LegalCommandEnumerations.MARK.toString())) || (command.equals(LegalCommandEnumerations.UNMARK.toString())) ||
             (command.equals(LegalCommandEnumerations.DELETE.toString())) || (command.equals(LegalCommandEnumerations.VIEW.toString())) ||
@@ -85,36 +77,4 @@ public class Parser {
         }
         return getCommand(userInput);
     }
-    /*
-    public static boolean parse(String userInput) throws WrongInputSyntaxException, EmptyTaskException {
-        boolean hasInputErrors;
-        try {
-            hasInputErrors = hasInputErrors(userInput);
-        } catch (EmptyTaskException ete){
-            throw new EmptyTaskException();
-        } catch (WrongInputSyntaxException wise){
-            throw new WrongInputSyntaxException();
-        }
-
-        if (hasInputErrors == false) {
-            if (userInput.equals(LegalCommandEnumerations.VIEW.toString())){
-                tasks.viewTasks();
-            } else if (userInput.equals(LegalCommandEnumerations.EXIT.toString())) {
-                ui.exit();
-            } else {
-                String command = getCommand(userInput);
-                if (command.equals(LegalCommandEnumerations.MARK.toString())){
-                    tasks.markTask(getItemNumber(userInput)); // e.g. "1. TODO buy lunch" --> 1
-                } else if (command.equals(LegalCommandEnumerations.UNMARK.toString())){
-                    tasks.unmarkTask(getItemNumber(userInput));
-                } else if (command.equals(LegalCommandEnumerations.DELETE.toString())){
-                    tasks.deleteTask(getItemNumber(userInput));
-                } else {
-                    tasks.addTask(userInput);
-                }
-            }
-        }
-        return false; // i.e. do not terminate program
-    }
-    */
 }

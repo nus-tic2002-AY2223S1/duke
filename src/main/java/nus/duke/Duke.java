@@ -61,7 +61,8 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        new Duke("/data/DukeTasks.txt").run();
+        //new Duke("/data/DTasks.txt").run();
+        new Duke("/Users/rebecca/Desktop/Duke/data/DTasks.txt").run();
     }
 
 }

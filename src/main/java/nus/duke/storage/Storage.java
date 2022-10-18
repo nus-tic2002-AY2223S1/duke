@@ -31,25 +31,28 @@ public class Storage {
     public ArrayList<Task> load() throws IOException {
         hardDiskTaskList = new TaskList();
         try {
-            //check if file exist first
-            File file = new File("/Users/rebecca/Desktop/Duke/data/DukeTasks.txt");
-            Scanner s = new Scanner(file);
-            String line;
-            String command;
-            int count = 1;
-            while(s.hasNext()){
-                line = s.nextLine();
-                command = parser.parse(line);
-                hardDiskTaskList.processTasks(command, line);
-                hardDiskTaskList.processIsDone(count, line);
-                count++;
+            String myPath = filePath;
+            java.nio.file.Path path = java.nio.file.Paths.get(myPath);
+            boolean directoryExists = java.nio.file.Files.exists(path);
+            if (directoryExists){
+                File file = new File(myPath);
+                Scanner s = new Scanner(file);
+                String line;
+                String command;
+                int count = 1;
+                while(s.hasNext()){
+                    line = s.nextLine();
+                    command = parser.parse(line);
+                    hardDiskTaskList.processTasks(command, line);
+                    hardDiskTaskList.processIsDone(count, line);
+                    count++;
+                }
+            } else {
+                createHardDiskFile(myPath);
             }
         } catch (IOException ioe){
-            System.out.println("do nth");
         } catch (WrongInputSyntaxException wise){
-            System.out.println("wrong input");
         } catch (EmptyTaskException ete){
-            System.out.println("empty task");
         }
         return hardDiskTaskList.getTaskList();
     }
