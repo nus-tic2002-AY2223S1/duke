@@ -1,17 +1,9 @@
-import Application.Helpers.ActionKeyword;
-import Domain.Aggregates.Tracker.*;
-import Application.Helpers.CommonHelper;
-import Application.Helpers.MessageConstants;
-import Domain.Exceptions.DukeException;
-
-import java.util.Scanner;
+import Application.UserInterface.Ui;
 
 public class Duke {
-    public static Tracker tracker = new Tracker();
+    public static Ui ui;
     public static void main(String[] args) {
-
+        ui = new Ui();
+        ui.init();
     }
-
-
-
 }

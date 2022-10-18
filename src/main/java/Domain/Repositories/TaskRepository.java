@@ -1,15 +1,15 @@
 package Domain.Repositories;
 
 import Application.Helpers.MessageConstants;
-import Domain.Aggregates.Tracker.Task;
-import Domain.Aggregates.Tracker.Tracker;
-import Domain.Exceptions.DukeArgumentException;
-import Domain.Exceptions.DukeExistedException;
-import Domain.Exceptions.DukeNotFoundException;
-import Domain.Exceptions.DukeValidationException;
+import Application.Helpers.StorageConstants;
+import Domain.Aggregates.Tracker.*;
+import Domain.Exceptions.*;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Scanner;
 
 public class TaskRepository implements ITaskRepository {
 
@@ -44,5 +44,35 @@ public class TaskRepository implements ITaskRepository {
     public void validateTask(ArrayList<Task> tasks, Task task) throws DukeExistedException {
         if(!getItem(tasks, task).isEmpty())
             throw new DukeExistedException(MessageConstants.TASK_EXISTED_ERROR);
+    }
+
+
+    public ArrayList<Task> convertToTaskList() throws DukeFileException {
+        ArrayList<Task> tasks = new ArrayList<>(100);
+        try {
+            Scanner scnr = new Scanner(new FileReader(StorageConstants.FILE_PATH));
+            String[] str;
+            scnr.nextLine();
+            while (scnr.hasNext()) {
+                str = scnr.nextLine().split(" \\| ");
+                Task task = null;
+                switch (TaskType.valueOf(str[1])) {
+                    case T:
+                        task = new Todo(Integer.valueOf(str[0]), str[3], Boolean.valueOf(str[2]));
+                        break;
+                    case E:
+                        task = new Event(Integer.valueOf(str[0]), str[3], str[4], Boolean.valueOf(str[2]));
+                        break;
+                    case D:
+                        task = new Deadline(Integer.valueOf(str[0]), str[3], str[4], Boolean.valueOf(str[2]));
+                        break;
+                }
+                tasks.add(task);
+            }
+            scnr.close();
+        } catch (IOException ex){
+            throw new DukeFileException(MessageConstants.TASK_GET_ERROR);
+        }
+        return tasks;
     }
 }

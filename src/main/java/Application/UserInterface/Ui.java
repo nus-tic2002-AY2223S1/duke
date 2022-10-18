@@ -1,33 +1,41 @@
 package Application.UserInterface;
 
+import Application.Commands.AddTaskCommand;
+import Application.Commands.DeleteTaskCommand;
+import Application.Commands.MarkTaskCommand;
+import Application.Commands.UnmarkTaskCommand;
+import Application.Controllers.RequestController;
 import Application.Helpers.ActionKeyword;
 import Application.Helpers.CommonHelper;
 import Application.Helpers.MessageConstants;
-import Domain.Aggregates.Tracker.Deadline;
-import Domain.Aggregates.Tracker.Event;
-import Domain.Aggregates.Tracker.Todo;
-import Domain.Aggregates.Tracker.Tracker;
-import Domain.Exceptions.DukeException;
-import Domain.Repositories.IStorageRepository;
-import Domain.Repositories.ITaskRepository;
-import Domain.Repositories.StorageRepository;
+import Domain.Aggregates.Storage.Storage;
+import Domain.Aggregates.Tracker.*;
+import Domain.Exceptions.*;
 
-import java.io.File;
 import java.util.Scanner;
 
 public class Ui {
 
     private Tracker tracker;
-    private File file;
-    private IStorageRepository _storageRepository;
+    private Storage storage;
+    private RequestController controller;
 
     public Ui(){
-        _storageRepository = new StorageRepository();
-        file = _storageRepository.init();
-        tracker = new Tracker(_storageRepository.convertToTaskList());
+        try {
+            storage = new Storage();
+            tracker = new Tracker();
+            controller = new RequestController(tracker, storage);
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
-    private static void intro(){
+    public void init(){
+        intro();
+        conversation();
+    }
+
+    private void intro(){
         String logo =
                 " _____             _   \n"
                         + "/  __ \\_   _ _  __|_| ___\n"
@@ -37,7 +45,7 @@ public class Ui {
         System.out.println(logo);
         System.out.println("Hello! I'm Curio\nWhat can i do for you?\n");
     }
-    private static void conversation(){
+    private void conversation(){
         String inp = "";
         Scanner scanner = new Scanner(System.in);
 
@@ -47,38 +55,36 @@ public class Ui {
                 ActionKeyword action = ActionKeyword.get(inp);
                 switch (action){
                     case LIST:
-                        tracker.showList();
+                        controller.list();
                         break;
                     case TODO:
-                        tracker.addItem(new Todo(inp.replace("todo","").trim()));
+                        controller.todo(inp.replace("todo","").trim());
                         break;
                     case EVENT:
-                        tracker.addItem(new Event(inp.replace("event","").trim()));
+                        controller.event(inp.replace("event","").trim());
                         break;
                     case DEADLINE:
-                        tracker.addItem(new Deadline(inp.replace("deadline","").trim()));
+                        controller.deadline(inp.replace("deadline","").trim());
                         break;
                     case MARK:
-                        tracker.updateItem(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()), true);
+                        controller.mark(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()));
                         break;
                     case UNMARK:
-                        tracker.updateItem(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()), false);
+                        controller.unmark(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()));
                         break;
                     case DELETE:
-                        tracker.deleteItem(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()));
+                        controller.delete(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()));
                         break;
                     case HI:
                     case HELLO:
-                        CommonHelper.printMessage(MessageConstants.WELCOME);
+                        controller.hello();
                         break;
                     case BYE:
-                        CommonHelper.printMessage(MessageConstants.END);
-                        System.exit(1);
+                        controller.bye();
                         break;
                     default:
                         CommonHelper.printMessage(MessageConstants.REPEAT);
                         break;
-
                 }
             } catch (DukeException ex){
 
@@ -88,4 +94,5 @@ public class Ui {
             }
         }
     }
+
 }

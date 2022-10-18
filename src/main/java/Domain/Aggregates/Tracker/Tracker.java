@@ -6,22 +6,18 @@ import Domain.Exceptions.DukeExistedException;
 import Domain.Exceptions.DukeFileException;
 import Domain.Exceptions.DukeNotFoundException;
 import Domain.Exceptions.DukeValidationException;
-import Domain.Repositories.IStorageRepository;
 import Domain.Repositories.ITaskRepository;
-import Domain.Repositories.StorageRepository;
 import Domain.Repositories.TaskRepository;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class Tracker {
     public ArrayList<Task> tasks;
     private final ITaskRepository _taskRepository;
 
-    public Tracker(ArrayList<Task> tasks) {
-        this.tasks = new ArrayList<>(100);
+    public Tracker() throws DukeFileException {
         _taskRepository = new TaskRepository();
-        this.tasks = tasks;
+        this.tasks = _taskRepository.convertToTaskList();
     }
 
     private void printList(){
@@ -44,38 +40,46 @@ public class Tracker {
         }
     }
 
-    public void addItem(Task task) throws DukeExistedException, DukeFileException {
-        _taskRepository.validateTask(task);
+    public boolean addItem(Task task) throws DukeExistedException {
+        _taskRepository.validateTask(tasks, task);
         task.setId(_taskRepository.getLastId(tasks) + 1);
         if(tasks.add(task)) {
-            _storageRepository.write(file, task.toString());
             CommonHelper.printMessage(MessageConstants.ADD_TASK);
             printTask(task);
+            return true;
         } else {
             CommonHelper.printMessage(MessageConstants.GENERAL_ERROR);
+            return false;
         }
     }
 
-    public void updateItem(int n, boolean isDone) throws DukeValidationException, DukeNotFoundException, DukeFileException {
-        Task task = _taskRepository.validateTask(n);
-        task.setIsDone(isDone);
-        _storageRepository.override(tasks);
-        if (isDone) {
-            CommonHelper.printMessage(MessageConstants.MARK_TASK);
-        } else {
-            CommonHelper.printMessage(MessageConstants.UNMARK_TASK);
+    public boolean updateItem(int n, boolean isDone) throws DukeValidationException, DukeNotFoundException {
+        Task task = _taskRepository.validateTask(tasks, n);
+        if(task != null) {
+            task.setIsDone(isDone);
+            if (isDone) {
+                CommonHelper.printMessage(MessageConstants.MARK_TASK);
+            } else {
+                CommonHelper.printMessage(MessageConstants.UNMARK_TASK);
+            }
+            task.printItem();
+            return true;
         }
-        task.printItem();
+        return false;
     }
 
-    public void deleteItem(int n) throws DukeValidationException, DukeNotFoundException, DukeFileException {
-        Task task = _taskRepository.validateTask(n);
-        if(tasks.remove(task)) {
-            _storageRepository.override(tasks);
-            CommonHelper.printMessage(MessageConstants.DELETE_TASK);
-            printTask(task);
-        } else {
-            CommonHelper.printMessage(MessageConstants.GENERAL_ERROR);
+    public boolean deleteItem(int n) throws DukeValidationException, DukeNotFoundException {
+        Task task = _taskRepository.validateTask(tasks, n);
+        if(task != null) {
+            if (tasks.remove(task)) {
+                CommonHelper.printMessage(MessageConstants.DELETE_TASK);
+                printTask(task);
+                return true;
+            } else {
+                CommonHelper.printMessage(MessageConstants.GENERAL_ERROR);
+                return false;
+            }
         }
+        return false;
     }
 }

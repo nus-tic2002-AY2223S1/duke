@@ -1,16 +1,6 @@
 ID | Type | Is Done | Name | Remarks
-1 | T | 0 | read book
-3 | T | 0 | borrow book
-5 | T | 0 | return book
-6 | E | 0 | a | b
-7 | D | 0 | c | dd
-8 | T | 0 | e f
-9 | E | 0 | h | j
-11 | D | 0 | q | w
-12 | D | 0 | t | y
-13 | E | 0 | u | i
-14 | T | 0 | o
-15 | T | 0 | p
-16 | T | 0 | a
-18 | D | 1 | a | a
-19 | T | 1 | b
+1 | T | 0 | y
+2 | E | 1 | g | h
+3 | E | 0 | g | k
+5 | D | 1 | t | y
+6 | D | 0 | g | k
