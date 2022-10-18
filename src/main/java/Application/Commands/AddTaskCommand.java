@@ -1,27 +1,24 @@
 package Application.Commands;
 
+import Domain.Aggregates.Storage.Storage;
 import Domain.Aggregates.Tracker.Task;
 import Domain.Aggregates.Tracker.Tracker;
 import Domain.Exceptions.DukeExistedException;
+import Domain.Exceptions.DukeFileException;
+import Domain.Repositories.IStorageRepository;
 import Domain.Repositories.ITaskRepository;
 
 public class AddTaskCommand extends Command{
     private final Task task;
-    private final ITaskRepository _taskRepository;
 
-    public AddTaskCommand(Tracker tracker, Task task, ITaskRepository taskRepository) {
-        super(tracker);
+    public AddTaskCommand(Tracker tracker, Storage storage, Task task) throws DukeExistedException, DukeFileException {
+        super(tracker, storage);
         this.task = task;
-        this._taskRepository = taskRepository;
     }
 
     @Override
-    public void execute() {
-
-    }
-
-    @Override
-    public void validate() throws DukeExistedException {
-        _taskRepository.validateTask(tracker.tasks, task);
+    public void execute() throws DukeExistedException, DukeFileException {
+        if(this.tracker.addItem(task))
+            this.storage.saveItem(task.toString());
     }
 }

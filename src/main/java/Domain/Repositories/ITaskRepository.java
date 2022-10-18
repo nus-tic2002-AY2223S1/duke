@@ -2,6 +2,7 @@ package Domain.Repositories;
 
 import Domain.Aggregates.Tracker.Task;
 import Domain.Exceptions.DukeExistedException;
+import Domain.Exceptions.DukeFileException;
 import Domain.Exceptions.DukeNotFoundException;
 import Domain.Exceptions.DukeValidationException;
 
@@ -14,4 +15,6 @@ public interface ITaskRepository {
     public int getLastId(ArrayList<Task> tasks);
     public Task validateTask(ArrayList<Task> tasks, int n) throws DukeNotFoundException, DukeValidationException;
     public void validateTask(ArrayList<Task> tasks, Task task) throws DukeExistedException;
+
+    public ArrayList<Task> convertToTaskList() throws DukeFileException;
 }
