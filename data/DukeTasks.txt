@@ -1,3 +1,2 @@
-TODO lunch[true]
-DEADLINE assignment /by tmr[false]
-EVENT visit aunt /at her place[false]
+TODO buy lunch[false]
+DEADLINE code assignment /by tmr[false]

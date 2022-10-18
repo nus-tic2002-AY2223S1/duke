@@ -6,7 +6,6 @@ import nus.duke.exceptions.*;
 
 public class Parser {
     private static Ui ui;
-    private static TaskList tasks;
 
     public static String getCommand(String userInput){
         if (userInput.length() == 4){
@@ -41,39 +40,41 @@ public class Parser {
     }
 
     public static boolean hasInputErrors(String userInput) throws WrongInputSyntaxException, EmptyTaskException {
-        if (userInput.indexOf(" ") == -1){ // e.g. "TODO" or "VIEW" or "EXIT"
+        if (userInput.indexOf(" ") == -1){
             if (userInput.equals("VIEW") || userInput.equals("EXIT")){
                 return false;
             } else {
-                throw new EmptyTaskException(); // E.G. "TODO"
-            }
-        } else {
-            String command = getCommand(userInput); // e.g. "TODO buy lunch" --> "TODO" or "TODO     " --> "TODO"
-            if (isValidCommand(command) == true) {
-                if (isEmptyTask(userInput) == true ) { // e.g. "TODO     " is an empty task with alot of blank space
-                    throw new EmptyTaskException();
-                } else {
-                    if (command.equals("DEADLINE") && (userInput.contains("/by") == false)){
-                        throw new WrongInputSyntaxException();
-                    } else if (command.equals("EVENT") && (userInput.contains("/at") == false)){
-                        throw new WrongInputSyntaxException();
-                    } else {
-                        return false;
-                    }
-                }
-            } else {
-                throw new WrongInputSyntaxException(); // user does not enter a valid command
+                throw new EmptyTaskException();
             }
         }
+
+        String command = getCommand(userInput); // e.g. "TODO buy lunch" --> "TODO" or "TODO     " --> "TODO"
+        if (isValidCommand(command) == false){
+            throw new WrongInputSyntaxException();
+        }
+
+        if ((isValidCommand(command) == true) && (isEmptyTask(userInput) == true)){
+            throw new EmptyTaskException();
+        }
+
+        if (command.equals("DEADLINE") && (userInput.contains("/by") == false)){
+            throw new WrongInputSyntaxException();
+        }
+
+        if (command.equals("EVENT") && (userInput.contains("/at") == false)){
+            throw new WrongInputSyntaxException();
+        }
+        return false;
     }
 
-    public static String parse(String userInput) throws WrongInputSyntaxException, EmptyTaskException {
+    public static String parse(String userInput) {
         try {
             hasInputErrors(userInput);
         } catch (EmptyTaskException ete){
-            throw new EmptyTaskException();
+            System.out.println("OOPS!!! Task cannot be empty.");
         } catch (WrongInputSyntaxException wise){
-            throw new WrongInputSyntaxException();
+            System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-( Please use a command from the command menu.");
+            ui.printCommandMenu();
         }
         return getCommand(userInput);
     }

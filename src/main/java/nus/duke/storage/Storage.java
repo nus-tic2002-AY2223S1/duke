@@ -28,33 +28,8 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    public ArrayList<Task> load() throws IOException {
-        hardDiskTaskList = new TaskList();
-        try {
-            String myPath = filePath;
-            java.nio.file.Path path = java.nio.file.Paths.get(myPath);
-            boolean directoryExists = java.nio.file.Files.exists(path);
-            if (directoryExists){
-                File file = new File(myPath);
-                Scanner s = new Scanner(file);
-                String line;
-                String command;
-                int count = 1;
-                while(s.hasNext()){
-                    line = s.nextLine();
-                    command = parser.parse(line);
-                    hardDiskTaskList.processTasks(command, line);
-                    hardDiskTaskList.processIsDone(count, line);
-                    count++;
-                }
-            } else {
-                createHardDiskFile(myPath);
-            }
-        } catch (IOException ioe){
-        } catch (WrongInputSyntaxException wise){
-        } catch (EmptyTaskException ete){
-        }
-        return hardDiskTaskList.getTaskList();
+    public String getFilePath(){
+        return this.filePath;
     }
 
     public static boolean createHardDiskFile(String filePath) {
@@ -62,15 +37,41 @@ public class Storage {
         try {
             f.createNewFile();
         } catch (IOException e) {
-            System.out.println("An error occurred: Java's IOException");
+            System.out.println("OPPS!!! There was an IO Exception.");
             e.printStackTrace();
         }
         return true;
     }
 
+    public ArrayList<Task> load() throws IOException {
+        hardDiskTaskList = new TaskList();
+        try {
+            String filePath = getFilePath();
+            java.nio.file.Path path = java.nio.file.Paths.get(filePath);
+            boolean directoryExists = java.nio.file.Files.exists(path);
+            if (directoryExists){
+                File file = new File(filePath);
+                Scanner s = new Scanner(file);
+                String line;
+                String command;
+                for(int count = 1; s.hasNext(); count++){
+                    line = s.nextLine();
+                    command = parser.parse(line);
+                    hardDiskTaskList.processTasks(command, line);
+                    hardDiskTaskList.processIsDone(count, line);
+                }
+            } else {
+                createHardDiskFile(filePath);
+            }
+        } catch (IOException ioe){
+            System.out.println("OPPS!!! There was an IO Exception.");
+        }
+        return hardDiskTaskList.getTaskList();
+    }
+
     public void saveTasks(TaskList taskList){
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/rebecca/Desktop/Duke/data/DukeTasks.txt"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(getFilePath()));
             for (int i = 0; i < taskList.getTotalTasks(); i++) {
                 String str = taskList.getTaskList().get(i).getTask() + "[" + taskList.getTaskList().get(i).getIsDone() + "]" + "\n";
                 writer.write(str);
@@ -78,8 +79,7 @@ public class Storage {
             writer.close();
             System.out.println("Your tasks are saved.");
         } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            System.out.println("OPPS!!! There was an IO Exception.");
         }
     }
 }

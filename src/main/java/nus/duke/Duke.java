@@ -18,6 +18,7 @@ public class Duke {
     private TaskList tasks;
     private Ui ui;
     private Parser parser;
+    Scanner s;
 
     public Duke(String filePath) {
         try {
@@ -35,26 +36,25 @@ public class Duke {
     public void run() {
         ui = new Ui();
         parser = new Parser();
+        s = new Scanner(System.in);
         ui.awakeDobby();
-        Scanner s = new Scanner(System.in);
         boolean terminateDobby = false;
         String command;
-
         do{
             String userInput = ui.getUserInput(s);
+            command = parser.parse(userInput);
+            terminateDobby = tasks.processTasks(command, userInput);
+            /*
             try {
                 command = parser.parse(userInput);
-                if (command.equals("EXIT")){
-                    terminateDobby = true;
-                } else {
-                    tasks.processTasks(command, userInput);
-                }
+                terminateDobby = tasks.processTasks(command, userInput);
             } catch (WrongInputSyntaxException wise){
                 System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-( Please use a command from the command menu");
                 ui.printCommandMenu();
             } catch (EmptyTaskException ete){
                 System.out.println("OOPS!!! The description of a TODO/DEADLINE/EVENT task cannot be empty.");
             }
+             */
         }while(terminateDobby != true);
         storage.saveTasks(tasks);
         ui.exit();
@@ -62,7 +62,7 @@ public class Duke {
 
     public static void main(String[] args) {
         //new Duke("/data/DTasks.txt").run();
-        new Duke("/Users/rebecca/Desktop/Duke/data/DTasks.txt").run();
+        new Duke("/Users/rebecca/Desktop/Duke/data/DukeTasks.txt").run();
     }
 
 }

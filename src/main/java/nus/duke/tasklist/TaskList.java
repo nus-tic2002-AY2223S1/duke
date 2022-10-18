@@ -75,26 +75,37 @@ public class TaskList {
         System.out.println("unmarked");
     }
 
-    public void processTasks(String command, String userInput){
-        if (userInput.equals(LegalCommandEnumerations.VIEW.toString())){
-            if ((this.getTotalTasks()) == 0){
-                System.out.println("There are 0 tasks in your list.");
-            } else {
-                this.viewTasks();
-            }
-        } else if (userInput.equals(LegalCommandEnumerations.EXIT.toString())) {
-            // do nothing
-        } else {
-            if (command.equals(LegalCommandEnumerations.MARK.toString())){
-                this.markTask(getItemNumber(userInput)); // e.g. "1. TODO buy lunch" --> 1
-            } else if (command.equals(LegalCommandEnumerations.UNMARK.toString())){
-                this.unmarkTask(getItemNumber(userInput));
-            } else if (command.equals(LegalCommandEnumerations.DELETE.toString())){
-                this.deleteTask(getItemNumber(userInput));
-            } else {
-                this.addTask(userInput);
-            }
+    public boolean processTasks(String command, String userInput){
+        if (command.equals("EXIT")){
+            return true;
         }
+
+        if ((userInput.equals(LegalCommandEnumerations.VIEW.toString())) && ((this.getTotalTasks()) == 0)){
+            System.out.println("There are 0 tasks in your list.");
+            return false;
+        }
+        if ((userInput.equals(LegalCommandEnumerations.VIEW.toString())) && ((this.getTotalTasks()) > 0)){
+            this.viewTasks();
+            return false;
+        }
+
+       if (command.equals(LegalCommandEnumerations.MARK.toString())) {
+           this.markTask(getItemNumber(userInput));
+           return false;
+       }
+
+       if (command.equals(LegalCommandEnumerations.UNMARK.toString())) {
+           this.unmarkTask(getItemNumber(userInput));
+           return false;
+       }
+
+       if (command.equals(LegalCommandEnumerations.DELETE.toString())){
+           this.deleteTask(getItemNumber(userInput));
+           return false;
+       }
+
+       this.addTask(userInput);
+       return false;
     }
 
     public void processIsDone(int count, String userInput){

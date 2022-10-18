@@ -6,7 +6,7 @@ public class Ui {
 
     public static void printCommandMenu(){
         showLine();
-        System.out.println("COMMAND Menu Below:");
+        System.out.println("**COMMAND MENU**");
         System.out.println("MARK | UNMARK | DELETE | VIEW | EXIT");
         System.out.println("TODO <<task>> | DEADLINE <<task>> /by <<date>>| EVENT <<TASK>> /at <<date>>");
         // System.out.println("Automatic Testing: /bin/bash runtest.sh");
