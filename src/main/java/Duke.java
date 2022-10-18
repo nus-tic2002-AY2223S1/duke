@@ -4,10 +4,10 @@ import java.lang.*;
 
 import file.StoreFile;
 //import File.save;
-import taskpackage.Events;
-import taskpackage.Task;
-import taskpackage.Deadline;
-import taskpackage.Todo;
+import task.Events;
+import task.Task;
+import task.Deadline;
+import task.Todo;
 import exception.DukeException;
 import static function.isNumber.isNumeric;
 
@@ -42,7 +42,7 @@ public class Duke {
     public static void main(String[] args){
         String line;
         Scanner in = new Scanner(System.in);
-        ArrayList<Task> listItems = new ArrayList<Task>();
+        ArrayList<Task> listItems = new ArrayList<>();
 
         UI.Greeting();
 
