@@ -1,4 +1,4 @@
-package TaskPackage;
+package taskpackage;
 
 public class Todo extends Task{
     protected boolean isDone;

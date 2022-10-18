@@ -1,4 +1,4 @@
-package TaskPackage;
+package taskpackage;
 
 public class Events extends Task {
     protected String by;

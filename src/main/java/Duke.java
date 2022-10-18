@@ -2,12 +2,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.*;
 
-import File.StoreFile;
+import file.StoreFile;
 //import File.save;
-import TaskPackage.Events;
-import TaskPackage.Task;
-import TaskPackage.Deadline;
-import TaskPackage.Todo;
+import taskpackage.Events;
+import taskpackage.Task;
+import taskpackage.Deadline;
+import taskpackage.Todo;
 import exception.DukeException;
 import static function.isNumber.isNumeric;
 

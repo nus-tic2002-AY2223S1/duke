@@ -1,4 +1,4 @@
-package TaskPackage;
+package taskpackage;
 
 
 
@@ -24,7 +24,7 @@ public class Deadline extends Task {
 
 
       public String getData() {
-          return "D" + super.getData() + "|" + by ;
+          return "D" + super.getData() +  by ;
       }
 
 
