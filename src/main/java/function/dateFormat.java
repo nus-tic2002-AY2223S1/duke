@@ -1,9 +1,18 @@
-package TaskPackage;
+package function;
 
 import java.time.format.DateTimeParseException;
 
+
+
 public class dateFormat {
 
+
+    /**
+     *'converToValidDate' is convert not correct inputdate format to correct Date format
+     * so that DateFormat can understand it.
+     * For example: when user enter date as ' 2/12/2019 1800' ,need convert the format to '2019/02/12T1800'
+     *
+     */
     public static String convertToValidDate(String Inputdate) {
         String input = Inputdate;
         if (Inputdate.contains(" ")) {

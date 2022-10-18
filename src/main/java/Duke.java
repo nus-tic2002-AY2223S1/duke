@@ -1,13 +1,15 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.*;
+
+import File.StoreFile;
+//import File.save;
 import TaskPackage.Events;
 import TaskPackage.Task;
 import TaskPackage.Deadline;
 import TaskPackage.Todo;
 import exception.DukeException;
-
-import static TaskPackage.isNumber.isNumeric;
+import static function.isNumber.isNumeric;
 
 
 public class Duke {
@@ -28,16 +30,13 @@ public class Duke {
     }
 
 
-
-
-
-    static void save(ArrayList<Task> listItems){
-        String list="";
-       for(Task listItem: listItems){
-           list+= listItem.getData()+ "\n";
-       }
-        StoreFile.writeToFile(list);
-    }
+    static void save(ArrayList<Task> listItems) {
+            String list = "";
+            for (Task listItem : listItems) {
+                list += listItem.getData() + "\n";
+            }
+            StoreFile.writeToFile(list);
+        }
 
 
     public static void main(String[] args){

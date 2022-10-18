@@ -1,4 +1,4 @@
-package TaskPackage;
+package function;
 
 public class isNumber {
     public static boolean isNumeric(String str) {

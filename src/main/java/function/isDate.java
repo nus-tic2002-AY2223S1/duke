@@ -1,6 +1,6 @@
-package TaskPackage;
+package function;
 
-import static TaskPackage.isNumber.isNumeric;
+import static function.isNumber.isNumeric;
 
 public class isDate {
     public static boolean isDate(String inputDate){
