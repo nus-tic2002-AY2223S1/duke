@@ -2,8 +2,8 @@ package nus.duke.task;
 
 public class Todo extends Task {
 
-    public Todo(String wish) {
-        super(wish);
+    public Todo(String userInput) {
+        super(userInput);
     }
 
     @Override

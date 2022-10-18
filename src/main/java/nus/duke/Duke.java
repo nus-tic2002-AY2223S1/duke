@@ -25,9 +25,6 @@ public class Duke {
             storage = new Storage(filePath);
             ArrayList<Task> hardDiskTaskList = storage.load();
             tasks = new TaskList(hardDiskTaskList);
-        //} //catch (FileNotFoundException fnfe) {
-           // ui.showHarddiskCreationMessage();
-          //  storage.createHardDiskFile(filePath);
         } catch (IOException ioe){
             System.out.println("io exception");
         }
@@ -44,24 +41,12 @@ public class Duke {
             String userInput = ui.getUserInput(s);
             command = parser.parse(userInput);
             terminateDobby = tasks.processTasks(command, userInput);
-            /*
-            try {
-                command = parser.parse(userInput);
-                terminateDobby = tasks.processTasks(command, userInput);
-            } catch (WrongInputSyntaxException wise){
-                System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-( Please use a command from the command menu");
-                ui.printCommandMenu();
-            } catch (EmptyTaskException ete){
-                System.out.println("OOPS!!! The description of a TODO/DEADLINE/EVENT task cannot be empty.");
-            }
-             */
         }while(terminateDobby != true);
         storage.saveTasks(tasks);
         ui.exit();
     }
 
     public static void main(String[] args) {
-        //new Duke("/data/DTasks.txt").run();
         new Duke("/Users/rebecca/Desktop/Duke/data/DukeTasks.txt").run();
     }
 
