@@ -16,7 +16,7 @@ public class TaskList {
     private static int totalTasks = 0;
 
     public TaskList(ArrayList<Task> loadedTaskList){
-        Collections.copy(this.taskList, loadedTaskList);
+        Collections.copy(loadedTaskList,this.taskList);
     }
     public TaskList(){};
 
@@ -83,8 +83,7 @@ public class TaskList {
                 this.viewTasks();
             }
         } else if (userInput.equals(LegalCommandEnumerations.EXIT.toString())) {
-            Ui ui = new Ui();
-            ui.exit();
+            // do nothing
         } else {
             if (command.equals(LegalCommandEnumerations.MARK.toString())){
                 this.markTask(getItemNumber(userInput)); // e.g. "1. TODO buy lunch" --> 1
@@ -95,6 +94,14 @@ public class TaskList {
             } else {
                 this.addTask(userInput);
             }
+        }
+    }
+
+    public void processIsDone(int count, String userInput){
+        int idx = userInput.indexOf("[") + 1;
+        String isDone = userInput.substring(idx, userInput.length()-1);
+        if (isDone.equals("true")){
+            this.markTask(count);
         }
     }
 

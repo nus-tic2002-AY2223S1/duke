@@ -36,10 +36,13 @@ public class Storage {
             Scanner s = new Scanner(file);
             String line;
             String command;
+            int count = 1;
             while(s.hasNext()){
                 line = s.nextLine();
                 command = parser.parse(line);
                 hardDiskTaskList.processTasks(command, line);
+                hardDiskTaskList.processIsDone(count, line);
+                count++;
             }
         } catch (IOException ioe){
             System.out.println("do nth");
@@ -66,7 +69,7 @@ public class Storage {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/rebecca/Desktop/Duke/data/DukeTasks.txt"));
             for (int i = 0; i < taskList.getTotalTasks(); i++) {
-                String str = "[" + taskList.getTaskList().get(i).getTaskType() + "]" + "[" + taskList.getTaskList().get(i).getIsDone() + "]" + " " + taskList.getTaskList().get(i).getTask();
+                String str = taskList.getTaskList().get(i).getTask() + "[" + taskList.getTaskList().get(i).getIsDone() + "]" + "\n";
                 writer.write(str);
             }
             writer.close();

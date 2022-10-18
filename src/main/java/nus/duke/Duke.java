@@ -35,16 +35,20 @@ public class Duke {
     public void run() {
         ui = new Ui();
         parser = new Parser();
-
         ui.awakeDobby();
         Scanner s = new Scanner(System.in);
         boolean terminateDobby = false;
         String command;
+
         do{
             String userInput = ui.getUserInput(s);
             try {
                 command = parser.parse(userInput);
-                tasks.processTasks(command, userInput);
+                if (command.equals("EXIT")){
+                    terminateDobby = true;
+                } else {
+                    tasks.processTasks(command, userInput);
+                }
             } catch (WrongInputSyntaxException wise){
                 System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-( Please use a command from the command menu");
                 ui.printCommandMenu();
