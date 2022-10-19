@@ -3,18 +3,14 @@ import java.util.Scanner;
 import java.lang.*;
 
 import file.StoreFile;
-//import File.save;
 import task.Events;
 import task.Task;
 import task.Deadline;
 import task.Todo;
 import exception.DukeException;
-import static function.isNumber.isNumeric;
-
+import function.Method.*;
 
 public class Duke {
-   // private static int count = 0;
-   // private static TaskPackage.Task[] tasks = new TaskPackage.Task[100];
 
     public static ArrayList<Task> AddList (ArrayList<Task> listItems,String input){
             listItems.add(new Task(input));
