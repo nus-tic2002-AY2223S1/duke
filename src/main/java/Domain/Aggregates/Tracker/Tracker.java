@@ -2,10 +2,7 @@ package Domain.Aggregates.Tracker;
 
 import Application.Helpers.CommonHelper;
 import Application.Helpers.MessageConstants;
-import Domain.Exceptions.DukeExistedException;
-import Domain.Exceptions.DukeFileException;
-import Domain.Exceptions.DukeNotFoundException;
-import Domain.Exceptions.DukeValidationException;
+import Domain.Exceptions.*;
 import Domain.Repositories.ITaskRepository;
 import Domain.Repositories.TaskRepository;
 
@@ -15,7 +12,7 @@ public class Tracker {
     public ArrayList<Task> tasks;
     private final ITaskRepository _taskRepository;
 
-    public Tracker() throws DukeFileException {
+    public Tracker() throws DukeFileException, DukeArgumentException {
         _taskRepository = new TaskRepository();
         this.tasks = _taskRepository.convertToTaskList();
     }

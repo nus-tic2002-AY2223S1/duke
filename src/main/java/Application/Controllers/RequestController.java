@@ -10,6 +10,8 @@ import Domain.Exceptions.DukeFileException;
 import Domain.Exceptions.DukeNotFoundException;
 import Domain.Exceptions.DukeValidationException;
 
+import java.text.ParseException;
+
 public class RequestController {
 
     private Tracker tracker;
@@ -31,7 +33,7 @@ public class RequestController {
         addTaskCommandHandler(new Event(input));
     }
 
-    public void deadline(String input) throws DukeValidationException, DukeExistedException, DukeFileException {
+    public void deadline(String input) throws DukeValidationException, DukeExistedException, DukeFileException, ParseException {
         addTaskCommandHandler(new Deadline(input));
     }
 
