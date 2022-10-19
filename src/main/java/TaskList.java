@@ -41,7 +41,7 @@ public class TaskList {
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
 
-        String currentLine;
+        String currentLine = "";
         String lineToRemove = textToRemove.trim();
 
         while((currentLine = reader.readLine()) != null) {//read current line from tasks.txt till it null
@@ -54,15 +54,11 @@ public class TaskList {
         writer.close();
         reader.close();
 
-        try{
-            inputFile.delete();
-            tempFile.renameTo(inputFile);
-        } catch (Exception e) {
-            System.gc();
-            inputFile.delete();
-            tempFile.renameTo(inputFile);
-            throw new RuntimeException(e);
-        }
+        System.gc();
+
+        inputFile.delete();
+
+        tempFile.renameTo(inputFile);
     }
 
     public void addTasks(String input) throws DukeException, IOException {
