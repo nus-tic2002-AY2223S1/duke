@@ -36,14 +36,14 @@ public class StorageRepository implements IStorageRepository{
             writer.write(row + "\n");
             writer.close();
         } catch (IOException ex){
-            throw new DukeFileException(MessageConstants.FIL_WRITE_ERROR);
+            throw new DukeFileException(MessageConstants.FILE_WRITE_ERROR);
         }
     }
 
     public void override(ArrayList<Task> tasks) throws DukeFileException {
         try {
             FileWriter writer = new FileWriter(StorageConstants.FILE_PATH);
-            writer.append(StorageConstants.HEADER);
+            writer.append(StorageConstants.HEADER + "\n");
             for (Task task : tasks) {
                 writer.append(task.toString() + "\n");
             }

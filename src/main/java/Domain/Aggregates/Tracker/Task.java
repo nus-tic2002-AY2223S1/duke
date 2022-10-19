@@ -4,6 +4,9 @@ import Application.Helpers.CommonHelper;
 import Application.Helpers.MessageConstants;
 import Domain.Exceptions.DukeValidationException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public abstract class Task {
     protected int id;
     protected String name;
@@ -25,6 +28,7 @@ public abstract class Task {
     public abstract void printItem();
     public abstract boolean equals(Object t);
     public abstract String toString();
+    public abstract boolean compare(LocalDate start, LocalDate end);
 
     public int getId() { return this.id; }
     public void setId(int i) { this.id = i; }

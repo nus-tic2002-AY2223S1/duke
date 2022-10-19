@@ -4,6 +4,7 @@ import Application.Helpers.CommonHelper;
 import Application.Helpers.MessageConstants;
 import Domain.Exceptions.DukeValidationException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -49,10 +50,22 @@ public class Event extends Task{
         return String.format("%d | %s | %d | %s | %s", this.id, this.shortName, CommonHelper.boolToInt(this.isDone), this.name, this.startDateTime.toString());
     }
 
+    @Override
+    public boolean compare(LocalDate start, LocalDate end) {
+        LocalDate _startDateTime = this.startDateTime.toLocalDate();
+        if(end == null)
+            return _startDateTime.isEqual(start);
+        return (_startDateTime.isAfter(start) || _startDateTime.isEqual(start)) && (_startDateTime.isBefore(end) || _startDateTime.isEqual(end));
+    }
+
     private void validate(String[] f) throws DukeValidationException{
         if(CommonHelper.isEmptyOrNull(f[0]))
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Description"));
         else if(CommonHelper.isEmptyOrNull(f[1]))
             throw new DukeValidationException(String.format(MessageConstants. TASK_VALIDATION_EMPTY_ERROR, "Start Date Time"));
+    }
+
+    public LocalDateTime getStartDateTime(){
+        return this.startDateTime;
     }
 }

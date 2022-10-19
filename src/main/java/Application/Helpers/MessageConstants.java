@@ -19,8 +19,10 @@ public final class MessageConstants {
     public static final String TASK_VALIDATION_SIZE_ERROR = "Oops! Specified id is out of range.";
     public static final String TASK_ARGUMENT_ERROR = "Oops! That doesn't seem right. What do you mean?";
     public static final String TASK_GET_ERROR = "\tOops! There seems to be an issue retrieving previous task(s).";
-    public static final String FIL_WRITE_ERROR = "\tOops! There seems to be an issue saving the task. Please try again.";
+    public static final String FILE_WRITE_ERROR = "\tOops! There seems to be an issue saving the task. Please try again.";
     public static final String FILE_OVERWRITE_ERROR = "\tOops! There seems to be an issue saving the updated task. Please try again.";
+    public static final String FILTER_RESULTS_FOUND = "\tFound %d tasks:";
+    public static final String NO_RESULTS_FOUND = "\tNo tasks found.";
     public static final String ERROR = "\tERROR!! - Oops something unexpected happened. Please try again.";
 
 }
