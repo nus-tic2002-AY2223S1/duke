@@ -15,6 +15,7 @@ public class Deadline extends Task{
     public LocalDateTime dueDateTime;
     protected String shortName = "D";
 
+
     public Deadline(String n) throws DukeValidationException {
         super(n);
         String[] f = CommonHelper.formatPassedName(n, "by");
@@ -53,6 +54,14 @@ public class Deadline extends Task{
         return String.format("%d | %s | %d | %s | %s", this.id, this.shortName, CommonHelper.boolToInt(this.isDone), this.name, this.dueDateTime);
     }
 
+    @Override
+    public boolean compare(LocalDate start, LocalDate end) {
+        LocalDate _dueDateTime = this.dueDateTime.toLocalDate();
+        if(end == null)
+            return _dueDateTime.isEqual(start);
+        return (_dueDateTime.isAfter(start) || _dueDateTime.isEqual(start)) && (_dueDateTime.isBefore(end) || _dueDateTime.isEqual(end));
+    }
+
     private void validate(String[] f) throws DukeValidationException{
         if(CommonHelper.isEmptyOrNull(f[0]))
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Description"));
@@ -60,4 +69,7 @@ public class Deadline extends Task{
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Due Date Time"));
     }
 
+    public LocalDateTime getDueDateTime(){
+        return this.dueDateTime;
+    }
 }

@@ -75,6 +75,9 @@ public class Ui {
                     case DELETE:
                         controller.delete(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()));
                         break;
+                    case FILTER:
+                        controller.filter(inp.replace("filter","").trim());
+                        break;
                     case HI:
                     case HELLO:
                         controller.hello();

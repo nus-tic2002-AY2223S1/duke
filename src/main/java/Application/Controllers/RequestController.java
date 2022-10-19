@@ -49,6 +49,10 @@ public class RequestController {
         deleteTaskCommandHandler(input);
     }
 
+    public void filter(String date) throws DukeValidationException {
+        filterTaskByDatesCommandHandler(date);
+    }
+
     public void hello(){
         CommonHelper.printMessage(MessageConstants.WELCOME);
     }
@@ -80,6 +84,11 @@ public class RequestController {
 
     private void deleteTaskCommandHandler(int id) throws DukeValidationException, DukeNotFoundException, DukeFileException {
         DeleteTaskCommand command = new DeleteTaskCommand(tracker, storage, id);
+        command.execute();
+    }
+    
+    private void filterTaskByDatesCommandHandler(String date) throws DukeValidationException {
+        FilterTaskByDatesCommand command = new FilterTaskByDatesCommand(tracker, storage, date);
         command.execute();
     }
 }

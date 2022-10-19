@@ -6,7 +6,10 @@ import Domain.Exceptions.*;
 import Domain.Repositories.ITaskRepository;
 import Domain.Repositories.TaskRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Tracker {
     public ArrayList<Task> tasks;
@@ -17,9 +20,9 @@ public class Tracker {
         this.tasks = _taskRepository.convertToTaskList();
     }
 
-    private void printList(){
-        for(int i = 0; i < tasks.size(); i++){
-            tasks.get(i).printItem();
+    private void printList(ArrayList<Task> t){
+        for(int i = 0; i < t.size(); i++){
+            t.get(i).printItem();
         }
     }
 
@@ -31,7 +34,7 @@ public class Tracker {
     public void showList(){
         if(tasks.size() > 0) {
             CommonHelper.printMessage(MessageConstants.LIST_TASK);
-            printList();
+            printList(tasks);
         } else {
             CommonHelper.printMessage(MessageConstants.NO_TASK);
         }
@@ -78,5 +81,15 @@ public class Tracker {
             }
         }
         return false;
+    }
+
+    public void filterByDates(LocalDate start, LocalDate end){
+        ArrayList<Task> filtered = this.tasks.stream().filter(x -> x.compare(start, end)).collect(Collectors.toCollection(ArrayList<Task>::new));
+        if(filtered.size() > 0) {
+            CommonHelper.printMessage(String.format(MessageConstants.FILTER_RESULTS_FOUND, filtered.size()));
+            printList(filtered);
+        }
+        else
+            CommonHelper.printMessage(MessageConstants.NO_RESULTS_FOUND);
     }
 }
