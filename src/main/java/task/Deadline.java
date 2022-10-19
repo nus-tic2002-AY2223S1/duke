@@ -1,7 +1,7 @@
 package task;
 
 
-import function.Method.*;
+import static utility.Method.DateTime;
 
 
 /**
@@ -22,7 +22,7 @@ public class Deadline extends Task {
 
 
       public String toString()  {
-          return "[D]" + super.toString() + " (by: " + DateAndTime(by) + ")";
+          return "[D]" + super.toString() + " (by: " + DateTime(by) + ")";
       }
 
 }

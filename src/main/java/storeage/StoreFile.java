@@ -1,7 +1,7 @@
-package file;
+package storeage;
 
-import java.io.*;
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
 
 /**
  * First time shows 'File is not exist'

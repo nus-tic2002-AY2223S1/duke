@@ -1,4 +1,4 @@
-package function;
+package utility;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -7,6 +7,7 @@ import java.time.format.DateTimeParseException;
 
 
 public class Method {
+
         public static boolean isNumeric(String str) {
             try {
                 String strNum=str;
@@ -36,19 +37,10 @@ public class Method {
         }
 
 
-        public static boolean isDate(String inputDate) {
-            String[] date = inputDate.split("/");
-            if (date.length == 3 || isNumeric(date[0]) || isNumeric(date[1]) || isNumeric(date[2])) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
 
         public static class dateFormat {
             /**
-             * 'converToValidDate' is convert not correct inputdate format to correct Date format
+             * 'converToValidDate' is convert not correct inputdate format to valid Date format
              * so that DateFormat can understand it.
              * For example: when user enter date as ' 2/12/2019 1800' ,need convert the format to '2019/02/12T1800'
              */
@@ -56,8 +48,7 @@ public class Method {
                 String input = InputDate;
                 if (InputDate.contains(" ")) {
                     String[] stringDate = InputDate.split(" ");
-                    String strDate = stringDate[0];
-                    input = strDate;
+                    input = stringDate[0];
                 }
                 String[] date = input.split("/");
 
@@ -112,8 +103,8 @@ public class Method {
 
 
 
-          public String convertToDate(String inputDate) throws DateTimeParseException {
-                    String strDate = dateFormat.convertToValidDate(inputDate);
+          public static String convertToDate(String inputDate) throws DateTimeParseException {
+              String strDate = dateFormat.convertToValidDate(inputDate);
                     strDate = strDate.replaceAll("/","-");
                     LocalDate date = LocalDate.parse(strDate);
                     DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM dd yyyy");
@@ -122,7 +113,12 @@ public class Method {
                  }
 
 
-           public  String convertToTime( String inputDate) throws DateTimeParseException {
+
+
+                    /**
+                    * convert to Time format when user input month,day,year,timing
+                    */
+           public static String convertToTime(String inputDate) throws DateTimeParseException {
               String str = dateFormat.convertToValidDate(inputDate);
               String  strDate = str.replaceAll("/", "-");
               for(char c: strDate.toCharArray()){
@@ -139,7 +135,12 @@ public class Method {
 
 
 
-          public String DateAndTime(String inputDate){
+
+    /**
+     * use if else condition check whether user input Date format or Time format
+     * return corresponding format to function call
+     */
+          public static String DateTime(String inputDate){
            String date=inputDate;
             try {
                if (isNumeric(inputDate)) {

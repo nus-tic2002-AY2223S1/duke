@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.*;
 
-import file.StoreFile;
+import storeage.StoreFile;
 import task.Events;
 import task.Task;
 import task.Deadline;
 import task.Todo;
 import exception.DukeException;
-import function.Method.*;
+import static utility.Method.isNumeric;
 
 public class Duke {
 
@@ -157,6 +157,9 @@ public class Duke {
                 save(listItems);
                 return true;
             default:
+
+                //need modify below to consider all cases,for example: if user input 'aaa'
+                // what if user input meaningful word like "read book" ?
                 if(userInput[0].equals(("blah"))){
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
