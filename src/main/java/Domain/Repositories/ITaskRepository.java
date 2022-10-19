@@ -1,10 +1,7 @@
 package Domain.Repositories;
 
 import Domain.Aggregates.Tracker.Task;
-import Domain.Exceptions.DukeExistedException;
-import Domain.Exceptions.DukeFileException;
-import Domain.Exceptions.DukeNotFoundException;
-import Domain.Exceptions.DukeValidationException;
+import Domain.Exceptions.*;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -16,5 +13,5 @@ public interface ITaskRepository {
     public Task validateTask(ArrayList<Task> tasks, int n) throws DukeNotFoundException, DukeValidationException;
     public void validateTask(ArrayList<Task> tasks, Task task) throws DukeExistedException;
 
-    public ArrayList<Task> convertToTaskList() throws DukeFileException;
+    public ArrayList<Task> convertToTaskList() throws DukeFileException, DukeArgumentException;
 }

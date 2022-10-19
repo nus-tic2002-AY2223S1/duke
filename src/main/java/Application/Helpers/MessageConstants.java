@@ -15,6 +15,7 @@ public final class MessageConstants {
     public static final String TASK_NOT_FOUND_ERROR = "\tOops! I could not find this task.";
     public static final String TASK_EXISTED_ERROR = "Oops! There is already an existing task.";
     public static final String TASK_VALIDATION_EMPTY_ERROR = "Oops! %s cannot be empty.";
+    public static final String TASK_VALIDATION_FORMAT_ERROR = "Oops! Incorrect date format passed. Valid formats: %s";
     public static final String TASK_VALIDATION_SIZE_ERROR = "Oops! Specified id is out of range.";
     public static final String TASK_ARGUMENT_ERROR = "Oops! That doesn't seem right. What do you mean?";
     public static final String TASK_GET_ERROR = "\tOops! There seems to be an issue retrieving previous task(s).";

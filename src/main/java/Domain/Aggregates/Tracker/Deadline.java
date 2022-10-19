@@ -4,8 +4,15 @@ import Application.Helpers.CommonHelper;
 import Application.Helpers.MessageConstants;
 import Domain.Exceptions.DukeValidationException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 public class Deadline extends Task{
-    public String dueDateTime;
+    public LocalDateTime dueDateTime;
     protected String shortName = "D";
 
     public Deadline(String n) throws DukeValidationException {
@@ -13,17 +20,23 @@ public class Deadline extends Task{
         String[] f = CommonHelper.formatPassedName(n, "by");
         validate(f);
         this.name = f[0].trim();
-        this.dueDateTime = f[1].trim();
+        if(f[1].trim().split(" ").length > 1)
+            this.dueDateTime = CommonHelper.convertStringToDateTime(f[1].trim());
+        else
+            this.dueDateTime = CommonHelper.convertStringToDate(f[1].trim());
     }
 
     public Deadline(int id, String name, String dueDateTime, boolean isDone) {
         super(id, name, isDone);
-        this.dueDateTime = dueDateTime;
+        this.dueDateTime = LocalDateTime.parse(dueDateTime);
     }
 
     @Override
     public void printItem(){
-        String displayText = String.format("\t\t%d.[%s][%s] %s (by: %s)", this.id, this.shortName, this.isDone ? "X":" ", this.name, this.dueDateTime);
+        String format = "[dd MMMM yyyy, hh:mm a]";
+        if(this.dueDateTime.format(DateTimeFormatter.ofPattern("HH:mm")).equals("00:00"))
+            format = "[dd MMMM yyyy]";
+        String displayText = String.format("\t\t%d.[%s][%s] %s (by: %s)", this.id, this.shortName, this.isDone ? "X":" ", this.name, this.dueDateTime.format(DateTimeFormatter.ofPattern(format)));
         CommonHelper.printMessage(displayText);
     }
 
@@ -47,10 +60,4 @@ public class Deadline extends Task{
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Due Date Time"));
     }
 
-    public String getDueDateTime(){
-        return this.dueDateTime;
-    }
-    public void setDueDateTime(String t){
-        this.dueDateTime = t;
-    }
 }

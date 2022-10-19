@@ -1,7 +1,12 @@
 package Application.Helpers;
 
+import Domain.Exceptions.DukeArgumentException;
 import Domain.Exceptions.DukeValidationException;
 
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public class CommonHelper {
@@ -38,5 +43,25 @@ public class CommonHelper {
 
     public static int boolToInt(boolean b) {
         return Boolean.compare(b, false);
+    }
+
+    public static LocalDateTime convertStringToDateTime(String date) throws DukeValidationException {
+        String formats = "[yyyy-MM-dd HH:mm][yyyy-MM-dd h:mm a][MMM dd yyyy HH:mm][MMM dd yyyy h:mm a]";
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formats);
+            return LocalDateTime.parse(date, formatter);
+        } catch (Exception ex){
+            throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_FORMAT_ERROR, formats));
+        }
+    }
+
+    public static LocalDateTime convertStringToDate(String date) throws DukeValidationException {
+        String formats = "[yyyy-MM-dd][MMM dd yyyy]";
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formats);
+            return LocalDate.parse(date, formatter).atStartOfDay();
+        } catch (Exception ex){
+            throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_FORMAT_ERROR, formats));
+        }
     }
 }
