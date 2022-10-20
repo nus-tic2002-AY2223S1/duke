@@ -11,7 +11,7 @@ public abstract class Task implements Serializable {
     protected boolean isDone;
 
     public Task(String description) throws InvalidInputException {
-        if (description.isEmpty()) {
+        if (description == null || description.isEmpty()) {
             throw new InvalidInputException(InputExceptionType.EMPTY_DESCRIPTION);
         }
         this.description = description;
@@ -32,7 +32,7 @@ public abstract class Task implements Serializable {
         isDone = true;
     }
     public void markAsnotDone() {
-        this.isDone = false;
+        isDone = false;
     }
     public String toString() {
         return String.format("[%s][%s] %s", getTypeIcon(), getStatusIcon(), getDescription());
