@@ -1,17 +1,26 @@
 package duke;
 
 import java.util.Scanner;
-import java.util.Vector;
 import java.util.Arrays;
 import duke.exception.InvalidInputException;
 import duke.exception.InvalidInputException.InputExceptionType;
-import duke.task.Task;
 public class Duke {
     public static final String LONG_LINE = "____________________________________________________________";
-
+    public static final String SAVE_PATH = "duke.save";
     public static void main(String[] args) {
         //data add
-        Vector<Task> tasks = new Vector<>();
+        TaskList tasks = null;
+        Storage storage = new Storage(SAVE_PATH);
+        try {
+            tasks = storage.load();
+        } catch (Exception e) {
+            HelperFunction.printlnWithIndent("Got a problem when loading save file at " + SAVE_PATH + ": " + e.getMessage());
+            HelperFunction.printlnWithIndent("An empty list will be used instead!");
+        } finally {
+            if (tasks == null) {
+                tasks = new TaskList(storage);
+            }
+        }
         ActHandler.greetingHandler();
         HelperFunction.printlnWithIndent(LONG_LINE);
 

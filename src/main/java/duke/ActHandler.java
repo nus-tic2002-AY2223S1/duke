@@ -1,9 +1,11 @@
 package duke;
+
+        import java.io.IOException;
         import java.util.Arrays;
-        import java.util.Vector;
 
         import duke.exception.InvalidInputException;
         import duke.exception.InvalidInputException.InputExceptionType;
+        import duke.exception.SaveException;
         import duke.task.Deadline;
         import duke.task.Event;
         import duke.task.Task;
@@ -29,7 +31,7 @@ public class ActHandler {
     }
 
     // Print out everything in the list, index starts from 1
-    protected static void listHandler(Vector<Task> tasks) {
+    protected static void listHandler(TaskList tasks) {
         if (tasks.size() == 0) {
             HelperFunction.printlnWithIndent("You don't have a task in your list!");
             return;
@@ -40,7 +42,7 @@ public class ActHandler {
         }
     }
     // Delete a task from the list
-    protected static void deleteHandler(Vector<Task> tasks, String[] arguments) throws InvalidInputException {
+    protected static void deleteHandler(TaskList tasks, String[] arguments) throws InvalidInputException, IOException, SaveException {
         if (arguments.length < 2) {
             // An index must be provided for the task to be marked "done"
             HelperFunction.printlnWithIndent("You will need to give me an index, like this: `delete 2`.");
@@ -61,7 +63,7 @@ public class ActHandler {
         }
     }
     // Mark a task to be done with index specified in arguments[1]
-    protected static void doneHandler(Vector<Task> tasks, String[] arguments) throws InvalidInputException {
+    protected static void doneHandler(TaskList tasks, String[] arguments) throws InvalidInputException, IOException, SaveException {
         if (arguments.length < 2) {
             // An index must be provided for the task to be marked "done"
             HelperFunction.printlnWithIndent("You will need to give me an index, like this: `done 2`.");
@@ -75,7 +77,7 @@ public class ActHandler {
 
                 Task task = tasks.get(index - 1);
                 task.markAsDone();
-                tasks.set(index - 1, task);
+                tasks.setTask(index - 1, task);
 
                 HelperFunction.printlnWithIndent("Nice! I've marked this task as done:");
                 HelperFunction.printlnWithIndent("\t" + task);
@@ -84,7 +86,7 @@ public class ActHandler {
             }
         }
     }
-    protected static void notdone(Vector<Task> tasks, String[] arguments) throws InvalidInputException{
+    protected static void notdone(TaskList tasks, String[] arguments) throws InvalidInputException, IOException, SaveException{
         if (arguments.length < 2) {
             // An index must be provided for the task to be marked "done"
             HelperFunction.printlnWithIndent("You will need to give me an index, like this: `ndone 2`.");
@@ -98,7 +100,7 @@ public class ActHandler {
 
                 Task task = tasks.get(index - 1);
                 task.markAsnotDone();
-                tasks.set(index - 1, task);
+                tasks.setTask(index - 1, task);
 
                 HelperFunction.printlnWithIndent("Nice! I've unmarked this task as ndone:");
                 HelperFunction.printlnWithIndent("\t" + task);
@@ -108,12 +110,12 @@ public class ActHandler {
         }
     }
     // Create a deadline task
-    protected static void deadlineHandler(Vector<Task> tasks, String[] arguments) throws InvalidInputException {
+    protected static void deadlineHandler(TaskList tasks, String[] arguments) throws InvalidInputException, IOException, SaveException {
         int i = HelperFunction.findIndex(arguments, "/by");
         if (i != -1 && i + 1 != arguments.length) {
             String description = String.join(" ", Arrays.copyOfRange(arguments, 1, i));
             String by = String.join(" ", Arrays.copyOfRange(arguments, i + 1, arguments.length));
-            tasks.add(new Deadline(description, by));
+            tasks.addTask(new Deadline(description, by));
             HelperFunction.printNewTask(tasks);
         } else {
             // Either /by is not found at all, or no dates are following /by
@@ -122,12 +124,12 @@ public class ActHandler {
     }
 
     // Create an event task
-    protected static void eventHandler(Vector<Task> tasks, String[] arguments) throws InvalidInputException {
+    protected static void eventHandler(TaskList tasks, String[] arguments) throws InvalidInputException, IOException, SaveException {
         int i = HelperFunction.findIndex(arguments, "/at");
         if (i != -1 && i + 1 != arguments.length) {
             String description = String.join(" ", Arrays.copyOfRange(arguments, 1, i));
             String at = String.join(" ", Arrays.copyOfRange(arguments, i + 1, arguments.length));
-            tasks.add(new Event(description, at));
+            tasks.addTask(new Event(description, at));
             HelperFunction.printNewTask(tasks);
         } else {
             // Either /at is not found at all, or no dates are following /at
@@ -136,9 +138,9 @@ public class ActHandler {
     }
 
     // Create a todo task
-    protected static void todoHandler(Vector<Task> tasks, String[] arguments) throws InvalidInputException {
+    protected static void todoHandler(TaskList tasks, String[] arguments) throws InvalidInputException, IOException, SaveException {
         String description = String.join(" ", Arrays.copyOfRange(arguments, 1, arguments.length));
-        tasks.add(new ToDo(description));
+        tasks.addTask(new ToDo(description));
         HelperFunction.printNewTask(tasks);
     }
 }

@@ -1,8 +1,11 @@
 
 package duke.task;
+
+import java.io.Serializable;
 import duke.exception.InvalidInputException;
 import duke.exception.InvalidInputException.InputExceptionType;
-public class Task {
+@SuppressWarnings("serial")
+public abstract class Task implements Serializable {
     protected String typeIcon = "*";
     protected String description;
     protected boolean isDone;

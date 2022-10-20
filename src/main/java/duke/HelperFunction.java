@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import duke.task.Task;
 
+
 public class HelperFunction {
     // Print a line with 1 tab as indentation
     protected static void printlnWithIndent(String line) {
