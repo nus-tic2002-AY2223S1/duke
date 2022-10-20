@@ -185,14 +185,21 @@ public class TaskList {
         }
     }
 
-    public void findTasks(String fullcommand){
-        String key = fullcommand.substring(1);
+    public void findTasks(String input){
+        String[] words = input.split(" ");
+        String key = "";
+        int noOfFind = 1;
+
+        for(int i = 1; i < words.length; i++){
+            key = key + words[i] + " ";
+        }
 
         for(int i = 0; i < task_count; ++i){
-            if(key.equals(myTaskList[i].description)){ //if line contain the keyword continue else print
-                continue;
+            if(myTaskList[i].description.contains(key.trim())){ //if line contain the keyword print else continue
+                System.out.println(noOfFind + ". " + myTaskList[i].toString());
+                ++noOfFind;
             }
-            System.out.println((i+1) + ". " + myTaskList[i].toString());
+            continue;
         }
     }
 }
