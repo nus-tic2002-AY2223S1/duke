@@ -1,31 +1,47 @@
 package Tasks;
 
+import java.util.Date;
+
 public class Task {
     private boolean isDone;
     private String work;
+    private long id;
 
-    public Task(boolean isDone, String work) {
+    protected Task(boolean isDone, String work) {
+        Date date = new Date();
         this.isDone = isDone;
         this.work = work;
+        id = date.getTime();
     }
 
-    public Task(String work) {
+    protected Task(boolean isDone, String work, long id) {
+        this.isDone = isDone;
+        this.work = work;
+        this.id = id;
+    }
+
+    protected Task(String work) {
         this(false, work);
     }
 
-    public void markTask(boolean mark) {
+    protected void markTask(boolean mark) {
         isDone = mark;
     }
 
-    public boolean isDone() {
+    protected String getWork() {
+        return work;
+    }
+
+    protected boolean isDone() {
         return isDone;
     }
+
+    protected long getId() { return id; }
     @Override
     public String toString() {
         String value = isDone ? "[X]" : "[ ]";
         value += work;
         return value;
     }
-
 }
 
