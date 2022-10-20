@@ -103,6 +103,7 @@ public class TaskList {
         String data = myTaskList[task_count].myTaskType + " | " +
                         myTaskList[task_count].isDone + " | " +
                         myTaskList[task_count].description;
+                         // + " | " + date; // to update for event and deadline
 
         //write to file
         try{
@@ -180,6 +181,17 @@ public class TaskList {
 
     public void listTasks(){
         for(int i = 0; i < task_count; ++i){
+            System.out.println((i+1) + ". " + myTaskList[i].toString());
+        }
+    }
+
+    public void findTasks(String fullcommand){
+        String key = fullcommand.substring(1);
+
+        for(int i = 0; i < task_count; ++i){
+            if(key.equals(myTaskList[i].description)){ //if line contain the keyword continue else print
+                continue;
+            }
             System.out.println((i+1) + ". " + myTaskList[i].toString());
         }
     }
