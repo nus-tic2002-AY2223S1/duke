@@ -1,4 +1,4 @@
-import Tasks.Task;
+import Common.TaskType;
 import Tasks.UnsupportedTaskType;
 
 public class Bot {
@@ -24,7 +24,7 @@ public class Bot {
             String firstWord = text.substring(0, text.indexOf(' '));
             String theRest = text.substring(text.indexOf(" "));
             seperator();
-            taskManager.addNewTask(TaskManager.TaskType.getType(firstWord), theRest);
+            taskManager.addNewTask(TaskType.getType(firstWord), theRest);
             int size = taskManager.getList().size();
             System.out.println(appendTab("Got it. I've added this task:"));
             System.out.println(appendTab(taskManager.getString()));
