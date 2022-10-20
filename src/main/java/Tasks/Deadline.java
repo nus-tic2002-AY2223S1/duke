@@ -6,6 +6,12 @@ public class Deadline extends Task implements TaskInterface {
         super(work);
     }
 
+    public Deadline(boolean isDone, String work, long id) {
+        super(isDone, work, id);
+    }
+
+    public Deadline(boolean isDone, String work) { super(isDone, work); }
+
     @Override
     public String getString() {
         return "[D]" + super.toString();
@@ -19,5 +25,15 @@ public class Deadline extends Task implements TaskInterface {
     @Override
     public void markTask(boolean mark){
         super.markTask(mark);
+    }
+
+    @Override
+    public String getWork() {
+        return super.getWork();
+    }
+
+    @Override
+    public long getID() {
+        return super.getId();
     }
 }

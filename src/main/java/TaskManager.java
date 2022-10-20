@@ -1,3 +1,4 @@
+import Common.TaskType;
 import Tasks.*;
 import Tasks.TaskInterface;
 
@@ -45,6 +46,16 @@ public class TaskManager implements TaskInterface {
         tasks.get(0).markTask(mark);
     }
 
+    @Override
+    public String getWork() {
+        return tasks.get(0).getWork();
+    }
+
+    @Override
+    public long getID() {
+        return tasks.get(0).getID();
+    }
+
     public boolean markTask(int index, boolean mark) {
         if(tasks.get(index).isDone() == mark) {
             return false;
@@ -64,20 +75,6 @@ public class TaskManager implements TaskInterface {
         return task.getString();
     }
 
-    public enum TaskType {
-        DEADLINE, EVENT, TODO;
 
-        public static TaskType getType(String type) throws UnsupportedTaskType {
-            if(type.equalsIgnoreCase("deadline")) {
-                return DEADLINE;
-            } else if (type.equalsIgnoreCase("event")) {
-                return EVENT;
-            } else if (type.equalsIgnoreCase("todo")) {
-                return TODO;
-            } else {
-                throw new UnsupportedTaskType();
-            }
-        }
-    }
 }
 
