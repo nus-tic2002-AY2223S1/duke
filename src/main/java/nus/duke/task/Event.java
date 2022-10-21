@@ -5,7 +5,7 @@ public class Event extends Task {
 
     public Event(String userInput) {
         super(userInput);
-        this.at = formatDateTime(userInput);
+        this.at = userInput; //formatDateTime(userInput);
     }
 
     @Override

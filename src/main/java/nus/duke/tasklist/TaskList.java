@@ -80,11 +80,11 @@ public class TaskList {
             return true;
         }
 
-        if ((userInput.equals(LegalCommandEnumerations.VIEW.toString())) && ((this.getTotalTasks()) == 0)){
+        if ((command.equals(LegalCommandEnumerations.VIEW.toString())) && ((this.getTotalTasks()) == 0)){
             System.out.println("There are 0 tasks in your list.");
             return false;
         }
-        if ((userInput.equals(LegalCommandEnumerations.VIEW.toString())) && ((this.getTotalTasks()) > 0)){
+        if ((command.equals(LegalCommandEnumerations.VIEW.toString())) && ((this.getTotalTasks()) > 0)){
             this.viewTasks();
             return false;
         }

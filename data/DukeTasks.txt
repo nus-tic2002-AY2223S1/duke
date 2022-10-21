@@ -1,2 +1,0 @@
-TODO buy lunch[false]
-DEADLINE code assignment /by tmr[false]

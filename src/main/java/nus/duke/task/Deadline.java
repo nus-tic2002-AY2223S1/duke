@@ -5,7 +5,7 @@ public class Deadline extends Task {
 
     public Deadline(String userInput) {
         super(userInput);
-        this.by = formatDateTime(userInput);
+        this.by = userInput; //useInput; //formatDateTime(userInput);
     }
     @Override
     public String getTaskType(){
