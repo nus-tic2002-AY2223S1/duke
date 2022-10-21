@@ -6,6 +6,6 @@ public class CommandArgsException extends DukeException {
 
     public CommandArgsException(String message) {
         super(message);
-        setCode(Constant.ErrorCode.ILLEGAL_ARGUMENTS);
+        setCode(Constant.ResponseCode.ERROR_ILLEGAL_ARGUMENTS);
     }
 }

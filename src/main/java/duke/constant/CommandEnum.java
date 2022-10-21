@@ -9,26 +9,29 @@ import java.util.Objects;
  */
 public enum CommandEnum {
 
-    UNKNOWN("unknown", "-"),
-    SHOW_COMMAND("show_command", "display current supported command in the program, syntax: `show_command`"),
-    LIST("list", "display task list, syntax: `list`"),
-    MARK_TASK("mark", "mark task as done by given index, syntax: `mark index`"),
-    UNMARK_TASK("unmark", "mark task as undone by given index, syntax: `unmark index`"),
-    DELETE_TASK("delete", "delete task from list, syntax: `delete index`"),
-    TODO("todo", "create a todo task, syntax: `todo description`"),
-    FIND_TASK("find", "search the task by given keyword, syntax: `find keyword`"),
-    DEADLINE("deadline", "create a deadline task, syntax: `deadline description / by deadlineTime(yyyy-MM-dd HH:mm)`"),
-    RESCHEDULE("reschedule", "reschedule the task by given index, syntax: `reschedule index`"),
-    EVENT("event", "create a event task, syntax: `event description / at startTime(yyyy-MM-dd HH:mm) & endTime(yyyy-MM-dd HH:mm)`"),
-    EXIT("bye", "exit program, syntax: `bye`");
+    UNKNOWN("unknown", "undefined command", "-"),
+    SHOW_COMMAND("show_command", "display current supported command in the program", "show_command"),
+    LIST("list", "display task list", "list"),
+    MARK_TASK("mark", "mark task as done by given index", "mark <index>"),
+    UNMARK_TASK("unmark", "mark task as undone by given index", "unmark <index>"),
+    DELETE_TASK("delete", "delete task from list, syntax", "delete <index>"),
+    TODO("todo", "create a todo task", "todo <description>"),
+    FIND_TASK("find", "search the task by given keyword", "find <keyword>"),
+    DEADLINE("deadline", "create a deadline task", "deadline <description> / by <deadlineTime(yyyy-MM-dd HH:mm)>"),
+    RESCHEDULE("reschedule", "reschedule the task by given index", "reschedule <index>"),
+    EVENT("event", "create a event task", "event <description> / at <startTime(yyyy-MM-dd HH:mm) & endTime(yyyy-MM-dd HH:mm)>"),
+    EXIT("bye", "exit program", "bye");
 
     private final String name;
 
     private final String description;
 
-    CommandEnum(String name, String description) {
+    private final String syntax;
+
+    CommandEnum(String name, String description, String syntax) {
         this.name = name;
         this.description = description;
+        this.syntax = syntax;
     }
 
     public String getName() {
@@ -37,6 +40,10 @@ public enum CommandEnum {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getSyntax() {
+        return syntax;
     }
 
     public static CommandEnum getCommandByName(String name) {

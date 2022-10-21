@@ -1,5 +1,6 @@
 package duke.service.command;
 
+import duke.dto.ResponseDto;
 import duke.entity.Task;
 import duke.form.Form;
 import duke.pool.AsyncExecutor;
@@ -27,11 +28,11 @@ public class AddTaskCommand extends Command {
      * @param form: parsed input form from user
      */
     @Override
-    public void execute(Form form) {
+    public ResponseDto<Void> execute(Form form) {
         Task task = new Task(form.getMetaData());
         taskManager.addTask(task);
-        System.out.println("Process to add a new task ...");
-        System.out.printf("Task [%s] is added!%n", form.getMetaData());
         AsyncExecutor.execute(() -> taskManager.persistTask());
+        String message = String.format("Task [%s] is added!", form.getMetaData());
+        return new ResponseDto<>(form.getCommand(), message);
     }
 }

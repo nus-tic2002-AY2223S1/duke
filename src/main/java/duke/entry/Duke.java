@@ -1,6 +1,7 @@
 package duke.entry;
 
 import duke.constant.Constant;
+import duke.dto.ResponseDto;
 import duke.exception.DukeException;
 import duke.form.Form;
 import duke.service.CommandManager;
@@ -45,19 +46,19 @@ public class Duke {
 
         // display greeting
         UI ui = new ConsoleUI();
-        ui.displayGreeting();
+        ui.renderGreetingMessage();
 
         // start program
         while (Constant.IS_RUNNING) {
             try {
                 Form form = ParserManager.parseForm(ui.getDukeCommandInput());
                 Command command = CommandManager.getCommand(form.getCommand());
-                command.execute(form);
-                ui.displayLineBreak();
+                ResponseDto<?> responseDto = command.execute(form);
+                ui.renderResponse(responseDto);
             } catch (DukeException dukeException) {
-                ui.displayDukeErrorMsg(dukeException.getMessage());
+                ui.renderDukeErrorMsg(dukeException.getMessage());
             } catch (Exception exception) {
-                ui.displayUnknownErrorMsg(exception);
+                ui.renderUnknownErrorMsg(exception);
             }
         }
     }

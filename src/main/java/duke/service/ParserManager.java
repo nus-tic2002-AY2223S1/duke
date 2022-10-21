@@ -120,7 +120,7 @@ public class ParserManager {
         public Form parseForm(String input) {
             String[] args = input.split(" ");
             if (args.length != 2) {
-                throw new CommandArgsException("[mark] command has invalid arguments, it should be in `mark index` format");
+                throw new CommandArgsException("[mark] command has invalid arguments, it should be in `mark <index>` format");
             }
 
             // check index
@@ -139,7 +139,7 @@ public class ParserManager {
         public Form parseForm(String input) {
             String[] args = input.split(" ");
             if (args.length != 2) {
-                throw new CommandArgsException("[unmark] command has invalid arguments, it should be in `unmark index` format");
+                throw new CommandArgsException("[unmark] command has invalid arguments, it should be in `unmark <index>` format");
             }
 
             // check index
@@ -158,7 +158,7 @@ public class ParserManager {
         public Form parseForm(String input) {
             String[] args = input.split(" ");
             if (args.length != 2) {
-                throw new CommandArgsException("[delete] command has invalid arguments, it should be in `delete index` format");
+                throw new CommandArgsException("[delete] command has invalid arguments, it should be in `delete <index>` format");
             }
 
             // check index
@@ -179,7 +179,7 @@ public class ParserManager {
         public Form parseForm(String input) {
             Matcher matcher = findClausePattern.matcher(input);
             if (!matcher.find()) {
-                throw new CommandArgsException("[find] command has invalid arguments, it should be in `find keyword` format");
+                throw new CommandArgsException("[find] command has invalid arguments, it should be in `find <keyword>` format");
             }
 
             String keyword = StringUtil.trim(matcher.group(1));
@@ -193,7 +193,7 @@ public class ParserManager {
         public Form parseForm(String input) {
             String[] args = input.split(" ");
             if (args.length != 2) {
-                throw new CommandArgsException("[reschedule] command has invalid arguments, it should be in `reschedule index` format");
+                throw new CommandArgsException("[reschedule] command has invalid arguments, it should be in `reschedule <index>` format");
             }
 
             // check index
@@ -214,7 +214,7 @@ public class ParserManager {
         public Form parseForm(String input) {
             Matcher matcher = todoClausePattern.matcher(input);
             if (!matcher.find()) {
-                throw new CommandArgsException("[todo] command has invalid arguments, it should be in `todo description` format");
+                throw new CommandArgsException("[todo] command has invalid arguments, it should be in `todo <description>` format");
             }
 
             String description = StringUtil.trim(matcher.group(1));
@@ -224,13 +224,13 @@ public class ParserManager {
 
     private static class DeadlineCommandParser implements Parser {
 
-        private static final Pattern deadlineClausePattern = Pattern.compile("deadline ([\\s\\w]*)/\\s*by (.*)");
+        private static final Pattern deadlineClausePattern = Pattern.compile("deadline ([\\s\\w\\W]*)/\\s*by (.*)");
 
         @Override
         public Form parseForm(String input) {
             Matcher matcher = deadlineClausePattern.matcher(input);
             if (!matcher.find()) {
-                throw new CommandArgsException("[deadline] command has invalid arguments, it should be in `deadline description / by deadlineTime(yyyy-MM-dd HH:mm)` format");
+                throw new CommandArgsException("[deadline] command has invalid arguments, it should be in `deadline <description> / by <deadlineTime(yyyy-MM-dd HH:mm)>` format");
             }
 
             String description = StringUtil.trim(matcher.group(1));
@@ -243,13 +243,13 @@ public class ParserManager {
 
     private static class EventCommandParser implements Parser {
 
-        private static final Pattern eventClausePattern = Pattern.compile("event ([\\s\\w]*)/\\s*at (.*)");
+        private static final Pattern eventClausePattern = Pattern.compile("event ([\\s\\w\\W]*)/\\s*at (.*)");
 
         @Override
         public Form parseForm(String input) {
             Matcher matcher = eventClausePattern.matcher(input);
             if (!matcher.find()) {
-                throw new CommandArgsException("[event] command has invalid arguments, it should be in `event description / at startTime(yyyy-MM-dd HH:mm) & endTime(yyyy-MM-dd HH:mm)` format");
+                throw new CommandArgsException("[event] command has invalid arguments, it should be in `event <description> / at <startTime(yyyy-MM-dd HH:mm) & endTime(yyyy-MM-dd HH:mm)>` format");
             }
 
             String description = StringUtil.trim(matcher.group(1));

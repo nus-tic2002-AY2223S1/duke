@@ -1,5 +1,6 @@
 package duke.service.command;
 
+import duke.dto.ResponseDto;
 import duke.entity.Event;
 import duke.form.EventForm;
 import duke.form.Form;
@@ -28,11 +29,12 @@ public class AddEventCommand extends Command {
      * @param form: parsed input form from user
      */
     @Override
-    public void execute(Form form) {
+    public ResponseDto<Void> execute(Form form) {
         EventForm eventForm = (EventForm) form;
         Event event = new Event(eventForm.getDescription(), eventForm.getStartTime(), eventForm.getEndTime());
         taskManager.addTask(event);
-        System.out.printf("Event [%s] is added!%n", eventForm.getDescription());
         AsyncExecutor.execute(() -> taskManager.persistTask());
+        String message = String.format("Event [%s] is added!", eventForm.getDescription());
+        return new ResponseDto<>(form.getCommand(), message);
     }
 }

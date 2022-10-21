@@ -67,18 +67,20 @@ public class Constant {
     }
 
     /**
-     * @description storing error code constant
+     * @description storing code constant
      * @author Dex
      * @date 2022/08/31
      */
-    public static class ErrorCode {
+    public static class ResponseCode {
 
-        private ErrorCode() {}
+        private ResponseCode() {}
 
-        public static final int COMMAND_NOT_FOUND = 600;
-
-        public static final int ILLEGAL_ARGUMENTS = 601;
-
-        public static final int SERVICE_EXCEPTION = 500;
+        public static final int SUCCESS = 200;
+        public static final int ERROR_COMMAND_NOT_FOUND = 600;
+        public static final int ERROR_ILLEGAL_ARGUMENTS = 601;
+        public static final int ERROR_EMPTY_TASK_LIST = 602;
+        public static final int ERROR_INVALID_RESCHEDULE_TASK = 603;
+        public static final int ERROR_INDEX_EXCEED_MAX_TASK_SIZE = 605;
+        public static final int ERROR_SERVICE_EXCEPTION = 500;
     }
 }

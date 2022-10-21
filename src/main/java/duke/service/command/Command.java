@@ -1,5 +1,6 @@
 package duke.service.command;
 
+import duke.dto.ResponseDto;
 import duke.form.Form;
 import duke.service.TaskManager;
 
@@ -21,5 +22,5 @@ public abstract class Command {
      * @date 2022/08/31
      * @param form: parsed input form from user
      */
-    public abstract void execute(Form form);
+    public abstract ResponseDto<?> execute(Form form);
 }

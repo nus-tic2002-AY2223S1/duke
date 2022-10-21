@@ -1,7 +1,9 @@
 package duke.service.command;
 
+import duke.dto.ResponseDto;
 import duke.entity.Task;
-import duke.exception.CommandArgsException;
+import duke.exception.EmptyTaskListException;
+import duke.exception.IndexOutOfBoundsException;
 import duke.form.Form;
 import duke.form.MarkingForm;
 import duke.pool.AsyncExecutor;
@@ -29,27 +31,25 @@ public class UnmarkTaskCommand extends Command {
      * @param form: parsed input form from user
      */
     @Override
-    public void execute(Form form) {
+    public ResponseDto<Void> execute(Form form) {
         MarkingForm markingForm = (MarkingForm) form;
         int taskSize = taskManager.getTaskSize();
         if (taskSize == 0) {
-            System.out.println("empty task list! please add in some tasks first");
-            return;
+            throw new EmptyTaskListException();
         }
 
         int index = markingForm.getIndex();
         if (index > taskSize) {
-            throw new CommandArgsException("given index is invalid, it should be less than current task size");
+            throw new IndexOutOfBoundsException();
         }
 
         // decrement for accessing correct index
         index--;
         Task task = taskManager.getTaskByIndex(index);
         task.setDone(false);
-
-        // print message
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(task);
         AsyncExecutor.execute(() -> taskManager.persistTask());
+
+        String message = String.format("%s%n%s", "OK, I've marked this task as not done yet:", task);
+        return new ResponseDto<>(form.getCommand(), message);
     }
 }

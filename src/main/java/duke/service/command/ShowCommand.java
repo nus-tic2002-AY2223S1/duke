@@ -1,10 +1,15 @@
 package duke.service.command;
 
 import duke.constant.CommandEnum;
+import duke.dto.CommandTableDto;
+import duke.dto.ResponseDto;
 import duke.form.Form;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 
 /**
  * @description singleton class
@@ -22,7 +27,6 @@ public class ShowCommand extends Command {
         return command;
     }
 
-
     /**
      * @description list all supported commands in the program
      * @author Dex
@@ -30,13 +34,14 @@ public class ShowCommand extends Command {
      * @param form: parsed input form from user
      */
     @Override
-    public void execute(Form form) {
-        System.out.println("supported commands as follow:");
-        Arrays.stream(CommandEnum.values())
-                .filter(o -> !Objects.equals("unknown", o.getName()))
-                .forEach(o -> {
-                    String message = String.format("%s - %s",o.getName(), o.getDescription());
-                    System.out.println(message);
-                });
+    public ResponseDto<CommandTableDto> execute(Form form) {
+        CommandTableDto commandTableDto = new CommandTableDto();
+        List<List<String>> rows = Arrays.stream(CommandEnum.values())
+                .filter(o -> !Objects.equals(o, CommandEnum.UNKNOWN))
+                .map(o -> List.of(o.getName(), o.getDescription(), o.getSyntax()))
+                .collect(Collectors.toList());
+        commandTableDto.setHeaders(List.of("name", "description", "syntax"));
+        commandTableDto.setRows(rows);
+        return new ResponseDto<>(form.getCommand(), commandTableDto);
     }
 }

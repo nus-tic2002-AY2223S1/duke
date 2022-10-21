@@ -1,5 +1,6 @@
 package duke.service.command;
 
+import duke.dto.ResponseDto;
 import duke.form.Form;
 
 /**
@@ -25,7 +26,9 @@ public class EchoCommand extends Command {
      * @param form: parsed input form from user
      */
     @Override
-    public void execute(Form form) {
-        System.out.println("echoing: " + form.getMetaData());
+    public ResponseDto<String> execute(Form form) {
+        ResponseDto<String> dto = new ResponseDto<>(form.getCommand());
+        dto.setData(form.getMetaData());
+        return dto;
     }
 }

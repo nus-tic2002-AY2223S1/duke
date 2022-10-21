@@ -1,13 +1,16 @@
 package duke.service.command;
 
 import duke.constant.Constant;
+import duke.dto.ResponseDto;
 import duke.entity.Event;
 import duke.entity.Task;
+import duke.exception.EmptyTaskListException;
+import duke.exception.IndexOutOfBoundsException;
+import duke.exception.InvalidRescheduleTaskException;
 import duke.form.Form;
 import duke.form.RescheduleForm;
 import duke.util.InputUtil;
 import duke.entity.Deadline;
-import duke.exception.CommandArgsException;
 import duke.pool.AsyncExecutor;
 import duke.util.DateUtil;
 
@@ -37,17 +40,16 @@ public class RescheduleTaskCommand extends Command {
      * @param form: parsed input form from user
      */
     @Override
-    public void execute(Form form) {
+    public ResponseDto<Void> execute(Form form) {
         RescheduleForm rescheduleForm = (RescheduleForm) form;
         int taskSize = taskManager.getTaskSize();
         if (taskSize == 0) {
-            System.out.println("empty task list! please add in some tasks first");
-            return;
+            throw new EmptyTaskListException();
         }
 
         int index = rescheduleForm.getIndex();
         if (index > taskSize) {
-            throw new CommandArgsException("given index is invalid, it should be less than current task size");
+            throw new IndexOutOfBoundsException();
         }
 
         // decrement for accessing correct index
@@ -55,8 +57,7 @@ public class RescheduleTaskCommand extends Command {
         Task task = taskManager.getTaskByIndex(index);
         if (!Objects.equals(task.getType(), Constant.Task.TYPE_EVENT)
             && !Objects.equals(task.getType(), Constant.Task.TYPE_DEADLINE)) {
-            System.out.println("selected task is not `event` or `deadline` task, cannot be rescheduled");
-            return;
+            throw new InvalidRescheduleTaskException();
         }
 
         if (Objects.equals(task.getType(), Constant.Task.TYPE_EVENT)) {
@@ -67,10 +68,10 @@ public class RescheduleTaskCommand extends Command {
             setNewScheduleForDeadline(task);
         }
 
-        // print message
-        System.out.println("OK, I've rescheduled task as follows:");
-        System.out.println(task);
         AsyncExecutor.execute(() -> taskManager.persistTask());
+
+        String message = String.format("%s%n%s", "OK, I've rescheduled task as follows:", task);
+        return new ResponseDto<>(form.getCommand(), message);
     }
 
     private void setNewScheduleForDeadline(Task task) {

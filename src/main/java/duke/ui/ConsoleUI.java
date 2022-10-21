@@ -1,27 +1,115 @@
 package duke.ui;
 
+import com.blinkfox.minitable.MiniTable;
+import duke.constant.CommandEnum;
 import duke.constant.Constant;
+import duke.dto.CommandTableDto;
+import duke.dto.ResponseDto;
+import duke.entity.Task;
+import duke.util.CollectionUtil;
 import duke.util.ExceptionUtil;
 import duke.util.InputUtil;
 import duke.util.StringUtil;
 
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ConsoleUI implements UI {
 
+    private interface RenderHandler {
+        void render(ResponseDto<?> responseDto);
+    }
+
+    private final Map<String, RenderHandler> renderHandlerMap = new HashMap<>();
+
+    /**
+     * store the maximum length, used to adjust the line break
+     */
     private int maxLineLength = 0;
+
+    /**
+     * default render handler which used to render response entity after executing command
+     */
+    RenderHandler defaultRenderHandler = responseDto -> {
+        printResponseMessage(responseDto);
+        printLineBreak();
+    };
+
+    /**
+     * render handler which used to render response entity after executing `show_command` command
+     */
+    RenderHandler showCommandRenderHandler = responseDto -> {
+        // render table data
+        CommandTableDto commandTableDto = (CommandTableDto) responseDto.getData();
+        MiniTable miniTable = new MiniTable();
+        miniTable.addHeaders(commandTableDto.getHeaders());
+        commandTableDto.getRows().forEach(miniTable::addDatas);
+        System.out.println(miniTable.render());
+    };
+
+    /**
+     * render handler which used to render response entity after executing `list` command
+     */
+    @SuppressWarnings("unchecked")
+    RenderHandler listTaskRenderHandler = responseDto -> {
+        // render task data
+        List<Task> taskList = (List<Task>) responseDto.getData();
+        int index = 1;
+        for (Task task : taskList) {
+            System.out.printf("%d. %s%n", index++, task.toString());
+        }
+
+        printResponseMessage(responseDto);
+        printLineBreak();
+    };
+
+    /**
+     * render handler which used to render response entity after executing `find` command
+     */
+    @SuppressWarnings("unchecked")
+    RenderHandler findTaskCommandHandler = responseDto -> {
+        // render task data
+        List<Task> taskList = (List<Task>) responseDto.getData();
+        if (!CollectionUtil.isEmpty(taskList)) {
+            System.out.println("Here are the matching tasks in your list:");
+            for (int i = 0; i < taskList.size(); i++) {
+                String taskInfo = String.format("%d: %s", i + 1, taskList.get(i).toString());
+                System.out.println(taskInfo);
+            }
+        }
+
+        printResponseMessage(responseDto);
+        printLineBreak();
+    };
+
+    /**
+     * render handler which used to render response entity after executing `bye` command
+     * program will terminate after render complete
+     */
+    RenderHandler existCommandHandler = responseDto -> {
+        printResponseMessage(responseDto);
+        System.exit(0);
+    };
 
     public ConsoleUI() {
         // compute the length line break
         // included bar length of 2 + last space
         this.maxLineLength = getGuidance().stream().map(String::length).max(Comparator.naturalOrder()).orElse(0) + 3;
+
+        // init render map
+        renderHandlerMap.put(CommandEnum.SHOW_COMMAND.getName(), showCommandRenderHandler);
+        renderHandlerMap.put(CommandEnum.LIST.getName(), listTaskRenderHandler);
+        renderHandlerMap.put(CommandEnum.FIND_TASK.getName(), findTaskCommandHandler);
+        renderHandlerMap.put(CommandEnum.EXIT.getName(), existCommandHandler);
     }
 
     @Override
-    public void displayGreeting() {
+    public void renderGreetingMessage() {
         // print logo
         System.out.println(Constant.STARTING_LOGO);
         System.out.println();
@@ -59,8 +147,7 @@ public class ConsoleUI implements UI {
         return Stream.generate(() -> " ").limit(length).collect(Collectors.joining());
     }
 
-    @Override
-    public void displayLineBreak() {
+    private void printLineBreak() {
         System.out.print("+");
         for (int i = 0; i < maxLineLength - 2; i++) {
             System.out.print("-");
@@ -70,24 +157,37 @@ public class ConsoleUI implements UI {
     }
 
     @Override
-    public void displayDukeErrorMsg(String errorMsg) {
+    public void renderDukeErrorMsg(String errorMsg) {
         System.out.println(":(");
         System.out.println("cannot execute command due to error raised");
         System.out.println(errorMsg);
-        displayLineBreak();
+        printLineBreak();
     }
 
     @Override
-    public void displayUnknownErrorMsg(Throwable throwable) {
+    public void renderUnknownErrorMsg(Throwable throwable) {
         System.out.println(":(");
         System.out.println("unknown error raised, please contact developer for assistance");
         // actual error message should keep internally, prevent exposure to user. (for dev purpose, do not comment out the given code)
         System.out.println(ExceptionUtil.getStackTraceAsString(throwable));
-        displayLineBreak();
+        printLineBreak();
     }
 
     public String getDukeCommandInput() {
         System.out.print("~@duke >>> ");
         return InputUtil.getInputString();
+    }
+
+    @Override
+    public void renderResponse(ResponseDto<?> responseDto) {
+        String commandName = responseDto.getCommandName();
+        RenderHandler renderHandler = renderHandlerMap.getOrDefault(commandName, defaultRenderHandler);
+        renderHandler.render(responseDto);
+    }
+
+    private void printResponseMessage(ResponseDto<?> responseDto) {
+        if (!StringUtil.isBlank(responseDto.getMessage())) {
+            System.out.println(responseDto.getMessage());
+        }
     }
 }

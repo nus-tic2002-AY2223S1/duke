@@ -1,5 +1,6 @@
 package duke.service.command;
 
+import duke.dto.ResponseDto;
 import duke.form.Form;
 
 /**
@@ -25,8 +26,7 @@ public class UndefinedCommand extends Command {
      * @param form: parsed input form from user
      */
     @Override
-    public void execute(Form form) {
-        String message = String.format("☹ OOPS!!! I'm sorry, but I don't know what [%s] means :-(", form.getMetaData());
-        System.out.println(message);
+    public ResponseDto<Void> execute(Form form) {
+        return new ResponseDto<>(form.getCommand(), String.format("☹ OOPS!!! I'm sorry, but I don't know what [%s] means :-(", form.getMetaData()));
     }
 }

@@ -1,8 +1,8 @@
 package duke.service.command;
 
 import duke.constant.Constant;
+import duke.dto.ResponseDto;
 import duke.form.Form;
-import duke.util.FileUtil;
 
 /**
  * @description singleton class
@@ -27,10 +27,9 @@ public class ExitCommand extends Command {
      * @param form: parsed input form from user
      */
     @Override
-    public void execute(Form form) {
+    public ResponseDto<Void> execute(Form form) {
         taskManager.persistTask();
-        System.out.println("It's been a pleasure to assist you, see you around!");
-        System.out.println(Constant.ENDING_LOGO);
-        System.exit(0);
+        String message = String.format("%s%n%s", "It's been a pleasure to assist you, see you around!", Constant.ENDING_LOGO);
+        return new ResponseDto<>(form.getCommand(), message);
     }
 }

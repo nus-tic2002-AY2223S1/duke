@@ -1,5 +1,6 @@
 package duke.service.command;
 
+import duke.dto.ResponseDto;
 import duke.entity.Todo;
 import duke.form.Form;
 import duke.form.TodoForm;
@@ -28,11 +29,12 @@ public class AddTodoCommand extends Command {
      * @param form: parsed input form from user
      */
     @Override
-    public void execute(Form form) {
+    public ResponseDto<Void> execute(Form form) {
         TodoForm todoForm = (TodoForm) form;
         Todo todo = new Todo(todoForm.getDescription());
         taskManager.addTask(todo);
-        System.out.printf("Todo [%s] is added!%n", todoForm.getDescription());
         AsyncExecutor.execute(() -> taskManager.persistTask());
+        String message = String.format("Todo [%s] is added!", todoForm.getDescription());
+        return new ResponseDto<>(form.getCommand(), message);
     }
 }
