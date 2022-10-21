@@ -1,6 +1,6 @@
 package Common;
 
-import Tasks.UnsupportedTaskType;
+import CustomException.UnsupportedTaskType;
 
 public enum TaskType {
     DEADLINE, EVENT, TODO;
