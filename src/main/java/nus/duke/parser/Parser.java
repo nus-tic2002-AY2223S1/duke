@@ -69,6 +69,8 @@ public class Parser {
 
     public static String parse(String userInput) {
         boolean hasError = false;
+        Scanner s;
+
         try {
             hasInputErrors(userInput);
         } catch (OnlyUpperCaseIsAcceptedException ouciae){
@@ -85,7 +87,7 @@ public class Parser {
 
         if (hasError){
             Ui ui = new Ui();
-            Scanner s = new Scanner(System.in);
+            s = new Scanner(System.in);
             System.out.println("Please proceed to key in the correct command");
             String newUserInput = ui.getUserInput(s);
             return newUserInput;

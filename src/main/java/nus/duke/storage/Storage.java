@@ -73,7 +73,13 @@ public class Storage {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(getFilePath()));
             for (int i = 0; i < taskList.getTotalTasks(); i++) {
-                String str = taskList.getTaskList().get(i).getTask() + "[" + taskList.getTaskList().get(i).getIsDone() + "]" + "\n";
+                String markedStatus = taskList.getTaskList().get(i).getIsDone();
+                if (markedStatus.equals("true")){
+                    markedStatus = "T";
+                } else {
+                    markedStatus = "F";
+                }
+                String str = taskList.getTaskList().get(i).getTask() + "[" + markedStatus + "]" + "\n";
                 writer.write(str);
             }
             writer.close();

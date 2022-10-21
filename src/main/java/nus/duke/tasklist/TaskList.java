@@ -76,6 +76,13 @@ public class TaskList {
     }
 
     public boolean processTasks(String command, String userInput){
+        int end = userInput.indexOf("[");
+        String parsedString = userInput;
+
+        if (end != -1){
+            parsedString = userInput.substring(0, end);
+        }
+
         if (command.equals("EXIT")){
             return true;
         }
@@ -104,15 +111,15 @@ public class TaskList {
            return false;
        }
 
-       this.addTask(userInput);
+       this.addTask(parsedString);
        return false;
     }
 
-    public void processIsDone(int count, String userInput){
-        int idx = userInput.indexOf("[") + 1;
-        String isDone = userInput.substring(idx, userInput.length()-1);
-        if (isDone.equals("true")){
-            this.markTask(count);
+    public void processIsDone(int idx, String userInput){
+        int start = userInput.indexOf("[") + 1;
+        String isDone = userInput.substring(start, userInput.length()-1);
+        if (isDone.equals("T")){
+            this.markTask(idx);
         }
     }
 

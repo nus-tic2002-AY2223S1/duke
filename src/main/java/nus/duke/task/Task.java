@@ -19,7 +19,11 @@ public abstract class Task {
     }
 
     public void markAsDone(){
-        this.isDone = true;
+        if (getIsDone().equals(false)){
+            this.isDone = true;
+        } else {
+            System.out.println("Task is already marked done");
+        }
     }
     public void markAsNotDone(){
         this.isDone = false;
