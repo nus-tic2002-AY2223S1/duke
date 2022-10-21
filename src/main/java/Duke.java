@@ -1,10 +1,18 @@
+import Data.DataFileFactory;
+import Data.DataInterface;
+import Logic.BotUseCase;
+import UI.DukeUI;
+import UI.UIInterface;
+
 import java.util.Scanner;
 
 
 public class Duke {
     public static void main(String[] args) {
-        Bot bot = new Bot("lamBDA", "--------------------------");
-        bot.welcome();
+        UIInterface ui = new DukeUI("lamBDA");
+        DataInterface data = new DataFileFactory("dukefile.txt", "duke-data");
+        BotUseCase router = new Router(ui, data);
+        Bot bot = new Bot(router);
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
@@ -33,7 +41,6 @@ public class Duke {
                 System.out.println("invalid value, expect a number for " + key.toString());
             }
             line = in.nextLine();
-
         }
         bot.goodbye();
     }
