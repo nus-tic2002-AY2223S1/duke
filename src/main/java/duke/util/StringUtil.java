@@ -45,7 +45,7 @@ public class StringUtil {
     }
 
     public static List<String> stringToList(String str, String delimiter) {
-        if (isBlank(str)) {
+        if (isBlank(str) || isBlank(delimiter)) {
             return Collections.emptyList();
         }
         return Arrays.asList(str.split(delimiter));
