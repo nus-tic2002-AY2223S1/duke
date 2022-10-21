@@ -43,6 +43,8 @@ public class DukeUI implements UIInterface {
         printlntab("☹ OOPS!!! I'm sorry, entered number is not in the list");
     }
     @Override
+    public void invalidFormat(String text) { printlntab("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");}
+    @Override
     public void showList(ArrayList<TaskInterface> lists) {
         seperator();
         printlntab("Here are the tasks in your list:");

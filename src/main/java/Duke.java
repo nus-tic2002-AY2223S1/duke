@@ -18,27 +18,19 @@ public class Duke {
         line = in.nextLine();
         while(Keyword.getKeyword(line) != Keyword.Bye) {
             Keyword key = Keyword.getKeyword(line);
-            try {
-                if(key == Keyword.List) {
-                    bot.showList();
-                } else if (key == Keyword.Mark) {
-                    String part = line.split(" ")[1];
-                    bot.mark(part, true);
-                } else if (key == Keyword.Unmark) {
-                    String part = line.split(" ")[1];
-                    bot.mark(part, false);
-                } else if (key == Keyword.Delete) {
-                    String part = line.split(" ")[1];
-                    bot.delete(part);
-                } else {
-                    bot.add(line);
-                }
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println(key.toString() + " on invalid task");
-            } catch (NullPointerException e) {
-                System.out.println(key.toString() + " on invalid task");
-            } catch (NumberFormatException e) {
-                System.out.println("invalid value, expect a number for " + key.toString());
+            if(key == Keyword.List) {
+                bot.showList();
+            } else if (key == Keyword.Mark) {
+                String part = line.split(" ")[1];
+                bot.mark(part, true);
+            } else if (key == Keyword.Unmark) {
+                String part = line.split(" ")[1];
+                bot.mark(part, false);
+            } else if (key == Keyword.Delete) {
+                String part = line.split(" ")[1];
+                bot.delete(part);
+            } else {
+                bot.add(line);
             }
             line = in.nextLine();
         }

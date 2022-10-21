@@ -18,8 +18,17 @@ public class TaskManager implements BotCallback {
 
     public void addNewTask(String text) {
         try {
+            if(text.indexOf(" ") == -1) {
+                router.invalidFormat(text);
+                return;
+            }
             String task = text.substring(0, text.indexOf(' '));
             String work = text.substring(text.indexOf(" "));
+            System.out.println(work);
+            if(work.isBlank() || work.isEmpty()) {
+                router.unsupportedFormat(text);
+                return;
+            }
             TaskType type= TaskType.getType(task);
             switch (type) {
                 case TODO:

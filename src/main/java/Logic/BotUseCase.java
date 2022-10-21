@@ -14,6 +14,7 @@ public abstract class BotUseCase {
     public void unsupportedTaskType(){};
     public void indexOutOFBound(){};
     public void unsupportedFormat(String text){};
+    public void invalidFormat(String text){};
     public void goodbye(){};
     public void loadData(){};
 
