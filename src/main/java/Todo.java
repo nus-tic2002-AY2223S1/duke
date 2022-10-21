@@ -1,25 +1,19 @@
 import java.util.ArrayList;
 
-public class Todo {
-
+public class Todo{
+    Helper h = new Helper();
     private ArrayList<Task> TodoList;
 
     public Todo() {
         TodoList = new ArrayList<>();
     }
 
-    public void separator() {
-        System.out.println("____________________________________");
-    }
-    public void newline(){
-        System.out.println("\n");
-    }
 
     public void addNewTodo(String incomingTaskName){
         TodoList.add(new Task(incomingTaskName));
-        separator();
+        h.separator();
         System.out.println("added: " + incomingTaskName);
-        separator();
+        h.separator();
     }
 
     public void showTodoList(){
@@ -40,26 +34,23 @@ public class Todo {
     public void changeToMarkAsDone(int TaskIndex){
         int i = TaskIndex-1;
         if (i> TodoList.size()){
-            separator();
+            h.separator();
             System.out.println("Uh oh! Task " + TaskIndex + " is not found :(");
-            separator();
+            h.separator();
         }
         else{
             if (!TodoList.get(i).isMarkAsDone()){
                 TodoList.get(i).setMarkAsDone();
-                separator();
+                h.separator();
                 System.out.println("Nice! I've marked this task as done: ");
-                System.out.println(TaskIndex + ".[x] " + TodoList.get(i).getTaskName());
-                separator();
-                newline();
             }
             else {
-                separator();
+                h.separator();
                 System.out.println("This task has already been marked as done!");
-                System.out.println(TaskIndex + ".[x] " + TodoList.get(i).getTaskName());
-                separator();
-                newline();
             }
+            System.out.println(TaskIndex + ".[x] " + TodoList.get(i).getTaskName());
+            h.separator();
+            h.newline();
         }
 
     }
@@ -72,18 +63,18 @@ public class Todo {
         else{
             if (TodoList.get(i).isMarkAsDone()){
                 TodoList.get(i).setMarkNotDone();
-                separator();
+                h.separator();
                 System.out.println("Meow, I've marked this task as not done yet: ");
                 System.out.println(TaskIndex + ".[ ] " + TodoList.get(i).getTaskName());
-                separator();
-                newline();
+                h.separator();
+                h.newline();
             }
             else {
-                separator();
+                h.separator();
                 System.out.println("This task has already been marked as not done!");
                 System.out.println(TaskIndex + ".[ ] " + TodoList.get(i).getTaskName());
-                separator();
-                newline();
+                h.separator();
+                h.newline();
             }
         }
 
