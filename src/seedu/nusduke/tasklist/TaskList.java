@@ -2,6 +2,7 @@ package seedu.nusduke.tasklist;
 
 import java.util.ArrayList;
 
+import seedu.nusduke.ui.Messages;
 import seedu.nusduke.ui.Ui;
 
 public class TaskList {
@@ -44,16 +45,19 @@ public class TaskList {
                 list.add(new Event(descriptionTime[0], descriptionTime[1]));
                 listCount ++;
                 break;
+            default:
+                return;
         }
         if (task[1].equals("X")){
-            list.get(listCount - 1).markAsDone();
+            list.get(listCount - 1).markAsDone(1);
         }
-        Ui.echoTasksLoadingFromFile(list    .get(listCount - 1));
+        Ui.echoTasksLoadingFromFile(list.get(listCount - 1));
     }
 
     public static String[] splitDescriptionTime(String description){
         String[] split = description.split(" \\(", 2);
-        split[1].replace("\\)","");
+        split[1] = split[1].substring(0, split[1].length() - 1);
+        split[1] = split[1].replace(":", "");
         return split;
     }
 
@@ -67,6 +71,19 @@ public class TaskList {
                 break;
             default:
                 break;
+        }
+    }
+
+    public void printList(){
+        if (listCount == 0) {
+            Ui.print(Messages.MESSAGE_NO_TASK_IN_LIST);
+            return;
+        }
+        Ui.print("Here are the tasks in your list:\n");
+        for(int i = 0; i < listCount; i++) {
+            String count = (i + 1) + ". ";
+            Ui.print(count);
+            list.get(i).printTask();
         }
     }
 

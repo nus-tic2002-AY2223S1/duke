@@ -15,7 +15,7 @@ public class Parser {
         Command userInput;
         switch (split[0]){
             case "bye":
-                userInput = new Command(true);
+                userInput = new Command(split[0], true);
                 break;
             case "list":
                 userInput  = new Command(split[0]);

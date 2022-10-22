@@ -1,5 +1,6 @@
 package seedu.nusduke.ui;
 
+
 public class Messages {
     public static final String MESSAGE_GOODBYE = "Bye. Remember!\n"
             + "In times of crisis, the wise build bridges while the foolish build barriers.\n";
@@ -11,11 +12,12 @@ public class Messages {
             + "|____/ \\__,_|_|\\_\\___|\n";
     public static final String MESSAGE_WELCOME =
               "Hello from\n" + LOGO
-            + "Wakanda forever! I'm Winston Duke"
-            + "What can I do for you?";
+            + "Wakanda forever! I'm Winston Duke\n"
+            + "What can I do for you?\n";
     public static final String MESSAGE_EMPTY_INPUT = "Empty input detected, please re-enter\n";
     public static final String MESSAGE_INDEX_NOT_NUMBER = "Index must be numbers!";
     public static final String MESSAGE_NO_TASK_DESCRIPTION = "Task description cannot be empty!\n";
+    public static final String MESSAGE_NO_TASK_IN_LIST = "There is 0 tasks in the list. Please use keyword: todo, deadlines or events to add task if you wish to.\n";
     public static final String MESSAGE_NO_KEYWORD_FOR_EVENT_DEADLINE = "Please use keyword \"/\" to represent date and time. E.g. /at 6 Aug 2022 6pm\n";
     public static final String MESSAGE_TASK_NUMBER_NOT_EXIST = "Task number not exist!\n";
     public static final String MESSAGE_TASK_NUMBER_OUT_OF_RANGE = "Task number out of list range!\n";

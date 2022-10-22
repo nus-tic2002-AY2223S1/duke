@@ -19,7 +19,8 @@ public class Command {
         this.command = command;
     }
 
-    public Command(boolean isExit){
+    public Command(String command, boolean isExit){
+        this.command = command;
         this.isEXit = isExit;
     }
 
@@ -47,15 +48,22 @@ public class Command {
         ArrayList<Task> list = tasks.getList();
         switch (this.command) {
             case "bye":
+                byeCommand(ui);
                 break;
             case "mark":
                 markCommand(list);
+                storage.save(tasks);
                 break;
             case "unmark":
                 unMarkCommand(list);
+                storage.save(tasks);
                 break;
             case "delete":
                 deleteCommand(tasks, ui);
+                storage.save(tasks);
+                break;
+            case "list":
+                tasks.printList();
                 break;
             case "todo":
             case "deadline":
@@ -72,18 +80,31 @@ public class Command {
         }
     }
 
-    public void markCommand(ArrayList<Task> list) {
-        list.get(this.index).markAsDone();
+    public void markCommand(ArrayList<Task> list) throws DukeException {
+        try {
+            list.get(this.index).markAsDone(0);
+        } catch (IndexOutOfBoundsException e){
+            throw new DukeException(Messages.MESSAGE_TASK_NUMBER_OUT_OF_RANGE);
+        }
     }
 
-    public void unMarkCommand(ArrayList<Task> list) {
-        list.get(this.index).markAsUndone();
+    public void unMarkCommand(ArrayList<Task> list) throws DukeException {
+        try {
+            list.get(this.index).markAsUndone(0);
+        } catch (IndexOutOfBoundsException e){
+            throw new DukeException(Messages.MESSAGE_TASK_NUMBER_OUT_OF_RANGE);
+        }
     }
 
-    public void deleteCommand(TaskList tasks, Ui ui) {
+    public void deleteCommand(TaskList tasks, Ui ui) throws DukeException {
         ArrayList<Task> list = tasks.getList();
-        String removedTask = list.get(this.index).toString();
-        list.remove(this.index);
+        String removedTask;
+        try {
+            removedTask = list.get(this.index).toString();
+            list.remove(this.index);
+        }catch (IndexOutOfBoundsException e){
+            throw new DukeException(Messages.MESSAGE_TASK_NUMBER_OUT_OF_RANGE);
+        }
         tasks.changeListCount("-");
         ui.echo(removedTask, "removed");
     }
@@ -111,10 +132,13 @@ public class Command {
             default:
         }
         tasks.changeListCount("+");
+        storage.save(tasks);
         ui.echo(list.get(tasks.getListCount() - 1).toString(), "added");
-
     }
 
+    public void byeCommand (Ui ui){
+        ui.showByeMessage();
+    }
     public static void isDuplicate (TaskList tasks, Ui ui) throws DukeException{
         ArrayList<Task> list = tasks.getList();
         for (int i = 0; i < tasks.getListCount(); i++) {

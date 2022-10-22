@@ -6,15 +6,14 @@ import seedu.nusduke.tasklist.TaskList;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.List;
+import java.io.File;
 
 public class Storage {
 
     /** Default file path used if the user doesn't provide the file name. */
-    public static final String DEFAULT_STORAGE_FILEPATH = "data/tasklist.txt";
+    public static final String DEFAULT_STORAGE_FILEPATH = "tasklist.txt";
 
     public final Path path;
 
@@ -43,12 +42,25 @@ public class Storage {
         return tasks;
     }
 
-    public void save (TaskList toSave){
-        String toWrite;
-        for (int i = 0; i < toSave.getListCount(); i++){
-            toWrite = toSave.getList().get(i).toString();
+    public void save (TaskList toSave) throws DukeException {
+        if (!Files.exists(path) || !Files.isRegularFile(path)){
+            File taskList = new File(String.valueOf(path));
             try {
-                Files.write(path, toWrite.getBytes());
+                taskList.createNewFile();
+            } catch (IOException e){
+                throw new DukeException(e.getMessage());
+            }
+        }
+        String toWrite;
+        try {
+            Files.write(path, "".getBytes());
+        } catch (IOException e) {
+            throw new DukeException(e.getMessage());
+        }
+        for (int i = 0; i < toSave.getListCount(); i++){
+            toWrite = toSave.getList().get(i).toString() + "\n";
+            try {
+                Files.write(path, toWrite.getBytes(), StandardOpenOption.APPEND);
             } catch (IOException e){
                 System.out.println(e);
             }

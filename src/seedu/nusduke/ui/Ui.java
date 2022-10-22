@@ -33,12 +33,16 @@ public class Ui {
         out.print(LINE_PREFIX + error);
     }
     public void showWelcome(){
-        out.println(Messages.MESSAGE_WELCOME);
+        out.print(Messages.MESSAGE_WELCOME);
+        showLine();
     }
     public void showLine(){
         out.println(DIVIDER);
     }
 
+    public void showByeMessage(){
+        out.print(Messages.MESSAGE_GOODBYE);
+    }
     public void showLoadingError(DukeException e) {
     }
     public static void print(String toPrint){
@@ -48,7 +52,7 @@ public class Ui {
         return LINE_PREFIX;
     }
     public static void echoTasksLoadingFromFile (Task added){
-        Ui.print(added.toString() + " added");
+        Ui.print(added.toString() + " added\n");
     }
 
     public static void echo(String toEcho, String mode) {
