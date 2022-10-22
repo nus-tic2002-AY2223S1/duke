@@ -25,7 +25,6 @@ public class Duke {
         }
     }
 
-
     static void save(ArrayList<Task> listItems) {
             String list = "";
             for (Task listItem : listItems) {
@@ -33,7 +32,6 @@ public class Duke {
             }
             StoreFile.writeToFile(list);
         }
-
 
     public static void main(String[] args){
         String line;
@@ -77,7 +75,6 @@ public class Duke {
                 return true;
             case"mark":
                     int indexMark = Integer.parseInt(userInput[1]);
-                    //TaskPackage.Task markTask = tasks[indexUnmark-1];
                     Task markTask = listItems.get(indexMark-1);
                     markTask.markAsDone();
                     System.out.println("Nice! I've marked this task as done:");
@@ -87,7 +84,6 @@ public class Duke {
                 return true;
             case"unmark":
                     int indexUnmark = Integer.parseInt(userInput[1]);
-                   // TaskPackage.Task unmarkTask = tasks[indexUnmark-1];
                     Task unmarkTask = listItems.get(indexUnmark-1);
                     unmarkTask.markAsNotdone();
                     System.out.println("OK, I've marked this task as not done yet:");
@@ -105,7 +101,6 @@ public class Duke {
                     String deadlineDate = Input.substring(divPos+4);
                     Deadline taskDeadline = new Deadline(deadlineTask,deadlineDate);
                     listItems.add(taskDeadline);
-                    //System.out.println("Got it. I've added this task: ");
                     System.out.println(taskDeadline);
                     System.out.println("Got it. I've added this task: ");
                     System.out.println("Now you have " + listItems.size() + " tasks in the list.");
@@ -152,22 +147,11 @@ public class Duke {
                     System.out.println("☹ OOPS!!! The index out of arraylist length");
                 }
                 return true;
-
             case"save":
                 save(listItems);
                 return true;
             default:
-
-                //need modify below to consider all cases,for example: if user input 'aaa'
-                // what if user input meaningful word like "read book" ?
-                if(userInput[0].equals(("blah"))){
-                    throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-                }
-                if(isNumeric(userInput[0])){
-                    throw new DukeException("☹ OOPS!!! You have enter a number,Pls re-enter task !");
-                }
-                AddList(listItems,Input);
-
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 return true;
         }
         return false;
