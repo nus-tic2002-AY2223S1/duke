@@ -7,6 +7,11 @@ import storage.Storage;
 public class ErrorCommand extends Command {
     public String inputCommand;
 
+    /**
+     * Error command constructor
+     *
+     * @param inputCommand user input
+     */
     public ErrorCommand(String inputCommand) {
         this.inputCommand = inputCommand;
     }

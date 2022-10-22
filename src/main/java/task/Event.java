@@ -4,6 +4,12 @@ public class Event extends Task {
 
     protected String at;
 
+    /**
+     * Event task constructor
+     *
+     * @param description task descriptions
+     * @param at          event datetime
+     */
     public Event(String description, String at) {
         super(description);
         this.at = at;

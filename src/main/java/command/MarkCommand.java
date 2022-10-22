@@ -8,6 +8,11 @@ public class MarkCommand extends Command {
 
     public int markIndex;
 
+    /**
+     * Mark command constructor
+     *
+     * @param markIndex task index to mark done in task list
+     */
     public MarkCommand(int markIndex) {
         this.markIndex = markIndex;
     }

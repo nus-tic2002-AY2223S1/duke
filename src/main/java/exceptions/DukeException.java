@@ -4,6 +4,11 @@ public class DukeException extends Exception {
 
     public String errorMsg;
 
+    /**
+     * DukeException constructor
+     *
+     * @param errorMsg error message to display
+     */
     public DukeException(String errorMsg) {
         this.errorMsg = errorMsg;
     }

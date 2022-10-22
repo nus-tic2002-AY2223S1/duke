@@ -11,6 +11,11 @@ import java.util.ArrayList;
 public class Storage {
     private static File file;
 
+    /**
+     * Storage constructor
+     *
+     * @param filePath file directory which store list of tasks
+     */
     public Storage(String filePath) {
         file = new File(filePath);
     }
@@ -41,6 +46,7 @@ public class Storage {
                 }
             }
             FileOutputStream writer = new FileOutputStream(filePath);
+
             for (Task task : taskList) {
                 writer.write((task.stringToOutput() + '\n').getBytes());
             }

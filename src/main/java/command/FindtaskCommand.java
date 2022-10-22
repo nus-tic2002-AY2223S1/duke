@@ -13,6 +13,11 @@ public class FindtaskCommand extends Command {
 
     public String inputDatetime;
 
+    /**
+     * Find task command constructor
+     *
+     * @param inputDatetime task datetime
+     */
     public FindtaskCommand(String inputDatetime) {
         this.inputDatetime = inputDatetime;
     }

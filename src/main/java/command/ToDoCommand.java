@@ -9,6 +9,11 @@ public class ToDoCommand extends Command {
 
     public String description;
 
+    /**
+     * To do command constructor
+     *
+     * @param description task description
+     */
     public ToDoCommand(String description) {
         this.description = description;
     }

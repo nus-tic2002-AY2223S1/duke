@@ -10,6 +10,12 @@ public class EventCommand extends Command {
     public String description;
     public String atDate;
 
+    /**
+     * Event command constructor
+     *
+     * @param description event task description
+     * @param atDate      date which event take place
+     */
     public EventCommand(String description, String atDate) {
         this.description = description;
         this.atDate = atDate;

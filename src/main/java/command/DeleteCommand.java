@@ -7,6 +7,11 @@ import task.TaskList;
 public class DeleteCommand extends Command {
     public int deleteIndex;
 
+    /**
+     * Delete command constructor
+     *
+     * @param deleteIndex task index to delete from the list
+     */
     public DeleteCommand(int deleteIndex) {
         this.deleteIndex = deleteIndex;
     }

@@ -4,6 +4,12 @@ public class Task {
     protected String description;
     protected boolean isDone;
 
+    /**
+     * Task constructor
+     * set task not done as default
+     *
+     * @param description task descriptions
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;

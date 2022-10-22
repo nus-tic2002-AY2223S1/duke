@@ -8,9 +8,17 @@ public class Command {
 
     public boolean exitValue = false;
 
+    /**
+     * Command constructor
+     */
     Command() {
     }
 
+    /**
+     * This constructor set a boolean value for exitValue based on user input
+     *
+     * @param exitValue boolean value to exit the chatbot process
+     */
     Command(boolean exitValue) {
         this.exitValue = exitValue;
     }

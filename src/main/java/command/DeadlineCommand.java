@@ -10,6 +10,12 @@ public class DeadlineCommand extends Command {
     public String description;
     public String byDate;
 
+    /**
+     * Deadline command constructor
+     *
+     * @param description task descriptions
+     * @param byDate      task deadline
+     */
     public DeadlineCommand(String description, String byDate) {
         this.description = description;
         this.byDate = byDate;

@@ -8,6 +8,11 @@ public class UnmarkCommand extends Command {
 
     public int unMarkIndex;
 
+    /**
+     * Unmark command constructor
+     *
+     * @param unMarkIndex task index to mark task undone in tasklist
+     */
     public UnmarkCommand(int unMarkIndex) {
         this.unMarkIndex = unMarkIndex;
     }

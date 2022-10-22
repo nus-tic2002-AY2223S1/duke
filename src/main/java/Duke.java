@@ -80,6 +80,9 @@ public class Duke {
         }
     }
 
+    /**
+     * Set up initial taskList based on given taskList file
+     */
     public Duke(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -94,6 +97,9 @@ public class Duke {
         }
     }
 
+    /**
+     * Chat bot process
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -114,6 +120,9 @@ public class Duke {
         }
     }
 
+    /**
+     * Main() method
+     */
     public static void main(String[] args) {
         new Duke("data/tasks.txt").run();
     }

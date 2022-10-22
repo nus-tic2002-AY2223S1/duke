@@ -10,10 +10,19 @@ import exceptions.DukeException;
 public class TaskList {
     public ArrayList<Task> myTaskList = new ArrayList<>();
 
+    /**
+     * TaskList empty constructor
+     */
     public TaskList() {
         myTaskList = new ArrayList<>();
     }
 
+
+    /**
+     * TaskList constructor
+     *
+     * @param f File that contains list of tasks
+     */
     // When we are loading a file
     public TaskList(File f) throws FileNotFoundException, DukeException {
         Scanner s = new Scanner(f);
