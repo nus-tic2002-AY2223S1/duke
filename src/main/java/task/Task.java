@@ -2,7 +2,7 @@ package task;
 
 public class Task {
 
-      protected String description;
+      public String description;
 
       protected boolean isDone;
 
