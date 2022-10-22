@@ -1,11 +1,14 @@
 package nus.duke.task;
 
-public class Deadline extends Task {
-    protected String by; // i.e. by a certain date or before a certain date
+import java.time.LocalDate;
 
+public class Deadline extends Task {
+    protected LocalDate localDate;
     public Deadline(String userInput) {
         super(userInput);
-        this.by = userInput; //useInput; //formatDateTime(userInput);
+        String description = super.getDescription(userInput);
+        super.setDescription(description);
+        this.localDate = processDate(userInput);
     }
     @Override
     public String getTaskType(){

@@ -1,5 +1,7 @@
 package nus.duke.task;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public abstract class Task {
@@ -40,10 +42,39 @@ public abstract class Task {
 
     public abstract String getTaskType();
 
+    public String getDescription(String userInput){
+        int end = 0;
+        if (userInput.indexOf("/by") != -1){
+            end = userInput.indexOf("/by");
+            return userInput.substring(0, end);
+        }
 
-    //public String formatDateTime(String userInput){
-        //String dateInString = getDate(userInput);
-        //LocalDate date = LocalDate.parse(dateInString);
-        //System.out.println(date.format(DateTimeFormatter.ofPattern("MMM d yyyy"))); // -> Oct 15 2019
-    //}
+        if (userInput.indexOf("/at") != -1){
+            end = userInput.indexOf("/at");
+            return userInput.substring(0, end);
+        }
+         return "";
+    }
+
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+    public String getDateInStr(String userInput){
+        int start = userInput.indexOf("/by") + 4;
+        if (userInput.indexOf("[T]") == -1 || userInput.indexOf("[F]") == -1){
+            return userInput.substring(start, userInput.length());
+        } else {
+            return userInput.substring(start, userInput.length()-3);
+        }
+    }
+
+    public LocalDate processDate(String userInput){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+        String date = getDateInStr(userInput);
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        localDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+        //System.out.println(localDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")));
+        return localDate;
+    }
 }
