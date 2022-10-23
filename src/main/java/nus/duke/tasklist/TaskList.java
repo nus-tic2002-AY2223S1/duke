@@ -41,7 +41,7 @@ public class TaskList {
 
     public static void viewTasks(){
         for (int i = 0; i < taskList.size(); i++) {
-            System.out.println( "[" + taskList.get(i).getTaskType() + "][" + taskList.get(i).getStatusIcon() + "] " + taskList.get(i).getTask());
+            System.out.println( "[" + taskList.get(i).getTaskType() + "][" + taskList.get(i).getStatusIcon() + "] " + taskList.get(i).getTask() + taskList.get(i).getTaskDetails());
         }
     }
 

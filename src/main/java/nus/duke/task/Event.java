@@ -12,4 +12,9 @@ public class Event extends Task {
     public String getTaskType(){
         return "E";
     }
+
+    @Override
+    public String getTaskDetails(){
+        return this.at;
+    }
 }

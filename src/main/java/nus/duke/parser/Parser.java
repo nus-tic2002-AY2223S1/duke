@@ -4,6 +4,8 @@ import nus.duke.frontend.*;
 import nus.duke.tasklist.*;
 import nus.duke.exceptions.*;
 import java.util.Scanner;
+import java.util.regex.Matcher; // check date using regex
+import java.util.regex.Pattern; // check date using regex
 
 public class Parser {
     private static Ui ui;
@@ -40,18 +42,44 @@ public class Parser {
         }
     }
 
-    public static void hasInputErrors(String userInput) throws OnlyUpperCaseIsAcceptedException, WrongInputSyntaxException, EmptyTaskException {
+    public static boolean hasDate(String userInput){
+        int start = userInput.indexOf("/by") + 3;
+        int end = userInput.indexOf("[");
+        String dateInString = userInput.substring(start, userInput.length());
+
+        if ((end == -1) && dateInString.isBlank()){
+            return false;
+        } else if ((end == -1) && dateInString.isBlank() == false){
+            dateInString = userInput.substring(start + 1, userInput.length());
+        } else if (end != -1){
+            dateInString = userInput.substring(start, end);
+        }
+
+        //String regex = "^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$";
+        String regex = "^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$";
+        Pattern regexPattern = Pattern.compile(regex);
+        Matcher matcher = regexPattern.matcher(dateInString);
+        return matcher.matches();
+    }
+
+    public static boolean hasInputErrors(String userInput) throws MissingKeywordException, EmptyTaskException, InvalidCommandException, MissingDateException {
         if (userInput.indexOf(" ") == -1){
             if (userInput.equals("VIEW") || userInput.equals("EXIT")){
-                return;
+                return false;
+            } else if (userInput.equals("TODO") || userInput.equals("DEADLINE") || userInput.equals("EVENT") || userInput.equals("MARK") || userInput.equals("UNMARK")){
+                throw new EmptyTaskException();
             } else {
-                throw new OnlyUpperCaseIsAcceptedException();
+                throw new InvalidCommandException();
             }
         }
 
-        String command = getCommand(userInput); // e.g. "TODO buy lunch" --> "TODO" or "TODO     " --> "TODO"
+        String command = getCommand(userInput);
         if (isValidCommand(command) == false){
-            throw new WrongInputSyntaxException();
+            throw new InvalidCommandException();
+        }
+
+        if (isValidCommand(command) == false && isEmptyTask(userInput) == true){
+            throw new InvalidCommandException();
         }
 
         if ((isValidCommand(command) == true) && (isEmptyTask(userInput) == true)){
@@ -59,29 +87,37 @@ public class Parser {
         }
 
         if (command.equals("DEADLINE") && (userInput.contains("/by") == false)){
-            throw new WrongInputSyntaxException();
+            throw new MissingKeywordException();
         }
 
         if (command.equals("EVENT") && (userInput.contains("/at") == false)){
-            throw new WrongInputSyntaxException();
+            throw new MissingKeywordException();
         }
+
+        if (command.equals("DEADLINE") && (userInput.contains("/by") == true) && hasDate(userInput) == false){
+            throw new MissingDateException();
+        }
+        return false;
     }
 
     public static String parse(String userInput) {
-        boolean hasError = false;
+        boolean hasError;
         Scanner s;
 
         try {
-            hasInputErrors(userInput);
-        } catch (OnlyUpperCaseIsAcceptedException ouciae){
-            System.out.println("OOPS!!! Only uppercase is accepted for VIEW and EXIT");
-            hasError = true;
+            hasError = hasInputErrors(userInput);
         } catch (EmptyTaskException ete){
             System.out.println("OOPS!!! Task cannot be empty.");
             hasError = true;
-        } catch (WrongInputSyntaxException wise){
-            System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-( Please use a command from the command menu.");
+        } catch (InvalidCommandException ice){
+            System.out.println("OOPS!!! This is not a valid command. Please see command menu.");
             ui.printCommandMenu();
+            hasError = true;
+        } catch (MissingKeywordException mke){
+            System.out.println("OOPS!!! Please indicate //by <<date>> for deadlines and //at <<venue>> for events");
+            hasError = true;
+        } catch (MissingDateException mde){
+            System.out.println("OOPS!!! Date needed. Please also key in the correct format: dd/mm/yyyy i.e dd-mm-yyyy is wrong");
             hasError = true;
         }
 

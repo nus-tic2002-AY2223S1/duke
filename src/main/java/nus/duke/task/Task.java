@@ -21,7 +21,7 @@ public abstract class Task {
     }
 
     public void markAsDone(){
-        if (getIsDone().equals(false)){
+        if (this.isDone == false){
             this.isDone = true;
         } else {
             System.out.println("Task is already marked done");
@@ -41,6 +41,7 @@ public abstract class Task {
     }
 
     public abstract String getTaskType();
+    public abstract String getTaskDetails();
 
     public String getDescription(String userInput){
         int end = 0;
@@ -63,9 +64,9 @@ public abstract class Task {
     public String getDateInStr(String userInput){
         int start = userInput.indexOf("/by") + 4;
         if (userInput.indexOf("[T]") == -1 || userInput.indexOf("[F]") == -1){
-            return userInput.substring(start, userInput.length());
+            return userInput.substring(start, userInput.length()).trim();
         } else {
-            return userInput.substring(start, userInput.length()-3);
+            return userInput.substring(start, userInput.length()-3).trim();
         }
     }
 
@@ -73,8 +74,6 @@ public abstract class Task {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
         String date = getDateInStr(userInput);
         LocalDate localDate = LocalDate.parse(date, formatter);
-        localDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
-        //System.out.println(localDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")));
         return localDate;
     }
 }

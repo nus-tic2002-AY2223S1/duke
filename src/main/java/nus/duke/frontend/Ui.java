@@ -9,6 +9,8 @@ public class Ui {
         System.out.println("**COMMAND MENU**");
         System.out.println("MARK | UNMARK | DELETE | VIEW | EXIT");
         System.out.println("TODO <<task>> | DEADLINE <<task>> /by <<date>>| EVENT <<TASK>> /at <<date>>");
+        System.out.println("Please ensure commands are all capitalised.");
+        System.out.println("**END OF COMMAND MENU**");
         // System.out.println("Automatic Testing: /bin/bash runtest.sh");
         showLine();
     }

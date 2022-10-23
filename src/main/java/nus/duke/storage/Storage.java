@@ -1,23 +1,17 @@
 package nus.duke.storage;
 
-import nus.duke.exceptions.EmptyTaskException;
-import nus.duke.exceptions.WrongInputSyntaxException;
 import nus.duke.task.*;
 import nus.duke.tasklist.*;
-
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.io.File;  // Import the File class
-import java.util.Scanner; // Import the Scanner class to read text files
-import java.io.FileNotFoundException;  // Import this class to handle errors
-import java.io.FileWriter;   // Import the FileWriter class
-import java.io.IOException;  // Import the IOException class to handle errors
-import java.io.FileReader;
-import java.io.BufferedWriter;
-import java.io.BufferedReader;
-import java.nio.file.Paths;
-import java.nio.file.Files;
 import nus.duke.parser.*;
+import java.util.ArrayList;
+import java.io.File;
+import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;  // Needed to handle IOException thrown by FileWriter
+import java.io.BufferedWriter;
+// import java.nio.file.Files;
+// import java.nio.file.Path;
+// import java.nio.file.Paths;
 
 public class Storage {
     private static String filePath;
@@ -37,7 +31,7 @@ public class Storage {
         try {
             f.createNewFile();
         } catch (IOException e) {
-            System.out.println("OPPS!!! There was an IO Exception.");
+            System.out.println("OPPS!!! IO Exception");
             e.printStackTrace();
         }
         return true;
@@ -64,7 +58,7 @@ public class Storage {
                 createHardDiskFile(filePath);
             }
         } catch (IOException ioe){
-            System.out.println("OPPS!!! There was an IO Exception.");
+            System.out.println("OPPS!!! IO Exception");
         }
         return hardDiskTaskList.getTaskList();
     }
@@ -85,7 +79,7 @@ public class Storage {
             writer.close();
             System.out.println("Your tasks are saved.");
         } catch (IOException e) {
-            System.out.println("OPPS!!! There was an IO Exception.");
+            System.out.println("OPPS!!! IO Exception");
         }
     }
 }

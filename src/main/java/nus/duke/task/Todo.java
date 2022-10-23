@@ -10,4 +10,9 @@ public class Todo extends Task {
     public String getTaskType(){
         return "T";
     }
+
+    @Override
+    public String getTaskDetails(){
+        return "";
+    }
 }

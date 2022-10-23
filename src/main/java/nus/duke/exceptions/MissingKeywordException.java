@@ -1,5 +1,5 @@
 package nus.duke.exceptions;
 
-public class WrongInputSyntaxException extends Exception {
+public class MissingKeywordException extends Exception {
     // no other code needed
 }
