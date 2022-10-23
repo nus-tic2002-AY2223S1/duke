@@ -22,7 +22,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: " + by + ")" + " [" + this.getPriority() + "]";
     }
 
     /**
@@ -32,7 +32,7 @@ public class Deadline extends Task {
      */
     @Override
     public String stringToOutput() {
-        return "D" + super.stringToOutput() + " | " + by;
+        return "D" + super.stringToOutput() + " | " + by + " | " + super.getPriority();
     }
 
     /**

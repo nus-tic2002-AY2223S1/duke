@@ -39,37 +39,55 @@ public class TaskList {
     public void loadTasks(String input) {
         String[] inputList = input.split(" \\| ");
         switch (inputList[0]) {
-            // Todo
             case "T":
-                String toDoTask = inputList[2];
-                myTaskList.add(new ToDo(toDoTask));
-                if (Integer.parseInt(inputList[1]) == 1) {
-                    myTaskList.get(myTaskList.size() - 1).markDone();
-                } else {
-                    myTaskList.get(myTaskList.size() - 1).unMarkDone();
-                }
-                break;
-            case "E":
-                String EventTask = inputList[2];
-                String ByDate = inputList[3];
-                myTaskList.add(new Event(EventTask, ByDate));
-                if (Integer.parseInt(inputList[1]) == 1) {
-                    myTaskList.get(myTaskList.size() - 1).markDone();
-                } else {
-                    myTaskList.get(myTaskList.size() - 1).unMarkDone();
-                }
-                break;
+                if (inputList.length == 4) {
+                    String toDoTask = inputList[2];
+                    ToDo toDo = new ToDo(toDoTask);
+                    toDo.setPriority(inputList[3]);
+                    if (Integer.parseInt(inputList[1]) == 1) {
+                        toDo.markDone();
+                    } else {
+                        toDo.unMarkDone();
+                    }
+                    myTaskList.add(toDo);
+                    break;
 
-            case "D":
-                String DeadLineTask = inputList[2];
-                String AtDate = inputList[3];
-                myTaskList.add(new Deadline(DeadLineTask, AtDate));
-                if (Integer.parseInt(inputList[1]) == 1) {
-                    myTaskList.get(myTaskList.size() - 1).markDone();
                 } else {
-                    myTaskList.get(myTaskList.size() - 1).unMarkDone();
+                    break;
                 }
-                break;
+
+            case "E":
+                if (inputList.length == 5 && inputList[1].matches("-?\\d+(\\.\\d+)?")) {
+                    String EventTask = inputList[2];
+                    String ByDate = inputList[3];
+                    Event event = new Event(EventTask, ByDate);
+                    event.setPriority(inputList[4]);
+                    if (Integer.parseInt(inputList[1]) == 1) {
+                        event.markDone();
+                    } else {
+                        event.unMarkDone();
+                    }
+                    myTaskList.add(event);
+                    break;
+                } else {
+                    break;
+                }
+            case "D":
+                if (inputList.length == 5 && inputList[1].matches("-?\\d+(\\.\\d+)?")) {
+                    String DeadLineTask = inputList[2];
+                    String AtDate = inputList[3];
+                    Deadline deadline = new Deadline(DeadLineTask, AtDate);
+                    deadline.setPriority(inputList[4]);
+                    if (Integer.parseInt(inputList[1]) == 1) {
+                        deadline.markDone();
+                    } else {
+                        deadline.unMarkDone();
+                    }
+                    myTaskList.add(deadline);
+                    break;
+                } else {
+                    break;
+                }
         }
     }
 

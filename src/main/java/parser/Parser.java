@@ -69,6 +69,17 @@ public class Parser {
                     return new ErrorCommand(inputCommand + "\n" + " ☹ OOPS!!! event has the wrong datetime format. " + "Event date format should be {d/MM/yyyy HHmm}");
                 }
 
+            case "priority":
+                String input = inputCommand.split("priority ")[1];
+                String[] inputList = input.split(" ");
+                int taskIndex = Integer.parseInt(inputList[0]) - 1;
+                String priority = inputList[1];
+                return new PriorityCommand(priority, taskIndex);
+
+            case "find":
+                String keyword = inputCommand.split("find ")[1];
+                return new FindCommand(keyword);
+
             default:
                 return new ErrorCommand(inputCommand);
         }

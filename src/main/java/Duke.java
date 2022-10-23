@@ -19,9 +19,9 @@ public class Duke {
         }
     }
 
-    private static String checkInput(String input, int taskListSize) throws TodoMissingDescriptionException, BasicInputException, DeadlineMissingKeywordException, EventMissingKeywordException, DeadlineWrongFormatException, EventWrongFormatException, InputNumberFormatException, InputWrongFormatException, InputIndexOutOfBoundsException, FindTaskMissingDatetimeException {
+    private static String checkInput(String input, int taskListSize) throws TodoMissingDescriptionException, BasicInputException, DeadlineMissingKeywordException, EventMissingKeywordException, DeadlineWrongFormatException, EventWrongFormatException, InputNumberFormatException, InputWrongFormatException, InputIndexOutOfBoundsException, FindTaskMissingDatetimeException, InputWrongPriorityException {
 
-        String[] keywordList = {"todo", "bye", "mark", "unmark", "deadline", "todo", "list", "delete", "event", "findtask"};
+        String[] keywordList = {"todo", "bye", "mark", "unmark", "deadline", "todo", "list", "delete", "event", "findtask", "priority", "find"};
         boolean keywordExist = false;
         for (int keywordIndex = 0; keywordIndex < keywordList.length; keywordIndex++) {
             if (input.contains(keywordList[keywordIndex])) {
@@ -75,6 +75,16 @@ public class Duke {
                 } else {
                     checkIndex(Integer.parseInt(input.split(" ")[1]) - 1, taskListSize);
                 }
+            } else if (input.indexOf("priority") != -1) {
+                if (input.split(" ").length != 3) {
+                    throw new InputWrongFormatException(" ☹ OOPS!!! Input has wrong format. Priority command should be: priority {task index} {priority}");
+                } else if (!input.split(" ")[1].matches("-?\\d+(\\.\\d+)?")) { // Check if numeric
+                    throw new InputNumberFormatException(input);
+                } else if (!(input.split(" ")[2].equals("low") || input.split(" ")[2].equals("medium") || input.split(" ")[2].equals("high"))) {
+                    throw new InputWrongPriorityException();
+                } else {
+                    checkIndex(Integer.parseInt(input.split(" ")[1]) - 1, taskListSize);
+                }
             }
             return input;
         }
@@ -98,7 +108,7 @@ public class Duke {
     }
 
     /**
-     * Chat bot process
+     * Chatbot process
      */
     public void run() {
         ui.showWelcome();

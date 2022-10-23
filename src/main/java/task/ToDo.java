@@ -18,7 +18,7 @@ public class ToDo extends Task {
      */
     @Override
     public String toString() {
-        return "[T]" + super.toString();
+        return "[T]" + super.toString() + " [" + this.getPriority() + "]";
     }
 
     /**
@@ -28,6 +28,6 @@ public class ToDo extends Task {
      */
     @Override
     public String stringToOutput() {
-        return "T" + super.stringToOutput();
+        return "T" + super.stringToOutput() + " | " + super.getPriority();
     }
 }

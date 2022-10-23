@@ -22,7 +22,7 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (at: " + at + ")";
+        return "[E]" + super.toString() + " (at: " + at + ")" + " [" + this.getPriority() + "]";
     }
 
     /**
@@ -32,7 +32,7 @@ public class Event extends Task {
      */
     @Override
     public String stringToOutput() {
-        return "E" + super.stringToOutput() + " | " + at;
+        return "E" + super.stringToOutput() + " | " + at + " | " + super.getPriority();
     }
 
     /**

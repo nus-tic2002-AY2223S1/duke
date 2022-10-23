@@ -3,6 +3,7 @@ package task;
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected String priority;
 
     /**
      * Task constructor
@@ -13,6 +14,7 @@ public class Task {
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.priority = "low";
     }
 
     /**
@@ -35,6 +37,15 @@ public class Task {
     }
 
     /**
+     * Return priority of task
+     *
+     * @return The priority of task
+     */
+    public String getPriority() {
+        return this.priority;
+    }
+
+    /**
      * Mark task as done by setting isDone variable to true.
      */
     public void markDone() {
@@ -47,6 +58,16 @@ public class Task {
     public void unMarkDone() {
         this.isDone = false;
     }
+
+    /**
+     * Method to set priority of task
+     *
+     * @param priority task priority to set
+     */
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
 
     /**
      * Return a string including both the status icon and description of task
