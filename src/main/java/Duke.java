@@ -15,6 +15,7 @@ public class Duke {
     static String todoPattern = "(todo) ([\\S\\s]*)";
     static String deadlinePattern = "(deadline) ([\\S\\s]*)(\\/by) ([\\S\\s]*)";
     static String eventPattern = "(event) ([\\S\\s]*)(\\/at )([\\S\\s]*)";
+    public static String[] keywords = {"todo","deadline","event"};
 
     public static void addTask(Task t){
         tasks[taskCount] = t;
@@ -42,6 +43,25 @@ public class Duke {
         return arrayOfInput[0];
     }
 
+//    public static void checkException(String input){
+//        for(String i : keywords){
+//            if(i.equalsIgnoreCase(input)){
+//                try{
+//                    throw new DukeException("☹ OOPS!!! The description of a " + input + " cannot be empty.");
+//                } catch (DukeException e){
+//                    System.out.println("\t"+e.getMessage());
+//                }
+//            }
+//        }
+//    }
+
+    public static void printException(String input){
+        try{
+            throw new LackDetailsException("☹ OOPS!!! The description of a " + input + " cannot be empty.");
+        } catch (LackDetailsException e){
+            System.out.println("\t"+e.getMessage());
+        }
+    }
 
     public static void testing(){
 //        tasks[0] = new Entity.Deadline("return book", "Monday");
@@ -66,6 +86,7 @@ public class Duke {
         while(input!=null){
 
             System.out.println(line);
+//            checkException(input);
             String firstWord = getFirstInputWord(input);
 
             if(input.equalsIgnoreCase("bye")){
@@ -109,6 +130,8 @@ public class Duke {
                     m = r.matcher(input);
                     if(m.find()){
                         addTask(new Todo(m.group(2)));
+                    }else{
+                        printException(input);
                     }
                    break;
 
@@ -119,6 +142,8 @@ public class Duke {
                         String descrp = m.group(2);
                         String by = m.group(4);
                         addTask(new Deadline(descrp,by));
+                    }else{
+                        printException(input);
                     }
                     break;
 
@@ -129,12 +154,19 @@ public class Duke {
                         String descrp = m.group(2);
                         String at = m.group(4);
                         addTask(new Event(descrp,at));
+                    }else {
+                        printException(input);
                     }
                     break;
 
                 default:
-                    Entity.Task t = new Entity.Task(input);
-                    addTask(t);
+                    try{
+                        throw new LackDetailsException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    } catch (LackDetailsException e){
+                        System.out.println("\t"+e.getMessage());
+                    }
+//                    Entity.Task t = new Entity.Task(input);
+//                    addTask(t);
             }
             System.out.println(line);
             input = inputCleaner(in.nextLine());
@@ -142,6 +174,7 @@ public class Duke {
         }
 
     }
+
 }
 
 
