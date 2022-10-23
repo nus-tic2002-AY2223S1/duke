@@ -19,7 +19,7 @@ public class TodoMissingDescriptionExceptionTest {
     }
 
     @Test
-    public void BasicInputExceptionLastConstructorTest() {
+    public void TodoMissingDescriptionExceptionLastConstructorTest() {
         TodoMissingDescriptionException todoMissingDescriptionException = new TodoMissingDescriptionException();
         assertNotEquals("This is another wrong message", todoMissingDescriptionException.errorMsg);
     }

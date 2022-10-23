@@ -16,9 +16,9 @@ public class Event extends Task {
     }
 
     /**
-     * Return a string including status icon, description and datetime of event
+     * Return a string including status icon, description, datetime and priority of event
      *
-     * @return Status icon, description and datetime of event in a string
+     * @return Status icon, description, datetime and priority of event in a string
      */
     @Override
     public String toString() {
@@ -26,9 +26,9 @@ public class Event extends Task {
     }
 
     /**
-     * Return a string including status icon, description and datetime of event in format to be saved in task.txt
+     * Return a string including status icon, description, datetime and priority of event in format to be saved in task.txt
      *
-     * @return Status icon, description and datetime of event in a string
+     * @return Status icon, description, datetime and priority of event in a string
      */
     @Override
     public String stringToOutput() {

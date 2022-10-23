@@ -14,7 +14,7 @@ public class TaskListTest {
     @Test
     public void TaskListLoadTaskTest() {
         TaskList task = new TaskList();
-        task.loadTasks("T | 1 | read book");
+        task.loadTasks("T | 1 | read book | low");
         assertEquals("read book", task.myTaskList.get(0).getDescription());
         assertEquals("X", task.myTaskList.get(0).getStatusIcon());
     }

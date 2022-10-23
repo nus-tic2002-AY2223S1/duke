@@ -78,4 +78,22 @@ public class ParserTest {
         Command c = Parser.parse("deadline finish math homework /by 2-02-2023 1330");
         assertSame(ErrorCommand.class, c.getClass());
     }
+
+    @Test
+    public void PriorityCommandTest() {
+        Command c = Parser.parse("priority 1 high");
+        assertSame(PriorityCommand.class, c.getClass());
+    }
+
+    @Test
+    public void FindCommandTest() {
+        Command c = Parser.parse("find this is test");
+        assertSame(FindCommand.class, c.getClass());
+    }
+
+    @Test
+    public void DoWithinPeriodCommandTest() {
+        Command c = Parser.parse("dowithinperiod have dinner with friends /between 02/03/2022 /and 05/06/2023");
+        assertSame(DoWithinPeriodCommand.class, c.getClass());
+    }
 }

@@ -58,9 +58,9 @@ public class TaskList {
 
             case "E":
                 if (inputList.length == 5 && inputList[1].matches("-?\\d+(\\.\\d+)?")) {
-                    String EventTask = inputList[2];
-                    String ByDate = inputList[3];
-                    Event event = new Event(EventTask, ByDate);
+                    String eventTask = inputList[2];
+                    String byDate = inputList[3];
+                    Event event = new Event(eventTask, byDate);
                     event.setPriority(inputList[4]);
                     if (Integer.parseInt(inputList[1]) == 1) {
                         event.markDone();
@@ -74,9 +74,9 @@ public class TaskList {
                 }
             case "D":
                 if (inputList.length == 5 && inputList[1].matches("-?\\d+(\\.\\d+)?")) {
-                    String DeadLineTask = inputList[2];
-                    String AtDate = inputList[3];
-                    Deadline deadline = new Deadline(DeadLineTask, AtDate);
+                    String deadLineTask = inputList[2];
+                    String atDate = inputList[3];
+                    Deadline deadline = new Deadline(deadLineTask, atDate);
                     deadline.setPriority(inputList[4]);
                     if (Integer.parseInt(inputList[1]) == 1) {
                         deadline.markDone();
@@ -84,6 +84,23 @@ public class TaskList {
                         deadline.unMarkDone();
                     }
                     myTaskList.add(deadline);
+                    break;
+                } else {
+                    break;
+                }
+            case "DWP":
+                if (inputList.length == 6 && inputList[1].matches("-?\\d+(\\.\\d+)?")) {
+                    String doWithinPeriodTask = inputList[2];
+                    String startPeriodDate = inputList[3];
+                    String endPeriodDate = inputList[4];
+                    DoWithinPeriod doWithinPeriod = new DoWithinPeriod(doWithinPeriodTask, startPeriodDate, endPeriodDate);
+                    doWithinPeriod.setPriority(inputList[5]);
+                    if (Integer.parseInt(inputList[1]) == 1) {
+                        doWithinPeriod.markDone();
+                    } else {
+                        doWithinPeriod.unMarkDone();
+                    }
+                    myTaskList.add(doWithinPeriod);
                     break;
                 } else {
                     break;

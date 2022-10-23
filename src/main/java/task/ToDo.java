@@ -12,9 +12,9 @@ public class ToDo extends Task {
     }
 
     /**
-     * Return a string including status icon, description of todo task
+     * Return a string including status icon, description and priority of todo task
      *
-     * @return Both status icon and description of todo task
+     * @return Status icon, description and priority of todo task
      */
     @Override
     public String toString() {
@@ -22,9 +22,9 @@ public class ToDo extends Task {
     }
 
     /**
-     * Return a string including both the status icon and description of todo task in format to be saved in task.txt
+     * Return a string including the status icon, description and priority of todo task in format to be saved in task.txt
      *
-     * @return Status icon and description of todo task in a string
+     * @return Status icon, description and priority of todo task in a string
      */
     @Override
     public String stringToOutput() {

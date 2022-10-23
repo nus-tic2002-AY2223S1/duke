@@ -8,19 +8,19 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 public class EventMissingKeywordExceptionTest {
 
     @Test
-    public void DeadlineMissDeadlineMissingKeywordExceptionConstructorTest() {
+    public void EventMissingKeywordExceptionConstructorTest() {
         EventMissingKeywordException eventMissingKeywordException = new EventMissingKeywordException();
         assertEquals(" ☹ OOPS!!! The key word /at must exists in the event command.", eventMissingKeywordException.errorMsg);
     }
 
     @Test
-    public void DeadlineMissDeadlineMissingKeywordExceptionAnotherConstructorTest() {
+    public void EventMissingKeywordExceptionAnotherConstructorTest() {
         EventMissingKeywordException eventMissingKeywordException = new EventMissingKeywordException();
         assertNotEquals("This is a wrong message", eventMissingKeywordException.errorMsg);
     }
 
     @Test
-    public void DeadlineMissDeadlineMissingKeywordExceptionLastConstructorTest() {
+    public void EventMissingKeywordExceptionLastConstructorTest() {
         EventMissingKeywordException eventMissingKeywordException = new EventMissingKeywordException();
         assertNotEquals("This is another wrong message", eventMissingKeywordException.errorMsg);
     }

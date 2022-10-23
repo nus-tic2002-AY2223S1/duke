@@ -14,12 +14,12 @@ public class ToDoTest {
     @Test
     public void ToDoToStringTest() {
         ToDo todo = new ToDo("Prepare for math exam");
-        assertEquals("[T][ ] Prepare for math exam", todo.toString());
+        assertEquals("[T][ ] Prepare for math exam [low]", todo.toString());
     }
 
     @Test
     public void ToDoStringToOutput() {
         ToDo todo = new ToDo("Prepare for math exam");
-        assertEquals("T | 0 | Prepare for math exam", todo.stringToOutput());
+        assertEquals("T | 0 | Prepare for math exam | low", todo.stringToOutput());
     }
 }

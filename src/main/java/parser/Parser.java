@@ -3,6 +3,7 @@ package parser;
 import command.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -79,6 +80,30 @@ public class Parser {
             case "find":
                 String keyword = inputCommand.split("find ")[1];
                 return new FindCommand(keyword);
+
+            case "dowithinperiod":
+                String doWithinPeriodTask = inputCommand.substring(15, inputCommand.indexOf("/between") - 1);
+                String startPeriodDateInput = (inputCommand.split("/between ")[1]).split(" /and")[0];
+                String endPeriodDateInput = inputCommand.split("/and ")[1];
+
+                String startPeriodDateString;
+                String endPeriodDateString;
+                DateTimeFormatter periodDateFormat = DateTimeFormatter.ofPattern("d/MM/yyyy");
+
+                try {
+                    LocalDate startPeriodDate = LocalDate.parse(startPeriodDateInput, periodDateFormat);
+                    LocalDate endPeriodDate = LocalDate.parse(endPeriodDateInput, periodDateFormat);
+
+                    if (endPeriodDate.isAfter(startPeriodDate)) {
+                        startPeriodDateString = startPeriodDate.format(DateTimeFormatter.ofPattern("d MMM yyyy"));
+                        endPeriodDateString = endPeriodDate.format(DateTimeFormatter.ofPattern("d MMM yyyy"));
+                        return new DoWithinPeriodCommand(doWithinPeriodTask, startPeriodDateString, endPeriodDateString);
+                    } else {
+                        return new ErrorCommand(inputCommand + "\n" + " ☹ OOPS!!! " + "The end period date should be after start period date");
+                    }
+                } catch (DateTimeParseException e) {
+                    return new ErrorCommand(inputCommand + "\n" + " ☹ OOPS!!! task has the wrong date format. " + "DoWithinPeriod date format should be {d/MM/yyyy}");
+                }
 
             default:
                 return new ErrorCommand(inputCommand);

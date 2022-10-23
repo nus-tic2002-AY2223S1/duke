@@ -15,13 +15,13 @@ public class EventTest {
     @Test
     public void EventToStringTest() {
         Event event = new Event("Attend design meeting", "03 June 2023 1130");
-        assertEquals("[E][ ] Attend design meeting (at: 03 June 2023 1130)", event.toString());
+        assertEquals("[E][ ] Attend design meeting (at: 03 June 2023 1130) [low]", event.toString());
     }
 
     @Test
     public void EventStringToOutput() {
         Event event = new Event("Attend design meeting", "03 June 2023 1130");
-        assertEquals("E | 0 | Attend design meeting | 03 June 2023 1130", event.stringToOutput());
+        assertEquals("E | 0 | Attend design meeting | 03 June 2023 1130 | low", event.stringToOutput());
     }
 
 

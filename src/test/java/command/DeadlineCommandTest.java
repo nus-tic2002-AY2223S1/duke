@@ -43,6 +43,6 @@ public class DeadlineCommandTest {
         DeadlineCommand deadline = new DeadlineCommand(deadLineTask, deadlineString);
         deadline.execute(task, ui, storage);
         assertEquals(1, task.myTaskList.size());
-        assertEquals("[D][ ] task1 (by: 2 Apr 2020 1230)", task.myTaskList.get(0).toString());
+        assertEquals("[D][ ] task1 (by: 2 Apr 2020 1230) [low]", task.myTaskList.get(0).toString());
     }
 }
