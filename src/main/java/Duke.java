@@ -9,6 +9,7 @@ import task.Deadline;
 import task.Todo;
 import exception.DukeException;
 import static utility.Method.isNumeric;
+import static utility.Method.searchWord;
 
 public class Duke {
 
@@ -151,13 +152,7 @@ public class Duke {
                 save(listItems);
                 return true;
             case"find":
-                String keyWord = Input.substring(5,Input.length());
-                for(Task item: listItems){
-                    if(item.description.contains(keyWord)){
-                        int index = listItems.indexOf(item) + 1;
-                        System.out.println(" " + Integer.toString(index) + "." + item);
-                    }
-                }
+                searchWord(listItems,Input);
                 return true;
             default:
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");

@@ -1,9 +1,11 @@
 package utility;
 
+import task.Task;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 
 
 public class Method {
@@ -154,6 +156,28 @@ public class Method {
             System.out.println("Pls enter number as date");
         }
         return date;
-        }
+    }
+
+     public static void searchWord(ArrayList<Task> listItems, String Input){
+              ArrayList<String> findList = new ArrayList<>();
+         String keyWord = Input.substring(5,Input.length());
+         for(Task item: listItems){
+             if(item.description.contains(keyWord)){
+                 int index = listItems.indexOf(item) + 1;
+                 String find = Integer.toString(index) + "." + item;
+                 findList.add(find);
+             }
+         }
+         if(!findList.isEmpty()){
+             System.out.println("Here are the matching tasks in your list:");
+             for(String item: findList){
+               System.out.println(item);
+             }
+         }else{
+             System.out.println("The searching word is not in your list:");
+         }
+
+     }
+
 
 }
