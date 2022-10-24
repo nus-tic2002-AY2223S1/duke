@@ -23,7 +23,7 @@ public class UI {
                }
            }
        } catch(Exception e){
-           System.out.println("☹ OOPS!!! There is no outstanding tasks at this moment");
+           System.out.println("There is no outstanding tasks at this moment");
        }
         System.out.println("What can I do for you?");
     }
