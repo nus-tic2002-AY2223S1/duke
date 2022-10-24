@@ -1,5 +1,6 @@
 package utility;
 
+import storeage.StoreFile;
 import task.Deadline;
 import task.Events;
 import task.Task;
@@ -224,6 +225,26 @@ public class Method {
         markTask.markAsDone();
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(markTask);
+    }
+
+    public static ArrayList<Task> AddList (ArrayList<Task> listItems,String input){
+        listItems.add(new Task(input));
+        System.out.println("\tadded: " + input);
+        return listItems;
+    }
+
+    public static void printList(ArrayList<Task>listItems){
+        for(int i=1;i<=listItems.size();i++){
+            System.out.println(i + "." + listItems.get(i-1));
+        }
+    }
+
+    public static void save(ArrayList<Task> listItems){
+        String list = "";
+        for (Task listItem : listItems) {
+            list += listItem.getData() + "\n";
+        }
+        StoreFile.writeToFile(list);
     }
 
 }

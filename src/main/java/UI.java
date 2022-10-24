@@ -11,11 +11,11 @@ import java.util.Scanner;
 public class UI {
     public static void Greeting() {
         System.out.println("Hello! I'm Duke");
-        System.out.println("Here is your outstanding tasks:");
         File file = new File("C:\\data\\duke.txt");
 
        try{
            Scanner s = new Scanner(file);
+           System.out.println("Here is your outstanding tasks:");
            while (s.hasNextLine()) {
                String line = s.nextLine();
                if(line.charAt(2)=='0'){
