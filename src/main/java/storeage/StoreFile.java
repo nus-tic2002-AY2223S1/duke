@@ -13,37 +13,19 @@ public class StoreFile {
             File f = new File("C:\\data\\duke.txt");
             File dirs = new File("C:\\data");
             if(!dirs.exists()){
+                //noinspection ResultOfMethodCallIgnored
                 dirs.mkdirs();
             }
 
-            try {
-                FileWriter pw = new FileWriter(f);
-                pw.write(Text);
-                pw.close();
-                System.out.println("Save file to Hard Drive Successfully !.");
+        try {
+            FileWriter pw = new FileWriter(f);
+            pw.write(Text);
+            pw.close();
+            System.out.println("Save file to Hard Drive Successfully !.");
 
-            }catch(Exception e){
-                System.out.println("File is not exist");
+        }catch(Exception e){
+            System.out.println("File is not exist");
             }
-        }
-
-//        public static void readToFile(){
-//
-//            try{
-//                File f = new File("C:\\data\\duke.txt");
-//                Scanner s = new Scanner(f);
-//                try{
-//                    while(s.hasNext()){
-//                        System.out.println(s.nextLine());
-//                    }
-//                }
-//                catch(Exception e){
-//                    System.out.println("Read file Error");
-//                }
-//            }
-//            catch (FileNotFoundException e){
-//                System.out.println("File is not found");
-//            }
-//        }
-
     }
+
+}

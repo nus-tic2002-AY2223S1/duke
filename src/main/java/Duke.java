@@ -17,7 +17,6 @@ public class Duke {
             listItems.add(new Task(input));
             System.out.println("\tadded: " + input);
         return listItems;
-
     }
 
     public static void printList(ArrayList<Task>listItems){
@@ -66,7 +65,7 @@ public class Duke {
             String[] userInput = Input.split(" ");
         switch(userInput[0]){
             case"bye":
-                System.out.println("Bye. Hope to see you again soon!");
+                    System.out.println("Bye. Hope to see you again soon!");
                 break;
             case"list":
                 if(listItems.isEmpty()){
@@ -80,8 +79,6 @@ public class Duke {
                     markTask.markAsDone();
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println(markTask);
-
-
                 return true;
             case"unmark":
                     int indexUnmark = Integer.parseInt(userInput[1]);

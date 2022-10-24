@@ -40,13 +40,13 @@ public class Method {
 
 
 
-        public static class dateFormat {
+
             /**
              * 'converToValidDate' is convert not correct inputdate format to valid Date format
              * so that DateFormat can understand it.
              * For example: when user enter date as ' 2/12/2019 1800' ,need convert the format to '2019/02/12T1800'
              */
-            public static String convertToValidDate(String InputDate) {
+        public static String convertToValidDate(String InputDate) {
                 String input = InputDate;
                 if (InputDate.contains(" ")) {
                     String[] stringDate = InputDate.split(" ");
@@ -81,7 +81,6 @@ public class Method {
                         }
                     }
 
-
                 } catch (DateTimeParseException e) {
                     System.out.println("Pls enter valid date or time");
                 }
@@ -100,28 +99,23 @@ public class Method {
                     return year + "/" + month + "/" + day;
                 }
 
-            }
         }
 
 
 
-          public static String convertToDate(String inputDate) throws DateTimeParseException {
-              String strDate = dateFormat.convertToValidDate(inputDate);
+        public static String convertToDate(String inputDate) throws DateTimeParseException {
+              String strDate = convertToValidDate(inputDate);
                     strDate = strDate.replaceAll("/","-");
                     LocalDate date = LocalDate.parse(strDate);
                     DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM dd yyyy");
-
                     return date.format(dateFormat);
-                 }
+        }
 
-
-
-
-                    /**
-                    * convert to Time format when user input month,day,year,timing
-                    */
-           public static String convertToTime(String inputDate) throws DateTimeParseException {
-              String str = dateFormat.convertToValidDate(inputDate);
+        /**
+        * convert to Time format when user input month,day,year,timing
+        */
+        public static String convertToTime(String inputDate) throws DateTimeParseException {
+              String str = convertToValidDate(inputDate);
               String  strDate = str.replaceAll("/", "-");
               for(char c: strDate.toCharArray()){
                  if(c==' '){
@@ -133,7 +127,7 @@ public class Method {
               LocalDateTime date = LocalDateTime.parse(strDate);
               DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM dd yyyy hhmma");
               return date.format(dateFormat);
-            }
+        }
 
 
 
@@ -142,7 +136,7 @@ public class Method {
      * use if else condition check whether user input Date format or Time format
      * return corresponding format to function call
      */
-          public static String DateTime(String inputDate){
+    public static String DateTime(String inputDate){
            String date=inputDate;
             try {
                if (isNumeric(inputDate)) {
@@ -159,25 +153,22 @@ public class Method {
     }
 
      public static void searchWord(ArrayList<Task> listItems, String Input){
-              ArrayList<String> findList = new ArrayList<>();
-         String keyWord = Input.substring(5,Input.length());
+         ArrayList<String> findList = new ArrayList<>();
+         String keyWord = Input.substring(5);
          for(Task item: listItems){
              if(item.description.contains(keyWord)){
-                 int index = listItems.indexOf(item) + 1;
-                 String find = Integer.toString(index) + "." + item;
+                 String find = "." + item;
                  findList.add(find);
              }
          }
          if(!findList.isEmpty()){
              System.out.println("Here are the matching tasks in your list:");
              for(String item: findList){
-               System.out.println(item);
+               System.out.println(findList.indexOf(item) + 1 + item);
              }
          }else{
              System.out.println("The searching word is not in your list:");
          }
-
      }
-
 
 }

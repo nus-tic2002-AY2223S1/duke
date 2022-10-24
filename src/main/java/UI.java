@@ -1,18 +1,12 @@
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 
 /**
  * greeting
  * since first time run Duke no task,so will print "there is no tasks at this moment"
- *
  * next time when start Duke, will automatically read file and print those outstanding tasks only
- *
  */
 public class UI {
     public static void Greeting() {
@@ -31,7 +25,6 @@ public class UI {
        } catch(Exception e){
            System.out.println("☹ OOPS!!! There is no outstanding tasks at this moment");
        }
-
         System.out.println("What can I do for you?");
     }
 }
