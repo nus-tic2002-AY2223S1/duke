@@ -49,8 +49,12 @@ public class Method {
              * For example: when user enter date as ' 2/12/2019 1800' ,need convert the format to '2019/02/12T1800'
              */
         public static String convertToValidDate(String InputDate) {
-                String[] date = InputDate.split("/");
-
+            String input = InputDate;
+            if (InputDate.contains(" ")) {
+                String[] stringDate = InputDate.split(" ");
+                input = stringDate[0];
+            }
+            String[] date = input.split("/");
                 String year = date[0];
                 String month = date[1];
                 String day = date[2];

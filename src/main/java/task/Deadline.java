@@ -15,7 +15,7 @@ public class Deadline extends Task {
         this.by = by;
     }
       public String getData() {
-          return "D" + super.getData() +  by ;
+          return "D" + super.getData() + "|" + by ;
       }
       public String toString()  {
           return "[D]" + super.toString() + " (by: " + DateTime(by) + ")";
