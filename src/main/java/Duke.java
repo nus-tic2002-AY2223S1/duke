@@ -1,7 +1,14 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
-    public static void main(String[] args) {
+
+    protected static String[] Tasks = new String[100];
+    protected static String userReply = "";
+    protected static Scanner in;
+    protected static int countTask = 0;
+
+    public static void greet() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -9,18 +16,49 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
-        System.out.println("Hello! I'm Duke" + System.lineSeparator() + "What can I do for you?");
+        String line = " ____________";
+        System.out.println("Hello Siying!\n" + "How's your day today?\n" + line + System.lineSeparator() + "Below are your tasks due today\n" + line );
+        System.out.println("What would you like to do now?");
+    }
 
-        String userReply;
-        Scanner in = new Scanner(System.in);
-        userReply = in.nextLine();
+    public static void exit() {
+        System.out.println("Bye Siying!" + System.lineSeparator() + "Enjoy your day ;)");
+    }
+
+    public static void getAction() {
 
         while (!userReply.equals("bye")) {
-            System.out.println(userReply);
             in = new Scanner(System.in);
             userReply = in.nextLine();
+
+            if (userReply.equals("bye")) {
+                ;
+            } else if (userReply.equals("list")) {
+                printTasks(Tasks);
+            } else {
+                Tasks[countTask] = userReply;
+                countTask++;
+
+                System.out.println(userReply);
+            }
         }
-            System.out.println("Bye. Hope to see you again soon!");
+    }
+
+    public static void printTasks(String[] items) {
+        for (int i = 0; i < countTask; i++){
+            System.out.println(i+1 + ". " + items[i]);
+        }
+    }
+
+//    public static void listDuetoday(){
+//        return Tasks;
+//    }
+
+    public static void main(String[] args) {
+
+        greet();
+        getAction();
+        exit();
 
     }
 }
