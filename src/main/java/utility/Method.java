@@ -76,7 +76,6 @@ public class Method {
                     System.out.println("Pls enter valid date or time");
                 }
 
-
                 if (month.length() == 1 ) {
                     month = '0' + month;
                 }
@@ -231,12 +230,6 @@ public class Method {
         System.out.println(markTask);
     }
 
-    public static ArrayList<Task> AddList (ArrayList<Task> listItems,String input){
-        listItems.add(new Task(input));
-        System.out.println("\tadded: " + input);
-        return listItems;
-    }
-
     public static void printList(ArrayList<Task>listItems){
         for(int i=1;i<=listItems.size();i++){
             System.out.println(i + "." + listItems.get(i-1));
@@ -244,11 +237,11 @@ public class Method {
     }
 
     public static void save(ArrayList<Task> listItems){
-        String list = "";
+        StringBuilder list = new StringBuilder();
         for (Task listItem : listItems) {
-            list += listItem.getData() + "\n";
+            list.append(listItem.getData()).append("\n");
         }
-        StoreFile.writeToFile(list);
+        StoreFile.writeToFile(list.toString());
     }
 
 }
