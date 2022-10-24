@@ -23,6 +23,7 @@ import static common.constants.ErrorMessage.EXCEPTION_ERROR_MSG;
 import static common.utils.PrintUtil.printGreet;
 import static common.utils.PrintUtil.printLine;
 import static common.utils.StringUtil.getFirstWord;
+import static logic.file.FileManager.loadFile;
 import static logic.parsers.Parser.parseChat;
 
 public class Duke {
@@ -40,6 +41,7 @@ public class Duke {
                 Chat chat = new Chat(CommandEnum.valueOf(command), input, taskList);
 
                 parseChat(chat);
+                loadFile(chat);
             } catch (IllegalArgumentException e) {
                 System.out.println(INVALID_TASK_COMMAND_MSG);
             } catch (EmptyTaskListException e) {

@@ -10,14 +10,13 @@ import logic.commands.Command;
 import logic.commands.AddDeadlineCommand;
 import logic.commands.AddEventCommand;
 import logic.commands.AddTodoCommand;
+import logic.commands.ByeCommand;
 import logic.commands.DeleteCommand;
 import logic.commands.HelpCommand;
 import logic.commands.ListCommand;
 import logic.commands.MarkCommand;
 import logic.commands.UnmarkCommand;
 import model.Chat;
-
-import static common.utils.PrintUtil.printBye;
 
 public class Parser {
     public Parser() {}
@@ -36,6 +35,7 @@ public class Parser {
         Command addDeadlineCom = new AddDeadlineCommand(chat);
         Command addEventCom = new AddEventCommand(chat);
         Command addTodoCom = new AddTodoCommand(chat);
+        Command byeCom = new ByeCommand(chat);
         Command deleteCom = new DeleteCommand(chat);
         Command helpCom = new HelpCommand(chat);
         Command listCom = new ListCommand(chat);
@@ -44,8 +44,8 @@ public class Parser {
 
         switch (chat.getCommand()) {
             case bye:
-                printBye();
-                System.exit(0);
+                byeCom.execute();
+                break;
             case list:
                 listCom.execute();
                 break;

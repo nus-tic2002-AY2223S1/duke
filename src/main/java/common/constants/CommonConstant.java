@@ -44,7 +44,11 @@ public class CommonConstant {
             + "| |_| | |_| |   <  __/\n"
             + "|____/ \\__,_|_|\\_\\___|\n";
 
+    public static final String MARKED_ICON = "X";
+
     public static final String MARKED_TASK = "Nice! Task %s is successfully marked.";
+
+    public static final String PIPE = "|";
 
     public static final String PROMPT = "bot@duke:~$ ";
 
