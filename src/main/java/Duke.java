@@ -31,11 +31,14 @@ public class Duke {
                 }
                 catch (NumberFormatException e)
                 {
-                    System.out.println(p.front() + " is not a valid integer");
+                    System.out.println("Meow! " + p.front() + " is not a valid integer.");
+                    t.showTodoList();
                 }
-
-                //clear the arraylist
-                p.clear();
+                catch (IndexOutOfBoundsException e)
+                {
+                    System.out.println("Meow! " + p.front() + " is not in the list.");
+                    t.showTodoList();
+                }
             }
 
             else if (p.front().equalsIgnoreCase("unmark")){
@@ -49,11 +52,14 @@ public class Duke {
                 }
                 catch (NumberFormatException e)
                 {
-                    System.out.println(p.front() + " is not a valid integer");
+                    System.out.println("Meow! " + p.front() + " is not a valid integer.");
+                    t.showTodoList();
                 }
-
-                //clear the arraylist
-                p.clear();
+                catch (IndexOutOfBoundsException e)
+                {
+                    System.out.println("Meow! " + p.front() + " is not in the list.");
+                    t.showTodoList();
+                }
             }
 
 
@@ -69,6 +75,30 @@ public class Duke {
                 p.next();
                 t.showTodoList();
             }
+
+            else if (p.front().equalsIgnoreCase("delete")){
+                //delete a task. e.g. delete 5
+                p.next();
+                //parse the index to deleteTask
+                try{
+                    String indexString = p.front();
+                    int index = Integer.parseInt(indexString);
+                    t.changeToMarkNotDone(index);
+                    t.deleteTask(index);
+                }
+                catch (NumberFormatException e)
+                {
+                    System.out.println("Meow! " + p.front() + " is not a valid integer.");
+                    t.showTodoList();
+                }
+                catch (IndexOutOfBoundsException e)
+                {
+                    System.out.println("Meow! " + p.front() + " is not in the list.");
+                    t.showTodoList();
+                }
+            }
+
+
 
             else { //add new task
                 String incomingTaskName="";
@@ -88,6 +118,11 @@ public class Duke {
                             incomingType = p.front();
                             p.next();
                             incomingTaskName = p.tokenToString();
+                            if (incomingTaskName.isBlank()){
+                                h.nalaSyntaxError("BlankTodo");
+                                break;
+                            }
+
                         }
                         t.addNewTask(incomingTaskName, incomingType);
                         p.clear();
@@ -109,6 +144,14 @@ public class Duke {
                             p.expect("/by");
                             incomingDate = p.tokenToString();
                             incomingTaskName = TaskNameString;
+                            if (incomingTaskName.isBlank()){
+                                h.nalaSyntaxError("BlankDeadline");
+                                break;
+                            }
+                            if (incomingDate.isBlank()){
+                                h.nalaSyntaxError("NoDate");
+                                break;
+                            }
                         }
                         else{ //no /by
                             h.nalaSyntaxError("DeadlineNoBy");
@@ -134,6 +177,14 @@ public class Duke {
                             p.expect("/at");
                             incomingDate = p.tokenToString();
                             incomingTaskName = TaskNameString;
+                            if (incomingTaskName.isBlank()){
+                                h.nalaSyntaxError("BlankEvent");
+                                break;
+                            }
+                            if (incomingDate.isBlank()){
+                                h.nalaSyntaxError("NoDate");
+                                break;
+                            }
                         }
                         else{ //no /at
                             h.nalaSyntaxError("EventNoAt");

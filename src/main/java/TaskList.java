@@ -26,7 +26,7 @@ public class TaskList {
         }
 
         h.separator();
-        System.out.println("added: " + TaskList.size() + ". " + incomingTaskName + "\nYou have " + TaskList.size()+ " tasks in the list!");
+        System.out.println("added: " + TaskList.size() + "." + incomingTaskName + "\nYou have " + TaskList.size()+ " tasks in the list!");
         h.separator();
     }
 
@@ -35,15 +35,32 @@ public class TaskList {
         TaskList.add(new Todo(incomingTaskName));
 
         h.separator();
-        System.out.println("added: " + TaskList.size() + ". " + incomingTaskName + "\nYou have " + TaskList.size()+ " tasks in the list!");
+        System.out.println("added: " + TaskList.size() + "." + incomingTaskName + "\nYou have " + TaskList.size()+ " tasks in the list!");
         h.separator();
+    }
+
+    public void deleteTask(int TaskIndex){
+        int i = TaskIndex-1;
+        if (i> TaskList.size()){
+            h.separator();
+            System.out.println("Uh oh! Task " + TaskIndex + " is not found :(. Task " + TaskIndex + " is NOT deleted.");
+            showTodoList();
+            h.separator();
+        }
+        else{
+            String toBeDeleted = TaskList.get(i).toString();
+            TaskList.remove(i);
+            h.separator();
+            System.out.println("Done! " +TaskIndex+". "+toBeDeleted+" has been deleted. The task list has been updated: ");
+            showTodoList();
+        }
     }
 
     public void showTodoList(){
         h.separator();
         for (int i = 0; i< TaskList.size(); i++){
 
-            System.out.println(TaskList.get(i).toString());
+            System.out.println(i+1+"."+TaskList.get(i).toString());
 
         }
         System.out.println("There are " + TaskList.size() + " tasks in the list!");
@@ -68,7 +85,7 @@ public class TaskList {
                 h.separator();
                 System.out.println("This task has already been marked as done!");
             }
-            System.out.println(i+". "+TaskList.get(i).toString());
+            System.out.println(TaskIndex+". "+TaskList.get(i).toString());
             h.separator();
             h.newline();
         }
@@ -91,7 +108,7 @@ public class TaskList {
                 h.separator();
                 System.out.println("This task has already been marked as not done!");
             }
-            System.out.println(i+". "+TaskList.get(i).toString());
+            System.out.println(TaskIndex+". "+TaskList.get(i).toString());
             h.separator();
             h.newline();
         }

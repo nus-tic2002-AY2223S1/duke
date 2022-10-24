@@ -33,6 +33,18 @@ public class Helper {
         else if (type == "DeadlineNoBy"){
             System.out.println("Meow! I can't create an Event for you without a \"/by\". Please create the task again!");
         }
+        else if (type == "BlankEvent"){
+            System.out.println("Meow! I can't create an Event for you without a description! Please create the task again!");
+        }
+        else if (type == "BlankDeadline"){
+            System.out.println("Meow! I can't create an Deadline for you without a description! Please create the task again!");
+        }
+        else if (type == "BlankTodo"){
+            System.out.println("Meow! I can't create an Todo for you without a description! Please create the task again!");
+        }
+        else if (type == "NoDate"){
+            System.out.println("Meow! You did not specify a date. Please create the task again!");
+        }
     }
 
 }
