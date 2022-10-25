@@ -93,6 +93,21 @@ public class TaskList {
         }
     }
 
+    public void filter(String keyword){
+        int count = 0;
+        for (int i = 0; i < taskList.size(); i++){
+            String str = taskList.get(i).getTask();
+            System.out.println(str);
+            if (str.contains(keyword)){
+                System.out.println("[" + taskList.get(i).getTaskType() + "][" + taskList.get(i).getStatusIcon() + "] " + taskList.get(i).getTask() + taskList.get(i).getTaskDetails());
+                count = count + 1;
+            }
+        }
+        if (count == 0){
+            System.out.println("No task with the keyword " + keyword + " exists");
+        }
+    }
+
     public boolean processTasks(String command, String userInput){
         int end = userInput.indexOf("[");
         String parsedString = userInput;
@@ -133,6 +148,14 @@ public class TaskList {
            this.getReminders();
            return false;
        }
+
+       if (command.equals(LegalCommandEnumerations.FILTER.toString())){
+           int start = userInput.indexOf(" ") + 1;
+           String keyword = userInput.substring(start, userInput.length());
+           this.filter(keyword);
+           return false;
+       }
+
 
        this.addTask(parsedString);
        return false;

@@ -7,7 +7,7 @@ public class Ui {
     public static void printCommandMenu(){
         showLine();
         System.out.println("**COMMAND MENU**");
-        System.out.println("MARK | UNMARK | DELETE | VIEW | EXIT");
+        System.out.println("MARK | UNMARK | DELETE | VIEW | EXIT | REMINDERS | FILTER");
         System.out.println("TODO <<task>> | DEADLINE <<task>> /by <<date>>| EVENT <<TASK>> /at <<date>>");
         System.out.println("Please ensure commands are all capitalised.");
         System.out.println("**END OF COMMAND MENU**");
