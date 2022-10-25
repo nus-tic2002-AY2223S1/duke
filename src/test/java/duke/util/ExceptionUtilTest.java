@@ -9,10 +9,10 @@ import java.io.StringWriter;
 
 class ExceptionUtilTest {
 
-	@Test
-	void testGetStackTraceAsString() {
-		String message = ExceptionUtil.getStackTraceAsString(new DukeException("custom message"));
-		boolean flag = message.contains("custom message");
-		Assertions.assertTrue(flag);
-	}
+    @Test
+    void testGetStackTraceAsString() {
+        String message = ExceptionUtil.getStackTraceAsString(new DukeException("custom message"));
+        boolean flag = message.contains("custom message");
+        Assertions.assertTrue(flag);
+    }
 }
