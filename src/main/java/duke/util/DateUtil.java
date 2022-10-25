@@ -13,7 +13,7 @@ public class DateUtil {
     public static LocalDateTime parse(String input, String pattern) {
         try {
             return LocalDateTime.parse(input, DateTimeFormatter.ofPattern(pattern));
-        } catch (DateTimeParseException exception) {
+        } catch (DateTimeParseException | NullPointerException exception) {
             throw new CommandArgsException("time format invalid, it should be in (yyyy-MM-dd HH:mm) format");
         }
     }
