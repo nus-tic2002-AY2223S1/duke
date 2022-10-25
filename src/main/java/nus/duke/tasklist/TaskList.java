@@ -33,10 +33,16 @@ public class TaskList {
         return idx;
     }
 
-    public static void viewTasks(){
+    public static void printTask(Task t){
+        System.out.println( "[" + t.getTaskType() + "][" + t.getStatusIcon() + "] " + t.getTask() + t.getTaskDetails());
+    }
+
+    public static void viewTaskList(){
         for (int i = 0; i < taskList.size(); i++) {
-            System.out.println( "[" + taskList.get(i).getTaskType() + "][" + taskList.get(i).getStatusIcon() + "] " + taskList.get(i).getTask() + taskList.get(i).getTaskDetails());
+            printTask(taskList.get(i));
+            //System.out.println( "[" + taskList.get(i).getTaskType() + "][" + taskList.get(i).getStatusIcon() + "] " + taskList.get(i).getTask() + taskList.get(i).getTaskDetails());
         }
+
     }
 
     public void addTask(String userInput) {
@@ -89,7 +95,8 @@ public class TaskList {
         }); */
 
         for (int i = 0; i < reminders.size(); i++) {
-            System.out.println( "[" + reminders.get(i).getTaskType() + "][" + reminders.get(i).getStatusIcon() + "] " + reminders.get(i).getTask() + reminders.get(i).getTaskDetails());
+            printTask(reminders.get(i));
+            // System.out.println( "[" + reminders.get(i).getTaskType() + "][" + reminders.get(i).getStatusIcon() + "] " + reminders.get(i).getTask() + reminders.get(i).getTaskDetails());
         }
     }
 
@@ -98,7 +105,8 @@ public class TaskList {
         for (int i = 0; i < taskList.size(); i++){
             String str = taskList.get(i).getTask();
             if (str.contains(keyword)){
-                System.out.println("[" + taskList.get(i).getTaskType() + "][" + taskList.get(i).getStatusIcon() + "] " + taskList.get(i).getTask() + taskList.get(i).getTaskDetails());
+                printTask(taskList.get(i));
+                //System.out.println("[" + taskList.get(i).getTaskType() + "][" + taskList.get(i).getStatusIcon() + "] " + taskList.get(i).getTask() + taskList.get(i).getTaskDetails());
                 count = count + 1;
             }
         }
@@ -124,7 +132,7 @@ public class TaskList {
             return false;
         }
         if ((command.equals(LegalCommandEnumerations.VIEW.toString())) && ((this.getTotalTasks()) > 0)){
-            this.viewTasks();
+            this.viewTaskList();
             return false;
         }
 

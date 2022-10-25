@@ -4,16 +4,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Event extends Task {
-    protected LocalDate localDate;
-    //protected String at; // i.e. at a specific date/time
+    protected String at; // /at a specific place
+    protected LocalDate localDate; // /on a specific date
 
     public Event(String userInput) {
         super(userInput);
-        //this.at = userInput;
-
-        String description = super.getDescription(userInput);
+        String description = this.getDescription(userInput);
         super.setDescription(description);
-        this.localDate = processDate(userInput);
+        this.at = getVenue(userInput);
+        this.localDate = this.processDate(userInput);
     }
 
     @Override
@@ -23,18 +22,31 @@ public class Event extends Task {
 
     @Override
     public String getTaskDetails(){
+        String venue = "(Venue: " + this.at + ")";
         String date = localDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
         date = "(Time: " + date + ")";
-        return date;
+        return venue + date;
+    }
+
+    @Override
+    public String getDescription(String userInput){
+        int end = userInput.indexOf("/at");
+        return userInput.substring(0, end);
     }
 
     @Override
     public String getDateInStr(String userInput){
-        int start = userInput.indexOf("/at") + 4;
+        int start = userInput.indexOf("/on") + 4;
         if (userInput.indexOf("[T]") == -1 || userInput.indexOf("[F]") == -1){
             return userInput.substring(start, userInput.length()).trim();
         } else {
             return userInput.substring(start, userInput.length()-3).trim();
         }
+    }
+
+    public String getVenue(String userInput){
+        int start = userInput.indexOf("/at") + 4;
+        int end = userInput.indexOf("/on");
+        return userInput.substring(start, end).trim();
     }
 }

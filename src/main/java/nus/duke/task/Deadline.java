@@ -9,10 +9,13 @@ public class Deadline extends Task {
 
     public Deadline(String userInput) {
         super(userInput);
-        // originalUserInput = userInput;
-        String description = super.getDescription(userInput);
+        String description = this.getDescription(userInput);
         super.setDescription(description);
         this.localDate = processDate(userInput);
+    }
+
+    public LocalDate getDate(){
+        return this.localDate;
     }
 
     @Override
@@ -29,8 +32,10 @@ public class Deadline extends Task {
         return date;
     }
 
-    public LocalDate getDate(){
-        return this.localDate;
+    @Override
+    public String getDescription(String userInput){
+        int end = userInput.indexOf("/by");
+        return userInput.substring(0, end);
     }
 
     @Override

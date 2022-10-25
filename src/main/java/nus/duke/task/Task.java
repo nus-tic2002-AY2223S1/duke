@@ -5,9 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public abstract class Task {
-
-    //private static int totalTasks = 0;
-
     protected String description;
     protected boolean isDone;
 
@@ -40,28 +37,9 @@ public abstract class Task {
         return isDoneStr;
     }
 
-    public abstract String getTaskType();
-    public abstract String getTaskDetails();
-
-    public String getDescription(String userInput){
-        int end = 0;
-        if (userInput.indexOf("/by") != -1){
-            end = userInput.indexOf("/by");
-            return userInput.substring(0, end);
-        }
-
-        if (userInput.indexOf("/at") != -1){
-            end = userInput.indexOf("/at");
-            return userInput.substring(0, end);
-        }
-         return "";
-    }
-
     public void setDescription(String description){
         this.description = description;
     }
-
-    public abstract String getDateInStr(String userInput);
 
     public LocalDate processDate(String userInput){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
@@ -69,4 +47,9 @@ public abstract class Task {
         LocalDate localDate = LocalDate.parse(date, formatter);
         return localDate;
     }
+
+    public abstract String getDateInStr(String userInput);
+    public abstract String getTaskType();
+    public abstract String getTaskDetails();
+    public abstract String getDescription(String userInput);
 }

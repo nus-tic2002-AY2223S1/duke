@@ -15,5 +15,7 @@ public class Todo extends Task {
     public String getTaskDetails(){ return ""; }
 
     @Override
+    public String getDescription(String userInput){ return "";}
+    @Override
     public String getDateInStr(String userInput) { return ""; }
 }

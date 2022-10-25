@@ -91,7 +91,7 @@ public class Parser {
             throw new MissingKeywordException();
         }
 
-        if (command.equals("EVENT") && (userInput.contains("/at") == false)){
+        if (command.equals("EVENT") && (userInput.contains("/at") == false) && (userInput.contains("/on") == false)){
             throw new MissingKeywordException();
         }
 
