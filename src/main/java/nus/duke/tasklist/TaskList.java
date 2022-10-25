@@ -97,7 +97,6 @@ public class TaskList {
         int count = 0;
         for (int i = 0; i < taskList.size(); i++){
             String str = taskList.get(i).getTask();
-            System.out.println(str);
             if (str.contains(keyword)){
                 System.out.println("[" + taskList.get(i).getTaskType() + "][" + taskList.get(i).getStatusIcon() + "] " + taskList.get(i).getTask() + taskList.get(i).getTaskDetails());
                 count = count + 1;

@@ -61,14 +61,7 @@ public abstract class Task {
         this.description = description;
     }
 
-    public String getDateInStr(String userInput){
-        int start = userInput.indexOf("/by") + 4;
-        if (userInput.indexOf("[T]") == -1 || userInput.indexOf("[F]") == -1){
-            return userInput.substring(start, userInput.length()).trim();
-        } else {
-            return userInput.substring(start, userInput.length()-3).trim();
-        }
-    }
+    public abstract String getDateInStr(String userInput);
 
     public LocalDate processDate(String userInput){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");

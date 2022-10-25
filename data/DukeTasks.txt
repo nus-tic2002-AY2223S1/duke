@@ -1,2 +1,9 @@
 TODO send dogs to the groomers
-DEADLINE finish assignment /by 01/10/2022
+TODO borrow Harry Potter book
+TODO borrow The Cat In The Hat book
+DEADLINE return Harry Potter book /by 20/10/2022
+DEADLINE return The Cat In The Hat book /by 01/01/2023
+DEADLINE finish coding assignment /by 12/12/2022
+DEADLINE finish ethics essay /by 7/11/2022
+EVENT visit the zoo /at San Diego
+EVENT dog park gathering /at Central Park
