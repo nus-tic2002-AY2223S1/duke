@@ -52,7 +52,19 @@ public class Ui implements AutoCloseable {
     }
 
     public void printTaskList(TaskList tasks) {
-        print("Here are the tasks in your list:");
+        printTaskList(tasks, null);
+    }
+
+    public void printTaskList(TaskList tasks, DateTime dateTime) {
+        if (tasks.size() == 0) {
+            print("You don't have a task in your list!");
+            return;
+        }
+        if (dateTime == null) {
+            print("Here are the tasks in your list:");
+        } else {
+            print("Here are the tasks in your list at/by " + dateTime);
+        }
         for (int i = 0; i < tasks.size(); i += 1) {
             print(String.format("%d.%s%s", i + 1, INTERNAL_INDENT, tasks.get(i)));
         }
@@ -83,7 +95,7 @@ public class Ui implements AutoCloseable {
         System.out.println( logo);
         print(
                 "Hello! I'm Anyer.\n"
-                        + "What can I do for you?"
+                 + "What can I do for you?"
         );
         printLine();
     }

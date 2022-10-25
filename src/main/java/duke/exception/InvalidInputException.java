@@ -6,6 +6,7 @@ public class InvalidInputException extends Exception {
         UNKNOWN_COMMAND,
         EMPTY_DESCRIPTION,
         EMPTY_INDEX,
+        NO_SEARCH_DATE,
         NO_BY_DATE,
         NO_AT_DATE,
         NOT_INTEGER,
@@ -29,6 +30,8 @@ public class InvalidInputException extends Exception {
                 return "You will need to provide a description.";
             case EMPTY_INDEX:
                 return "An integer index must follow the command";
+            case NO_SEARCH_DATE:
+                return "You must specify a date after searchdate command.";
             case NO_BY_DATE:
                 return "You must specify a deadline date following /by keyword.";
             case NO_AT_DATE:

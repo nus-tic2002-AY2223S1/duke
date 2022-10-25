@@ -2,10 +2,13 @@
 package duke.task;
 
 import java.io.Serializable;
+import duke.DateTime;
 import duke.exception.InvalidInputException;
 import duke.exception.InvalidInputException.InputExceptionType;
-@SuppressWarnings("serial")
+
 public abstract class Task implements Serializable {
+
+    public static final long serialVersionUID = 1L;
     protected String typeIcon = "*";
     protected String description;
     protected boolean isDone;
@@ -34,6 +37,7 @@ public abstract class Task implements Serializable {
     public void markAsnotDone() {
         isDone = false;
     }
+    public abstract Boolean isSameDate(DateTime dateTime);
     public String toString() {
         return String.format("[%s][%s] %s", getTypeIcon(), getStatusIcon(), getDescription());
     }

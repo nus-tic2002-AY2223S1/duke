@@ -1,4 +1,5 @@
 package duke.task;
+import duke.DateTime;
 import duke.exception.InvalidInputException;
 
 public class ToDo extends Task {
@@ -7,4 +8,8 @@ public class ToDo extends Task {
         super(description);
         typeIcon = "T";
     }
+    @Override
+    public Boolean isSameDate(DateTime dateTime) {
+        return false;
+    };
 }

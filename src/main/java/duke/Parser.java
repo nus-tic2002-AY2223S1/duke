@@ -3,6 +3,7 @@ package duke;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Arrays;
 
 import duke.command.Command;
 import duke.exception.InvalidInputException;
@@ -22,7 +23,11 @@ public class Parser {
 
     public Command parse(String fullCommand) throws InvalidInputException {
         HashMap<String, String> arguments = new HashMap<>();
-        String[] tokens = fullCommand.split(DELIMITER);
+        String[] tokens = fullCommand.split("\\s+");
+        // If first token (command) is empty, there are empty spaces typed in at the front - so we remove it
+        if (tokens[0].isEmpty()) {
+            tokens = Arrays.copyOfRange(tokens, 1, tokens.length);
+        }
         if (tokens.length == 0) {
             throw new InvalidInputException(InputExceptionType.UNKNOWN_COMMAND);
         }

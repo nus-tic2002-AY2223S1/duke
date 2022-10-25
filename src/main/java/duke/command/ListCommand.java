@@ -13,10 +13,6 @@ public class ListCommand extends Command {
 
     @Override
     public void execute() {
-        if (tasks.size() == 0) {
-            ui.print("You don't have a task in your list!");
-            return;
-        }
         ui.printTaskList(tasks);
     }
 }

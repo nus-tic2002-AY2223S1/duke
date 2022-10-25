@@ -12,6 +12,10 @@ public class Event extends Task {
         this.at = at;
         typeIcon = "E";
     }
+    @Override
+    public Boolean isSameDate(DateTime dateTime) {
+        return at.isSameDate(dateTime);
+    };
 
     @Override
     public String toString() {
