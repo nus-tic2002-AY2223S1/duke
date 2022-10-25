@@ -22,7 +22,7 @@ public class Parser {
 
     public static boolean isValidCommand(String command){
         if ((command.equals(LegalCommandEnumerations.MARK.toString())) || (command.equals(LegalCommandEnumerations.UNMARK.toString())) ||
-            (command.equals(LegalCommandEnumerations.DELETE.toString())) || (command.equals(LegalCommandEnumerations.VIEW.toString())) ||
+            (command.equals(LegalCommandEnumerations.DELETE.toString())) || (command.equals(LegalCommandEnumerations.VIEW.toString())) || (command.equals(LegalCommandEnumerations.REMINDERS.toString())) ||
             (command.equals(LegalCommandEnumerations.EXIT.toString())) || (command.equals(LegalCommandEnumerations.TODO.toString())) ||
             (command.equals(LegalCommandEnumerations.DEADLINE.toString())) || (command.equals(LegalCommandEnumerations.EVENT.toString()))){
                 return true;
@@ -64,7 +64,7 @@ public class Parser {
 
     public static boolean hasInputErrors(String userInput) throws MissingKeywordException, EmptyTaskException, InvalidCommandException, MissingDateException {
         if (userInput.indexOf(" ") == -1){
-            if (userInput.equals("VIEW") || userInput.equals("EXIT")){
+            if (userInput.equals("VIEW") || userInput.equals("EXIT") || userInput.trim().equals("REMINDERS")){
                 return false;
             } else if (userInput.equals("TODO") || userInput.equals("DEADLINE") || userInput.equals("EVENT") || userInput.equals("MARK") || userInput.equals("UNMARK")){
                 throw new EmptyTaskException();

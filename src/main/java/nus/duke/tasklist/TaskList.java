@@ -1,15 +1,9 @@
 package nus.duke.tasklist;
 
 import nus.duke.task.*;
-import nus.duke.storage.*;
-import nus.duke.frontend.*;
-
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
-import nus.duke.frontend.*;
-import java.io.File;  // Import the File class
-import java.io.IOException;  // Import the IOException class to handle errors
+import java.util.Comparator;
 
 public class TaskList {
     protected static ArrayList<Task> taskList = new ArrayList<Task>();
@@ -75,6 +69,30 @@ public class TaskList {
         System.out.println("unmarked");
     }
 
+    public void getReminders(){
+        ArrayList<Deadline> reminders = new ArrayList<Deadline>();
+        for (int i = 0; i < taskList.size(); i++) {
+            if (taskList.get(i).getTaskType().equals("D")){
+                Deadline dl = (Deadline) taskList.get(i);
+                reminders.add(dl);
+            }
+        }
+
+        Collections.sort(reminders, (d1, d2) -> d1.getDate().compareTo(d2.getDate()));
+
+        /*Collections.sort(reminders, new Comparator<Deadline>()
+        {
+            public int compare(Deadline d1, Deadline d2)
+            {
+                return d1.getDate().compareTo(d2.getDate());
+            }
+        }); */
+
+        for (int i = 0; i < reminders.size(); i++) {
+            System.out.println( "[" + reminders.get(i).getTaskType() + "][" + reminders.get(i).getStatusIcon() + "] " + reminders.get(i).getTask() + reminders.get(i).getTaskDetails());
+        }
+    }
+
     public boolean processTasks(String command, String userInput){
         int end = userInput.indexOf("[");
         String parsedString = userInput;
@@ -108,6 +126,11 @@ public class TaskList {
 
        if (command.equals(LegalCommandEnumerations.DELETE.toString())){
            this.deleteTask(getItemNumber(userInput));
+           return false;
+       }
+
+       if (command.equals(LegalCommandEnumerations.REMINDERS.toString())){
+           this.getReminders();
            return false;
        }
 
