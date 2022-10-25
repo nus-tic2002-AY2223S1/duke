@@ -21,7 +21,7 @@ public class Event extends Task {
     }
 
     @Override
-    public String getTaskDetails(){
+    public String getTaskDetails() {
         String venue = "(Venue: " + this.at + ")";
         String date = localDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
         date = "(Time: " + date + ")";
@@ -29,22 +29,22 @@ public class Event extends Task {
     }
 
     @Override
-    public String getDescription(String userInput){
+    public String getDescription(String userInput) {
         int end = userInput.indexOf("/at");
         return userInput.substring(0, end);
     }
 
     @Override
-    public String getDateInStr(String userInput){
+    public String getDateInStr(String userInput) {
         int start = userInput.indexOf("/on") + 4;
-        if (userInput.indexOf("[T]") == -1 || userInput.indexOf("[F]") == -1){
+        if (userInput.indexOf("[T]") == -1 || userInput.indexOf("[F]") == -1) {
             return userInput.substring(start, userInput.length()).trim();
         } else {
             return userInput.substring(start, userInput.length()-3).trim();
         }
     }
 
-    public String getVenue(String userInput){
+    public String getVenue(String userInput) {
         int start = userInput.indexOf("/at") + 4;
         int end = userInput.indexOf("/on");
         return userInput.substring(start, end).trim();

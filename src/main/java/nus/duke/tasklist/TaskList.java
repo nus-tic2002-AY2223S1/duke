@@ -26,30 +26,28 @@ public class TaskList {
     }
     public int getTotalTasks(){ return this.totalTasks; }
 
-    public static int getItemNumber(String userInput){
+    public static int getItemNumber(String userInput) {
         int idx = userInput.indexOf(" ");
         String itemNumber = userInput.substring(idx+1, userInput.length());
         idx = Integer.parseInt(itemNumber);
         return idx;
     }
 
-    public static void printTask(Task t){
+    public static void printTask(Task t) {
         System.out.println( "[" + t.getTaskType() + "][" + t.getStatusIcon() + "] " + t.getTask() + t.getTaskDetails());
     }
 
     public static void viewTaskList(){
         for (int i = 0; i < taskList.size(); i++) {
             printTask(taskList.get(i));
-            //System.out.println( "[" + taskList.get(i).getTaskType() + "][" + taskList.get(i).getStatusIcon() + "] " + taskList.get(i).getTask() + taskList.get(i).getTaskDetails());
         }
-
     }
 
     public void addTask(String userInput) {
         Task t;
-        if (userInput.contains("/by")){
+        if (userInput.contains("/by")) {
             t = new Deadline(userInput);
-        } else if (userInput.contains("/at")){
+        } else if (userInput.contains("/at")) {
             t = new Event(userInput);
         } else {
             t = new Todo(userInput);
@@ -65,12 +63,12 @@ public class TaskList {
         System.out.println("Removed");
     }
 
-    public static void markTask(int idx){ //mark as done
+    public static void markTask(int idx) {
         (taskList.get(idx-1)).markAsDone();
         System.out.println("marked");
     }
 
-    public static void unmarkTask(int idx){ //mark as done
+    public static void unmarkTask(int idx) {
         (taskList.get(idx-1)).markAsNotDone();
         System.out.println("unmarked");
     }
@@ -78,44 +76,33 @@ public class TaskList {
     public void getReminders(){
         ArrayList<Deadline> reminders = new ArrayList<Deadline>();
         for (int i = 0; i < taskList.size(); i++) {
-            if (taskList.get(i).getTaskType().equals("D")){
+            if (taskList.get(i).getTaskType().equals("D")) {
                 Deadline dl = (Deadline) taskList.get(i);
                 reminders.add(dl);
             }
         }
 
         Collections.sort(reminders, (d1, d2) -> d1.getDate().compareTo(d2.getDate()));
-
-        /*Collections.sort(reminders, new Comparator<Deadline>()
-        {
-            public int compare(Deadline d1, Deadline d2)
-            {
-                return d1.getDate().compareTo(d2.getDate());
-            }
-        }); */
-
         for (int i = 0; i < reminders.size(); i++) {
             printTask(reminders.get(i));
-            // System.out.println( "[" + reminders.get(i).getTaskType() + "][" + reminders.get(i).getStatusIcon() + "] " + reminders.get(i).getTask() + reminders.get(i).getTaskDetails());
         }
     }
 
-    public void filter(String keyword){
+    public void filter(String keyword) {
         int count = 0;
-        for (int i = 0; i < taskList.size(); i++){
+        for (int i = 0; i < taskList.size(); i++) {
             String str = taskList.get(i).getTask();
-            if (str.contains(keyword)){
+            if (str.contains(keyword)) {
                 printTask(taskList.get(i));
-                //System.out.println("[" + taskList.get(i).getTaskType() + "][" + taskList.get(i).getStatusIcon() + "] " + taskList.get(i).getTask() + taskList.get(i).getTaskDetails());
                 count = count + 1;
             }
         }
-        if (count == 0){
+        if (count == 0) {
             System.out.println("No task with the keyword " + keyword + " exists");
         }
     }
 
-    public boolean processTasks(String command, String userInput){
+    public boolean processTasks(String command, String userInput) {
         int end = userInput.indexOf("[");
         String parsedString = userInput;
 
@@ -123,15 +110,15 @@ public class TaskList {
             parsedString = userInput.substring(0, end);
         }
 
-        if (command.equals("EXIT")){
+        if (command.equals("EXIT")) {
             return true;
         }
 
-        if ((command.equals(LegalCommandEnumerations.VIEW.toString())) && ((this.getTotalTasks()) == 0)){
+        if ((command.equals(LegalCommandEnumerations.VIEW.toString())) && ((this.getTotalTasks()) == 0)) {
             System.out.println("There are 0 tasks in your list.");
             return false;
         }
-        if ((command.equals(LegalCommandEnumerations.VIEW.toString())) && ((this.getTotalTasks()) > 0)){
+        if ((command.equals(LegalCommandEnumerations.VIEW.toString())) && ((this.getTotalTasks()) > 0)) {
             this.viewTaskList();
             return false;
         }
@@ -146,17 +133,17 @@ public class TaskList {
            return false;
        }
 
-       if (command.equals(LegalCommandEnumerations.DELETE.toString())){
+       if (command.equals(LegalCommandEnumerations.DELETE.toString())) {
            this.deleteTask(getItemNumber(userInput));
            return false;
        }
 
-       if (command.equals(LegalCommandEnumerations.REMINDERS.toString())){
+       if (command.equals(LegalCommandEnumerations.REMINDERS.toString())) {
            this.getReminders();
            return false;
        }
 
-       if (command.equals(LegalCommandEnumerations.FILTER.toString())){
+       if (command.equals(LegalCommandEnumerations.FILTER.toString())) {
            int start = userInput.indexOf(" ") + 1;
            String keyword = userInput.substring(start, userInput.length());
            this.filter(keyword);
@@ -168,7 +155,7 @@ public class TaskList {
        return false;
     }
 
-    public void processIsDone(int idx, String userInput){
+    public void processIsDone(int idx, String userInput) {
         int start = userInput.indexOf("[") + 1;
         String isDone = userInput.substring(start, userInput.length()-1);
         if (isDone.equals("T")){

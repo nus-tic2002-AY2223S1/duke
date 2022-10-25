@@ -12,10 +12,10 @@ public class Todo extends Task {
     }
 
     @Override
-    public String getTaskDetails(){ return ""; }
+    public String getTaskDetails() { return ""; }
 
     @Override
-    public String getDescription(String userInput){ return "";}
+    public String getDescription(String userInput) { return "";}
     @Override
     public String getDateInStr(String userInput) { return ""; }
 }

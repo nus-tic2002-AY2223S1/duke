@@ -1,5 +1,6 @@
 package nus.duke.storage;
 
+import nus.duke.frontend.Ui;
 import nus.duke.task.*;
 import nus.duke.tasklist.*;
 import nus.duke.parser.*;
@@ -9,14 +10,13 @@ import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;  // Needed to handle IOException thrown by FileWriter
 import java.io.BufferedWriter;
-// import java.nio.file.Files;
-// import java.nio.file.Path;
-// import java.nio.file.Paths;
+import static nus.duke.frontend.CommonPrintStatements.*;
 
 public class Storage {
     private static String filePath;
     private static TaskList hardDiskTaskList;
     private static Parser parser;
+    private static Ui ui;
 
     public Storage(String filePath){
         this.filePath = filePath;
@@ -31,8 +31,7 @@ public class Storage {
         try {
             f.createNewFile();
         } catch (IOException e) {
-            System.out.println("OPPS!!! IO Exception");
-            e.printStackTrace();
+            System.out.println(FILE_WRITER_IOEXCEPTION_ERROR_MESSAGE);
         }
         return true;
     }
@@ -48,22 +47,24 @@ public class Storage {
                 Scanner s = new Scanner(file);
                 String line;
                 String command;
-                for(int count = 1; s.hasNext(); count++){
+                for (int count = 1; s.hasNext(); count++) {
                     line = s.nextLine();
                     command = parser.parse(line);
                     hardDiskTaskList.processTasks(command, line);
                     hardDiskTaskList.processIsDone(count, line);
                 }
+                ui.showHardDiskLoadedMessage();
             } else {
                 createHardDiskFile(filePath);
+                ui.showHardDiskCreationMessage();
             }
-        } catch (IOException ioe){
-            System.out.println("OPPS!!! IO Exception");
+        } catch (IOException ioe) {
+            System.out.println(FILE_WRITER_IOEXCEPTION_ERROR_MESSAGE);
         }
         return hardDiskTaskList.getTaskList();
     }
 
-    public void saveTasks(TaskList taskList){
+    public void saveTasks(TaskList taskList) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(getFilePath()));
             for (int i = 0; i < taskList.getTotalTasks(); i++) {
@@ -77,9 +78,9 @@ public class Storage {
                 writer.write(str);
             }
             writer.close();
-            System.out.println("Your tasks are saved.");
+            System.out.println(TASKS_ARE_SAVED_MESSAGE);
         } catch (IOException e) {
-            System.out.println("OPPS!!! IO Exception");
+            System.out.println(FILE_WRITER_IOEXCEPTION_ERROR_MESSAGE);
         }
     }
 }

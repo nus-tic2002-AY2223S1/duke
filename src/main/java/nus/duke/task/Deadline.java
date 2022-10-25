@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task {
     protected LocalDate localDate;
-    // String originalUserInput;
 
     public Deadline(String userInput) {
         super(userInput);
@@ -23,25 +22,23 @@ public class Deadline extends Task {
         return "D";
     }
 
-    // public String getOriginalUserInput(){ return this.originalUserInput; }
-
     @Override
-    public String getTaskDetails(){
+    public String getTaskDetails() {
         String date = localDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
         date = "(by: " + date + ")";
         return date;
     }
 
     @Override
-    public String getDescription(String userInput){
+    public String getDescription(String userInput) {
         int end = userInput.indexOf("/by");
         return userInput.substring(0, end);
     }
 
     @Override
-    public String getDateInStr(String userInput){
+    public String getDateInStr(String userInput) {
         int start = userInput.indexOf("/by") + 4;
-        if (userInput.indexOf("[T]") == -1 || userInput.indexOf("[F]") == -1){
+        if (userInput.indexOf("[T]") == -1 || userInput.indexOf("[F]") == -1) {
             return userInput.substring(start, userInput.length()).trim();
         } else {
             return userInput.substring(start, userInput.length()-3).trim();

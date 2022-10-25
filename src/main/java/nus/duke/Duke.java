@@ -3,14 +3,12 @@ package nus.duke;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import nus.duke.exceptions.*;
 import nus.duke.frontend.*;
 import nus.duke.parser.*;
 import nus.duke.storage.*;
 import nus.duke.tasklist.*;
 import nus.duke.task.*;
-import java.io.FileNotFoundException;  // Import this class to handle errors
+import static nus.duke.frontend.CommonPrintStatements.*;
 
 
 public class Duke {
@@ -25,8 +23,8 @@ public class Duke {
             storage = new Storage(filePath);
             ArrayList<Task> hardDiskTaskList = storage.load();
             tasks = new TaskList(hardDiskTaskList);
-        } catch (IOException ioe){
-            System.out.println("io exception");
+        } catch (IOException ioe) {
+            System.out.println(FILE_WRITER_IOEXCEPTION_ERROR_MESSAGE);
         }
     }
 
@@ -34,14 +32,14 @@ public class Duke {
         ui = new Ui();
         parser = new Parser();
         s = new Scanner(System.in);
-        ui.awakeDobby();
-        boolean terminateDobby = false;
+        ui.startProgram();
+        boolean terminateProgram = false;
         String command;
-        do{
+        do {
             String userInput = ui.getUserInput(s);
             command = parser.parse(userInput);
-            terminateDobby = tasks.processTasks(command, userInput);
-        }while(terminateDobby != true);
+            terminateProgram = tasks.processTasks(command, userInput);
+        } while (terminateProgram != true);
         storage.saveTasks(tasks);
         ui.exit();
     }

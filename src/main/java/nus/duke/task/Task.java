@@ -17,8 +17,8 @@ public abstract class Task {
         return this.description;
     }
 
-    public void markAsDone(){
-        if (this.isDone == false){
+    public void markAsDone() {
+        if (this.isDone == false) {
             this.isDone = true;
         } else {
             System.out.println("Task is already marked done");
@@ -32,7 +32,7 @@ public abstract class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
-    public String getIsDone(){
+    public String getIsDone() {
         String isDoneStr = Boolean.toString(this.isDone);
         return isDoneStr;
     }
@@ -41,7 +41,7 @@ public abstract class Task {
         this.description = description;
     }
 
-    public LocalDate processDate(String userInput){
+    public LocalDate processDate(String userInput) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
         String date = getDateInStr(userInput);
         LocalDate localDate = LocalDate.parse(date, formatter);

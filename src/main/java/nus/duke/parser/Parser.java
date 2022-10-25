@@ -1,17 +1,18 @@
 package nus.duke.parser;
 
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import nus.duke.frontend.*;
 import nus.duke.tasklist.*;
 import nus.duke.exceptions.*;
-import java.util.Scanner;
-import java.util.regex.Matcher; // check date using regex
-import java.util.regex.Pattern; // check date using regex
+import static nus.duke.frontend.CommonPrintStatements.*;
 
 public class Parser {
     private static Ui ui;
 
-    public static String getCommand(String userInput){
-        if (userInput.length() == 4){
+    public static String getCommand(String userInput) {
+        if (userInput.length() == 4) {
             return userInput.substring(0, 4);
         } else {
             int idx = userInput.indexOf(" ");
@@ -20,7 +21,7 @@ public class Parser {
         }
     }
 
-    public static boolean isValidCommand(String command){
+    public static boolean isValidCommand(String command) {
         if ((command.equals(LegalCommandEnumerations.MARK.toString())) || (command.equals(LegalCommandEnumerations.UNMARK.toString())) ||
             (command.equals(LegalCommandEnumerations.DELETE.toString())) || (command.equals(LegalCommandEnumerations.VIEW.toString())) ||
             (command.equals(LegalCommandEnumerations.REMINDERS.toString())) || (command.equals(LegalCommandEnumerations.FILTER.toString())) ||
@@ -36,7 +37,7 @@ public class Parser {
     public static boolean isEmptyTask(String userInput){
         int idx = userInput.indexOf(" ");
         String str = userInput.substring(idx, userInput.length());
-        if (str.isBlank()){
+        if (str.isBlank()) {
             return true;
         } else {
             return false;
@@ -48,54 +49,74 @@ public class Parser {
         int end = userInput.indexOf("[");
         String dateInString = userInput.substring(start, userInput.length());
 
-        if ((end == -1) && dateInString.isBlank()){
+        if ((end == -1) && dateInString.isBlank()) {
             return false;
-        } else if ((end == -1) && dateInString.isBlank() == false){
+        } else if ((end == -1) && dateInString.isBlank() == false) {
             dateInString = userInput.substring(start + 1, userInput.length());
         } else if (end != -1){
             dateInString = userInput.substring(start, end);
         }
 
-        //String regex = "^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$";
         String regex = "^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$";
         Pattern regexPattern = Pattern.compile(regex);
         Matcher matcher = regexPattern.matcher(dateInString);
         return matcher.matches();
     }
 
+    public static boolean isValidOneWordCommand(String command) {
+        if (command.equals(LegalCommandEnumerations.VIEW.toString()) ||
+                command.equals(LegalCommandEnumerations.EXIT.toString()) ||
+                    command.equals(LegalCommandEnumerations.REMINDERS.toString())){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean isValidCommandThatNeedsInput(String command) {
+        if (command.equals(LegalCommandEnumerations.TODO.toString()) ||
+                command.equals(LegalCommandEnumerations.DEADLINE.toString()) ||
+                    command.equals(LegalCommandEnumerations.EVENT.toString()) ||
+                        command.equals(LegalCommandEnumerations.MARK.toString()) ||
+                            command.equals(LegalCommandEnumerations.UNMARK.toString()) ||
+                                command.equals(LegalCommandEnumerations.FILTER.toString())){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static boolean hasInputErrors(String userInput) throws MissingKeywordException, EmptyTaskException, InvalidCommandException, MissingDateException {
-        if (userInput.indexOf(" ") == -1){
-            if (userInput.equals("VIEW") || userInput.equals("EXIT") || userInput.trim().equals("REMINDERS")){
-                return false;
-            } else if (userInput.equals("TODO") || userInput.equals("DEADLINE") || userInput.equals("EVENT") || userInput.equals("MARK") || userInput.equals("UNMARK") || userInput.equals("FILTER")){
-                throw new EmptyTaskException();
-            } else {
-                throw new InvalidCommandException();
-            }
-        }
+        String trimmedInput = userInput.trim();
 
-        String command = getCommand(userInput);
-        if (isValidCommand(command) == false){
-            throw new InvalidCommandException();
-        }
-
-        if (isValidCommand(command) == false && isEmptyTask(userInput) == true){
-            throw new InvalidCommandException();
-        }
-
-        if ((isValidCommand(command) == true) && (isEmptyTask(userInput) == true)){
+        if (isValidOneWordCommand(trimmedInput)) {
+            return false;
+        } else if (isValidCommandThatNeedsInput(trimmedInput)) {
             throw new EmptyTaskException();
         }
 
-        if (command.equals("DEADLINE") && (userInput.contains("/by") == false)){
+        String command = getCommand(trimmedInput);
+        if (isValidCommand(command) == false) {
+            throw new InvalidCommandException();
+        }
+
+        if (isValidCommand(command) == false && isEmptyTask(userInput) == true) {
+            throw new InvalidCommandException();
+        }
+
+        if ((isValidCommand(command) == true) && (isEmptyTask(userInput) == true)) {
+            throw new EmptyTaskException();
+        }
+
+        if (command.equals("DEADLINE") && (userInput.contains("/by") == false)) {
             throw new MissingKeywordException();
         }
 
-        if (command.equals("EVENT") && (userInput.contains("/at") == false) && (userInput.contains("/on") == false)){
+        if (command.equals("EVENT") && (userInput.contains("/at") == false) && (userInput.contains("/on") == false)) {
             throw new MissingKeywordException();
         }
 
-        if (command.equals("DEADLINE") && (userInput.contains("/by") == true) && hasDate(userInput) == false){
+        if (command.equals("DEADLINE") && (userInput.contains("/by") == true) && hasDate(userInput) == false) {
             throw new MissingDateException();
         }
         return false;
@@ -107,25 +128,25 @@ public class Parser {
 
         try {
             hasError = hasInputErrors(userInput);
-        } catch (EmptyTaskException ete){
-            System.out.println("OOPS!!! Task cannot be empty.");
+        } catch (EmptyTaskException ete) {
+            System.out.println(TASK_CANNOT_BE_EMPTY_ERROR_MESSAGE);
             hasError = true;
-        } catch (InvalidCommandException ice){
-            System.out.println("OOPS!!! This is not a valid command. Please see command menu.");
+        } catch (InvalidCommandException ice) {
+            System.out.println(INVALID_COMMAND_ERROR_MESSAGE);
             ui.printCommandMenu();
             hasError = true;
-        } catch (MissingKeywordException mke){
-            System.out.println("OOPS!!! Please indicate //by <<date>> for deadlines and //at <<venue>> for events");
+        } catch (MissingKeywordException mke) {
+            System.out.println(MISSING_KEYWORD_ERROR_MESSAGE);
             hasError = true;
-        } catch (MissingDateException mde){
-            System.out.println("OOPS!!! Date needed. Please also key in the correct format: dd/mm/yyyy i.e dd-mm-yyyy is wrong");
+        } catch (MissingDateException mde) {
+            System.out.println(MISSING_DATE_ERROR_MESSAGE);
             hasError = true;
         }
 
-        if (hasError){
+        if (hasError) {
             Ui ui = new Ui();
             s = new Scanner(System.in);
-            System.out.println("Please proceed to key in the correct command");
+            System.out.println(ASK_FOR_USER_INPUT_AFTER_ERROR_MESSAGE_WAS_DISPLAYED_MESSAGE);
             String newUserInput = ui.getUserInput(s);
             return newUserInput;
         } else {
