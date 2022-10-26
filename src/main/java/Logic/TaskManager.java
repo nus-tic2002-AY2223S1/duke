@@ -5,6 +5,7 @@ import CustomException.UnsupportedTaskType;
 import Tasks.*;
 import Tasks.TaskInterface;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.UnsupportedTemporalTypeException;
 import java.util.ArrayList;
@@ -52,11 +53,12 @@ public class TaskManager implements BotCallback {
                 case DEADLINE:
                     try {
                         String[] deadlines = task.split("/by ");
-                        Deadline deadline = new Deadline(deadlines[0], LocalDateTime.parse(deadlines[1]));
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+                        Deadline deadline = new Deadline(deadlines[0], LocalDateTime.parse(deadlines[1], formatter));
                         tasks.add(deadline);
                         router.addSuccess(deadline);
                     } catch (IndexOutOfBoundsException e) {
-                        router.customError("Please add yyyy-mm-ddThh:mm format after /by. e.g correct command is deadline return book /by 2022-08-01T20:00");
+                        router.customError("Please add /by by yyyy/MM/dd HH:mm format. e.g deadline return book /by 2022/08/01 20:00");
                     }
                     break;
             }
@@ -65,9 +67,9 @@ public class TaskManager implements BotCallback {
         } catch (IndexOutOfBoundsException e) {
             router.unsupportedFormat(text);
         } catch (DateTimeParseException e) {
-            router.customError("please use yyyy-mm-ddThh:mm format. e.g 2022-08-01T20:00");
+            router.customError("please use YYYY/MM/dd HH:mm format. e.g 2022/08/01 20:00");
         } catch (UnsupportedTemporalTypeException e) {
-            router.customError("please use yyyy-mm-ddThh:mm format. e.g 2022-08-01T20:00");
+            router.customError("please use YYYY/MM/dd HH:mm format. e.g 2022/08/01 20:00");
 
         }
     }
@@ -118,7 +120,6 @@ public class TaskManager implements BotCallback {
     public int getSize() {
         return tasks.size();
     }
-
 
 }
 

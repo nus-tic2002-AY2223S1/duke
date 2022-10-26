@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -115,7 +116,8 @@ public class DataFileFactory implements DataInterface {
             case TODO:
                 return new Todo(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]));
             case DEADLINE:
-                return new Deadline(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]), LocalDateTime.parse(texts[4]));
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+                return new Deadline(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]), LocalDateTime.parse(texts[4], formatter));
             case EVENT:
                 return new Event(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]), texts[4]);
             default:
