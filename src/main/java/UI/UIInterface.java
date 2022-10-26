@@ -16,4 +16,5 @@ public interface UIInterface {
     public void invalidFormat(String text);
     public void goodbye();
     public void displaySize(int size);
+    public void customError(String text);
 }

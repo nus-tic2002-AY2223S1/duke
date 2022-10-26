@@ -4,6 +4,9 @@ import Common.TaskType;
 import CustomException.UnsupportedTaskType;
 import Tasks.*;
 import Tasks.TaskInterface;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.UnsupportedTemporalTypeException;
 import java.util.ArrayList;
 
 public class TaskManager implements BotCallback {
@@ -22,35 +25,50 @@ public class TaskManager implements BotCallback {
                 router.invalidFormat(text);
                 return;
             }
-            String task = text.substring(0, text.indexOf(' '));
-            String work = text.substring(text.indexOf(" "));
-            System.out.println(work);
-            if(work.isBlank() || work.isEmpty()) {
+            String type = text.substring(0, text.indexOf(' '));
+            String task = text.substring(text.indexOf(" "));
+            if(task.isBlank() || task.isEmpty()) {
                 router.unsupportedFormat(text);
                 return;
             }
-            TaskType type= TaskType.getType(task);
-            switch (type) {
+            TaskType taskType = TaskType.getType(type);
+            switch (taskType) {
                 case TODO:
-                    Todo todo = new Todo(work);
+                    Todo todo = new Todo(task);
                     tasks.add(todo);
                     router.addSuccess(todo);
                     break;
                 case EVENT:
-                    Event event = new Event(work);
-                    tasks.add(event);
-                    router.addSuccess(event);
+                    try {
+                        String[] events = task.split("/at ");
+                        Event event = new Event(events[0], events[1]);
+                        tasks.add(event);
+                        router.addSuccess(event);
+                    } catch (IndexOutOfBoundsException e) {
+                        router.customError("Please add when will it finished after /at");
+
+                    }
                     break;
                 case DEADLINE:
-                    Deadline deadline = new Deadline(work);
-                    tasks.add(deadline);
-                    router.addSuccess(deadline);
+                    try {
+                        String[] deadlines = task.split("/by ");
+                        Deadline deadline = new Deadline(deadlines[0], LocalDateTime.parse(deadlines[1]));
+                        tasks.add(deadline);
+                        router.addSuccess(deadline);
+                    } catch (IndexOutOfBoundsException e) {
+                        router.customError("Please add yyyy-mm-ddThh:mm format after /by. e.g correct command is deadline return book /by 2022-08-01T20:00");
+                    }
                     break;
             }
         } catch (UnsupportedTaskType e) {
             router.unsupportedTaskType();
         } catch (IndexOutOfBoundsException e) {
             router.unsupportedFormat(text);
+        } catch (DateTimeParseException e) {
+            router.customError("please use yyyy-mm-ddThh:mm format. e.g 2022-08-01T20:00");
+        } catch (UnsupportedTemporalTypeException e) {
+            router.customError("please use yyyy-mm-ddThh:mm format. e.g 2022-08-01T20:00");
+
         }
     }
 

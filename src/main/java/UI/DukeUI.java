@@ -89,6 +89,11 @@ public class DukeUI implements UIInterface {
     public void displaySize(int size) {
         printlntab("Now you have "+size+" tasks in the list.");
     }
+
+    @Override
+    public void customError(String text) {
+        printlntab(text);
+    }
     private void seperator() {
         System.out.println("\t---------------------------------------------");
     }

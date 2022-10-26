@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -99,11 +100,12 @@ public class DataFileFactory implements DataInterface {
             text += TaskType.EVENT.getKey() +"|";
         }
         text += (task.isDone() ? "1" : 0) + "|";
-        text += task.getWork();
+        text += task.getWork() + "|";
+        text += task.getEndDate();
         return text;
     }
 
-    private TaskInterface convertStringToTask(String text) throws UnsupportedTaskType {
+    private TaskInterface convertStringToTask(String text) throws UnsupportedTaskType, IndexOutOfBoundsException {
         String[] texts = text.split("\\|");
         if(texts.length == 0) {
             return null;
@@ -113,9 +115,9 @@ public class DataFileFactory implements DataInterface {
             case TODO:
                 return new Todo(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]));
             case DEADLINE:
-                return new Deadline(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]));
+                return new Deadline(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]), LocalDateTime.parse(texts[4]));
             case EVENT:
-                return new Event(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]));
+                return new Event(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]), texts[4]);
             default:
                 throw new UnsupportedTaskType();
         }

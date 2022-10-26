@@ -1,17 +1,23 @@
 package Tasks;
 
+import java.time.LocalDate;
+
 public class Event extends Task implements TaskInterface {
-    public Event(String work) {
+    String endDate;
+
+    public Event(String work, String endDate) {
         super(work);
+        this.endDate = endDate;
     }
 
-    public Event(boolean isDone, String work, long id) {
+    public Event(boolean isDone, String work, long id, String endDate) {
         super(isDone, work, id);
+        this.endDate = endDate;
     }
 
     @Override
     public String getString() {
-        return  "[E]" + super.toString();
+        return  "[E]" + super.toString() + " (at: "+endDate+")";
     }
     @Override
     public boolean isDone() {
@@ -31,5 +37,10 @@ public class Event extends Task implements TaskInterface {
     @Override
     public long getID() {
         return super.getId();
+    }
+
+    @Override
+    public String getEndDate() {
+        return endDate;
     }
 }

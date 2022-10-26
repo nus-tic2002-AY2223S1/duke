@@ -35,4 +35,9 @@ public class Todo extends Task implements TaskInterface {
     public long getID() {
         return super.getId();
     }
+
+    @Override
+    public String getEndDate() {
+        return "";
+    }
 }

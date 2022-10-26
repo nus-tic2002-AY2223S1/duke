@@ -72,4 +72,6 @@ public class Router extends BotUseCase {
     public void goodbye() { ui.goodbye(); }
     @Override
     public void invalidFormat(String text) { ui.invalidFormat(text); }
+
+    public void customError(String text) { ui.customError(text); }
 }

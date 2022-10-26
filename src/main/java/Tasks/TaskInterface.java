@@ -7,4 +7,5 @@ public interface TaskInterface {
     public String getWork();
 
     public long getID();
+    public String getEndDate();
 }
