@@ -7,26 +7,34 @@ import duke.form.Form;
 import duke.pool.AsyncExecutor;
 
 /**
- * @description singleton class
- * perform `add deadline task` operation
+ * Singleton class, perform `add deadline task` operation.
+ *
  * @author Dex
  * @date 2022/08/31
  */
 public class AddDeadlineCommand extends Command {
 
+    /**
+     * Variable holds the instance.
+     */
     private static final AddDeadlineCommand command = new AddDeadlineCommand();
 
     private AddDeadlineCommand() {}
 
+    /**
+     * Get single instance.
+     *
+     * @return Single instance of command.
+     */
     public static AddDeadlineCommand getInstance() {
         return command;
     }
 
     /**
-     * @description add deadline task by given user input
-     * @author Dex
-     * @date 2022/09/02
-     * @param form: parsed input form from user
+     * Add deadline task by given user input.
+     *
+     * @param form: Parsed input form from user.
+     * @return Response entity after command execute.
      */
     @Override
     public ResponseDto<Void> execute(Form form) {

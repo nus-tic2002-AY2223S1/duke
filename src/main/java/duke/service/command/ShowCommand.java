@@ -12,26 +12,34 @@ import java.util.stream.Collectors;
 
 
 /**
- * @description singleton class
- * perform `list command` operation
+ * Singleton class, perform `list command` operation.
+ *
  * @author Dex
  * @date 2022/08/31
  */
 public class ShowCommand extends Command {
 
+    /**
+     * Variable holds the instance.
+     */
     private static final ShowCommand command = new ShowCommand();
 
     private ShowCommand() {}
 
+    /**
+     * Get single instance.
+     *
+     * @return Single instance of command.
+     */
     public static ShowCommand getInstance() {
         return command;
     }
 
     /**
-     * @description list all supported commands in the program
-     * @author Dex
-     * @date 2022/08/31
-     * @param form: parsed input form from user
+     * List all supported commands in the program.
+     *
+     * @param form: Parsed input form from user.
+     * @return Response entity after command execute.
      */
     @Override
     public ResponseDto<CommandTableDto> execute(Form form) {

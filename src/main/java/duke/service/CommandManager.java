@@ -17,10 +17,16 @@ import duke.service.command.UnmarkTaskCommand;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class which used to return the respective command instance.
+ *
+ * @author Dex
+ * @date 2022/10/26
+ */
 public class CommandManager {
 
     /**
-     * mapping for `commandName` to `commandInstance`
+     * Mapping for `commandName` to `commandInstance`.
      */
     private static final Map<String, Command> commandMap = new HashMap<>();
 
@@ -41,10 +47,9 @@ public class CommandManager {
     private CommandManager() {}
 
     /**
-     * @description get command instance by given command name in runtime
-     * @author Dex
-     * @date 2022/08/31
-     * @param commandName: name of command
+     * Get command instance by given command name in runtime.
+     *
+     * @param commandName: Name of command.
      */
     public static Command getCommand(String commandName) {
         return commandMap.getOrDefault(commandName, UndefinedCommand.getInstance());

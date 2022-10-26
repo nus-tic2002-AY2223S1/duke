@@ -7,26 +7,33 @@ import duke.form.TodoForm;
 import duke.pool.AsyncExecutor;
 
 /**
- * @description singleton class
- * perform `add todo task` operation
+ * Singleton class, perform `add todo task` operation
+ *
  * @author Dex
  * @date 2022/08/31
  */
 public class AddTodoCommand extends Command {
 
+    /**
+     * Variable holds the instance.
+     */
     private static final AddTodoCommand command = new AddTodoCommand();
 
     private AddTodoCommand() {}
 
+    /**
+     * Get single instance.
+     *
+     * @return Single instance of command.
+     */
     public static AddTodoCommand getInstance() {
         return command;
     }
 
     /**
-     * @description add todo task by given user input
-     * @author Dex
-     * @date 2022/09/02
-     * @param form: parsed input form from user
+     * Add todo task by given user input.
+     *
+     * @param form: Parsed input form from user.
      */
     @Override
     public ResponseDto<Void> execute(Form form) {

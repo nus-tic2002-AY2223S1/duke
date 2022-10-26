@@ -9,26 +9,34 @@ import duke.form.MarkingForm;
 import duke.pool.AsyncExecutor;
 
 /**
- * @description singleton class
- * perform `mark task as done` operation
+ * Singleton class, perform `mark task as done` operation.
+ *
  * @author Dex
  * @date 2022/08/31
  */
 public class MarkTaskCommand extends Command {
 
+    /**
+     * Variable holds the instance.
+     */
     private static final MarkTaskCommand command = new MarkTaskCommand();
 
     private MarkTaskCommand() {}
 
+    /**
+     * Get single instance.
+     *
+     * @return Single instance of command.
+     */
     public static MarkTaskCommand getInstance() {
         return command;
     }
 
     /**
-     * @description mark task as `done` status
-     * @author Dex
-     * @date 2022/08/31
-     * @param form: parsed input form from user
+     * Mark task as `done` status.
+     *
+     * @param form: Parsed input form from user.
+     * @return Response entity after command execute.
      */
     @Override
     public ResponseDto<Void> execute(Form form) {

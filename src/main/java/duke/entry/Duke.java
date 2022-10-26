@@ -11,24 +11,39 @@ import duke.service.command.Command;
 import duke.ui.ConsoleUI;
 import duke.ui.UI;
 
+/**
+ * Entry class to start application.
+ *
+ * @author Dex
+ * @date 2022/10/26
+ */
 public class Duke {
 
+    /**
+     * Location of persisting the task data.
+     */
     private String dataFilePath;
 
-    public Duke() {}
-
+    /**
+     * Multi args constructors.
+     *
+     * @param dataFilePath: Location of file to store data.
+     */
     public Duke(String dataFilePath) {
         this.dataFilePath = dataFilePath;
     }
 
+    /**
+     * Get data file location.
+     *
+     * @return Data file location.
+     */
     public String getDataFilePath() {
         return dataFilePath;
     }
 
     /**
-     * @description init all components
-     * @author Dex
-     * @date 2022/09/16
+     * Init all components in the program.
      */
     private void init() {
         // init Task Manager
@@ -36,9 +51,7 @@ public class Duke {
     }
 
     /**
-     * @description entry of program, start chatbot
-     * @author Dex
-     * @date 2022/08/31
+     * Entry method of the program, start application.
      */
     public void run() {
         // init app components
@@ -63,6 +76,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Main method of application.
+     *
+     * @param args: Arguments from the user.
+     */
     public static void main(String[] args) {
         Duke duke = new Duke("data/data.json");
         duke.run();

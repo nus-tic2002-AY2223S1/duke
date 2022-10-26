@@ -5,22 +5,23 @@ import duke.form.Form;
 import duke.service.TaskManager;
 
 /**
- * @description base command class which acts as command class for all different command
+ * Base command class which acts as command class for all different command.
+ *
  * @author Dex
  * @date 2022/08/31
  */
 public abstract class Command {
 
     /**
-     * instance which provides operation on task, shared by all command instance
+     * Instance which provides operation on task, shared by all command instance.
      */
     protected static TaskManager taskManager = TaskManager.getInstance();
 
     /**
-     * @description execute the different commands in runtime
-     * @author Dex
-     * @date 2022/08/31
-     * @param form: parsed input form from user
+     * Description execute the different commands in runtime.
+     *
+     * @param form: Parsed input form from user.
+     * @return Response entity after command execute.
      */
     public abstract ResponseDto<?> execute(Form form);
 }

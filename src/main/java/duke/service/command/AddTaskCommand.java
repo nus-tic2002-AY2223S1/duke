@@ -6,26 +6,34 @@ import duke.form.Form;
 import duke.pool.AsyncExecutor;
 
 /**
- * @description singleton class
- * perform `add task`operation
+ * Singleton class, perform `add task`operation.
+ *
  * @author Dex
  * @date 2022/08/31
  */
 public class AddTaskCommand extends Command {
 
+    /**
+     * Variable holds the instance.
+     */
     private static final AddTaskCommand command = new AddTaskCommand();
 
     private AddTaskCommand() {}
 
+    /**
+     * Get single instance.
+     *
+     * @return Single instance of command.
+     */
     public static AddTaskCommand getInstance() {
         return command;
     }
 
     /**
-     * @description add task by given input form
-     * @author Dex
-     * @date 2022/08/31
-     * @param form: parsed input form from user
+     * Add task by given input form.
+     *
+     * @param form: Parsed input form from user.
+     * @return Response entity after command execute.
      */
     @Override
     public ResponseDto<Void> execute(Form form) {

@@ -18,26 +18,34 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
- * @description singleton class
- * perform `reschedule task` operation
+ * Singleton class, perform `reschedule task` operation.
+ *
  * @author Dex
  * @date 2022/09/08
  */
 public class RescheduleTaskCommand extends Command {
 
+    /**
+     * Variable holds the instance.
+     */
     private static final RescheduleTaskCommand command = new RescheduleTaskCommand();
 
     private RescheduleTaskCommand() {}
 
+    /**
+     * Get single instance.
+     *
+     * @return Single instance of command.
+     */
     public static RescheduleTaskCommand getInstance() {
         return command;
     }
 
     /**
-     * @description reschedule the task by given index and new schedule
-     * @author Dex
-     * @date 2022/09/08
-     * @param form: parsed input form from user
+     * Reschedule the task by given index and new schedule.
+     *
+     * @param form: Parsed input form from user.
+     * @return Response entity after command execute.
      */
     @Override
     public ResponseDto<Void> execute(Form form) {

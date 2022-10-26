@@ -5,26 +5,34 @@ import duke.dto.ResponseDto;
 import duke.form.Form;
 
 /**
- * @description singleton class
- * perform `exit program` operation
+ * Singleton class, perform `exit program` operation.
+ *
  * @author Dex
  * @date 2022/08/31
  */
 public class ExitCommand extends Command {
 
+    /**
+     * Variable holds the instance.
+     */
     private static final ExitCommand command = new ExitCommand();
 
     private ExitCommand() {}
 
+    /**
+     * Get single instance.
+     *
+     * @return Single instance of command.
+     */
     public static ExitCommand getInstance() {
         return command;
     }
 
     /**
-     * @description exit program, persist the task data
-     * @author Dex
-     * @date 2022/08/31
-     * @param form: parsed input form from user
+     * Exit program, persist the task data.
+     *
+     * @param form: Parsed input form from user.
+     * @return Response entity after command execute.
      */
     @Override
     public ResponseDto<Void> execute(Form form) {

@@ -9,26 +9,34 @@ import duke.form.Form;
 import duke.pool.AsyncExecutor;
 
 /**
- * @description singleton class
- * perform `delete task` operation
+ * Singleton class, perform `delete task` operation.
+ *
  * @author Dex
  * @date 2022/08/31
  */
 public class DeleteTaskCommand extends Command {
 
+    /**
+     * Variable holds the instance.
+     */
     private static final DeleteTaskCommand command = new DeleteTaskCommand();
 
     private DeleteTaskCommand() {}
 
+    /**
+     * Get single instance.
+     *
+     * @return Single instance of command.
+     */
     public static DeleteTaskCommand getInstance() {
         return command;
     }
 
     /**
-     * @description delete task from list by given index
-     * @author Dex
-     * @date 2022/09/06
-     * @param form: parsed input form from user
+     * Delete task from list by given index.
+     *
+     * @param form: Parsed input form from user.
+     * @return Response entity after command execute.
      */
     @Override
     public ResponseDto<Void> execute(Form form) {

@@ -23,19 +23,37 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Service class which used to manage the operation of task related entity.
+ *
+ * @author Dex
+ * @date 2022/10/26
+ */
 public class TaskManager {
 
     /**
-     * store task data
+     * Store task data.
      */
     private static final List<Task> taskList = new ArrayList<>();
 
+    /**
+     * Single instance.
+     */
     private static final TaskManager taskManager = new TaskManager();
 
+    /**
+     * Default location to persist task data.
+     */
     private static final String DEFAULT_DATA_PATH = "data/data.txt";
 
+    /**
+     * Check if the initialization is completed.
+     */
     private static boolean initComplete = false;
 
+    /**
+     * Final location to persist task data.
+     */
     private static String dataFilePath;
 
     public static TaskManager getInstance() {
@@ -45,10 +63,9 @@ public class TaskManager {
     private TaskManager() {}
 
     /**
-     * @description init task list from hard disk data
-     * @author Dex
-     * @date 2022/08/29
-     * @param dataFilePath: dest data file for storing task data
+     * Init task list from hard disk data.
+     *
+     * @param dataFilePath: Input persistent data location from user.
      */
     public static void init(String dataFilePath) {
         if (initComplete) {
@@ -170,10 +187,8 @@ public class TaskManager {
     }
 
     /**
-     * @description write task list data into hard disk
-     * method is called in daemon thread, resource modification can happen concurrently
-     * @author Dex
-     * @date 2022/08/29
+     * Write task list data into hard disk method is called in daemon thread,
+     * resource modification can happen concurrently.
      */
     public synchronized void persistTask() {
         String content = taskList.stream().map(o -> JSON.toJSONStringWithDateFormat(o, Constant.Time.INPUT_FORMAT)).collect(Collectors.joining("\n"));
@@ -184,40 +199,36 @@ public class TaskManager {
     }
 
     /**
-     * @description linear search for the description of task, check if it contains the given keyword
-     * @author Dex
-     * @date 2022/09/07
-     * @param keyword: keyword in the description of task
+     * Linear search for the description of task, check if it contains the given keyword.
+     *
+     * @param keyword: Keyword in the description of task.
      */
     public List<Task> findTask(String keyword) {
         return taskList.stream().filter(o -> o.getDescription().contains(keyword)).collect(Collectors.toList());
     }
 
     /**
-     * @description append new task to task list
-     * @author Dex
-     * @date 2022/08/29
-     * @param task: task entity
+     * Append new task to task list.
+     *
+     * @param task: Task entity.
      */
     public void addTask(Task task) {
         taskList.add(task);
     }
 
     /**
-     * @description get task instance by given index
-     * @author Dex
-     * @date 2022/08/31
-     * @param index: index of task in the list
+     * Get task instance by given index.
+     *
+     * @param index: Index of task in the list.
      */
     public Task getTaskByIndex(int index) {
         return taskList.get(index);
     }
 
     /**
-     * @description remove task from list by given index
-     * @author Dex
-     * @date 2022/08/29
-     * @param index: index of task in the list
+     * Remove task from list by given index.
+     *
+     * @param index: Index of task in the list.
      */
     public void removeTask(int index) {
         // may have performance issue
@@ -225,19 +236,14 @@ public class TaskManager {
     }
 
     /**
-     * @description get task size
-     * @author Dex
-     * @date 2022/08/31
+     * Get task size.
      */
     public int getTaskSize() {
         return taskList.size();
     }
 
     /**
-     * @description get task list instance, direct access of task list is not recommended.
-     * for iteration purpose, include getIterator method (TODO)
-     * @author Dex
-     * @date 2022/08/31
+     * Get task list instance. Make a copy of it is needed to prevent unintentional change of task entity.
      */
     public List<Task> getTaskList() {
         return taskList;

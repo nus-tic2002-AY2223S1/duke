@@ -19,55 +19,67 @@ import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class which used to parse the console input from user.
+ *
+ * @author Dex
+ * @date 2022/10/26
+ */
 public class ParserManager {
 
     private ParserManager() {}
 
     /**
-     * default parser to parse the string input
+     * Default parser to parse the string input.
      */
     private static final DefaultCommandParser DEFAULT_COMMAND_PARSER = new DefaultCommandParser();
 
     /**
-     * parser to parse the string input for `mark` operation
+     * Parser to parse the string input for `mark` operation.
      */
     private static final MarkCommandParser MARK_COMMAND_PARSER = new MarkCommandParser();
 
     /**
-     * parser to parse the string input for `unmark` operation
+     * Parser to parse the string input for `unmark` operation.
      */
     private static final UnmarkCommandParser UNMARK_COMMAND_PARSER = new UnmarkCommandParser();
 
     /**
-     * parser to parse the string input for `todo` operation
+     * Parser to parse the string input for `todo` operation.
      */
     private static final TodoCommandParser TODO_COMMAND_PARSER = new TodoCommandParser();
 
     /**
-     * parser to parse the string input for `deadline` operation
+     * Parser to parse the string input for `deadline` operation.
      */
     private static final DeadlineCommandParser DEADLINE_COMMAND_PARSER = new DeadlineCommandParser();
 
     /**
-     * parser to parse the string input for `event` operation
+     * Parser to parse the string input for `event` operation.
      */
     private static final EventCommandParser EVENT_COMMAND_PARSER = new EventCommandParser();
 
     /**
-     * parser to parse the string input for `delete` operation
+     * Parser to parse the string input for `delete` operation.
      */
     private static final DeleteCommandParser DELETE_COMMAND_PARSER = new DeleteCommandParser();
 
     /**
-     * parser to parse the string input for `delete` operation
+     * Parser to parse the string input for `delete` operation.
      */
     private static final FindCommandParser FIND_COMMAND_PARSER = new FindCommandParser();
 
     /**
-     * parser to parse the string input for `reschedule` operation
+     * Parser to parse the string input for `reschedule` operation.
      */
     private static final RescheduleCommandParser RESCHEDULE_COMMAND_PARSER = new RescheduleCommandParser();
 
+    /**
+     * Parse the console input from user.
+     *
+     * @param input: Console input.
+     * @return Form contain the parsed parameters.
+     */
     public static Form parseForm(String input) {
         input = StringUtil.trim(input);
         String[] args = input.split(" ");
@@ -105,8 +117,20 @@ public class ParserManager {
 
     }
 
+    /**
+     * Implementation class to parse unknown command.
+     *
+     * @author Dex
+     * @date 2022/10/26
+     */
     private static class DefaultCommandParser implements Parser {
 
+        /**
+         * Return what is given in the input.
+         *
+         * @param input: Input from console.
+         * @return Parse form.
+         */
         @Override
         public Form parseForm(String input) {
             // single string input, input could be command itself
@@ -114,8 +138,20 @@ public class ParserManager {
         }
     }
 
+    /**
+     * Implementation class to parse mark command.
+     *
+     * @author Dex
+     * @date 2022/10/26
+     */
     private static class MarkCommandParser implements Parser {
 
+        /**
+         * Extract the index parameter from input.
+         *
+         * @param input: Input from console.
+         * @return Parsed form.
+         */
         @Override
         public Form parseForm(String input) {
             String[] args = input.split(" ");
@@ -133,8 +169,20 @@ public class ParserManager {
         }
     }
 
+    /**
+     * Implementation class to parse unmark command.
+     *
+     * @author Dex
+     * @date 2022/10/26
+     */
     private static class UnmarkCommandParser implements Parser {
 
+        /**
+         * Extract the index parameter from input.
+         *
+         * @param input: Input from console.
+         * @return Parsed form.
+         */
         @Override
         public Form parseForm(String input) {
             String[] args = input.split(" ");
@@ -152,8 +200,20 @@ public class ParserManager {
         }
     }
 
+    /**
+     * Implementation class to parse delete command.
+     *
+     * @author Dex
+     * @date 2022/10/26
+     */
     private static class DeleteCommandParser implements Parser {
 
+        /**
+         * Extract the index parameter from input.
+         *
+         * @param input: Input from console.
+         * @return Parsed form.
+         */
         @Override
         public Form parseForm(String input) {
             String[] args = input.split(" ");
@@ -171,10 +231,25 @@ public class ParserManager {
         }
     }
 
+    /**
+     * Implementation class to parse find command.
+     *
+     * @author Dex
+     * @date 2022/10/26
+     */
     private static class FindCommandParser implements Parser {
 
+        /**
+         * Regex expression which used to match the given input from user.
+         */
         private static final Pattern findClausePattern = Pattern.compile("find (.*)");
 
+        /**
+         * Extract the keyword parameter from input.
+         *
+         * @param input: Input from console.
+         * @return Parsed form.
+         */
         @Override
         public Form parseForm(String input) {
             Matcher matcher = findClausePattern.matcher(input);
@@ -187,8 +262,20 @@ public class ParserManager {
         }
     }
 
+    /**
+     * Implementation class to parse reschedule command.
+     *
+     * @author Dex
+     * @date 2022/10/26
+     */
     private static class RescheduleCommandParser implements Parser {
 
+        /**
+         * Extract the index parameter from input.
+         *
+         * @param input: Input from console.
+         * @return Parsed form.
+         */
         @Override
         public Form parseForm(String input) {
             String[] args = input.split(" ");
@@ -206,10 +293,25 @@ public class ParserManager {
         }
     }
 
+    /**
+     * Implementation class to parse todo command.
+     *
+     * @author Dex
+     * @date 2022/10/26
+     */
     private static class TodoCommandParser implements Parser {
 
+        /**
+         * Regex expression which used to match the given input from user.
+         */
         private static final Pattern todoClausePattern = Pattern.compile("todo (.*)");
 
+        /**
+         * Extract the description parameter from input.
+         *
+         * @param input: Input from console.
+         * @return Parsed form.
+         */
         @Override
         public Form parseForm(String input) {
             Matcher matcher = todoClausePattern.matcher(input);
@@ -222,10 +324,25 @@ public class ParserManager {
         }
     }
 
+    /**
+     * Implementation class to parse deadline command.
+     *
+     * @author Dex
+     * @date 2022/10/26
+     */
     private static class DeadlineCommandParser implements Parser {
 
+        /**
+         * Regex expression which used to match the given input from user.
+         */
         private static final Pattern deadlineClausePattern = Pattern.compile("deadline ([\\s\\w\\W]*)/\\s*by (.*)");
 
+        /**
+         * Extract the description, deadline time parameter from input.
+         *
+         * @param input: Input from console.
+         * @return Parsed form.
+         */
         @Override
         public Form parseForm(String input) {
             Matcher matcher = deadlineClausePattern.matcher(input);
@@ -241,10 +358,25 @@ public class ParserManager {
         }
     }
 
+    /**
+     * Implementation class to parse event command.
+     *
+     * @author Dex
+     * @date 2022/10/26
+     */
     private static class EventCommandParser implements Parser {
 
+        /**
+         * Regex expression which used to match the given input from user.
+         */
         private static final Pattern eventClausePattern = Pattern.compile("event ([\\s\\w\\W]*)/\\s*at (.*)");
 
+        /**
+         * Extract the description, start time and end time parameter from input.
+         *
+         * @param input: Input from console.
+         * @return Parsed form.
+         */
         @Override
         public Form parseForm(String input) {
             Matcher matcher = eventClausePattern.matcher(input);

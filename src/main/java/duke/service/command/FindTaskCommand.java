@@ -9,21 +9,35 @@ import duke.util.CollectionUtil;
 import java.util.List;
 
 /**
- * @description singleton class
- * perform `find task` operation
+ * Singleton class, perform `find task` operation.
+ *
  * @author Dex
  * @date 2022/08/31
  */
 public class FindTaskCommand extends Command {
 
+    /**
+     * Variable holds the instance.
+     */
     private static final FindTaskCommand command = new FindTaskCommand();
 
     private FindTaskCommand() {}
 
+    /**
+     * Get single instance.
+     *
+     * @return Single instance of command.
+     */
     public static FindTaskCommand getInstance() {
         return command;
     }
 
+    /**
+     * Find the task from the given keyword description.
+     *
+     * @param form: Parsed input form from user.
+     * @return Response entity after command execute.
+     */
     @Override
     public ResponseDto<List<Task>> execute(Form form) {
         FindForm findForm = (FindForm) form;
