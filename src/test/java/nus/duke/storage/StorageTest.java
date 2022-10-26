@@ -4,8 +4,6 @@ import nus.duke.tasklist.TaskList;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import nus.duke.task.Task;
 
 class StorageTest {
     String filePath = "/Users/rebecca/Desktop/Duke/data/DukeTasks.txt";
@@ -16,5 +14,4 @@ class StorageTest {
         TaskList tl = new TaskList();
         assertEquals(tl.getTaskList(), storage.load());
     }
-
 }

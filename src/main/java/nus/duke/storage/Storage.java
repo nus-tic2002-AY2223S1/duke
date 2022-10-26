@@ -43,6 +43,7 @@ public class Storage {
             java.nio.file.Path path = java.nio.file.Paths.get(filePath);
             boolean directoryExists = java.nio.file.Files.exists(path);
             if (directoryExists){
+                ui.showHardDiskLoadingMessage();
                 File file = new File(filePath);
                 Scanner s = new Scanner(file);
                 String line;
@@ -70,12 +71,12 @@ public class Storage {
             for (int i = 0; i < taskList.getTotalTasks(); i++) {
                 String markedStatus = taskList.getTaskList().get(i).getIsDone();
                 if (markedStatus.equals("true")){
-                    markedStatus = "T";
+                    markedStatus = MARKED_AS_TRUE;
                 } else {
-                    markedStatus = "F";
+                    markedStatus = MARKED_AS_FALSE;
                 }
-                String str = taskList.getTaskList().get(i).getTask() + "[" + markedStatus + "]" + "\n";
-                writer.write(str);
+                String taskToBeSaved = taskList.getTaskList().get(i).getTask() + markedStatus + "\n";
+                writer.write(taskToBeSaved);
             }
             writer.close();
             System.out.println(TASKS_ARE_SAVED_MESSAGE);

@@ -7,6 +7,7 @@ import nus.duke.frontend.*;
 import nus.duke.tasklist.*;
 import nus.duke.exceptions.*;
 import static nus.duke.frontend.CommonPrintStatements.*;
+import nus.duke.enumerations.*;
 
 public class Parser {
     private static Ui ui;
@@ -15,7 +16,7 @@ public class Parser {
         if (userInput.length() == 4) {
             return userInput.substring(0, 4);
         } else {
-            int idx = userInput.indexOf(" ");
+            int idx = userInput.indexOf(SPACE);
             String command = userInput.substring(0, idx);
             return command;
         }
@@ -35,7 +36,7 @@ public class Parser {
     }
 
     public static boolean isEmptyTask(String userInput){
-        int idx = userInput.indexOf(" ");
+        int idx = userInput.indexOf(SPACE);
         String str = userInput.substring(idx, userInput.length());
         if (str.isBlank()) {
             return true;
@@ -45,7 +46,13 @@ public class Parser {
     }
 
     public static boolean hasDate(String userInput){
-        int start = userInput.indexOf("/by") + 3;
+        int start = 0;
+        if (userInput.contains(BY)) {
+            start = userInput.indexOf(BY) + 3;
+        } else if (userInput.contains(ON)) {
+            start = userInput.indexOf(ON) + 3;
+        }
+
         int end = userInput.indexOf("[");
         String dateInString = userInput.substring(start, userInput.length());
 
@@ -108,15 +115,27 @@ public class Parser {
             throw new EmptyTaskException();
         }
 
-        if (command.equals("DEADLINE") && (userInput.contains("/by") == false)) {
+        if (command.equals(LegalCommandEnumerations.DEADLINE.toString()) && (userInput.contains(BY) == false)) {
             throw new MissingKeywordException();
         }
 
-        if (command.equals("EVENT") && (userInput.contains("/at") == false) && (userInput.contains("/on") == false)) {
+        if (command.equals(LegalCommandEnumerations.EVENT.toString()) && (userInput.contains(AT) == false) && (userInput.contains(ON) == false)) {
             throw new MissingKeywordException();
         }
 
-        if (command.equals("DEADLINE") && (userInput.contains("/by") == true) && hasDate(userInput) == false) {
+        if (command.equals(LegalCommandEnumerations.EVENT.toString()) && (userInput.contains(AT) == false) && (userInput.contains(ON) == true)) {
+            throw new MissingKeywordException();
+        }
+
+        if (command.equals(LegalCommandEnumerations.EVENT.toString()) && (userInput.contains(AT) == true) && (userInput.contains(ON) == false)) {
+            throw new MissingKeywordException();
+        }
+
+        if (command.equals(LegalCommandEnumerations.DEADLINE.toString()) && (userInput.contains(BY) == true) && hasDate(userInput) == false) {
+            throw new MissingDateException();
+        }
+
+        if (command.equals(LegalCommandEnumerations.EVENT.toString()) && (userInput.contains(AT) == true) && (userInput.contains(ON) == true) && hasDate(userInput) == false) {
             throw new MissingDateException();
         }
         return false;

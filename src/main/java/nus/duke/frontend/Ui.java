@@ -10,7 +10,7 @@ public class Ui {
     }
 
     public static void showLine() {
-        System.out.println("_____________________________________________________");
+        System.out.println("------------------------------------");
     }
 
     public static void printCommandMenu() {
@@ -43,8 +43,14 @@ public class Ui {
     public static void showHardDiskLoadedMessage() {
         System.out.println(HARDDISK_LOADED_MESSAGE);
     }
+
+    public static void showHardDiskLoadingMessage(){
+        System.out.println(LOADING_ARTWORK);
+    }
     
     public static void showHardDiskCreationMessage() {
+        System.out.println("\n");
         System.out.println(HARDDISK_CREATED_MESSAGE);
+        System.out.println("");
     }
 }

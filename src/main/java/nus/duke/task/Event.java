@@ -1,7 +1,11 @@
 package nus.duke.task;
 
+import nus.duke.enumerations.LegalTaskEnumerations;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
+import static nus.duke.frontend.CommonPrintStatements.*;
 
 public class Event extends Task {
     protected String at; // /at a specific place
@@ -17,7 +21,7 @@ public class Event extends Task {
 
     @Override
     public String getTaskType(){
-        return "E";
+        return LegalTaskEnumerations.E.toString();
     }
 
     @Override
@@ -30,14 +34,14 @@ public class Event extends Task {
 
     @Override
     public String getDescription(String userInput) {
-        int end = userInput.indexOf("/at");
+        int end = userInput.indexOf(AT);
         return userInput.substring(0, end);
     }
 
     @Override
     public String getDateInStr(String userInput) {
-        int start = userInput.indexOf("/on") + 4;
-        if (userInput.indexOf("[T]") == -1 || userInput.indexOf("[F]") == -1) {
+        int start = userInput.indexOf(ON) + 4;
+        if (userInput.indexOf(MARKED_AS_TRUE) == -1 || userInput.indexOf(MARKED_AS_FALSE) == -1) {
             return userInput.substring(start, userInput.length()).trim();
         } else {
             return userInput.substring(start, userInput.length()-3).trim();
@@ -45,8 +49,8 @@ public class Event extends Task {
     }
 
     public String getVenue(String userInput) {
-        int start = userInput.indexOf("/at") + 4;
-        int end = userInput.indexOf("/on");
+        int start = userInput.indexOf(AT) + 4;
+        int end = userInput.indexOf(ON);
         return userInput.substring(start, end).trim();
     }
 }

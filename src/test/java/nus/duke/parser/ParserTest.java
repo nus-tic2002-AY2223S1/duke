@@ -30,6 +30,7 @@ class ParserTest {
     void parserCorrectlyThrowsMissingKeywordException() {
         assertThrows(MissingKeywordException.class, () -> hasInputErrors("DEADLINE ethics essay"));
         assertThrows(MissingKeywordException.class, () -> hasInputErrors("EVENT school bake sale"));
+        assertThrows(MissingKeywordException.class, () -> hasInputErrors("EVENT school bake sale /on 23-08-2020"));
     }
 
     @Test
@@ -39,6 +40,9 @@ class ParserTest {
         assertThrows(MissingDateException.class, () -> hasInputErrors("DEADLINE ethics essay /by tomorrow"));
         assertThrows(MissingDateException.class, () -> hasInputErrors("DEADLINE ethics essay /by 01-01-2022"));
         assertThrows(MissingDateException.class, () -> hasInputErrors("DEADLINE ethics essay /by 01012022"));
+        assertThrows(MissingKeywordException.class, () -> hasInputErrors("DEADLINE ethics essay /by"));
+        assertThrows(MissingKeywordException.class, () -> hasInputErrors("EVENT school bake sale /at raffles jc /on "));
+        assertThrows(MissingKeywordException.class, () -> hasInputErrors("EVENT school bake sale /at raffles jc /on 1234"));
     }
 
     @Test

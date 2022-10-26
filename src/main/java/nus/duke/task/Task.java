@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import static nus.duke.frontend.CommonPrintStatements.*;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -21,7 +23,7 @@ public abstract class Task {
         if (this.isDone == false) {
             this.isDone = true;
         } else {
-            System.out.println("Task is already marked done");
+            System.out.println(TASK_ALREADY_MARKED_DONE_MESSAGE);
         }
     }
     public void markAsNotDone(){
@@ -29,7 +31,7 @@ public abstract class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "X" : SPACE); // mark done task with X
     }
 
     public String getIsDone() {

@@ -1,9 +1,12 @@
 package nus.duke.tasklist;
 
+import nus.duke.enumerations.*;
 import nus.duke.task.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import static nus.duke.frontend.CommonPrintStatements.*;
 
 public class TaskList {
     protected static ArrayList<Task> taskList = new ArrayList<Task>();
@@ -27,7 +30,7 @@ public class TaskList {
     public int getTotalTasks(){ return this.totalTasks; }
 
     public static int getItemNumber(String userInput) {
-        int idx = userInput.indexOf(" ");
+        int idx = userInput.indexOf(SPACE);
         String itemNumber = userInput.substring(idx+1, userInput.length());
         idx = Integer.parseInt(itemNumber);
         return idx;
@@ -45,9 +48,9 @@ public class TaskList {
 
     public void addTask(String userInput) {
         Task t;
-        if (userInput.contains("/by")) {
+        if (userInput.contains(BY)) {
             t = new Deadline(userInput);
-        } else if (userInput.contains("/at")) {
+        } else if (userInput.contains(AT)) {
             t = new Event(userInput);
         } else {
             t = new Todo(userInput);
@@ -60,23 +63,23 @@ public class TaskList {
     public void deleteTask(int idx) {
         taskList.remove(idx-1);
         decrementTotalTasks();
-        System.out.println("Removed");
+        System.out.println(REMOVED);
     }
 
     public static void markTask(int idx) {
         (taskList.get(idx-1)).markAsDone();
-        System.out.println("marked");
+        System.out.println(MARKED);
     }
 
     public static void unmarkTask(int idx) {
         (taskList.get(idx-1)).markAsNotDone();
-        System.out.println("unmarked");
+        System.out.println(UNMARKED);
     }
 
     public void getReminders(){
         ArrayList<Deadline> reminders = new ArrayList<Deadline>();
         for (int i = 0; i < taskList.size(); i++) {
-            if (taskList.get(i).getTaskType().equals("D")) {
+            if (taskList.get(i).getTaskType().equals(LegalTaskEnumerations.D.toString())) {
                 Deadline dl = (Deadline) taskList.get(i);
                 reminders.add(dl);
             }
@@ -110,12 +113,12 @@ public class TaskList {
             parsedString = userInput.substring(0, end);
         }
 
-        if (command.equals("EXIT")) {
+        if (command.equals(EXIT)) {
             return true;
         }
 
         if ((command.equals(LegalCommandEnumerations.VIEW.toString())) && ((this.getTotalTasks()) == 0)) {
-            System.out.println("There are 0 tasks in your list.");
+            System.out.println(TASKLIST_IS_EMPTY_MESSAGE);
             return false;
         }
         if ((command.equals(LegalCommandEnumerations.VIEW.toString())) && ((this.getTotalTasks()) > 0)) {
@@ -144,7 +147,7 @@ public class TaskList {
        }
 
        if (command.equals(LegalCommandEnumerations.FILTER.toString())) {
-           int start = userInput.indexOf(" ") + 1;
+           int start = userInput.indexOf(SPACE) + 1;
            String keyword = userInput.substring(start, userInput.length());
            this.filter(keyword);
            return false;
@@ -158,7 +161,7 @@ public class TaskList {
     public void processIsDone(int idx, String userInput) {
         int start = userInput.indexOf("[") + 1;
         String isDone = userInput.substring(start, userInput.length()-1);
-        if (isDone.equals("T")){
+        if (isDone.equals(TRUE)){
             this.markTask(idx);
         }
     }

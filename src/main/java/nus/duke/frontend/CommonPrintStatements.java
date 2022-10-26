@@ -13,6 +13,20 @@ public class CommonPrintStatements {
     public static final String START_PROGRAM_MESSAGE = "My name is Dobby and I am a free elf!";
     public static final String EXIT_PROGRAM_MESSAGE = "Goodbye, my friend. Dobby must now hurry to Harry Potter";
     public static final String TASKS_ARE_SAVED_MESSAGE = "Your tasks are saved";
+    public static final String TASKLIST_IS_EMPTY_MESSAGE = "There are 0 tasks in your list";
+    public static final String TASK_ALREADY_MARKED_DONE_MESSAGE = "Task was already marked done";
+    public static final String MARKED_AS_TRUE = "[T]";
+    public static final String MARKED_AS_FALSE = "[F]";
+    public static final String TRUE = "T";
+    public static final String BY = "/by"; // a specific date
+    public static final String AT = "/at"; // a specific venue
+    public static final String ON = "/on"; // a specific date
+    public static final String REMOVED = "* Removed *";
+    public static final String MARKED = "* Marked *";
+    public static final String UNMARKED = "* Unmarked *";
+    public static final String EXIT = "EXIT";
+    public static final String EMPTY_STRING = "";
+    public static final String SPACE = " ";
     public static final String DOBBY_ARTWORK =
             "   _____\n" +
             "  /     \\\n" +
@@ -31,4 +45,20 @@ public class CommonPrintStatements {
             "   || ||\n" +
             "   \\\\ \\\\  \n" +
             "  ^^^^ ^^^";
+
+    public static final String LOADING_ARTWORK =
+            "\n" +
+            "Loading…\n" +
+            "█▒▒▒▒▒▒▒▒▒\n" +
+            "\n" +
+            "10%\n" +
+            "███▒▒▒▒▒▒▒\n" +
+            "\n" +
+            "30%\n" +
+            "█████▒▒▒▒▒\n" +
+            "\n" +
+            "50%\n" +
+            "███████▒▒▒\n" +
+            "\n" +
+            "\u200E0███████████████████100%";
 }
