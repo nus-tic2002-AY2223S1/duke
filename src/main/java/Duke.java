@@ -21,7 +21,7 @@ public class Duke {
 
     private static String checkInput(String input, int taskListSize) throws TodoMissingDescriptionException, BasicInputException, DeadlineMissingKeywordException, EventMissingKeywordException, DeadlineWrongFormatException, EventWrongFormatException, InputNumberFormatException, InputWrongFormatException, InputIndexOutOfBoundsException, FindTaskMissingDatetimeException, InputWrongPriorityException, DoWithinPeriodMissingKeywordException, DoWithinPeriodWrongFormatException {
 
-        String[] keywordList = {"todo", "bye", "mark", "unmark", "deadline", "todo", "list", "delete", "event", "findtask", "priority", "find", "dowithinperiod"};
+        String[] keywordList = {"bye", "mark", "unmark", "deadline", "todo", "list", "delete", "event", "findtask", "priority", "find", "dowithinperiod"};
         String keywordInput = input.split(" ")[0];
         boolean keywordExist = false;
         for (int keywordIndex = 0; keywordIndex < keywordList.length; keywordIndex++) {

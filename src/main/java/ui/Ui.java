@@ -19,7 +19,21 @@ public class Ui {
     public void showWelcome() {
         String logo = " ____        _        \n" + "|  _ \\ _   _| | _____ \n" + "| | | | | | | |/ / _ \\\n" + "| |_| | |_| |   <  __/\n" + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-        System.out.println("Hello! I'm Duke. \nWhat can I do for you?");
+
+        System.out.println("Services & command are as follow:\n ");
+        System.out.println("        1.  [Add todo task] todo {description}");
+        System.out.println("        2.  [Add deadline task] deadline {description} /by {deadline}");
+        System.out.println("        3.  [Add event task] event {description} /at {datetime}");
+        System.out.println("        4.  [Add doWithinPeriod task] dowithinperiod {description} /between {start date} /and {end date}");
+        System.out.println("        5.  [list tasks] list");
+        System.out.println("        6.  [Search tasks with keyword] find {description key word}");
+        System.out.println("        7.  [Search deadline/event tasks with datetime] findtask {datetime}");
+        System.out.println("        8.  [Delete task] delete {task index}");
+        System.out.println("        9.  [Mark task done] mark {task index}");
+        System.out.println("        10. [Mark task undone] unmark {task index}");
+        System.out.println("        11. [Prioritise task] priority {task index} {priority level}");
+        System.out.println("        12. [End process] bye\n");
+        System.out.println("What can I do for you?");
     }
 
     /**
