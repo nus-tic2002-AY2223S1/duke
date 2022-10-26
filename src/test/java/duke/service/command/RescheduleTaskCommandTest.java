@@ -2,22 +2,29 @@ package duke.service.command;
 
 import duke.constant.CommandEnum;
 import duke.entity.Deadline;
+import duke.entity.Task;
+import duke.exception.DukeException;
 import duke.form.RescheduleForm;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class RescheduleTaskCommandTest extends CommandTestBase {
 
     @Test
-    void testExecute() {
-        // prefill the data set
-        Deadline e = new Deadline(TEST_TASK_DESCRIPTION);
-        e.setBy(TEST_DEADLINE_BY_TIME);
-        taskManager.addTask(e);
+    void testExecuteWithException() {
+        // prefill data
+        Task task1 = new Task("task1");
+        taskManager.addTask(task1);
 
+        Command command = RescheduleTaskCommand.getInstance();
         String commandName = CommandEnum.RESCHEDULE.getName();
         RescheduleForm rescheduleForm = new RescheduleForm(TEST_META_DATA_DESCRIPTION, commandName, getUserInputLastIndex());
-
-        // as input is fetched in console, need to change the way how scanner takes in input
-        // no testable at the moment
+        try {
+            command.execute(rescheduleForm);
+        } catch (DukeException e) {
+            Assertions.assertEquals("error code: 603, message: selected task is not `event` or `deadline` task, cannot be rescheduled", e.getMessage());
+        } finally {
+            taskManager.removeTask(0);
+        }
     }
 }
