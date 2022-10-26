@@ -1,7 +1,6 @@
 package Tasks;
 
 public class Deadline extends Task implements TaskInterface {
-
     public Deadline(String work) {
         super(work);
     }
@@ -9,8 +8,6 @@ public class Deadline extends Task implements TaskInterface {
     public Deadline(boolean isDone, String work, long id) {
         super(isDone, work, id);
     }
-
-    public Deadline(boolean isDone, String work) { super(isDone, work); }
 
     @Override
     public String getString() {

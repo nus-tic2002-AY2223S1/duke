@@ -5,8 +5,6 @@ public class Event extends Task implements TaskInterface {
         super(work);
     }
 
-    public Event(boolean isDone, String work) { super(isDone, work); }
-
     public Event(boolean isDone, String work, long id) {
         super(isDone, work, id);
     }
