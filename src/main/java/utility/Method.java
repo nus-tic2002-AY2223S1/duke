@@ -44,9 +44,14 @@ public class Method {
 
 
             /**
-             * 'converToValidDate' is convert not correct inputdate format to valid Date format
-             * so that DateFormat can understand it.
-             * For example: when user enter date as ' 2/12/2019 1800' ,need convert the format to '2019/02/12T1800'
+             * Returns String of Date and time.
+             * If input format is not year/month/day, returned year/month/day.
+             * <p>
+             * This method always returns year/month/day whether user input correct
+             * format or not.When user input day/month/year, it will automatical
+             * convert to year/month/day.
+             * @param InputDate user input string date
+             * @return year/month/day or year/month/day/time
              */
         public static String convertToValidDate(String InputDate) {
             String input = InputDate;
@@ -97,7 +102,14 @@ public class Method {
         }
 
 
-
+    /**
+     * Returns Date pattern Month/day/year.
+     * This method always returns Date format when user input date as string.
+     *
+     * @param inputDate user input string date.
+     * @return DateFormat date.
+     * @throws DateTimeParseException if year/month/day is not DateFormat
+     */
         public static String convertToDate(String inputDate) throws DateTimeParseException {
               String strDate = convertToValidDate(inputDate);
                     strDate = strDate.replaceAll("/","-");
@@ -106,9 +118,14 @@ public class Method {
                 return date.format(dateFormat);
         }
 
-        /**
-        * convert to Time format when user input month,day,year,timing
-        */
+    /**
+     *Return Date and time pattern  Month/day/year time.
+     * This method always returns DateTime format when user input date and time as string.
+     *
+     * @param inputDate user input string date and time.
+     * @return DateFormat date and time.
+     * @throws DateTimeParseException if year/month/day/time is not DateFormat
+     */
         public static String convertToTime(String inputDate) throws DateTimeParseException {
               String str = convertToValidDate(inputDate);
               String  strDate = str.replaceAll("/", "-");
@@ -125,11 +142,13 @@ public class Method {
         }
 
 
-
-
     /**
-     * use if else condition check whether user input Date format or Time format
-     * return corresponding format to function call
+     *Returns String date or datetime.
+     * If user input is year/month/day,date returned
+     * If user input is year/month/day/time, date and time returned
+     *
+     * @param inputDate user input string date
+     * @return string date.
      */
     public static String DateTime(String inputDate){
            String date=inputDate;
@@ -147,6 +166,14 @@ public class Method {
         return date;
     }
 
+
+    /**
+     * Return a list of item which is contains searching words.
+     * If the task list contain searching words,a list of item contains searching words returned.
+     *
+     * @param listItems a list of task
+     * @param Input searching words
+     */
      public static void searchWord(ArrayList<Task> listItems, String Input){
          ArrayList<String> findList = new ArrayList<>();
          String keyWord = Input.substring(5);
