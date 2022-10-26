@@ -5,8 +5,16 @@ public class Parser {
     public String tokenToString;
     ArrayList<String> remainingTokens;
 
-    protected Parser() {
+    private Parser() {
         remainingTokens = new ArrayList<>();
+    }
+    private static Parser instance = null;
+
+    public static Parser getInstance(){
+        if (instance == null) {
+            instance = new Parser();
+        }
+        return instance;
     }
 
     public void stringToToken(String incomingText) {
@@ -15,8 +23,7 @@ public class Parser {
     }
 
     public String tokenToString(){
-        String arraylistString = String.join(" ", remainingTokens);
-        return arraylistString;
+        return String.join(" ", remainingTokens);
     }
 
     public String front() { return remainingTokens.get(0); }
@@ -38,10 +45,7 @@ public class Parser {
     }
 
     public boolean match(String symbol){
-        if (symbol.equalsIgnoreCase(remainingTokens.get(0))){
-            return true;
-        }
-        return false;
+        return symbol.equalsIgnoreCase(remainingTokens.get(0));
     }
 
 

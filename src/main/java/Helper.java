@@ -20,30 +20,31 @@ public class Helper {
     }
 
     public static void nalaSyntaxError(String type){
-        if (type == "Event"){
-            System.out.println("Meow! I spotted an \"/at\" in your input. Did you mean to create an event? Please create the task again!");
-        }
-        else if (type == "Deadline"){
-            System.out.println("Meow! I spotted an \"/by\" in your input. Did you mean to create an deadline? Please create the task again!");
-        }
-
-        else if (type == "EventNoAt"){
-            System.out.println("Meow! I can't create an Event for you without an \"/at\". Please create the task again!");
-        }
-        else if (type == "DeadlineNoBy"){
-            System.out.println("Meow! I can't create an Event for you without a \"/by\". Please create the task again!");
-        }
-        else if (type == "BlankEvent"){
-            System.out.println("Meow! I can't create an Event for you without a description! Please create the task again!");
-        }
-        else if (type == "BlankDeadline"){
-            System.out.println("Meow! I can't create an Deadline for you without a description! Please create the task again!");
-        }
-        else if (type == "BlankTodo"){
-            System.out.println("Meow! I can't create an Todo for you without a description! Please create the task again!");
-        }
-        else if (type == "NoDate"){
-            System.out.println("Meow! You did not specify a date. Please create the task again!");
+        switch (type) {
+            case "Event":
+                System.out.println("Meow! I spotted an \"/at\" in your input. Did you mean to create an event? Please create the task again!");
+                break;
+            case "Deadline":
+                System.out.println("Meow! I spotted an \"/by\" in your input. Did you mean to create an deadline? Please create the task again!");
+                break;
+            case "EventNoAt":
+                System.out.println("Meow! I can't create an Event for you without an \"/at\". Please create the task again!");
+                break;
+            case "DeadlineNoBy":
+                System.out.println("Meow! I can't create an Event for you without a \"/by\". Please create the task again!");
+                break;
+            case "BlankEvent":
+                System.out.println("Meow! I can't create an Event for you without a description! Please create the task again!");
+                break;
+            case "BlankDeadline":
+                System.out.println("Meow! I can't create an Deadline for you without a description! Please create the task again!");
+                break;
+            case "BlankTodo":
+                System.out.println("Meow! I can't create an Todo for you without a description! Please create the task again!");
+                break;
+            case "NoDate":
+                System.out.println("Meow! You did not specify a date. Please create the task again!");
+                break;
         }
     }
 
