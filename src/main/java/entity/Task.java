@@ -2,6 +2,7 @@ package entity;
 
 public class Task {
     protected String description;
+
     protected boolean isDone;
 
     public Task(String description) {
@@ -9,8 +10,12 @@ public class Task {
         this.isDone = false;
     }
 
-    public String getDescription() {
-        return this.description;
+    public String toFile() {
+        return getStatus() + " | " + description + "\n";
+    }
+
+    public String getStatus() {
+        return (isDone ? "1" : "0");
     }
 
     public String getStatusIcon() {
