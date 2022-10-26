@@ -10,17 +10,15 @@ public class Ui {
     }
 
     public static void showLine() {
-        System.out.println("------------------------------------");
+        System.out.println("_______________ʕ　·ᴥ·ʔ COMMAND MENU  ʕ·ᴥ·　ʔ_______________");
     }
 
     public static void printCommandMenu() {
         showLine();
-        System.out.println("***COMMAND MENU***");
         System.out.println("MARK | UNMARK | DELETE | VIEW | EXIT | REMINDERS");
         System.out.println("TODO <<task>> | FILTER <<keyword>>");
         System.out.println("DEADLINE <<task>> /by <<dd/MM/YYYY>>| EVENT <<TASK>> /at <<venue>> /on <<dd/MM/YYY>>");
         System.out.println("Please ensure commands are all capitalised.");
-        System.out.println("***END OF COMMAND MENU***");
         showLine();
     }
 
@@ -30,7 +28,7 @@ public class Ui {
 
     public static void startProgram() {
         printDobby();
-        System.out.println(START_PROGRAM_MESSAGE);
+        //System.out.println(START_PROGRAM_MESSAGE);
         System.out.println(ASK_FOR_USER_INPUT_MESSAGE);
         printCommandMenu();
     }
