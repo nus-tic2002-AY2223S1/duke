@@ -11,62 +11,62 @@ import java.util.Objects;
 public enum CommandEnum {
 
     /**
-     * Unknown command constant instance.
+     * Constant instance of `unknown` command.
      */
     UNKNOWN("unknown", "undefined command", "-"),
 
     /**
-     * show_command command constant instance.
+     * Constant instance of `show_command` command.
      */
     SHOW_COMMAND("show_command", "display current supported command in the program", "show_command"),
 
     /**
-     * list command constant instance.
+     * Constant instance of `list` command.
      */
     LIST("list", "display task list", "list"),
 
     /**
-     * mark command constant instance.
+     * Constant instance of `mark` command.
      */
     MARK_TASK("mark", "mark task as done by given index", "mark <index>"),
 
     /**
-     * unmark command constant instance.
+     * Constant instance of `unmark` command.
      */
     UNMARK_TASK("unmark", "mark task as undone by given index", "unmark <index>"),
 
     /**
-     * delete command constant instance.
+     * Constant instance of `delete` command.
      */
     DELETE_TASK("delete", "delete task from list, syntax", "delete <index>"),
 
     /**
-     * todo command constant instance.
+     * Constant instance of `todo` command.
      */
     TODO("todo", "create a todo task", "todo <description>"),
 
     /**
-     * find command constant instance.
+     * Constant instance of `find` command.
      */
     FIND_TASK("find", "search the task by given keyword", "find <keyword>"),
 
     /**
-     * deadline command constant instance.
+     * Constant instance of `deadline` command.
      */
     DEADLINE("deadline", "create a deadline task", "deadline <description> / by <deadlineTime(yyyy-MM-dd HH:mm)>"),
 
     /**
-     * reschedule command constant instance.
+     * Constant instance of `reschedule` command.
      */
     RESCHEDULE("reschedule", "reschedule the task by given index", "reschedule <index>"),
 
     /**
-     * event command constant instance.
+     * Constant instance of `event` command.
      */
     EVENT("event", "create a event task", "event <description> / at <startTime(yyyy-MM-dd HH:mm) & endTime(yyyy-MM-dd HH:mm)>"),
 
     /**
-     * bye command constant instance.
+     * Constant instance of `bye` command.
      */
     EXIT("bye", "exit program", "bye");
 
