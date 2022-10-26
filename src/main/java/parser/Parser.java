@@ -27,8 +27,10 @@ public class Parser {
             case "bye":
                 return new ByeCommand(true);
             case "mark":
+                assert (lineList[1].matches("-?\\d+(\\.\\d+)?"));
                 return new MarkCommand(Integer.parseInt(lineList[1]) - 1);
             case "unmark":
+                assert (lineList[1].matches("-?\\d+(\\.\\d+)?"));
                 return new UnmarkCommand(Integer.parseInt(lineList[1]) - 1);
             case "event":
                 String eventTask = inputCommand.substring(6, inputCommand.indexOf("/at") - 1);
@@ -55,6 +57,7 @@ public class Parser {
                     return new ErrorCommand(inputCommand + "\n" + " ☹ OOPS!!! deadline has the wrong datetime format. " + "Deadline format should be {d/MM/yyyy HHmm}");
                 }
             case "delete":
+                assert (lineList[1].matches("-?\\d+(\\.\\d+)?"));
                 int deleteIndex = Integer.parseInt(lineList[1]) - 1;
                 return new DeleteCommand(deleteIndex);
 
@@ -73,6 +76,7 @@ public class Parser {
             case "priority":
                 String input = inputCommand.split("priority ")[1];
                 String[] inputList = input.split(" ");
+                assert (inputList[0].matches("-?\\d+(\\.\\d+)?"));
                 int taskIndex = Integer.parseInt(inputList[0]) - 1;
                 String priority = inputList[1];
                 return new PriorityCommand(priority, taskIndex);

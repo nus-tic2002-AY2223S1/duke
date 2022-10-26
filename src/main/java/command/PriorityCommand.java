@@ -29,6 +29,7 @@ public class PriorityCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
+        assert (priority.equals("high") || priority.equals("medium") || priority.equals("low"));
         tasks.myTaskList.get(taskIndex).setPriority(priority);
         ui.showMessage("Noted. I've set the task priority: " + this.priority);
     }
