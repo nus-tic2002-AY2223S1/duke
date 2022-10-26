@@ -77,6 +77,14 @@ public class TaskList {
         Helper.separator();
     }
 
+    public int getTLSize(){
+        return TaskList.size();
+    }
+
+    public String getTodoListRow(int index){
+        return index + 1 +"."+TaskList.get(index).toString();
+    }
+
     public void changeToMarkAsDone(int TaskIndex){
         int i = TaskIndex-1;
         if (i> TaskList.size()){

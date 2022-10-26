@@ -1,17 +1,32 @@
+import java.io.File;
 import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) throws Exception {
         Parser p = Parser.getInstance();
+        Storage s = Storage.getInstance();
 
         Helper.separator();
-        System.out.println("Hello! I'm Nala the Annoying Cat!\n" + "What can I do for you?");
+        System.out.println("Hello! I'm Nala the Annoying Cat!\n" + "What can I do for you?\n Protip: Type !help for a list of commands!");
         Helper.separator();
         while (true) {
             //tokenizer
+            Helper.nalaBehaviour();
             String incomingText = userInput();
             p.stringToToken(incomingText);
 
-            if (p.front().equalsIgnoreCase("mark")) {
+            if (p.front().equalsIgnoreCase("!help")) {
+                System.out.println("Here's the list of commands:\n" +
+                                    "todo [description] - create a todo \n" +
+                                     "event [description] /at [date or time] - create an event\n"+
+                                    "deadline [description] /by [date or time] - create a deadline\n"+
+                                    "mark [index] - mark a task as done\n"+
+                                    "unmark [index] - mark a task as not done\n"+
+                                    "delete [index] - delete a task\n"+
+                                    "list - shows the current list of tasks\n"+
+                                    "print - saves the tasklist to a .txt file\n"+
+                                    "bye or end - say goodbye to Nala :(");
+            }
+            else if (p.front().equalsIgnoreCase("mark")) {
                 parseMark();
             }
 
@@ -32,11 +47,42 @@ public class Duke {
                 parseDelete();
             }
 
+            else if (p.front().equalsIgnoreCase("print")){
+                parsePrint();
+            }
+
+
             else { //add new task
                 parseAddTask();
             }
             p.clear();
         }
+    }
+
+    private static void parsePrint() throws Exception {
+        Storage s = Storage.getInstance();
+        System.out.println("Meow! I will be printing the following list:");
+        parseShowlist();
+        System.out.println("I will be saving the .txt file under Desktop/dukeFile, if it is not created already.\n" + "What are we naming the output file?");
+        while (true){
+            String userFilename = userInput();
+            s.setFileName(userFilename);
+            if (userFilename.equalsIgnoreCase("/e")){
+                break;
+            }
+            if (!s.checkExistence()){
+                s.createFile();
+                s.populateFile();
+                break;
+            }
+            else{
+                System.out.println(userFilename + ".txt already exists on " + System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "dukeFile" + "\n Please type a different filename, or type \"/e\" to go back to the main menu!" );
+            }
+
+
+        }
+
+
     }
 
     public static void parseMark(){
