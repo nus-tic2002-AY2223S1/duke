@@ -2,43 +2,44 @@ package duke.ui;
 
 import duke.dto.ResponseDto;
 
+/**
+ * Interface which used to be implemented by different user interface application.
+ *
+ * @author Dex
+ * @date 2022/10/26
+ */
 public interface UI {
 
     /**
-     * @description display greeting message when program starts
-     * @author Dex
-     * @date 2022/08/31
+     * Display greeting message when program starts.
      */
     void renderGreetingMessage();
 
     /**
-     * @description format duke exception message to prevent actual cause expose to user
-     * @author Dex
-     * @date 2022/08/31
-     * @param errorMsg: program error message
+     * Format duke exception message to prevent actual cause expose to user.
+     *
+     * @param errorMsg: Program error message.
      */
     void renderDukeErrorMsg(String errorMsg);
 
     /**
-     * @description display message for unknown exception, hide the actual root cause to user
-     * @author Dex
-     * @date 2022/09/06
-     * @param throwable: exception instance
+     * Display message for unknown exception, hide the actual root cause to user.
+     *
+     * @param throwable: Exception instance.
      */
     void renderUnknownErrorMsg(Throwable throwable);
 
     /**
-     * @description display the message & data in response entity
-     * @author Dex
-     * @date 2022/10/21
-     * @param responseDto: response entity
+     * Display the message & data in response entity.
+     *
+     * @param responseDto: Response entity.
      */
     void renderResponse(ResponseDto<?> responseDto);
 
     /**
-     * @description get user input in raw string
-     * @author Dex
-     * @date 2022/08/31
+     * Get user input in raw string.
+     *
+     * @return Raw input from user .
      */
     String getDukeCommandInput();
 }

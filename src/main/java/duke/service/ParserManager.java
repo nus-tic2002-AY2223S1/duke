@@ -111,6 +111,9 @@ public class ParserManager {
         }
     }
 
+    /**
+     * Internal interface to be implemented by different parser
+     */
     private interface Parser {
 
         Form parseForm(String input);

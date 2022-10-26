@@ -11,7 +11,6 @@ import duke.util.ExceptionUtil;
 import duke.util.InputUtil;
 import duke.util.StringUtil;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -19,21 +18,33 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Console based implementation for UI interface.
+ *
+ * @author Dex
+ * @date 2022/10/26
+ */
 public class ConsoleUI implements UI {
 
+    /**
+     * Internal interface to be implemented by different render handler.
+     */
     private interface RenderHandler {
         void render(ResponseDto<?> responseDto);
     }
 
+    /**
+     * Store the mapping of command name and its render handler.
+     */
     private final Map<String, RenderHandler> renderHandlerMap = new HashMap<>();
 
     /**
-     * store the maximum length, used to adjust the line break
+     * Store the maximum length, used to adjust the line break.
      */
     private int maxLineLength = 0;
 
     /**
-     * default render handler which used to render response entity after executing command
+     * Default render handler which used to render response entity after executing command.
      */
     RenderHandler defaultRenderHandler = responseDto -> {
         printResponseMessage(responseDto);
@@ -41,7 +52,7 @@ public class ConsoleUI implements UI {
     };
 
     /**
-     * render handler which used to render response entity after executing `show_command` command
+     * Render handler which used to render response entity after executing `show_command` command.
      */
     RenderHandler showCommandRenderHandler = responseDto -> {
         // render table data
@@ -53,7 +64,7 @@ public class ConsoleUI implements UI {
     };
 
     /**
-     * render handler which used to render response entity after executing `list` command
+     * Render handler which used to render response entity after executing `list` command.
      */
     @SuppressWarnings("unchecked")
     RenderHandler listTaskRenderHandler = responseDto -> {
@@ -69,7 +80,7 @@ public class ConsoleUI implements UI {
     };
 
     /**
-     * render handler which used to render response entity after executing `find` command
+     * Render handler which used to render response entity after executing `find` command.
      */
     @SuppressWarnings("unchecked")
     RenderHandler findTaskCommandHandler = responseDto -> {
@@ -88,14 +99,17 @@ public class ConsoleUI implements UI {
     };
 
     /**
-     * render handler which used to render response entity after executing `bye` command
-     * program will terminate after render complete
+     * Render handler which used to render response entity after executing `bye` command
+     * program will terminate after render complete.
      */
     RenderHandler existCommandHandler = responseDto -> {
         printResponseMessage(responseDto);
         System.exit(0);
     };
 
+    /**
+     * Default constructor.
+     */
     public ConsoleUI() {
         // compute the length line break
         // included bar length of 2 + last space
@@ -108,6 +122,9 @@ public class ConsoleUI implements UI {
         renderHandlerMap.put(CommandEnum.EXIT.getName(), existCommandHandler);
     }
 
+    /**
+     * Render greeting message in console.
+     */
     @Override
     public void renderGreetingMessage() {
         // print logo
@@ -156,6 +173,11 @@ public class ConsoleUI implements UI {
         System.out.println();
     }
 
+    /**
+     * Render error message in console.
+     *
+     * @param errorMsg: Program error message.
+     */
     @Override
     public void renderDukeErrorMsg(String errorMsg) {
         System.out.println(":(");
@@ -164,6 +186,11 @@ public class ConsoleUI implements UI {
         printLineBreak();
     }
 
+    /**
+     * Render error message in console.
+     *
+     * @param throwable: Program exception instance.
+     */
     @Override
     public void renderUnknownErrorMsg(Throwable throwable) {
         System.out.println(":(");
@@ -173,11 +200,21 @@ public class ConsoleUI implements UI {
         printLineBreak();
     }
 
+    /**
+     * Get user raw input from console.
+     *
+     * @return Raw input in string.
+     */
     public String getDukeCommandInput() {
         System.out.print("~@duke >>> ");
         return InputUtil.getInputString();
     }
 
+    /**
+     * Render response entity in console.
+     *
+     * @param responseDto: Response entity.
+     */
     @Override
     public void renderResponse(ResponseDto<?> responseDto) {
         String commandName = responseDto.getCommandName();
