@@ -1,11 +1,11 @@
-package seedu;
+package nus.duke;
 
-import seedu.nusduke.data.DukeException;
-import seedu.nusduke.parser.Command;
-import seedu.nusduke.parser.Parser;
-import seedu.nusduke.storage.Storage;
-import seedu.nusduke.tasklist.TaskList;
-import seedu.nusduke.ui.Ui;
+import nus.duke.data.DukeException;
+import nus.duke.parser.Command;
+import nus.duke.parser.*;
+import nus.duke.storage.Storage;
+import nus.duke.tasklist.TaskList;
+import nus.duke.ui.Ui;
 
 
 /**
@@ -20,6 +20,7 @@ public class Duke {
     private TaskList tasks;
     private Ui ui;
 
+    /** Initiation of Duke.  */
     public Duke(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -31,6 +32,7 @@ public class Duke {
         }
     }
 
+    /** Runs the program until termination.  */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
