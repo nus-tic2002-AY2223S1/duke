@@ -6,7 +6,7 @@ import storage.Storage;
 
 public class Command {
 
-    public boolean exitValue = false;
+    public boolean isExit = false;
 
     /**
      * Command constructor
@@ -20,7 +20,7 @@ public class Command {
      * @param exitValue boolean value to exit the chatbot process
      */
     Command(boolean exitValue) {
-        this.exitValue = exitValue;
+        this.isExit = exitValue;
     }
 
 
@@ -39,7 +39,7 @@ public class Command {
      *
      * @return boolean value
      */
-    public boolean isExit() {
-        return this.exitValue;
+    public boolean getExitValue() {
+        return this.isExit;
     }
 }

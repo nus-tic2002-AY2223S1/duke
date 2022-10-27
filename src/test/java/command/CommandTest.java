@@ -12,13 +12,13 @@ public class CommandTest {
     @Test
     public void CommandConstructorTest() {
         Command c = new Command();
-        assertEquals(false, c.exitValue);
+        assertEquals(false, c.getExitValue());
     }
 
     @Test
     public void CommandAnotherConstructorTest() {
         Command c = new Command(true);
-        assertEquals(true, c.exitValue);
+        assertEquals(true, c.getExitValue());
     }
 
     @Test
