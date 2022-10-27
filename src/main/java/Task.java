@@ -1,13 +1,16 @@
 public class Task {
 
+    // properties
     protected String description;
     protected boolean isDone;
 
+    // constructors
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
+    // methods
     public String getDescription() {
         return description;
     }
