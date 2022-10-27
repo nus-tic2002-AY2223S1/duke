@@ -5,3 +5,21 @@ Hello from
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 
+Wakanda forever! I'm Winston Duke
+What can I do for you?
+     added: read book
+     added: return book
+     added: go gym
+     Here are the tasks in your list:
+     1. [ ] read book
+     2. [ ] return book
+     3. [ ] go gym
+     Nice! I've marked this task as done:
+            [X] return book
+     Nice! I've marked this task as done:
+            [X] read book
+     Task number out of list range!
+     Here are the tasks in your list:
+     1. [X] read book
+     2. [X] return book
+     3. [ ] go gym
