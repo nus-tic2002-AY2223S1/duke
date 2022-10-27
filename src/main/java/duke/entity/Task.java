@@ -18,7 +18,7 @@ public class Task {
     /**
      * Flag to mark if the task is done.
      */
-    protected boolean done;
+    protected boolean isDone;
 
     /**
      * Type of task.
@@ -32,7 +32,7 @@ public class Task {
      */
     public Task(String description) {
         this.description = description;
-        this.done = false;
+        this.isDone = false;
     }
 
     /**
@@ -68,7 +68,7 @@ public class Task {
      * @return True is the task is done, otherwise value is false.
      */
     public boolean isDone() {
-        return done;
+        return isDone;
     }
 
     /**
@@ -77,7 +77,7 @@ public class Task {
      * @param done: Flag which label if the task is completed.
      */
     public void setDone(boolean done) {
-        this.done = done;
+        this.isDone = done;
     }
 
     /**
