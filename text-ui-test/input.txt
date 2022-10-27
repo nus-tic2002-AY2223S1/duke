@@ -1,9 +1,0 @@
-todo read book
-deadline return book /6th June 2022
-event go gym /7th June 2022 3-4pm
-list
-mark 2 
-mark 1 
-mark 0
-list
-
