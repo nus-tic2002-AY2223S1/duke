@@ -7,9 +7,17 @@ public class Event extends Task {
         this.at = at;
     }
 
+    public Event(String description) {
+        super(description);
+    }
+
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (at: " + at + ")";
+        if (this.at == null) {
+            return "[E]" + super.toString();
+        } else {
+            return "[E]" + super.toString() + " (at: " + at + ")";
+        }
     }
 
 }

@@ -1,0 +1,4 @@
+1. [T][ ]  borrow book
+2. [D][X]  return book (by:  Sunday)
+3. [E][ ]  project meeting (at:  Mon 2-4pm)
+4. [T][ ]  eat dinner

@@ -5,7 +5,7 @@ public class Session {
     
     // properties
     private final Repository sessionRepo;
-
+    private TaskList sessionTaskList;
 
     // constructors
     public Session (Repository repo) {
@@ -14,7 +14,9 @@ public class Session {
 
     // methods
     public void start() throws IOException {
-        sessionRepo.open();
+        sessionRepo.loadFile();
+        sessionTaskList = new TaskList();
+        sessionTaskList.existingTaskList(sessionRepo.readFile());
 
         String logo = " ____        _        \n"
                     + "|  _ \\ _   _| | _____ \n"
@@ -36,8 +38,6 @@ public class Session {
         String commandLine;
         Scanner input = new Scanner(System.in);
 
-        TaskList sessionTaskList = new TaskList();
-        
         // user input and echo
         while (true) {
             inputLine = input.nextLine();
@@ -46,7 +46,6 @@ public class Session {
             // obtain the command, first element
             commandLine = lineArray[0];
 
-            // if input is "bye", prints goodbye message and terminate
             if (inputLine.equalsIgnoreCase("bye")) {
                 System.out.println("\t-----------------------------------------------------------------");
                 System.out.println("\t Bye. Hope to see you again soon!");
@@ -55,12 +54,15 @@ public class Session {
             } 
             else if (commandLine.equalsIgnoreCase("delete")) {
                 sessionTaskList.deleteTask(lineArray);
+                sessionTaskList.saveTaskList(sessionRepo.getFileDirectory());
             }
             else if (commandLine.equalsIgnoreCase("mark")) {
                 sessionTaskList.markTask(lineArray);
+                sessionTaskList.saveTaskList(sessionRepo.getFileDirectory());
             }
             else if (commandLine.equalsIgnoreCase("unmark")) {
                 sessionTaskList.unmarkTask(lineArray);
+                sessionTaskList.saveTaskList(sessionRepo.getFileDirectory());
             }
             else if (commandLine.equalsIgnoreCase("list")) {
                 sessionTaskList.listTask();
@@ -72,6 +74,7 @@ public class Session {
                     continue;
                 }
                 sessionTaskList.addToDo(lineArray);
+                sessionTaskList.saveTaskList(sessionRepo.getFileDirectory());
             } else if (commandLine.equalsIgnoreCase("deadline")) {
                 if (lineArray.length < 2) {
                     System.out.println("\t-----------------------------------------------------------------");
@@ -80,6 +83,7 @@ public class Session {
                     continue;
                 }
                 sessionTaskList.addDeadLine(lineArray);
+                sessionTaskList.saveTaskList(sessionRepo.getFileDirectory());
             } else if (commandLine.equalsIgnoreCase("event")) {
                 if (lineArray.length < 2) {
                     System.out.println("\t-----------------------------------------------------------------");
@@ -88,6 +92,7 @@ public class Session {
                     continue;
                 }
                 sessionTaskList.addEvent(lineArray);
+                sessionTaskList.saveTaskList(sessionRepo.getFileDirectory());
             }
             else {
                 System.out.println("\t-----------------------------------------------------------------");
@@ -97,4 +102,5 @@ public class Session {
         }
         input.close();
     }
+
 }

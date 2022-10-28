@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +15,7 @@ public class TaskList {
         // if list is empty, prints empty list message
         if (tasks.size() == 0) {
             System.out.println("\t The list is empty");
-        }
-        else
-        {
+        } else {
             // prints out the entire list
             for (int i = 0; i < tasks.size(); i++) {
                 int count = i + 1;
@@ -115,6 +116,26 @@ public class TaskList {
         System.out.println("\t Now you have " + tasks.size() + " tasks in the list.");
         System.out.println("\t-----------------------------------------------------------------");
         tasks.remove(arrayIndex);
+    }
+
+    public void saveTaskList(String fileDirectory) throws IOException {
+        FileWriter w = new FileWriter(fileDirectory);
+        BufferedWriter bw = new BufferedWriter(w);
+        for (int i = 0; i < tasks.size(); i++ ) {
+            String line = String.valueOf(i+1) + "." + " " + tasks.get(i);
+            bw.write(line);
+            bw.newLine();
+        }
+        bw.flush();
+        bw.close();
+    }
+
+    public void existingTaskList(List<Task> existingContent) {
+        if (!existingContent.equals(null)) {
+            for (int i = 0; i < existingContent.size(); i++) {
+                tasks.add(existingContent.get(i));
+            }
+        }
     }
 
 }
