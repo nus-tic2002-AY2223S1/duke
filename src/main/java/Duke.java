@@ -14,7 +14,7 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.printf("Hello from Duke. What can I do for you?%n");
-        Scanner myObj = new Scanner(System.in).useDelimiter("\\s");
+        Scanner myObj = new Scanner(System.in).useDelimiter("\n");
 
         while(true){
             String input = myObj.next();
