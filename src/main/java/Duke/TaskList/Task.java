@@ -1,6 +1,12 @@
-public class Task {
+package Duke.TaskList;
+import java.util.ArrayList;
+import Duke.*;
+import Duke.Exception.DukeException;
+
+public abstract class Task {
     protected String description;
     protected boolean isDone;
+    private static ArrayList<Task> taskList;
 
     public Task(String description) {
         this.description = description;
@@ -68,11 +74,20 @@ public class Task {
     }
 
     public static void list() {
-        System.out.println(Duke.line + "Here are the tasks in your list:\n");
-        for (int i = 0; i < Duke.taskListCount; i++) {
-            System.out.println(i+1 + ". " + Duke.taskList[i].toString());
+        if(Duke.taskListCount == 0) {
+            System.out.println(Duke.line + "Your list is empty\n");
         }
-        System.out.println(Duke.line);
+        else {
+            System.out.println(Duke.line + "Here are the tasks in your list:\n");
+            for (int i = 0; i < Duke.taskListCount; i++) {
+                System.out.println(i+1 + ". " + Duke.taskList[i].toString());
+            }
+            System.out.println(Duke.line);
+        }
+    }
+
+    public static ArrayList<Task> getList (){
+        return taskList;
     }
 
     public static void markTask() {
@@ -110,4 +125,6 @@ public class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }
+
+    public abstract String saveToFile();
 }

@@ -1,16 +1,25 @@
+package Duke.Ui;
+import Duke.Exception.DukeException;
+import Duke.Parser.*;
+import Duke.TaskList.*;
+
+import static Duke.Duke.*;
+
+import java.io.IOException;
 import java.util.Scanner;
 
-public class Duke {
-    public static String line = "\n----------------------------------\n";
-    static public String userInput = "";
-    static public Task taskList[] = new Task[100];
-    static public int taskListCount = 0;
+public class Ui {
+    public Scanner userInput;
 
-    public static void bye() {
-        System.out.println(line + "Bye. Hope to see you again soon!" + line);
+    public Ui() {
+        userInput = new Scanner(System.in);
     }
 
-    public static void main(String[] args) {
+    public static void line() {
+        System.out.println("\n_______________________________________________________________________________________________\n");
+    }
+
+    public static void hello() {
         String logo = "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠔⠋⠀⠐⠈⠉⠉⠉⠀⠀⠀⠉⠓⢄⠀⣀⠄⠚⠙⠉⠁⠀⠉⠉⠉⠁⠂⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠐⣜⣦⠀⠀⠀⠀⠀⠀⠀⠀\n" +
                 "⠀⠀⠀⠀⠀⠀⠀⠀⢀⠔⡁⠀⠀⠀⠀⠀⠀⣀⣀⣤⡤⠤⣤⣄⣀⣀⠀⠘⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣷⡀⠀⠀⠀⠀⠀⠀\n" +
@@ -38,41 +47,47 @@ public class Duke {
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠈⢙⣻⣿⠿⡿⠛⠛⠛⠉⠉⠀⠀⠀⠀⠀";
 
         System.out.println(logo);
+        line();
+        System.out.println("Hello! I'm Pepe\nWhat can I do for you?");
+        line();
+    }
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(line + "Hello! I'm Pepe\nWhat can I do for you?" + line);
+    public static void bye() {
+        line();
+        System.out.println("Bye. Hope to see you again soon!");
+        line();
+    }
 
-        userInput = scanner.nextLine();
-        while(!userInput.equalsIgnoreCase("bye")) {
-            if (userInput.startsWith("list")) {
-                Task.list();
-            }
-            else if(userInput.contains("mark")) {
-                Task.markTask();
-            }
-            else if (userInput.startsWith("todo") || userInput.startsWith("deadline") || userInput.startsWith("event")) {
-                try {
-                    Task.addTask(userInput);
-                    System.out.println(line + "Got it. I've added this task:\n");
-                    System.out.println(taskList[taskListCount-1].toString());
-                    System.out.println("Now you have " + taskListCount + " tasks in the list." + line);
-                } catch (DukeException e) {
-                    System.out.println(line + "\uD83D\uDE1F OOPS!!! The description of a todo cannot be empty." + line);
-                }
-            }
-            else if (userInput.startsWith("delete")) {
-                Task.deleteTask();
-            }
-            else {
-                try {
-                    throw new DukeException();
-                } catch (DukeException e) {
-                    System.out.println(line + "\uD83D\uDE1F OOPS!!! I'm sorry, but I don't know what that means" + line);
-                }
-            }
+    public static void addedTask() {
+        line();
+        System.out.println("Got it. I've added this task:\n");
+        System.out.println(taskList[taskListCount-1].toString());
+        System.out.println("Now you have " + taskListCount + " tasks in the list.");
+        line();
+    }
 
-            userInput = scanner.nextLine();
+    public static void input(String userInput) throws DukeException {
+        Parser command = new Parser(userInput);
+        try {
+            switch(command.getCommand()) {
+                case "list":
+                    Task.list();
+                    break;
+                case "todo":
+                    ToDo.addTask(userInput);
+                case "done":
+                    Task.markTask();
+                    break;
+                case "undone":
+                    Task.markTask();
+                    break;
+                case "bye":
+                    bye();
+                    break;
+            }
         }
-        bye();
+        catch (Exception e){
+            throw new DukeException();
+        }
     }
 }

@@ -1,3 +1,5 @@
+package Duke.TaskList;
+
 public class ToDo extends Task {
 
     public ToDo(String description) {
@@ -7,5 +9,10 @@ public class ToDo extends Task {
     @Override
     public String toString() {
         return "[T]" + super.toString();
+    }
+
+    @Override
+    public String saveToFile() {
+        return null;
     }
 }
