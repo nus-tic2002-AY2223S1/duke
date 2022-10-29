@@ -3,33 +3,47 @@ import Entity.Event;
 import Entity.Task;
 import Entity.Todo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Duke {
     public static String line = "\t____________________________________________________________";
-    private static Task[] tasks = new Task[100];
+    private static ArrayList<Task> tasks = new ArrayList<Task>();
     private static int taskCount = 0;
     static String markUnmarkPattern = "(mark|unmark)\\s*(\\d+)";
     static String todoPattern = "(todo) ([\\S\\s]*)";
     static String deadlinePattern = "(deadline) ([\\S\\s]*)(\\/by) ([\\S\\s]*)";
     static String eventPattern = "(event) ([\\S\\s]*)(\\/at )([\\S\\s]*)";
-    public static String[] keywords = {"todo","deadline","event"};
+    static String deletePattern = "(delete)\\s*(\\d+)";
 
     public static void addTask(Task t){
-        tasks[taskCount] = t;
+        tasks.add(t);
         taskCount++;
         System.out.println("\tGot it. I have added this task:");
         t.print();
         System.out.println("\tNow you have " + taskCount + " tasks in the list.");
     }
 
+    public static void deleteTask(int taskNumber){
+        if(1<=taskNumber && taskNumber<=taskCount){
+            Task temp = tasks.get(taskNumber-1);
+            tasks.remove(taskNumber-1);
+            taskCount--;
+            System.out.println("\tNoted. I have removed this task:");
+            temp.print();
+            System.out.println("\tNow you have " + taskCount + " tasks in the list.");
+        } else {
+            System.out.println("\tPlease input a valid task number");
+        }
+    }
+
     public static void printTasks(){
         System.out.println("\t Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++){
             System.out.print("\t "+(i+1)+".");
-            tasks[i].print();
+            tasks.get(i).print();
         }
     }
 
@@ -42,18 +56,6 @@ public class Duke {
 //        System.out.println(arrayOfInput[0]);
         return arrayOfInput[0];
     }
-
-//    public static void checkException(String input){
-//        for(String i : keywords){
-//            if(i.equalsIgnoreCase(input)){
-//                try{
-//                    throw new DukeException("☹ OOPS!!! The description of a " + input + " cannot be empty.");
-//                } catch (DukeException e){
-//                    System.out.println("\t"+e.getMessage());
-//                }
-//            }
-//        }
-//    }
 
     public static void printException(String input){
         try{
@@ -86,7 +88,6 @@ public class Duke {
         while(input!=null){
 
             System.out.println(line);
-//            checkException(input);
             String firstWord = getFirstInputWord(input);
 
             if(input.equalsIgnoreCase("bye")){
@@ -105,7 +106,7 @@ public class Duke {
                     if (m.find()) {
                         int taskNumber = Integer.parseInt(m.group(2));
                         if (m.group(1).equalsIgnoreCase("mark")) {
-                            tasks[taskNumber - 1].updateStatus(true);
+                            tasks.get(taskNumber -1).updateStatus(true);
                         }
                     } else {
                         System.out.println("NO MATCH");
@@ -118,7 +119,7 @@ public class Duke {
                     if (m.find()) {
                         int taskNumber = Integer.parseInt(m.group(2));
                         if (m.group(1).equalsIgnoreCase("unmark")) {
-                            tasks[taskNumber - 1].updateStatus(false);
+                            tasks.get(taskNumber -1).updateStatus(false);
                         }
                     } else {
                         System.out.println("NO MATCH");
@@ -159,14 +160,23 @@ public class Duke {
                     }
                     break;
 
+                case "delete":
+                    r = Pattern.compile(deletePattern);
+                    m = r.matcher(input);
+                    if(m.find()){
+                        deleteTask(Integer.valueOf(m.group(2)));
+                    }else {
+                        printException(input);
+                    }
+                    break;
+
                 default:
                     try{
                         throw new LackDetailsException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                     } catch (LackDetailsException e){
                         System.out.println("\t"+e.getMessage());
                     }
-//                    Entity.Task t = new Entity.Task(input);
-//                    addTask(t);
+
             }
             System.out.println(line);
             input = inputCleaner(in.nextLine());
