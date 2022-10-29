@@ -1,4 +1,9 @@
 package common.exceptions;
 
-public class DuplicatedTaskException extends Exception {
+import static common.constants.ErrorMessage.DUPLICATED_TASK_ERROR_MSG;
+
+public class DuplicatedTaskException extends DukeException {
+    public DuplicatedTaskException() {
+        super(DUPLICATED_TASK_ERROR_MSG);
+    }
 }

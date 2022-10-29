@@ -1,4 +1,10 @@
 package common.exceptions;
 
-public class FileException extends Exception {
+import static common.constants.ErrorMessage.INVALID_FILE_ERROR_MSG;
+
+public class FileException extends DukeException {
+
+    public FileException() {
+        super(INVALID_FILE_ERROR_MSG);
+    }
 }
