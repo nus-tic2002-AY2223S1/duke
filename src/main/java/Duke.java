@@ -1,4 +1,4 @@
-import Application.UserInterface.Ui;
+import application.userInterface.Ui;
 
 public class Duke {
     public static Ui ui;
