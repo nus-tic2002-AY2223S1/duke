@@ -9,8 +9,6 @@ public class ErrorMessage {
 
     public static final String INVALID_TASK_DESCRIPTION_ERROR_MSG = "Invalid task description!";
 
-    public static final String INVALID_TASK_COMMAND_MSG = "Invalid task command, please re-enter!";
-
     public static final String MARKED_TASK_ERROR_MSG = "Task has already been marked.";
 
     public static final String NOT_EXIST_TASK_ERROR_MSG = "Task does not exist in the task list.";
