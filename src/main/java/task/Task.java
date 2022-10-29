@@ -1,4 +1,6 @@
-public class Task {
+package task;
+
+public abstract class Task {
 
     protected String TaskName;
     private boolean MarkAsDone;
@@ -29,7 +31,5 @@ public class Task {
         this.MarkAsDone = false;
     }
 
-    public String toString() {
-        return "[" + isMarkAsDone() + "]" + TaskName;
-    }
+    public abstract String toString();
 }

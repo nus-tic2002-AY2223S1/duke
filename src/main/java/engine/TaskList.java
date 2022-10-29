@@ -1,4 +1,8 @@
+package engine;
 import java.util.ArrayList;
+
+import formatting.Helper;
+import task.*;
 
 
 public class TaskList {
@@ -22,6 +26,15 @@ public class TaskList {
         }
         return instance;
     }
+
+    public int getTLSize(){
+        return TaskList.size();
+    }
+
+    public String getTodoListRow(int index){
+        return index + 1 +"."+TaskList.get(index).toString();
+    }
+
 
     public void addNewTask(String incomingTaskName, String incomingType, String incomingDate){
         switch (incomingType){
@@ -77,13 +90,7 @@ public class TaskList {
         Helper.separator();
     }
 
-    public int getTLSize(){
-        return TaskList.size();
-    }
 
-    public String getTodoListRow(int index){
-        return index + 1 +"."+TaskList.get(index).toString();
-    }
 
     public void changeToMarkAsDone(int TaskIndex){
         int i = TaskIndex-1;

@@ -1,3 +1,5 @@
+package task;
+
 import java.util.ArrayList;
 
 public class Todo extends Task{
@@ -7,7 +9,8 @@ public class Todo extends Task{
         super(taskName);
     }
 
+    @Override
     public String toString() {
-        return "[T]" + super.toString();
+        return "[T]" + "[" + isMarkAsDone() + "] " + TaskName;
     }
 }

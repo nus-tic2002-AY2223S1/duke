@@ -1,3 +1,4 @@
+package task;
 public class Deadline extends Task{
 
     private String atDate;
@@ -7,7 +8,8 @@ public class Deadline extends Task{
         this.atDate = atDate;
     }
 
+    @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + atDate + ")";
+        return "[D]" + "[" + isMarkAsDone() + "] " + TaskName + " (by: " + atDate + ")";
     }
 }

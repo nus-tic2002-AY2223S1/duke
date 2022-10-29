@@ -1,14 +1,8 @@
+package cat;
+
 import java.util.Random;
-public class Helper {
-    //helper class for formatting
 
-    public static void newline(){
-        System.out.println("\n");
-    }
-    public static void separator() {
-        System.out.println("____________________________________");
-    }
-
+public class Nala {
     public static void nalaConfused() {
         Random rand = new Random();
         int nalaMood = rand.nextInt(9);
@@ -59,5 +53,4 @@ public class Helper {
                 break;
         }
     }
-
 }

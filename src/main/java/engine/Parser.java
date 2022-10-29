@@ -1,5 +1,8 @@
+package engine;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 public class Parser {
     public String tokenToString;
@@ -15,6 +18,10 @@ public class Parser {
             instance = new Parser();
         }
         return instance;
+    }
+
+    public boolean getTokenContains(String token) {
+        return remainingTokens.contains(token);
     }
 
     public void stringToToken(String incomingText) {
@@ -47,8 +54,4 @@ public class Parser {
     public boolean match(String symbol){
         return symbol.equalsIgnoreCase(remainingTokens.get(0));
     }
-
-
-
-
 }

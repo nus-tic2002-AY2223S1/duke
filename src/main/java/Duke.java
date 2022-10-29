@@ -1,16 +1,21 @@
+import engine.*;
 import java.io.File;
 import java.util.Scanner;
+
+import formatting.Helper;
+import storage.Storage;
+import cat.Nala;
+
 public class Duke {
     public static void main(String[] args) throws Exception {
         Parser p = Parser.getInstance();
-        Storage s = Storage.getInstance();
 
         Helper.separator();
         System.out.println("Hello! I'm Nala the Annoying Cat!\n" + "What can I do for you?\n Protip: Type !help for a list of commands!");
         Helper.separator();
         while (true) {
             //tokenizer
-            Helper.nalaBehaviour();
+            Nala.nalaBehaviour();
             String incomingText = userInput();
             p.stringToToken(incomingText);
 
@@ -181,19 +186,19 @@ public class Duke {
 
         switch (p.front().toLowerCase()){
             case ("todo"):
-                if (p.remainingTokens.contains("/at")){
-                    Helper.nalaSyntaxError("Event");
+                if (p.getTokenContains("/at")){
+                    Nala.nalaSyntaxError("Event");
                     break;
                 }
-                else if (p.remainingTokens.contains("/by")){
-                    Helper.nalaSyntaxError("Deadline");
+                else if (p.getTokenContains("/by")){
+                    Nala.nalaSyntaxError("Deadline");
                     break;
                 }
                 else{
                     p.next();
                     incomingTaskName = p.tokenToString();
                     if (incomingTaskName.isBlank()){
-                        Helper.nalaSyntaxError("BlankTodo");
+                        Nala.nalaSyntaxError("BlankTodo");
                         break;
                     }
                 }
@@ -202,32 +207,36 @@ public class Duke {
                 break;
 
             case ("deadline"):
-                if (p.remainingTokens.contains("/at")){
-                    Helper.nalaSyntaxError("Event");
+                if (p.getTokenContains("/at")){
+                    Nala.nalaSyntaxError("Event");
                     break;
                 }
-                else if (p.remainingTokens.contains("/by")){
+                else if (p.getTokenContains("/by")){
                     incomingType = p.front();
                     p.next();
                     StringBuilder TaskNameString= new StringBuilder();
-                    while (!p.front().equalsIgnoreCase("/by")){
-                        TaskNameString.append(" ").append(p.front());
+                    if (!p.front().equalsIgnoreCase("/by")){
+                        TaskNameString.append(p.front());
                         p.next();
+                        while (!p.front().equalsIgnoreCase("/by")){
+                            TaskNameString.append(" ").append(p.front());
+                            p.next();
+                        }
                     }
                     p.expect("/by");
                     incomingDate = p.tokenToString();
                     incomingTaskName = TaskNameString.toString();
                     if (incomingTaskName.isBlank()){
-                        Helper.nalaSyntaxError("BlankDeadline");
+                        Nala.nalaSyntaxError("BlankDeadline");
                         break;
                     }
                     if (incomingDate.isBlank()){
-                        Helper.nalaSyntaxError("NoDate");
+                        Nala.nalaSyntaxError("NoDate");
                         break;
                     }
                 }
                 else{ //no /by
-                    Helper.nalaSyntaxError("DeadlineNoBy");
+                    Nala.nalaSyntaxError("DeadlineNoBy");
                     break;
                 }
                 t.addNewTask(incomingTaskName, incomingType, incomingDate);
@@ -235,39 +244,43 @@ public class Duke {
                 break;
 
             case  ("event"):
-                if (p.remainingTokens.contains("/by")){
-                    Helper.nalaSyntaxError("Deadline");
+                if (p.getTokenContains("/by")){
+                    Nala.nalaSyntaxError("Deadline");
                     break;
                 }
-                else if (p.remainingTokens.contains("/at")){
+                else if (p.getTokenContains("/at")){
                     incomingType = p.front();
                     p.next();
                     StringBuilder TaskNameString= new StringBuilder();
-                    while (!p.front().equalsIgnoreCase("/at")){
-                        TaskNameString.append(" ").append(p.front());
+                    if (!p.front().equalsIgnoreCase("/at")){
+                        TaskNameString.append(p.front());
                         p.next();
+                        while (!p.front().equalsIgnoreCase("/at")){
+                            TaskNameString.append(" ").append(p.front());
+                            p.next();
+                        }
                     }
                     p.expect("/at");
                     incomingDate = p.tokenToString();
                     incomingTaskName = TaskNameString.toString();
                     if (incomingTaskName.isBlank()){
-                        Helper.nalaSyntaxError("BlankEvent");
+                        Nala.nalaSyntaxError("BlankEvent");
                         break;
                     }
                     if (incomingDate.isBlank()){
-                        Helper.nalaSyntaxError("NoDate");
+                        Nala.nalaSyntaxError("NoDate");
                         break;
                     }
                 }
                 else{ //no /at
-                    Helper.nalaSyntaxError("EventNoAt");
+                    Nala.nalaSyntaxError("EventNoAt");
                     break;
                 }
                 t.addNewTask(incomingTaskName, incomingType, incomingDate);
                 p.clear();
                 break;
             default:
-                Helper.nalaConfused();
+                Nala.nalaConfused();
 
         }
 
