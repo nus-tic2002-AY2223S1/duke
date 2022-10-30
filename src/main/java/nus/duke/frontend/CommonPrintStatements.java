@@ -1,5 +1,8 @@
 package nus.duke.frontend;
 
+/**
+ * This is a class containing all the print statements commonly used through the code, to keep the code neat.
+ */
 public class CommonPrintStatements {
 	public static final String FILE_WRITER_IOEXCEPTION_ERROR_MESSAGE = "[ERROR] IO Exception thrown by FileWriter";
 	public static final String TASK_CANNOT_BE_EMPTY_ERROR_MESSAGE = "[ERROR] Task cannot be empty";

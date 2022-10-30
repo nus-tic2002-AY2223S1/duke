@@ -13,7 +13,13 @@ import nus.duke.task.*;
 import static nus.duke.frontend.CommonPrintStatements.*;
 
 /**
- * Represents the skeleton of the Duke chatbot
+ * The Duke program is a virtual personal assistant that keeps track of a user's tasks.
+ * Users interact with the Duke program by chatting with Dobby, a chatbot named after an elf in Harry Potter.
+ * Dobby is assisted by his friend Pooh Bear.
+ *
+ * @author  ANG Poh Ye
+ * @version 1.0
+ * @since   Oct 2022
  */
 public class Duke {
 	private Storage storage;
@@ -32,6 +38,10 @@ public class Duke {
 		}
 	}
 
+	/**
+	 * Starts the Duke program and keeps the program running until it is terminated.
+	 * @return nothing. This is a void function.
+	 */
 	public void run() {
 		ui = new Ui();
 		parser = new Parser();
@@ -48,8 +58,11 @@ public class Duke {
 		ui.exit();
 	}
 
+	/**
+	 * Entry point to the Duke program.
+	 * The filepath was intentionally fixed for ease of use i.e. just run the program.
+	 */
 	public static void main(String[] args) {
 		new Duke("/Users/rebecca/Desktop/Duke/data/DukeTasks.txt").run();
 	}
-
 }

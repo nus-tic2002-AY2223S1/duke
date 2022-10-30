@@ -14,6 +14,10 @@ import java.io.BufferedWriter;
 
 import static nus.duke.frontend.CommonPrintStatements.*;
 
+/**
+ * Represents a storage system.
+ * Storage deals with loading tasks from the file and saving tasks in the file.
+ */
 public class Storage {
 	private static String filePath;
 	private static TaskList hardDiskTaskList;
