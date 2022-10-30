@@ -9,6 +9,6 @@ public class Todo extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return (this.by == null ? "\t[T]" + super.toString() : "\t[T]" + super.toString() + " (by: " + by + ")");
     }
 }
