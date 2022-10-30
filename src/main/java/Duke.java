@@ -7,6 +7,16 @@ public class Duke {
     public static ArrayList<Task> arrayList = new ArrayList<>(Arrays.asList(arr));
     public static String format = "    ─────────────────────────────────────────\n    %s\n    ─────────────────────────────────────────\n";
 
+    public static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch(NumberFormatException | NullPointerException e) {
+            System.out.format(format, "Enter the item index.");
+            return false;
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -17,24 +27,40 @@ public class Duke {
         Scanner myObj = new Scanner(System.in).useDelimiter("\n");
 
         while(true){
-            String input = myObj.next();
-            switch (input){
+            String input = myObj.nextLine();
+            String[] arrInput = input.split(" ", 2);
+
+            switch (arrInput[0]){
                 case "list":
                     printList(true);
                     continue;
                 case "mark":
-                    int idxMark = myObj.nextInt()-1;
+                    if (!isInteger(arrInput[1])){
+                        continue;
+                    }
+                    int idxMark = Integer.parseInt(arrInput[1])-1;
+                    if (idxMark < arrInput.length){
+                        continue;
+                    }
                     arr[idxMark].markTask();
                     printSingle(idxMark,true);
                     continue;
                 case "unmark":
-                    int idxUnmark = myObj.nextInt()-1;
+                    if (!isInteger(arrInput[1])){
+                        continue;
+                    }
+                    int idxUnmark = Integer.parseInt(arrInput[1])-1;
+                    if (idxUnmark < arrInput.length){
+                        continue;
+                    }
                     arr[idxUnmark].unmarkTask();
                     printSingle(idxUnmark,false);
                     continue;
                 case "bye":
                     System.out.format(format, "Bye. Hope to see you again soon!");
                     return;
+                case "todo":
+                    continue;
                 case "":
                     continue;
                 default:
