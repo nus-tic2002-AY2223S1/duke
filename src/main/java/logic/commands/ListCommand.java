@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static common.constants.CommonConstant.INIT_INT_VAL;
 import static common.constants.CommonConstant.SPACE;
 import static common.constants.CommonConstant.TASK_LIST;
-import static common.constants.SymbolConstant.PERIOD;
+import static common.constants.CommonConstant.PERIOD;
 import static logic.validators.Validator.validateList;
 
 public class ListCommand extends Command {

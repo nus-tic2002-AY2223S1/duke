@@ -8,7 +8,7 @@ import static common.constants.CommonConstant.INIT_INT_VAL;
 import static common.constants.CommonConstant.SPACE;
 import static common.constants.CommonConstant.ZERO_VAL;
 import static common.constants.ErrorMessage.EXCEPTION_ERROR_MSG;
-import static common.constants.SymbolConstant.DELIMITER;
+import static common.constants.CommonConstant.DELIMITER;
 
 public class StringUtil {
     /**

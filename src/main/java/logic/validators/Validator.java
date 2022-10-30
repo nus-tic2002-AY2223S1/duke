@@ -43,7 +43,7 @@ public class Validator {
      * @return {void}
      */
     public static void validateEvent(String description, Chat chat) throws InvalidTaskDescriptionException, DuplicatedTaskException {
-        String regex = chat.getCommand() + "\\s+\\w+\\s+/" + AT + "\\s+.+";
+        String regex = chat.getCommand() + "\\s+\\w+\\s+/" + AT + "\\s+\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])";
         regexValidation(regex, chat);
         duplicatedTaskValidation(description, chat);
     }
@@ -58,7 +58,7 @@ public class Validator {
      * @return {void}
      */
     public static void validateDeadline(String description, Chat chat) throws InvalidTaskDescriptionException, DuplicatedTaskException {
-        String regex = chat.getCommand() + "\\s+\\w+\\s+/" + BY + "\\s+.+";
+        String regex = chat.getCommand() + "\\s+\\w+\\s+/" + BY + "\\s+\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])";
         regexValidation(regex, chat);
         duplicatedTaskValidation(description, chat);
     }
