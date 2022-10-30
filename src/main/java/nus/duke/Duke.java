@@ -29,6 +29,8 @@ public class Duke {
 	Scanner s;
 
 	public Duke(String filePath) {
+		boolean isEmpty = filePath.isEmpty();
+		assert(isEmpty == false);
 		try {
 			storage = new Storage(filePath);
 			ArrayList<Task> hardDiskTaskList = storage.load();
