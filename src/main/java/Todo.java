@@ -1,14 +1,29 @@
 public class Todo extends Task {
 
-    protected String by;
+    protected String type = "T";
 
-    public Todo(String description, String by) {
+    public Todo(String description, String due) {
         super(description);
-        this.by = by;
+        this.due = due;
     }
 
     @Override
     public String toString() {
-        return (this.by == null ? "\t[T]" + super.toString() : "\t[T]" + super.toString() + " (by: " + by + ")");
+        return (this.due == null ? "\t[T]" + super.toString() : "\t[T]" + super.toString() + " (by: " + this.due + ")");
+    }
+
+    @Override
+    public String getType() {
+        return this.type;
+    }
+
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
+
+    @Override
+    public String getIsDone() {
+        return this.isDone ? "1" : "0";
     }
 }

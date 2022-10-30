@@ -1,3 +1,8 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -62,8 +67,20 @@ public class Duke {
         }
     }
 
+    public static void saveFile() throws IOException {
+        FileWriter writer = new FileWriter("output.txt");
+        for(Task str: arrayList) {
+//            String s = str.getType() + "|" +
+//                    str.getStatusIcon() + "|" +
+//                    str.getDescription() + "|" +
+//                    str.getDue();
+            writer.write(str.toString() + System.lineSeparator());
+        }
+        writer.close();
+    }
+
     //processCommand Processes the commands of event / deadline / to-do
-    public static void processCommand(Command c,String[] s){
+    public static void processCommand(Command c,String[] s) {
         if (s.length == 1){
             d.Warning("OOPS!!! The description of " + c.getLabel() +" cannot be empty.");
             return;
@@ -72,18 +89,24 @@ public class Duke {
         switch (c){
             case EVENT:
                 String[] eventByInput = s[1].split("/at", 2);
-                arrayList.add(new Event(eventByInput[0],eventByInput.length == 1 ? null: eventByInput[1]));
+                arrayList.add(new Event(eventByInput[0].trim(),eventByInput.length == 1 ? null: eventByInput[1].trim()));
                 break;
             case DEADLINE:
                 String[] deadlineByInput = s[1].split("/by", 2);
-                arrayList.add(new Deadline(deadlineByInput[0],deadlineByInput.length == 1 ? null: deadlineByInput[1]));
+                arrayList.add(new Deadline(deadlineByInput[0].trim(),deadlineByInput.length == 1 ? null: deadlineByInput[1].trim()));
                 break;
             case TODO:
                 String[] todoByInput = s[1].split("/by", 2);
-                arrayList.add(new Todo(todoByInput[0],todoByInput.length == 1 ? null: todoByInput[1]));
+                arrayList.add(new Todo(todoByInput[0].trim(),todoByInput.length == 1 ? null: todoByInput[1].trim()));
                 break;
         }
         printNewTaskAdded();
+
+        try{
+            saveFile();
+        }catch(IOException e){
+            d.Warning("IOException");
+        }
     }
     public static int getIndex(String s) {
         if (!isInteger(s)){

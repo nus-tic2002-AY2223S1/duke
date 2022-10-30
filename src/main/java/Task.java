@@ -1,5 +1,7 @@
 public class Task {
     protected String description;
+    protected String type = "Task";
+    protected String due;
     protected boolean isDone;
 
     public Task(String description) {
@@ -21,5 +23,21 @@ public class Task {
 
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public String getDue() {
+        return this.due == null? "" : this.due;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public String getIsDone() {
+        return this.isDone ? "1" : "0";
     }
 }
