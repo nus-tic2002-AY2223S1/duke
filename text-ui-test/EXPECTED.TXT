@@ -8,51 +8,92 @@ Hello from
 Hello there! I'm Duke
 What can I do for you?
 ____________________________________________________________
-added: read book
-____________________________________________________________
+Got it. I've added this task:
+[T][ ]   borrow book
 
+Now you have 1 tasks in the list.
 ____________________________________________________________
-added: return book
 ____________________________________________________________
-
+Todo description cannot be empty.
+Please enter a valid input (E.g. todo borrow book).
 ____________________________________________________________
-added: buy bread
 ____________________________________________________________
-
+Please enter a valid input (E.g. todo Task 1)
+____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
-1. [ ]   read book
-2. [ ]   return book
-3. [ ]   buy bread
+1. [T][ ]   borrow book
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+[D][ ]   return book (by: Sunday)
+
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Invalid Deadline input.
+Please enter a valid input (E.g. deadline return book /by Sunday).
+____________________________________________________________
+____________________________________________________________
+Invalid Deadline input.
+Please enter a valid input (E.g. deadline return book /by Sunday).
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1. [T][ ]   borrow book
+2. [D][ ]   return book (by: Sunday)
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done: 
-   [X]   read book
+ borrow book
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
-1. [X]   read book
-2. [ ]   return book
-3. [ ]   buy bread
+1. [T][X]   borrow book
+2. [D][ ]   return book (by: Sunday)
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done: 
-   [X]   return book
+ return book
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
-1. [X]   read book
-2. [X]   return book
-3. [ ]   buy bread
+1. [T][X]   borrow book
+2. [D][X]   return book (by: Sunday)
 ____________________________________________________________
 ____________________________________________________________
 OK, I've marked this task as not done yet: 
-   [ ]   read book
+borrow book
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
-1. [ ]   read book
-2. [X]   return book
-3. [ ]   buy bread
+1. [T][ ]   borrow book
+2. [D][X]   return book (by: Sunday)
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+[E][ ]   project meeting (at: Mon 2-4pm)
+
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1. [T][ ]   borrow book
+2. [D][X]   return book (by: Sunday)
+3. [E][ ]   project meeting (at: Mon 2-4pm)
+____________________________________________________________
+____________________________________________________________
+Invalid Event input.
+Please enter a valid input (E.g. event project meeting /at Mon 2-4pm).
+____________________________________________________________
+____________________________________________________________
+Invalid Event input.
+Please enter a valid input (E.g. event project meeting /at Mon 2-4pm).
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1. [T][ ]   borrow book
+2. [D][X]   return book (by: Sunday)
+3. [E][ ]   project meeting (at: Mon 2-4pm)
 ____________________________________________________________
 Bye. Hope to see you again soon!
