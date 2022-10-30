@@ -33,7 +33,7 @@ public class Event extends Task{
         String format = "[dd MMMM yyyy, hh:mm a]";
         if(this.startDateTime.format(DateTimeFormatter.ofPattern("HH:mm")).equals("00:00"))
             format = "[dd MMMM yyyy]";
-        String displayText = String.format("\t\t%d.[%s][%s] %s (by: %s)", this.id, this.shortName, this.isDone ? "X":" ", this.name, this.startDateTime.format(DateTimeFormatter.ofPattern(format)));
+        String displayText = String.format("\t\t%d.[%s][%s] %s (at: %s)", this.id, this.shortName, this.isDone ? "X":" ", this.name, this.startDateTime.format(DateTimeFormatter.ofPattern(format)));
         CommonHelper.printMessage(displayText);
     }
 
