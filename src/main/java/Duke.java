@@ -18,81 +18,107 @@ public class Duke {
 
         inputCommand(tasks, 0);
     }
-    public static void inputCommand(Task[] tasksArr, int count) {
+    public static void inputCommand(Task[] tasksArr, int count){
         Scanner in = new Scanner(System.in);
         String command = in.nextLine();
 
-        if (command.equalsIgnoreCase("bye")) {
-            System.out.println("Bye. Hope to see you again soon!");
-        }
-
-        else if (command.equalsIgnoreCase("list")) {
-            int listNo = 0;
-
-            System.out.println("Here are the tasks in your list:");
-
-            for (Task element : tasksArr) {
-                listNo++;
-                if (element == null) {
-                    System.out.println();
-                    break;
-                } else
-                    System.out.println(listNo + "." + element.toString());
+        try {
+            if (command.replaceAll("\\s+","").equalsIgnoreCase("bye")) {
+                System.out.println("Bye. Hope to see you again soon!");
             }
 
-            inputCommand(tasksArr, count);
-        }
+            else if (command.replaceAll("\\s+","").equalsIgnoreCase("list")) {
+                int listNo = 0;
 
-        else if (command.startsWith("mark")) {
-            // -5 index for "mark "
-            int taskNo = Integer.parseInt(command.substring(5)) - 1;
-            tasksArr[taskNo].markAsDone(true);
+                for (Task element : tasksArr) {
+                    listNo++;
+                    if (element == null) {
+                        System.out.println();
+                        break;
+                    } else
+                        System.out.println("Here are the tasks in your list:" + System.lineSeparator() + listNo + "." + element.toString());
+                }
+                inputCommand(tasksArr, count);
+            }
 
-            System.out.println("Nice! I've marked this task as done:" + System.lineSeparator()
-                    + tasksArr[taskNo].toString() + System.lineSeparator());
+            else if (command.startsWith("mark")) {
+                try {
+                    // -5 index for "mark "
+                    int taskNo = Integer.parseInt(command.substring(5)) - 1;
+                    tasksArr[taskNo].markAsDone(true);
 
-            inputCommand(tasksArr, count);
-        }
+                    System.out.println("Nice! I've marked this task as done:" + System.lineSeparator()
+                            + tasksArr[taskNo].toString() + System.lineSeparator());
+                } catch (StringIndexOutOfBoundsException | NumberFormatException e) {
+                    System.out.println("☹ OOPS!!! Please indicate task to mark.");
+                } catch (NullPointerException e) {
+                    System.out.println("☹ OOPS!!! Task not found or invalid. Please try again.");
+                }
+                inputCommand(tasksArr, count);
+            }
 
-        else if (command.startsWith("unmark")) {
-            // -7 index for "unmark "
-            int taskNo = Integer.parseInt(command.substring(7)) - 1;
-            tasksArr[taskNo].markAsDone(false);
+            else if (command.startsWith("unmark")) {
+                try {
+                    // -7 index for "unmark "
+                    int taskNo = Integer.parseInt(command.substring(7)) - 1;
+                    tasksArr[taskNo].markAsDone(false);
 
-            System.out.println("OK, I've marked this task as not done yet:" + System.lineSeparator()
-                    + tasksArr[taskNo].toString() + System.lineSeparator());
+                    System.out.println("OK, I've marked this task as not done yet:" + System.lineSeparator()
+                            + tasksArr[taskNo].toString() + System.lineSeparator());
+                } catch (StringIndexOutOfBoundsException | NumberFormatException e) {
+                    System.out.println("☹ OOPS!!! Please indicate task to unmark.");
+                } catch (NullPointerException e) {
+                    System.out.println("☹ OOPS!!! Task not found or invalid. Please try again.");
+                }
+                inputCommand(tasksArr, count);
+            }
 
-            inputCommand(tasksArr, count);
-        }
+            else if (command.startsWith("todo")) {
+                try {
+                    String taskName = command.substring(5);
+                    if (taskName.isBlank()) {
+                        throw new DukeException();
+                    } else {
+                        addTask(new Todo(taskName));
+                    }
+                } catch (StringIndexOutOfBoundsException | DukeException e) {
+                    System.out.println("☹ OOPS!!! The description of a todo cannot be empty." + System.lineSeparator());
+                }
+                inputCommand(tasksArr, count);
+            }
 
-        else if (command.startsWith("todo")) {
-            String taskName = command.substring(5);
+            else if (command.startsWith("deadline")) {
+                try {
+                    int split = command.indexOf('/');
+                    String taskName = command.substring(9, split - 1);
+                    String byWhen = command.substring(split + 4);
 
-            addTask(new Todo(taskName));
+                    addTask(new Deadline(taskName, byWhen));
+                } catch (StringIndexOutOfBoundsException e) {
+                    System.out.println("☹ OOPS!!! The description of a deadline cannot be empty." + System.lineSeparator());
+                }
+                inputCommand(tasksArr, count);
+            }
 
-            inputCommand(tasksArr, count);
-        }
+            else if (command.startsWith("event")) {
+                try {
+                    int split = command.indexOf('/');
+                    String taskName = command.substring(6, split - 1);
+                    String byWhen = command.substring(split + 4);
 
-        else if (command.startsWith("deadline")) {
-            int split = command.indexOf('/');
-            String taskName = command.substring(9,split - 1);
-            String byWhen = command.substring(split + 4);
+                    addTask(new Event(taskName, byWhen));
+                } catch (StringIndexOutOfBoundsException e) {
+                    System.out.println("☹ OOPS!!! The description of an event cannot be empty." + System.lineSeparator());
+                }
+                inputCommand(tasksArr, count);
+            }
 
-            addTask(new Deadline(taskName,byWhen));
+            else {
+                throw new DukeException();
+            }
 
-            inputCommand(tasksArr, count);
-        }
-
-        else if (command.startsWith("event")) {
-            int split = command.indexOf('/');
-            String taskName = command.substring(6,split - 1);
-            String byWhen = command.substring(split + 4);
-
-            addTask(new Event(taskName,byWhen));
-
-            inputCommand(tasksArr, count);
-        }
-        else {
+        } catch (DukeException e) {
+            System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(" + System.lineSeparator());
             inputCommand(tasksArr, count);
         }
     }
