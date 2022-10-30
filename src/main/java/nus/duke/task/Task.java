@@ -7,51 +7,55 @@ import java.util.ArrayList;
 import static nus.duke.frontend.CommonPrintStatements.*;
 
 public abstract class Task {
-    protected String description;
-    protected boolean isDone;
+	protected String description;
+	protected boolean isDone;
 
-    public Task(String description) {
-        this.description = description;
-        this.isDone = false;
-    }
+	public Task(String description) {
+		this.description = description;
+		this.isDone = false;
+	}
 
-    public String getTask(){
-        return this.description;
-    }
+	public String getTask() {
+		return this.description;
+	}
 
-    public void markAsDone() {
-        if (this.isDone == false) {
-            this.isDone = true;
-        } else {
-            System.out.println(TASK_ALREADY_MARKED_DONE_MESSAGE);
-        }
-    }
-    public void markAsNotDone(){
-        this.isDone = false;
-    }
+	public void markAsDone() {
+		if (this.isDone == false) {
+			this.isDone = true;
+		} else {
+			System.out.println(TASK_ALREADY_MARKED_DONE_MESSAGE);
+		}
+	}
 
-    public String getStatusIcon() {
-        return (isDone ? "X" : SPACE); // mark done task with X
-    }
+	public void markAsNotDone() {
+		this.isDone = false;
+	}
 
-    public String getIsDone() {
-        String isDoneStr = Boolean.toString(this.isDone);
-        return isDoneStr;
-    }
+	public String getStatusIcon() {
+		return (isDone ? "X" : SPACE); // mark done task with X
+	}
 
-    public void setDescription(String description){
-        this.description = description;
-    }
+	public String getIsDone() {
+		String isDoneStr = Boolean.toString(this.isDone);
+		return isDoneStr;
+	}
 
-    public LocalDate processDate(String userInput) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-        String date = getDateInStr(userInput);
-        LocalDate localDate = LocalDate.parse(date, formatter);
-        return localDate;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public abstract String getDateInStr(String userInput);
-    public abstract String getTaskType();
-    public abstract String getTaskDetails();
-    public abstract String getDescription(String userInput);
+	public LocalDate processDate(String userInput) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		String date = getDateInStr(userInput);
+		LocalDate localDate = LocalDate.parse(date, formatter);
+		return localDate;
+	}
+
+	public abstract String getDateInStr(String userInput);
+
+	public abstract String getTaskType();
+
+	public abstract String getTaskDetails();
+
+	public abstract String getDescription(String userInput);
 }
