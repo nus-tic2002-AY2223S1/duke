@@ -16,9 +16,9 @@ public class Duke {
                 + "What can I do for you?\n\n";
         System.out.print(hello);
 
-        inputCommand(tasks, 0);
+        inputCommand(tasks);
     }
-    public static void inputCommand(Task[] tasksArr, int count){
+    public static void inputCommand(Task[] tasksArr){
         Scanner in = new Scanner(System.in);
         String command = in.nextLine();
 
@@ -29,6 +29,7 @@ public class Duke {
 
             else if (command.replaceAll("\\s+","").equalsIgnoreCase("list")) {
                 int listNo = 0;
+                System.out.println("Here are the tasks in your list:");
 
                 for (Task element : tasksArr) {
                     listNo++;
@@ -36,9 +37,9 @@ public class Duke {
                         System.out.println();
                         break;
                     } else
-                        System.out.println("Here are the tasks in your list:" + System.lineSeparator() + listNo + "." + element.toString());
+                        System.out.println(listNo + "." + element.toString());
                 }
-                inputCommand(tasksArr, count);
+                inputCommand(tasksArr);
             }
 
             else if (command.startsWith("mark")) {
@@ -50,11 +51,11 @@ public class Duke {
                     System.out.println("Nice! I've marked this task as done:" + System.lineSeparator()
                             + tasksArr[taskNo].toString() + System.lineSeparator());
                 } catch (StringIndexOutOfBoundsException | NumberFormatException e) {
-                    System.out.println("☹ OOPS!!! Please indicate task to mark.");
+                    System.out.println("☹ OOPS!!! Please indicate task to mark." + System.lineSeparator());
                 } catch (NullPointerException e) {
-                    System.out.println("☹ OOPS!!! Task not found or invalid. Please try again.");
+                    System.out.println("☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
                 }
-                inputCommand(tasksArr, count);
+                inputCommand(tasksArr);
             }
 
             else if (command.startsWith("unmark")) {
@@ -66,11 +67,11 @@ public class Duke {
                     System.out.println("OK, I've marked this task as not done yet:" + System.lineSeparator()
                             + tasksArr[taskNo].toString() + System.lineSeparator());
                 } catch (StringIndexOutOfBoundsException | NumberFormatException e) {
-                    System.out.println("☹ OOPS!!! Please indicate task to unmark.");
+                    System.out.println("☹ OOPS!!! Please indicate task to unmark." + System.lineSeparator());
                 } catch (NullPointerException e) {
-                    System.out.println("☹ OOPS!!! Task not found or invalid. Please try again.");
+                    System.out.println("☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
                 }
-                inputCommand(tasksArr, count);
+                inputCommand(tasksArr);
             }
 
             else if (command.startsWith("todo")) {
@@ -84,7 +85,7 @@ public class Duke {
                 } catch (StringIndexOutOfBoundsException | DukeException e) {
                     System.out.println("☹ OOPS!!! The description of a todo cannot be empty." + System.lineSeparator());
                 }
-                inputCommand(tasksArr, count);
+                inputCommand(tasksArr);
             }
 
             else if (command.startsWith("deadline")) {
@@ -97,7 +98,7 @@ public class Duke {
                 } catch (StringIndexOutOfBoundsException e) {
                     System.out.println("☹ OOPS!!! The description of a deadline cannot be empty." + System.lineSeparator());
                 }
-                inputCommand(tasksArr, count);
+                inputCommand(tasksArr);
             }
 
             else if (command.startsWith("event")) {
@@ -110,7 +111,7 @@ public class Duke {
                 } catch (StringIndexOutOfBoundsException e) {
                     System.out.println("☹ OOPS!!! The description of an event cannot be empty." + System.lineSeparator());
                 }
-                inputCommand(tasksArr, count);
+                inputCommand(tasksArr);
             }
 
             else {
@@ -119,7 +120,7 @@ public class Duke {
 
         } catch (DukeException e) {
             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(" + System.lineSeparator());
-            inputCommand(tasksArr, count);
+            inputCommand(tasksArr);
         }
     }
 
