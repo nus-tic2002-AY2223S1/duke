@@ -26,4 +26,5 @@ public class CommonStrings {
 
     public static final String AT = "/at";
     public static final String BY = "/by";
+    public static final String PIPE = " | ";
 }

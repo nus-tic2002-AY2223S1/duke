@@ -15,5 +15,5 @@ public interface TaskProcessor {
 
     void addEvent(String userInput, List<Task> taskList);
 
-    void deleteEvent(String userInput, List<Task> taskList);
+    void deleteTask(String userInput, List<Task> taskList);
 }

@@ -1,5 +1,7 @@
 import domain.task.Task;
+import processor.MemoryProcessor;
 import processor.TaskProcessor;
+import processor.impl.MemoryProcesserImpl;
 import processor.impl.TaskProcessorImpl;
 
 import java.util.ArrayList;
@@ -20,9 +22,12 @@ public class Duke {
         Scanner scanner = new Scanner(System.in);
         List<Task> taskList = new ArrayList<>();
         TaskProcessor taskProcessor = new TaskProcessorImpl();
+        MemoryProcessor memoryProcessor = new MemoryProcesserImpl();
 
         System.out.println(LOGO);
         speak(GREETING);
+        memoryProcessor.load(taskList);
+        speak(taskList);
 
         while (!scanner.hasNext("bye")) {
             String userInput = scanner.nextLine();
@@ -50,7 +55,7 @@ public class Duke {
                     taskProcessor.addEvent(userInput, taskList);
                     break;
                 case "delete":
-                    taskProcessor.deleteEvent(userInput, taskList);
+                    taskProcessor.deleteTask(userInput, taskList);
                     break;
                 case "help":
                     speak(HELP);
@@ -59,6 +64,10 @@ public class Duke {
                     speak(whatAreYouDoingErrMsg(userInput));
             }
         }
+
+        // save existing tasks into hard disk
+        memoryProcessor.save(taskList);
+
         speak(GOODBYE);
 
     }

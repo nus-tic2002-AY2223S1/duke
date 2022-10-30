@@ -17,6 +17,14 @@ public class Task {
         return count;
     }
 
+    public static void deleteTask() {
+        count--;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
     public boolean isDone() {
         return isDone;
     }

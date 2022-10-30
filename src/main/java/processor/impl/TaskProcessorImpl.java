@@ -61,11 +61,12 @@ public class TaskProcessorImpl implements TaskProcessor {
         getEventFromUserInput(userInput).ifPresent(event -> addTask(event, taskList));
     }
 
-    public void deleteEvent(String userInput, List<Task> taskList) {
+    public void deleteTask(String userInput, List<Task> taskList) {
         try {
             int index = getTaskIndexFromUserInput(userInput);
             Task task = taskList.get(index);
             taskList.remove(index);
+            Task.deleteTask();
             speak(taskRemovedMsg(task));
         } catch (IndexOutOfBoundsException e) {
             speak(NUMBER_OUT_OF_RANGE_ERR_MSG);
