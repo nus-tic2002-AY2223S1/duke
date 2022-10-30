@@ -59,7 +59,6 @@ public class RequestController {
 
     public void bye(){
         CommonHelper.printMessage(MessageConstants.END);
-        System.exit(1);
     }
 
     private void viewTaskCommandHandler() throws DukeFileException, DukeValidationException, DukeNotFoundException {
