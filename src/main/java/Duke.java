@@ -212,6 +212,7 @@ public class Duke {
                             "\n____________________________________________________________");
                     break;
             }
+            StorageFile.mainCaller();
         }
     }
 }
