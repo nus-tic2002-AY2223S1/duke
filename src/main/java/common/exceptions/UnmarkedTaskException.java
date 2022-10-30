@@ -1,4 +1,9 @@
 package common.exceptions;
 
-public class UnmarkedTaskException extends Exception {
+import static common.constants.ErrorMessage.UNMARKED_TASK_ERROR_MSG;
+
+public class UnmarkedTaskException extends DukeException {
+    public UnmarkedTaskException() {
+        super(UNMARKED_TASK_ERROR_MSG);
+    }
 }

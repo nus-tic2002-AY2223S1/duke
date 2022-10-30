@@ -6,17 +6,17 @@ import common.exceptions.NotExistTaskException;
 import common.exceptions.UnmarkedTaskException;
 import model.Chat;
 import model.Task;
+import ui.ConsoleUi;
 
 import static common.enums.CommandEnum.unmark;
 import static common.constants.CommonConstant.INIT_INT_VAL;
 import static common.constants.CommonConstant.UNMARKED_TASK;
-import static common.utils.PrintUtil.printMarkedTask;
 import static common.utils.StringUtil.getDescriptionFromString;
 import static logic.validators.Validator.validateUnmark;
 
 public class UnmarkCommand extends Command {
-    public UnmarkCommand(Chat chat) {
-        super(chat);
+    public UnmarkCommand(ConsoleUi ui, Chat chat) {
+        super(ui, chat);
     }
 
     /**
@@ -35,6 +35,6 @@ public class UnmarkCommand extends Command {
 
         Task task = chat.getTaskList().get(Integer.parseInt(description) - INIT_INT_VAL);
         task.unmarkDone();
-        printMarkedTask(UNMARKED_TASK, description, task);
+        ui.printMarkedTask(UNMARKED_TASK, description, task);
     }
 }

@@ -1,8 +1,10 @@
 package model;
 
+import common.enums.TypeEnum;
+
 import static common.constants.SymbolConstant.CLOSE_SQ_BRACKET;
 import static common.constants.SymbolConstant.OPEN_SQ_BRACKET;
-import static common.constants.ModelConstant.TODO_ICON;
+import static common.enums.TypeEnum.T;
 
 public class ToDo extends Task {
 
@@ -11,7 +13,12 @@ public class ToDo extends Task {
     }
 
     @Override
+    public TypeEnum getType() {
+        return T;
+    }
+
+    @Override
     public String toString() {
-        return OPEN_SQ_BRACKET + TODO_ICON + CLOSE_SQ_BRACKET + super.toString();
+        return OPEN_SQ_BRACKET + T + CLOSE_SQ_BRACKET + super.toString();
     }
 }

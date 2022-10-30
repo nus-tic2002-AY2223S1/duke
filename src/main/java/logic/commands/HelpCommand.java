@@ -2,13 +2,14 @@ package logic.commands;
 
 import common.exceptions.InvalidTaskDescriptionException;
 import model.Chat;
+import ui.ConsoleUi;
 
 import static common.constants.CommonConstant.INPUT_OPTIONS;
 import static logic.validators.Validator.validateHelp;
 
 public class HelpCommand extends Command {
-    public HelpCommand(Chat chat) {
-        super(chat);
+    public HelpCommand(ConsoleUi ui, Chat chat) {
+        super(ui, chat);
     }
 
     /**

@@ -4,16 +4,16 @@ import common.exceptions.EmptyTaskListException;
 import common.exceptions.InvalidTaskDescriptionException;
 import common.exceptions.NotExistTaskException;
 import model.Chat;
+import ui.ConsoleUi;
 
 import static common.enums.CommandEnum.delete;
 import static common.constants.CommonConstant.INIT_INT_VAL;
-import static common.utils.PrintUtil.printAddedDeletedTask;
 import static common.utils.StringUtil.getDescriptionFromString;
 import static logic.validators.Validator.validateDelete;
 
 public class DeleteCommand extends Command {
-    public DeleteCommand(Chat chat) {
-        super(chat);
+    public DeleteCommand(ConsoleUi ui, Chat chat) {
+        super(ui, chat);
     }
 
     /**
@@ -30,6 +30,6 @@ public class DeleteCommand extends Command {
         validateDelete(description, chat);
 
         chat.getTaskList().remove(Integer.parseInt(description) - INIT_INT_VAL);
-        printAddedDeletedTask(chat);
+        ui.printAddedDeletedTask(chat);
     }
 }

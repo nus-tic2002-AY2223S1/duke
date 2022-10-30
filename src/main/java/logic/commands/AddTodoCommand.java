@@ -4,14 +4,14 @@ import common.exceptions.DuplicatedTaskException;
 import common.exceptions.InvalidTaskDescriptionException;
 import model.Chat;
 import model.ToDo;
+import ui.ConsoleUi;
 
-import static common.utils.PrintUtil.printAddedDeletedTask;
 import static common.utils.StringUtil.getDescriptionFromString;
 import static logic.validators.Validator.validateTodo;
 
 public class AddTodoCommand extends Command {
-    public AddTodoCommand(Chat chat) {
-        super(chat);
+    public AddTodoCommand(ConsoleUi ui, Chat chat) {
+        super(ui, chat);
     }
 
     /**
@@ -27,6 +27,6 @@ public class AddTodoCommand extends Command {
         ToDo newToDo = new ToDo(description);
         chat.getTaskList().add(newToDo);
 
-        printAddedDeletedTask(chat);
+        ui.printAddedDeletedTask(chat);
     }
 }

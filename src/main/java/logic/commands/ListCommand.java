@@ -3,6 +3,7 @@ package logic.commands;
 import common.exceptions.EmptyTaskListException;
 import common.exceptions.InvalidTaskDescriptionException;
 import model.Chat;
+import ui.ConsoleUi;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -13,8 +14,8 @@ import static common.constants.SymbolConstant.PERIOD;
 import static logic.validators.Validator.validateList;
 
 public class ListCommand extends Command {
-    public ListCommand(Chat chat) {
-        super(chat);
+    public ListCommand(ConsoleUi ui, Chat chat) {
+        super(ui, chat);
     }
 
     /**

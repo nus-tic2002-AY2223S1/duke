@@ -4,15 +4,15 @@ import common.exceptions.DuplicatedTaskException;
 import common.exceptions.InvalidTaskDescriptionException;
 import model.Chat;
 import model.Deadline;
+import ui.ConsoleUi;
 
-import static common.utils.PrintUtil.printAddedDeletedTask;
 import static common.utils.StringUtil.getDescriptionFromString;
 import static common.utils.StringUtil.getTimeFromString;
 import static logic.validators.Validator.validateDeadline;
 
 public class AddDeadlineCommand extends Command {
-    public AddDeadlineCommand(Chat chat) {
-        super(chat);
+    public AddDeadlineCommand(ConsoleUi ui, Chat chat) {
+        super(ui, chat);
     }
 
     /**
@@ -28,6 +28,6 @@ public class AddDeadlineCommand extends Command {
         Deadline newDeadline = new Deadline(description, getTimeFromString(chat.getInput()));
         chat.getTaskList().add(newDeadline);
 
-        printAddedDeletedTask(chat);
+        ui.printAddedDeletedTask(chat);
     }
 }

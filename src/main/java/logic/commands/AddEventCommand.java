@@ -4,15 +4,15 @@ import common.exceptions.DuplicatedTaskException;
 import common.exceptions.InvalidTaskDescriptionException;
 import model.Chat;
 import model.Event;
+import ui.ConsoleUi;
 
-import static common.utils.PrintUtil.printAddedDeletedTask;
 import static common.utils.StringUtil.getDescriptionFromString;
 import static common.utils.StringUtil.getTimeFromString;
 import static logic.validators.Validator.validateEvent;
 
 public class AddEventCommand extends Command {
-    public AddEventCommand(Chat chat) {
-        super(chat);
+    public AddEventCommand(ConsoleUi ui, Chat chat) {
+        super(ui, chat);
     }
 
     /**
@@ -28,6 +28,6 @@ public class AddEventCommand extends Command {
         Event newEvent = new Event(description, getTimeFromString(chat.getInput()));
         chat.getTaskList().add(newEvent);
 
-        printAddedDeletedTask(chat);
+        ui.printAddedDeletedTask(chat);
     }
 }

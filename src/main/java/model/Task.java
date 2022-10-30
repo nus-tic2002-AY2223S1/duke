@@ -1,13 +1,18 @@
 package model;
 
+import common.enums.TypeEnum;
+
 import static common.constants.SymbolConstant.CLOSE_SQ_BRACKET;
 import static common.constants.SymbolConstant.OPEN_SQ_BRACKET;
 import static common.constants.CommonConstant.SPACE;
-import static common.constants.ModelConstant.MARKED_ICON;
+import static common.constants.CommonConstant.MARKED_ICON;
+import static common.enums.TypeEnum.UNDEFINED;
 
 public class Task {
     protected String description;
     protected boolean isDone;
+
+    protected String time;
 
     public Task(String description) {
         this.description = description;
@@ -32,6 +37,14 @@ public class Task {
 
     public void unmarkDone() {
         isDone = false;
+    }
+
+    public TypeEnum getType() {
+        return UNDEFINED;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     @Override
