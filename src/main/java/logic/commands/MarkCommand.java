@@ -6,17 +6,17 @@ import common.exceptions.NotExistTaskException;
 import common.exceptions.MarkedTaskException;
 import model.Chat;
 import model.Task;
+import ui.ConsoleUi;
 
 import static common.enums.CommandEnum.mark;
 import static common.constants.CommonConstant.INIT_INT_VAL;
 import static common.constants.CommonConstant.MARKED_TASK;
-import static common.utils.PrintUtil.printMarkedTask;
 import static common.utils.StringUtil.getDescriptionFromString;
 import static logic.validators.Validator.validateMark;
 
 public class MarkCommand extends Command {
-    public MarkCommand(Chat chat) {
-        super(chat);
+    public MarkCommand(ConsoleUi ui, Chat chat) {
+        super(ui, chat);
     }
 
     /**
@@ -35,6 +35,6 @@ public class MarkCommand extends Command {
 
         Task task = chat.getTaskList().get(Integer.parseInt(description) - INIT_INT_VAL);
         task.markDone();
-        printMarkedTask(MARKED_TASK, description, task);
+        ui.printMarkedTask(MARKED_TASK, description, task);
     }
 }

@@ -1,12 +1,11 @@
 package logic.commands;
 
 import model.Chat;
-
-import static common.utils.PrintUtil.printBye;
+import ui.ConsoleUi;
 
 public class ByeCommand extends Command {
-    public ByeCommand(Chat chat) {
-        super(chat);
+    public ByeCommand(ConsoleUi ui, Chat chat) {
+        super(ui, chat);
     }
 
     /**
@@ -16,7 +15,7 @@ public class ByeCommand extends Command {
      */
     @Override
     public void execute() {
-        printBye();
+        ui.printBye();
         System.exit(0);
     }
 }

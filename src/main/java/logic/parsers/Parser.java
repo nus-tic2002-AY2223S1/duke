@@ -17,6 +17,7 @@ import logic.commands.ListCommand;
 import logic.commands.MarkCommand;
 import logic.commands.UnmarkCommand;
 import model.Chat;
+import ui.ConsoleUi;
 
 public class Parser {
     public Parser() {}
@@ -31,16 +32,16 @@ public class Parser {
      * @throws DuplicatedTaskException
      * @return {void}
      */
-    public static void parseChat(Chat chat) throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException, MarkedTaskException, UnmarkedTaskException, DuplicatedTaskException {
-        Command addDeadlineCom = new AddDeadlineCommand(chat);
-        Command addEventCom = new AddEventCommand(chat);
-        Command addTodoCom = new AddTodoCommand(chat);
-        Command byeCom = new ByeCommand(chat);
-        Command deleteCom = new DeleteCommand(chat);
-        Command helpCom = new HelpCommand(chat);
-        Command listCom = new ListCommand(chat);
-        Command markCom = new MarkCommand(chat);
-        Command unmarkCom = new UnmarkCommand(chat);
+    public static void parseChat(ConsoleUi ui, Chat chat) throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException, MarkedTaskException, UnmarkedTaskException, DuplicatedTaskException {
+        Command addDeadlineCom = new AddDeadlineCommand(ui, chat);
+        Command addEventCom = new AddEventCommand(ui, chat);
+        Command addTodoCom = new AddTodoCommand(ui, chat);
+        Command byeCom = new ByeCommand(ui, chat);
+        Command deleteCom = new DeleteCommand(ui, chat);
+        Command helpCom = new HelpCommand(ui, chat);
+        Command listCom = new ListCommand(ui, chat);
+        Command markCom = new MarkCommand(ui, chat);
+        Command unmarkCom = new UnmarkCommand(ui, chat);
 
         switch (chat.getCommand()) {
             case bye:

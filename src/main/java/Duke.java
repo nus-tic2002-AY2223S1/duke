@@ -7,32 +7,32 @@ import common.exceptions.UnmarkedTaskException;
 import common.exceptions.DuplicatedTaskException;
 import model.Chat;
 import model.Task;
+import ui.ConsoleUi;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static common.constants.CommonConstant.PROMPT;
-import static common.utils.PrintUtil.printGreet;
-import static common.utils.PrintUtil.printLine;
 import static common.utils.StringUtil.getFirstWord;
 import static logic.file.FileManager.loadFile;
 import static logic.parsers.Parser.parseChat;
 
 public class Duke {
     public static void main(String[] args) {
-        printGreet();
+        ConsoleUi ui = new ConsoleUi();
         Scanner userInput = new Scanner(System.in);
         ArrayList<Task> taskList = new ArrayList<>();
 
+        ui.printGreet();
+
         while (userInput.hasNext()) {
-            printLine();
+            ui.lineSeparator();
 
             try {
                 String input = (userInput.nextLine()).toLowerCase();
                 String command = getFirstWord(input);
                 Chat chat = new Chat(CommandEnum.valueOf(command), input, taskList);
 
-                parseChat(chat);
+                parseChat(ui, chat);
                 loadFile(chat);
             } catch (IllegalArgumentException e) {
                 System.out.println(e);
@@ -52,8 +52,8 @@ public class Duke {
                 System.out.println(e);
             }
 
-            printLine();
-            System.out.print(PROMPT);
+            ui.lineSeparator();
+            ui.prompt();
         }
     }
 }
