@@ -24,14 +24,31 @@ public class Storage {
 	private static Parser parser;
 	private static Ui ui;
 
+	/**
+	 * Constructor.
+	 *
+	 * @return nothing. This is a constructor.
+	 */
 	public Storage(String filePath) {
 		this.filePath = filePath;
 	}
 
+	/**
+	 * Returns the filepath that was stored.
+	 *
+	 * @return The filepath that was stored.
+	 */
 	public String getFilePath() {
 		return this.filePath;
 	}
 
+	/**
+	 * Returns true if a file (i.e. the hard disk) has been created.
+	 *
+	 * @param filePath The filepath where the file will be created.
+	 * @return true (i.e. file has been created) or false (i.e. file not created)
+	 * @throws IOException when filewriter catches an exception
+	 */
 	public static boolean createHardDiskFile(String filePath) {
 		File f = new File(filePath);
 		try {
@@ -42,6 +59,12 @@ public class Storage {
 		return true;
 	}
 
+	/**
+	 * Loads data from the hard disk.
+	 *
+	 * @return an ArrayList of Task objects which will be copied to the task list when a task list is constructed.
+	 * @throws IOException when filewriter catches an exception
+	 */
 	public ArrayList<Task> load() throws IOException {
 		hardDiskTaskList = new TaskList();
 		try {
@@ -71,6 +94,12 @@ public class Storage {
 		return hardDiskTaskList.getTaskList();
 	}
 
+	/**
+	 * Saves task list into a file when a user wants to exit the Duke program.
+	 *
+	 * @param taskList The most recent task list that stored all tasks.
+	 * @return nothing. This is a void function.
+	 */
 	public void saveTasks(TaskList taskList) {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(getFilePath()));
