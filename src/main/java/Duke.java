@@ -10,6 +10,9 @@ public class Duke {
         TODO("todo");
 
         public final String label;
+        public String getLabel(){
+            return this.label;
+        }
         private Command(String label) {
             this.label = label;
         }
@@ -17,9 +20,13 @@ public class Duke {
 
     public enum Action{
         MARK("mark"),
-        UNMARK("unmark");
+        UNMARK("unmark"),
+        DELETE("delete");
 
         public final String label;
+        public String getLabel(){
+            return this.label;
+        }
         private Action(String label) {
             this.label = label;
         }
@@ -32,29 +39,33 @@ public class Duke {
     //processAction Processes the actions of mark / unmark
     public static void processAction(Action a,String[] s) {
         if (s.length == 1){
-            d.Warning("OOPS!!! The selection to " + a.label +" cannot be empty.");
+            d.Warning("OOPS!!! The selection to " + a.getLabel() +" cannot be empty.");
             return;
         }
 
-        int idxMark = getIndex(s[1]);
-        boolean isMark = false;
-        if (idxMark != -1){
+        int idx = getIndex(s[1]);
+        if (idx != -1){
             switch (a){
                 case MARK:
-                    arr[idxMark].markTask();
-                    isMark = true;
+                    arrayList.get(idx).markTask();
+                    printSingle(idx, true);
                     break;
                 case UNMARK:
-                    arr[idxMark].unmarkTask();
+                    arrayList.get(idx).unmarkTask();
+                    printSingle(idx, false);
+                    break;
+                case DELETE:
+                    printTaskRemovedByIndex(idx);
+                    arrayList.remove(idx);
+                    break;
             }
-            printSingle(idxMark, isMark);
         }
     }
 
     //processCommand Processes the commands of event / deadline / to-do
     public static void processCommand(Command c,String[] s){
         if (s.length == 1){
-            d.Warning("OOPS!!! The description of " + c.label +" cannot be empty.");
+            d.Warning("OOPS!!! The description of " + c.getLabel() +" cannot be empty.");
             return;
         }
 
@@ -72,7 +83,6 @@ public class Duke {
                 arrayList.add(new Todo(todoByInput[0],todoByInput.length == 1 ? null: todoByInput[1]));
                 break;
         }
-        arr = arrayList.toArray(arr);
         printNewTaskAdded();
     }
     public static int getIndex(String s) {
@@ -80,7 +90,7 @@ public class Duke {
             return -1;
         }
         int i = Integer.parseInt(s)-1;
-        if (i <= 0 || i >= arr.length){
+        if (i < 0 || i >= arrayList.size()){
             d.Warning("No such index.");
             return -1;
         }
@@ -131,6 +141,9 @@ public class Duke {
                 case "event":
                     processCommand(Command.EVENT,processedInput);
                     continue;
+                case "delete":
+                    processAction(Action.DELETE,processedInput);
+                    continue;
                 case "bye":
                     d.Output("Bye. Hope to see you again soon!");
                     return;
@@ -144,19 +157,19 @@ public class Duke {
 
     public static void printList(Boolean withIndex){
         StringBuilder s = new StringBuilder();
-        if (arr.length == 0){
+        if (arrayList.size() == 0){
             s.append("You have no task.");
         }else{
             s.append("Here are the tasks in your list:\n    ");
-            for( int i = 0; i < arr.length; i++){
+            for( int i = 0; i < arrayList.size(); i++){
                 String suffix = "";
-                if (i != arr.length -1){
+                if (i != arrayList.size() -1){
                     suffix = "\n    ";
                 }
                 if (withIndex){
                     s.append(i+1);
                 }
-                s.append(".").append(arr[i].toString()).append(suffix);
+                s.append(".").append(arrayList.get(i).toString()).append(suffix);
             }
         }
         d.Output(s);
@@ -165,17 +178,28 @@ public class Duke {
     public static void printSingle(int index, Boolean isMark) {
         StringBuilder s = new StringBuilder();
         s.append(isMark ? "Nice! I've marked this task as done:\n    " :"OK, I've marked this task as not done yet:\\n    \"" ).
-                append(arr[index].toString());
+                append(arrayList.get(index).toString());
         d.Output(s);
     }
 
     public static void printNewTaskAdded() {
         StringBuilder s = new StringBuilder();
         s.append("Got it. I've added this task:\n\t").
-                append(arr[arr.length - 1].toString()).
+                append(arrayList.get(arrayList.size() - 1).toString()).
                 append("\n\tNow you have ").
-                append(arr.length).
-                append(arr.length > 1 ? " tasks " :" task ").
+                append(arrayList.size()).
+                append(arrayList.size() > 1 ? " tasks " :" task ").
+                append("in the list.");
+        d.Output(s);
+    }
+
+    public static void printTaskRemovedByIndex(int index) {
+        StringBuilder s = new StringBuilder();
+        s.append("Noted. I've removed this task:\n\t").
+                append(arrayList.get(index).toString()).
+                append("\n\tNow you have ").
+                append(arrayList.size() - 1).
+                append(arrayList.size() > 1 ? " tasks " :" task ").
                 append("in the list.");
         d.Output(s);
     }
