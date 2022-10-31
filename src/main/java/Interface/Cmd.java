@@ -17,6 +17,7 @@ public class Cmd {
         ADD_EVENT,
         DELETE_TASK,
         FIND_DATE,
+        FIND_TASK,
         RETURN,
         EXIT;
     }
@@ -64,6 +65,9 @@ public class Cmd {
                 break;
             case FIND_DATE:
                 r.processFindDate(input);
+                break;
+            case FIND_TASK:
+                r.processFindTask(input);
                 break;
             case EXIT:
                 r.printExitMessage();
