@@ -83,7 +83,7 @@ public class TodoTest {
     @Test
     void testEquals_differentTask_event_false() {
         try {
-            Event event = new Event("Task 2/at 2022-12-10 2:00 PM");
+            Event event = new Event("Task 2/at 2022-12-10 02:00");
             assertEquals(false, todo.equals(event));
         } catch (DukeValidationException ex){
             assert(false);

@@ -44,6 +44,19 @@ class EventTest {
     }
 
     @Test
+    void eventInit_date(){
+        try {
+            Event newEvent = new Event("Task 2 /at Dec 15 2022");
+            assertEquals(0, newEvent.getId());
+            assertEquals("Task 2", newEvent.getName());
+            assertEquals(LocalDate.parse("Dec 15 2022", DateTimeFormatter.ofPattern("[MMM dd yyyy]")).atStartOfDay(), newEvent.getStartDateTime());
+            assertEquals(false, newEvent.getIsDone());
+        } catch (DukeValidationException ex){
+            assert(false);
+        }
+    }
+
+    @Test
     void eventInit_allValues(){
         Event newEvent = new Event(2,"Task 2", "2022-12-23T20:00",true);
         assertEquals(2, newEvent.getId());
@@ -62,6 +75,24 @@ class EventTest {
     }
 
     @Test
+    void eventInit_nullName_throwsDukeValidationException(){
+        try {
+            Event newEvent = new Event(" /at 2022-11-05");
+            assertThrows(DukeValidationException.class, (Executable) newEvent);
+        } catch (DukeValidationException ex){
+        }
+    }
+
+    @Test
+    void eventInit_nullDate_throwsDukeValidationException(){
+        try {
+            Event newEvent = new Event("Task 2");
+            assertThrows(DukeValidationException.class, (Executable) newEvent);
+        } catch (DukeValidationException ex){
+        }
+    }
+
+    @Test
     void printItem_dateTime() {
         event.printItem();
         assertEquals("\t\t0.[E][ ] Task 1 (at: 15 December 2022, 02:00 PM)\n", outContent.toString());
@@ -71,6 +102,7 @@ class EventTest {
     void printItem_date() {
         try {
             Event event2 = new Event("Task 2 /at Dec 15 2022");
+            event2.printItem();
             assertEquals("\t\t0.[E][ ] Task 2 (at: 15 December 2022)\n", outContent.toString());
         } catch (DukeValidationException ex){
             assert(false);

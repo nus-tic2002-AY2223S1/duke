@@ -7,6 +7,7 @@ import domain.exceptions.DukeValidationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Pattern;
 
 public class Deadline extends Task{
     public LocalDateTime dueDateTime;
@@ -18,7 +19,8 @@ public class Deadline extends Task{
         String[] f = CommonHelper.formatPassedName(n, "by");
         validate(f);
         this.name = f[0].trim();
-        if(f[1].trim().split(" ").length > 1)
+        Pattern p = Pattern.compile(".*([01]?[0-9]|2[0-3]):[0-5][0-9].*");
+        if(p.matcher(f[1].trim()).matches())
             this.dueDateTime = CommonHelper.convertStringToDateTime(f[1].trim());
         else
             this.dueDateTime = CommonHelper.convertStringToDate(f[1].trim());
