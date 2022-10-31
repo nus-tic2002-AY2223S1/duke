@@ -1,11 +1,6 @@
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 
 public class StorageFile {
@@ -18,6 +13,10 @@ public class StorageFile {
 //        return true;
 //    }
 
+    public static String homeDirectory(){
+        String homeDirectory = System.getProperty("user.home");
+        return homeDirectory;
+    }
     private static void writeToFile(String filePath, List<Task> taskList) throws IOException {
         // write to file
         FileWriter fw = new FileWriter(filePath);
@@ -27,21 +26,24 @@ public class StorageFile {
         fw.close();
     }
 
-    public static void main(String[] args) {
-        // get user's home directory
-        String homeDirectory = System.getProperty("user.home");
-
+    public static void main(String[] args) throws InvalidStorageFilePathException, IOException {
         // create file to file path assuming all users are storing the duke in the user home directory
-        File file = new File(homeDirectory, "/duke/data/duke.txt");
-        try {
-            // write to file
-            writeToFile(String.valueOf(file), Duke.taskList);
-        } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
+        File file = new File(homeDirectory(), "/duke/data/duke.txt");
+        File home = new File(homeDirectory());
+        if (!home.exists()) {
+            throw new InvalidStorageFilePathException();
+        }
+        else {
+            try {
+                // write to file
+                writeToFile(String.valueOf(file), Duke.taskList);
+            } catch (IOException e) {
+                System.out.println("Something went wrong: " + e.getMessage());
+            }
         }
     }
 
-    static void mainCaller() {
+    static void mainCaller() throws InvalidStorageFilePathException, IOException {
         StorageFile.main(null);
     }
 }

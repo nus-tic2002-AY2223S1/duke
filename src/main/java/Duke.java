@@ -110,7 +110,7 @@ public class Duke {
         }
     }
 
-    public static void main(String[] args) throws DukeException {
+    public static void main(String[] args) throws DukeException, InvalidStorageFilePathException, IOException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
