@@ -51,20 +51,16 @@ public class Session {
                 System.out.println("\t Bye. Hope to see you again soon!");
                 System.out.println("\t-----------------------------------------------------------------");
                 break;
-            } 
-            else if (commandLine.equalsIgnoreCase("delete")) {
+            } else if (commandLine.equalsIgnoreCase("delete")) {
                 sessionTaskList.deleteTask(lineArray);
                 sessionTaskList.saveTaskList(sessionRepo.getFileDirectory());
-            }
-            else if (commandLine.equalsIgnoreCase("mark")) {
+            } else if (commandLine.equalsIgnoreCase("mark")) {
                 sessionTaskList.markTask(lineArray);
                 sessionTaskList.saveTaskList(sessionRepo.getFileDirectory());
-            }
-            else if (commandLine.equalsIgnoreCase("unmark")) {
+            } else if (commandLine.equalsIgnoreCase("unmark")) {
                 sessionTaskList.unmarkTask(lineArray);
                 sessionTaskList.saveTaskList(sessionRepo.getFileDirectory());
-            }
-            else if (commandLine.equalsIgnoreCase("list")) {
+            } else if (commandLine.equalsIgnoreCase("list")) {
                 sessionTaskList.listTask();
             } else if (commandLine.equalsIgnoreCase("todo")) {
                 if (lineArray.length < 2) {
@@ -93,8 +89,7 @@ public class Session {
                 }
                 sessionTaskList.addEvent(lineArray);
                 sessionTaskList.saveTaskList(sessionRepo.getFileDirectory());
-            }
-            else {
+            } else {
                 System.out.println("\t-----------------------------------------------------------------");
                 System.out.println("\t " + "Pleas enter a valid command");
                 System.out.println("\t-----------------------------------------------------------------");

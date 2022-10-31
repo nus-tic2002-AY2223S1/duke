@@ -1,6 +1,8 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,13 +52,24 @@ public class TaskList {
             }
             descriptionLine += " " + lineArray[i];
         }
-        String date = "";
+        String date = lineArray[indexOfDelimiter+1];
+        String time = lineArray[indexOfDelimiter+2];
+        String dateTime = date + "T" + time;
+
+        /*
         for (int i = indexOfDelimiter+1; i < lineArray.length; i++) {
-            date += " " + lineArray[i];
-        }
+
+             date = " " + lineArray[i];
+         }
+        */
+
+        LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
+        // System.out.println(localDateTime.format(DateTimeFormatter.ofPattern("E, dd MMM yyyy HH:mm:ss")));
+
+
         System.out.println("\t-----------------------------------------------------------------");
         System.out.println("\t " + "Got it. I've added this task: ");
-        tasks.add(new Deadline(descriptionLine, date));
+        tasks.add(new Deadline(descriptionLine, localDateTime));
         System.out.println("\t\t " + tasks.get(tasks.size()-1));
         System.out.println("\t " + "Now you have " + tasks.size() + " tasks in the list.");
         System.out.println("\t-----------------------------------------------------------------");
@@ -73,13 +86,23 @@ public class TaskList {
             }
             descriptionLine += " " + lineArray[i];
         }
-        String date = "";
+        String date = lineArray[indexOfDelimiter+1];
+        String time = lineArray[indexOfDelimiter+2];
+        String dateTime = date + "T" + time;
+
+        /*
         for (int i = indexOfDelimiter+1; i < lineArray.length; i++) {
-            date += " " + lineArray[i];
-        }
+
+             date = " " + lineArray[i];
+         }
+        */
+
+        LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
+        // System.out.println(localDateTime.format(DateTimeFormatter.ofPattern("E, dd MMM yyyy HH:mm:ss")));
+
         System.out.println("\t-----------------------------------------------------------------");
         System.out.println("\t " + "Got it. I've added this task: ");
-        tasks.add(new Event(descriptionLine, date));
+        tasks.add(new Event(descriptionLine, localDateTime));
         System.out.println("\t\t " + tasks.get(tasks.size()-1));
         System.out.println("\t " + "Now you have " + tasks.size() + " tasks in the list.");
         System.out.println("\t-----------------------------------------------------------------");
