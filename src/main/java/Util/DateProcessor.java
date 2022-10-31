@@ -68,16 +68,16 @@ public class DateProcessor {
         return dateTimeToUnix(s+ " 0000");
     }
 
-    private long dateTimeToUnix(String s){
+    public long dateTimeToUnix(String s){
         try{
-            return dateTimeToUnixFormat.parse(s).toInstant().getEpochSecond();
+            return dateTimeToUnixFormat.parse(s+ " 0000").toInstant().getEpochSecond();
         } catch (ParseException e) {
             ui.sendGenericFatal(e.getMessage());
         }
         return -1;
     }
 
-    private long dateToUnix(String s){
+    public long dateToUnix(String s){
         try{
             return dateToUnixFormat.parse(s).toInstant().getEpochSecond();
         } catch (ParseException e) {
