@@ -1,13 +1,63 @@
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 
 public class Duke {
 
-    //public static String taskname(int num) {
 
-    //}
+    //Read from File
+  /*  private static void printFileContents(String filePath) throws FileNotFoundException {
+        File f = new File(filePath); // create a File for the given file path
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            String re= s.nextLine();
+            if(re.substring(0)=="["){
+
+                if(re.substring(1)=="T"){
+
+                    //tasks.add(new Todo(temp.substring(5)));
+
+                }
+
+                else if(re.substring(1)=="D"){
+
+
+
+                }
+
+                else if(re.substring(1)=="E"){
+
+
+
+                }
+            }
+        }
+    }
+
+
+    public static void readt() {
+        try {
+            printFileContents("/Users/nikhilshankar/Duke Test/DukeText.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+    }
+*/
+
+
+    private static void writeToFile(String filePath, String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(textToAdd);
+        fw.close();
+    }
+
+
     static void validate(String s, String tas) throws DukeException {
         if (s.equals(tas)) {
 
@@ -38,6 +88,8 @@ public class Duke {
         String ts="null";
         int i=1;
         int j=0;
+        //Read the existing text file here using a function. Bring back the edited string here to be added into Task
+
         while(i==1){
             Scanner in = new Scanner(System.in);
             temp = in.nextLine();
@@ -202,6 +254,28 @@ public class Duke {
             }
 
         }
+
+        //write to file
+        String file1= "/Users/nikhilshankar/Duke Test/DukeText.txt";
+        int k=0;
+        String line2="Duke Task List:";
+        while(k<j) {
+            String line1;
+            System.out.println(k + 1 + ". " + tasks.get(k));
+
+            line1= tasks.get(k).toString();
+            line2= line2+"\n"+line1;
+
+
+
+            k++;
+        }
+        try {
+            writeToFile(file1,line2 );
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+
         System.out.println("Byeee!! See you Again!!");
     }
 }
