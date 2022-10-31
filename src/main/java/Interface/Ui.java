@@ -1,6 +1,5 @@
 package Interface;
 import Duke.Task;
-import Util.DukeException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -26,7 +25,8 @@ public class Ui {
         INFO_GOODBYE("Bye. Hope to see you again soon!"),
         ERROR_COMMAND_UNKNOWN("OOPS!!! I'm sorry, but I don't know what that means :( \n\tSpecify Todo / Deadline / Event. \n\tE.g. Todo <Task Name>"),
         ERROR_PROCESS_ACTION("OOPS!!! The selection to %s cannot be empty."),
-        ERROR_PROCESS_COMMAND("OOPS!!! The description of %s cannot be empty.");
+        ERROR_PROCESS_COMMAND("OOPS!!! The description of %s cannot be empty."),
+        ERROR_FIND_DATE("OOPS!!! The date to search cannot be empty.");
 
         public final String text;
         public String getText(){return this.text;}
@@ -42,12 +42,13 @@ public class Ui {
     private void sendFatal(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.FATAL.getIcon(), String.format(u.getText(),m) ));}
     private void sendConfirmation(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.CONFIRMATION.getIcon(), String.format(u.getText(),m) ));}
     public void sendConfirmedOutput(StringBuilder message){sendConfirmation(UiMessage.GENERIC_FORMATTED, String.valueOf(message));}
-    public void sendGenericInfo(String message){sendInfo(UiMessage.GENERIC,message);}
-    public void sendGenericWarning(String message){sendWarning(UiMessage.GENERIC,message);}
-    public void sendGenericFatal(String message){sendFatal(UiMessage.GENERIC,message);}
+    public void sendGenericInfo(String message){sendInfo(UiMessage.GENERIC_FORMATTED,message);}
+    public void sendGenericWarning(String message){sendWarning(UiMessage.GENERIC_FORMATTED,message);}
+    public void sendGenericFatal(String message){sendFatal(UiMessage.GENERIC_FORMATTED,message);}
     public void sendProcessActionError(String message){sendFatal(UiMessage.ERROR_PROCESS_ACTION,message);}
     public void sendProcessCommandError(String message){sendFatal(UiMessage.ERROR_PROCESS_COMMAND,message);}
     public void sendCommandUnknownError(){sendFatal(UiMessage.ERROR_COMMAND_UNKNOWN,"");}
+    public void sendProcessFindDateError(){sendFatal(UiMessage.ERROR_FIND_DATE,"");}
 
     public void sendWelcomeMessage(){
         String logo = " ____        _        \n"
@@ -93,17 +94,32 @@ public class Ui {
         if (tasks.size() == 0){
             s.append("You have no task.");
         }else{
-            s.append("Here are the tasks in your list:\n    ");
-            for( int i = 0; i < tasks.size(); i++){
-                String suffix = "";
-                if (i != tasks.size() -1){
-                    suffix = "\n    ";
-                }
-                if (withIndex){
-                    s.append(i+1);
-                }
-                s.append(".").append(tasks.get(i).toString()).append(suffix);
+            s.append("Here are the task(s) in your list:\n    ");
+            buildList(tasks, withIndex, s);
+        }
+        sendConfirmedOutput(s);
+    }
+
+    private void buildList(ArrayList<Task> tasks, Boolean withIndex, StringBuilder s) {
+        for( int i = 0; i < tasks.size(); i++){
+            String suffix = "";
+            if (i != tasks.size() -1){
+                suffix = "\n    ";
             }
+            if (withIndex){
+                s.append(i+1);
+            }
+            s.append(".").append(tasks.get(i).toString()).append(suffix);
+        }
+    }
+
+    public void printSelectedList(ArrayList<Task> tasks, Boolean withIndex, String date){
+        StringBuilder s = new StringBuilder();
+        if (tasks.size() == 0){
+            s.append("You have no task scheduled on ").append(date);
+        }else{
+            s.append("Here are the task(s) scheduled on this day:\n    ");
+            buildList(tasks, withIndex, s);
         }
         sendConfirmedOutput(s);
     }

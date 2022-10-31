@@ -1,17 +1,20 @@
 package Duke;
+
+import Util.DateProcessor;
+
 public class Event extends Task {
 
     protected String type = "E";
 
 
-    public Event(String description, String due) {
+    public Event(String description, long due) {
         super(description);
         this.due = due;
     }
 
     @Override
     public String toString() {
-        return (this.due == null ? "\t[E]" + super.toString() : "\t[E]" + super.toString() + " (at: " + this.due + ")");
+        return (this.due == 0 ? "\t[E]" + super.toString() : "\t[E]" + super.toString() + " (at: " + DateProcessor.unixToString(this.due)  + ")");
     }
 
     @Override

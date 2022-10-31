@@ -21,12 +21,12 @@ public class Parser {
                     return new Cmd(Cmd.CmdTypes.DELETE_TASK,processedInput);
                 case "bye":
                     return new Cmd(Cmd.CmdTypes.EXIT,null);
+                case "day":
+                    return new Cmd(Cmd.CmdTypes.FIND_DATE,processedInput);
                 case "":
-                    break;
+                    return new Cmd(Cmd.CmdTypes.RETURN,null);
                 default:
                     return new Cmd(Cmd.CmdTypes.UNKNOWN_CMD,null);
             }
-        return null;
     }
-
 }

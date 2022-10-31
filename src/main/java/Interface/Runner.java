@@ -3,15 +3,20 @@ import Duke.Deadline;
 import Duke.Event;
 import Duke.Task;
 import Duke.Todo;
+import Util.DateProcessor;
 import Util.DukeException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import static Interface.Runner.Command.EVENT;
 
 public class Runner {
     public enum Command{
         DEADLINE("deadline"),
         EVENT("event"),
+        DATE("date"),
         TODO("todo");
 
         public final String label;
@@ -38,15 +43,18 @@ public class Runner {
     protected Ui ui;
     protected boolean isExit;
     protected ArrayList<Task> arrayList;
+    DateProcessor d;
     public Runner(ArrayList<Task> a) {
         arrayList = a;
         ui = new Ui();
+         d = new DateProcessor();
     }
     public void run(ArrayList<Task> tasks, Ui runtimeUi) throws DukeException {
         arrayList = tasks;
         ui = runtimeUi;
     }
     public void printList(Boolean withIndex){ui.printList(arrayList,withIndex);}
+    public void printSelectedList(ArrayList<Task> l,Boolean withIndex,String date){ui.printSelectedList(l,withIndex,date);}
     public  void printSingle(int index, Boolean isMark) {ui.printMarkTask(arrayList.get(index).toString(),isMark);}
     public  void printNewTaskAdded() {ui.printNewTasks(arrayList.get(arrayList.size()-1).toString(), arrayList.size());}
     public  void printTaskRemovedByIndex(int index) {ui.printTaskRemovedByIndex(arrayList.get(index).toString(), arrayList.size());}
@@ -56,6 +64,7 @@ public class Runner {
     public void printWarningMessage(String message){ui.sendGenericWarning(message);}
     public void printProcessCommandMessage(String message){ui.sendProcessCommandError(message);}
     public void printProcessActionMessage(String message){ui.sendProcessActionError(message);}
+    public void printProcessFindDateMessage(){ui.sendProcessFindDateError();}
     public int getIndex(String s) {
         if (!isInteger(s)){
             return -1;
@@ -103,7 +112,49 @@ public class Runner {
         }
     }
 
-    public void processCommand(Command c, String[] s) {
+    private boolean processDue(Command c,String[] s){
+        long convertedTime;
+        switch (c){
+            case EVENT:
+                String[] eventByInput = s[1].split("/at", 2);
+                if(eventByInput.length ==1){
+                    arrayList.add(new Event(eventByInput[0].trim(),0));
+                }else{
+                    convertedTime = d.processDateTime(eventByInput[1].trim());
+                    if (convertedTime == -1){
+                        return false;
+                    }
+                    arrayList.add(new Event(eventByInput[0].trim(),convertedTime));
+                }
+                break;
+            case DEADLINE:
+                String[] deadlineByInput = s[1].split("/by", 2);
+                if(deadlineByInput.length ==1){
+                    arrayList.add(new Deadline(deadlineByInput[0].trim(),0));
+                }else{
+                    convertedTime = d.processDateTime(deadlineByInput[1].trim());
+                    if (convertedTime == -1){
+                        return false;
+                    }
+                    arrayList.add(new Deadline(deadlineByInput[0].trim(),convertedTime));
+                }
+                break;
+            case TODO:
+                String[] todoByInput = s[1].split("/by", 2);
+                if(todoByInput.length ==1){
+                    arrayList.add(new Todo(todoByInput[0].trim(),0));
+                }else{
+                    convertedTime = d.processDateTime(todoByInput[1].trim());
+                    if (convertedTime == -1){
+                        return false;
+                    }
+                    arrayList.add(new Todo(todoByInput[0].trim(),convertedTime));
+                }
+                break;
+        }
+        return true;
+    }
+    public void processAddTask(Command c, String[] s) {
         if (s.length == 1){
             printProcessCommandMessage(c.getLabel());
             return;
@@ -114,20 +165,10 @@ public class Runner {
             return;
         }
 
-        switch (c){
-            case EVENT:
-                String[] eventByInput = s[1].split("/at", 2);
-                arrayList.add(new Event(eventByInput[0].trim(),eventByInput.length == 1 ? null: eventByInput[1].trim()));
-                break;
-            case DEADLINE:
-                String[] deadlineByInput = s[1].split("/by", 2);
-                arrayList.add(new Deadline(deadlineByInput[0].trim(),deadlineByInput.length == 1 ? null: deadlineByInput[1].trim()));
-                break;
-            case TODO:
-                String[] todoByInput = s[1].split("/by", 2);
-                arrayList.add(new Todo(todoByInput[0].trim(),todoByInput.length == 1 ? null: todoByInput[1].trim()));
-                break;
+        if(!processDue(c,s)){
+            return;
         }
+
         printNewTaskAdded();
 
         try{
@@ -148,5 +189,36 @@ public class Runner {
             writer.write(str.toString() + System.lineSeparator());
         }
         writer.close();
+    }
+
+    private long checkFindDate(String[] s) {
+        if (s.length == 1){
+            printProcessFindDateMessage();
+            return -1;
+        }
+
+        if (s[1].trim().equals("")){
+            printProcessFindDateMessage();
+            return -1;
+        }
+
+        DateProcessor d = new DateProcessor();
+        return d.processDate(s[1]);
+    }
+    public void processFindDate(String[] s) {
+        long d = checkFindDate(s);
+        if(d == -1){
+            return;
+        }
+
+        Task[] arr = {};
+        ArrayList<Task> selected = new ArrayList<>(Arrays.asList(arr));
+
+        for (Task t : this.arrayList){
+            if (t.getDue() >= d && t.getDue() <= d + 86400){
+                selected.add(t);
+            }
+        }
+        printSelectedList(selected,true,s[1]);
     }
 }
