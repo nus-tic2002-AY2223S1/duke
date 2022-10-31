@@ -2,7 +2,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -136,9 +135,9 @@ public class TaskList {
         System.out.println("\t-----------------------------------------------------------------");
         System.out.println("\t Noted. I've removed this task:");
         System.out.println("\t\t " + tasks.get(arrayIndex));
+        tasks.remove(arrayIndex);
         System.out.println("\t Now you have " + tasks.size() + " tasks in the list.");
         System.out.println("\t-----------------------------------------------------------------");
-        tasks.remove(arrayIndex);
     }
 
     public void saveTaskList(String fileDirectory) throws IOException {
