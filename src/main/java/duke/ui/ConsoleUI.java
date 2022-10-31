@@ -70,9 +70,11 @@ public class ConsoleUI implements UI {
     RenderHandler listTaskRenderHandler = responseDto -> {
         // render task data
         List<Task> taskList = (List<Task>) responseDto.getData();
-        int index = 1;
-        for (Task task : taskList) {
-            System.out.printf("%d. %s%n", index++, task.toString());
+        if (!CollectionUtil.isEmpty(taskList)) {
+            int index = 1;
+            for (Task task : taskList) {
+                System.out.printf("%d. %s%n", index++, task.toString());
+            }
         }
 
         printResponseMessage(responseDto);

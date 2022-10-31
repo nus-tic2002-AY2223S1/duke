@@ -2,7 +2,6 @@ package duke.service.command;
 
 import duke.dto.ResponseDto;
 import duke.entity.Task;
-import duke.exception.EmptyTaskListException;
 import duke.form.Form;
 import duke.util.CollectionUtil;
 
@@ -42,9 +41,9 @@ public class ListTaskCommand extends Command {
     public ResponseDto<List<Task>> execute(Form form) {
         List<Task> taskList = taskManager.getTaskList();
         if (CollectionUtil.isEmpty(taskList)) {
-            throw new EmptyTaskListException();
+            String message = "current task list is empty, kindly feed me some tasks before perform any operation";
+            return new ResponseDto<>(form.getCommand(), message);
         }
-
         return new ResponseDto<>(form.getCommand(), taskList);
     }
 }

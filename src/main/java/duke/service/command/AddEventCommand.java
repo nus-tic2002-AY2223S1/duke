@@ -1,5 +1,6 @@
 package duke.service.command;
 
+import duke.constant.Constant;
 import duke.dto.ResponseDto;
 import duke.entity.Event;
 import duke.form.EventForm;
@@ -42,7 +43,7 @@ public class AddEventCommand extends Command {
         Event event = new Event(eventForm.getDescription(), eventForm.getStartTime(), eventForm.getEndTime());
         taskManager.addTask(event);
         AsyncExecutor.execute(() -> taskManager.persistTask());
-        String message = String.format("Event [%s] is added!", eventForm.getDescription());
+        String message = String.format(Constant.TASK_ADD_SUCCESS_MSG_TEMPLATE, event, taskManager.getTaskSize());
         return new ResponseDto<>(form.getCommand(), message);
     }
 }

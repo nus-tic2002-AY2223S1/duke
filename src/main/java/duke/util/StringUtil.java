@@ -49,6 +49,16 @@ public class StringUtil {
     }
 
     /**
+     * Check if the input string is numeric.
+     *
+     * @param str: Input string instance.
+     * @return True is given str is number.
+     */
+    public static boolean isNumeric(String str) {
+        return StringUtils.isNumeric(str);
+    }
+
+    /**
      * Remove trailing and leading space of given string instance.
      *
      * @param str: Input string instance.

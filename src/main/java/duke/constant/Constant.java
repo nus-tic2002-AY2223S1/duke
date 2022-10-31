@@ -26,6 +26,13 @@ public class Constant {
     public static final int MAX_THREAD = 2;
 
     /**
+     * Common message template to display when task is added to program successfully.
+     */
+    public static final String TASK_ADD_SUCCESS_MSG_TEMPLATE = "Noted. I've add this task:%n" +
+            "%s%n" +
+            "Now you have %d tasks in the list";
+
+    /**
      * Logo when program starts.
      */
     public static final String STARTING_LOGO =
@@ -153,5 +160,13 @@ public class Constant {
          * Code for general service exception.
          */
         public static final int ERROR_SERVICE_EXCEPTION = 500;
+    }
+
+    public static final class ErrorMsg {
+
+        private ErrorMsg() {}
+
+        public static final String INDEX_OUT_BOUND = "given index is invalid, it should be more than 0";
+        public static final String INDEX_NOT_A_NUMBER = "given index is invalid, index should be a positive number";
     }
 }

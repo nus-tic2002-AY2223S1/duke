@@ -1,5 +1,6 @@
 package duke.service.command;
 
+import duke.constant.Constant;
 import duke.dto.ResponseDto;
 import duke.entity.Task;
 import duke.form.Form;
@@ -40,7 +41,7 @@ public class AddTaskCommand extends Command {
         Task task = new Task(form.getMetaData());
         taskManager.addTask(task);
         AsyncExecutor.execute(() -> taskManager.persistTask());
-        String message = String.format("Task [%s] is added!", form.getMetaData());
+        String message = String.format(Constant.TASK_ADD_SUCCESS_MSG_TEMPLATE, task, taskManager.getTaskSize());
         return new ResponseDto<>(form.getCommand(), message);
     }
 }

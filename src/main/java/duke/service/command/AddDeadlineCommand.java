@@ -1,5 +1,6 @@
 package duke.service.command;
 
+import duke.constant.Constant;
 import duke.dto.ResponseDto;
 import duke.entity.Deadline;
 import duke.form.DeadlineForm;
@@ -42,7 +43,7 @@ public class AddDeadlineCommand extends Command {
         Deadline deadline = new Deadline(deadlineForm.getDescription(), deadlineForm.getBy());
         taskManager.addTask(deadline);
         AsyncExecutor.execute(() -> taskManager.persistTask());
-        String message = String.format("Deadline [%s] is added!", deadlineForm.getDescription());
+        String message = String.format(Constant.TASK_ADD_SUCCESS_MSG_TEMPLATE, deadline, taskManager.getTaskSize());
         return new ResponseDto<>(form.getCommand(), message);
     }
 }

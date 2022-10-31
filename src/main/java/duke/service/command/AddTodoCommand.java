@@ -1,5 +1,6 @@
 package duke.service.command;
 
+import duke.constant.Constant;
 import duke.dto.ResponseDto;
 import duke.entity.Todo;
 import duke.form.Form;
@@ -41,7 +42,7 @@ public class AddTodoCommand extends Command {
         Todo todo = new Todo(todoForm.getDescription());
         taskManager.addTask(todo);
         AsyncExecutor.execute(() -> taskManager.persistTask());
-        String message = String.format("Todo [%s] is added!", todoForm.getDescription());
+        String message = String.format(Constant.TASK_ADD_SUCCESS_MSG_TEMPLATE, todo, taskManager.getTaskSize());
         return new ResponseDto<>(form.getCommand(), message);
     }
 }

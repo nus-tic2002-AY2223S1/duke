@@ -163,9 +163,13 @@ public class ParserManager {
             }
 
             // check index
+            if (!StringUtil.isNumeric(args[1])) {
+                throw new CommandArgsException(Constant.ErrorMsg.INDEX_NOT_A_NUMBER);
+            }
+
             int index = DataUtil.toInteger(args[1]);
             if (index < 1) {
-                throw new CommandArgsException("given index is invalid, it should be more than 0");
+                throw new CommandArgsException(Constant.ErrorMsg.INDEX_OUT_BOUND);
             }
 
             return new MarkingForm(input, CommandEnum.MARK_TASK.getName(), index);
@@ -194,9 +198,13 @@ public class ParserManager {
             }
 
             // check index
+            if (!StringUtil.isNumeric(args[1])) {
+                throw new CommandArgsException(Constant.ErrorMsg.INDEX_NOT_A_NUMBER);
+            }
+
             int index = DataUtil.toInteger(args[1]);
             if (index < 1) {
-                throw new CommandArgsException("given index is invalid, it should be more than 0");
+                throw new CommandArgsException(Constant.ErrorMsg.INDEX_OUT_BOUND);
             }
 
             return new MarkingForm(input, CommandEnum.UNMARK_TASK.getName(), index);
@@ -225,9 +233,13 @@ public class ParserManager {
             }
 
             // check index
+            if (!StringUtil.isNumeric(args[1])) {
+                throw new CommandArgsException(Constant.ErrorMsg.INDEX_NOT_A_NUMBER);
+            }
+
             int index = DataUtil.toInteger(args[1]);
             if (index < 1) {
-                throw new CommandArgsException("given index is invalid, it should be more than 0");
+                throw new CommandArgsException(Constant.ErrorMsg.INDEX_OUT_BOUND);
             }
 
             return new DeleteForm(input, CommandEnum.DELETE_TASK.getName(), index);
@@ -287,9 +299,13 @@ public class ParserManager {
             }
 
             // check index
+            if (!StringUtil.isNumeric(args[1])) {
+                throw new CommandArgsException(Constant.ErrorMsg.INDEX_NOT_A_NUMBER);
+            }
+
             int index = DataUtil.toInteger(args[1]);
             if (index < 1) {
-                throw new CommandArgsException("given index is invalid, it should be more than 0");
+                throw new CommandArgsException(Constant.ErrorMsg.INDEX_OUT_BOUND);
             }
 
             return new RescheduleForm(input, CommandEnum.RESCHEDULE.getName(), index);
