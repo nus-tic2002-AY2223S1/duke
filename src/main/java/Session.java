@@ -1,18 +1,23 @@
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Encapsulate the properties, constructors and methods required to run the program.
+ * Contains the program logic.
+ * Contains the parser code to parse user inputs.
+ */
 public class Session {
-    
-    // properties
     private final Repository sessionRepo;
     private TaskList sessionTaskList;
 
-    // constructors
     public Session (Repository repo) {
         this.sessionRepo = repo;
     }
 
-    // methods
+    /**
+     * Encapsulates the program logic and parsing of user input.
+     * @throws IOException If an I/O error occurred.
+     */
     public void start() throws IOException {
         sessionRepo.loadFile();
         sessionTaskList = new TaskList();
@@ -26,14 +31,12 @@ public class Session {
 
         System.out.println("System booting up...\n" + logo);
 
-        // greetings
         System.out.println("\t-----------------------------------------------------------------");
         System.out.println("\t Hello! I'm Duke");
         System.out.println("\t What can I do for you?");
         System.out.println("\t-----------------------------------------------------------------");
         System.out.println();
 
-        // declaration
         String inputLine;
         String commandLine;
         Scanner input = new Scanner(System.in);
@@ -97,5 +100,4 @@ public class Session {
         }
         input.close();
     }
-
 }

@@ -5,12 +5,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Creates an ArrayList of Task objects to store the List of Task.
+ * Encapsulates the methods such as List, Add, Delete, Mark and Un-mark to manipulate the ArrayList.
+ * Saves the ArrayList to a local directory and overwrites the existing file.
+ */
 public class TaskList {
-    
-    // properties
     List<Task> tasks = new ArrayList<>();
 
-    // methods
+    /**
+     * Prints out the contents of the ArrayList of Task with ordered numbering.
+     * Prints out and error message "The list is empty" if it is an empty list.
+     */
     public void listTask() {
         System.out.println("\t-----------------------------------------------------------------");
         // if list is empty, prints empty list message
@@ -26,6 +32,10 @@ public class TaskList {
         System.out.println("\t-----------------------------------------------------------------");
     }
 
+    /**
+     * Adds a To-do Task to the ArrayList.
+     * @param lineArray an Array to store the result of a string split.
+     */
     public void addToDo(String[] lineArray) {
         // piece the task description back together
         String descriptionLine = "";
@@ -40,6 +50,10 @@ public class TaskList {
         System.out.println("\t-----------------------------------------------------------------");
     }
 
+    /**
+     * Adds a Deadline Task to the ArrayList.
+     * @param lineArray an Array to store the result of a string split.
+     */
     public void addDeadLine(String[] lineArray) {
         // piece the task description back together
         String descriptionLine = "";
@@ -54,18 +68,7 @@ public class TaskList {
         String date = lineArray[indexOfDelimiter+1];
         String time = lineArray[indexOfDelimiter+2];
         String dateTime = date + "T" + time;
-
-        /*
-        for (int i = indexOfDelimiter+1; i < lineArray.length; i++) {
-
-             date = " " + lineArray[i];
-         }
-        */
-
         LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
-        // System.out.println(localDateTime.format(DateTimeFormatter.ofPattern("E, dd MMM yyyy HH:mm:ss")));
-
-
         System.out.println("\t-----------------------------------------------------------------");
         System.out.println("\t " + "Got it. I've added this task: ");
         tasks.add(new Deadline(descriptionLine, localDateTime));
@@ -74,8 +77,11 @@ public class TaskList {
         System.out.println("\t-----------------------------------------------------------------");
     }
 
+    /**
+     * Adds an Event Task to the ArrayList.
+     * @param lineArray an Array to store the result of a String split
+     */
     public void addEvent(String[] lineArray) {
-        // piece the task description back together
         String descriptionLine = "";
         int indexOfDelimiter = 0;
         for (int i = 1; i < lineArray.length; i++) {
@@ -88,17 +94,7 @@ public class TaskList {
         String date = lineArray[indexOfDelimiter+1];
         String time = lineArray[indexOfDelimiter+2];
         String dateTime = date + "T" + time;
-
-        /*
-        for (int i = indexOfDelimiter+1; i < lineArray.length; i++) {
-
-             date = " " + lineArray[i];
-         }
-        */
-
         LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
-        // System.out.println(localDateTime.format(DateTimeFormatter.ofPattern("E, dd MMM yyyy HH:mm:ss")));
-
         System.out.println("\t-----------------------------------------------------------------");
         System.out.println("\t " + "Got it. I've added this task: ");
         tasks.add(new Event(descriptionLine, localDateTime));
@@ -107,6 +103,10 @@ public class TaskList {
         System.out.println("\t-----------------------------------------------------------------");
     }
 
+    /**
+     * Marks a Task as completed in the ArrayList.
+     * @param lineArray a String array to store the result of a String split
+     */
     public void markTask(String[] lineArray) {
         // get the index of the to do list to mark
         int inputIndex = Integer.parseInt(lineArray[1]);
@@ -118,6 +118,10 @@ public class TaskList {
         System.out.println("\t-----------------------------------------------------------------");
     }
 
+    /**
+     * Marks a Task as uncomplete in the ArrayList.
+     * @param lineArray a String array to store the result of a String split
+     */
     public void unmarkTask(String[] lineArray) {
         // get the index of the to do list to unmark
         int inputIndex = Integer.parseInt(lineArray[1]);
@@ -129,6 +133,10 @@ public class TaskList {
         System.out.println("\t-----------------------------------------------------------------");
     }
 
+    /**
+     * Deletes a Task in the ArrayList.
+     * @param lineArray a String array to store the result of a String split
+     */
     public void deleteTask(String[] lineArray) {
         int inputIndex = Integer.parseInt(lineArray[1]);
         int arrayIndex = inputIndex - 1;
@@ -140,6 +148,10 @@ public class TaskList {
         System.out.println("\t-----------------------------------------------------------------");
     }
 
+    /**
+     * Saves the ArrayList to a local directory and overwrites existing file.
+     * @param fileDirectory file path of the local directory to where the file is store.
+     */
     public void saveTaskList(String fileDirectory) throws IOException {
         FileWriter w = new FileWriter(fileDirectory);
         BufferedWriter bw = new BufferedWriter(w);
@@ -152,6 +164,11 @@ public class TaskList {
         bw.close();
     }
 
+    /**
+     * Checks if there are existing content in the file.
+     * Adds existing content in the file to the ArrayList.
+     * @param existingContent ArrayList of Task object.
+     */
     public void existingTaskList(List<Task> existingContent) {
         if (!existingContent.equals(null)) {
             for (int i = 0; i < existingContent.size(); i++) {

@@ -2,19 +2,23 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Encapsulate the methods required to access a file.
+ */
 public class Repository {
-    
-    // properties
     private final String repoDirectory;
     private final String repoFileName;
     List<Task> repoList = new ArrayList<>();
 
-    // constructors
-    public Repository (String directory, String fileName) { // constructor for main to pass in the directory parameter
+    public Repository (String directory, String fileName) {
         this.repoDirectory = directory;
         this.repoFileName = fileName;
     }
 
+    /**
+     * Atomically creates a new, empty file named by this abstract pathname if and only if a file with this name does not yet exist.
+     * @throws IOException If an I/O error occurred.
+     */
     public void loadFile() throws IOException {
         File f = new File(repoDirectory + repoFileName);
         if (f.createNewFile()) {
@@ -26,19 +30,27 @@ public class Repository {
         }
     }
 
+    /**
+     * Returns the path of the file.
+     * @return file path.
+     */
     public String getFileDirectory() {
-        return this.repoDirectory + this.repoFileName; // getter method to get the directory, so that it can be used in other classes like Session
+        return this.repoDirectory + this.repoFileName;
     }
 
+    /**
+     * Returns an array list of Task objects.
+     * @return array list.
+     * @throws IOException If an I/O error occurred.
+     */
     public List<Task> readFile() throws IOException {
-        FileReader r = new FileReader(this.repoDirectory + this.repoFileName); // instantiate new FileReader
-        BufferedReader br = new BufferedReader(r); // instantiate new BufferedReader
+        FileReader r = new FileReader(this.repoDirectory + this.repoFileName);
+        BufferedReader br = new BufferedReader(r);
         while (true) {
-            String contentLine = br.readLine(); // store the read line into a string
-            if (contentLine == null) // check if it is null and exit the loop, otherwise there will be a nullPointerError
+            String contentLine = br.readLine();
+            if (contentLine == null)
                 break;
             String[] stringParser = contentLine.split(" ");
-            // if it is a to-do task and if it is marked or unmarked
             if (stringParser[1].contains("T")) {
                 Task todo = new Todo(contentLine.substring(10));
                 if (stringParser[1].contains("X")) {
@@ -46,7 +58,6 @@ public class Repository {
                 }
                 repoList.add(todo);
             }
-            // if it is a deadline task and if it is marked or unmarked
             if (stringParser[1].contains("D")) {
                 Task deadline = new Deadline(contentLine.substring(10));
                 if (stringParser[1].contains("X")) {
@@ -54,7 +65,6 @@ public class Repository {
                 }
                 repoList.add(deadline);
             }
-            // if it is an event task and if it is marked or unmarked
             if (stringParser[1].contains("E")) {
                 Task event = new Event(contentLine.substring(10));
                 if (stringParser[1].contains("X")) {
@@ -66,5 +76,4 @@ public class Repository {
         br.close();
         return repoList;
     }
-
 }
