@@ -14,6 +14,11 @@ public class Event extends Task{
     protected LocalDateTime startDateTime;
     protected String shortName = "E";
 
+    /**
+     * Event is a Task
+     * Event default constructor
+     * Conversion from string to LocalDate and LocalDateTime done based on regex expression to find HH:mm
+     */
     public Event(String n) throws DukeValidationException {
         super(n);
         String[] f = CommonHelper.formatPassedName(n, "at");
@@ -26,11 +31,18 @@ public class Event extends Task{
             this.startDateTime = CommonHelper.convertStringToDate(f[1].trim());
     }
 
+    /**
+     * Default constructor when converting values from .txt file to an Event object
+     */
     public Event(int id, String name, String startDateTime, boolean isDone) {
         super(id, name, isDone);
         this.startDateTime = LocalDateTime.parse(startDateTime);
     }
 
+    /**
+     * Abstract method that is overwritten
+     * To print out task in this format: {id}.[{shortName}] [{isDone}] {name} (by: {startDateTime})
+     */
     @Override
     public void printItem(){
         String format = "[dd MMMM yyyy, hh:mm a]";
@@ -40,6 +52,10 @@ public class Event extends Task{
         CommonHelper.printMessage(displayText);
     }
 
+    /**
+     * Abstract method that is overwritten
+     * Compares 2 objects to see if they are equal
+     */
     @Override
     public boolean equals(Object obj) {
         if(this.getClass() != obj.getClass())
@@ -48,11 +64,19 @@ public class Event extends Task{
         return e.shortName.equals(this.shortName) && e.name.equals(this.name) && e.startDateTime.equals(this.startDateTime);
     }
 
+    /**
+     * Abstract method that is overwritten
+     * To convert object to string in this format: {id} | {shortName} | {isDone} | {name} | {startDateTime}
+     */
     @Override
     public String toString(){
         return String.format("%d | %s | %d | %s | %s", this.id, this.shortName, CommonHelper.boolToInt(this.isDone), this.name, this.startDateTime.toString());
     }
 
+    /**
+     * Abstract method that is overwritten
+     * Retrieves all Events within the start and end datetime range
+     */
     @Override
     public boolean compare(LocalDate start, LocalDate end) {
         LocalDate _startDateTime = this.startDateTime.toLocalDate();
@@ -61,6 +85,10 @@ public class Event extends Task{
         return (_startDateTime.isAfter(start) || _startDateTime.isEqual(start)) && (_startDateTime.isBefore(end) || _startDateTime.isEqual(end));
     }
 
+    /**
+     * Event validation
+     * Name and Start Date Time are mandatory
+     */
     private void validate(String[] f) throws DukeValidationException{
         if(CommonHelper.isEmptyOrNull(f[0]))
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Description"));
@@ -68,6 +96,9 @@ public class Event extends Task{
             throw new DukeValidationException(String.format(MessageConstants. TASK_VALIDATION_EMPTY_ERROR, "Start Date Time"));
     }
 
+    /**
+     * Getters
+     */
     public LocalDateTime getStartDateTime(){
         return this.startDateTime;
     }

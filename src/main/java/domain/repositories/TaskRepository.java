@@ -16,20 +16,34 @@ public class TaskRepository implements ITaskRepository {
     public TaskRepository() {
     }
 
+    /**
+     * Find first item by ID
+     */
     public Optional<Task> getItem(ArrayList<Task> tasks, int n){
         return tasks.stream().filter(x -> x.getId() == n).findFirst();
     }
 
+    /**
+     * Find first item by item
+     */
     public Optional<Task> getItem(ArrayList<Task> tasks, Task task){
         return tasks.stream().filter(x -> x.equals(task)).findFirst();
     }
 
+    /**
+     * Find last item ID
+     */
     public int getLastId(ArrayList<Task> tasks){
         if(tasks.size() == 0)
             return 0;
         return tasks.get(tasks.size() - 1).getId();
     }
 
+    /**
+     * Validate Task by index passed where is > 0 and < last item ID
+     * Return Task object if successfully validated
+     * Else, DukeValidationException thrown with respective error messages
+     */
     public Task validateTask(ArrayList<Task> tasks, int n) throws DukeNotFoundException, DukeValidationException {
         if(n < 0)
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Id"));
@@ -41,12 +55,21 @@ public class TaskRepository implements ITaskRepository {
         return task.get();
     }
 
+    /**
+     * Validate Task by task to make sure there are no duplicates
+     * If exists, DukeExistedException is thrown
+     */
     public void validateTask(ArrayList<Task> tasks, Task task) throws DukeExistedException {
         if(!getItem(tasks, task).isEmpty())
             throw new DukeExistedException(MessageConstants.TASK_EXISTED_ERROR);
     }
 
-
+    /**
+     * Convert .txt file items to an ArrayList<Task> and returns it
+     * Loads the file by given path and skips the first line which is the Header
+     * Each line is converted and added
+     * If IOException is thrown while reading the file, DukeFileException is thrown with respective error message
+     */
     public ArrayList<Task> convertToTaskList() throws DukeFileException {
         ArrayList<Task> tasks = new ArrayList<>(100);
         try {

@@ -15,6 +15,12 @@ public class StorageRepository implements IStorageRepository{
 
     }
 
+    /**
+     * Initialise and return a file
+     * New file set writable & readable to true
+     * If file does not exist, initialised file will be saved and adds a header
+     * If any error occurred when saving, DukeFileException is thrown
+     */
     public File init() throws DukeFileException {
         File file = new File(StorageConstants.FILE_PATH);
         file.setWritable(true);
@@ -30,6 +36,9 @@ public class StorageRepository implements IStorageRepository{
         return file;
     }
 
+    /**
+     * Appends new row to the file
+     */
     public void write(File file, String row) throws DukeFileException {
         try {
             FileWriter writer = new FileWriter(file, true);
@@ -40,6 +49,10 @@ public class StorageRepository implements IStorageRepository{
         }
     }
 
+    /**
+     * Creates new file with the latest tasks
+     * Replaces previous file with this file
+     */
     public void override(ArrayList<Task> tasks) throws DukeFileException {
         try {
             FileWriter writer = new FileWriter(StorageConstants.FILE_PATH);

@@ -11,6 +11,11 @@ public abstract class Task {
     protected String name;
     protected boolean isDone;
 
+    /**
+     * Task default constructor.
+     * Name is mandatory
+     * Is Done is set to false by default
+     */
     public Task(String n) throws DukeValidationException {
         if(CommonHelper.isEmptyOrNull(n))
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Description"));
@@ -18,17 +23,38 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    /**
+     * Task constructor when converting values from .txt file to a Task object
+     */
     public Task(int id, String name, boolean isDone){
         this.id = id;
         this.name = name;
         this.isDone = isDone;
     }
 
+    /**
+     * Abstract method to be overwritten for printing Task
+     */
     public abstract void printItem();
+
+    /**
+     * Abstract method to be overwritten for checking if 2 objects are equal
+     */
     public abstract boolean equals(Object t);
+
+    /**
+     * Abstract method to be overwritten for converting object to string
+     */
     public abstract String toString();
+
+    /**
+     * Abstract method to be overwritten for getting Task within the date range
+     */
     public abstract boolean compare(LocalDate start, LocalDate end);
 
+    /**
+     * Getters & Setters for properties
+     */
     public int getId() { return this.id; }
     public void setId(int i) { this.id = i; }
     public String getName(){

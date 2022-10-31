@@ -2,15 +2,28 @@ package domain.exceptions;
 
 public class DukeException extends Exception {
     private String code;
+
+    /**
+     * Base Exception
+     * Default constructor with string message
+     * Prints exception in this format: {exceptionCode} - {errorMessage}
+     */
     public DukeException(String message){
         System.out.println(String.format("\t%s - %s", this.getExceptionCode(this), message));
     }
 
+    /**
+     * Default constructor with exception
+     * Prints exception in this format: {exceptionCode} - {errorMessage}
+     */
     public DukeException(Exception ex) {
         ex.printStackTrace();
         System.out.println(String.format("\t%s - %s", this.getExceptionCode(ex), ex));
     }
 
+    /**
+     * Get exception code based on the type of exception that is thrown
+     */
     private DukeExceptionCode getExceptionCode(Exception ex){
         String className = ex.getClass().getName().toLowerCase();
         if(className.contains("notfound"))

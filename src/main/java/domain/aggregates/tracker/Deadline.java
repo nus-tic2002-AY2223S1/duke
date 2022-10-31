@@ -13,7 +13,11 @@ public class Deadline extends Task{
     public LocalDateTime dueDateTime;
     protected String shortName = "D";
 
-
+    /**
+     * Deadline is a Task
+     * Deadline default constructor
+     * Conversion from string to LocalDate and LocalDateTime done based on regex expression to find HH:mm
+     */
     public Deadline(String n) throws DukeValidationException {
         super(n);
         String[] f = CommonHelper.formatPassedName(n, "by");
@@ -26,11 +30,18 @@ public class Deadline extends Task{
             this.dueDateTime = CommonHelper.convertStringToDate(f[1].trim());
     }
 
+    /**
+     * Default constructor when converting values from .txt file to a Deadline object
+     */
     public Deadline(int id, String name, String dueDateTime, boolean isDone) {
         super(id, name, isDone);
         this.dueDateTime = LocalDateTime.parse(dueDateTime);
     }
 
+    /**
+     * Abstract method that is overwritten
+     * To print out task in this format: {id}.[{shortName}] [{isDone}] {name} (by: {dueDateTime})
+     */
     @Override
     public void printItem(){
         String format = "[dd MMMM yyyy, hh:mm a]";
@@ -39,7 +50,10 @@ public class Deadline extends Task{
         String displayText = String.format("\t\t%d.[%s][%s] %s (by: %s)", this.id, this.shortName, this.isDone ? "X":" ", this.name, this.dueDateTime.format(DateTimeFormatter.ofPattern(format)));
         CommonHelper.printMessage(displayText);
     }
-
+    /**
+     * Abstract method that is overwritten
+     * Compares 2 objects to see if they are equal
+     */
     @Override
     public boolean equals(Object obj) {
         if(this.getClass() != obj.getClass())
@@ -48,11 +62,19 @@ public class Deadline extends Task{
         return d.shortName.equals(this.shortName) && d.name.equals(this.name) && d.dueDateTime.equals(this.dueDateTime);
     }
 
+    /**
+     * Abstract method that is overwritten
+     * To convert object to string in this format: {id} | {shortName} | {isDone} | {name} | {dueDateTime}
+     */
     @Override
     public String toString(){
         return String.format("%d | %s | %d | %s | %s", this.id, this.shortName, CommonHelper.boolToInt(this.isDone), this.name, this.dueDateTime);
     }
 
+    /**
+     * Abstract method that is overwritten
+     * Retrieves all Deadlines within the start and end datetime range
+     */
     @Override
     public boolean compare(LocalDate start, LocalDate end) {
         LocalDate _dueDateTime = this.dueDateTime.toLocalDate();
@@ -61,6 +83,10 @@ public class Deadline extends Task{
         return (_dueDateTime.isAfter(start) || _dueDateTime.isEqual(start)) && (_dueDateTime.isBefore(end) || _dueDateTime.isEqual(end));
     }
 
+    /**
+     * Deadline validation
+     * Name and Due Date Time are mandatory
+     */
     private void validate(String[] f) throws DukeValidationException{
         if(CommonHelper.isEmptyOrNull(f[0]))
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Description"));
@@ -68,6 +94,9 @@ public class Deadline extends Task{
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Due Date Time"));
     }
 
+    /**
+     * Getters
+     */
     public LocalDateTime getDueDateTime(){
         return this.dueDateTime;
     }

@@ -1,5 +1,8 @@
 package domain.exceptions;
 
+/**
+ * List of Error Exception Type with its Code
+ */
 public enum DukeExceptionCode {
     Validation("E100"),
     NotFound("E101"),
