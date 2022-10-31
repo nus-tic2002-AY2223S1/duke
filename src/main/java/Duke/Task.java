@@ -1,9 +1,11 @@
 package Duke;
 
+import Util.DateProcessor;
+
 public class Task {
     protected String description;
     protected String type = "Task";
-    protected String due;
+    protected long due = 0;
     protected boolean isDone;
 
     public Task(String description) {
@@ -31,10 +33,9 @@ public class Task {
         return this.type;
     }
 
-    public String getDue() {
-        return this.due == null? "" : this.due;
+    public long getDue() {
+        return this.due;
     }
-
     public String getDescription() {
         return this.description;
     }

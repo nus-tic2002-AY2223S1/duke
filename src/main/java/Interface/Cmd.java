@@ -16,6 +16,8 @@ public class Cmd {
         ADD_DEADLINE,
         ADD_EVENT,
         DELETE_TASK,
+        FIND_DATE,
+        RETURN,
         EXIT;
     }
     CmdTypes t;
@@ -34,6 +36,8 @@ public class Cmd {
         arrayList = tasks;
         this.r = new Runner(arrayList);
         switch (this.t){
+            case RETURN:
+                break;
             case UNKNOWN_CMD:
                 r.printCommandUnknownMessage();
                 break;
@@ -47,16 +51,19 @@ public class Cmd {
                 r.processAction(Runner.Action.UNMARK,input);
                 break;
             case ADD_TODO:
-                r.processCommand(Runner.Command.TODO,input);
+                r.processAddTask(Runner.Command.TODO,input);
                 break;
             case ADD_DEADLINE:
-                r.processCommand(Runner.Command.DEADLINE,input);
+                r.processAddTask(Runner.Command.DEADLINE,input);
                 break;
             case ADD_EVENT:
-                r.processCommand(Runner.Command.EVENT,input);
+                r.processAddTask(Runner.Command.EVENT,input);
                 break;
             case DELETE_TASK:
                 r.processAction(Runner.Action.DELETE,input);
+                break;
+            case FIND_DATE:
+                r.processFindDate(input);
                 break;
             case EXIT:
                 r.printExitMessage();

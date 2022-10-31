@@ -1,16 +1,18 @@
 package Duke;
-public class Todo extends Task {
 
+import Util.DateProcessor;
+
+public class Todo extends Task {
     protected String type = "T";
 
-    public Todo(String description, String due) {
+    public Todo(String description, long due) {
         super(description);
         this.due = due;
     }
 
     @Override
     public String toString() {
-        return (this.due == null ? "\t[T]" + super.toString() : "\t[T]" + super.toString() + " (by: " + this.due + ")");
+        return (this.due == 0 ? "\t[T]" + super.toString() : "\t[T]" + super.toString() + " (by: " + DateProcessor.unixToString(this.due) + ")");
     }
 
     @Override
