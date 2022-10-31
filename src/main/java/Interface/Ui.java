@@ -1,3 +1,7 @@
+package Interface;
+import Duke.Task;
+import Util.DukeException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -5,7 +9,8 @@ public class Ui {
     public enum UiIcon{
         FATAL("❌"),
         WARNING("⚠️"),
-        INFO("💬");
+        INFO("💬"),
+        CONFIRMATION("✅");
 
         public final String icon;
         public String getIcon(){return this.icon;}
@@ -15,6 +20,8 @@ public class Ui {
     }
 
     public enum UiMessage{
+        GENERIC(""),
+        GENERIC_FORMATTED("%s"),
         INFO_WELCOME("Hello from Duke. What can I do for you?"),
         INFO_GOODBYE("Bye. Hope to see you again soon!"),
         ERROR_COMMAND_UNKNOWN("OOPS!!! I'm sorry, but I don't know what that means :( \n\tSpecify Todo / Deadline / Event. \n\tE.g. Todo <Task Name>"),
@@ -32,14 +39,15 @@ public class Ui {
     public Ui() {}
     private void sendWarning(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.WARNING.getIcon(), String.format(u.getText(),m) ));}
     private void sendInfo(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.INFO.getIcon(), String.format(u.getText(),m) ));}
-    private void sendError(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.FATAL.getIcon(), String.format(u.getText(),m) ));}
-    public void sendConsolidatedOutput(StringBuilder message){System.out.format(this.format,String.format("%s %s",UiIcon.INFO.getIcon(),message));}
-    public void sendGenericInfo(String message){System.out.format(this.format, String.format("%s %s",UiIcon.INFO.getIcon(),message));}
-    public void sendGenericWarning(String message){System.out.format(this.format, String.format("%s %s",UiIcon.WARNING.getIcon(),message));}
-
-    public void sendProcessActionError(String message){sendError(UiMessage.ERROR_PROCESS_ACTION,message);}
-    public void sendProcessCommandError(String message){sendError(UiMessage.ERROR_PROCESS_COMMAND,message);}
-    public void sendCommandUnknownError(){sendError(UiMessage.ERROR_COMMAND_UNKNOWN,"");}
+    private void sendFatal(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.FATAL.getIcon(), String.format(u.getText(),m) ));}
+    private void sendConfirmation(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.CONFIRMATION.getIcon(), String.format(u.getText(),m) ));}
+    public void sendConfirmedOutput(StringBuilder message){sendConfirmation(UiMessage.GENERIC_FORMATTED, String.valueOf(message));}
+    public void sendGenericInfo(String message){sendInfo(UiMessage.GENERIC,message);}
+    public void sendGenericWarning(String message){sendWarning(UiMessage.GENERIC,message);}
+    public void sendGenericFatal(String message){sendFatal(UiMessage.GENERIC,message);}
+    public void sendProcessActionError(String message){sendFatal(UiMessage.ERROR_PROCESS_ACTION,message);}
+    public void sendProcessCommandError(String message){sendFatal(UiMessage.ERROR_PROCESS_COMMAND,message);}
+    public void sendCommandUnknownError(){sendFatal(UiMessage.ERROR_COMMAND_UNKNOWN,"");}
 
     public void sendWelcomeMessage(){
         String logo = " ____        _        \n"
@@ -59,7 +67,7 @@ public class Ui {
                 append(size).
                 append(size > 1 ? " tasks " :" task ").
                 append("in the list.");
-        sendConsolidatedOutput(s);
+        sendConfirmedOutput(s);
     }
 
     public void printTaskRemovedByIndex(String task, int size) {
@@ -70,17 +78,17 @@ public class Ui {
                 append(size-1).
                 append(size > 1 ? " tasks " :" task ").
                 append("in the list.");
-        sendConsolidatedOutput(s);
+        sendConfirmedOutput(s);
     }
 
     public void printMarkTask(String task, Boolean isMark) {
         StringBuilder s = new StringBuilder();
         s.append(isMark ? "Nice! I've marked this task as done:\n    " :"OK, I've marked this task as not done yet:\n    " ).
                 append(task);
-        sendConsolidatedOutput(s);
+        sendConfirmedOutput(s);
     }
 
-    public void printList(ArrayList<Task> tasks,Boolean withIndex) throws DukeException{
+    public void printList(ArrayList<Task> tasks, Boolean withIndex){
         StringBuilder s = new StringBuilder();
         if (tasks.size() == 0){
             s.append("You have no task.");
@@ -97,7 +105,7 @@ public class Ui {
                 s.append(".").append(tasks.get(i).toString()).append(suffix);
             }
         }
-        sendConsolidatedOutput(s);
+        sendConfirmedOutput(s);
     }
 
     public String[] readIn(){
@@ -106,5 +114,4 @@ public class Ui {
         //splitting input into <command> + <task name + at/by>
         return inputLine.split(" ", 2);
     }
-
 }

@@ -1,3 +1,4 @@
+package Interface;
 public class Parser {
     static Ui ui = new Ui();
 
@@ -19,12 +20,11 @@ public class Parser {
                 case "delete":
                     return new Cmd(Cmd.CmdTypes.DELETE_TASK,processedInput);
                 case "bye":
-                    ui.sendGoodbyeMessage();
-                    return null;
+                    return new Cmd(Cmd.CmdTypes.EXIT,null);
                 case "":
                     break;
                 default:
-                    ui.sendCommandUnknownError();
+                    return new Cmd(Cmd.CmdTypes.UNKNOWN_CMD,null);
             }
         return null;
     }

@@ -1,14 +1,16 @@
-public class Deadline extends Task {
-    protected String type = "D";
+package Duke;
+public class Todo extends Task {
 
-    public Deadline(String description, String due) {
+    protected String type = "T";
+
+    public Todo(String description, String due) {
         super(description);
         this.due = due;
     }
 
     @Override
     public String toString() {
-        return (this.due == null ? "\t[D]" + super.toString() : "\t[D]" + super.toString() + " (by: " + this.due + ")");
+        return (this.due == null ? "\t[T]" + super.toString() : "\t[T]" + super.toString() + " (by: " + this.due + ")");
     }
 
     @Override
