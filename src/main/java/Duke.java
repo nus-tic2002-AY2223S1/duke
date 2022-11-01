@@ -2,6 +2,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
+    protected static String[] Tasks = new String[100];
+    private static int countTask = 0;
 
     public static class Ui {
 
@@ -25,13 +27,36 @@ public class Duke {
             do {
                 in = new Scanner(System.in);
                 userInput = in.nextLine();
-                System.out.println(userInput);
+
+                Parser.identifyCommand(userInput);
             } while (!userInput.equals("bye"));
             exit();
         }
 
         public static void exit() {
             System.out.println("Bye Siying!" + System.lineSeparator() + "Enjoy your day ;)");
+        }
+
+    }
+
+    public static class Parser {
+
+        public static void identifyCommand(String input) {
+            switch (input){
+                case "list":
+                    for (int i = 0; i < countTask; i++) {
+                        System.out.println(i+1 + ". " + Tasks[i]);
+                    }
+                    break;
+                case "bye":
+                    break;
+                default:
+                    Tasks[countTask] = input;
+                    countTask++;
+                    System.out.println("added: " + input);
+                    break;
+            }
+
         }
 
     }
