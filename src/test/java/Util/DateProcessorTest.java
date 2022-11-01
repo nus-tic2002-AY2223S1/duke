@@ -20,8 +20,8 @@ public class DateProcessorTest {
 
     @Test
     public void dateTimeToUnixValidTest(){
-        String s = "1/4/1999 0000";
-        long expected = 922896000;
+        String s = "1/11/2022 0000";
+        long expected = 1667232000;
         long actual = DateProcessor.dateTimeToUnix(s);
         assertEquals(expected, actual);
     }
@@ -36,8 +36,8 @@ public class DateProcessorTest {
 
     @Test
     public void dateToUnixValidTest(){
-        String s = "1/4/1999";
-        long expected = 922896000;
+        String s = "1/11/2022";
+        long expected = 1667232000;
         long actual = DateProcessor.dateTimeToUnix(s);
         assertEquals(expected, actual);
     }
