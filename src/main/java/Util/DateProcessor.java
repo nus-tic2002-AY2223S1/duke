@@ -6,6 +6,7 @@ import Interface.Ui;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class DateProcessor {
     static SimpleDateFormat dateTimeToUnixFormat = new SimpleDateFormat("dd/MM/yyyy HHmm");
@@ -69,6 +70,7 @@ public class DateProcessor {
 
     public static long dateTimeToUnix(String s){
         try{
+            dateTimeToUnixFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
             return dateTimeToUnixFormat.parse(s+ " 0000").toInstant().getEpochSecond();
         } catch (ParseException e) {
             ui.sendGenericFatal(e.getMessage());
@@ -78,6 +80,7 @@ public class DateProcessor {
 
     public static long dateToUnix(String s){
         try{
+            dateToUnixFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
             return dateToUnixFormat.parse(s).toInstant().getEpochSecond();
         } catch (ParseException e) {
             ui.sendGenericFatal(e.getMessage());
@@ -86,6 +89,7 @@ public class DateProcessor {
     }
 
     public static String unixToString(long timeStamp){
+        unixToStringFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
         return unixToStringFormat.format(new java.util.Date(timeStamp *1000));
     }
 }
