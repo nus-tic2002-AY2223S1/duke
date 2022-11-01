@@ -49,18 +49,19 @@ public class Runner {
     public void run(ArrayList<Task> tasks) throws DukeException {
         arrayList = tasks;
     }
-    public void printList(Boolean withIndex){ui.printList(arrayList,withIndex);}
+    public String printList(Boolean withIndex){return ui.printList(arrayList,withIndex);}
     public void printSelectedList(ArrayList<Task> l,Boolean withIndex,String date){ui.printSelectedList(l,withIndex,date);}
     public void printFoundList(ArrayList<Task> l,Boolean withIndex,String keyword){ui.printFoundList(l,withIndex,keyword);}
-    public  void printSingle(int index, Boolean isMark) {ui.printMarkTask(arrayList.get(index).toString(),isMark);}
+    public  String printSingle(int index, Boolean isMark) {return ui.printMarkTask(arrayList.get(index).toString(),isMark);}
     public  void printNewTaskAdded() {ui.printNewTasks(arrayList.get(arrayList.size()-1).toString(), arrayList.size());}
-    public  void printTaskRemovedByIndex(int index) {ui.printTaskRemovedByIndex(arrayList.get(index).toString(), arrayList.size());}
+    public  String printTaskRemovedByIndex(Task t) {
+        return ui.printTaskRemovedByIndex(t.toString(), arrayList.size());}
     public void printExitMessage()  {ui.sendGoodbyeMessage();}
-    public void printCommandUnknownMessage()  {ui.sendCommandUnknownError();}
+    public String printCommandUnknownMessage()  {return ui.sendCommandUnknownError();}
     public void printFatalMessage(String message){ui.sendGenericFatal(message);}
     public void printWarningMessage(String message){ui.sendGenericWarning(message);}
     public void printProcessCommandMessage(String message){ui.sendProcessCommandError(message);}
-    public void printProcessActionMessage(String message){ui.sendProcessActionError(message);}
+    public String printProcessActionMessage(String message){return ui.sendProcessActionError(message);}
     public void printProcessFindDateMessage(){ui.sendProcessFindDateError();}
     public void printProcessFindTaskMessage(){ui.sendProcessFindTaskError();}
     public void printProcessViewScheduleMessage(){ui.sendProcessViewScheduleError();}
@@ -86,10 +87,9 @@ public class Runner {
         return true;
     }
 
-    public void processAction(Action a, String[] s) {
+    public String processAction(Action a, String[] s) {
         if (s.length == 1){
-            printProcessActionMessage(a.getLabel());
-            return;
+            return printProcessActionMessage(a.getLabel());
         }
 
         int idx = getIndex(s[1]);
@@ -97,36 +97,32 @@ public class Runner {
             switch (a){
                 case MARK:
                     arrayList.get(idx).markTask();
-                    printSingle(idx, true);
-
                     try{
                         saveFile();
                     }catch(IOException e){
-                        ui.sendGenericWarning("IOException");
+                        return ui.sendGenericWarning("IOException");
                     }
-                    break;
+                    return printSingle(idx, true);
                 case UNMARK:
                     arrayList.get(idx).unmarkTask();
-                    printSingle(idx, false);
-
                     try{
                         saveFile();
                     }catch(IOException e){
-                        ui.sendGenericWarning("IOException");
+                        return ui.sendGenericWarning("IOException");
                     }
-                    break;
+                    return printSingle(idx, false);
                 case DELETE:
-                    printTaskRemovedByIndex(idx);
+                    Task copy = arrayList.get(idx);
                     arrayList.remove(idx);
-
                     try{
                         saveFile();
                     }catch(IOException e){
-                        ui.sendGenericWarning("IOException");
+                        return ui.sendGenericWarning("IOException");
                     }
-                    break;
+                return printTaskRemovedByIndex(copy);
             }
         }
+        return "";
     }
 
     private boolean processDue(Command c,String[] s){

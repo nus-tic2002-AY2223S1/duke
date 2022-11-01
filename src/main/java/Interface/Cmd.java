@@ -36,21 +36,18 @@ public class Cmd {
     public boolean isExit(){
         return this.isExit;
     }
-    public void run(ArrayList<Task> tasks) throws DukeException {
+    public String run(ArrayList<Task> tasks) throws DukeException {
         arrayList = tasks;
         this.r = new Runner(arrayList);
         switch (this.t){
             case RETURN:
                 break;
             case UNKNOWN_CMD:
-                r.printCommandUnknownMessage();
-                break;
+                return r.printCommandUnknownMessage();
             case PRINT_LIST:
-                r.printList(true);
-                break;
+                return r.printList(true);
             case MARK_TASK:
-                r.processAction(Runner.Action.MARK,input);
-                break;
+                return r.processAction(Runner.Action.MARK,input);
             case UNMARK_TASK:
                 r.processAction(Runner.Action.UNMARK,input);
                 break;
@@ -86,5 +83,6 @@ public class Cmd {
                 this.isExit = true;
                 break;
         }
+        return "";
     }
 }

@@ -11,6 +11,10 @@ public class Parser {
         this.in = inputLine.split(" ", 2);
         return this;
     }
+    public Parser readInText(String text) {
+        this.in = text.split(" ", 2);
+        return this;
+    }
     public Parser injectIn(String[] in){
         this.in = in;
         return this;

@@ -5,11 +5,19 @@ import Interface.Ui;
 import Util.DukeException;
 import java.io.FileNotFoundException;
 
-public class Duke {
-    private final Ui ui;
+public class Duke  {
+    private Ui ui;
     private TaskList t;
-    private final Parser p;
+    private Parser p;
 
+    /**
+     * You should have your own function to generate a response to user input.
+     * Replace this stub with your completed method.
+     */
+    String getResponse(String input) {
+        return inter(input);
+//        return "Duke heard: " + input;
+    }
     public Duke(String path){
         ui = new Ui();
         p = new Parser();
@@ -36,5 +44,15 @@ public class Duke {
                 ui.sendGenericFatal(e.getMessage());
             }
         }
+    }
+
+    public String inter(String s){
+        try {
+            Cmd c = p.readInText(s).parse();
+            return c.run(t.getList());
+        } catch (DukeException e) {
+            ui.sendGenericFatal(e.getMessage());
+        }
+        return "";
     }
     }

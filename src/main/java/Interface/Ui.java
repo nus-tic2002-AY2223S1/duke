@@ -25,35 +25,40 @@ public class Ui {
         INFO_WELCOME_EXISTING("Hello again, %s! Welcome back. What can I do for you?"),
         INFO_LAST_SAVED("[Last Modified on %s]"),
         INFO_GOODBYE("Bye. Hope to see you again soon!"),
-        ERROR_COMMAND_UNKNOWN("OOPS!!! I'm sorry, but I don't know what that means :( \n\tSpecify Todo / Deadline / Event. \n\tE.g. Todo <Task Name>"),
-        ERROR_PROCESS_ACTION("OOPS!!! The selection to %s cannot be empty."),
-        ERROR_PROCESS_COMMAND("OOPS!!! The description of %s cannot be empty."),
-        ERROR_FIND_DATE("OOPS!!! The date to search cannot be empty."),
-        ERROR_FIND_TASK("OOPS!!! The keyword to search cannot be empty."),
-        ERROR_VIEW_SCHEDULE("OOPS!!! The date to search cannot be empty.");
+        ERROR_COMMAND_UNKNOWN("I'm sorry, but I don't know what that means :( \n\tSpecify Todo / Deadline / Event. \n\tE.g. Todo <Task Name>"),
+        ERROR_PROCESS_ACTION("The selection to %s cannot be empty."),
+        ERROR_PROCESS_COMMAND("The description of %s cannot be empty."),
+        ERROR_FIND_DATE("The date to search cannot be empty."),
+        ERROR_FIND_TASK("The keyword to search cannot be empty."),
+        ERROR_VIEW_SCHEDULE("The date to search cannot be empty.");
         public final String text;
         public String getText(){return this.text;}
         private UiMessage(String text) {
             this.text = text;
         }
     }
-    protected String format = "    ───────────────────────────────────────────────────────────────────────────\n    %s\n    ───────────────────────────────────────────────────────────────────────────\n";
+//    protected String format = "    ───────────────────────────────────────────────────────────────────────────\n    %s\n    ───────────────────────────────────────────────────────────────────────────\n";
+    protected String format = "────────────────────────────────────\n    %s\n────────────────────────────────────\n";
 
     public Ui() {}
     private void sendPlain(UiMessage u,String m){System.out.printf("\t%s%n", String.format(u.getText(),m) );}
-    private void sendWarning(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.WARNING.getIcon(), String.format(u.getText(),m) ));}
+    private String sendWarning(UiMessage u,String m){
+        return String.format(this.format, String.format("%s %s",UiIcon.WARNING.getIcon(), String.format(u.getText(),m) ));}
     private void sendInfo(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.INFO.getIcon(), String.format(u.getText(),m) ));}
-    private void sendFatal(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.FATAL.getIcon(), String.format(u.getText(),m) ));}
-    private void sendConfirmation(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.CONFIRMATION.getIcon(), String.format(u.getText(),m) ));}
-    public void sendConfirmedOutput(StringBuilder message){sendConfirmation(UiMessage.GENERIC_FORMATTED, String.valueOf(message));}
+    private String sendFatal(UiMessage u,String m){
+        return String.format(this.format, String.format("%s %s",UiIcon.FATAL.getIcon(), String.format(u.getText(),m) ));
+    }
+    private String sendConfirmation(UiMessage u,String m){
+        return String.format(this.format, String.format("%s %s",UiIcon.CONFIRMATION.getIcon(), String.format(u.getText(),m) ));}
+    public String sendConfirmedOutput(StringBuilder message){return sendConfirmation(UiMessage.GENERIC_FORMATTED, String.valueOf(message));}
     public void sendGenericPlain(String message){sendPlain(UiMessage.GENERIC_FORMATTED,message);}
     public void sendGenericInfo(String message){sendInfo(UiMessage.GENERIC_FORMATTED,message);}
-    public void sendGenericWarning(String message){sendWarning(UiMessage.GENERIC_FORMATTED,message);}
+    public String sendGenericWarning(String message){return sendWarning(UiMessage.GENERIC_FORMATTED,message);}
     public void sendGenericFatal(String message){sendFatal(UiMessage.GENERIC_FORMATTED,message);}
     public void sendGenericConfirmation(String message){sendConfirmation(UiMessage.GENERIC_FORMATTED,message);}
-    public void sendProcessActionError(String message){sendFatal(UiMessage.ERROR_PROCESS_ACTION,message);}
+    public String sendProcessActionError(String message){return sendFatal(UiMessage.ERROR_PROCESS_ACTION,message);}
     public void sendProcessCommandError(String message){sendFatal(UiMessage.ERROR_PROCESS_COMMAND,message);}
-    public void sendCommandUnknownError(){sendFatal(UiMessage.ERROR_COMMAND_UNKNOWN,"");}
+    public String sendCommandUnknownError(){return sendFatal(UiMessage.ERROR_COMMAND_UNKNOWN,"");}
     public void sendProcessFindDateError(){sendFatal(UiMessage.ERROR_FIND_DATE,"");}
     public void sendProcessFindTaskError(){sendFatal(UiMessage.ERROR_FIND_TASK,"");}
     public void sendProcessViewScheduleError(){sendFatal(UiMessage.ERROR_VIEW_SCHEDULE,"");}
@@ -86,7 +91,7 @@ public class Ui {
         sendConfirmedOutput(s);
     }
 
-    public void printTaskRemovedByIndex(String task, int size) {
+    public String printTaskRemovedByIndex(String task, int size) {
         StringBuilder s = new StringBuilder();
         s.append("Noted. I've removed this task:\n\t").
                 append(task).
@@ -94,17 +99,17 @@ public class Ui {
                 append(size-1).
                 append(size > 1 ? " tasks " :" task ").
                 append("in the list.");
-        sendConfirmedOutput(s);
+        return sendConfirmedOutput(s);
     }
 
-    public void printMarkTask(String task, Boolean isMark) {
+    public String printMarkTask(String task, Boolean isMark) {
         StringBuilder s = new StringBuilder();
         s.append(isMark ? "Nice! I've marked this task as done:\n    " :"OK, I've marked this task as not done yet:\n    " ).
                 append(task);
-        sendConfirmedOutput(s);
+        return sendConfirmedOutput(s);
     }
 
-    public void printList(ArrayList<Task> tasks, Boolean withIndex){
+    public String printList(ArrayList<Task> tasks, Boolean withIndex){
         StringBuilder s = new StringBuilder();
         if (tasks.size() == 0){
             s.append("You have no task.");
@@ -112,7 +117,8 @@ public class Ui {
             s.append("Here are the task(s) in your list:\n    ");
             buildList(tasks, withIndex, s);
         }
-        sendConfirmedOutput(s);
+        return String.valueOf(s);
+//        sendConfirmedOutput(s);
     }
 
     private void buildList(ArrayList<Task> tasks, Boolean withIndex, StringBuilder s) {
