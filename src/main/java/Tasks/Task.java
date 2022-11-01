@@ -2,6 +2,9 @@ package Tasks;
 
 import java.util.Date;
 
+/**
+ * A parent class for all the class with common feature like isDone, id, and work
+ */
 public class Task {
     private boolean isDone;
     private String work;

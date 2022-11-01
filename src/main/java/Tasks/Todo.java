@@ -1,5 +1,8 @@
 package Tasks;
 
+/**
+ * A basic task
+ */
 public class Todo extends Task implements TaskInterface {
 
     public Todo(String work) {

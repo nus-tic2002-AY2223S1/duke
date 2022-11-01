@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * File storage to store it in a file by implementing DataInterface
+ */
 public class DataFileFactory implements DataInterface {
     private String folder;
     private String path;

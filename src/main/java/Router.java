@@ -5,6 +5,9 @@ import UI.UIInterface;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * A router to route the logic to different factory, currently it is supporting a route to UIInterface and DataInterface
+ */
 public class Router extends BotUseCase {
     UIInterface ui;
     DataInterface data;

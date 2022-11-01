@@ -1,6 +1,9 @@
 import Logic.BotUseCase;
 import Logic.TaskManager;
 
+/**
+ * Redirect the command to taskManager where has the logic
+ */
 public class Bot {
     private TaskManager taskManager;
 

@@ -3,6 +3,9 @@ package Tasks;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * a task that has end date
+ */
 public class Deadline extends Task implements TaskInterface {
     LocalDateTime endDate;
     public Deadline(String work, LocalDateTime endDate) {

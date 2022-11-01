@@ -9,7 +9,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.UnsupportedTemporalTypeException;
 import java.util.ArrayList;
-
+/**
+ * The logic of the bot
+ */
 public class TaskManager implements BotCallback {
     ArrayList<TaskInterface> tasks = new ArrayList<>();
     BotUseCase router;

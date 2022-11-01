@@ -1,7 +1,8 @@
 package Tasks;
 
-import java.time.LocalDate;
-
+/**
+ * a task that has date with start and end time
+ */
 public class Event extends Task implements TaskInterface {
     String endDate;
 

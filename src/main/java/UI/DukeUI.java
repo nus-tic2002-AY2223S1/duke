@@ -4,6 +4,9 @@ import Tasks.TaskInterface;
 
 import java.util.ArrayList;
 
+/**
+ * The command line UI for the duke by implementing UIInterface
+ */
 public class DukeUI implements UIInterface {
     private String name;
     public DukeUI(String name) {

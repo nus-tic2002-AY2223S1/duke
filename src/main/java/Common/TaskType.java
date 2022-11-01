@@ -2,9 +2,19 @@ package Common;
 
 import CustomException.UnsupportedTaskType;
 
+/**
+ * The enum task type to represent each task that can be used
+ */
 public enum TaskType {
     DEADLINE, EVENT, TODO;
 
+    /**
+     * convert string to TaskType
+     * if the string is not supported will throw unsupportedTaskType
+     *
+     * @return TaskType
+     * @param type the string version of the task type
+     */
     public static TaskType getType(String type) throws UnsupportedTaskType {
         if(type.equalsIgnoreCase("deadline")) {
             return DEADLINE;
@@ -17,6 +27,13 @@ public enum TaskType {
         }
     }
 
+    /**
+     * convert a key to TaskType
+     * if the key is not supported will throw unsupportedTaskType
+     *
+     * @return TaskType
+     * @param key the string key version of the task type
+     */
     public static TaskType getTypeByKey(String key) throws UnsupportedTaskType {
         if(key.equalsIgnoreCase("D")) {
             return DEADLINE;
@@ -28,7 +45,12 @@ public enum TaskType {
             throw new UnsupportedTaskType();
         }
     }
-
+    /**
+     * convert current TaskType to a string key
+     * if the type is not supported will return empty
+     *
+     * @return String
+     */
     public String getKey() {
         switch (this) {
             case DEADLINE:
