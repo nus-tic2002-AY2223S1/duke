@@ -33,6 +33,6 @@ public class DateTime implements Serializable {
 
     @Override
     public String toString() {
-        return dateTime.format(DateTimeFormatter.ofPattern(datePattern+ " " + timePattern));
+        return dateTime.format(DateTimeFormatter.ofPattern("MMM-dd-yyyy"+ " " + timePattern));
     }
 }

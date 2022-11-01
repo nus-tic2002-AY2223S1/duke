@@ -43,7 +43,8 @@ public class Parser {
                 arguments.put(key, String.join(DELIMITER, values));
                 key = tokens[i].substring(1);
                 values.clear();
-            } else {
+            }
+            else {
                 // If not, append this token to the end of the value
                 values.add(tokens[i]);
             }

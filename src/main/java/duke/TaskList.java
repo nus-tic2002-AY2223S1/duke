@@ -37,6 +37,10 @@ public class TaskList extends Vector<Task> {
         super.add(task);
         save();
     }
+    public void tagTask(int index , Task task) throws IOException, SaveException {
+        super.add(index , task);
+        save();
+    }
 
     public void setTask(int index, Task task) throws IOException, SaveException {
         super.set(index, task);
