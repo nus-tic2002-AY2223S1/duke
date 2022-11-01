@@ -1,15 +1,8 @@
 package Util;
-
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DateProcessorTest {
-    @Test
-    public void dummyTest(){
-        assertEquals(2, 2);
-    }
-
     @Test
     public void dateTimeToUnixInvalidTest(){
         String s = ".1/4/1999 0000";

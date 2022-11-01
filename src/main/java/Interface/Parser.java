@@ -1,7 +1,5 @@
 package Interface;
 public class Parser {
-    static Ui ui = new Ui();
-
     public Parser() {}
     public static Cmd parse(String[] processedInput){
     switch (processedInput[0]){
