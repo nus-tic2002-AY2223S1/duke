@@ -1,4 +1,0 @@
-list
-buy books
-mark 1
-bye
