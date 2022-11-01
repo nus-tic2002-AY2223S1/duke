@@ -11,6 +11,10 @@ public class FilterTaskByDatesCommand extends Command{
     private final LocalDate start;
     private LocalDate end = null;
 
+    /**
+     * Filter Task By Dates command default constructor
+     * Requires Tracker, Storage and date filter text
+     */
     public FilterTaskByDatesCommand(Tracker tracker, Storage storage, String s) throws DukeValidationException {
         super(tracker, storage);
         String[] f = s.split("to");
@@ -19,6 +23,10 @@ public class FilterTaskByDatesCommand extends Command{
         start = CommonHelper.convertStringToDate(f[0].trim()).toLocalDate();
     }
 
+    /**
+     * Abstract method that is overwritten
+     * Handles filter by date range capability
+     */
     @Override
     public void execute() {
         this.tracker.filterByDates(start, end);

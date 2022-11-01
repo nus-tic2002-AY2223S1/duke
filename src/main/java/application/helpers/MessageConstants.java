@@ -1,5 +1,8 @@
 package application.helpers;
 
+/**
+ * Messages shown in Duke
+ */
 public final class MessageConstants {
     public static final String WELCOME = "\tHello again! How can i help you?";
     public static final String REPEAT = "\tI'm sorry. What do you mean?";

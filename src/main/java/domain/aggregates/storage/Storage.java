@@ -9,13 +9,16 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Storage {
-    public File file;
+    /**
+     * Properties
+     */
+    private File file;
     private final IStorageRepository _storageRepository;
 
     /**
      * Storage has file to read and write to
      * Storage default constructor
-     * Requires StorageRespository
+     * Requires StorageRepository
      */
     public Storage() throws DukeFileException {
         _storageRepository = new StorageRepository();

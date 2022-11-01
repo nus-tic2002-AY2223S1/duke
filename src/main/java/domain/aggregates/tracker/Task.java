@@ -7,6 +7,9 @@ import domain.exceptions.DukeValidationException;
 import java.time.LocalDate;
 
 public abstract class Task {
+    /**
+     * Properties
+     */
     protected int id;
     protected String name;
     protected boolean isDone;

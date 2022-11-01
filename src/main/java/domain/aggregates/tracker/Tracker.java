@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class Tracker {
+    /**
+     * Properties
+     */
     public ArrayList<Task> tasks;
     private final ITaskRepository _taskRepository;
 

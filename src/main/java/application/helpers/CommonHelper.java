@@ -7,6 +7,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class CommonHelper {
+
+    /**
+     * Split input into Name and Remark and returns an array with 2 string objects
+     */
     public static String[] formatPassedName(String n, String keyword){
         String[] formatted = new String[2];
         Integer idx = n.indexOf("/");
@@ -24,24 +28,43 @@ public class CommonHelper {
         return formatted;
     }
 
+    /**
+     * Print line with a message
+     */
     public static void printMessage(String message){
         System.out.println(message);
     }
 
+    /**
+     * Check if string is empty or whitespace or null
+     * Return boolean result
+     */
     public static boolean isEmptyOrNull(String text) {
         return text != null ? text.isEmpty() || text.isBlank() : true;
     }
 
+    /**
+     * Convert string to an integer
+     * Returns integer result
+     */
     public static int getNumber(String text) throws DukeValidationException {
         if(CommonHelper.isEmptyOrNull(text))
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Id"));
         return Integer.parseInt(text);
     }
 
+    /**
+     * Convert boolean to an integer
+     * Returns integer result
+     */
     public static int boolToInt(boolean b) {
         return Boolean.compare(b, false);
     }
 
+    /**
+     * Convert string to a datetime
+     * Returns datetime result
+     */
     public static LocalDateTime convertStringToDateTime(String date) throws DukeValidationException {
         String formats = "[yyyy-MM-dd HH:mm][yyyy-MM-dd h:mm a][MMM dd yyyy HH:mm][MMM dd yyyy h:mm a]";
         try {
@@ -52,6 +75,10 @@ public class CommonHelper {
         }
     }
 
+    /**
+     * Convert string to a datetime
+     * Returns datetime result with a date value and 00:00 as the hours and minutes
+     */
     public static LocalDateTime convertStringToDate(String date) throws DukeValidationException {
         String formats = "[yyyy-MM-dd][MMM dd yyyy]";
         try {

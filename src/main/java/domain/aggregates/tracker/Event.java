@@ -11,6 +11,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 public class Event extends Task{
+    /**
+     * Properties
+     */
     protected LocalDateTime startDateTime;
     protected String shortName = "E";
 

@@ -6,6 +6,9 @@ import domain.exceptions.DukeValidationException;
 import java.time.LocalDate;
 
 public class Todo extends Task {
+    /**
+     * Properties
+     */
     protected String shortName = "T";
 
     /**

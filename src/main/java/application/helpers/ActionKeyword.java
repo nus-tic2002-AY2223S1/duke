@@ -2,6 +2,10 @@ package application.helpers;
 
 import domain.exceptions.DukeArgumentException;
 
+/**
+ * ActionKeyword enum represents the keyword that is entered to redirect according
+ * Add label to assist in conversion
+ */
 public enum ActionKeyword {
     TODO("todo"),
     EVENT("event"),
@@ -20,6 +24,9 @@ public enum ActionKeyword {
         this.label = label;
     }
 
+    /**
+     * Convert input string to an Enum
+     */
     public static ActionKeyword get(String label) throws DukeArgumentException {
         try {
             return ActionKeyword.valueOf(label.toUpperCase().split(" ")[0]);

@@ -16,6 +16,11 @@ public class Ui {
     private Storage storage;
     private RequestController controller;
 
+
+    /**
+     * Default constructor for UI
+     * Initialises Storage, Tracker and Request Controller
+     */
     public Ui(){
         try {
             storage = new Storage();
@@ -26,11 +31,18 @@ public class Ui {
         }
     }
 
+    /**
+     * Initialise UI
+     * Call intro and conversation methods
+     */
     public void init(){
         intro();
         conversation();
     }
 
+    /**
+     * Display Curio Logo and welcome message
+     */
     private void intro(){
         String logo =
                 " _____             _   \n"
@@ -41,6 +53,14 @@ public class Ui {
         System.out.println(logo);
         System.out.println("Hello! I'm Curio\nWhat can i do for you?\n");
     }
+
+    /**
+     * Initialise scanner
+     * Format input - removing keyword
+     * Redirect to the respective request controller for each keyword with the expected input format
+     * If throws DukeException, continue as it has been handled by the respective methods
+     * Else, print Exception trace with a general error message
+     */
     private void conversation(){
         String inp = "";
         Scanner scanner = new Scanner(System.in);

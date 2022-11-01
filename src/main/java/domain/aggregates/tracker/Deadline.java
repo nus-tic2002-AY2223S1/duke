@@ -10,7 +10,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 public class Deadline extends Task{
-    public LocalDateTime dueDateTime;
+    /**
+     * Properties
+     */
+    protected LocalDateTime dueDateTime;
     protected String shortName = "D";
 
     /**
