@@ -1,7 +1,7 @@
 name: CI
 
 on:
-  [push]
+  [push, pull_request]
 
 jobs:
   build:
@@ -26,6 +26,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run tests
         run:  ./gradlew clean build
+      - name: Coverage Report
+        run: ./gradlew jacocoTestReport
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
