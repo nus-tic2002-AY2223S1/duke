@@ -7,10 +7,12 @@ import Util.DukeException;
 public class Duke {
     private final Ui ui;
     private final TaskList t;
+    private final Parser p;
 
     public Duke(){
         ui = new Ui();
         t = new TaskList();
+        p = new Parser();
     }
     public static void main(String[] args) {
         new Duke().run();
@@ -21,7 +23,7 @@ public class Duke {
         boolean isExit = false;
         while (!isExit) {
             try {
-                Cmd c = Parser.parse(ui.readIn());
+                Cmd c = p.readIn().parse();
                 c.run(t.getList());
                 isExit = c.isExit();
             } catch (DukeException e) {

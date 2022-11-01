@@ -135,11 +135,4 @@ public class Ui {
         }
         sendConfirmedOutput(s);
     }
-
-    public String[] readIn(){
-        Scanner inputRaw = new Scanner(System.in).useDelimiter("\n");
-        String inputLine = inputRaw.nextLine();
-        //splitting input into <command> + <task name + at/by>
-        return inputLine.split(" ", 2);
-    }
 }
