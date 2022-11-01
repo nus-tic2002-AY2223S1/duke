@@ -16,7 +16,9 @@ public class Duke  {
      */
     String getResponse(String input) {
         return inter(input);
-//        return "Duke heard: " + input;
+    }
+    String[] getWelcome() {
+        return ui.sendWelcomeMessage(t);
     }
     public Duke(String path){
         ui = new Ui();

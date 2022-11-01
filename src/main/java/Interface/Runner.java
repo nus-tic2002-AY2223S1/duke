@@ -50,41 +50,44 @@ public class Runner {
         arrayList = tasks;
     }
     public String printList(Boolean withIndex){return ui.printList(arrayList,withIndex);}
-    public void printSelectedList(ArrayList<Task> l,Boolean withIndex,String date){ui.printSelectedList(l,withIndex,date);}
-    public void printFoundList(ArrayList<Task> l,Boolean withIndex,String keyword){ui.printFoundList(l,withIndex,keyword);}
+    public String printSelectedList(ArrayList<Task> l,Boolean withIndex,String date){return ui.printSelectedList(l,withIndex,date);}
+    public String printFoundList(ArrayList<Task> l,Boolean withIndex,String keyword){return ui.printFoundList(l,withIndex,keyword);}
     public  String printSingle(int index, Boolean isMark) {return ui.printMarkTask(arrayList.get(index).toString(),isMark);}
-    public  void printNewTaskAdded() {ui.printNewTasks(arrayList.get(arrayList.size()-1).toString(), arrayList.size());}
+    public  String printNewTaskAdded() {return ui.printNewTasks(arrayList.get(arrayList.size()-1).toString(), arrayList.size());}
     public  String printTaskRemovedByIndex(Task t) {
         return ui.printTaskRemovedByIndex(t.toString(), arrayList.size());}
-    public void printExitMessage()  {ui.sendGoodbyeMessage();}
+    public String  printExitMessage(){return ui.sendGoodbyeMessage();}
     public String printCommandUnknownMessage()  {return ui.sendCommandUnknownError();}
-    public void printFatalMessage(String message){ui.sendGenericFatal(message);}
-    public void printWarningMessage(String message){ui.sendGenericWarning(message);}
-    public void printProcessCommandMessage(String message){ui.sendProcessCommandError(message);}
+    public String  printFatalMessage(String message){return ui.sendGenericFatal(message);}
+    public String printWarningMessage(String message){return ui.sendGenericWarning(message);}
+    public String  printProcessCommandMessage(String message){return ui.sendProcessCommandError(message);}
     public String printProcessActionMessage(String message){return ui.sendProcessActionError(message);}
-    public void printProcessFindDateMessage(){ui.sendProcessFindDateError();}
-    public void printProcessFindTaskMessage(){ui.sendProcessFindTaskError();}
-    public void printProcessViewScheduleMessage(){ui.sendProcessViewScheduleError();}
-    public int getIndex(String s) {
-        if (!isInteger(s)){
-            return -1;
+    public String printProcessFindDateMessage(){return ui.sendProcessFindDateError();}
+    public String printProcessFindTaskMessage(){return ui.sendProcessFindTaskError();}
+    public String  printProcessViewScheduleMessage(){return ui.sendProcessViewScheduleError();}
+    public int getIndex(String s) throws DukeException{
+        try {
+            if (!isInteger(s)){
+                return -1;
+            }
+        }catch (DukeException e){
+            throw new DukeException(e.getMessage());
         }
+
         int i = Integer.parseInt(s)-1;
         if (i < 0 || i >= this.arrayList.size()){
-            printWarningMessage("No such index.");
-            return -1;
+            throw new DukeException(printWarningMessage("No such index.")) ;
         }
         return i;
     }
 
-    public boolean isInteger(String s) {
+    public boolean isInteger(String s) throws DukeException{
         try {
             Integer.parseInt(s);
+            return true;
         } catch(NumberFormatException | NullPointerException e) {
-            printFatalMessage("Enter the numeric item index.");
-            return false;
+            throw new DukeException(printFatalMessage("Enter the numeric item index."));
         }
-        return true;
     }
 
     public String processAction(Action a, String[] s) {
@@ -92,40 +95,50 @@ public class Runner {
             return printProcessActionMessage(a.getLabel());
         }
 
-        int idx = getIndex(s[1]);
+        int idx;
+        try {
+            idx = getIndex(s[1]);
+        }catch (DukeException e){
+            return e.getMessage();
+        }
+
+        if(idx > arrayList.size()){
+            return printProcessActionMessage("That is not a valid index.");
+        }
+
         if (idx != -1){
             switch (a){
                 case MARK:
                     arrayList.get(idx).markTask();
                     try{
                         saveFile();
+                        return printSingle(idx, true);
                     }catch(IOException e){
                         return ui.sendGenericWarning("IOException");
                     }
-                    return printSingle(idx, true);
                 case UNMARK:
                     arrayList.get(idx).unmarkTask();
                     try{
                         saveFile();
+                        return printSingle(idx, false);
                     }catch(IOException e){
                         return ui.sendGenericWarning("IOException");
                     }
-                    return printSingle(idx, false);
                 case DELETE:
                     Task copy = arrayList.get(idx);
                     arrayList.remove(idx);
                     try{
                         saveFile();
+                        return printTaskRemovedByIndex(copy);
                     }catch(IOException e){
                         return ui.sendGenericWarning("IOException");
                     }
-                return printTaskRemovedByIndex(copy);
             }
         }
         return "";
     }
 
-    private boolean processDue(Command c,String[] s){
+    private void processDue(Command c,String[] s) throws DukeException{
         long convertedTime;
 
         switch (c){
@@ -134,9 +147,14 @@ public class Runner {
                 if(eventByInput.length ==1){
                     arrayList.add(new Event(eventByInput[0].trim(),new long[]{}));
                 }else{
-                    long[] convertedTimeRange = DateProcessor.processDateTimeRange(eventByInput[1].trim());
-                    if (convertedTimeRange== null){
-                        return false;
+                    long[] convertedTimeRange;
+                    try{
+                        convertedTimeRange = DateProcessor.processDateTimeRange(eventByInput[1].trim());
+                    }catch (DukeException e){
+                        throw new DukeException(e.getMessage());
+                    }
+                    if (convertedTimeRange == null){
+                        throw new DukeException("");
                     }
                     arrayList.add(new Event(eventByInput[0].trim(),convertedTimeRange));
                 }
@@ -146,9 +164,13 @@ public class Runner {
                 if(deadlineByInput.length ==1){
                     arrayList.add(new Deadline(deadlineByInput[0].trim(),0));
                 }else{
-                    convertedTime = DateProcessor.processDateTime(deadlineByInput[1].trim());
+                    try {
+                        convertedTime = DateProcessor.processDateTime(deadlineByInput[1].trim());
+                    }catch (DukeException e){
+                        throw new DukeException(e.getMessage());
+                    }
                     if (convertedTime == -1){
-                        return false;
+                        throw new DukeException("");
                     }
                     arrayList.add(new Deadline(deadlineByInput[0].trim(),convertedTime));
                 }
@@ -158,40 +180,42 @@ public class Runner {
                 if(todoByInput.length ==1){
                     arrayList.add(new Todo(todoByInput[0].trim(),0));
                 }else{
-                    convertedTime = DateProcessor.processDateTime(todoByInput[1].trim());
+                    try {
+                        convertedTime = DateProcessor.processDateTime(todoByInput[1].trim());
+                    }catch (DukeException e){
+                        throw new DukeException(e.getMessage());
+                    }
                     if (convertedTime == -1){
-                        return false;
+                        throw new DukeException("");
                     }
                     arrayList.add(new Todo(todoByInput[0].trim(),convertedTime));
                 }
                 break;
         }
-        return true;
     }
-    public void processAddTask(Command c, String[] s) {
+    public String processAddTask(Command c, String[] s) {
         if (s.length == 1){
-            printProcessCommandMessage(c.getLabel());
-            return;
+            return printProcessCommandMessage(c.getLabel());
         }
 
         if (s[1].trim().equals("")){
-            printProcessCommandMessage(c.getLabel());
-            return;
+            return printProcessCommandMessage(c.getLabel());
         }
 
-        if(!processDue(c,s)){
-            return;
+        try{
+            processDue(c,s);
+        } catch (DukeException e) {
+            return e.getMessage();
         }
-
-        printNewTaskAdded();
 
         try{
             saveFile();
         }catch(IOException e){
-            ui.sendGenericWarning("IOException");
+            return ui.sendGenericWarning("IOException");
         }
+        return printNewTaskAdded();
     }
-    public void restoreFile(int selection) throws IOException {
+    public String restoreFile(int selection) throws IOException {
         String cacheFileName = "cache/archives.txt";
         String archiveFileDir = "archives/";
         String path = "";
@@ -204,12 +228,9 @@ public class Runner {
 
         File fileToMove = new File(archiveFileDir + path);
         File toReplace = new File("save/output.txt");
-        System.out.println(fileToMove.toPath());
-        System.out.println(toReplace.toPath());
-
         Files.copy(fileToMove.toPath(), toReplace.toPath(),StandardCopyOption.REPLACE_EXISTING);
-        ui.sendGenericConfirmation("Successfully restored records. Rebooting.");
         TaskList t = new TaskList(new Scanner(new File(toReplace.toString())));
+        return ui.sendGenericConfirmation("Successfully restored records. Rebooting.");
     }
 
     public boolean archiveFile() throws IOException {
@@ -219,13 +240,7 @@ public class Runner {
         String archivePath ="archives/";
 
         File fileToMove = new File("save/output.txt");
-        boolean isSuccess = fileToMove.renameTo(new File(archivePath,archiveFileName));
-        if (!isSuccess){
-            ui.sendGenericFatal("Failed to archive records.");
-            return false;
-        }
-        ui.sendGenericConfirmation("Successfully archived records.");
-        return true;
+        return fileToMove.renameTo(new File(archivePath,archiveFileName));
     }
 
     public void saveFile() throws IOException {
@@ -259,24 +274,30 @@ public class Runner {
     }
 
 
-    private long checkFindDate(String[] s) {
+    private long checkFindDate(String[] s) throws DukeException {
         if (s.length == 1){
-            printProcessFindDateMessage();
-            return -1;
+            throw new DukeException(printProcessFindDateMessage());
         }
 
         if (s[1].trim().equals("")){
-            printProcessFindDateMessage();
-            return -1;
+            throw new DukeException(printProcessFindDateMessage());
         }
 
         DateProcessor d = new DateProcessor();
-        return DateProcessor.processDate(s[1]);
+
+        try {
+            return DateProcessor.processDate(s[1]);
+        }catch (DukeException e){
+            throw new DukeException(e.getMessage());
+        }
     }
-    public void processFindDate(String[] s) {
-        long d = checkFindDate(s);
-        if(d == -1){
-            return;
+    public String processFindDate(String[] s){
+        long d;
+
+        try {
+            d = checkFindDate(s);
+        }catch (DukeException e){
+            return e.getMessage();
         }
 
         Task[] arr = {};
@@ -288,7 +309,7 @@ public class Runner {
             }
         }
         selected.sort(new TaskComparator());
-        printSelectedList(selected,true,s[1]);
+        return printSelectedList(selected,true,s[1]);
     }
 
     static class TaskComparator implements Comparator<Task> {
@@ -298,22 +319,23 @@ public class Runner {
         }
     }
 
-    private String checkFindTask(String[] s) {
+    private String checkFindTask(String[] s) throws DukeException{
         if (s.length == 1){
-            printProcessFindTaskMessage();
-            return null;
+            throw new DukeException(printProcessFindTaskMessage());
         }
 
         if (s[1].trim().equals("")){
-            printProcessFindTaskMessage();
-            return null;
+            throw new DukeException(printProcessFindTaskMessage());
         }
         return s[1];
     }
-    public void processFindTask(String[] s) {
-        String k = checkFindTask(s);
-        if (k ==null){
-            return;
+    public String processFindTask(String[] s){
+        String k;
+
+        try {
+            k = checkFindTask(s);
+        }catch (DukeException e){
+            return e.getMessage();
         }
 
         Task[] arr = {};
@@ -324,40 +346,44 @@ public class Runner {
                 selected.add(t);
             }
         }
-        printFoundList(selected,true,s[1]);
+        return printFoundList(selected,true,s[1]);
     }
 
-    private String checkViewSchedule(String[] s) {
+    private String checkViewSchedule(String[] s)throws DukeException {
         if (s.length == 1){
-            printProcessViewScheduleMessage();
-            return null;
+            throw new DukeException(printProcessViewScheduleMessage());
         }
 
         if (s[1].trim().equals("")){
-            printProcessViewScheduleMessage();
-            return null;
+            throw new DukeException(printProcessViewScheduleMessage());
         }
         return s[1];
     }
 
     //TODO
-    public void processViewSchedule(String[] s) {
-        String d = checkViewSchedule(s);
-        if (d ==null){
-            return;
+    public String processViewSchedule(String[] s) {
+        String d;
+
+        try {
+            d =checkViewSchedule(s);
+        }catch (DukeException e){
+            return e.getMessage();
         }
         long dayStartTS = DateProcessor.dateToUnix(d);
         long dayEndTS =dayStartTS + 86400;
+        return "";
     }
 
-    public void processArchive() {
+    public String processArchive() {
         try{
             if (archiveFile()){
                 arrayList.clear();
+                return ui.sendGenericConfirmation("Successfully archived records.");
             }
         }catch(IOException e){
-            ui.sendGenericWarning("IOException");
+            return ui.sendGenericWarning("IOException");
         }
+        return ui.sendGenericFatal("Failed to archive records.");
     }
 
     private long translateFileName(String fileName){
@@ -366,53 +392,44 @@ public class Runner {
         return Long.parseLong(parsedFileDate[0]);
     }
 
-    private void listFiles() {
+    private String listFiles() {
         File folder = new File("archives/");
         File[] listOfFiles = folder.listFiles();
         assert listOfFiles != null;
         int i = 1;
-
-        ui.sendGenericInfo("Select from the files below by entering restore <index>.");
+        StringBuilder s = new StringBuilder();
+        s.append(ui.sendGenericInfo("Select from the files below by entering restore <index>."));
         for (File listOfFile : listOfFiles) {
             if (listOfFile.isFile()) {
                 this.fileMap.put(i,listOfFile.getName());
                 System.out.println(fileMap);
-                ui.sendGenericPlain(i+ ". " + DateProcessor.unixToString(translateFileName(listOfFile.getName())) );
+                s.append(ui.sendGenericPlain(i+ ". " + DateProcessor.unixToString(translateFileName(listOfFile.getName()))));
             }
             i++;
         }
+        s.append(ui.sendGenericInfo("Chat will be refreshed after restoring."));
 
         try{
             cacheFile();
         }catch(IOException e){
-            ui.sendGenericWarning("IOException");
+            return ui.sendGenericWarning("IOException");
         }
+        return String.valueOf(s);
     }
 
-    private String checkProcessRestore(String[] s) {
+    public String processRestore(String[] s) {
         if (s.length == 1){
-            listFiles();
-            return null;
+            return listFiles();
         }
 
         if (s[1].trim().equals("")){
-            printProcessViewScheduleMessage();
-            return null;
-        }
-        return s[1];
-    }
-
-    public boolean processRestore(String[] s) {
-        String d = checkProcessRestore(s);
-        if (d ==null){
-            return false;
+            return printProcessViewScheduleMessage();
         }
 
         try{
-            restoreFile(Integer.parseInt(d));
+            return restoreFile(Integer.parseInt(s[1]));
         }catch(IOException e){
-            ui.sendGenericFatal("Failed to restore records.");
+            return ui.sendGenericFatal("Failed to restore records.");
         }
-        return true;
     }
 }

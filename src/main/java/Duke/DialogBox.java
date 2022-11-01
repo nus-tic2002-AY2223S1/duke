@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 import Interface.Ui;
+import Util.DateProcessor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,10 +24,11 @@ public class DialogBox extends HBox {
     @FXML
     private Label dialog;
     @FXML
+    private Label meta;
+    @FXML
     private ImageView displayPicture;
-    protected static String format = "────────────────────────────────────\n    %s\n────────────────────────────────────\n";
 
-    private DialogBox(String text, Image img) {
+    private DialogBox(String text, Image img,String userSpecific, boolean isDuke) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
@@ -35,7 +37,13 @@ public class DialogBox extends HBox {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if(isDuke){
+            meta.setText(DateProcessor.getMetaTimeStamp());
+        }else{
+            meta.setText(DateProcessor.getMetaTimeStamp() + " ✓");
+        }
         dialog.setText(text);
+        dialog.setStyle(userSpecific+";-fx-padding:10;-fx-label-padding:2,0,2,0;-fx-wrap-text:true;-fx-background-radius:10;-fx-max-width:500");
         displayPicture.setImage(img);
     }
 
@@ -50,12 +58,11 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
-        String s = String.format(format, text);
-        return new DialogBox(s, img);
+        return new DialogBox(text, img,"-fx-background-color: #90ee90",false);
     }
 
     public static DialogBox getDukeDialog(String text, Image img) {
-        var db = new DialogBox(text, img);
+        var db = new DialogBox(text, img,"-fx-background-color: #dcdcdc",true);
         db.flip();
         return db;
     }

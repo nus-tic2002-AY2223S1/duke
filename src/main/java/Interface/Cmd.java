@@ -49,39 +49,29 @@ public class Cmd {
             case MARK_TASK:
                 return r.processAction(Runner.Action.MARK,input);
             case UNMARK_TASK:
-                r.processAction(Runner.Action.UNMARK,input);
-                break;
+                return r.processAction(Runner.Action.UNMARK,input);
             case ADD_TODO:
-                r.processAddTask(Runner.Command.TODO,input);
-                break;
+                return r.processAddTask(Runner.Command.TODO,input);
             case ADD_DEADLINE:
-                r.processAddTask(Runner.Command.DEADLINE,input);
-                break;
+                return r.processAddTask(Runner.Command.DEADLINE,input);
             case ADD_EVENT:
-                r.processAddTask(Runner.Command.EVENT,input);
-                break;
+                return r.processAddTask(Runner.Command.EVENT,input);
             case DELETE_TASK:
-                r.processAction(Runner.Action.DELETE,input);
-                break;
+                return r.processAction(Runner.Action.DELETE,input);
             case FIND_DATE:
-                r.processFindDate(input);
-                break;
+                return r.processFindDate(input);
             case FIND_TASK:
-                r.processFindTask(input);
-                break;
-            case VIEW_SCHEDULE:
-                r.processViewSchedule(input);
-                break;
+                return r.processFindTask(input);
+//            case VIEW_SCHEDULE:
+//                return r.processViewSchedule(input);
             case ARCHIVE:
-                r.processArchive();
-                break;
+                return r.processArchive();
             case RESTORE:
-                this.isExit = r.processRestore(input);
-                break;
+                //isExit
+                return r.processRestore(input);
             case EXIT:
-                r.printExitMessage();
                 this.isExit = true;
-                break;
+                return r.printExitMessage();
         }
         return "";
     }

@@ -4,19 +4,30 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<fx:root alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="400.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-        <Label fx:id="dialog" text="Label" wrapText="true">
-         <HBox.margin>
-            <Insets left="10.0" right="10.0" />
-         </HBox.margin>
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding></Label>
-        <ImageView fx:id="displayPicture" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-    </children>
+<fx:root alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="800.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <padding>
         <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
     </padding>
+   <VBox prefHeight="0.0" prefWidth="100.0" />
+   <Label fx:id="meta" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Label">
+      <HBox.margin>
+         <Insets left="10.0" right="10.0" />
+      </HBox.margin>
+   </Label>
+    <Label fx:id="dialog" alignment="TOP_CENTER" contentDisplay="CENTER" style="-fx-shape: M1495 9164 c-377 -65 -582 -149 -830 -338 -272 -206 -494 -546 -580-886 -52 -203 -48 -14 -52 -2800 -3 -1812 -1 -2613 7 -2680 46 -404 215 -749502 -1025 273 -264 631 -423 1023 -456 64 -5 1920 -9 4445 -9 4650 0 4414 -24631 49 174 41 471 165 608 254 93 60 220 188 283 282 61 93 177 318 222 43138 98 79 242 104 369 14 71 16 357 19 2505 4 2544 1 2796 -37 2974 -124 588-502 1031 -1052 1237 -106 39 -179 57 -346 85 l-144 24 -4361 -1 c-3659 -1-4375 -4 -4442 -15z; -fx-background-color: #00bfff; -fx-background-insets: 0,1; -fx-padding: 15; -fx-label-padding: 5,0,5,0; -fx-wrap-text: true; -fx-min-height: 0; -fx-border-radius: 10;" text="Label" wrapText="true">
+        <font>
+        <Font size="14.0" />
+        </font>
+      <padding>
+         <Insets right="10.0" />
+      </padding>
+    </Label>
+    <ImageView fx:id="displayPicture" fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+      <HBox.margin>
+         <Insets left="10.0" right="10.0" />
+      </HBox.margin>
+    </ImageView>
 </fx:root>
