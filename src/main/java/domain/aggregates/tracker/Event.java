@@ -16,6 +16,7 @@ public class Event extends Task{
      */
     protected LocalDateTime startDateTime;
     protected String shortName = "E";
+    private Pattern p = Pattern.compile(".*([01]?[0-9]|2[0-3]):[0-5][0-9].*");
 
     /**
      * Event is a Task
@@ -27,7 +28,6 @@ public class Event extends Task{
         String[] f = CommonHelper.formatPassedName(n, "at");
         validate(f);
         this.name = f[0].trim();
-        Pattern p = Pattern.compile(".*([01]?[0-9]|2[0-3]):[0-5][0-9].*");
         if(p.matcher(f[1].trim()).matches())
             this.startDateTime = CommonHelper.convertStringToDateTime(f[1].trim());
         else
@@ -86,6 +86,17 @@ public class Event extends Task{
         if(end == null)
             return _startDateTime.isEqual(start);
         return (_startDateTime.isAfter(start) || _startDateTime.isEqual(start)) && (_startDateTime.isBefore(end) || _startDateTime.isEqual(end));
+    }
+
+    @Override
+    public void update(String remarks) throws DukeValidationException {
+        if(!CommonHelper.isEmptyOrNull(remarks)) {
+            if (p.matcher(remarks.trim()).matches())
+                this.startDateTime = CommonHelper.convertStringToDateTime(remarks.trim());
+            else
+                this.startDateTime = CommonHelper.convertStringToDate(remarks.trim());
+        } else
+            this.startDateTime = this.startDateTime.plusDays(1);
     }
 
     /**

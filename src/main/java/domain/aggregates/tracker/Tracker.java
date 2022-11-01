@@ -7,6 +7,7 @@ import domain.repositories.ITaskRepository;
 import domain.repositories.TaskRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -136,5 +137,19 @@ public class Tracker {
         }
         else
             CommonHelper.printMessage(MessageConstants.NO_RESULTS_FOUND);
+    }
+
+    public boolean snooze(int n, String newDateTime) throws DukeValidationException, DukeNotFoundException {
+        Task task = _taskRepository.validateTask(tasks, n);
+        if(task != null){
+            task.update(newDateTime);
+            if(CommonHelper.isEmptyOrNull(newDateTime))
+                CommonHelper.printMessage(MessageConstants.DEFAULT_SNOOZE_TASK);
+            else
+                CommonHelper.printMessage(MessageConstants.SNOOZE_TASK);
+            printTask(task);
+            return true;
+        }
+        return false;
     }
 }

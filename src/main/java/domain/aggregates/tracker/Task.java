@@ -55,6 +55,8 @@ public abstract class Task {
      */
     public abstract boolean compare(LocalDate start, LocalDate end);
 
+    public abstract void update(String remarks) throws DukeValidationException;
+
     /**
      * Getters & Setters for properties
      */

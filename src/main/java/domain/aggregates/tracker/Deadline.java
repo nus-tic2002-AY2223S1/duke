@@ -15,6 +15,7 @@ public class Deadline extends Task{
      */
     protected LocalDateTime dueDateTime;
     protected String shortName = "D";
+    private Pattern p = Pattern.compile(".*([01]?[0-9]|2[0-3]):[0-5][0-9].*");
 
     /**
      * Deadline is a Task
@@ -26,7 +27,6 @@ public class Deadline extends Task{
         String[] f = CommonHelper.formatPassedName(n, "by");
         validate(f);
         this.name = f[0].trim();
-        Pattern p = Pattern.compile(".*([01]?[0-9]|2[0-3]):[0-5][0-9].*");
         if(p.matcher(f[1].trim()).matches())
             this.dueDateTime = CommonHelper.convertStringToDateTime(f[1].trim());
         else
@@ -84,6 +84,17 @@ public class Deadline extends Task{
         if(end == null)
             return _dueDateTime.isEqual(start);
         return (_dueDateTime.isAfter(start) || _dueDateTime.isEqual(start)) && (_dueDateTime.isBefore(end) || _dueDateTime.isEqual(end));
+    }
+
+    @Override
+    public void update(String remarks) throws DukeValidationException {
+        if(!CommonHelper.isEmptyOrNull(remarks)) {
+            if (p.matcher(remarks.trim()).matches())
+                this.dueDateTime = CommonHelper.convertStringToDateTime(remarks.trim());
+            else
+                this.dueDateTime = CommonHelper.convertStringToDate(remarks.trim());
+        } else
+            this.dueDateTime = this.dueDateTime.plusDays(1);
     }
 
     /**

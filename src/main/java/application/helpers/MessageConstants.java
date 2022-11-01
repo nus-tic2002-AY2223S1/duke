@@ -14,6 +14,8 @@ public final class MessageConstants {
     public static final String MARK_TASK = "\tNice! I've marked this task as done:";
     public static final String UNMARK_TASK = "\tOK, I've marked this task as not done yet:";
     public static final String DELETE_TASK = "\tNoted. I've removed this task:";
+    public static final String SNOOZE_TASK = "\tNoted. I've rescheduled this task:";
+    public static final String DEFAULT_SNOOZE_TASK = "\tNoted. I've extended this task by 1 day:";
     public static final String GENERAL_ERROR = "\tOops! I could not process the request. Please try again.";
     public static final String TASK_NOT_FOUND_ERROR = "\tOops! I could not find this task.";
     public static final String TASK_EXISTED_ERROR = "Oops! There is already an existing task.";

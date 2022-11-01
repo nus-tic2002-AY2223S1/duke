@@ -83,6 +83,13 @@ public class RequestController {
     }
 
     /**
+     * Snooze keyword behaviour: Calls Snooze Task with new date in string
+     */
+    public void snooze(int id, String date) throws DukeValidationException, DukeNotFoundException, DukeFileException {
+        snoozeTaskCommandHandler(id, date);
+    }
+
+    /**
      * Hello keyword behaviour: Display Welcome message
      */
     public void hello(){
@@ -141,6 +148,14 @@ public class RequestController {
      */
     private void filterTaskByDatesCommandHandler(String date) throws DukeValidationException {
         FilterTaskByDatesCommand command = new FilterTaskByDatesCommand(tracker, storage, date);
+        command.execute();
+    }
+
+    /**
+     * Executes Snooze Task Command Handler
+     */
+    private void snoozeTaskCommandHandler(int id, String date) throws DukeValidationException, DukeNotFoundException, DukeFileException {
+        SnoozeTaskCommand command = new SnoozeTaskCommand(tracker, storage, id, date);
         command.execute();
     }
 }

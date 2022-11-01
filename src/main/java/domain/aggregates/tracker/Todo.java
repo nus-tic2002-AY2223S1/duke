@@ -65,4 +65,8 @@ public class Todo extends Task {
     public boolean compare(LocalDate start, LocalDate end) {
         return false;
     }
+
+    @Override
+    public void update(String remarks) {
+    }
 }

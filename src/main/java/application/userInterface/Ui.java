@@ -94,6 +94,10 @@ public class Ui {
                     case FILTER:
                         controller.filter(inp.replace("filter","").trim());
                         break;
+                    case SNOOZE:
+                        int id = CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim());
+                        controller.snooze(id, inp.replace("snooze","").replace(String.valueOf(id), "").trim());
+                        break;
                     case HI:
                     case HELLO:
                         controller.hello();
