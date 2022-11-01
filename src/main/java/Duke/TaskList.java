@@ -11,8 +11,6 @@ public class TaskList {
     private String lastSaveTimeStamp;
     private String lastUserName;
 
-    private boolean isReturnUser;
-
     public TaskList(Scanner s) {
         Task[] arr = {};
         this.arrayList = new ArrayList<>(Arrays.asList(arr));

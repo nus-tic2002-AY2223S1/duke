@@ -2,9 +2,7 @@ package Interface;
 import Duke.Task;
 import Duke.TaskList;
 import Util.DateProcessor;
-
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Ui {
     public enum UiIcon{
@@ -31,7 +29,8 @@ public class Ui {
         ERROR_PROCESS_ACTION("OOPS!!! The selection to %s cannot be empty."),
         ERROR_PROCESS_COMMAND("OOPS!!! The description of %s cannot be empty."),
         ERROR_FIND_DATE("OOPS!!! The date to search cannot be empty."),
-        ERROR_FIND_TASK("OOPS!!! The keyword to search cannot be empty.");
+        ERROR_FIND_TASK("OOPS!!! The keyword to search cannot be empty."),
+        ERROR_VIEW_SCHEDULE("OOPS!!! The date to search cannot be empty.");
         public final String text;
         public String getText(){return this.text;}
         private UiMessage(String text) {
@@ -47,14 +46,17 @@ public class Ui {
     private void sendFatal(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.FATAL.getIcon(), String.format(u.getText(),m) ));}
     private void sendConfirmation(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.CONFIRMATION.getIcon(), String.format(u.getText(),m) ));}
     public void sendConfirmedOutput(StringBuilder message){sendConfirmation(UiMessage.GENERIC_FORMATTED, String.valueOf(message));}
+    public void sendGenericPlain(String message){sendPlain(UiMessage.GENERIC_FORMATTED,message);}
     public void sendGenericInfo(String message){sendInfo(UiMessage.GENERIC_FORMATTED,message);}
     public void sendGenericWarning(String message){sendWarning(UiMessage.GENERIC_FORMATTED,message);}
     public void sendGenericFatal(String message){sendFatal(UiMessage.GENERIC_FORMATTED,message);}
+    public void sendGenericConfirmation(String message){sendConfirmation(UiMessage.GENERIC_FORMATTED,message);}
     public void sendProcessActionError(String message){sendFatal(UiMessage.ERROR_PROCESS_ACTION,message);}
     public void sendProcessCommandError(String message){sendFatal(UiMessage.ERROR_PROCESS_COMMAND,message);}
     public void sendCommandUnknownError(){sendFatal(UiMessage.ERROR_COMMAND_UNKNOWN,"");}
     public void sendProcessFindDateError(){sendFatal(UiMessage.ERROR_FIND_DATE,"");}
     public void sendProcessFindTaskError(){sendFatal(UiMessage.ERROR_FIND_TASK,"");}
+    public void sendProcessViewScheduleError(){sendFatal(UiMessage.ERROR_VIEW_SCHEDULE,"");}
 
     public void sendWelcomeMessage(TaskList t){
         String logo = " ____        _        \n"

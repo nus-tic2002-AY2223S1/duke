@@ -1,16 +1,14 @@
 package Interface;
-import Duke.Deadline;
-import Duke.Event;
-import Duke.Task;
-import Duke.Todo;
+import Duke.*;
 import Util.DateProcessor;
 import Util.DukeException;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.InetAddress;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class Runner {
     public enum Command{
@@ -43,13 +41,13 @@ public class Runner {
     protected Ui ui;
     protected boolean isExit;
     protected ArrayList<Task> arrayList;
+    protected Map<Integer,String> fileMap= new HashMap<Integer,String>();
     public Runner(ArrayList<Task> a) {
         arrayList = a;
         ui = new Ui();
     }
-    public void run(ArrayList<Task> tasks, Ui runtimeUi) throws DukeException {
+    public void run(ArrayList<Task> tasks) throws DukeException {
         arrayList = tasks;
-        ui = runtimeUi;
     }
     public void printList(Boolean withIndex){ui.printList(arrayList,withIndex);}
     public void printSelectedList(ArrayList<Task> l,Boolean withIndex,String date){ui.printSelectedList(l,withIndex,date);}
@@ -65,6 +63,7 @@ public class Runner {
     public void printProcessActionMessage(String message){ui.sendProcessActionError(message);}
     public void printProcessFindDateMessage(){ui.sendProcessFindDateError();}
     public void printProcessFindTaskMessage(){ui.sendProcessFindTaskError();}
+    public void printProcessViewScheduleMessage(){ui.sendProcessViewScheduleError();}
     public int getIndex(String s) {
         if (!isInteger(s)){
             return -1;
@@ -196,13 +195,51 @@ public class Runner {
             ui.sendGenericWarning("IOException");
         }
     }
+    public void restoreFile(int selection) throws IOException {
+        String cacheFileName = "cache/archives.txt";
+        String archiveFileDir = "archives/";
+        String path = "";
 
-    //TODO: save and read from file
+        Scanner scn = new Scanner(new File(cacheFileName));
+        while (selection > 0 && scn.hasNext()){
+            path = scn.nextLine();
+            selection--;
+        }
+
+        File fileToMove = new File(archiveFileDir + path);
+        File toReplace = new File("save/output.txt");
+        System.out.println(fileToMove.toPath());
+        System.out.println(toReplace.toPath());
+
+        Files.copy(fileToMove.toPath(), toReplace.toPath(),StandardCopyOption.REPLACE_EXISTING);
+        ui.sendGenericConfirmation("Successfully restored records. Rebooting.");
+        TaskList t = new TaskList(new Scanner(new File(toReplace.toString())));
+    }
+
+    public boolean archiveFile() throws IOException {
+        String userName = System.getProperty("user.name");
+        long timeNow = Instant.now().getEpochSecond();
+        String archiveFileName = "archive_" + userName + "_" + timeNow+".txt";
+        String archivePath ="archives/";
+
+        File fileToMove = new File("save/output.txt");
+        boolean isSuccess = fileToMove.renameTo(new File(archivePath,archiveFileName));
+        if (!isSuccess){
+            ui.sendGenericFatal("Failed to archive records.");
+            return false;
+        }
+        ui.sendGenericConfirmation("Successfully archived records.");
+        return true;
+    }
+
     public void saveFile() throws IOException {
-        FileWriter writer = new FileWriter("output.txt");
+        String userName = System.getProperty("user.name");
+        long timeNow = Instant.now().getEpochSecond();
+        FileWriter writer = new FileWriter("save/output.txt");
+
         //Name and time stamp
-        writer.write(System.getProperty("user.name") + System.lineSeparator());
-        writer.write(Instant.now().getEpochSecond() + System.lineSeparator());
+        writer.write(userName + System.lineSeparator());
+        writer.write(timeNow + System.lineSeparator());
 
         for(Task str: arrayList) {
             String s = str.getType() + "," +
@@ -214,6 +251,17 @@ public class Runner {
         }
         writer.close();
     }
+
+    public void cacheFile() throws IOException {
+        FileWriter writer = new FileWriter("cache/archives.txt");
+
+        for(Map.Entry<Integer,String> m: fileMap.entrySet()) {
+            String s = m.getValue();
+            writer.write(s + System.lineSeparator());
+        }
+        writer.close();
+    }
+
 
     private long checkFindDate(String[] s) {
         if (s.length == 1){
@@ -243,7 +291,15 @@ public class Runner {
                 selected.add(t);
             }
         }
+        selected.sort(new TaskComparator());
         printSelectedList(selected,true,s[1]);
+    }
+
+    static class TaskComparator implements Comparator<Task> {
+        public int compare(Task t1, Task t2)
+        {
+            return Long.compare(t1.getDue(), t2.getDue());
+        }
     }
 
     private String checkFindTask(String[] s) {
@@ -273,5 +329,94 @@ public class Runner {
             }
         }
         printFoundList(selected,true,s[1]);
+    }
+
+    private String checkViewSchedule(String[] s) {
+        if (s.length == 1){
+            printProcessViewScheduleMessage();
+            return null;
+        }
+
+        if (s[1].trim().equals("")){
+            printProcessViewScheduleMessage();
+            return null;
+        }
+        return s[1];
+    }
+
+    //TODO
+    public void processViewSchedule(String[] s) {
+        String d = checkViewSchedule(s);
+        if (d ==null){
+            return;
+        }
+        long dayStartTS = DateProcessor.dateToUnix(d);
+        long dayEndTS =dayStartTS + 86400;
+    }
+
+    public void processArchive() {
+        try{
+            if (archiveFile()){
+                arrayList.clear();
+            }
+        }catch(IOException e){
+            ui.sendGenericWarning("IOException");
+        }
+    }
+
+    private long translateFileName(String fileName){
+        String[] parsedFileName = fileName.split("_", 3);
+        String[] parsedFileDate = parsedFileName[2].split("\\.", 2);
+        return Long.parseLong(parsedFileDate[0]);
+    }
+
+    private void listFiles() {
+        File folder = new File("archives/");
+        File[] listOfFiles = folder.listFiles();
+        assert listOfFiles != null;
+        int i = 1;
+
+        ui.sendGenericInfo("Select from the files below by entering restore <index>.");
+        for (File listOfFile : listOfFiles) {
+            if (listOfFile.isFile()) {
+                this.fileMap.put(i,listOfFile.getName());
+                System.out.println(fileMap);
+                ui.sendGenericPlain(i+ ". " + DateProcessor.unixToString(translateFileName(listOfFile.getName())) );
+            }
+            i++;
+        }
+
+        try{
+            cacheFile();
+        }catch(IOException e){
+            ui.sendGenericWarning("IOException");
+        }
+    }
+
+    private String checkProcessRestore(String[] s) {
+        if (s.length == 1){
+            listFiles();
+            return null;
+        }
+
+        if (s[1].trim().equals("")){
+            printProcessViewScheduleMessage();
+            return null;
+        }
+        return s[1];
+    }
+
+    public boolean processRestore(String[] s) {
+        String d = checkProcessRestore(s);
+        if (d ==null){
+            return false;
+        }
+
+        try{
+            restoreFile(Integer.parseInt(d));
+        }catch(IOException e){
+            ui.sendGenericFatal("Failed to restore records.");
+        }
+        return true;
     }
 }

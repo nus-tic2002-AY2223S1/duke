@@ -21,7 +21,7 @@ public class Duke {
         }
     }
     public static void main(String[] args) {
-        new Duke("output.txt").run();
+        new Duke("save/output.txt").run();
     }
 
     public void run() {
