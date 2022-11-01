@@ -6,10 +6,10 @@ import java.util.Scanner;
 
 public class Ui {
     public enum UiIcon{
-        FATAL("❌"),
-        WARNING("⚠️"),
-        INFO("💬"),
-        CONFIRMATION("✅");
+        FATAL("\u274c"),
+        WARNING("\u26a0️"),
+        INFO("\u26aa"),
+        CONFIRMATION("\u2705");
 
         public final String icon;
         public String getIcon(){return this.icon;}
