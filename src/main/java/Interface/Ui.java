@@ -6,10 +6,10 @@ import java.util.Scanner;
 
 public class Ui {
     public enum UiIcon{
-        FATAL("❌"),
-        WARNING("⚠️"),
-        INFO("💬"),
-        CONFIRMATION("✅");
+        FATAL("\u274c"),
+        WARNING("\u26a0️"),
+        INFO("\u26aa"),
+        CONFIRMATION("\u2705");
 
         public final String icon;
         public String getIcon(){return this.icon;}
@@ -26,8 +26,8 @@ public class Ui {
         ERROR_COMMAND_UNKNOWN("OOPS!!! I'm sorry, but I don't know what that means :( \n\tSpecify Todo / Deadline / Event. \n\tE.g. Todo <Task Name>"),
         ERROR_PROCESS_ACTION("OOPS!!! The selection to %s cannot be empty."),
         ERROR_PROCESS_COMMAND("OOPS!!! The description of %s cannot be empty."),
-        ERROR_FIND_DATE("OOPS!!! The date to search cannot be empty.");
-
+        ERROR_FIND_DATE("OOPS!!! The date to search cannot be empty."),
+        ERROR_FIND_TASK("OOPS!!! The keyword to search cannot be empty.");
         public final String text;
         public String getText(){return this.text;}
         private UiMessage(String text) {
@@ -49,6 +49,7 @@ public class Ui {
     public void sendProcessCommandError(String message){sendFatal(UiMessage.ERROR_PROCESS_COMMAND,message);}
     public void sendCommandUnknownError(){sendFatal(UiMessage.ERROR_COMMAND_UNKNOWN,"");}
     public void sendProcessFindDateError(){sendFatal(UiMessage.ERROR_FIND_DATE,"");}
+    public void sendProcessFindTaskError(){sendFatal(UiMessage.ERROR_FIND_TASK,"");}
 
     public void sendWelcomeMessage(){
         String logo = " ____        _        \n"
@@ -119,6 +120,17 @@ public class Ui {
             s.append("You have no task scheduled on ").append(date);
         }else{
             s.append("Here are the task(s) scheduled on this day:\n    ");
+            buildList(tasks, withIndex, s);
+        }
+        sendConfirmedOutput(s);
+    }
+
+    public void printFoundList(ArrayList<Task> tasks, Boolean withIndex, String keyword){
+        StringBuilder s = new StringBuilder();
+        if (tasks.size() == 0){
+            s.append("You have no task with keyword '").append(keyword).append("'");
+        }else{
+            s.append("Here are the task(s) that contains '").append(keyword).append("':\n    ");
             buildList(tasks, withIndex, s);
         }
         sendConfirmedOutput(s);

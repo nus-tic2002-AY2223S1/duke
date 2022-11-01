@@ -11,16 +11,15 @@ public class DateProcessor {
     static SimpleDateFormat dateTimeToUnixFormat = new SimpleDateFormat("dd/MM/yyyy HHmm");
     static SimpleDateFormat dateToUnixFormat = new SimpleDateFormat("dd/MM/yyyy");
     static SimpleDateFormat unixToStringFormat = new SimpleDateFormat("dd MMM yyyy, HH:mm E");
-    Ui ui;
+    static Ui ui = new Ui();;
     public DateProcessor(){
-        ui = new Ui();
     }
 
-    private boolean checkTime(String t){
+    private static boolean checkTime(String t){
         return t.length() == 4;
     }
 
-    private boolean checkDate(String d){
+    private static boolean checkDate(String d){
         String[] parsed = d.split("/", 3);
 
         if (parsed.length != 3) {
@@ -35,14 +34,14 @@ public class DateProcessor {
         return true;
     }
 
-    private String concatDateTime(String date, String time){
+    private static String concatDateTime(String date, String time){
         return date + " " + time;
     }
 
     private String concatDate(String[]s){
         return s[0] +"/"+ s[1] +"/"+ s[2];
     }
-    public long processDateTime(String s){
+    public static long processDateTime(String s){
         String[] parsed = s.split(" ", 2);
 
         if (parsed.length != 2) {
@@ -68,7 +67,7 @@ public class DateProcessor {
         return dateTimeToUnix(s+ " 0000");
     }
 
-    public long dateTimeToUnix(String s){
+    public static long dateTimeToUnix(String s){
         try{
             return dateTimeToUnixFormat.parse(s+ " 0000").toInstant().getEpochSecond();
         } catch (ParseException e) {
@@ -77,7 +76,7 @@ public class DateProcessor {
         return -1;
     }
 
-    public long dateToUnix(String s){
+    public static long dateToUnix(String s){
         try{
             return dateToUnixFormat.parse(s).toInstant().getEpochSecond();
         } catch (ParseException e) {

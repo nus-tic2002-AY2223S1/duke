@@ -23,6 +23,8 @@ public class Parser {
                     return new Cmd(Cmd.CmdTypes.EXIT,null);
                 case "day":
                     return new Cmd(Cmd.CmdTypes.FIND_DATE,processedInput);
+                case "find":
+                    return new Cmd(Cmd.CmdTypes.FIND_TASK,processedInput);
                 case "":
                     return new Cmd(Cmd.CmdTypes.RETURN,null);
                 default:

@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static Interface.Runner.Command.EVENT;
-
 public class Runner {
     public enum Command{
         DEADLINE("deadline"),
@@ -43,11 +41,9 @@ public class Runner {
     protected Ui ui;
     protected boolean isExit;
     protected ArrayList<Task> arrayList;
-    DateProcessor d;
     public Runner(ArrayList<Task> a) {
         arrayList = a;
         ui = new Ui();
-         d = new DateProcessor();
     }
     public void run(ArrayList<Task> tasks, Ui runtimeUi) throws DukeException {
         arrayList = tasks;
@@ -55,6 +51,7 @@ public class Runner {
     }
     public void printList(Boolean withIndex){ui.printList(arrayList,withIndex);}
     public void printSelectedList(ArrayList<Task> l,Boolean withIndex,String date){ui.printSelectedList(l,withIndex,date);}
+    public void printFoundList(ArrayList<Task> l,Boolean withIndex,String keyword){ui.printFoundList(l,withIndex,keyword);}
     public  void printSingle(int index, Boolean isMark) {ui.printMarkTask(arrayList.get(index).toString(),isMark);}
     public  void printNewTaskAdded() {ui.printNewTasks(arrayList.get(arrayList.size()-1).toString(), arrayList.size());}
     public  void printTaskRemovedByIndex(int index) {ui.printTaskRemovedByIndex(arrayList.get(index).toString(), arrayList.size());}
@@ -65,6 +62,7 @@ public class Runner {
     public void printProcessCommandMessage(String message){ui.sendProcessCommandError(message);}
     public void printProcessActionMessage(String message){ui.sendProcessActionError(message);}
     public void printProcessFindDateMessage(){ui.sendProcessFindDateError();}
+    public void printProcessFindTaskMessage(){ui.sendProcessFindDateError();}
     public int getIndex(String s) {
         if (!isInteger(s)){
             return -1;
@@ -120,7 +118,7 @@ public class Runner {
                 if(eventByInput.length ==1){
                     arrayList.add(new Event(eventByInput[0].trim(),0));
                 }else{
-                    convertedTime = d.processDateTime(eventByInput[1].trim());
+                    convertedTime = DateProcessor.processDateTime(eventByInput[1].trim());
                     if (convertedTime == -1){
                         return false;
                     }
@@ -132,7 +130,7 @@ public class Runner {
                 if(deadlineByInput.length ==1){
                     arrayList.add(new Deadline(deadlineByInput[0].trim(),0));
                 }else{
-                    convertedTime = d.processDateTime(deadlineByInput[1].trim());
+                    convertedTime = DateProcessor.processDateTime(deadlineByInput[1].trim());
                     if (convertedTime == -1){
                         return false;
                     }
@@ -144,7 +142,7 @@ public class Runner {
                 if(todoByInput.length ==1){
                     arrayList.add(new Todo(todoByInput[0].trim(),0));
                 }else{
-                    convertedTime = d.processDateTime(todoByInput[1].trim());
+                    convertedTime = DateProcessor.processDateTime(todoByInput[1].trim());
                     if (convertedTime == -1){
                         return false;
                     }
@@ -220,5 +218,34 @@ public class Runner {
             }
         }
         printSelectedList(selected,true,s[1]);
+    }
+
+    private String checkFindTask(String[] s) {
+        if (s.length == 1){
+            printProcessFindTaskMessage();
+            return null;
+        }
+
+        if (s[1].trim().equals("")){
+            printProcessFindTaskMessage();
+            return null;
+        }
+        return s[1];
+    }
+    public void processFindTask(String[] s) {
+        String k = checkFindTask(s);
+        if (k ==null){
+            return;
+        }
+
+        Task[] arr = {};
+        ArrayList<Task> selected = new ArrayList<>(Arrays.asList(arr));
+
+        for (Task t : this.arrayList){
+            if (t.getDescription().contains(k)){
+                selected.add(t);
+            }
+        }
+        printFoundList(selected,true,s[1]);
     }
 }
