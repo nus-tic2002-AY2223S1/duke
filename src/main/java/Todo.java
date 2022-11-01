@@ -6,11 +6,10 @@ public class Todo extends Task {
 
     @Override
     public String getTask() {
-        if(status) {
-            return "[T][X] " + name;
-        }
-        else {
-            return "[T][ ] " + name;
+        if(isDone) {
+            return "T|1|" + name;
+        } else {
+            return "T|0|" + name;
         }
     }
 }

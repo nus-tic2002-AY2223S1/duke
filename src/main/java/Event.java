@@ -8,11 +8,10 @@ public class Event extends Task {
 
     @Override
     public String getTask() {
-        if(status) {
-            return "[E][X] " + name + "(at: " + time + ")";
-        }
-        else {
-            return "[E][ ] " + name  + "(at: " + time + ")";
+        if(isDone) {
+            return "E|1|" + name + "|at " + time + " |";
+        } else {
+            return "E|0|" + name  + "|at " + time + "|";
         }
     }
 }

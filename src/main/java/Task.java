@@ -1,21 +1,14 @@
-public class Task {
+public abstract class Task {
     protected String name;
-    protected boolean status = false;
+    protected boolean isDone = false;
 
     public Task(String name) {
         this.name = name;
     }
 
-    public void setStatus (boolean status) {
-        this.status = status;
+    public void setStatus (boolean isDone) {
+        this.isDone = isDone;
     }
 
-    public String getTask() {
-        if(status) {
-            return "[X] " + name;
-        }
-        else {
-            return "[ ] " + name;
-        }
-    }
+    public abstract String getTask();
 }

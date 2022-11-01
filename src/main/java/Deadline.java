@@ -8,11 +8,10 @@ public class Deadline extends Task {
 
     @Override
     public String getTask() {
-        if(status) {
-            return "[D][X] " + name + "(by: " + due + ")";
-        }
-        else {
-            return "[D][ ] " + name  + "(by: " + due + ")";
+        if(isDone) {
+            return "D|1|" + name + "|by " + due + "|";
+        } else {
+            return "D|0|" + name  + "|by " + due + "|";
         }
     }
 }
