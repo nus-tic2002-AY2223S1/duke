@@ -37,6 +37,8 @@ public class Parser {
                     return new Cmd(Cmd.CmdTypes.FIND_DATE,this.in);
                 case "find":
                     return new Cmd(Cmd.CmdTypes.FIND_TASK,this.in);
+                case "view":
+                    return new Cmd(Cmd.CmdTypes.VIEW_SCHEDULE,this.in);
                 case "":
                     return new Cmd(Cmd.CmdTypes.RETURN,null);
                 default:

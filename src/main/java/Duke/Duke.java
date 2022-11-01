@@ -3,23 +3,29 @@ import Interface.Cmd;
 import Interface.Parser;
 import Interface.Ui;
 import Util.DukeException;
+import java.io.FileNotFoundException;
 
 public class Duke {
     private final Ui ui;
-    private final TaskList t;
+    private TaskList t;
     private final Parser p;
 
-    public Duke(){
+    public Duke(String path){
         ui = new Ui();
-        t = new TaskList();
         p = new Parser();
+        Storage s = new Storage(path);
+        try{
+            t = new TaskList(s.load());
+        }catch (FileNotFoundException e){
+            t = new TaskList();
+        }
     }
     public static void main(String[] args) {
-        new Duke().run();
+        new Duke("output.txt").run();
     }
 
     public void run() {
-        ui.sendWelcomeMessage();
+        ui.sendWelcomeMessage(t);
         boolean isExit = false;
         while (!isExit) {
             try {

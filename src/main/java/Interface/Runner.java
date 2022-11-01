@@ -7,6 +7,8 @@ import Util.DateProcessor;
 import Util.DukeException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -62,7 +64,7 @@ public class Runner {
     public void printProcessCommandMessage(String message){ui.sendProcessCommandError(message);}
     public void printProcessActionMessage(String message){ui.sendProcessActionError(message);}
     public void printProcessFindDateMessage(){ui.sendProcessFindDateError();}
-    public void printProcessFindTaskMessage(){ui.sendProcessFindDateError();}
+    public void printProcessFindTaskMessage(){ui.sendProcessFindTaskError();}
     public int getIndex(String s) {
         if (!isInteger(s)){
             return -1;
@@ -97,14 +99,32 @@ public class Runner {
                 case MARK:
                     arrayList.get(idx).markTask();
                     printSingle(idx, true);
+
+                    try{
+                        saveFile();
+                    }catch(IOException e){
+                        ui.sendGenericWarning("IOException");
+                    }
                     break;
                 case UNMARK:
                     arrayList.get(idx).unmarkTask();
                     printSingle(idx, false);
+
+                    try{
+                        saveFile();
+                    }catch(IOException e){
+                        ui.sendGenericWarning("IOException");
+                    }
                     break;
                 case DELETE:
                     printTaskRemovedByIndex(idx);
                     arrayList.remove(idx);
+
+                    try{
+                        saveFile();
+                    }catch(IOException e){
+                        ui.sendGenericWarning("IOException");
+                    }
                     break;
             }
         }
@@ -112,17 +132,18 @@ public class Runner {
 
     private boolean processDue(Command c,String[] s){
         long convertedTime;
+
         switch (c){
             case EVENT:
                 String[] eventByInput = s[1].split("/at", 2);
                 if(eventByInput.length ==1){
-                    arrayList.add(new Event(eventByInput[0].trim(),0));
+                    arrayList.add(new Event(eventByInput[0].trim(),new long[]{}));
                 }else{
-                    convertedTime = DateProcessor.processDateTime(eventByInput[1].trim());
-                    if (convertedTime == -1){
+                    long[] convertedTimeRange = DateProcessor.processDateTimeRange(eventByInput[1].trim());
+                    if (convertedTimeRange== null){
                         return false;
                     }
-                    arrayList.add(new Event(eventByInput[0].trim(),convertedTime));
+                    arrayList.add(new Event(eventByInput[0].trim(),convertedTimeRange));
                 }
                 break;
             case DEADLINE:
@@ -179,12 +200,17 @@ public class Runner {
     //TODO: save and read from file
     public void saveFile() throws IOException {
         FileWriter writer = new FileWriter("output.txt");
+        //Name and time stamp
+        writer.write(System.getProperty("user.name") + System.lineSeparator());
+        writer.write(Instant.now().getEpochSecond() + System.lineSeparator());
+
         for(Task str: arrayList) {
-//            String s = str.getType() + "|" +
-//                    str.getStatusIcon() + "|" +
-//                    str.getDescription() + "|" +
-//                    str.getDue();
-            writer.write(str.toString() + System.lineSeparator());
+            String s = str.getType() + "," +
+                    str.getIsDone() + "," +
+                    str.getDescription() + "," +
+                    str.getDue() + "," +
+                    str.getTo();
+            writer.write(s + System.lineSeparator());
         }
         writer.close();
     }
@@ -201,7 +227,7 @@ public class Runner {
         }
 
         DateProcessor d = new DateProcessor();
-        return d.processDate(s[1]);
+        return DateProcessor.processDate(s[1]);
     }
     public void processFindDate(String[] s) {
         long d = checkFindDate(s);
@@ -242,7 +268,7 @@ public class Runner {
         ArrayList<Task> selected = new ArrayList<>(Arrays.asList(arr));
 
         for (Task t : this.arrayList){
-            if (t.getDescription().contains(k)){
+            if (Arrays.asList(t.getDescription().split(" ")).contains(k)){
                 selected.add(t);
             }
         }
