@@ -1,8 +1,8 @@
 package Interface;
 import Duke.Task;
-
+import Duke.TaskList;
+import Util.DateProcessor;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Ui {
     public enum UiIcon{
@@ -22,42 +22,56 @@ public class Ui {
         GENERIC(""),
         GENERIC_FORMATTED("%s"),
         INFO_WELCOME("Hello from Duke. What can I do for you?"),
+        INFO_WELCOME_EXISTING("Hello again, %s! Welcome back. What can I do for you?"),
+        INFO_LAST_SAVED("[Last Modified on %s]"),
         INFO_GOODBYE("Bye. Hope to see you again soon!"),
         ERROR_COMMAND_UNKNOWN("OOPS!!! I'm sorry, but I don't know what that means :( \n\tSpecify Todo / Deadline / Event. \n\tE.g. Todo <Task Name>"),
         ERROR_PROCESS_ACTION("OOPS!!! The selection to %s cannot be empty."),
         ERROR_PROCESS_COMMAND("OOPS!!! The description of %s cannot be empty."),
         ERROR_FIND_DATE("OOPS!!! The date to search cannot be empty."),
-        ERROR_FIND_TASK("OOPS!!! The keyword to search cannot be empty.");
+        ERROR_FIND_TASK("OOPS!!! The keyword to search cannot be empty."),
+        ERROR_VIEW_SCHEDULE("OOPS!!! The date to search cannot be empty.");
         public final String text;
         public String getText(){return this.text;}
         private UiMessage(String text) {
             this.text = text;
         }
     }
-    protected String format = "    ─────────────────────────────────────────\n    %s\n    ─────────────────────────────────────────\n";
+    protected String format = "    ───────────────────────────────────────────────────────────────────────────\n    %s\n    ───────────────────────────────────────────────────────────────────────────\n";
 
     public Ui() {}
+    private void sendPlain(UiMessage u,String m){System.out.printf("\t%s%n", String.format(u.getText(),m) );}
     private void sendWarning(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.WARNING.getIcon(), String.format(u.getText(),m) ));}
     private void sendInfo(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.INFO.getIcon(), String.format(u.getText(),m) ));}
     private void sendFatal(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.FATAL.getIcon(), String.format(u.getText(),m) ));}
     private void sendConfirmation(UiMessage u,String m){System.out.format(this.format, String.format("%s %s",UiIcon.CONFIRMATION.getIcon(), String.format(u.getText(),m) ));}
     public void sendConfirmedOutput(StringBuilder message){sendConfirmation(UiMessage.GENERIC_FORMATTED, String.valueOf(message));}
+    public void sendGenericPlain(String message){sendPlain(UiMessage.GENERIC_FORMATTED,message);}
     public void sendGenericInfo(String message){sendInfo(UiMessage.GENERIC_FORMATTED,message);}
     public void sendGenericWarning(String message){sendWarning(UiMessage.GENERIC_FORMATTED,message);}
     public void sendGenericFatal(String message){sendFatal(UiMessage.GENERIC_FORMATTED,message);}
+    public void sendGenericConfirmation(String message){sendConfirmation(UiMessage.GENERIC_FORMATTED,message);}
     public void sendProcessActionError(String message){sendFatal(UiMessage.ERROR_PROCESS_ACTION,message);}
     public void sendProcessCommandError(String message){sendFatal(UiMessage.ERROR_PROCESS_COMMAND,message);}
     public void sendCommandUnknownError(){sendFatal(UiMessage.ERROR_COMMAND_UNKNOWN,"");}
     public void sendProcessFindDateError(){sendFatal(UiMessage.ERROR_FIND_DATE,"");}
     public void sendProcessFindTaskError(){sendFatal(UiMessage.ERROR_FIND_TASK,"");}
+    public void sendProcessViewScheduleError(){sendFatal(UiMessage.ERROR_VIEW_SCHEDULE,"");}
 
-    public void sendWelcomeMessage(){
+    public void sendWelcomeMessage(TaskList t){
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
-        sendInfo(UiMessage.INFO_WELCOME,"");
+
+        if (t.getLastInfo() != null) {
+            sendInfo(UiMessage.INFO_WELCOME_EXISTING, t.getLastInfo()[0]);
+            printList(t.getList(),true);
+            sendPlain(UiMessage.INFO_LAST_SAVED,DateProcessor.unixToString(Long.parseLong(t.getLastInfo()[1])) );
+        }else{
+            sendInfo(UiMessage.INFO_WELCOME,"");
+        }
     }
     public void sendGoodbyeMessage(){sendInfo(UiMessage.INFO_GOODBYE,"");}
 

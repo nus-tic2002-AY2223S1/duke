@@ -38,7 +38,7 @@ public class DateProcessorTest {
     @Test
     public void unixToStringValidTest(){
         long l = 1667260800;
-        String expected = "01 Nov 2022, 08:00 Tue";
+        String expected = "Tue 01 Nov 2022, 08:00";
         String actual = DateProcessor.unixToString(l);
         assertEquals(expected, actual);
     }

@@ -18,6 +18,9 @@ public class Cmd {
         DELETE_TASK,
         FIND_DATE,
         FIND_TASK,
+        VIEW_SCHEDULE,
+        ARCHIVE,
+        RESTORE,
         RETURN,
         EXIT;
     }
@@ -68,6 +71,15 @@ public class Cmd {
                 break;
             case FIND_TASK:
                 r.processFindTask(input);
+                break;
+            case VIEW_SCHEDULE:
+                r.processViewSchedule(input);
+                break;
+            case ARCHIVE:
+                r.processArchive();
+                break;
+            case RESTORE:
+                this.isExit = r.processRestore(input);
                 break;
             case EXIT:
                 r.printExitMessage();

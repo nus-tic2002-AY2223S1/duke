@@ -11,7 +11,7 @@ import java.util.TimeZone;
 public class DateProcessor {
     static SimpleDateFormat dateTimeToUnixFormat = new SimpleDateFormat("dd/MM/yyyy HHmm");
     static SimpleDateFormat dateToUnixFormat = new SimpleDateFormat("dd/MM/yyyy");
-    static SimpleDateFormat unixToStringFormat = new SimpleDateFormat("dd MMM yyyy, HH:mm E");
+    static SimpleDateFormat unixToStringFormat = new SimpleDateFormat("E dd MMM yyyy, HH:mm");
     static Ui ui = new Ui();;
     public DateProcessor(){
     }
@@ -61,7 +61,62 @@ public class DateProcessor {
         return dateTimeToUnix(concatDateTime(parsed[0],parsed[1]));
     }
 
-    public long processDate(String s){
+    public static long[] processDateTimeRange(String s){
+        // 1/1/1999 0900 - 2/2/1999 0900
+        // 1/1/1999 - 2/2/1999
+        // 1/1/1999
+        String[] parsedRange = s.split("-", 2);
+
+        if (parsedRange.length == 1) {
+            if(s.contains(" ")){
+                ui.sendGenericWarning("Invalid format. Range has to be \n\tdd/mm/yyyy  \n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+                return null;
+            }
+            //all day event
+            // 1/1/1999 0000 - 1/1/1999 2359
+            long timeFrom = processDate(parsedRange[0]);
+
+            if (timeFrom == -1){
+                return null;
+            }
+            return new long[]{timeFrom,timeFrom+86399} ;
+        }
+
+        if (parsedRange.length != 2) {
+            ui.sendGenericWarning("Specify a range. Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+            return null;
+        }
+
+        if(!s.contains("-")){
+            ui.sendGenericWarning("Invalid format.");
+            return null;
+        }
+
+        String[] parsedDateFrom = parsedRange[0].trim().split(" ", 2);
+        String[] parsedDateTo = parsedRange[1].trim().split(" ", 2);
+
+        if (parsedDateFrom.length == 1 && parsedDateTo.length == 1) {
+            System.out.println("day - day");
+            return new long[]{processDate(parsedDateFrom[0].trim()),processDate(parsedDateTo[0].trim())+86399} ;
+        }
+
+        if (parsedDateFrom.length == 1 || parsedDateTo.length == 1) {
+            ui.sendGenericWarning("Invalid time range. Range start and end should be consistent. Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+            return null;
+        }
+
+        // time to time
+        long timeFrom = processDateTime(parsedRange[0].trim());
+        long timeTo = processDateTime(parsedRange[1].trim());
+
+        if(timeFrom == -1 || timeTo == -1){
+            ui.sendGenericWarning("Invalid time range. Range start and end should be consistent. Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+            return null;
+        }
+        return new long[]{timeFrom,timeTo};
+    }
+
+    public static long processDate(String s){
         if (!checkDate(s)){
             return -1;
         }
