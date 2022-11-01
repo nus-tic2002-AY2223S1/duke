@@ -41,11 +41,9 @@ public class Runner {
     protected Ui ui;
     protected boolean isExit;
     protected ArrayList<Task> arrayList;
-    DateProcessor d;
     public Runner(ArrayList<Task> a) {
         arrayList = a;
         ui = new Ui();
-         d = new DateProcessor();
     }
     public void run(ArrayList<Task> tasks, Ui runtimeUi) throws DukeException {
         arrayList = tasks;
@@ -120,7 +118,7 @@ public class Runner {
                 if(eventByInput.length ==1){
                     arrayList.add(new Event(eventByInput[0].trim(),0));
                 }else{
-                    convertedTime = d.processDateTime(eventByInput[1].trim());
+                    convertedTime = DateProcessor.processDateTime(eventByInput[1].trim());
                     if (convertedTime == -1){
                         return false;
                     }
@@ -132,7 +130,7 @@ public class Runner {
                 if(deadlineByInput.length ==1){
                     arrayList.add(new Deadline(deadlineByInput[0].trim(),0));
                 }else{
-                    convertedTime = d.processDateTime(deadlineByInput[1].trim());
+                    convertedTime = DateProcessor.processDateTime(deadlineByInput[1].trim());
                     if (convertedTime == -1){
                         return false;
                     }
@@ -144,7 +142,7 @@ public class Runner {
                 if(todoByInput.length ==1){
                     arrayList.add(new Todo(todoByInput[0].trim(),0));
                 }else{
-                    convertedTime = d.processDateTime(todoByInput[1].trim());
+                    convertedTime = DateProcessor.processDateTime(todoByInput[1].trim());
                     if (convertedTime == -1){
                         return false;
                     }

@@ -47,3 +47,9 @@ run{
     standardInput = System.in
     enableAssertions = true
 }
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+    scanForTestClasses = false
+//    include "**/*Test.class" // whatever Ant pattern matches your test class files
+}

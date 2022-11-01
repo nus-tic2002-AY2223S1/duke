@@ -12,37 +12,81 @@ public class DateProcessorTest {
 
     @Test
     public void dateTimeToUnixInvalidTest(){
-        DateProcessor d = new DateProcessor();
         String s = ".1/4/1999 0000";
         long expected = -1;
-        long actual = d.dateTimeToUnix(s);
+        long actual = DateProcessor.dateTimeToUnix(s);
         assertEquals(expected, actual);
     }
 
     @Test
     public void dateTimeToUnixValidTest(){
-        DateProcessor d = new DateProcessor();
         String s = "1/4/1999 0000";
         long expected = 922896000;
-        long actual = d.dateTimeToUnix(s);
+        long actual = DateProcessor.dateTimeToUnix(s);
         assertEquals(expected, actual);
     }
 
     @Test
     public void dateToUnixInvalidTest(){
-        DateProcessor d = new DateProcessor();
         String s = ".1/4/1999";
         long expected = -1;
-        long actual = d.dateToUnix(s);
+        long actual = DateProcessor.dateToUnix(s);
         assertEquals(expected, actual);
     }
 
     @Test
     public void dateToUnixValidTest(){
-        DateProcessor d = new DateProcessor();
         String s = "1/4/1999";
         long expected = 922896000;
-        long actual = d.dateTimeToUnix(s);
+        long actual = DateProcessor.dateTimeToUnix(s);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void unixToStringValidTest(){
+        long l = 1667260800;
+        String expected = "01 Nov 2022, 08:00 Tue";
+        String actual = DateProcessor.unixToString(l);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void processDateTimeNoTimeTest(){
+        String s = "1/4/1999";
+        long expected = -1;
+        long actual = DateProcessor.processDateTime(s);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void processDateTimeInvalidTimeTest(){
+        String s = "1/4/1999 900";
+        long expected = -1;
+        long actual = DateProcessor.processDateTime(s);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void processDateTimeInvalidDateYYYYTest(){
+        String s = "1/4/99 0900";
+        long expected = -1;
+        long actual = DateProcessor.processDateTime(s);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void processDateTimeInvalidDateDDMMTest(){
+        String s = "1/99 0900";
+        long expected = -1;
+        long actual = DateProcessor.processDateTime(s);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void processDateTimeValidTest(){
+        String s = "1/4/1999 0000";
+        long expected = 922896000;
+        long actual = DateProcessor.processDateTime(s);
         assertEquals(expected, actual);
     }
 }
