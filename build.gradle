@@ -55,7 +55,7 @@ dependencies {
 }
 
 application {
-    mainClassName = "Duke.GUI.Launcher"
+    mainClassName = "duke.gui.Launcher"
 }
 
 shadowJar {

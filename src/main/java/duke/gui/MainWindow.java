@@ -103,12 +103,12 @@ public class MainWindow extends AnchorPane {
         userInput.clear();
 
         ActionListener taskPerformer2 = evt -> Platform.runLater(() -> {
-            chatLabel.setText("duke");
+            chatLabel.setText("Duke");
             dialogContainer.getChildren().addAll(
                     DialogBox.getDukeDialog(response, dukeImage)
             );
         });
-        int randTime = (int) (Math.random() * (1500 - 500));
+        int randTime = (int) (Math.random() * (2000 - 1000));
         Timer timer2 = new Timer((randTime), taskPerformer2);
         System.out.println(randTime);
         chatLabel.setText("Duke is typing...");
