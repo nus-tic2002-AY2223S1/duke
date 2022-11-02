@@ -41,7 +41,7 @@ public class Duke {
             }
         }
         public static void printTask(int index){
-            System.out.println(" [" + tasklist.get(index).getTypetask() + "]" +
+            System.out.println("[" + tasklist.get(index).getTypetask() + "]" +
                             "[" + tasklist.get(index).getDone() + "] " +
                             tasklist.get(index).getDescription() + " " +
                             tasklist.get(index).getString());
@@ -55,6 +55,10 @@ public class Duke {
             System.out.println("Noted. I've removed this task:");
             Ui.printTask(index);
             System.out.println("Now you have " + (indexTask-1) + " tasks in the list");
+        }
+        public static void printFind(int index, int countfind){
+            System.out.print(countfind + ".");
+            printTask(index);
         }
 
         public static void exit() {
@@ -115,6 +119,8 @@ public class Duke {
                         deleteCommand(Integer.parseInt(desTask)-1);
                         indexTask--;
                         break;
+                    case "find":
+                        findCommand(desTask);
                     case "bye":
                         break;
                     default:
@@ -154,6 +160,17 @@ public class Duke {
             Ui.printDeleted(index);
             tasklist.remove(index);
         }
+        public static void findCommand(String find){
+            int findCount = 0;
+
+            System.out.println("Here are the matching tasks in your list:");
+            for (int i = 0; i < indexTask; i++){
+                if(tasklist.get(i).find(find)){
+                    findCount++;
+                    Ui.printFind(i, findCount);
+                }
+            }
+        }
 
     }
 
@@ -188,7 +205,9 @@ public class Duke {
         public void unmarkDone(){
             this.isDone = false;
         }
-
+        public boolean find(String find){
+            return this.description.contains(find);
+        }
     }
     public static class Todo extends Task{
         public Todo(String description){
