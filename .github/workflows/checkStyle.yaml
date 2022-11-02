@@ -23,5 +23,3 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run checkStyle
         run: ./gradlew checkStyleMain
-        with:
-          fail_ci_if_error: false
