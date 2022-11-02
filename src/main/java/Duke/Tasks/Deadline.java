@@ -1,6 +1,6 @@
-package Duke;
+package Duke.Tasks;
 
-import Util.DateProcessor;
+import Duke.Util.DateProcessor;
 
 public class Deadline extends Task {
     protected String type = "D";
@@ -12,7 +12,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return (this.due == 0 ? "\t[D]" + super.toString() : "\t[D]" + super.toString() + " (by: " + DateProcessor.unixToString(this.due)  + ")");
+        return (this.due == 0 ? "\t[D]" + super.toString() : "\t[D]" + super.toString() + " (by: " + DateProcessor.unixToString(this.due) + ")");
     }
 
     @Override

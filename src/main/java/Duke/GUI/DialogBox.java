@@ -1,9 +1,9 @@
-package Duke;
+package Duke.GUI;
+
 import java.io.IOException;
 import java.util.Collections;
 
-import Interface.Ui;
-import Util.DateProcessor;
+import Duke.Util.DateProcessor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,11 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
-/**
- * An example of a custom control using FXML.
- * This control represents a dialog box consisting of an ImageView to represent the speaker's face and a label
- * containing text from the speaker.
- */
 public class DialogBox extends HBox {
     @FXML
     private Label dialog;
@@ -28,7 +23,7 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
-    private DialogBox(String text, Image img,String userSpecific, boolean isDuke) {
+    private DialogBox(String text, Image img, String userSpecific, boolean isDuke) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
@@ -37,13 +32,13 @@ public class DialogBox extends HBox {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(isDuke){
+        if (isDuke) {
             meta.setText(DateProcessor.getMetaTimeStamp());
-        }else{
+        } else {
             meta.setText(DateProcessor.getMetaTimeStamp() + " ✓");
         }
         dialog.setText(text);
-        dialog.setStyle(userSpecific+";-fx-padding:10;-fx-label-padding:2,0,2,0;-fx-wrap-text:true;-fx-background-radius:10;-fx-max-width:500");
+        dialog.setStyle(userSpecific + ";-fx-padding:10;-fx-label-padding:2,0,2,0;-fx-wrap-text:true;-fx-background-radius:10;-fx-max-width:500");
         displayPicture.setImage(img);
     }
 
@@ -58,11 +53,11 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img,"-fx-background-color: #90ee90",false);
+        return new DialogBox(text, img, "-fx-background-color: #90ee90", false);
     }
 
     public static DialogBox getDukeDialog(String text, Image img) {
-        var db = new DialogBox(text, img,"-fx-background-color: #dcdcdc",true);
+        var db = new DialogBox(text, img, "-fx-background-color: #dcdcdc", true);
         db.flip();
         return db;
     }

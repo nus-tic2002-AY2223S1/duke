@@ -10,34 +10,37 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1000.0" maxWidth="800.0" minHeight="1000.0" minWidth="800.0" prefHeight="1000.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duke.MainWindow">
+<AnchorPane maxHeight="1000.0" maxWidth="800.0" minHeight="1000.0" minWidth="800.0" prefHeight="1000.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duke.GUI.MainWindow">
     <TextField fx:id="userInput" layoutX="14.0" layoutY="935.0" maxHeight="41.0" maxWidth="511.0" minHeight="41.0" minWidth="511.0" onAction="#handleUserInput" prefHeight="41.0" prefWidth="511.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="282.0">
         <padding>
-        <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
         </padding>
         <font>
-        <Font size="15.0" />
+            <Font size="15.0" />
         </font>
     </TextField>
     <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" hvalue="1.0" layoutY="46.0" prefHeight="873.0" prefWidth="800.0" vbarPolicy="NEVER" vvalue="1.0">
         <VBox fx:id="dialogContainer" />
     </ScrollPane>
-    <Button fx:id="quitButton" layoutX="623.0" layoutY="935.0" mnemonicParsing="false" onAction="#quitAction" prefHeight="41.0" prefWidth="76.0" text="Quit">
-      <tooltip>
-         <Tooltip text="Quit" />
-      </tooltip></Button>
+    <Button fx:id="listButton" layoutX="623.0" layoutY="935.0" mnemonicParsing="false" onAction="#listAction" prefHeight="41.0" prefWidth="76.0" text="List">
+        <tooltip>
+            <Tooltip text="Quit" />
+        </tooltip>
+    </Button>
     <Button fx:id="sendButton" layoutX="536.0" layoutY="935.0" mnemonicParsing="false" onAction="#handleUserInput" prefHeight="41.0" prefWidth="76.0" text="Send" AnchorPane.bottomAnchor="24.0" AnchorPane.rightAnchor="188.0">
-      <tooltip>
-         <Tooltip text="Send" />
-      </tooltip></Button>
+        <tooltip>
+            <Tooltip text="Send" />
+        </tooltip>
+    </Button>
     <Button fx:id="refreshButton" layoutX="710.0" layoutY="935.0" mnemonicParsing="false" onAction="#refreshAction" prefHeight="41.0" prefWidth="76.0" text="Refresh">
-      <tooltip>
-         <Tooltip text="Refresh" />
-      </tooltip></Button>
-   <Label fx:id="status" alignment="CENTER_RIGHT" layoutX="748.0" layoutY="978.0" text="Online" />
-   <Label layoutX="378.0" layoutY="8.0" text="Duke">
-      <font>
-         <Font size="20.0" />
-      </font>
-   </Label>
+        <tooltip>
+            <Tooltip text="Refresh" />
+        </tooltip>
+    </Button>
+    <Label fx:id="status" alignment="CENTER_RIGHT" layoutX="623.0" layoutY="978.0" prefHeight="17.0" prefWidth="161.0" text="Online" />
+    <Label fx:id="chatLabel" alignment="CENTER" layoutX="-2.0" layoutY="8.0" prefHeight="26.0" prefWidth="800.0" text="Duke">
+        <font>
+            <Font size="20.0" />
+        </font>
+    </Label>
 </AnchorPane>

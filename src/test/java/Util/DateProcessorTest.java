@@ -1,8 +1,8 @@
 package Util;
-import Duke.Duke;
-import org.junit.jupiter.api.Test;
 
-import java.text.ParseException;
+import Duke.Util.DateProcessor;
+import Duke.Util.DukeException;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +14,7 @@ public class DateProcessorTest {
 
         try {
             DateProcessor.processDateTime(s);
-        }catch (DukeException e){
+        } catch (DukeException e) {
             assertEquals(expected.getMessage(), e.getMessage());
         }
     }
@@ -28,7 +28,7 @@ public class DateProcessorTest {
     }
 
     @Test
-    public void dateToUnixInvalidTest(){
+    public void dateToUnixInvalidTest() {
         String s = ".1/4/1999";
         long expected = -1;
         long actual = DateProcessor.dateToUnix(s);
@@ -44,7 +44,7 @@ public class DateProcessorTest {
     }
 
     @Test
-    public void unixToStringValidTest(){
+    public void unixToStringValidTest() {
         long l = 1667260800;
         String expected = "Tue 01 Nov 2022, 08:00";
         String actual = DateProcessor.unixToString(l);
@@ -58,31 +58,31 @@ public class DateProcessorTest {
 
         try {
             DateProcessor.processDateTime(s);
-        }catch (DukeException e){
+        } catch (DukeException e) {
             assertEquals(expected.getMessage(), e.getMessage());
         }
     }
 
     @Test
-    public void processDateTimeInvalidTimeTest(){
+    public void processDateTimeInvalidTimeTest() {
         String s = "1/4/1999 900";
         DukeException expected = new DukeException("⚠️ Invalid time format. Time has to be 0000 ~ 2359.");
 
         try {
             DateProcessor.processDateTime(s);
-        }catch (DukeException e){
+        } catch (DukeException e) {
             assertEquals(expected.getMessage(), e.getMessage());
         }
     }
 
     @Test
-    public void processDateTimeInvalidDateYYYYTest(){
+    public void processDateTimeInvalidDateYYYYTest() {
         String s = "1/4/99 0900";
         DukeException expected = new DukeException("⚠️ Invalid year format. Year has to be yyyy.");
 
         try {
             DateProcessor.processDateTime(s);
-        }catch (DukeException e){
+        } catch (DukeException e) {
             assertEquals(expected.getMessage(), e.getMessage());
         }
     }
@@ -93,7 +93,7 @@ public class DateProcessorTest {
         DukeException expected = new DukeException("⚠️ Invalid date format. Date time has to be dd/mm/yyyy.");
         try {
             DateProcessor.processDateTime(s);
-        }catch (DukeException e){
+        } catch (DukeException e) {
             assertEquals(expected.getMessage(), e.getMessage());
         }
     }

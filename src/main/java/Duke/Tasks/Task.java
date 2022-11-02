@@ -1,6 +1,4 @@
-package Duke;
-
-import Util.DateProcessor;
+package Duke.Tasks;
 
 public class Task {
     protected String description;
@@ -15,13 +13,13 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "X" : " ");
     }
 
-    //Assumes users will repeatedly call mark / unmark, so we cannot just invert the value
     public void markTask() {
         this.isDone = true;
     }
+
     public void unmarkTask() {
         this.isDone = false;
     }
@@ -41,6 +39,7 @@ public class Task {
     public long getTo() {
         return this.to;
     }
+
     public String getDescription() {
         return this.description;
     }

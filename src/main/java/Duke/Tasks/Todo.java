@@ -1,6 +1,6 @@
-package Duke;
+package Duke.Tasks;
 
-import Util.DateProcessor;
+import Duke.Util.DateProcessor;
 
 public class Todo extends Task {
     protected String type = "T";
