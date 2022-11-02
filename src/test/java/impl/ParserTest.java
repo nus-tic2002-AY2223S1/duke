@@ -1,10 +1,11 @@
-package Interface;
+package impl;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import duke.impl.Cmd;
 import duke.impl.Parser;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ParserTest {
     @Test

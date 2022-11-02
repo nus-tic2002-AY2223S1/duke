@@ -1,14 +1,15 @@
-package Interface;
+package impl;
+
+import org.junit.jupiter.api.Test;
+
+import java.io.FileNotFoundException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import duke.impl.Storage;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.tasks.Todo;
-import org.junit.jupiter.api.Test;
-
-import java.io.FileNotFoundException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class StorageTest {
     @Test

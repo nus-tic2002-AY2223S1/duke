@@ -1,10 +1,11 @@
 package utils;
 
-import duke.utils.DateProcessor;
-import duke.utils.DukeException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import duke.utils.DateProcessor;
+import duke.utils.DukeException;
 
 public class DateProcessorTest {
     @Test
@@ -76,7 +77,7 @@ public class DateProcessorTest {
     }
 
     @Test
-    public void processDateTimeInvalidDateYYYYTest() {
+    public void processDateTimeInvalidDateYearTest() {
         String s = "1/4/99 0900";
         DukeException expected = new DukeException("⚠️ Invalid year format. Year has to be yyyy.");
 
@@ -88,7 +89,7 @@ public class DateProcessorTest {
     }
 
     @Test
-    public void processDateTimeInvalidDateDDMMTest() throws DukeException {
+    public void processDateTimeInvalidDateTest() {
         String s = "1/99 0900";
         DukeException expected = new DukeException("⚠️ Invalid date format. Date time has to be dd/mm/yyyy.");
         try {
