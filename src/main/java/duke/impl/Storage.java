@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Storage class to read data from file.
+ */
 public class Storage {
     protected String path;
 

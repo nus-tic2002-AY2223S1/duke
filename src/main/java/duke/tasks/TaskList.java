@@ -5,11 +5,19 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * Main class to process restoring of Tasks
+ */
 public class TaskList {
     private final ArrayList<Task> arrayList;
     private String lastSaveTimeStamp;
     private String lastUserName;
 
+    /**
+     * Initializes the state of Tasks from file
+     *
+     * @param s Scanner object from file read
+     */
     public TaskList(Scanner s) {
         Task[] arr = {};
         this.arrayList = new ArrayList<>(Arrays.asList(arr));
@@ -28,7 +36,9 @@ public class TaskList {
 
             switch (parsed[0]) {
             case "E":
-                arrayList.add(new Event(parsed[2].trim(), new long[]{Long.parseLong(parsed[3]), Long.parseLong(parsed[4])}));
+                arrayList.add(new Event(parsed[2].trim(), new long[]{
+                        Long.parseLong(parsed[3]),
+                        Long.parseLong(parsed[4])}));
                 break;
             case "T":
                 arrayList.add(new Todo(parsed[2].trim(), Long.parseLong(parsed[3])));
@@ -45,6 +55,9 @@ public class TaskList {
         }
     }
 
+    /**
+     * Initializes an empty list of Task
+     */
     public TaskList() {
         Task[] arr = {};
         this.arrayList = new ArrayList<>(Arrays.asList(arr));

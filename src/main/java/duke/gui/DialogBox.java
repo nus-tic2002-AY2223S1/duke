@@ -15,6 +15,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+/**
+ * Renders the chat bubble for both User and Duke
+ */
 public class DialogBox extends HBox {
     @FXML
     private Label dialog;
@@ -38,7 +41,12 @@ public class DialogBox extends HBox {
             meta.setText(DateProcessor.getMetaTimeStamp() + " \u2713");
         }
         dialog.setText(text);
-        dialog.setStyle(userSpecific + ";-fx-padding:10;-fx-label-padding:2,0,2,0;-fx-wrap-text:true;-fx-background-radius:10;-fx-max-width:500");
+        dialog.setStyle(userSpecific
+                + ";-fx-padding:10;"
+                + "-fx-label-padding:2,0,2,0;"
+                + "-fx-wrap-text:true;"
+                + "-fx-background-radius:10;"
+                + "-fx-max-width:500");
         displayPicture.setImage(img);
     }
 

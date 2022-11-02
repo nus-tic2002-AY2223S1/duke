@@ -1,16 +1,16 @@
 package duke.gui;
 
-import java.awt.*;
+import java.awt.Desktop;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Objects;
-import javax.swing.*;
+import javax.swing.Timer;
 
 import duke.Duke;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -22,22 +22,39 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * Main window of the chat. Container of dialogBox, menu bar and buttons.
+ */
 public class MainWindow extends AnchorPane {
-    public Label listButton;
-    public Label refreshButton;
-    public Label status;
-    public Label chatLabel;
-    private final Image userImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/images/gigachad.png")));
-    private final Image dukeImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/images/duke.png")));
-    public MenuItem menuCloseButton;
-    public Menu menuFile;
-    public MenuBar menuBar;
-    public MenuItem menuRefreshButton;
-    public MenuItem menuArchiveButton;
-    public MenuItem menuRestoreButton;
-
     private Duke duke;
     private boolean newChat = true;
+    @FXML
+    private Label listButton;
+    @FXML
+    private Label refreshButton;
+    @FXML
+    private Label status;
+    @FXML
+    private Label chatLabel;
+    private final Image userImage = new Image(
+            Objects.requireNonNull(
+                    this.getClass().getResourceAsStream("/images/gigachad.png")));
+    private final Image dukeImage = new Image(
+            Objects.requireNonNull(
+                    this.getClass().getResourceAsStream("/images/duke.png")));
+    @FXML
+    private MenuItem menuCloseButton;
+    @FXML
+    private Menu menuFile;
+    @FXML
+    private MenuBar menuBar;
+    @FXML
+    private MenuItem menuRefreshButton;
+    @FXML
+    private MenuItem menuArchiveButton;
+    @FXML
+    private MenuItem menuRestoreButton;
+
     @FXML
     private ScrollPane scrollPane;
     @FXML

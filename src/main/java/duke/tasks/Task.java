@@ -1,5 +1,8 @@
 package duke.tasks;
 
+/**
+ * Main Class for Tasks
+ */
 public class Task {
     protected String description;
     protected String type = "Task";
@@ -7,6 +10,12 @@ public class Task {
     protected long to = 0;
     protected boolean isDone;
 
+    /**
+     * Initialized a Task
+     * Initialized task description and state of completion
+     *
+     * @param description Description of task
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;

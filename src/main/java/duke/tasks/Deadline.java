@@ -2,9 +2,19 @@ package duke.tasks;
 
 import duke.utils.DateProcessor;
 
+/**
+ * Inherited Task for Deadline
+ */
 public class Deadline extends Task {
     protected String type = "D";
 
+    /**
+     * Initialized a Deadline Task
+     * Initialized task description and due time
+     *
+     * @param description Description of task
+     * @param due         UNIX timestamp of due time
+     */
     public Deadline(String description, long due) {
         super(description);
         this.due = due;
@@ -12,7 +22,9 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return (this.due == 0 ? "\t[D]" + super.toString() : "\t[D]" + super.toString() + " (by: " + DateProcessor.unixToString(this.due) + ")");
+        return (this.due == 0
+                ? "\t[D]" + super.toString()
+                : "\t[D]" + super.toString() + " (by: " + DateProcessor.unixToString(this.due) + ")");
     }
 
     @Override
