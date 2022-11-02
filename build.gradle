@@ -1,9 +1,14 @@
-
 plugins {
     id 'java'
     id 'application'
-//    id 'checkstyle'
+    id 'checkstyle'
     id 'com.github.johnrengelman.shadow' version '5.1.0'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+}
+
+checkstyle {
+    toolVersion = '8.29'
+    ignoreFailures = true
 }
 
 repositories {
@@ -14,6 +19,20 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.0'
+    String javaFxVersion = '11'
+
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'linux'
 }
 
 test {
@@ -36,7 +55,7 @@ dependencies {
 }
 
 application {
-    mainClassName = "seedu.duke.Duke"
+    mainClassName = "duke.gui.Launcher"
 }
 
 shadowJar {
@@ -44,7 +63,7 @@ shadowJar {
     archiveClassifier = null
 }
 
-run{
+run {
     standardInput = System.in
     enableAssertions = true
 }
@@ -52,7 +71,7 @@ run{
 tasks.withType(Test) {
     useJUnitPlatform()
     scanForTestClasses = false
-//    include "**/*Test.class" // whatever Ant pattern matches your test class files
+
 }
 apply plugin: 'java'
 
@@ -67,3 +86,7 @@ jacocoTestReport {
 
 check.dependsOn jacocoTestReport
 
+javafx {
+    version = "19"
+    modules = ['javafx.controls', 'javafx.fxml']
+}
