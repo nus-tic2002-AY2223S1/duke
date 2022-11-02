@@ -14,7 +14,7 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    private final String path = "save/output.txt";
+    private final String path = "data/save/output.txt";
     private final Duke duke = new Duke(path);
 
     @Override
