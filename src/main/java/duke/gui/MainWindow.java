@@ -1,14 +1,20 @@
 package duke.gui;
 
+import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.*;
 import java.util.Objects;
-import javax.swing.Timer;
+import javax.swing.*;
 
 import duke.Duke;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -23,6 +29,12 @@ public class MainWindow extends AnchorPane {
     public Label chatLabel;
     private final Image userImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/images/gigachad.png")));
     private final Image dukeImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/images/duke.png")));
+    public MenuItem menuCloseButton;
+    public Menu menuFile;
+    public MenuBar menuBar;
+    public MenuItem menuRefreshButton;
+    public MenuItem menuArchiveButton;
+    public MenuItem menuRestoreButton;
 
     private Duke duke;
     private boolean newChat = true;
@@ -142,5 +154,34 @@ public class MainWindow extends AnchorPane {
         Stage stage = (Stage) refreshButton.getScene().getWindow();
         Main m = new Main();
         m.start(stage);
+    }
+
+    @FXML
+    private void exitAction() {
+        Stage stage = (Stage) menuBar.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void restoreAction() {
+        handleMenuInput("restore");
+    }
+
+    @FXML
+    private void archiveAction() {
+        handleMenuInput("archive");
+    }
+
+    @FXML
+    private void aboutAction() throws IOException, URISyntaxException {
+        Desktop.getDesktop().browse(new URI("https://github.com/aaronangxz/duke"));
+    }
+
+    @FXML
+    private void handleMenuInput(String command) {
+        String response = duke.getResponse(command);
+        dialogContainer.getChildren().addAll(
+                DialogBox.getDukeDialog(response, dukeImage)
+        );
     }
 }

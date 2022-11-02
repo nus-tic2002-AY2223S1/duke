@@ -486,7 +486,6 @@ public class Runner {
         StringBuilder s = new StringBuilder();
         s.append(printListFilesHeaderMessage());
         for (File listOfFile : listOfFiles) {
-            System.out.println(listOfFile.getName());
             if (listOfFile.isFile() && !listOfFile.getName().equals(".gitkeep")) {
                 this.fileMap.put(i, listOfFile.getName());
                 s.append(ui
