@@ -17,7 +17,9 @@ public class FileManager {
     private static final String DIRECTORY_PATH = "/data";
     private static final String FILE_NAME = "duke.txt";
     private static String projectDirectory;
-
+ 
+    private FileManager() {
+    }
     public static void newInstance() {
         instance = new FileManager();
         projectDirectory = System.getProperty("user.dir");
