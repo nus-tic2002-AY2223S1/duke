@@ -195,7 +195,7 @@ public class Runner {
         return i;
     }
 
-    public boolean isInteger(String s) throws DukeException {
+    private boolean isInteger(String s) throws DukeException {
         try {
             Integer.parseInt(s);
             return true;
@@ -204,7 +204,7 @@ public class Runner {
         }
     }
 
-    public String processAction(Action a, String[] s) {
+    protected String processAction(Action a, String[] s) {
         if (s.length == 1) {
             return printProcessActionMessage(a.getLabel());
         }
@@ -250,7 +250,7 @@ public class Runner {
         return "";
     }
 
-    private void processDue(Command c, String[] s) throws DukeException {
+    protected void processDue(Command c, String[] s) throws DukeException {
         long convertedTime;
 
         switch (c) {
@@ -308,7 +308,7 @@ public class Runner {
         }
     }
 
-    public String processAddTask(Command c, String[] s) {
+    protected String processAddTask(Command c, String[] s) {
         if (s.length == 1) {
             return printProcessCommandMessage(c.getLabel());
         }
@@ -331,7 +331,7 @@ public class Runner {
         return printNewTaskAdded();
     }
 
-    public void restoreFile(int selection) throws IOException {
+    private void restoreFile(int selection) throws IOException {
         String path = "";
         Files.createDirectories(Paths.get(ARCHIVE_CACHE_DIR));
         Scanner scn = new Scanner(new File(ARCHIVE_CACHE_FILE_PATH));
@@ -347,14 +347,14 @@ public class Runner {
         TaskList t = new TaskList(new Scanner(new File(toReplace.toString())));
     }
 
-    public boolean archiveFile() throws IOException {
+    private boolean archiveFile() throws IOException {
         String archiveFileName = "archive_" + getCurrentUserName() + "_" + getCurrentTimeStamp() + ".txt";
         File fileToMove = new File(SAVED_FILE_PATH);
         Files.createDirectories(Paths.get(ARCHIVE_DIR));
         return fileToMove.renameTo(new File(ARCHIVE_DIR, archiveFileName));
     }
 
-    public void saveFile() throws IOException {
+    private void saveFile() throws IOException {
         Files.createDirectories(Paths.get(SAVED_DIR));
         FileWriter writer = new FileWriter(SAVED_FILE_PATH);
         writer.write(getCurrentUserName() + System.lineSeparator());
@@ -371,7 +371,7 @@ public class Runner {
         writer.close();
     }
 
-    public void cacheFile() throws IOException {
+    private void cacheFile() throws IOException {
         Files.createDirectories(Paths.get(ARCHIVE_CACHE_DIR));
         FileWriter writer = new FileWriter(ARCHIVE_CACHE_FILE_PATH);
 
@@ -401,7 +401,7 @@ public class Runner {
         }
     }
 
-    public String processFindDate(String[] s) {
+    protected String processFindDate(String[] s) {
         long d;
 
         try {
@@ -439,7 +439,7 @@ public class Runner {
         return s[1];
     }
 
-    public String processFindTask(String[] s) {
+    protected String processFindTask(String[] s) {
         String k;
 
         try {
@@ -459,7 +459,7 @@ public class Runner {
         return printFoundList(selected, true, s[1]);
     }
 
-    public String processArchive() {
+    protected String processArchive() {
         try {
             if (archiveFile()) {
                 arrayList.clear();
@@ -504,7 +504,7 @@ public class Runner {
         return String.valueOf(s);
     }
 
-    public String processRestore(String[] s) {
+    protected String processRestore(String[] s) {
         try {
             if (s.length == 1) {
                 return listFiles();

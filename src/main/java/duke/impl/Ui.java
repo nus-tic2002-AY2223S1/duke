@@ -1,17 +1,34 @@
 package duke.impl;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.utils.DateProcessor;
 
+/**
+ * Main class to generate text responses
+ */
 public class Ui {
+    /**
+     * Enum of icon types
+     */
     public enum UiIcon {
+        /**
+         * Icon of FATAL messages
+         */
         FATAL("\u2716"),
-        WARNING("\u2757️"),
+        /**
+         * Icon of WARNING messages
+         */
+        WARNING("\u0021"),
+        /**
+         * Icon of INFO messages
+         */
         INFO("\u00bb"),
+        /**
+         * Icon of CONFIRMATION messages
+         */
         CONFIRMATION("\u2714");
 
         public final String icon;
@@ -25,6 +42,9 @@ public class Ui {
         }
     }
 
+    /**
+     * Enum of messages
+     */
     public enum UiMessage {
         GENERIC(""),
         GENERIC_FORMATTED("%s"),
@@ -32,7 +52,9 @@ public class Ui {
         INFO_WELCOME_EXISTING("Hello again, %s! Welcome back. What can I do for you?"),
         INFO_LAST_SAVED("[Last Modified on %s]"),
         INFO_GOODBYE("Bye. Hope to see you again soon!"),
-        ERROR_COMMAND_UNKNOWN("I'm sorry, but I don't know what that means :( \nSpecify a Todo / Deadline / Event. \n\t \u27a4 Todo <Task Name>"),
+        ERROR_COMMAND_UNKNOWN("I'm sorry, but I don't know what that means :( "
+                + "\nSpecify a Todo / Deadline / Event. "
+                + "\n\t \u27a4 Todo <Task Name>"),
         ERROR_PROCESS_ACTION("The selection to %s cannot be empty."),
         ERROR_PROCESS_COMMAND("The description of %s cannot be empty."),
         ERROR_FIND_DATE("The date to search cannot be empty."),
@@ -63,19 +85,23 @@ public class Ui {
     }
 
     private String sendWarning(UiMessage u, String m) {
-        return String.format(this.format, String.format("%s %s", UiIcon.WARNING.getIcon(), String.format(u.getText(), m)));
+        return String.format(this.format,
+                String.format("%s %s", UiIcon.WARNING.getIcon(), String.format(u.getText(), m)));
     }
 
     private String sendInfo(UiMessage u, String m) {
-        return String.format(this.format, String.format("%s %s", UiIcon.INFO.getIcon(), String.format(u.getText(), m)));
+        return String.format(this.format,
+                String.format("%s %s", UiIcon.INFO.getIcon(), String.format(u.getText(), m)));
     }
 
     private String sendFatal(UiMessage u, String m) {
-        return String.format(this.format, String.format("%s %s", UiIcon.FATAL.getIcon(), String.format(u.getText(), m)));
+        return String.format(this.format,
+                String.format("%s %s", UiIcon.FATAL.getIcon(), String.format(u.getText(), m)));
     }
 
     private String sendConfirmation(UiMessage u, String m) {
-        return String.format(this.format, String.format("%s %s", UiIcon.CONFIRMATION.getIcon(), String.format(u.getText(), m)));
+        return String.format(this.format,
+                String.format("%s %s", UiIcon.CONFIRMATION.getIcon(), String.format(u.getText(), m)));
     }
 
     public String sendConfirmedOutput(StringBuilder message) {
@@ -134,6 +160,14 @@ public class Ui {
         return sendFatal(UiMessage.ERROR_ARCHIVE, "");
     }
 
+    /**
+     * Generate welcome message
+     * If saved tasks are restored, display all tasks
+     * Else only display welcome message
+     *
+     * @param t TaskList loaded from file
+     * @return Welcome message text
+     */
     public String[] sendWelcomeMessage(TaskList t) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -144,7 +178,8 @@ public class Ui {
         if (t.getLastInfo() != null) {
             return new String[]{sendInfo(UiMessage.INFO_WELCOME_EXISTING, t.getLastInfo()[0]),
                     printList(t.getList(), true),
-                    sendPlain(UiMessage.INFO_LAST_SAVED, DateProcessor.unixToString(Long.parseLong(t.getLastInfo()[1])))};
+                    sendPlain(UiMessage.INFO_LAST_SAVED,
+                            DateProcessor.unixToString(Long.parseLong(t.getLastInfo()[1])))};
         } else {
             return new String[]{sendInfo(UiMessage.INFO_WELCOME, "")};
         }
@@ -154,6 +189,13 @@ public class Ui {
         return sendInfo(UiMessage.INFO_GOODBYE, "");
     }
 
+    /**
+     * Display message after adding new tasks
+     *
+     * @param task Description of task added
+     * @param size Current number of tasks
+     * @return Message
+     */
     public String printNewTasks(String task, int size) {
         StringBuilder s = new StringBuilder();
         s.append("Got it. I've added this task:\n\t")
@@ -165,6 +207,13 @@ public class Ui {
         return sendConfirmedOutput(s);
     }
 
+    /**
+     * Display message after removing task by index
+     *
+     * @param task Description of task removed
+     * @param size Current number of tasks
+     * @return Message
+     */
     public String printTaskRemovedByIndex(String task, int size) {
         StringBuilder s = new StringBuilder();
         s.append("Noted. I've removed this task:\n\t")
@@ -176,6 +225,13 @@ public class Ui {
         return sendConfirmedOutput(s);
     }
 
+    /**
+     * Display message after marking task as completed
+     *
+     * @param task   Description of task removed
+     * @param isMark Mark state of task
+     * @return Message
+     */
     public String printMarkTask(String task, Boolean isMark) {
         StringBuilder s = new StringBuilder();
         s.append(isMark ? "Nice! I've marked this task as done:\n" : "OK, I've marked this task as not done yet:\n")
@@ -183,6 +239,13 @@ public class Ui {
         return sendConfirmedOutput(s);
     }
 
+    /**
+     * Display all tasks
+     *
+     * @param tasks     An array of available tasks
+     * @param withIndex Whether to print with index
+     * @return List of tasks
+     */
     public String printList(ArrayList<Task> tasks, Boolean withIndex) {
         StringBuilder s = new StringBuilder();
         if (tasks.size() == 0) {
@@ -209,6 +272,14 @@ public class Ui {
         }
     }
 
+    /**
+     * Display all tasks selected by date
+     *
+     * @param tasks     An array of available tasks
+     * @param withIndex Whether to print with index
+     * @param date      Selected date
+     * @return List of tasks
+     */
     public String printSelectedList(ArrayList<Task> tasks, Boolean withIndex, String date) {
         StringBuilder s = new StringBuilder();
         if (tasks.size() == 0) {
@@ -221,6 +292,14 @@ public class Ui {
         return sendConfirmedOutput(s);
     }
 
+    /**
+     * Display all tasks selected by keyword
+     *
+     * @param tasks     An array of available tasks
+     * @param withIndex Whether to print with index
+     * @param keyword   Selected keyword
+     * @return List of tasks
+     */
     public String printFoundList(ArrayList<Task> tasks, Boolean withIndex, String keyword) {
         StringBuilder s = new StringBuilder();
         if (tasks.size() == 0) {

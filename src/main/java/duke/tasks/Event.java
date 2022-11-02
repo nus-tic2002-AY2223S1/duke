@@ -2,9 +2,19 @@ package duke.tasks;
 
 import duke.utils.DateProcessor;
 
+/**
+ * Inherited Task for Event
+ */
 public class Event extends Task {
     protected String type = "E";
 
+    /**
+     * Initialized an Event Task
+     * Initialized task description and due time
+     *
+     * @param description Description of task
+     * @param due         UNIX timestamp of start and due time
+     */
     public Event(String description, long[] due) {
         super(description);
 
@@ -26,9 +36,12 @@ public class Event extends Task {
         }
 
         if (this.to == 0) {
-            return "\t[E]" + super.toString() + " (at: " + DateProcessor.unixToString(this.due) + ")";
+            return "\t[E]" + super.toString()
+                    + " (at: " + DateProcessor.unixToString(this.due) + ")";
         }
-        return "\t[E]" + super.toString() + " (" + DateProcessor.unixToString(this.due) + " ~ " + DateProcessor.unixToString(this.to) + ")";
+        return "\t[E]" + super.toString()
+                + " (" + DateProcessor.unixToString(this.due)
+                + " ~ " + DateProcessor.unixToString(this.to) + ")";
     }
 
     @Override

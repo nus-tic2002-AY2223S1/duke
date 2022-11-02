@@ -6,13 +6,12 @@ import duke.Duke;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
+/**
+ * Main class for GUI, interfaces with Duke
+ */
 public class Main extends Application {
     private final String path = "data/save/output.txt";
     private final Duke duke = new Duke(path);

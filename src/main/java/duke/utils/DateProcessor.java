@@ -7,6 +7,9 @@ import java.util.TimeZone;
 
 import duke.impl.Ui;
 
+/**
+ * Util Processor to process date and time
+ */
 public class DateProcessor {
     private static Ui ui = new Ui();
     private static final String TIME_ZONE = "GMT+8:00";
@@ -35,15 +38,22 @@ public class DateProcessor {
     }
 
     private static String printInconsistentTimeRangeFormat() {
-        return ui.sendGenericWarning("Invalid time range. Range start and end should be consistent. Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+        return ui.sendGenericWarning("Invalid time range. Range start and end should be consistent. "
+                + "Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy "
+                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
     }
 
     private static String printInvalidTimeRangeFormat() {
-        return ui.sendGenericWarning("Invalid format. Range has to be \n\tdd/mm/yyyy  \n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+        return ui.sendGenericWarning("Invalid format. "
+                + "Range has to be \n\tdd/mm/yyyy  "
+                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n"
+                + "\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
     }
 
     private static String printUnspecifiedTimeRangeFormat() {
-        return ui.sendGenericWarning("Specify a range. Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+        return ui.sendGenericWarning("Specify a range. "
+                + "Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy "
+                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
     }
 
     private static String printInvalidTDateSeparatorFormat() {
@@ -70,6 +80,13 @@ public class DateProcessor {
         return date + " " + time;
     }
 
+    /**
+     * Verification and translation of date and time
+     *
+     * @param s Date Time string of format dd/MM/yyyy HHmm
+     * @return UNIX time converted from s
+     * @throws DukeException Exception
+     */
     public static long processDateTime(String s) throws DukeException {
         String[] parsed = s.split(" ", 2);
 
@@ -94,6 +111,15 @@ public class DateProcessor {
         }
     }
 
+    /**
+     * Verification and translation of two date time
+     *
+     * @param s Date Time string of format dd/MM/yyyy HHmm - dd/MM/yyyy HHmm
+     *          or dd/MM/yyyy - dd/MM/yyyy
+     *          or dd/MM/yyyy
+     * @return Start and end UNIX time converted from s
+     * @throws DukeException Exception
+     */
     public static long[] processDateTimeRange(String s) throws DukeException {
         // 1/1/1999 0900 - 2/2/1999 0900
         // 1/1/1999 - 2/2/1999
@@ -156,6 +182,13 @@ public class DateProcessor {
         return new long[]{timeFrom, timeTo};
     }
 
+    /**
+     * Verification of Date string
+     *
+     * @param s Date string
+     * @return UNIX time of s
+     * @throws DukeException Exception
+     */
     public static long processDate(String s) throws DukeException {
         try {
             checkDate(s);
@@ -170,6 +203,13 @@ public class DateProcessor {
         }
     }
 
+    /**
+     * Conversion of date time string to UNIX time
+     *
+     * @param s Date time string
+     * @return UNIX time of s
+     * @throws DukeException Exception
+     */
     public static long dateTimeToUnix(String s) throws DukeException {
         try {
             DATE_TIME_FORMAT.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
@@ -179,6 +219,12 @@ public class DateProcessor {
         }
     }
 
+    /**
+     * Conversion of date string to UNIX time
+     *
+     * @param s Date string
+     * @return UNIX time of s
+     */
     public static long dateToUnix(String s) {
         try {
             DATE_FORMAT.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
@@ -189,16 +235,34 @@ public class DateProcessor {
         return -1;
     }
 
+    /**
+     * Conversion of UNIX time to date string in 'E dd MMM yyyy, HH:mm' format
+     *
+     * @param timeStamp UNIX timestamp
+     * @return Date time string
+     */
     public static String unixToString(long timeStamp) {
         DATE_TIME_FORMAT_SEPARATOR.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
         return DATE_TIME_FORMAT_SEPARATOR.format(new java.util.Date(timeStamp * 1000));
     }
 
+    /**
+     * Conversion of UNIX time to date string in 'HH:mm' format
+     *
+     * @param timeStamp UNIX timestamp
+     * @return Time string
+     */
     public static String unixToSimplifiedString(long timeStamp) {
         TIME_FORMAT.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
         return TIME_FORMAT.format(new java.util.Date(timeStamp * 1000));
     }
 
+    /**
+     * Returns current time in HH:mm format
+     * Used for chat bubble timestamp
+     *
+     * @return Time string of current time
+     */
     public static String getMetaTimeStamp() {
         long unixTime = Instant.now().getEpochSecond();
         return unixToSimplifiedString(unixTime);
