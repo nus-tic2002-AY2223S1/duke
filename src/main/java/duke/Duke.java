@@ -34,12 +34,7 @@ public class Duke {
     }
 
     private String inter(String s) {
-        try {
-            Cmd c = p.readInText(s).parse();
-            return c.run(t.getList());
-        } catch (DukeException e) {
-            ui.sendGenericFatal(e.getMessage());
-        }
-        return "";
+        Cmd c = p.readInText(s).parse();
+        return c.run(t.getList());
     }
 }

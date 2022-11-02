@@ -7,6 +7,12 @@ import java.util.Scanner;
 public class Storage {
     protected String path;
 
+    /**
+     * Storage Constructor.
+     * Initialize storage file path.
+     *
+     * @param path File path to initialize
+     */
     public Storage(String path) {
         this.path = path;
     }
@@ -21,6 +27,12 @@ public class Storage {
         return new Scanner(new File(this.path));
     }
 
+    /**
+     * Storage Constructor.
+     * Initialize storage file path.
+     *
+     * @return The initialized storage file path.
+     */
     public String getPath() {
         return this.path;
     }

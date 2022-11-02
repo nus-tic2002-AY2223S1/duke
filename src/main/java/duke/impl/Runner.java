@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -21,11 +22,20 @@ import duke.tasks.Todo;
 import duke.utils.DateProcessor;
 import duke.utils.DukeException;
 
+/**
+ * Executor of actual processing logic.
+ */
 public class Runner {
+    private static final String ARCHIVE_CACHE_DIR = "data/tmp/";
     private static final String ARCHIVE_CACHE_FILE_PATH = "data/tmp/archives.txt";
-    private static final String SAVED_FILE_PATH = "data/save/output.txt";
-    private static final String ARCHIVE_DIR_PATH = "data/archives/";
 
+    private static final String SAVED_DIR = "data/save/";
+    private static final String SAVED_FILE_PATH = "data/save/output.txt";
+    private static final String ARCHIVE_DIR = "data/archives/";
+
+    /**
+     * Enums of task related commands
+     */
     public enum Command {
         DEADLINE("deadline"), EVENT("event"),
 
@@ -42,6 +52,9 @@ public class Runner {
         }
     }
 
+    /**
+     * Enums of action related commands
+     */
     public enum Action {
         MARK("mark"), UNMARK("unmark"), DELETE("delete");
 
@@ -61,6 +74,11 @@ public class Runner {
     protected ArrayList<Task> arrayList;
     protected Map<Integer, String> fileMap = new HashMap<Integer, String>();
 
+    /**
+     * Initializes TaskList and IO of Runner object.
+     *
+     * @param a Task list to execute
+     */
     public Runner(ArrayList<Task> a) {
         arrayList = a;
         ui = new Ui();
@@ -169,7 +187,10 @@ public class Runner {
 
         int i = Integer.parseInt(s) - 1;
         if (i < 0 || i >= this.arrayList.size()) {
-            throw new DukeException(printWarningMessage("This is not a valid index. Choose from the " + this.arrayList.size() + " tasks."));
+            throw new DukeException(
+                    printWarningMessage("This is not a valid index. Choose from the "
+                            + this.arrayList.size()
+                            + " tasks."));
         }
         return i;
     }
@@ -312,14 +333,15 @@ public class Runner {
 
     public void restoreFile(int selection) throws IOException {
         String path = "";
-
+        Files.createDirectories(Paths.get(ARCHIVE_CACHE_DIR));
         Scanner scn = new Scanner(new File(ARCHIVE_CACHE_FILE_PATH));
         while (selection > 0 && scn.hasNext()) {
             path = scn.nextLine();
             selection--;
         }
-
-        File fileToMove = new File(ARCHIVE_DIR_PATH + path);
+        Files.createDirectories(Paths.get(ARCHIVE_DIR));
+        Files.createDirectories(Paths.get(SAVED_DIR));
+        File fileToMove = new File(ARCHIVE_DIR + path);
         File toReplace = new File(SAVED_FILE_PATH);
         Files.copy(fileToMove.toPath(), toReplace.toPath(), StandardCopyOption.REPLACE_EXISTING);
         TaskList t = new TaskList(new Scanner(new File(toReplace.toString())));
@@ -328,22 +350,29 @@ public class Runner {
     public boolean archiveFile() throws IOException {
         String archiveFileName = "archive_" + getCurrentUserName() + "_" + getCurrentTimeStamp() + ".txt";
         File fileToMove = new File(SAVED_FILE_PATH);
-        return fileToMove.renameTo(new File(ARCHIVE_DIR_PATH, archiveFileName));
+        Files.createDirectories(Paths.get(ARCHIVE_DIR));
+        return fileToMove.renameTo(new File(ARCHIVE_DIR, archiveFileName));
     }
 
     public void saveFile() throws IOException {
+        Files.createDirectories(Paths.get(SAVED_DIR));
         FileWriter writer = new FileWriter(SAVED_FILE_PATH);
         writer.write(getCurrentUserName() + System.lineSeparator());
         writer.write(getCurrentTimeStamp() + System.lineSeparator());
 
         for (Task str : arrayList) {
-            String s = str.getType() + "," + str.getIsDone() + "," + str.getDescription() + "," + str.getDue() + "," + str.getTo();
+            String s = str.getType()
+                    + "," + str.getIsDone()
+                    + "," + str.getDescription()
+                    + "," + str.getDue()
+                    + "," + str.getTo();
             writer.write(s + System.lineSeparator());
         }
         writer.close();
     }
 
     public void cacheFile() throws IOException {
+        Files.createDirectories(Paths.get(ARCHIVE_CACHE_DIR));
         FileWriter writer = new FileWriter(ARCHIVE_CACHE_FILE_PATH);
 
         for (Map.Entry<Integer, String> m : fileMap.entrySet()) {
@@ -351,6 +380,8 @@ public class Runner {
             writer.write(s + System.lineSeparator());
         }
         writer.close();
+        File f = new File(ARCHIVE_CACHE_FILE_PATH);
+        f.deleteOnExit();
     }
 
 
@@ -446,19 +477,22 @@ public class Runner {
         return Long.parseLong(parsedFileDate[0]);
     }
 
-    private String listFiles() {
-        File folder = new File(ARCHIVE_DIR_PATH);
+    private String listFiles() throws IOException {
+        Files.createDirectories(Paths.get(ARCHIVE_DIR));
+        File folder = new File(ARCHIVE_DIR);
         File[] listOfFiles = folder.listFiles();
         assert listOfFiles != null;
         int i = 1;
         StringBuilder s = new StringBuilder();
         s.append(printListFilesHeaderMessage());
         for (File listOfFile : listOfFiles) {
-            if (listOfFile.isFile()) {
+            if (listOfFile.isFile() && !listOfFile.getName().equals(".gitkeep")) {
                 this.fileMap.put(i, listOfFile.getName());
-                s.append(ui.sendGenericPlain(i + ". " + DateProcessor.unixToString(translateFileNameToDateTime(listOfFile.getName()))));
+                s.append(ui
+                        .sendGenericPlain(i + ". "
+                                + DateProcessor.unixToString(translateFileNameToDateTime(listOfFile.getName()))));
+                i++;
             }
-            i++;
         }
         s.append(printListFilesFooterMessage());
 
@@ -471,8 +505,12 @@ public class Runner {
     }
 
     public String processRestore(String[] s) {
-        if (s.length == 1) {
-            return listFiles();
+        try {
+            if (s.length == 1) {
+                return listFiles();
+            }
+        } catch (IOException e) {
+            return printIoException("failed to retrieve archive records.");
         }
 
         if (s[1].trim().equals("")) {

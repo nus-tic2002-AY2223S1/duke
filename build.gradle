@@ -71,8 +71,8 @@ run {
 tasks.withType(Test) {
     useJUnitPlatform()
     scanForTestClasses = false
-
 }
+
 apply plugin: 'java'
 
 apply plugin: 'jacoco'

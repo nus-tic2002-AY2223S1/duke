@@ -2,12 +2,25 @@ package duke.impl;
 
 import java.util.Scanner;
 
+/**
+ * THe Parser module to parse user input and identify the commands specified.
+ */
 public class Parser {
     protected String[] in;
 
+    /**
+     * Calls the corresponding implementation based on Command type.
+     */
     public Parser() {
     }
 
+    /**
+     * Reads input from CLI.
+     * Line breaks by carriage return.
+     * Input will be tokenized, separated by spaces.
+     *
+     * @return Parser Object of read-in string
+     */
     public Parser readIn() {
         Scanner inputRaw = new Scanner(System.in).useDelimiter("\n");
         String inputLine = inputRaw.nextLine();
@@ -15,16 +28,35 @@ public class Parser {
         return this;
     }
 
+    /**
+     * Calls the corresponding implementation based on input args.
+     * Line breaks by carriage return.
+     * Input will be tokenized, separated by spaces.
+     *
+     * @param text Input string
+     * @return Parser Object of read-in string
+     */
     public Parser readInText(String text) {
         this.in = text.split(" ", 2);
         return this;
     }
 
+    /**
+     * Directly injects read-in string.
+     *
+     * @param in Input to be injected
+     * @return Parser Object of read-in string
+     */
     public Parser injectIn(String[] in) {
         this.in = in;
         return this;
     }
 
+    /**
+     * Parses input and identify the corresponding commands.
+     *
+     * @return Cmd Object of parsed command input.
+     */
     public Cmd parse() {
         switch (this.in[0].trim()) {
         case "list":

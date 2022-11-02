@@ -1,5 +1,6 @@
 package duke.impl;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import duke.tasks.Task;
@@ -8,10 +9,10 @@ import duke.utils.DateProcessor;
 
 public class Ui {
     public enum UiIcon {
-        FATAL("\u274c"),
-        WARNING("\u26a0️"),
-        INFO("\u26aa"),
-        CONFIRMATION("\u2705");
+        FATAL("\u2716"),
+        WARNING("\u2757️"),
+        INFO("\u00bb"),
+        CONFIRMATION("\u2714");
 
         public final String icon;
 
@@ -31,7 +32,7 @@ public class Ui {
         INFO_WELCOME_EXISTING("Hello again, %s! Welcome back. What can I do for you?"),
         INFO_LAST_SAVED("[Last Modified on %s]"),
         INFO_GOODBYE("Bye. Hope to see you again soon!"),
-        ERROR_COMMAND_UNKNOWN("I'm sorry, but I don't know what that means :( \n\tSpecify Todo / Deadline / Event. \n\tE.g. Todo <Task Name>"),
+        ERROR_COMMAND_UNKNOWN("I'm sorry, but I don't know what that means :( \nSpecify a Todo / Deadline / Event. \n\t \u27a4 Todo <Task Name>"),
         ERROR_PROCESS_ACTION("The selection to %s cannot be empty."),
         ERROR_PROCESS_COMMAND("The description of %s cannot be empty."),
         ERROR_FIND_DATE("The date to search cannot be empty."),

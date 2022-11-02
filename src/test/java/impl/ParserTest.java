@@ -14,8 +14,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.PRINT_LIST, null);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -24,8 +24,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.MARK_TASK, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -34,8 +34,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.MARK_TASK, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -44,8 +44,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.UNMARK_TASK, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -54,8 +54,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.UNMARK_TASK, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -64,8 +64,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.ADD_TODO, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -74,8 +74,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.ADD_TODO, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -84,8 +84,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.ADD_DEADLINE, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -94,8 +94,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.ADD_DEADLINE, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -104,8 +104,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.ADD_EVENT, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -114,8 +114,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.ADD_EVENT, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -124,8 +124,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.DELETE_TASK, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -134,8 +134,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.DELETE_TASK, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -144,8 +144,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.EXIT, null);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -154,8 +154,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.FIND_DATE, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -164,8 +164,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.FIND_DATE, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -174,8 +174,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.FIND_TASK, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -184,8 +184,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.FIND_TASK, s);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -194,8 +194,8 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.RETURN, null);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 
     @Test
@@ -204,7 +204,7 @@ public class ParserTest {
         Parser p = new Parser();
         Cmd actual = p.injectIn(s).parse();
         Cmd expected = new Cmd(Cmd.CmdTypes.UNKNOWN_CMD, null);
-        assertEquals(expected.t, actual.t);
-        assertEquals(expected.input, actual.input);
+        assertEquals(expected.getCmdTypes(), actual.getCmdTypes());
+        assertEquals(expected.getInput(), actual.getInput());
     }
 }
