@@ -1,122 +1,132 @@
 package constant;
 
+import commands.*;
 import entity.*;
-
 import exceptions.DukeException;
+
+import java.util.Date;
 
 public enum CommandExecutor {
     BYE {
+        /**
+         * Bye command executor operation
+         * @param inputs user input
+         * @throws DukeException Duke exception
+         */
         @Override
-        public void execute(TaskList taskList, String inputs) {
-            Ui.echoText("Bye. Hope to see you again soon!");
+        public void execute(String inputs) throws DukeException {
+            Command c = new ByeCommand();
+            c.execute();
         }
     },
     LIST {
+        /**
+         * List command executor operation
+         * @param inputs user input
+         * @throws DukeException Duke exception
+         */
         @Override
-        public void execute(TaskList taskList, String inputs) {
-            taskList.printTasks();
+        public void execute(String inputs) throws DukeException {
+            Command c = new ListCommand();
+            c.execute();
         }
     },
     MARK {
+        /**
+         * Mark command executor operation
+         * @param inputs user input
+         * @throws DukeException Duke exception
+         */
         @Override
-        public void execute(TaskList taskList, String inputs) throws DukeException {
-            if (CommandParser.countCommandParts(inputs) < 2)
-                throw new DukeException("☹ OOPS!!! Mark is not specified.");
-
-            String inputBody = CommandParser.getCommandBody(inputs);
-            int taskNo = Integer.parseInt(inputBody) - 1;
-
-            if (taskNo >= taskList.tasks.size())
-                throw new DukeException("☹ OOPS!!! The task for marking is not in list.");
-            taskList.markTask(taskNo);
-
+        public void execute(String inputs) throws DukeException {
+            Command c = new MarkCommand(inputs);
+            c.execute();
         }
     },
     UNMARK {
+        /**
+         * Unmark command executor operation
+         * @param inputs user input
+         * @throws DukeException Duke exception
+         */
         @Override
-        public void execute(TaskList taskList, String inputs) throws DukeException {
-            if (CommandParser.countCommandParts(inputs) < 2)
-                throw new DukeException("☹ OOPS!!! Unmark is not specified");
-
-            String inputBody = CommandParser.getCommandBody(inputs);
-            int taskNo = Integer.parseInt(inputBody) - 1;
-
-            if (taskNo >= taskList.tasks.size())
-                throw new DukeException("☹ OOPS!!! The task for unmarking is not in list.");
-            taskList.unmarkTask(taskNo);
+        public void execute(String inputs) throws DukeException {
+            Command c = new UnmarkCommand(inputs);
+            c.execute();
         }
     },
     DEADLINE {
+        /**
+         * Deadline command executor operation
+         * @param inputs user input
+         * @throws DukeException Duke exception
+         */
         @Override
-        public void execute(TaskList taskList, String inputs) throws DukeException {
-            if (CommandParser.countCommandParts(inputs) < 2)
-                throw new DukeException("☹ OOPS!!! The description of a deadline cannot be empty.");
-
-            String inputBody = CommandParser.getCommandBody(inputs);
-            String[] deadlineDesc = CommandParser.getDeadlineDetails(inputBody);
-            Deadline deadline = deadlineDesc.length == 2 ?
-                    new Deadline(deadlineDesc[0], deadlineDesc[1]) :
-                    new Deadline(deadlineDesc[0], "");
-            taskList.addTask(deadline);
+        public void execute(String inputs) throws DukeException {
+            Command c = new DeadlineCommand(inputs);
+            c.execute();
         }
     },
     TODO {
+        /**
+         * To-do command executor operation
+         * @param inputs user input
+         * @throws DukeException Duke exception
+         */
         @Override
-        public void execute(TaskList taskList, String inputs) throws DukeException {
-            if (CommandParser.countCommandParts(inputs) < 2)
-                throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
-
-            String inputBody = CommandParser.getCommandBody(inputs);
-            Todo todo = new Todo(inputBody);
-            taskList.addTask(todo);
+        public void execute(String inputs) throws DukeException {
+            Command c = new TodoCommand(inputs);
+            c.execute();
         }
     },
     EVENT {
+        /**
+         * Event command executor operation
+         * @param inputs user input
+         * @throws DukeException Duke exception
+         */
         @Override
-        public void execute(TaskList taskList, String inputs) throws DukeException {
-            if (CommandParser.countCommandParts(inputs) < 2)
-                throw new DukeException("☹ OOPS!!! The description of a event cannot be empty.");
-
-            String inputBody = CommandParser.getCommandBody(inputs);
-            String[] eventDesc = CommandParser.getEventDetails(inputBody);
-            Event event = eventDesc.length == 2 ?
-                    new Event(eventDesc[0], eventDesc[1]) :
-                    new Event(eventDesc[0], "");
-            taskList.addTask(event);
+        public void execute(String inputs) throws DukeException {
+            Command c = new EventCommand(inputs);
+            c.execute();
         }
     },
     DELETE {
+        /**
+         * Delete command executor operation
+         * @param inputs user input
+         * @throws DukeException Duke exception
+         */
         @Override
-        public void execute(TaskList taskList, String inputs) throws DukeException {
-            if (CommandParser.countCommandParts(inputs) < 2)
-                throw new DukeException("☹ OOPS!!! Delete is not specified");
-
-            String inputBody = CommandParser.getCommandBody(inputs);
-            int taskNo = Integer.parseInt(inputBody) - 1;
-
-            if (taskNo >= taskList.tasks.size())
-                throw new DukeException("☹ OOPS!!! The task for deleting is not in list.");
-
-            taskList.deleteTask(taskNo);
+        public void execute(String inputs) throws DukeException {
+            Command c = new DeleteCommand(inputs);
+            c.execute();
         }
     },
     SAVE {
+        /**
+         * Save command executor operation
+         * @param inputs user input
+         * @throws DukeException Duke exception
+         */
         @Override
-        public void execute(TaskList taskList, String inputs) throws DukeException {
-            Storage file = new Storage();
-            file.write(taskList.writeTasksToFile());
-            Ui.echoText("The tasks have been saved");
+        public void execute(String inputs) throws DukeException {
+            Command c = new SaveCommand();
+            c.execute();
         }
     },
     UNDEFINED {
+        /**
+         * Undefined command executor operation
+         * @param inputs user input
+         * @throws DukeException Duke exception
+         */
         @Override
-        public void execute(TaskList taskList, String inputs) throws DukeException {
-            throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+        public void execute(String inputs) throws DukeException {
+            Command c = new UndefinedCommand();
+            c.execute();
         }
     };
 
-
-//    public abstract void execute();
-
-    public abstract void execute(TaskList taskList, String inputs) throws DukeException;
+    public abstract void execute(String inputs) throws DukeException;
 }

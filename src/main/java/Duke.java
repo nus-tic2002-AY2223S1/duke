@@ -1,36 +1,38 @@
 
-import java.util.*;
-
 import entity.CommandParser;
 import constant.CommandExecutor;
 import entity.Storage;
-import entity.TaskList;
 import entity.Ui;
 import exceptions.DukeException;
 
 public class Duke {
-    private static final Map<String, CommandExecutor> COMMAND_EXECUTOR_MAP = CommandParser.createMap();
+    public static String inputs;
+    public static CommandExecutor command;
+
+    /**
+     * Duke program initiation
+     */
+    public static void init() {
+        Ui.dukeInit();
+        Storage instance = Storage.getInstance();
+        instance.read();
+    }
+
+    /**
+     * main program
+     *
+     * @param args na
+     * @throws DukeException duke exception
+     */
     public static void main(String[] args) throws DukeException {
         // DUKE greeting message
-        Ui.dukeInit();
-
-        String inputs;
-        CommandExecutor command;
-        TaskList taskList = new TaskList();
-
-        Storage file = new Storage();
-        file.read(taskList);
+        init();
 
         while (true) {
             inputs = CommandParser.getInputs();
             command = CommandParser.getCommandExecutor(inputs);
-            command = command != null ? command : CommandExecutor.UNDEFINED;
-            if (command == CommandExecutor.BYE) {
-                command.execute(taskList, inputs);
-                break;
-            }
             try {
-                command.execute(taskList, inputs);
+                command.execute(inputs);
             } catch (DukeException err) {
                 Ui.showErrMessage(err);
             }

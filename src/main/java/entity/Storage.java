@@ -6,19 +6,35 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Storage {
+public class Storage extends TaskList {
     private final String filePath;
 
-    public Storage() throws DukeException {
+    private static final Storage instance = new Storage();
+
+    public static Storage getInstance() {
+        return instance;
+    }
+
+    /**
+     * Storage object constructor
+     */
+    private Storage() {
         String dir = System.getProperty("user.dir");
         this.filePath = dir + "/data/duke.txt";
         create();
     }
 
-    public void create() throws DukeException {
+    /**
+     * Create text file for storage if file not exists
+     */
+    public void create() {
         try {
             File file = new File(this.filePath);
             if (!file.exists()) file.createNewFile();
@@ -27,6 +43,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Write Tasks to file
+     *
+     * @param contexts Tasks
+     * @throws DukeException Duke exception
+     */
     public void write(String contexts) throws DukeException {
         try {
             FileWriter writer = new FileWriter(this.filePath);
@@ -37,13 +59,18 @@ public class Storage {
         }
     }
 
-    public void read(TaskList taskList) throws DukeException {
+    /**
+     * Read tasks in file
+     *
+     * @throws DukeException Duke exception
+     */
+    public void read() throws DukeException {
         try {
             File file = new File(this.filePath);
             Scanner reader = new Scanner(file);
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
-                taskList.addTask(generateTask(line));
+                instance.loadTask(generateTask(line));
             }
             reader.close();
         } catch (FileNotFoundException e) {
@@ -52,6 +79,12 @@ public class Storage {
 
     }
 
+    /**
+     * Parse task in file to TasksList object
+     *
+     * @param line each line of task
+     * @return a Task object
+     */
     public Task generateTask(String line) {
         String[] details = line.split(" \\| ");
         Task task = null;
@@ -61,11 +94,13 @@ public class Storage {
                 if (Objects.equals(details[1], "1")) task.markTask();
                 break;
             case "D":
-                task = new Deadline(details[2], details[3]);
+                task = new Deadline(details[2],
+                        LocalDateTime.parse(details[3].replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
                 if (Objects.equals(details[1], "1")) task.markTask();
                 break;
             case "E":
-                task = new Event(details[2], details[3]);
+                task = new Event(details[2],
+                        LocalDateTime.parse(details[3].replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
                 if (Objects.equals(details[1], "1")) task.markTask();
                 break;
         }

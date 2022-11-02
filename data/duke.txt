@@ -1,3 +1,4 @@
-T | 0 | byebye
-E | 0 | project meeting  |  Mon 3pm
+T | 1 | byebye
 T | 0 | good morning
+D | 1 | assignment 1  | 2022-11-11T00:00
+E | 0 | project meeting  | 2022-11-12T00:00
