@@ -17,8 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MainWindow extends AnchorPane {
-    public Button listButton;
-    public Button refreshButton;
+    public Label listButton;
+    public Label refreshButton;
     public Label status;
     public Label chatLabel;
     private final Image userImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/images/gigachad.png")));
@@ -33,7 +33,7 @@ public class MainWindow extends AnchorPane {
     @FXML
     private TextField userInput;
     @FXML
-    private Button sendButton;
+    private Label sendButton;
 
     @FXML
     public void initialize() {
@@ -127,10 +127,6 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void listAction() {
         String response = duke.getResponse("list");
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog("list", userImage)
-        );
-
         ActionListener taskPerformer = evt -> Platform.runLater(() -> {
             dialogContainer.getChildren().addAll(
                     DialogBox.getDukeDialog(response, dukeImage)

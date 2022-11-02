@@ -21,11 +21,17 @@ import duke.tasks.Todo;
 import duke.utils.DateProcessor;
 import duke.utils.DukeException;
 
+/**
+ * Executor of actual processing logic.
+ */
 public class Runner {
     private static final String ARCHIVE_CACHE_FILE_PATH = "data/tmp/archives.txt";
     private static final String SAVED_FILE_PATH = "data/save/output.txt";
     private static final String ARCHIVE_DIR_PATH = "data/archives/";
 
+    /**
+     * Enums of task related commands
+     */
     public enum Command {
         DEADLINE("deadline"), EVENT("event"),
 
@@ -42,6 +48,9 @@ public class Runner {
         }
     }
 
+    /**
+     * Enums of action related commands
+     */
     public enum Action {
         MARK("mark"), UNMARK("unmark"), DELETE("delete");
 
@@ -61,6 +70,9 @@ public class Runner {
     protected ArrayList<Task> arrayList;
     protected Map<Integer, String> fileMap = new HashMap<Integer, String>();
 
+    /**
+     * Initializes TaskList and IO of Runner object.
+     */
     public Runner(ArrayList<Task> a) {
         arrayList = a;
         ui = new Ui();
@@ -169,7 +181,10 @@ public class Runner {
 
         int i = Integer.parseInt(s) - 1;
         if (i < 0 || i >= this.arrayList.size()) {
-            throw new DukeException(printWarningMessage("This is not a valid index. Choose from the " + this.arrayList.size() + " tasks."));
+            throw new DukeException(
+                    printWarningMessage("This is not a valid index. Choose from the "
+                            + this.arrayList.size()
+                            + " tasks."));
         }
         return i;
     }
@@ -337,7 +352,11 @@ public class Runner {
         writer.write(getCurrentTimeStamp() + System.lineSeparator());
 
         for (Task str : arrayList) {
-            String s = str.getType() + "," + str.getIsDone() + "," + str.getDescription() + "," + str.getDue() + "," + str.getTo();
+            String s = str.getType()
+                    + "," + str.getIsDone()
+                    + "," + str.getDescription()
+                    + "," + str.getDue()
+                    + "," + str.getTo();
             writer.write(s + System.lineSeparator());
         }
         writer.close();
@@ -454,11 +473,14 @@ public class Runner {
         StringBuilder s = new StringBuilder();
         s.append(printListFilesHeaderMessage());
         for (File listOfFile : listOfFiles) {
-            if (listOfFile.isFile()) {
+            System.out.println(listOfFile.getName());
+            if (listOfFile.isFile() && !listOfFile.getName().equals(".gitkeep")) {
                 this.fileMap.put(i, listOfFile.getName());
-                s.append(ui.sendGenericPlain(i + ". " + DateProcessor.unixToString(translateFileNameToDateTime(listOfFile.getName()))));
+                s.append(ui
+                        .sendGenericPlain(i + ". "
+                                + DateProcessor.unixToString(translateFileNameToDateTime(listOfFile.getName()))));
+                i++;
             }
-            i++;
         }
         s.append(printListFilesFooterMessage());
 
