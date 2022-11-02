@@ -1,7 +1,7 @@
 name: Check Style
 
 on:
-  [ push, pull_request ]
+  [ push ]
 
 jobs:
   check_style:
