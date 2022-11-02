@@ -62,6 +62,14 @@ public class MainWindow extends AnchorPane {
             return;
         }
 
+        if (Objects.equals(input.trim(), "")) {
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getUserDialog(input, userImage)
+            );
+            userInput.clear();
+            return;
+        }
+
         if (Objects.equals(input, "bye")) {
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input, userImage)
@@ -103,7 +111,7 @@ public class MainWindow extends AnchorPane {
         userInput.clear();
 
         ActionListener taskPerformer2 = evt -> Platform.runLater(() -> {
-            chatLabel.setText("Duke");
+            status.setText("Online");
             dialogContainer.getChildren().addAll(
                     DialogBox.getDukeDialog(response, dukeImage)
             );
@@ -111,7 +119,7 @@ public class MainWindow extends AnchorPane {
         int randTime = (int) (Math.random() * (2000 - 1000));
         Timer timer2 = new Timer((randTime), taskPerformer2);
         System.out.println(randTime);
-        chatLabel.setText("Duke is typing...");
+        status.setText("Typing...");
         timer2.setRepeats(false);
         timer2.start();
     }

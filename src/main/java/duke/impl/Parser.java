@@ -26,7 +26,7 @@ public class Parser {
     }
 
     public Cmd parse() {
-        switch (this.in[0]) {
+        switch (this.in[0].trim()) {
         case "list":
             return new Cmd(Cmd.CmdTypes.PRINT_LIST, null);
         case "mark":
