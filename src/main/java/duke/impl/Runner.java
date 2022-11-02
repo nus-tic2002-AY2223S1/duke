@@ -22,9 +22,9 @@ import duke.utils.DateProcessor;
 import duke.utils.DukeException;
 
 public class Runner {
-    private static final String ARCHIVE_CACHE_FILE_PATH = "cache/archives.txt";
-    private static final String SAVED_FILE_PATH = "save/output.txt";
-    private static final String ARCHIVE_DIR_PATH = "archives/";
+    private static final String ARCHIVE_CACHE_FILE_PATH = "data/tmp/archives.txt";
+    private static final String SAVED_FILE_PATH = "data/save/output.txt";
+    private static final String ARCHIVE_DIR_PATH = "data/archives/";
 
     public enum Command {
         DEADLINE("deadline"), EVENT("event"),
