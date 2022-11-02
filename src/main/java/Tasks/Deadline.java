@@ -49,6 +49,6 @@ public class Deadline extends Task implements TaskInterface {
     }
 
     private String endDateInString() {
-        return endDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " " + endDate.format(DateTimeFormatter.ofPattern("HH:mm"));
+        return endDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
     }
 }

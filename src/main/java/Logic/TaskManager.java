@@ -44,12 +44,21 @@ public class TaskManager implements BotCallback {
                 case EVENT:
                     try {
                         String[] events = task.split("/at ");
-                        Event event = new Event(events[0], events[1]);
-                        tasks.add(event);
-                        router.addSuccess(event);
+                        String work = events[0];
+                        String[] dates = events[1].split("-");
+                        try {
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+                            LocalDateTime startdate = LocalDateTime.parse(dates[0], formatter);
+                            String enddatestring = startdate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd ")) + dates[1];
+                            LocalDateTime enddate = LocalDateTime.parse(enddatestring, formatter);
+                            Event event = new Event(work, startdate, enddate);
+                            tasks.add(event);
+                            router.addSuccess(event);
+                        } catch (Exception e) {
+                            router.customError("please use YYYY/MM/dd HH:mm-HH:mm format. e.g 2022/08/01 20:00-21:00");
+                        }
                     } catch (IndexOutOfBoundsException e) {
-                        router.customError("Please add when will it finished after /at");
-
+                        router.customError("Please add when and until after /at e.g /at 2022/08/01 20:00-21:00");
                     }
                     break;
                 case DEADLINE:
