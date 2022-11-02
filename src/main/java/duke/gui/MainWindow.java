@@ -118,7 +118,6 @@ public class MainWindow extends AnchorPane {
         });
         int randTime = (int) (Math.random() * (2000 - 1000));
         Timer timer2 = new Timer((randTime), taskPerformer2);
-        System.out.println(randTime);
         status.setText("Typing...");
         timer2.setRepeats(false);
         timer2.start();

@@ -23,6 +23,9 @@ public class Cmd {
 
     /**
      * Initialize the Cmd Object with CmdTypes and parsed input.
+     *
+     * @param c              The CmdType
+     * @param processedInput The parsed user input string
      */
     public Cmd(CmdTypes c, String[] processedInput) {
         this.t = c;
@@ -32,6 +35,7 @@ public class Cmd {
     /**
      * Calls the corresponding implementation based on Command type.
      *
+     * @param tasks Array of Tasks
      * @return Message to display in GUI
      */
     public String run(ArrayList<Task> tasks) {

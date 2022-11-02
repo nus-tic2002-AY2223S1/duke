@@ -33,6 +33,7 @@ public class Parser {
      * Line breaks by carriage return.
      * Input will be tokenized, separated by spaces.
      *
+     * @param text Input string
      * @return Parser Object of read-in string
      */
     public Parser readInText(String text) {
@@ -43,6 +44,7 @@ public class Parser {
     /**
      * Directly injects read-in string.
      *
+     * @param in Input to be injected
      * @return Parser Object of read-in string
      */
     public Parser injectIn(String[] in) {

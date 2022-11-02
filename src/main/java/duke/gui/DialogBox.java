@@ -35,7 +35,7 @@ public class DialogBox extends HBox {
         if (isDuke) {
             meta.setText(DateProcessor.getMetaTimeStamp());
         } else {
-            meta.setText(DateProcessor.getMetaTimeStamp() + " ✓");
+            meta.setText(DateProcessor.getMetaTimeStamp() + " \u2713");
         }
         dialog.setText(text);
         dialog.setStyle(userSpecific + ";-fx-padding:10;-fx-label-padding:2,0,2,0;-fx-wrap-text:true;-fx-background-radius:10;-fx-max-width:500");

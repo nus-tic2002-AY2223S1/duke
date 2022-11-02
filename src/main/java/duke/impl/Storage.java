@@ -10,6 +10,8 @@ public class Storage {
     /**
      * Storage Constructor.
      * Initialize storage file path.
+     *
+     * @param path File path to initialize
      */
     public Storage(String path) {
         this.path = path;
