@@ -16,7 +16,9 @@ bin/
 /text-ui-test/ACTUAL.txt
 text-ui-test/EXPECTED-UNIX.TXT
 
-!data/.gitkeep
+!data/archives/.gitkeep
+!data/tmp/.gitkeep
+!data/save/.gitkeep
 data/archives/*.txt
 data/tmp/*.txt
 data/save/output.txt
