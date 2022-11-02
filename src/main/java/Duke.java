@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.Scanner;
 
 public class Duke {
@@ -50,6 +51,11 @@ public class Duke {
             Ui.printTask(index);
             System.out.println("Now you have " + (indexTask+1) + " tasks in the list");
         }
+        public static void printDeleted(int index){
+            System.out.println("Noted. I've removed this task:");
+            Ui.printTask(index);
+            System.out.println("Now you have " + (indexTask-1) + " tasks in the list");
+        }
 
         public static void exit() {
             System.out.println("Bye Siying!" + System.lineSeparator() + "Enjoy your day ;)");
@@ -65,50 +71,58 @@ public class Duke {
             String desTask;
             String timedateTask = null;
 
-            // command mark, unmark
-            if (desPosition < 0) {
-                command = input;
-                desTask = "";
-            } else if (timePosition < 0){
-                command = input.substring(0, desPosition);
-                desTask = input.substring(desPosition + 1);
-            // command event, deadline
+            if(input.isEmpty()){
+                throw new EmptyStackException();
             } else {
-                command = input.substring(0, desPosition);
-                desTask = input.substring(desPosition + 1, timePosition - 1);
-                timedateTask = input.substring(timePosition + 4);
-            }
+                // command mark, unmark
+                if (desPosition < 0) {
+                    command = input;
+                    desTask = "";
+                } else if (timePosition < 0){
+                    command = input.substring(0, desPosition);
+                    desTask = input.substring(desPosition + 1);
+                    // command event, deadline
+                } else {
+                    command = input.substring(0, desPosition);
+                    desTask = input.substring(desPosition + 1, timePosition - 1);
+                    timedateTask = input.substring(timePosition + 4);
+                }
 
-            switch (command) {
-                case "list":
-                    System.out.println("Here are the tasks in your list:");
-                    Ui.printList();
-                    break;
-                case "todo":
-                    addTodo(desTask, indexTask);
-                    indexTask++;
-                    break;
-                case "event":
-                    addEvent(desTask, timedateTask, indexTask);
-                    indexTask++;
-                    break;
-                case "deadline":
-                    addDeadline(desTask, timedateTask, indexTask);
-                    indexTask++;
-                    break;
-                case "mark":
-                    markCommand(Integer.parseInt(desTask)-1);
-                    break;
-                case "unmark":
-                    unmarkCommand(Integer.parseInt(desTask)-1);
-                    break;
-                case "bye":
-                    break;
-                default:
-                    tasklist.add(new Task(input));
-                    indexTask++;
-                    addCommand(input);
-                    break;
+                switch (command) {
+                    case "list":
+                        System.out.println("Here are the tasks in your list:");
+                        Ui.printList();
+                        break;
+                    case "todo":
+                        addTodo(desTask, indexTask);
+                        indexTask++;
+                        break;
+                    case "event":
+                        addEvent(desTask, timedateTask, indexTask);
+                        indexTask++;
+                        break;
+                    case "deadline":
+                        addDeadline(desTask, timedateTask, indexTask);
+                        indexTask++;
+                        break;
+                    case "mark":
+                        markCommand(Integer.parseInt(desTask)-1);
+                        break;
+                    case "unmark":
+                        unmarkCommand(Integer.parseInt(desTask)-1);
+                        break;
+                    case "delete":
+                        deleteCommand(Integer.parseInt(desTask)-1);
+                        indexTask--;
+                        break;
+                    case "bye":
+                        break;
+                    default:
+                        tasklist.add(new Task(input));
+                        indexTask++;
+                        addCommand(input);
+                        break;
+                }
             }
         }
         public static void addTodo(String destask, int index){
@@ -136,6 +150,10 @@ public class Duke {
             System.out.println("OK, I've marked this task as not done yet:");
             Ui.printTask(index);
         }
+        public static void deleteCommand(int index){
+            Ui.printDeleted(index);
+            tasklist.remove(index);
+        }
 
     }
 
@@ -144,9 +162,6 @@ public class Duke {
         private String description;
         private Boolean isDone;
         protected String typeTask;
-        private enum enumTask {
-            TODO, EVENT, DEADLINE;
-        }
 
         public Task(String description){
             this.description = description;
