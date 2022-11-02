@@ -1,28 +1,31 @@
-package Duke.GUI;
+package duke.gui;
 
-import Duke.Duke;
+import java.awt.event.ActionListener;
+import java.util.Objects;
+import javax.swing.Timer;
+
+import duke.Duke;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-
-/**
- * Controller for MainWindow. Provides the layout for the other controls.
- */
 public class MainWindow extends AnchorPane {
     public Button listButton;
     public Button refreshButton;
     public Label status;
     public Label chatLabel;
+    private final Image userImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/images/gigachad.png")));
+    private final Image dukeImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/images/duke.png")));
+
+    private Duke duke;
+    private boolean newChat = true;
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -31,12 +34,6 @@ public class MainWindow extends AnchorPane {
     private TextField userInput;
     @FXML
     private Button sendButton;
-
-    private Duke duke;
-    boolean newChat = true;
-
-    private final Image userImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/images/gigachad.png")));
-    private final Image dukeImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/images/duke.png")));
 
     @FXML
     public void initialize() {
@@ -106,7 +103,7 @@ public class MainWindow extends AnchorPane {
         userInput.clear();
 
         ActionListener taskPerformer2 = evt -> Platform.runLater(() -> {
-            chatLabel.setText("Duke");
+            chatLabel.setText("duke");
             dialogContainer.getChildren().addAll(
                     DialogBox.getDukeDialog(response, dukeImage)
             );

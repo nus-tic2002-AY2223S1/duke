@@ -1,7 +1,7 @@
-package Util;
+package utils;
 
-import Duke.Util.DateProcessor;
-import Duke.Util.DukeException;
+import duke.utils.DateProcessor;
+import duke.utils.DukeException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

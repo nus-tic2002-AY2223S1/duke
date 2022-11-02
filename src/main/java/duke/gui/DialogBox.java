@@ -1,9 +1,9 @@
-package Duke.GUI;
+package duke.gui;
 
 import java.io.IOException;
 import java.util.Collections;
 
-import Duke.Util.DateProcessor;
+import duke.utils.DateProcessor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

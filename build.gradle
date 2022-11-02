@@ -1,9 +1,13 @@
 plugins {
     id 'java'
     id 'application'
-//    id 'checkstyle'
+    id 'checkstyle'
     id 'com.github.johnrengelman.shadow' version '5.1.0'
     id 'org.openjfx.javafxplugin' version '0.0.13'
+}
+
+checkstyle {
+    toolVersion = '8.29'
 }
 
 repositories {
@@ -66,7 +70,7 @@ run {
 tasks.withType(Test) {
     useJUnitPlatform()
     scanForTestClasses = false
-//    include "**/*Test.class" // whatever Ant pattern matches your test class files
+
 }
 apply plugin: 'java'
 

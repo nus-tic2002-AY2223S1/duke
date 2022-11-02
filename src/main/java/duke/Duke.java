@@ -1,26 +1,18 @@
-package Duke;
-
-import Duke.Interface.Cmd;
-import Duke.Interface.Parser;
-import Duke.Interface.Storage;
-import Duke.Interface.Ui;
-import Duke.Tasks.TaskList;
-import Duke.Util.DukeException;
+package duke;
 
 import java.io.FileNotFoundException;
+
+import duke.impl.Cmd;
+import duke.impl.Parser;
+import duke.impl.Storage;
+import duke.impl.Ui;
+import duke.tasks.TaskList;
+import duke.utils.DukeException;
 
 public class Duke {
     private final Ui ui;
     private TaskList t;
     private final Parser p;
-
-    public String getResponse(String input) {
-        return inter(input);
-    }
-
-    public String[] getWelcome() {
-        return ui.sendWelcomeMessage(t);
-    }
 
     public Duke(String path) {
         ui = new Ui();
@@ -31,6 +23,14 @@ public class Duke {
         } catch (FileNotFoundException e) {
             t = new TaskList();
         }
+    }
+
+    public String getResponse(String input) {
+        return inter(input);
+    }
+
+    public String[] getWelcome() {
+        return ui.sendWelcomeMessage(t);
     }
 
     private String inter(String s) {

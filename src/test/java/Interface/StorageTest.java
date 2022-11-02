@@ -1,15 +1,12 @@
 package Interface;
 
-import Duke.Interface.Storage;
-import Duke.Tasks.Task;
-import Duke.Tasks.TaskList;
-import Duke.Tasks.Todo;
+import duke.impl.Storage;
+import duke.tasks.Task;
+import duke.tasks.TaskList;
+import duke.tasks.Todo;
 import org.junit.jupiter.api.Test;
 
-import javax.naming.event.NamingExceptionEvent;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 

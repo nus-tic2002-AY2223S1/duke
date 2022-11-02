@@ -1,6 +1,6 @@
-package Duke.Tasks;
+package duke.tasks;
 
-import Duke.Util.DateProcessor;
+import duke.utils.DateProcessor;
 
 public class Event extends Task {
     protected String type = "E";

@@ -1,8 +1,4 @@
-package Duke.Interface;
-
-import Duke.Tasks.*;
-import Duke.Util.DateProcessor;
-import Duke.Util.DukeException;
+package duke.impl;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -10,44 +6,53 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Task;
+import duke.tasks.TaskList;
+import duke.tasks.Todo;
+import duke.utils.DateProcessor;
+import duke.utils.DukeException;
 
 public class Runner {
-    static String archiveCacheFilePath = "cache/archives.txt";
-    static String savedFilePath = "save/output.txt";
-    static String archiveDirPath = "archives/";
+    private static final String ARCHIVE_CACHE_FILE_PATH = "cache/archives.txt";
+    private static final String SAVED_FILE_PATH = "save/output.txt";
+    private static final String ARCHIVE_DIR_PATH = "archives/";
 
     public enum Command {
-        DEADLINE("deadline"),
-        EVENT("event"),
+        DEADLINE("deadline"), EVENT("event"),
 
-        DATE("date"),
-        TODO("todo");
+        DATE("date"), TODO("todo");
 
         public final String label;
-
-        public String getLabel() {
-            return this.label;
-        }
 
         Command(String label) {
             this.label = label;
         }
-    }
-
-    public enum Action {
-        MARK("mark"),
-        UNMARK("unmark"),
-        DELETE("delete");
-
-        public final String label;
 
         public String getLabel() {
             return this.label;
         }
+    }
+
+    public enum Action {
+        MARK("mark"), UNMARK("unmark"), DELETE("delete");
+
+        public final String label;
 
         Action(String label) {
             this.label = label;
+        }
+
+        public String getLabel() {
+            return this.label;
         }
     }
 
@@ -133,7 +138,7 @@ public class Runner {
         return ui.sendProcessRestoreError();
     }
 
-    private String printIOException(String s) {
+    private String printIoException(String s) {
         return ui.sendGenericWarning(s);
     }
 
@@ -192,31 +197,33 @@ public class Runner {
 
         if (idx != -1) {
             switch (a) {
-                case MARK:
-                    arrayList.get(idx).markTask();
-                    try {
-                        saveFile();
-                        return printSingle(idx, true);
-                    } catch (IOException e) {
-                        return printIOException(e.getMessage());
-                    }
-                case UNMARK:
-                    arrayList.get(idx).unmarkTask();
-                    try {
-                        saveFile();
-                        return printSingle(idx, false);
-                    } catch (IOException e) {
-                        return printIOException(e.getMessage());
-                    }
-                case DELETE:
-                    Task copy = arrayList.get(idx);
-                    arrayList.remove(idx);
-                    try {
-                        saveFile();
-                        return printTaskRemovedByIndex(copy);
-                    } catch (IOException e) {
-                        return printIOException(e.getMessage());
-                    }
+            case MARK:
+                arrayList.get(idx).markTask();
+                try {
+                    saveFile();
+                    return printSingle(idx, true);
+                } catch (IOException e) {
+                    return printIoException(e.getMessage());
+                }
+            case UNMARK:
+                arrayList.get(idx).unmarkTask();
+                try {
+                    saveFile();
+                    return printSingle(idx, false);
+                } catch (IOException e) {
+                    return printIoException(e.getMessage());
+                }
+            case DELETE:
+                Task copy = arrayList.get(idx);
+                arrayList.remove(idx);
+                try {
+                    saveFile();
+                    return printTaskRemovedByIndex(copy);
+                } catch (IOException e) {
+                    return printIoException(e.getMessage());
+                }
+            default:
+                return ("Unknown Command");
             }
         }
         return "";
@@ -226,55 +233,57 @@ public class Runner {
         long convertedTime;
 
         switch (c) {
-            case EVENT:
-                String[] eventByInput = s[1].split("/at", 2);
-                if (eventByInput.length == 1) {
-                    arrayList.add(new Event(eventByInput[0].trim(), new long[]{}));
-                } else {
-                    long[] convertedTimeRange;
-                    try {
-                        convertedTimeRange = DateProcessor.processDateTimeRange(eventByInput[1].trim());
-                    } catch (DukeException e) {
-                        throw new DukeException(e.getMessage());
-                    }
-                    if (convertedTimeRange == null) {
-                        throw new DukeException("");
-                    }
-                    arrayList.add(new Event(eventByInput[0].trim(), convertedTimeRange));
+        case EVENT:
+            String[] eventByInput = s[1].split("/at", 2);
+            if (eventByInput.length == 1) {
+                arrayList.add(new Event(eventByInput[0].trim(), new long[]{}));
+            } else {
+                long[] convertedTimeRange;
+                try {
+                    convertedTimeRange = DateProcessor.processDateTimeRange(eventByInput[1].trim());
+                } catch (DukeException e) {
+                    throw new DukeException(e.getMessage());
                 }
-                break;
-            case DEADLINE:
-                String[] deadlineByInput = s[1].split("/by", 2);
-                if (deadlineByInput.length == 1) {
-                    arrayList.add(new Deadline(deadlineByInput[0].trim(), 0));
-                } else {
-                    try {
-                        convertedTime = DateProcessor.processDateTime(deadlineByInput[1].trim());
-                    } catch (DukeException e) {
-                        throw new DukeException(e.getMessage());
-                    }
-                    if (convertedTime == -1) {
-                        throw new DukeException("");
-                    }
-                    arrayList.add(new Deadline(deadlineByInput[0].trim(), convertedTime));
+                if (convertedTimeRange == null) {
+                    throw new DukeException("");
                 }
-                break;
-            case TODO:
-                String[] todoByInput = s[1].split("/by", 2);
-                if (todoByInput.length == 1) {
-                    arrayList.add(new Todo(todoByInput[0].trim(), 0));
-                } else {
-                    try {
-                        convertedTime = DateProcessor.processDateTime(todoByInput[1].trim());
-                    } catch (DukeException e) {
-                        throw new DukeException(e.getMessage());
-                    }
-                    if (convertedTime == -1) {
-                        throw new DukeException("");
-                    }
-                    arrayList.add(new Todo(todoByInput[0].trim(), convertedTime));
+                arrayList.add(new Event(eventByInput[0].trim(), convertedTimeRange));
+            }
+            break;
+        case DEADLINE:
+            String[] deadlineByInput = s[1].split("/by", 2);
+            if (deadlineByInput.length == 1) {
+                arrayList.add(new Deadline(deadlineByInput[0].trim(), 0));
+            } else {
+                try {
+                    convertedTime = DateProcessor.processDateTime(deadlineByInput[1].trim());
+                } catch (DukeException e) {
+                    throw new DukeException(e.getMessage());
                 }
-                break;
+                if (convertedTime == -1) {
+                    throw new DukeException("");
+                }
+                arrayList.add(new Deadline(deadlineByInput[0].trim(), convertedTime));
+            }
+            break;
+        case TODO:
+            String[] todoByInput = s[1].split("/by", 2);
+            if (todoByInput.length == 1) {
+                arrayList.add(new Todo(todoByInput[0].trim(), 0));
+            } else {
+                try {
+                    convertedTime = DateProcessor.processDateTime(todoByInput[1].trim());
+                } catch (DukeException e) {
+                    throw new DukeException(e.getMessage());
+                }
+                if (convertedTime == -1) {
+                    throw new DukeException("");
+                }
+                arrayList.add(new Todo(todoByInput[0].trim(), convertedTime));
+            }
+            break;
+        default:
+            throw new DukeException("Unknown Command");
         }
     }
 
@@ -296,7 +305,7 @@ public class Runner {
         try {
             saveFile();
         } catch (IOException e) {
-            return printIOException(e.getMessage());
+            return printIoException(e.getMessage());
         }
         return printNewTaskAdded();
     }
@@ -304,42 +313,38 @@ public class Runner {
     public void restoreFile(int selection) throws IOException {
         String path = "";
 
-        Scanner scn = new Scanner(new File(archiveCacheFilePath));
+        Scanner scn = new Scanner(new File(ARCHIVE_CACHE_FILE_PATH));
         while (selection > 0 && scn.hasNext()) {
             path = scn.nextLine();
             selection--;
         }
 
-        File fileToMove = new File(archiveDirPath + path);
-        File toReplace = new File(savedFilePath);
+        File fileToMove = new File(ARCHIVE_DIR_PATH + path);
+        File toReplace = new File(SAVED_FILE_PATH);
         Files.copy(fileToMove.toPath(), toReplace.toPath(), StandardCopyOption.REPLACE_EXISTING);
         TaskList t = new TaskList(new Scanner(new File(toReplace.toString())));
     }
 
     public boolean archiveFile() throws IOException {
         String archiveFileName = "archive_" + getCurrentUserName() + "_" + getCurrentTimeStamp() + ".txt";
-        File fileToMove = new File(savedFilePath);
-        return fileToMove.renameTo(new File(archiveDirPath, archiveFileName));
+        File fileToMove = new File(SAVED_FILE_PATH);
+        return fileToMove.renameTo(new File(ARCHIVE_DIR_PATH, archiveFileName));
     }
 
     public void saveFile() throws IOException {
-        FileWriter writer = new FileWriter(savedFilePath);
+        FileWriter writer = new FileWriter(SAVED_FILE_PATH);
         writer.write(getCurrentUserName() + System.lineSeparator());
         writer.write(getCurrentTimeStamp() + System.lineSeparator());
 
         for (Task str : arrayList) {
-            String s = str.getType() + "," +
-                    str.getIsDone() + "," +
-                    str.getDescription() + "," +
-                    str.getDue() + "," +
-                    str.getTo();
+            String s = str.getType() + "," + str.getIsDone() + "," + str.getDescription() + "," + str.getDue() + "," + str.getTo();
             writer.write(s + System.lineSeparator());
         }
         writer.close();
     }
 
     public void cacheFile() throws IOException {
-        FileWriter writer = new FileWriter(archiveCacheFilePath);
+        FileWriter writer = new FileWriter(ARCHIVE_CACHE_FILE_PATH);
 
         for (Map.Entry<Integer, String> m : fileMap.entrySet()) {
             String s = m.getValue();
@@ -430,7 +435,7 @@ public class Runner {
                 return printProcessArchiveMessage();
             }
         } catch (IOException e) {
-            return printIOException(e.getMessage());
+            return printIoException(e.getMessage());
         }
         return printProcessArchiveFailureMessage();
     }
@@ -442,7 +447,7 @@ public class Runner {
     }
 
     private String listFiles() {
-        File folder = new File(archiveDirPath);
+        File folder = new File(ARCHIVE_DIR_PATH);
         File[] listOfFiles = folder.listFiles();
         assert listOfFiles != null;
         int i = 1;
@@ -460,7 +465,7 @@ public class Runner {
         try {
             cacheFile();
         } catch (IOException e) {
-            return printIOException(e.getMessage());
+            return printIoException(e.getMessage());
         }
         return String.valueOf(s);
     }
@@ -478,7 +483,7 @@ public class Runner {
             restoreFile(Integer.parseInt(s[1]));
             return "";
         } catch (IOException e) {
-            return printIOException("failed to restore records");
+            return printIoException("failed to restore records");
         }
     }
 }

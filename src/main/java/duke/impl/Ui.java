@@ -1,10 +1,10 @@
-package Duke.Interface;
-
-import Duke.Tasks.Task;
-import Duke.Tasks.TaskList;
-import Duke.Util.DateProcessor;
+package duke.impl;
 
 import java.util.ArrayList;
+
+import duke.tasks.Task;
+import duke.tasks.TaskList;
+import duke.utils.DateProcessor;
 
 public class Ui {
     public enum UiIcon {
@@ -15,12 +15,12 @@ public class Ui {
 
         public final String icon;
 
-        public String getIcon() {
-            return this.icon;
-        }
-
         private UiIcon(String icon) {
             this.icon = icon;
+        }
+
+        public String getIcon() {
+            return this.icon;
         }
     }
 
@@ -43,17 +43,15 @@ public class Ui {
 
         public final String text;
 
+        UiMessage(String text) {
+            this.text = text;
+        }
+
         public String getText() {
             return this.text;
         }
-
-        private UiMessage(String text) {
-            this.text = text;
-        }
     }
 
-    //    protected String format = "    ───────────────────────────────────────────────────────────────────────────\n    %s\n    ───────────────────────────────────────────────────────────────────────────\n";
-//    protected String format = "────────────────────────────────────\n    %s\n────────────────────────────────────\n";
     protected String format = "%s";
 
     public Ui() {
@@ -157,30 +155,30 @@ public class Ui {
 
     public String printNewTasks(String task, int size) {
         StringBuilder s = new StringBuilder();
-        s.append("Got it. I've added this task:\n\t").
-                append(task).
-                append("\n\tNow you have ").
-                append(size).
-                append(size > 1 ? " tasks " : " task ").
-                append("in the list.");
+        s.append("Got it. I've added this task:\n\t")
+                .append(task)
+                .append("\n\tNow you have ")
+                .append(size)
+                .append(size > 1 ? " tasks " : " task ")
+                .append("in the list.");
         return sendConfirmedOutput(s);
     }
 
     public String printTaskRemovedByIndex(String task, int size) {
         StringBuilder s = new StringBuilder();
-        s.append("Noted. I've removed this task:\n\t").
-                append(task).
-                append("\n\tNow you have ").
-                append(size - 1).
-                append(size > 1 ? " tasks " : " task ").
-                append("in the list.");
+        s.append("Noted. I've removed this task:\n\t")
+                .append(task)
+                .append("\n\tNow you have ")
+                .append(size - 1)
+                .append(size > 1 ? " tasks " : " task ")
+                .append("in the list.");
         return sendConfirmedOutput(s);
     }
 
     public String printMarkTask(String task, Boolean isMark) {
         StringBuilder s = new StringBuilder();
-        s.append(isMark ? "Nice! I've marked this task as done:\n" : "OK, I've marked this task as not done yet:\n").
-                append(task);
+        s.append(isMark ? "Nice! I've marked this task as done:\n" : "OK, I've marked this task as not done yet:\n")
+                .append(task);
         return sendConfirmedOutput(s);
     }
 
@@ -204,14 +202,17 @@ public class Ui {
             if (withIndex) {
                 s.append(i + 1);
             }
-            s.append(".").append(tasks.get(i).toString()).append(suffix);
+            s.append(".")
+                    .append(tasks.get(i).toString())
+                    .append(suffix);
         }
     }
 
     public String printSelectedList(ArrayList<Task> tasks, Boolean withIndex, String date) {
         StringBuilder s = new StringBuilder();
         if (tasks.size() == 0) {
-            s.append("You have no task scheduled on ").append(date);
+            s.append("You have no task scheduled on ")
+                    .append(date);
         } else {
             s.append("Here are the task(s) scheduled on this day:\n    ");
             buildList(tasks, withIndex, s);
@@ -222,9 +223,13 @@ public class Ui {
     public String printFoundList(ArrayList<Task> tasks, Boolean withIndex, String keyword) {
         StringBuilder s = new StringBuilder();
         if (tasks.size() == 0) {
-            s.append("You have no task with keyword '").append(keyword).append("'");
+            s.append("You have no task with keyword '")
+                    .append(keyword)
+                    .append("'");
         } else {
-            s.append("Here are the task(s) that contains '").append(keyword).append("':\n    ");
+            s.append("Here are the task(s) that contains '")
+                    .append(keyword)
+                    .append("':\n    ");
             buildList(tasks, withIndex, s);
         }
         return sendConfirmedOutput(s);
