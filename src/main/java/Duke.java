@@ -1,6 +1,11 @@
+import java.time.LocalDateTime;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class Duke {
     private static final ArrayList<Task> tasklist = new ArrayList<>();
@@ -56,10 +61,6 @@ public class Duke {
             Ui.printTask(index);
             System.out.println("Now you have " + (indexTask-1) + " tasks in the list");
         }
-        public static void printFind(int index, int countfind){
-            System.out.print(countfind + ".");
-            printTask(index);
-        }
 
         public static void exit() {
             System.out.println("Bye Siying!" + System.lineSeparator() + "Enjoy your day ;)");
@@ -73,7 +74,7 @@ public class Duke {
             int timePosition = input.indexOf("/");
             String command;
             String desTask;
-            String timedateTask = null;
+            String datetimeTask = null;
 
             if(input.isEmpty()){
                 throw new EmptyStackException();
@@ -85,11 +86,16 @@ public class Duke {
                 } else if (timePosition < 0){
                     command = input.substring(0, desPosition);
                     desTask = input.substring(desPosition + 1);
-                    // command event, deadline
+                // command event, deadline, postpone
                 } else {
                     command = input.substring(0, desPosition);
                     desTask = input.substring(desPosition + 1, timePosition - 1);
-                    timedateTask = input.substring(timePosition + 4);
+                    datetimeTask = input.substring(timePosition + 4);
+                    if(datetimeTask.length() == 16){
+                        datetimeTask = formatDateTime(datetimeTask);
+                    } else if (datetimeTask.length() == 10){
+                        datetimeTask = formatDate(datetimeTask);
+                    }
                 }
 
                 switch (command) {
@@ -102,11 +108,11 @@ public class Duke {
                         indexTask++;
                         break;
                     case "event":
-                        addEvent(desTask, timedateTask, indexTask);
+                        addEvent(desTask, datetimeTask, indexTask);
                         indexTask++;
                         break;
                     case "deadline":
-                        addDeadline(desTask, timedateTask, indexTask);
+                        addDeadline(desTask, datetimeTask, indexTask);
                         indexTask++;
                         break;
                     case "mark":
@@ -121,12 +127,14 @@ public class Duke {
                         break;
                     case "find":
                         findCommand(desTask);
+                    case "due":
+                        duetaskCommand(desTask);
+                    case "postpone":
+                        postponeCommand(Integer.parseInt(desTask)-1, datetimeTask);
                     case "bye":
                         break;
                     default:
-                        tasklist.add(new Task(input));
-                        indexTask++;
-                        addCommand(input);
+                        System.out.println("Invalid Action");
                         break;
                 }
             }
@@ -135,16 +143,13 @@ public class Duke {
             tasklist.add(new Todo(destask));
             Ui.printAdded(index);
         }
-        public static void addEvent(String destask, String timedatetask, int index){
-            tasklist.add(new Event(destask, timedatetask));
+        public static void addEvent(String destask, String datetimetask, int index){
+            tasklist.add(new Event(destask, datetimetask));
             Ui.printAdded(index);
         }
-        public static void addDeadline(String destask, String timedatetask, int index){
-            tasklist.add(new Deadline(destask, timedatetask));
+        public static void addDeadline(String destask, String datetimetask, int index){
+            tasklist.add(new Deadline(destask, datetimetask));
             Ui.printAdded(index);
-        }
-        public static void addCommand(String input){
-            System.out.println("added: " + input);
         }
         public static void markCommand(int index){
             tasklist.get(index).markDone();
@@ -161,15 +166,35 @@ public class Duke {
             tasklist.remove(index);
         }
         public static void findCommand(String find){
-            int findCount = 0;
-
             System.out.println("Here are the matching tasks in your list:");
             for (int i = 0; i < indexTask; i++){
-                if(tasklist.get(i).find(find)){
-                    findCount++;
-                    Ui.printFind(i, findCount);
+                if(tasklist.get(i).matchFind(find)){
+                    Ui.printTask(i);
                 }
             }
+        }
+        public static void duetaskCommand(String date){
+            System.out.println("Here are the tasks in your list matching the due date:");
+            for (int i = 0; i < indexTask; i++){
+                if(tasklist.get(i).matchDue(formatDate(date))){
+                    Ui.printTask(i);
+                }
+            }
+        }
+        public static void postponeCommand(int index, String date){
+            System.out.println("OK, I've postpone this task to new date below:");
+            tasklist.get(index).setDate(date);
+            Ui.printTask(index);
+        }
+        public static String formatDateTime(String datetime){
+            LocalDateTime formattedDatetime = LocalDateTime.parse(datetime);
+            DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("EEE MMM dd, yyyy HH:mm");
+            return formattedDatetime.format(dateformatter);
+        }
+        public static String formatDate(String date){
+            LocalDate formattedDate = LocalDate.parse(date);
+            DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("EEE MMM dd, yyyy");
+            return formattedDate.format(dateformatter);
         }
 
     }
@@ -205,8 +230,14 @@ public class Duke {
         public void unmarkDone(){
             this.isDone = false;
         }
-        public boolean find(String find){
+        public boolean matchFind(String find){
             return this.description.contains(find);
+        }
+        public boolean matchDue(String duedate){
+            return false;
+        }
+        public void setDate(String newdate){
+
         }
     }
     public static class Todo extends Task{
@@ -222,8 +253,15 @@ public class Duke {
             super.typeTask = "E";
             this.at = at;
         }
+
         public String getString(){
             return super.getString() + "(at: " + this.at + ")";
+        }
+        public boolean matchDue(String duedate){
+            return this.at.equals(duedate);
+        }
+        public void setDate(String newdate){
+            this.at = newdate;
         }
     }
     public static class Deadline extends Task{
@@ -233,8 +271,15 @@ public class Duke {
             super.typeTask = "D";
             this.by = by;
         }
+
         public String getString(){
             return super.getString() + "(by: " + this.by + ")";
+        }
+        public boolean matchDue(String duedate){
+            return this.by.equals(duedate);
+        }
+        public void setDate(String newdate){
+            this.by = newdate;
         }
     }
 
