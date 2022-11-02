@@ -1,9 +1,13 @@
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.File;
+import java.io.FileWriter;
+
 
 public class Duke {
-    //private static final Task[] tasks = new Task[100];
     private static final List<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -21,16 +25,14 @@ public class Duke {
         inputCommand();
     }
     public static void inputCommand(){
+        saveToFile();
         Scanner in = new Scanner(System.in);
         String command = in.nextLine();
-        System.out.println("taskList: " + tasks);
 
         try {
-            if (command.replaceAll("\\s+","").equalsIgnoreCase("bye")) {
+            if (command.replaceAll("\\s+", "").equalsIgnoreCase("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
-            }
-
-            else if (command.replaceAll("\\s+","").equalsIgnoreCase("list")) {
+            } else if (command.replaceAll("\\s+", "").equalsIgnoreCase("list")) {
                 int listNo = 0;
                 System.out.println("Here are the tasks in your list:");
 
@@ -44,9 +46,7 @@ public class Duke {
                 }
                 System.out.println();
                 inputCommand();
-            }
-
-            else if (command.toLowerCase().startsWith("mark")) {
+            } else if (command.toLowerCase().startsWith("mark")) {
                 try {
                     // -5 index for "mark "
                     int taskNo = Integer.parseInt(command.substring(5)) - 1;
@@ -60,9 +60,7 @@ public class Duke {
                     System.out.println("☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
                 }
                 inputCommand();
-            }
-
-            else if (command.toLowerCase().startsWith("unmark")) {
+            } else if (command.toLowerCase().startsWith("unmark")) {
                 try {
                     // -7 index for "unmark "
                     int taskNo = Integer.parseInt(command.substring(7)) - 1;
@@ -76,9 +74,7 @@ public class Duke {
                     System.out.println("☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
                 }
                 inputCommand();
-            }
-
-            else if (command.startsWith("delete")) {
+            } else if (command.startsWith("delete")) {
                 try {
                     // -7 index for "unmark"
                     int taskNo = Integer.parseInt(command.substring(7)) - 1;
@@ -89,9 +85,7 @@ public class Duke {
                     System.out.println("☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
                 }
                 inputCommand();
-            }
-
-            else if (command.startsWith("todo")) {
+            } else if (command.startsWith("todo")) {
                 try {
                     String taskName = command.substring(5);
                     if (taskName.isBlank()) {
@@ -103,9 +97,7 @@ public class Duke {
                     System.out.println("☹ OOPS!!! The description of a todo cannot be empty." + System.lineSeparator());
                 }
                 inputCommand();
-            }
-
-            else if (command.startsWith("deadline")) {
+            } else if (command.startsWith("deadline")) {
                 try {
                     int split = command.indexOf('/');
                     String taskName = command.substring(9, split - 1);
@@ -116,9 +108,7 @@ public class Duke {
                     System.out.println("☹ OOPS!!! The description of a deadline cannot be empty." + System.lineSeparator());
                 }
                 inputCommand();
-            }
-
-            else if (command.startsWith("event")) {
+            } else if (command.startsWith("event")) {
                 try {
                     int split = command.indexOf('/');
                     String taskName = command.substring(6, split - 1);
@@ -129,12 +119,9 @@ public class Duke {
                     System.out.println("☹ OOPS!!! The description of an event cannot be empty." + System.lineSeparator());
                 }
                 inputCommand();
-            }
-
-            else {
+            } else {
                 throw new DukeException();
             }
-
         } catch (DukeException e) {
             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(" + System.lineSeparator());
             inputCommand();
@@ -149,11 +136,51 @@ public class Duke {
                 System.lineSeparator());
     }
 
-    public static void removeTask(Task t){
+    public static void removeTask(Task t) {
         tasks.remove(t);
 
         System.out.println("Noted. I've removed this task:" + System.lineSeparator() +
                 t.toString() + System.lineSeparator() + "Now you have " + tasks.size() + " task(s) in the list." +
                 System.lineSeparator());
+    }
+
+    public static void saveToFile(){
+        try {
+            File dukeText = new File("data/duke.txt");
+            dukeText.getParentFile().mkdirs();
+            dukeText.createNewFile();
+
+            FileWriter dukeTextWrite = new FileWriter("data/duke.txt");
+
+            for (Task element : tasks) {
+                char taskType = element.toString().charAt(1);
+                char markType = element.toString().charAt(4);
+                String taskDesc;
+
+                int intMarkType = 0;
+
+                if (markType == 'X') {
+                    intMarkType = 1;
+                } else {
+                    intMarkType = 0;
+                }
+
+                if (taskType == 'T') {
+                    taskDesc = element.toString().substring(7);
+
+                    dukeTextWrite.write(taskType + " | " + intMarkType + " | " + taskDesc + System.lineSeparator());
+                } else {
+                    int split = element.toString().indexOf(':');
+                    int end = element.toString().indexOf(')');
+                    taskDesc = element.toString().substring(7, split - 4);
+                    String taskByWhen = element.toString().substring(split + 2, end);
+
+                    dukeTextWrite.write(taskType + " | " + intMarkType + " | " + taskDesc + " | " + taskByWhen + System.lineSeparator());
+                }
+            }
+            dukeTextWrite.close();
+        } catch (IOException e) {
+            System.out.println("Unable to save to file. Please check if directory and file exists.");
+        }
     }
 }
