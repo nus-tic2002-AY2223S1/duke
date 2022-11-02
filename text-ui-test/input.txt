@@ -1,2 +1,18 @@
 list
+todo Buy groceries from NTUC at Bedok Central
+deadline Complete Duke project /by 2022-11-13 23:59:59
+event Gynae appointment /at 2022-11-25 10:30:00
+list
+mark 1
+list
+mark 3
+list
+unmark 3
+list
+delete 2
+list
+delete 1
+list
+delete 1
+list
 bye
