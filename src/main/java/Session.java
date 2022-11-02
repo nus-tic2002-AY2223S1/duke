@@ -19,6 +19,7 @@ public class Session {
      * @throws IOException If an I/O error occurred.
      */
     public void start() throws IOException {
+        sessionRepo.loadDirectory();
         sessionRepo.loadFile();
         sessionTaskList = new TaskList();
         sessionTaskList.existingTaskList(sessionRepo.readFile());
@@ -41,12 +42,9 @@ public class Session {
         String commandLine;
         Scanner input = new Scanner(System.in);
 
-        // user input and echo
         while (true) {
             inputLine = input.nextLine();
-            // instantiate an array to tokenize the input
             String[] lineArray = inputLine.split(" ");
-            // obtain the command, first element
             commandLine = lineArray[0];
 
             if (inputLine.equalsIgnoreCase("bye")) {

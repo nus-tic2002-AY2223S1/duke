@@ -15,6 +15,14 @@ public class Repository {
         this.repoFileName = fileName;
     }
 
+    public void loadDirectory() throws IOException {
+        File dir = new File(repoDirectory);
+        if (dir.mkdir()) {
+            System.out.printf("The %s directory has been created,\n" , repoDirectory);
+        }
+        System.out.printf("Using %s directory,\n" , repoDirectory);
+    }
+
     /**
      * Atomically creates a new, empty file named by this abstract pathname if and only if a file with this name does not yet exist.
      * @throws IOException If an I/O error occurred.
@@ -22,10 +30,10 @@ public class Repository {
     public void loadFile() throws IOException {
         File f = new File(repoDirectory + repoFileName);
         if (f.createNewFile()) {
-            System.out.printf("The %s file has been created\n" , repoFileName);
+            System.out.printf("The %s file has been created.\n" , repoFileName);
             System.out.println();
         } else {
-            System.out.printf("Opening %s file for persistence\n" , repoFileName);
+            System.out.printf("Opening %s file.\n" , repoFileName);
             System.out.println();
         }
     }
