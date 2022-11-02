@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ui.ErrorMessages.*;
+import static ui.TaskMessages.*;
 import static ui.UI.*;
 
 public class TaskList {
@@ -12,16 +13,27 @@ public class TaskList {
 
     public static void addTask(Task task){
         taskList.add(task);
-        System.out.println("Got it. I've added this task:");
+        printMessage(MESSAGE_TASK_ADDED);
         System.out.println(task);
         System.out.println("\nNow you have " + taskList.size() + " tasks in the list.");
     }
 
-//    public void deleteTask(int deleteIndex){
-//            Task task = taskList.get(deleteIndex - 1);
-//            taskList.remove(task);
-//    }
-
+    public static void deleteTask(String[] lineSpaceSplit) {
+        printLine();
+        int deleteIndex = Integer.parseInt(lineSpaceSplit[1]);
+        try {
+            Task task = taskList.get(deleteIndex - 1);
+            taskList.remove(task);
+            printMessage(MESSAGE_TASK_REMOVED);
+            System.out.println(task);
+            System.out.println("\nNow you have " + taskList.size() + " tasks in the list.");
+        } catch (IndexOutOfBoundsException e) {
+            printLine();
+            printError(TASK_NUMBER_OOB);
+            listTask();
+            printLine();
+        }
+    }
     public static void listTask() {
         int taskCount = 0;
         ui.UI.printLine();
@@ -39,8 +51,9 @@ public class TaskList {
             Task markedTask = taskList.get(markedIndex - 1);
             markedTask.markAsDone();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Task Number out of range. Please enter a valid input (Task Number: 1 " + "-" + taskList.size() + ")");
-            ui.UI.printLine();
+            printError(TASK_NUMBER_OOB);
+            listTask();
+            printLine();
         }
     }
 
@@ -50,7 +63,9 @@ public class TaskList {
             Task unmarkedTask = taskList.get(unmarkedIndex - 1);
             unmarkedTask.markAsUndone();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Task Number out of range. Please enter a valid input (Current Range: 1 " + "to " + taskList.size() + ")");
+            printError(TASK_NUMBER_OOB);
+            listTask();
+            printLine();
         }
     }
 
@@ -59,10 +74,6 @@ public class TaskList {
         try {
             String todoTask = line.substring(5);
             Todo newTodoTask = new Todo(todoTask);
-//            taskList.add(newTodoTask);
-//            System.out.println("Got it. I've added this task:");
-//            System.out.println(newTodoTask);
-//            System.out.println("\nNow you have " + taskList.size() + " tasks in the list.");
             addTask(newTodoTask);
         } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
             printError(INVALID_TODO_INPUT);
@@ -79,13 +90,8 @@ public class TaskList {
             String deadlineBy = deadlineItemSplit[1];
             Deadline task = new Deadline(deadlineTask, deadlineBy);
             addTask(task);
-//            taskList.add(task);
-//            System.out.println("Got it. I've added this task:");
-//            System.out.println(task);
-//            System.out.println("\nNow you have " + taskList.size() + " tasks in the list.");
         } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
-            String m = "Invalid Deadline input.\nPlease enter a valid input (E.g. deadline return book /by Sunday).";
-            printError(m);
+            printError(INVALID_DEADLINE_INPUT);
         }
         printLine();
     }
@@ -98,31 +104,10 @@ public class TaskList {
             String eventAt = eventItemSplit[1];
             Event task = new Event(eventTask, eventAt);
             addTask(task);
-//            taskList.add(task);
-//            System.out.println("Got it. I've added this task:");
-//            System.out.println(task);
-//            System.out.println("\nNow you have " + taskList.size() + " tasks in the list.");
         } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
             printTask(INVALID_EVENT_INPUT);
         }
         printLine();
     }
-
-    public static void deleteTask(String[] lineSpaceSplit) {
-        printLine();
-        int deleteIndex = Integer.parseInt(lineSpaceSplit[1]);
-        try {
-            Task task = taskList.get(deleteIndex - 1);
-            taskList.remove(task);
-            System.out.println("Noted. I've removed this task:\n");
-            System.out.println(task);
-            System.out.println("\nNow you have " + taskList.size() + " tasks in the list.");
-        } catch (IndexOutOfBoundsException e) {
-            printLine();
-            printError(TASK_NUMBER_OOB);
-            printLine();
-        }
-    }
-
 }
 
