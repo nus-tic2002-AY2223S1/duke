@@ -1,13 +1,11 @@
 name: CI
 
 on:
-  [push, pull_request]
+  [ push, pull_request ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -25,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
-        run:  ./gradlew clean build
+        run: ./gradlew clean build
       - name: Coverage Report
         run: ./gradlew jacocoTestReport
       - name: Upload coverage to Codecov
