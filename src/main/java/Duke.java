@@ -33,13 +33,23 @@ public class Duke {
 
         public static void printList(){
             for (int i = 0; i < indexTask; i++) {
-                System.out.println(i + 1 + ".[" + tasklist.get(i).getDone() + "] " + tasklist.get(i).getDescription());
+                System.out.println(i + 1 + ".[" + tasklist.get(i).getTypetask() + "]" +
+                        "[" + tasklist.get(i).getDone() + "] " +
+                        tasklist.get(i).getDescription() + " " +
+                        tasklist.get(i).getString());
             }
         }
         public static void printTask(int index){
-            System.out.println(" [" + tasklist.get(index).getDone() + "] " + tasklist.get(index).getDescription());
+            System.out.println(" [" + tasklist.get(index).getTypetask() + "]" +
+                            "[" + tasklist.get(index).getDone() + "] " +
+                            tasklist.get(index).getDescription() + " " +
+                            tasklist.get(index).getString());
         }
-
+        public static void printAdded(int index){
+            System.out.println("Got it. I've added this task:");
+            Ui.printTask(index);
+            System.out.println("Now you have " + (indexTask+1) + " tasks in the list");
+        }
 
         public static void exit() {
             System.out.println("Bye Siying!" + System.lineSeparator() + "Enjoy your day ;)");
@@ -49,27 +59,48 @@ public class Duke {
     public static class Parser {
 
         public static void identifyCommand(String input) {
-            int descriptionPosition = input.indexOf(" ");
+            int desPosition = input.indexOf(" ");
+            int timePosition = input.indexOf("/");
             String command;
-            String taskDes;
+            String desTask;
+            String timedateTask = null;
 
-            if (descriptionPosition < 0) {
+            // command mark, unmark
+            if (desPosition < 0) {
                 command = input;
-                taskDes = "";
+                desTask = "";
+            } else if (timePosition < 0){
+                command = input.substring(0, desPosition);
+                desTask = input.substring(desPosition + 1);
+            // command event, deadline
             } else {
-                command = input.substring(0, descriptionPosition);
-                taskDes = input.substring(descriptionPosition + 1);
+                command = input.substring(0, desPosition);
+                desTask = input.substring(desPosition + 1, timePosition - 1);
+                timedateTask = input.substring(timePosition + 4);
             }
 
             switch (command) {
                 case "list":
+                    System.out.println("Here are the tasks in your list:");
                     Ui.printList();
                     break;
+                case "todo":
+                    addTodo(desTask, indexTask);
+                    indexTask++;
+                    break;
+                case "event":
+                    addEvent(desTask, timedateTask, indexTask);
+                    indexTask++;
+                    break;
+                case "deadline":
+                    addDeadline(desTask, timedateTask, indexTask);
+                    indexTask++;
+                    break;
                 case "mark":
-                    markCommand(Integer.parseInt(taskDes)-1);
+                    markCommand(Integer.parseInt(desTask)-1);
                     break;
                 case "unmark":
-                    unmarkCommand(Integer.parseInt(taskDes)-1);
+                    unmarkCommand(Integer.parseInt(desTask)-1);
                     break;
                 case "bye":
                     break;
@@ -79,6 +110,18 @@ public class Duke {
                     addCommand(input);
                     break;
             }
+        }
+        public static void addTodo(String destask, int index){
+            tasklist.add(new Todo(destask));
+            Ui.printAdded(index);
+        }
+        public static void addEvent(String destask, String timedatetask, int index){
+            tasklist.add(new Event(destask, timedatetask));
+            Ui.printAdded(index);
+        }
+        public static void addDeadline(String destask, String timedatetask, int index){
+            tasklist.add(new Deadline(destask, timedatetask));
+            Ui.printAdded(index);
         }
         public static void addCommand(String input){
             System.out.println("added: " + input);
@@ -97,12 +140,18 @@ public class Duke {
     }
 
     public static class Task {
+
         private String description;
         private Boolean isDone;
+        protected String typeTask;
+        private enum enumTask {
+            TODO, EVENT, DEADLINE;
+        }
 
         public Task(String description){
             this.description = description;
             this.isDone = false;
+            this.typeTask = " ";
         }
 
         public String getDescription(){
@@ -110,8 +159,14 @@ public class Duke {
         }
         public String getDone(){
             return (this.isDone ? "X" : " ");
-
         }
+        public String getTypetask(){
+            return this.typeTask;
+        }
+        public String getString(){
+            return "";
+        }
+
         public void markDone(){
             this.isDone = true;
         }
@@ -119,7 +174,34 @@ public class Duke {
             this.isDone = false;
         }
 
-
+    }
+    public static class Todo extends Task{
+        public Todo(String description){
+            super(description);
+            super.typeTask = "T";
+        }
+    }
+    public static class Event extends Task{
+        private String at;
+        public Event(String description, String at){
+            super(description);
+            super.typeTask = "E";
+            this.at = at;
+        }
+        public String getString(){
+            return super.getString() + "(at: " + this.at + ")";
+        }
+    }
+    public static class Deadline extends Task{
+        private String by;
+        public Deadline(String description, String by){
+            super(description);
+            super.typeTask = "D";
+            this.by = by;
+        }
+        public String getString(){
+            return super.getString() + "(by: " + this.by + ")";
+        }
     }
 
     public static void main(String[] args) {
