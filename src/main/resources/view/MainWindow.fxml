@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1000.0" maxWidth="800.0" minHeight="1000.0" minWidth="800.0" prefHeight="1000.0"
+<AnchorPane fx:id="rootPane" maxHeight="1000.0" maxWidth="800.0" minHeight="1000.0" minWidth="800.0" prefHeight="1000.0"
             prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="duke.gui.MainWindow">
     <Label fx:id="chatLabel" alignment="CENTER" layoutY="28.0" prefHeight="26.0" prefWidth="800.0" text="Duke">
@@ -83,8 +83,8 @@
     </HBox>
     <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="27.0" prefWidth="800.0">
         <Menu fx:id="menuFile" mnemonicParsing="false" text="File">
-            <MenuItem fx:id="menuRefreshButton" mnemonicParsing="false" onAction="#refreshAction"
-                      text="Refresh"/>
+            <MenuItem fx:id="darkModeButton" mnemonicParsing="false" onAction="#toggleDarkMode" text="Dark Mode"/>
+            <MenuItem fx:id="menuRefreshButton" mnemonicParsing="false" onAction="#refreshAction" text="Refresh"/>
             <MenuItem fx:id="menuCloseButton" mnemonicParsing="false" onAction="#exitAction" text="Close"/>
         </Menu>
         <Menu mnemonicParsing="false" text="Tools">

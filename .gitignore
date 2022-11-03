@@ -19,6 +19,6 @@ text-ui-test/EXPECTED-UNIX.TXT
 !data/archives/.gitkeep
 !data/tmp/.gitkeep
 !data/save/.gitkeep
-data/archives/*.txt
-data/tmp/*.txt
-data/save/output.txt
+data/archives/
+data/tmp/
+data/save/
