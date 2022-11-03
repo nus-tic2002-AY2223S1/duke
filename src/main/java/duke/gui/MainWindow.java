@@ -2,15 +2,22 @@ package duke.gui;
 
 import java.awt.Desktop;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Map;
 import java.util.Objects;
 import javax.swing.Timer;
 
 import duke.Duke;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -26,8 +33,11 @@ import javafx.stage.Stage;
  * Main window of the chat. Container of dialogBox, menu bar and buttons.
  */
 public class MainWindow extends AnchorPane {
+    public Parent rootPane;
+    public MenuItem darkModeButton;
     private Duke duke;
     private boolean newChat = true;
+    private boolean isDark = false;
     @FXML
     private Label listButton;
     @FXML
@@ -171,6 +181,8 @@ public class MainWindow extends AnchorPane {
         Stage stage = (Stage) refreshButton.getScene().getWindow();
         Main m = new Main();
         m.start(stage);
+        Scene s = rootPane.getScene();
+        s.getStylesheets().add(getClass().getResource("/view/dark.css").toExternalForm());
     }
 
     @FXML
@@ -200,5 +212,32 @@ public class MainWindow extends AnchorPane {
         dialogContainer.getChildren().addAll(
                 DialogBox.getDukeDialog(response, dukeImage)
         );
+    }
+
+    @FXML
+    private void toggleDarkMode() throws IOException {
+        Scene s = rootPane.getScene();
+        if (isDark) {
+            isDark = false;
+            darkModeButton.setText("Dark Mode");
+            s.getStylesheets().remove(Objects.requireNonNull(getClass().getResource("/view/dark.css")).toExternalForm());
+        } else {
+            isDark = true;
+            darkModeButton.setText("\u2713 Dark Mode");
+            s.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/view/dark.css")).toExternalForm());
+        }
+        cacheState(isDark);
+    }
+
+    private void cacheState(boolean isDark) throws IOException {
+        Files.createDirectories(Paths.get("data/tmp/"));
+        FileWriter writer = new FileWriter("data/tmp/mode");
+        writer.write(isDark ? "dark=1" : "dark=0");
+        writer.close();
+    }
+
+    public void setDarkModeText() {
+        isDark = true;
+        darkModeButton.setText("\u2713 Dark Mode");
     }
 }

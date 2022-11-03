@@ -1,0 +1,13 @@
+#dialog1 {
+    -fx-background-color: #e7e7e7;
+    -fx-padding: 10;
+    -fx-label-padding: 2, 0, 2, 0;
+    -fx-wrap-text: true;
+    -fx-background-radius: 10;
+    -fx-max-width: 500
+}
+
+#sendButton {
+    -fx-graphic: url('/view/icons8-send-35.png');
+}
+

@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,6 +26,7 @@ public class DialogBox extends HBox {
     private Label meta;
     @FXML
     private ImageView displayPicture;
+    private Parent rootPane;
 
     private DialogBox(String text, Image img, String userSpecific, boolean isDuke) {
         try {
@@ -65,7 +67,7 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getDukeDialog(String text, Image img) {
-        var db = new DialogBox(text, img, "-fx-background-color: #dcdcdc", true);
+        var db = new DialogBox(text, img, "", true);
         db.flip();
         return db;
     }
