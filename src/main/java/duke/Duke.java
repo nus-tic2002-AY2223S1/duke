@@ -6,7 +6,14 @@ import duke.impl.Cmd;
 import duke.impl.Parser;
 import duke.impl.Storage;
 import duke.impl.Ui;
+import duke.orm.Database;
+import duke.orm.DatabaseObject;
 import duke.tasks.TaskList;
+
+import javax.xml.crypto.Data;
+
+import static duke.orm.Database.logDuke;
+import static duke.orm.Database.logUser;
 
 /**
  * Main class of Duke
@@ -16,12 +23,16 @@ public class Duke {
     private TaskList t;
     private final Parser p;
 
+    Database db;
+
     /**
      * Initialize IO, Parser, and restore previous records. (If any)
      *
      * @param path File path to read previous records from.
      */
     public Duke(String path) {
+        db = new Database();
+        db.createTable();
         ui = new Ui();
         p = new Parser();
         Storage s = new Storage(path);
@@ -57,7 +68,10 @@ public class Duke {
      * @param s User input command
      */
     private String inter(String s) {
+        logUser(s);
         Cmd c = p.readInText(s).parse();
-        return c.run(t.getList());
+        String resp = c.run(t.getList());
+        logDuke(resp);
+        return resp;
     }
 }
