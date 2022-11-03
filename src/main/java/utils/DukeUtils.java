@@ -1,8 +1,11 @@
+package utils;
+
 import java.util.List;
 import entities.Task;
 import entities.Todo;
 import entities.Deadline;
 import entities.Event;
+import exception.DukeException;
 
 public class DukeUtils {
     public static void printText(String text){
@@ -17,6 +20,15 @@ public class DukeUtils {
         String space = "     ";
         System.out.println(space + line);
         System.out.println(space + "Got it. I've added this task:" );
+        System.out.println(space + t.toString());
+        System.out.println(space + "Now you have" + count + "tasks in the list." );
+        System.out.println(space + line);
+    }
+    public static void printDelete(Task t, int count){
+        String line = "---------------------------------------------";
+        String space = "     ";
+        System.out.println(space + line);
+        System.out.println(space + "Noted. I've removed this task:" );
         System.out.println(space + t.toString());
         System.out.println(space + "Now you have" + count + "tasks in the list." );
         System.out.println(space + line);
@@ -45,7 +57,6 @@ public class DukeUtils {
         }
         System.out.println(space + line);
     }
-
     public static void validateInput(String text) throws DukeException {
         String action;
         action = text.split(" ", 2)[0];
@@ -66,6 +77,11 @@ public class DukeUtils {
             case "event":
                 if (text.split(" ", 2).length < 2) {
                     throw new DukeException("☹ OOPS!!! The description of a event cannot be empty.");
+                }
+                break;
+            case "delete":
+                if (text.split(" ", 2).length < 2) {
+                    throw new DukeException("☹ OOPS!!! The delete task number cannot be empty.");
                 }
                 break;
             default:

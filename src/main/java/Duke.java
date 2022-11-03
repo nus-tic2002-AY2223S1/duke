@@ -1,12 +1,20 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 import entities.Task;
 import entities.Deadline;
 import entities.Event;
 import entities.Todo;
+import exception.DukeException;
+import utils.DukeUtils;
+
+import static command.command.*;
 
 public class Duke {
+
+    private static final Scanner s = new Scanner(System.in);
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -21,21 +29,19 @@ public class Duke {
         List<Task> tasks = new ArrayList<>();
         String action, rest;
 
-        whileLoop: while (true){
-            String text;
-            Scanner s = new Scanner(System.in);
-            text = s.nextLine();
-            try{
+        whileLoop:
+        while (true) {
+            String text = s.nextLine();
+            try {
                 DukeUtils.validateInput(text);
-            }catch (DukeException e){
+            } catch (DukeException e) {
                 DukeUtils.printText(e.getMessage());
                 continue;
             }
-            Task t;
 
             action = text.split(" ", 2)[0];
 
-            switch(action){
+            switch (action) {
                 case "bye":
                     System.out.println("    ---------------------------------------");
                     System.out.println("    Bye. Hope to see you again soon!");
@@ -47,39 +53,32 @@ public class Duke {
 
                 case "mark":
                     rest = text.split(" ", 2)[1];
-                    t = tasks.get(Integer.parseInt(rest)-1);
+                    Task t = tasks.get(Integer.parseInt(rest) - 1);
                     t.updateMark(true);
                     DukeUtils.printText("Nice! I've marked this task as done:\n " + "    " + t.toString());
                     break;
 
                 case "unmark":
                     rest = text.split(" ", 2)[1];
-                    t = tasks.get(Integer.parseInt(rest)-1);
-                    t.updateMark(false);
-                    DukeUtils.printText("OK, I've marked this task as not done yet:\n " + "    " + t.toString());
+                    Task unmarkt = tasks.get(Integer.parseInt(rest) - 1);
+                    unmarkt.updateMark(false);
+                    DukeUtils.printText("OK, I've marked this task as not done yet:\n " + "    " + unmarkt.toString());
                     break;
 
                 case "todo":
-                    t = new Todo(text);
-                    tasks.add(t);
-                    int countT = tasks.size();
-                    DukeUtils.printAction(t, countT);
+                    createTodo(text, tasks);
                     break;
 
                 case "deadline":
-                    String dateD = DukeUtils.getDate(text);
-                    t = new Deadline(text, dateD);
-                    tasks.add(t);
-                    int countD = tasks.size();
-                    DukeUtils.printAction(t ,countD);
+                    createDeadline(text, tasks);
                     break;
 
                 case "event":
-                    String dateE = DukeUtils.getDate(text);
-                    t = new Event(text, dateE);
-                    tasks.add(t);
-                    int countE = tasks.size();
-                    DukeUtils.printAction(t, countE);
+                    createEvent(text, tasks);
+                    break;
+
+                case "delete":
+                    deleteTask(text, tasks);
                     break;
 
                 default:
