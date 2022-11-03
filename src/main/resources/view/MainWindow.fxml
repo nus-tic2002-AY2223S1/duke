@@ -40,8 +40,8 @@
     <HBox layoutX="665.0" layoutY="949.0" prefHeight="41.0" prefWidth="121.0" AnchorPane.bottomAnchor="10.0"
           AnchorPane.topAnchor="949.0">
         <children>
-            <Label fx:id="sendButton" alignment="CENTER" onMouseClicked="#handleUserInput"
-                   style="-fx-graphic: url('https://img.icons8.com/nolan/35/sent.png');">
+            <Label id="sendButton" fx:id="sendButton" alignment="CENTER" onMouseClicked="#handleUserInput"
+                   style="-fx-graphic: url('/view/icons8-send-35.png');">
                 <padding>
                     <Insets bottom="5.0" left="2.0" right="2.0" top="5.0"/>
                 </padding>
@@ -53,7 +53,7 @@
                 </tooltip>
             </Label>
             <Label fx:id="listButton" alignment="CENTER" onMouseClicked="#listAction"
-                   style="-fx-graphic: url('https://img.icons8.com/nolan/35/reminders.png');">
+                   style="-fx-graphic: url('/view/icons8-reminders-35.png');">
                 <padding>
                     <Insets bottom="5.0" left="2.0" right="2.0" top="5.0"/>
                 </padding>
@@ -65,7 +65,7 @@
                 </tooltip>
             </Label>
             <Label fx:id="refreshButton" alignment="CENTER" onMouseClicked="#refreshAction"
-                   style="-fx-graphic: url('https://img.icons8.com/nolan/35/refresh.png');">
+                   style="-fx-graphic: url('/view/icons8-reset-35.png');">
                 <padding>
                     <Insets bottom="5.0" left="2.0" right="2.0" top="5.0"/>
                 </padding>

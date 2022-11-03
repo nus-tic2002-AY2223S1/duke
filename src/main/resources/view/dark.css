@@ -73,3 +73,11 @@
     -fx-background-color: #000000;
     -fx-text-fill: #363636;
 }
+
+#sendButton {
+    -fx-graphic: url('/view/icons8-send-35-dark.png');
+}
+
+#sendButton:hover {
+    -fx-graphic: url('/view/icons8-send-35.png');
+}

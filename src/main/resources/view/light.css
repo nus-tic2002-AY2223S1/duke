@@ -6,3 +6,8 @@
     -fx-background-radius: 10;
     -fx-max-width: 500
 }
+
+#sendButton {
+    -fx-graphic: url('/view/icons8-send-35.png');
+}
+

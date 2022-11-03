@@ -43,6 +43,8 @@ public class Main extends Application {
                 if (Objects.equals(ss[0], "dark") && Objects.equals(ss[1], "1")) {
                     scene.getStylesheets().add(getClass().getResource("/view/dark.css").toExternalForm());
                     fxmlLoader.<MainWindow>getController().setDarkModeText();
+                } else {
+                    scene.getStylesheets().add(getClass().getResource("/view/light.css").toExternalForm());
                 }
             }
             stage.show();
