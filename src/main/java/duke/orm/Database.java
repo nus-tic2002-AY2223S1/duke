@@ -1,5 +1,7 @@
 package duke.orm;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,6 +21,7 @@ public class Database {
     public static Connection init() {
         Connection c = null;
         try {
+            Files.createDirectories(Paths.get("data/tmp/"));
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:data/tmp/chat.db");
             c.setAutoCommit(false);

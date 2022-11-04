@@ -27,3 +27,9 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
    | |_| | |_| |   <  __/
    |____/ \__,_|_|\_\___|
    ```
+
+Build into OSX App
+
+- Using [jar2app](https://github.com/dante-biase/jar2app)
+- `brew install dante-biase/x2x/jar2app`
+- `jar2app build/libs/duke.jar -i src/main/resources/images/duke.icns -n "Duke`

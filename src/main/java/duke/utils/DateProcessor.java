@@ -285,4 +285,13 @@ public class DateProcessor {
         long unixTime = Instant.now().getEpochSecond();
         return unixToSimplifiedString(unixTime);
     }
+
+    public static String getTimeNowString() {
+        long unixTime = Instant.now().getEpochSecond();
+        return (String.valueOf(unixTime));
+    }
+
+    public static long getTimeNow() {
+        return Instant.now().getEpochSecond();
+    }
 }
