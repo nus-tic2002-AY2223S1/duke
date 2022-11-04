@@ -2,6 +2,9 @@ package duke;
 
 import java.io.FileNotFoundException;
 
+import static duke.orm.Database.logDuke;
+import static duke.orm.Database.logUser;
+
 import duke.impl.Cmd;
 import duke.impl.Parser;
 import duke.impl.Storage;
@@ -9,17 +12,14 @@ import duke.impl.Ui;
 import duke.orm.Database;
 import duke.tasks.TaskList;
 
-import static duke.orm.Database.logDuke;
-import static duke.orm.Database.logUser;
-
 /**
  * Main class of Duke
  **/
 public class Duke {
+    private Database db;
     private final Ui ui;
     private TaskList t;
     private final Parser p;
-    Database db;
 
     /**
      * Initialize IO, Parser, and restore previous records. (If any)

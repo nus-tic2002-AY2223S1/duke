@@ -17,11 +17,17 @@ import javax.swing.Timer;
 
 import duke.Duke;
 import duke.orm.Database;
+import duke.orm.DatabaseObject;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -31,8 +37,13 @@ import javafx.stage.Stage;
  * Main window of the chat. Container of dialogBox, menu bar and buttons.
  */
 public class MainWindow extends AnchorPane {
-    public Parent rootPane;
-    public MenuItem darkModeButton;
+    private static final String MODE_CACHE_DIR = "data/tmp/";
+    private static final String MODE_CACHE_FILE_PATH = "data/tmp/mode";
+    private static final String DARK_CSS_FILE_PATH = "/view/dark.css";
+    @FXML
+    private Parent rootPane;
+    @FXML
+    private MenuItem darkModeButton;
     private Duke duke;
     private boolean newChat = true;
     private boolean isDark = false;
@@ -86,13 +97,15 @@ public class MainWindow extends AnchorPane {
         ResultSet r = null;
         try {
             stmt = c.createStatement();
-            String sql = "SELECT id, sender, message, timestamp FROM (SELECT * FROM chat_tab ORDER BY id DESC LIMIT 500) ORDER BY id;";
+            String sql = "SELECT id, sender, message, timestamp FROM "
+                    + "(SELECT * FROM chat_tab ORDER BY id DESC LIMIT 500) "
+                    + "ORDER BY id;";
             r = stmt.executeQuery(sql);
             if (!r.isBeforeFirst()) {
                 System.out.println("No data");
             }
             while (r.next()) {
-                if (r.getInt(2) == 0) {
+                if (r.getInt(2) == DatabaseObject.Sender.DUKE.getLabel()) {
                     dialogContainer.getChildren().addAll(
                             DialogBox.getDukeDialog(r.getString(3), dukeImage, r.getInt(4))
                     );
@@ -210,7 +223,9 @@ public class MainWindow extends AnchorPane {
         Main m = new Main();
         m.start(stage);
         Scene s = rootPane.getScene();
-        s.getStylesheets().add(getClass().getResource("/view/dark.css").toExternalForm());
+        s.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))
+                        .toExternalForm());
     }
 
     @FXML
@@ -248,18 +263,22 @@ public class MainWindow extends AnchorPane {
         if (isDark) {
             isDark = false;
             darkModeButton.setText("Dark Mode");
-            s.getStylesheets().remove(Objects.requireNonNull(getClass().getResource("/view/dark.css")).toExternalForm());
+            s.getStylesheets().remove(
+                    Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))
+                            .toExternalForm());
         } else {
             isDark = true;
             darkModeButton.setText("\u2713 Dark Mode");
-            s.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/view/dark.css")).toExternalForm());
+            s.getStylesheets().add(
+                    Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))
+                            .toExternalForm());
         }
         cacheState(isDark);
     }
 
     private void cacheState(boolean isDark) throws IOException {
-        Files.createDirectories(Paths.get("data/tmp/"));
-        FileWriter writer = new FileWriter("data/tmp/mode");
+        Files.createDirectories(Paths.get(MODE_CACHE_DIR));
+        FileWriter writer = new FileWriter(MODE_CACHE_FILE_PATH);
         writer.write(isDark ? "dark=1" : "dark=0");
         writer.close();
     }

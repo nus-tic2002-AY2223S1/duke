@@ -20,7 +20,7 @@
         </font>
     </Label>
     <Label fx:id="status" alignment="CENTER" contentDisplay="CENTER" layoutY="54.0" prefHeight="17.0" prefWidth="800.0" text="Online" />
-    <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" hvalue="1.0" layoutY="75.0" prefHeight="865.0" prefWidth="800.0" vbarPolicy="NEVER" vvalue="1.0">
+    <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" hvalue="1.0" layoutY="75.0" prefHeight="865.0" prefWidth="800.0" vvalue="1.0">
         <VBox fx:id="dialogContainer" />
     </ScrollPane>
     <TextField fx:id="userInput" layoutX="14.0" layoutY="949.0" maxHeight="41.0" maxWidth="638.0" minHeight="41.0" minWidth="511.0" onAction="#handleUserInput" prefHeight="41.0" prefWidth="638.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="148.0">

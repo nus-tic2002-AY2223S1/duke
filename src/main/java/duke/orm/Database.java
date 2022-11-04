@@ -1,9 +1,9 @@
 package duke.orm;
 
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Objects;
 
 public class Database {
@@ -32,12 +32,12 @@ public class Database {
         try {
             String tb = "chat_tab";
             stmt = c.createStatement();
-            String sql = "CREATE TABLE IF NOT EXISTS " + tb +
-                    " ('id' INTEGER NOT NULL," +
-                    "'sender' INTEGER NOT NULL, " +
-                    "'message' TEXT NOT NULL, " +
-                    "'timestamp' INTEGER NOT NULL," +
-                    "PRIMARY KEY('id' AUTOINCREMENT));";
+            String sql = "CREATE TABLE IF NOT EXISTS " + tb
+                    + " ('id' INTEGER NOT NULL,"
+                    + "'sender' INTEGER NOT NULL, "
+                    + "'message' TEXT NOT NULL, "
+                    + "'timestamp' INTEGER NOT NULL,"
+                    + "PRIMARY KEY('id' AUTOINCREMENT));";
             System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
