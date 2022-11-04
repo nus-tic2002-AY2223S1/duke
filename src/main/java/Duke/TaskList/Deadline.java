@@ -1,11 +1,17 @@
 package Duke.TaskList;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 public class Deadline extends Task {
-    protected String by;
+    private LocalDate by;
+    private DateTimeFormatter displayDateFormat = DateTimeFormatter.ofPattern("MMM d yyyy");
+    private DateTimeFormatter saveDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public Deadline(String description, String by) {
+
+    public Deadline(String description, LocalDate by, boolean isDone) {
         super(description);
         this.by = by;
+        super.isDone = isDone;
     }
 
     @Override
@@ -15,6 +21,7 @@ public class Deadline extends Task {
 
     @Override
     public String saveToFile() {
-        return null;
+        int status = isDone ? 1:0;
+        return "D | " + status + " | " + super.description;
     }
 }

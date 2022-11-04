@@ -6,13 +6,18 @@ import Duke.TaskList.*;
 import static Duke.Duke.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
-    public Scanner userInput;
+    public static Scanner userInput;
 
     public Ui() {
         userInput = new Scanner(System.in);
+    }
+
+    public static Scanner getUserInput() {
+        return userInput;
     }
 
     public static void line() {
@@ -58,36 +63,49 @@ public class Ui {
         line();
     }
 
-    public static void addedTask() {
+    public static void addedTask(ArrayList<Task> tl) {
         line();
         System.out.println("Got it. I've added this task:\n");
-        System.out.println(taskList[taskListCount-1].toString());
-        System.out.println("Now you have " + taskListCount + " tasks in the list.");
+        System.out.println(tl.get(tl.size()-1).toString() + tl.get(tl.size()-1).getTask());
+        System.out.println("Now you have " + tl.size() + " tasks in the list.");
         line();
     }
 
-    public static void input(String userInput) throws DukeException {
-        Parser command = new Parser(userInput);
+    public static void input (Tasklist task, String userInput) throws DukeException {
+        Parser process = new Parser(userInput);
         try {
-            switch(command.getCommand()) {
+            switch (process.getCommand()) {
                 case "list":
-                    Task.list();
+                    Tasklist.display(Tasklist.getList(), "list");
+                    break;
+                case "mark":
+                    Tasklist.markTask(process.getListIdx(), true);
+                    break;
+                case "unmark":
+                    Tasklist.markTask(process.getListIdx(), false);
+                    break;
+                case "delete":
+                    Tasklist.deleteTask(process.getListIdx());
                     break;
                 case "todo":
-                    ToDo.addTask(userInput);
-                case "done":
-                    Task.markTask();
+                    Tasklist.addTodo(new ToDo(process.getTodoDesc(), false));
                     break;
-                case "undone":
-                    Task.markTask();
+                case "deadline":
+                    Tasklist.addDeadline(new Deadline(process.getDeadlineDesc(), process.getDatelineDate(),  false));
+                    break;
+                case "event":
+                    Tasklist.addEvent(new Event(process.getEventDesc(), process.getEventDate(), process.getEventStart(), process.getEventEnd(), false));
                     break;
                 case "bye":
                     bye();
                     break;
             }
+        } catch(ArrayIndexOutOfBoundsException e) {
+            throw new DukeException("Sorry. I do not understand.");
         }
-        catch (Exception e){
-            throw new DukeException();
-        }
+    }
+
+    public static void error(String error) {
+        System.out.println(error);
     }
 }

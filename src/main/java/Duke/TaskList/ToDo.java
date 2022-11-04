@@ -2,8 +2,9 @@ package Duke.TaskList;
 
 public class ToDo extends Task {
 
-    public ToDo(String description) {
+    public ToDo(String description, boolean isDone) {
         super(description);
+        super.isDone = isDone;
     }
 
     @Override
@@ -13,6 +14,7 @@ public class ToDo extends Task {
 
     @Override
     public String saveToFile() {
-        return null;
+        int status = isDone ? 1:0;
+        return "T | " + status + " | " + super.description + "\r";
     }
 }
