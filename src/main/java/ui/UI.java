@@ -2,21 +2,20 @@ package ui;
 
 import java.util.Scanner;
 
-import static ui.ErrorMessages.NO_TASK_FOUND;
 import static ui.ErrorMessages.TASK_NUMBER_OOB;
 import static ui.TaskMessages.*;
 
 public class UI {
 
-    public static void printTask(String task) {
+    public static void printTask(String task){
         System.out.println(task.toString());
     }
 
-    public static void printLine() {
+    public static void printLine(){
         System.out.println("____________________________________________________________");
     }
 
-    public static void printIntro() {
+    public static void printIntro(){
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -30,11 +29,9 @@ public class UI {
     public static void printError(String message) {
         System.out.println(message);
     }
-
     public static void printMessage(String message) {
         System.out.println(message);
     }
-
     public static void printStandardError() {
         System.out.println("Sorry, I don't understand what you mean!");
     }
@@ -47,15 +44,13 @@ public class UI {
         return fullInputLine;
     }
 
-    public static void printBye() {
+    public static void printBye(){
         System.out.println(MESSAGE_EXIT);
     }
 
-    public static void printArrayOOB() {
+    public static void printArrayOOB(){
         UI.printLine();
         UI.printError(TASK_NUMBER_OOB);
         UI.printLine();
     }
-
-
 }

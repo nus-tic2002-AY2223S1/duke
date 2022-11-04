@@ -5,19 +5,11 @@ import taskList.Task;
 import taskList.TaskList;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.FileWriter;
 import java.util.List;
 
 public class Storage {
-    private static File file;
-    public Storage(String filePath) {
-    }
-    public static File load() throws FileNotFoundException {
-        return file;
-    }
-
     public static String homeDirectory(){
         String homeDirectory = System.getProperty("user.home");
         return homeDirectory;
@@ -48,9 +40,8 @@ public class Storage {
         }
     }
 
-    public static void mainCaller() throws InvalidStorageFilePathException, IOException {
+    static void mainCaller() throws InvalidStorageFilePathException, IOException {
         Storage.main(null);
     }
-
 }
 
