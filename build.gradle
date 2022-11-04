@@ -4,7 +4,16 @@ plugins {
     id 'checkstyle'
     id 'com.github.johnrengelman.shadow' version '5.1.0'
     id 'org.openjfx.javafxplugin' version '0.0.13'
+//    id "edu.sc.seis.macAppBundle" version "2.1.0"
 }
+
+//macAppBundle {
+//    mainClassName = "duke.gui.Launcher"
+//    icon = "resources/images/main.svg"
+//    bundleJRE = true
+//    javaProperties.put("apple.laf.useScreenMenuBar", "true")
+//    backgroundImage = "resources/images/bg.png"
+//}
 
 checkstyle {
     toolVersion = '8.29'
