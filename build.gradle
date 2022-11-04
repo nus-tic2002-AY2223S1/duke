@@ -8,7 +8,7 @@ plugins {
 
 checkstyle {
     toolVersion = '8.29'
-    ignoreFailures = true
+    ignoreFailures = false
 }
 
 javadoc {

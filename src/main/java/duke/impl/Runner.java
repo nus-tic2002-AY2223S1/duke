@@ -21,6 +21,7 @@ import duke.tasks.TaskList;
 import duke.tasks.Todo;
 import duke.utils.DateProcessor;
 import duke.utils.DukeException;
+import duke.utils.Encoder;
 
 /**
  * Executor of actual processing logic.
@@ -371,7 +372,7 @@ public class Runner {
                     + "," + str.getDescription()
                     + "," + str.getDue()
                     + "," + str.getTo();
-            writer.write(s + System.lineSeparator());
+            writer.write(Encoder.encode(s) + System.lineSeparator());
         }
         writer.close();
     }

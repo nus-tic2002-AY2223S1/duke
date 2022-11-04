@@ -23,7 +23,7 @@ public class StorageTest {
     public void storageLoadFileTest() throws FileNotFoundException {
         //expected
         TaskList expected = new TaskList();
-        expected.addTask(new Todo("sample_todo", 0));
+        expected.addTask(new Todo("TestTask", 0));
         Task expectedTask = expected.getList().get(0);
 
         //actual
