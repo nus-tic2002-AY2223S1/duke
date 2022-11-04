@@ -4,9 +4,11 @@ import storage.Storage;
 import taskList.TaskList;
 import ui.UI;
 
-public class Command {
-    Command() {
+public abstract class Command {
+    protected Command() {
     }
+
+    protected TaskList taskList;
 
     public boolean isExit = false;
 
@@ -18,8 +20,9 @@ public class Command {
         throw new UnsupportedOperationException("This method is to be implemented by child classes");
     }
 
-    public boolean isExit() {
+    public static boolean isExit() {
         return false;
     }
 
+    public abstract boolean isExit(Command command);
 }
