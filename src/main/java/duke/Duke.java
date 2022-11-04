@@ -39,6 +39,7 @@ public class Duke {
         try {
             t = new TaskList(s.load());
         } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
             t = new TaskList();
         }
     }

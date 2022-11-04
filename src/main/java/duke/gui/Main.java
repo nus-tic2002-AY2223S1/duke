@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -18,7 +19,7 @@ import javafx.stage.Stage;
  * Main class for GUI, interfaces with Duke
  */
 public class Main extends Application {
-    private final String path = "data/save/output.txt";
+    private final String path = "data/save/output";
     private final Duke duke = new Duke(path);
 
     @Override
@@ -29,6 +30,7 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setDuke(duke);
+
             stage.setResizable(false);
 
             String path = "";
@@ -48,7 +50,7 @@ public class Main extends Application {
                 }
             }
             stage.show();
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
     }

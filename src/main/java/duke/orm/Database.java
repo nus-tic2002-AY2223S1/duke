@@ -2,6 +2,7 @@ package duke.orm;
 
 import java.sql.*;
 import java.time.Instant;
+import java.util.Objects;
 
 public class Database {
     public Database() {
@@ -11,7 +12,7 @@ public class Database {
         Connection c = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:data/test.db");
+            c = DriverManager.getConnection("jdbc:sqlite:data/tmp/chat.db");
             c.setAutoCommit(false);
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -38,12 +39,10 @@ public class Database {
             System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
+            c.commit();
             c.close();
-            System.out.println(c.isClosed());
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-            return;
         }
         System.out.println("Table created successfully");
     }
@@ -69,12 +68,22 @@ public class Database {
         System.out.println("Records created successfully");
     }
 
+    private static boolean isEmpty(String s) {
+        return Objects.equals(s, "");
+    }
+
     public static void logUser(String message) {
+        if (isEmpty(message)) {
+            return;
+        }
         DatabaseObject o = new DatabaseObject(DatabaseObject.Sender.USER, message);
         o.write();
     }
 
     public static void logDuke(String message) {
+        if (isEmpty(message)) {
+            return;
+        }
         DatabaseObject o = new DatabaseObject(DatabaseObject.Sender.DUKE, message);
         o.write();
     }

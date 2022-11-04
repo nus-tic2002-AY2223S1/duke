@@ -13,86 +13,76 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" maxHeight="1000.0" maxWidth="800.0" minHeight="1000.0" minWidth="800.0" prefHeight="1000.0"
-            prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="duke.gui.MainWindow">
+<AnchorPane fx:id="rootPane" maxHeight="1000.0" maxWidth="800.0" minHeight="1000.0" minWidth="800.0" prefHeight="1000.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="duke.gui.MainWindow">
     <Label fx:id="chatLabel" alignment="CENTER" layoutY="28.0" prefHeight="26.0" prefWidth="800.0" text="Duke">
         <font>
-            <Font size="20.0"/>
+            <Font size="20.0" />
         </font>
     </Label>
-    <Label fx:id="status" alignment="CENTER" contentDisplay="CENTER" layoutY="54.0" prefHeight="17.0" prefWidth="800.0"
-           text="Online"/>
-    <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" hvalue="1.0" layoutY="75.0" prefHeight="865.0" prefWidth="800.0"
-                vbarPolicy="NEVER" vvalue="1.0">
-        <VBox fx:id="dialogContainer"/>
+    <Label fx:id="status" alignment="CENTER" contentDisplay="CENTER" layoutY="54.0" prefHeight="17.0" prefWidth="800.0" text="Online" />
+    <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" hvalue="1.0" layoutY="75.0" prefHeight="865.0" prefWidth="800.0" vbarPolicy="NEVER" vvalue="1.0">
+        <VBox fx:id="dialogContainer" />
     </ScrollPane>
-    <TextField fx:id="userInput" layoutX="14.0" layoutY="949.0" maxHeight="41.0" maxWidth="638.0" minHeight="41.0"
-               minWidth="511.0" onAction="#handleUserInput" prefHeight="41.0" prefWidth="638.0"
-               AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="148.0">
+    <TextField fx:id="userInput" layoutX="14.0" layoutY="949.0" maxHeight="41.0" maxWidth="638.0" minHeight="41.0" minWidth="511.0" onAction="#handleUserInput" prefHeight="41.0" prefWidth="638.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="148.0">
         <padding>
-            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0"/>
+            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
         </padding>
         <font>
-            <Font size="15.0"/>
+            <Font size="15.0" />
         </font>
     </TextField>
-    <HBox layoutX="665.0" layoutY="949.0" prefHeight="41.0" prefWidth="121.0" AnchorPane.bottomAnchor="10.0"
-          AnchorPane.topAnchor="949.0">
+    <HBox layoutX="665.0" layoutY="949.0" prefHeight="41.0" prefWidth="121.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="949.0">
         <children>
-            <Label id="sendButton" fx:id="sendButton" alignment="CENTER" onMouseClicked="#handleUserInput"
-                   style="-fx-graphic: url('/view/icons8-send-35.png');">
+            <Label id="sendButton" fx:id="sendButton" alignment="CENTER" onMouseClicked="#handleUserInput" style="-fx-graphic: url('/view/icons8-send-35.png');">
                 <padding>
-                    <Insets bottom="5.0" left="2.0" right="2.0" top="5.0"/>
+                    <Insets bottom="5.0" left="2.0" right="2.0" top="5.0" />
                 </padding>
                 <font>
-                    <Font size="10.0"/>
+                    <Font size="10.0" />
                 </font>
                 <tooltip>
-                    <Tooltip text="Send"/>
+                    <Tooltip text="Send" />
                 </tooltip>
             </Label>
-            <Label fx:id="listButton" alignment="CENTER" onMouseClicked="#listAction"
-                   style="-fx-graphic: url('/view/icons8-reminders-35.png');">
+            <Label fx:id="listButton" alignment="CENTER" onMouseClicked="#listAction" style="-fx-graphic: url('/view/icons8-reminders-35.png');">
                 <padding>
-                    <Insets bottom="5.0" left="2.0" right="2.0" top="5.0"/>
+                    <Insets bottom="5.0" left="2.0" right="2.0" top="5.0" />
                 </padding>
                 <font>
-                    <Font size="10.0"/>
+                    <Font size="10.0" />
                 </font>
                 <tooltip>
-                    <Tooltip text="List"/>
+                    <Tooltip text="List" />
                 </tooltip>
             </Label>
-            <Label fx:id="refreshButton" alignment="CENTER" onMouseClicked="#refreshAction"
-                   style="-fx-graphic: url('/view/icons8-reset-35.png');">
+            <Label fx:id="refreshButton" alignment="CENTER" onMouseClicked="#refreshAction" style="-fx-graphic: url('/view/icons8-reset-35.png');">
                 <padding>
-                    <Insets bottom="5.0" left="2.0" right="2.0" top="5.0"/>
+                    <Insets bottom="5.0" left="2.0" right="2.0" top="5.0" />
                 </padding>
                 <font>
-                    <Font size="10.0"/>
+                    <Font size="10.0" />
                 </font>
                 <tooltip>
-                    <Tooltip text="Refresh"/>
+                    <Tooltip text="Refresh" />
                 </tooltip>
             </Label>
         </children>
         <padding>
-            <Insets bottom="10.0"/>
+            <Insets bottom="10.0" />
         </padding>
     </HBox>
     <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="27.0" prefWidth="800.0">
         <Menu fx:id="menuFile" mnemonicParsing="false" text="File">
-            <MenuItem fx:id="darkModeButton" mnemonicParsing="false" onAction="#toggleDarkMode" text="Dark Mode"/>
-            <MenuItem fx:id="menuRefreshButton" mnemonicParsing="false" onAction="#refreshAction" text="Refresh"/>
-            <MenuItem fx:id="menuCloseButton" mnemonicParsing="false" onAction="#exitAction" text="Close"/>
+            <MenuItem fx:id="darkModeButton" mnemonicParsing="false" onAction="#toggleDarkMode" text="Dark Mode" />
+            <MenuItem fx:id="menuRefreshButton" mnemonicParsing="false" onAction="#refreshAction" text="Refresh" />
+            <MenuItem fx:id="menuCloseButton" mnemonicParsing="false" onAction="#exitAction" text="Quit" />
         </Menu>
         <Menu mnemonicParsing="false" text="Tools">
-            <MenuItem fx:id="menuArchiveButton" mnemonicParsing="false" onAction="#archiveAction" text="Archive"/>
-            <MenuItem fx:id="menuRestoreButton" mnemonicParsing="false" onAction="#restoreAction" text="Restore"/>
+            <MenuItem fx:id="menuArchiveButton" mnemonicParsing="false" onAction="#archiveAction" text="Archive" />
+            <MenuItem fx:id="menuRestoreButton" mnemonicParsing="false" onAction="#restoreAction" text="Restore" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
-            <MenuItem mnemonicParsing="false" onAction="#aboutAction" text="Github"/>
+            <MenuItem mnemonicParsing="false" onAction="#aboutAction" text="Github" />
         </Menu>
     </MenuBar>
 </AnchorPane>
