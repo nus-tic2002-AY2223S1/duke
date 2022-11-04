@@ -4,16 +4,7 @@ plugins {
     id 'checkstyle'
     id 'com.github.johnrengelman.shadow' version '5.1.0'
     id 'org.openjfx.javafxplugin' version '0.0.13'
-//    id "edu.sc.seis.macAppBundle" version "2.1.0"
 }
-
-//macAppBundle {
-//    mainClassName = "duke.gui.Launcher"
-//    icon = "resources/images/main.svg"
-//    bundleJRE = true
-//    javaProperties.put("apple.laf.useScreenMenuBar", "true")
-//    backgroundImage = "resources/images/bg.png"
-//}
 
 checkstyle {
     toolVersion = '8.29'
@@ -33,7 +24,7 @@ dependencies {
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.39.3.0'
 
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.0'
     String javaFxVersion = '11'
 
