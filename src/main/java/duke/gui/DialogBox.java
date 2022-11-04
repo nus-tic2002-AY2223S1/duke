@@ -28,7 +28,7 @@ public class DialogBox extends HBox {
     private ImageView displayPicture;
     private Parent rootPane;
 
-    private DialogBox(String text, Image img, String userSpecific, boolean isDuke) {
+    private DialogBox(String text, Image img, String userSpecific, boolean isDuke, String ts) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
@@ -38,9 +38,9 @@ public class DialogBox extends HBox {
             e.printStackTrace();
         }
         if (isDuke) {
-            meta.setText(DateProcessor.getMetaTimeStamp());
+            meta.setText(ts);
         } else {
-            meta.setText(DateProcessor.getMetaTimeStamp() + " \u2713");
+            meta.setText(ts + " \u2713");
         }
         dialog.setText(text);
         dialog.setStyle(userSpecific
@@ -62,12 +62,24 @@ public class DialogBox extends HBox {
         setAlignment(Pos.TOP_LEFT);
     }
 
-    public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img, "-fx-background-color: #90ee90", false);
+    public static DialogBox getUserDialog(String text, Image img, int ts) {
+        String timestamp;
+        if (ts == 0) {
+            timestamp = DateProcessor.getMetaTimeStamp();
+        } else {
+            timestamp = DateProcessor.unixToSimplifiedString(ts);
+        }
+        return new DialogBox(text, img, "-fx-background-color: #90ee90", false, timestamp);
     }
 
-    public static DialogBox getDukeDialog(String text, Image img) {
-        var db = new DialogBox(text, img, "", true);
+    public static DialogBox getDukeDialog(String text, Image img, int ts) {
+        String timestamp;
+        if (ts == 0) {
+            timestamp = DateProcessor.getMetaTimeStamp();
+        } else {
+            timestamp = DateProcessor.unixToSimplifiedString(ts);
+        }
+        var db = new DialogBox(text, img, "", true, timestamp);
         db.flip();
         return db;
     }

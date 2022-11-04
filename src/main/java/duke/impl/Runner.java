@@ -27,10 +27,10 @@ import duke.utils.DukeException;
  */
 public class Runner {
     private static final String ARCHIVE_CACHE_DIR = "data/tmp/";
-    private static final String ARCHIVE_CACHE_FILE_PATH = "data/tmp/archives.txt";
+    private static final String ARCHIVE_CACHE_FILE_PATH = "data/tmp/archives";
 
     private static final String SAVED_DIR = "data/save/";
-    private static final String SAVED_FILE_PATH = "data/save/output.txt";
+    private static final String SAVED_FILE_PATH = "data/save/output";
     private static final String ARCHIVE_DIR = "data/archives/";
 
     /**
@@ -153,6 +153,10 @@ public class Runner {
     }
 
     private String printProcessRestoreMessage() {
+        return ui.sendGenericConfirmation("Successfully restored record.");
+    }
+
+    private String printProcessRestoreFailureMessage() {
         return ui.sendProcessRestoreError();
     }
 
@@ -348,8 +352,9 @@ public class Runner {
     }
 
     private boolean archiveFile() throws IOException {
-        String archiveFileName = "archive_" + getCurrentUserName() + "_" + getCurrentTimeStamp() + ".txt";
+        String archiveFileName = "archive_" + getCurrentUserName() + "_" + getCurrentTimeStamp();
         File fileToMove = new File(SAVED_FILE_PATH);
+        saveFile();
         Files.createDirectories(Paths.get(ARCHIVE_DIR));
         return fileToMove.renameTo(new File(ARCHIVE_DIR, archiveFileName));
     }
@@ -514,12 +519,12 @@ public class Runner {
         }
 
         if (s[1].trim().equals("")) {
-            return printProcessRestoreMessage();
+            return printProcessRestoreFailureMessage();
         }
 
         try {
             restoreFile(Integer.parseInt(s[1]));
-            return "";
+            return printProcessRestoreMessage();
         } catch (IOException e) {
             return printIoException("failed to restore records");
         }
