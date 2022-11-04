@@ -2,11 +2,18 @@ package duke.orm;
 
 import java.time.Instant;
 
+
+/**
+ * Object of Database Orm
+ */
 public class DatabaseObject {
     private int sender;
     private String message;
     private long timestamp;
 
+    /**
+     * Types of Sender
+     */
     public enum Sender {
         DUKE(0),
         USER(1);
@@ -21,6 +28,9 @@ public class DatabaseObject {
         }
     }
 
+    /**
+     * Initialize Object based on schema
+     */
     public DatabaseObject(Sender s, String msg) {
         this.sender = s.getLabel();
         this.message = msg;

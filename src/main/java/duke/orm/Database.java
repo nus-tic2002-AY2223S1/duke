@@ -6,10 +6,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Objects;
 
+/**
+ * Interface of Database Orm
+ */
 public class Database {
     public Database() {
     }
 
+    /**
+     * Initialize Database Connection
+     */
     public static Connection init() {
         Connection c = null;
         try {
@@ -25,6 +31,9 @@ public class Database {
         return c;
     }
 
+    /**
+     * Create new table
+     */
     public void createTable() {
         Connection c = init();
         Statement stmt = null;
@@ -49,6 +58,9 @@ public class Database {
         System.out.println("Table created successfully");
     }
 
+    /**
+     * Insert into table
+     */
     public static void insert(DatabaseObject o) {
         Connection c = init();
         Statement stmt = null;
@@ -74,6 +86,9 @@ public class Database {
         return Objects.equals(s, "");
     }
 
+    /**
+     * Log user dialog into table
+     */
     public static void logUser(String message) {
         if (isEmpty(message)) {
             return;
@@ -82,6 +97,9 @@ public class Database {
         o.write();
     }
 
+    /**
+     * Log duke dialog into table
+     */
     public static void logDuke(String message) {
         if (isEmpty(message)) {
             return;

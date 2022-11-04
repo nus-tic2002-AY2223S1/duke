@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 
+import duke.utils.Encoder;
+
 /**
  * Main class to process restoring of Tasks
  */
@@ -32,7 +34,7 @@ public class TaskList {
 
         while (s.hasNext()) {
             String inputLine = s.nextLine();
-            String[] parsed = inputLine.split(",");
+            String[] parsed = Encoder.decode(inputLine).split(",");
 
             switch (parsed[0]) {
             case "E":

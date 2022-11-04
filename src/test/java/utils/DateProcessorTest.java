@@ -2,12 +2,12 @@ package utils;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import duke.utils.DateProcessor;
 import duke.utils.DukeException;
-
-import java.time.Instant;
 
 public class DateProcessorTest {
     @Test
@@ -77,7 +77,8 @@ public class DateProcessorTest {
         try {
             actual = DateProcessor.dateToUnix(s);
             assertEquals(expected, actual);
-        } catch (DukeException ignored) {
+        } catch (DukeException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -111,7 +112,8 @@ public class DateProcessorTest {
         try {
             actual = DateProcessor.dateToUnix(s);
             assertEquals(expected, actual);
-        } catch (DukeException ignored) {
+        } catch (DukeException e) {
+            System.out.println(e.getMessage());
         }
     }
 
