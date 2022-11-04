@@ -2,7 +2,6 @@ package taskList;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static ui.ErrorMessages.*;
 import static ui.TaskMessages.*;
 import static ui.UI.*;
@@ -45,7 +44,8 @@ public class TaskList {
         printLine();
     }
 
-    public static void markTask(String[] lineSpaceSplit) {
+    public static void markTask(String line) {
+        String[] lineSpaceSplit = line.split(" ");
         int markedIndex = Integer.parseInt(lineSpaceSplit[1]);
         try {
             Task markedTask = taskList.get(markedIndex - 1);
