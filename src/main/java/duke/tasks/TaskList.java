@@ -80,4 +80,12 @@ public class TaskList {
     public String[] getLastInfo() {
         return this.lastSaveTimeStamp == null ? null : new String[]{this.lastUserName, this.lastSaveTimeStamp};
     }
+
+    public void injectLastInfo(String s) {
+        this.lastSaveTimeStamp = s;
+    }
+
+    public void injectLastUserName(String s) {
+        this.lastUserName = s;
+    }
 }

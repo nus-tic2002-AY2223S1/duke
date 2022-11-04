@@ -264,10 +264,9 @@ public class Ui {
                 suffix = "\n";
             }
             if (withIndex) {
-                s.append(i + 1);
+                s.append(i + 1).append(".");
             }
-            s.append(".")
-                    .append(tasks.get(i).toString())
+            s.append(tasks.get(i).toString())
                     .append(suffix);
         }
     }
@@ -286,7 +285,7 @@ public class Ui {
             s.append("You have no task scheduled on ")
                     .append(date);
         } else {
-            s.append("Here are the task(s) scheduled on this day:\n    ");
+            s.append("Here are the task(s) scheduled on this day:\n");
             buildList(tasks, withIndex, s);
         }
         return sendConfirmedOutput(s);
@@ -309,7 +308,7 @@ public class Ui {
         } else {
             s.append("Here are the task(s) that contains '")
                     .append(keyword)
-                    .append("':\n    ");
+                    .append("':\n");
             buildList(tasks, withIndex, s);
         }
         return sendConfirmedOutput(s);
