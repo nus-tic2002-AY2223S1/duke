@@ -7,10 +7,7 @@ import duke.impl.Parser;
 import duke.impl.Storage;
 import duke.impl.Ui;
 import duke.orm.Database;
-import duke.orm.DatabaseObject;
 import duke.tasks.TaskList;
-
-import javax.xml.crypto.Data;
 
 import static duke.orm.Database.logDuke;
 import static duke.orm.Database.logUser;
@@ -22,7 +19,6 @@ public class Duke {
     private final Ui ui;
     private TaskList t;
     private final Parser p;
-
     Database db;
 
     /**
