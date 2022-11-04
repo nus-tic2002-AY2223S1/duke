@@ -1,5 +1,7 @@
 package taskList;
 
+import ui.UI;
+
 import java.util.ArrayList;
 import java.util.List;
 import static ui.ErrorMessages.*;
@@ -8,16 +10,17 @@ import static ui.UI.*;
 
 public class TaskList {
     //contains the task list e.g., it has operations to add/delete tasks in the list
-    public static List<Task> taskList = new ArrayList<>();
+    public List<Task> taskList = new ArrayList<>();
 
-    public static void addTask(Task task){
+
+    public void addTask(Task task){
         taskList.add(task);
         printMessage(MESSAGE_TASK_ADDED);
         System.out.println(task);
         System.out.println("\nNow you have " + taskList.size() + " tasks in the list.");
     }
 
-    public static void deleteTask(String[] lineSpaceSplit) {
+    public void deleteTask(String[] lineSpaceSplit) {
         printLine();
         int deleteIndex = Integer.parseInt(lineSpaceSplit[1]);
         try {
@@ -33,7 +36,7 @@ public class TaskList {
             printLine();
         }
     }
-    public static void listTask() {
+    public void listTask() {
         int taskCount = 0;
         ui.UI.printLine();
         System.out.println("Here are the tasks in your list:");
@@ -44,7 +47,7 @@ public class TaskList {
         printLine();
     }
 
-    public static void markTask(String line) {
+    public void markTask(String line) {
         String[] lineSpaceSplit = line.split(" ");
         int markedIndex = Integer.parseInt(lineSpaceSplit[1]);
         try {
@@ -57,7 +60,7 @@ public class TaskList {
         }
     }
 
-    public static void unmarkTask(String[] lineSpaceSplit) {
+    public void unmarkTask(String[] lineSpaceSplit) {
         int unmarkedIndex = Integer.parseInt(lineSpaceSplit[1]);
         try {
             Task unmarkedTask = taskList.get(unmarkedIndex - 1);
@@ -69,7 +72,7 @@ public class TaskList {
         }
     }
 
-    public static void todoTask(String line) {
+    public void todoTask(String line) {
         ui.UI.printLine();
         try {
             String todoTask = line.substring(5);
@@ -81,8 +84,7 @@ public class TaskList {
         printLine();
     }
 
-    public static void deadlineTask(String line) {
-
+    public void deadlineTask(String line) {
         printLine();
         try {
             String[] deadlineItemSplit = (line.substring(9)).split(" /by ");
@@ -96,7 +98,7 @@ public class TaskList {
         printLine();
     }
 
-    public static void eventTask(String line) {
+    public void eventTask(String line) {
         printLine();
         try {
             String[] eventItemSplit = (line.substring(6)).split(" /at ");
@@ -109,5 +111,15 @@ public class TaskList {
         }
         printLine();
     }
+
+    public boolean checkEmptyTaskList() {
+        if (taskList.isEmpty()) {
+            UI.printLine();
+            UI.printError(NO_TASK_FOUND);
+            UI.printLine();
+            return true;
+        } else return false;
+    }
+
 }
 
