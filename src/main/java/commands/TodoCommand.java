@@ -3,7 +3,12 @@ package commands;
 import storage.Storage;
 import taskList.Task;
 import taskList.TaskList;
+import taskList.Todo;
 import ui.UI;
+
+import static ui.ErrorMessages.INVALID_TODO_INPUT;
+import static ui.UI.printError;
+import static ui.UI.printLine;
 
 
 public class TodoCommand extends Command {
@@ -18,6 +23,11 @@ public class TodoCommand extends Command {
     }
 
     public void execute(TaskList task, UI ui, Storage storage) {
-        TaskList.todoTask(this.description);
+        taskList.todoTask(this.description);
+    }
+
+    @Override
+    public boolean isExit(Command command) {
+        return false;
     }
 }
