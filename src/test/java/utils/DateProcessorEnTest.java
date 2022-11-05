@@ -1,17 +1,17 @@
 package utils;
 
-import duke.impl.Ui;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import duke.impl.Ui;
 import duke.utils.DateProcessor;
 import duke.utils.DukeException;
 
 public class DateProcessorEnTest {
-    DateProcessor d = new DateProcessor(Ui.LocaleRegion.EN);
+    private static DateProcessor d = new DateProcessor(Ui.LocaleRegion.EN);
 
     @Test
     public void dateTimeToUnixInvalidTest() {

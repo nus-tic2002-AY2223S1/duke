@@ -1,17 +1,17 @@
 package impl;
 
-import duke.impl.Ui;
-import duke.impl.UiCn;
-import duke.impl.UiEn;
-import duke.tasks.Task;
-import duke.tasks.TaskList;
-import duke.utils.DateProcessor;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import duke.impl.Ui;
+import duke.impl.UiCn;
+import duke.tasks.Task;
+import duke.tasks.TaskList;
+import duke.utils.DateProcessor;
+
 public class UiCnTest {
-    Ui u = new UiCn();
+    private static Ui u = new UiCn();
 
     @Test
     public void sendConfirmedOutputTest() {
