@@ -15,8 +15,7 @@ public class DatabaseObject {
      * Types of Sender
      */
     public enum Sender {
-        DUKE(0),
-        USER(1);
+        DUKE(0), USER(1);
         public final int label;
 
         Sender(int label) {
