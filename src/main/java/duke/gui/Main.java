@@ -83,7 +83,7 @@ public class Main extends Application {
     }
 
     private FXMLLoader loadLocale() throws IOException {
-        FXMLLoader fxmlLoader = null;
+        FXMLLoader fxmlLoader;
         String path = "";
         Files.createDirectories(Paths.get("data/tmp/"));
         File f = new File("data/tmp/il8n");

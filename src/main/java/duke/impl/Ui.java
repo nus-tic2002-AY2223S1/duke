@@ -15,7 +15,7 @@ public abstract class Ui {
      * Enum of locales
      */
     public enum LocaleRegion {
-        EN, CN;
+        EN, CN
     }
 
     /**
@@ -41,7 +41,7 @@ public abstract class Ui {
 
         public final String icon;
 
-        private UiIcon(String icon) {
+        UiIcon(String icon) {
             this.icon = icon;
         }
 

@@ -73,10 +73,6 @@ public class TaskList {
         return this.arrayList;
     }
 
-    public long getLastSaveTimeStamp() {
-        return this.lastSaveTimeStamp == null ? 0 : Long.parseLong(this.lastSaveTimeStamp);
-    }
-
     public String[] getLastInfo() {
         return this.lastSaveTimeStamp == null ? null : new String[]{this.lastUserName, this.lastSaveTimeStamp};
     }

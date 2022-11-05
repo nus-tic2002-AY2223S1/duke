@@ -32,7 +32,8 @@ public class DialogBox extends HBox {
     private Label meta;
     @FXML
     private ImageView displayPicture;
-
+    
+    @FXML
     private Parent rootPane;
 
     private DialogBox(String text, Image img, String userSpecific, boolean isDuke, String ts) {

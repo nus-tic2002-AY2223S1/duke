@@ -107,7 +107,7 @@ public class MainWindow extends AnchorPane {
         //restore chat
         Connection c = Database.init();
         Statement stmt;
-        ResultSet r = null;
+        ResultSet r;
         try {
             stmt = c.createStatement();
             String sql = "SELECT id, sender, message, timestamp FROM "

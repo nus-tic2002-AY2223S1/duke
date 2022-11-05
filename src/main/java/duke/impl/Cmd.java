@@ -13,7 +13,7 @@ public class Cmd {
      */
     public enum CmdTypes {
         UNKNOWN_CMD, PRINT_LIST, MARK_TASK, UNMARK_TASK, ADD_TODO, ADD_DEADLINE, ADD_EVENT, DELETE_TASK, FIND_DATE,
-        FIND_TASK, ARCHIVE, RESTORE, RETURN, EXIT;
+        FIND_TASK, ARCHIVE, RESTORE, RETURN, EXIT
     }
 
     protected CmdTypes t;

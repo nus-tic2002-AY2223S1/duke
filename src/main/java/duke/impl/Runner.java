@@ -72,10 +72,8 @@ public class Runner {
     protected Ui ui;
 
     protected DateProcessor d;
-
-    protected boolean isExit;
     protected ArrayList<Task> arrayList;
-    protected Map<Integer, String> fileMap = new HashMap<Integer, String>();
+    protected Map<Integer, String> fileMap = new HashMap<>();
 
     /**
      * Initializes TaskList and IO of Runner object.
@@ -94,10 +92,6 @@ public class Runner {
         default:
         }
         d = new DateProcessor(l);
-    }
-
-    public void run(ArrayList<Task> tasks) throws DukeException {
-        arrayList = tasks;
     }
 
     public String printList(Boolean withIndex) {
@@ -130,14 +124,6 @@ public class Runner {
 
     public String printCommandUnknownMessage() {
         return ui.sendCommandUnknownError();
-    }
-
-    private String printFatalMessage(String message) {
-        return ui.sendGenericFatal(message);
-    }
-
-    private String printWarningMessage(String message) {
-        return ui.sendGenericWarning(message);
     }
 
     private String printProcessCommandMessage(String message) {
@@ -374,7 +360,7 @@ public class Runner {
         File fileToMove = new File(ARCHIVE_DIR + path);
         File toReplace = new File(SAVED_FILE_PATH);
         Files.copy(fileToMove.toPath(), toReplace.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        TaskList t = new TaskList(new Scanner(new File(toReplace.toString())));
+        new TaskList(new Scanner(new File(toReplace.toString())));
     }
 
     private boolean archiveFile() throws IOException {
