@@ -45,8 +45,6 @@ public class MainWindow extends AnchorPane {
     private static final String LOCALE_CACHE_FILE_PATH = "data/tmp/il8n";
     private static final String DARK_CSS_FILE_PATH = "/view/dark.css";
     private Duke duke;
-
-    private boolean newChat = true;
     private boolean isDark = false;
     private boolean isListOnLaunch = false;
     private Ui.LocaleRegion locale;

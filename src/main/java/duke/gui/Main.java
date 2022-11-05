@@ -20,8 +20,6 @@ import javafx.stage.Stage;
  * Main class for GUI, interfaces with Duke
  */
 public class Main extends Application {
-    private final String path = "data/save/output";
-    private Duke duke;
 
     private Ui.LocaleRegion l;
 
@@ -29,7 +27,8 @@ public class Main extends Application {
     public void start(Stage stage) {
         try {
             FXMLLoader fxmlLoader = loadLocale();
-            duke = new Duke(path, l);
+            String path = "data/save/output";
+            Duke duke = new Duke(path, l);
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);

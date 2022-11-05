@@ -18,7 +18,6 @@ import duke.tasks.TaskList;
  * Main class of Duke
  **/
 public class Duke {
-    private Database db;
     private Ui ui;
     private TaskList t;
     private final Parser p;
@@ -31,7 +30,7 @@ public class Duke {
      */
     public Duke(String path, Ui.LocaleRegion l) {
         setLocale(l);
-        db = new Database();
+        Database db = new Database();
         db.createTable();
         p = new Parser();
         Storage s = new Storage(path);

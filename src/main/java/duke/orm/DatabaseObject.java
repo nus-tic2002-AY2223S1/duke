@@ -7,9 +7,9 @@ import java.time.Instant;
  * Object of Database Orm
  */
 public class DatabaseObject {
-    private int sender;
-    private String message;
-    private long timestamp;
+    private final int sender;
+    private final String message;
+    private final long timestamp;
 
     /**
      * Types of Sender
