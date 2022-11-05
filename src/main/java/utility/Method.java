@@ -142,14 +142,6 @@ public class Method {
         }
 
 
-    /**
-     *Returns String date or datetime.
-     * If user input is year/month/day,date returned
-     * If user input is year/month/day/time, date and time returned
-     *
-     * @param inputDate user input string date
-     * @return string date.
-     */
     public static String DateTime(String inputDate){
            String date=inputDate;
             try {
