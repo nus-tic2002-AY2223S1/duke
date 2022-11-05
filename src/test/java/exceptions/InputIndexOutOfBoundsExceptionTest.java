@@ -10,7 +10,7 @@ public class InputIndexOutOfBoundsExceptionTest {
     @Test
     public void InputIndexOutOfBoundsExceptionConstructorTest() {
         InputIndexOutOfBoundsException inputIndexOutOfBoundsException = new InputIndexOutOfBoundsException();
-        assertEquals("OOPS!!! Index in the input is out of bound. Please choose an index that is within than the size of our tasklist", inputIndexOutOfBoundsException.errorMsg);
+        assertEquals("OOPS!!! Index in the input is out of bound. Please choose an index that is within the size of our tasklist", inputIndexOutOfBoundsException.errorMsg);
     }
 
     @Test
