@@ -55,8 +55,8 @@ public class Duke {
      *
      * @return Welcome message text
      */
-    public String[] getWelcome() {
-        return ui.sendWelcomeMessage(t);
+    public String[] getWelcome(boolean shouldList) {
+        return ui.sendWelcomeMessage(t, shouldList);
     }
 
     /**

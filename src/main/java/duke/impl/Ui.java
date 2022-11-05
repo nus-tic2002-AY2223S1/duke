@@ -168,7 +168,7 @@ public class Ui {
      * @param t TaskList loaded from file
      * @return Welcome message text
      */
-    public String[] sendWelcomeMessage(TaskList t) {
+    public String[] sendWelcomeMessage(TaskList t, boolean shouldList) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -176,6 +176,9 @@ public class Ui {
                 + "|____/ \\__,_|_|\\_\\___|\n";
 
         if (t.getLastInfo() != null) {
+            if (!shouldList) {
+                return new String[]{sendInfo(UiMessage.INFO_WELCOME_EXISTING, t.getLastInfo()[0])};
+            }
             return new String[]{sendInfo(UiMessage.INFO_WELCOME_EXISTING, t.getLastInfo()[0]),
                     printList(t.getList(), true),
                     sendPlain(UiMessage.INFO_LAST_SAVED,
@@ -219,7 +222,7 @@ public class Ui {
         s.append("Noted. I've removed this task:\n\t")
                 .append(task)
                 .append("\n\tNow you have ")
-                .append(size - 1)
+                .append(size)
                 .append(size > 1 ? " tasks " : " task ")
                 .append("in the list.");
         return sendConfirmedOutput(s);

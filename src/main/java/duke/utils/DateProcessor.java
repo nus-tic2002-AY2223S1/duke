@@ -16,7 +16,7 @@ public class DateProcessor {
     private static final String TIME_ZONE = "GMT+8:00";
     private static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy HHmm");
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
-    private static final DateFormat DATE_TIME_FORMAT_SEPARATOR = new SimpleDateFormat("E dd MMM yyyy, HH:mm");
+    private static final DateFormat DATE_TIME_FORMAT_SEPARATOR = new SimpleDateFormat("E dd MMM yyyy, h:mm a");
     private static final DateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm a");
 
     public DateProcessor() {
@@ -224,15 +224,13 @@ public class DateProcessor {
      * @throws DukeException Exception
      */
     public static long dateTimeToUnix(String s) throws DukeException {
-        long parsed;
         try {
             DATE_TIME_FORMAT.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
             DATE_TIME_FORMAT.setLenient(false);
-            parsed = DATE_TIME_FORMAT.parse(s).toInstant().getEpochSecond();
+            return DATE_TIME_FORMAT.parse(s).toInstant().getEpochSecond();
         } catch (ParseException e) {
-            throw new DukeException(ui.sendGenericFatal(e.getMessage()));
+            throw new DukeException(ui.sendGenericFatal("I could not recognise this date. " + e.getMessage()));
         }
-        return parsed;
     }
 
     /**
@@ -247,7 +245,7 @@ public class DateProcessor {
             DATE_FORMAT.setLenient(false);
             return DATE_FORMAT.parse(s + " 0000").toInstant().getEpochSecond();
         } catch (ParseException e) {
-            throw new DukeException(ui.sendGenericFatal(e.getMessage()));
+            throw new DukeException(ui.sendGenericFatal("I could not recognise this date. " + e.getMessage()));
         }
     }
 

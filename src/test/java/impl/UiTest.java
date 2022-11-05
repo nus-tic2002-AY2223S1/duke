@@ -152,7 +152,7 @@ public class UiTest {
         tl.addTask(t);
         Ui u = new Ui();
         String expected = "» Hello from Duke. What can I do for you?";
-        String[] actual = u.sendWelcomeMessage(tl);
+        String[] actual = u.sendWelcomeMessage(tl, true);
         assertEquals(1, actual.length);
         assertEquals(expected, actual[0]);
     }
@@ -172,7 +172,7 @@ public class UiTest {
         String expected2 = "✔ Here are the task(s) in your list:\n1.[ ] Task1";
         String expected3 = String.format("[Last Modified on %s]\n", dateString);
 
-        String[] actual = u.sendWelcomeMessage(tl);
+        String[] actual = u.sendWelcomeMessage(tl, true);
         assertEquals(3, actual.length);
         assertEquals(expected1, actual[0]);
         assertEquals(expected2, actual[1]);
@@ -203,7 +203,7 @@ public class UiTest {
         String taskName = "Task1";
         String expected = "✔ Noted. I've removed this task:\n\t"
                 + taskName + "\n\tNow you have 0 task in the list.";
-        String actual = u.printTaskRemovedByIndex(taskName, 1);
+        String actual = u.printTaskRemovedByIndex(taskName, 0);
         assertEquals(expected, actual);
     }
 

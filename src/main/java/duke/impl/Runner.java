@@ -458,7 +458,7 @@ public class Runner {
         ArrayList<Task> selected = new ArrayList<>(Arrays.asList(arr));
 
         for (Task t : this.arrayList) {
-            if (Arrays.asList(t.getDescription().split(" ")).contains(k)) {
+            if (Arrays.asList(t.getDescription().toLowerCase().split(" ")).contains(k.toLowerCase())) {
                 selected.add(t);
             }
         }
