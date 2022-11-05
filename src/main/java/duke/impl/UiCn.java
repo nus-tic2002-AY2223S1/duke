@@ -24,14 +24,25 @@ public class UiCn extends Ui {
         INFO_LAST_SAVED("[最后修改于 %s]"),
         INFO_GOODBYE("再见！"),
         ERROR_COMMAND_UNKNOWN("抱歉， 我不明白你的意思 :( "
-                + "\n新增一个 Todo / Deadline / Event. "
+                + "\n新增一个 待办Todo / 期限Deadline / 事件Event. "
                 + "\n\t \u27a4 Todo <Task Name>"),
         ERROR_PROCESS_ACTION("%s 选择不能为空。"),
         ERROR_PROCESS_COMMAND("%s 描述不能为空。"),
-        ERROR_FIND_DATE("日期搜索不能为空。"),
-        ERROR_FIND_TASK("关键字搜索不能为空。"),
-        ERROR_RESTORE("恢复文件选择不能为空。"),
-        ERROR_ARCHIVE("归档文件不能为空。");
+        ERROR_FIND_DATE_INPUT("日期搜索不能为空。\n\t \u27a4 day <日期>"),
+        ERROR_FIND_TASK_INPUT("关键字搜索不能为空。\n\t \u27a4 find <关键字>"),
+        INFO_ARCHIVE("成功归档。"),
+        ERROR_ARCHIVE_SELECTION("归档文件不能为空。"),
+        ERROR_ARCHIVE("归档失败。"),
+        INFO_RESTORE("成功恢复记录。"),
+        ERROR_RESTORE("查找归档记录失败。"),
+        ERROR_RESTORE_SELECTION("恢复文件选择不能为空。\n\t \u27a4 restore <索引>"),
+        ERROR_RESTORE_NO_RECORD("恢复记录失败。"),
+        INFO_LIST_FILES_HEADER("输入归档记录对应的索引。 restore <索引>"),
+        INFO_LIST_FILES_FOOTER("聊天将会在恢复记录后刷新。"),
+        ERROR_GET_INDEX("索引不存在。 请从%s个任务中选择。"),
+        ERROR_GET_ARCHIVE_INDEX("索引不存在。 请从%s个归档中选择。"),
+        ERROR_IS_INTEGER("请输入数字。"),
+        ERROR_UNKNOWN_COMMAND("未知指令。");
 
         public final String text;
 
@@ -98,22 +109,78 @@ public class UiCn extends Ui {
 
     @Override
     public String sendProcessFindDateError() {
-        return sendFatal(UiMessage.ERROR_FIND_DATE.getText(), "");
+        return sendFatal(UiMessage.ERROR_FIND_DATE_INPUT.getText(), "");
     }
 
     @Override
     public String sendProcessFindTaskError() {
-        return sendFatal(UiMessage.ERROR_FIND_TASK.getText(), "");
+        return sendFatal(UiMessage.ERROR_FIND_TASK_INPUT.getText(), "");
     }
 
     @Override
     public String sendProcessRestoreError() {
-        return sendFatal(UiMessage.ERROR_RESTORE.getText(), "");
+        return sendFatal(UiMessage.ERROR_RESTORE_SELECTION.getText(), "");
     }
 
     @Override
     public String sendProcessArchiveError() {
-        return sendFatal(UiMessage.ERROR_ARCHIVE.getText(), "");
+        return sendFatal(UiMessage.ERROR_ARCHIVE_SELECTION.getText(), "");
+    }
+
+    @Override
+    public String printProcessArchiveMessage() {
+        return sendGenericConfirmation(UiMessage.INFO_ARCHIVE.getText());
+    }
+
+    @Override
+    public String printProcessArchiveFailureMessage() {
+        return sendGenericFatal(UiMessage.ERROR_ARCHIVE.getText());
+    }
+
+    @Override
+    public String printProcessRestoreMessage() {
+        return sendGenericConfirmation(UiMessage.INFO_RESTORE.getText());
+    }
+
+    @Override
+    public String printProcessRestoreErrorMessage() {
+        return sendGenericWarning(UiMessage.ERROR_RESTORE.getText());
+    }
+
+    @Override
+    public String printProcessRestoreNoRecordMessage() {
+        return sendGenericWarning(UiMessage.ERROR_RESTORE_NO_RECORD.getText());
+    }
+
+    @Override
+    public String printListFilesHeaderMessage() {
+        return sendGenericInfo(UiMessage.INFO_LIST_FILES_HEADER.getText());
+    }
+
+    @Override
+    public String printListFilesFooterMessage() {
+        return sendGenericInfo(UiMessage.INFO_LIST_FILES_FOOTER.getText());
+    }
+
+    @Override
+    public String printGetIndexErrorMessage(int size) {
+        return sendGenericWarning(String.format(UiMessage.ERROR_GET_INDEX.getText(), size));
+    }
+
+    @Override
+    public String printGetArchiveIndexErrorMessage(int size) {
+        return sendGenericWarning(String.format(UiMessage.ERROR_GET_ARCHIVE_INDEX.getText(), size));
+
+    }
+
+    @Override
+    public String printIsIntegerErrorMessage() {
+        return sendGenericWarning(UiMessage.ERROR_IS_INTEGER.getText());
+    }
+
+    @Override
+    public String printUnknownCommandErrorMessage() {
+        return sendGenericWarning(UiMessage.ERROR_UNKNOWN_COMMAND.getText());
     }
 
     /**

@@ -28,11 +28,21 @@ public class UiEn extends Ui {
                 + "\n\t \u27a4 Todo <Task Name>"),
         ERROR_PROCESS_ACTION("The selection to %s cannot be empty."),
         ERROR_PROCESS_COMMAND("The description of %s cannot be empty."),
-        ERROR_FIND_DATE("The date to search cannot be empty."),
-        ERROR_FIND_TASK("The keyword to search cannot be empty."),
-        ERROR_VIEW_SCHEDULE("The date to search cannot be empty."),
-        ERROR_RESTORE("The file selection to restore cannot be empty."),
-        ERROR_ARCHIVE("The file selection to archive cannot be empty.");
+        ERROR_FIND_DATE_INPUT("The date to search cannot be empty.\n\t \u27a4 day <date>"),
+        ERROR_FIND_TASK_INPUT("The keyword to search cannot be empty.\n\t \u27a4 find <keyword>"),
+        INFO_ARCHIVE("Successfully archived records."),
+        ERROR_ARCHIVE_SELECTION("The file selection to archive cannot be empty."),
+        ERROR_ARCHIVE("Failed to archive records."),
+        INFO_RESTORE("Successfully restored record."),
+        ERROR_RESTORE("Failed to retrieve archive records."),
+        ERROR_RESTORE_SELECTION("The file selection to restore cannot be empty.\n\t \u27a4 restore <index>"),
+        ERROR_RESTORE_NO_RECORD("Failed to restore records."),
+        INFO_LIST_FILES_HEADER("Select from the files below by entering restore <index>."),
+        INFO_LIST_FILES_FOOTER("Chat will be refreshed after restoring."),
+        ERROR_GET_INDEX("This is not a valid index. Choose from the  %s tasks."),
+        ERROR_GET_ARCHIVE_INDEX("This is not a valid index. Choose from the  %s records."),
+        ERROR_IS_INTEGER("Enter the numeric item index."),
+        ERROR_UNKNOWN_COMMAND("Unknown Command.");
 
         public final String text;
 
@@ -98,27 +108,78 @@ public class UiEn extends Ui {
 
     @Override
     public String sendProcessFindDateError() {
-        return sendFatal(UiMessage.ERROR_FIND_DATE.getText(), "");
+        return sendFatal(UiMessage.ERROR_FIND_DATE_INPUT.getText(), "");
     }
 
     @Override
     public String sendProcessFindTaskError() {
-        return sendFatal(UiMessage.ERROR_FIND_TASK.getText(), "");
-    }
-
-    @Override
-    public String sendProcessViewScheduleError() {
-        return sendFatal(UiMessage.ERROR_VIEW_SCHEDULE.getText(), "");
+        return sendFatal(UiMessage.ERROR_FIND_TASK_INPUT.getText(), "");
     }
 
     @Override
     public String sendProcessRestoreError() {
-        return sendFatal(UiMessage.ERROR_RESTORE.getText(), "");
+        return sendFatal(UiMessage.ERROR_RESTORE_SELECTION.getText(), "");
     }
 
     @Override
     public String sendProcessArchiveError() {
-        return sendFatal(UiMessage.ERROR_ARCHIVE.getText(), "");
+        return sendFatal(UiMessage.ERROR_ARCHIVE_SELECTION.getText(), "");
+    }
+
+    @Override
+    public String printProcessArchiveMessage() {
+        return sendGenericConfirmation(UiMessage.INFO_ARCHIVE.getText());
+    }
+
+    @Override
+    public String printProcessArchiveFailureMessage() {
+        return sendGenericFatal(UiMessage.ERROR_ARCHIVE.getText());
+    }
+
+    @Override
+    public String printProcessRestoreMessage() {
+        return sendGenericConfirmation(UiMessage.INFO_RESTORE.getText());
+    }
+
+    @Override
+    public String printProcessRestoreErrorMessage() {
+        return sendGenericWarning(UiMessage.ERROR_RESTORE.getText());
+    }
+
+    @Override
+    public String printProcessRestoreNoRecordMessage() {
+        return sendGenericWarning(UiMessage.ERROR_RESTORE_NO_RECORD.getText());
+    }
+
+    @Override
+    public String printListFilesHeaderMessage() {
+        return sendGenericInfo(UiMessage.INFO_LIST_FILES_HEADER.getText());
+    }
+
+    @Override
+    public String printListFilesFooterMessage() {
+        return sendGenericInfo(UiMessage.INFO_LIST_FILES_FOOTER.getText());
+    }
+
+    @Override
+    public String printGetIndexErrorMessage(int size) {
+        return sendGenericWarning(String.format(UiMessage.ERROR_GET_INDEX.getText(), size));
+    }
+
+    @Override
+    public String printGetArchiveIndexErrorMessage(int size) {
+        return sendGenericWarning(String.format(UiMessage.ERROR_GET_ARCHIVE_INDEX.getText(), size));
+
+    }
+
+    @Override
+    public String printIsIntegerErrorMessage() {
+        return sendGenericWarning(UiMessage.ERROR_IS_INTEGER.getText());
+    }
+
+    @Override
+    public String printUnknownCommandErrorMessage() {
+        return sendGenericWarning(UiMessage.ERROR_UNKNOWN_COMMAND.getText());
     }
 
     /**
