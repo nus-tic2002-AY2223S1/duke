@@ -324,17 +324,17 @@ public class UiEn extends Ui {
 
     @Override
     public String getEventLabel() {
-        return "[E]";
+        return "[Event]";
     }
 
     @Override
     public String getDeadlineLabel() {
-        return "[D]";
+        return "[Deadline]";
     }
 
     @Override
     public String getTodoLabel() {
-        return "[T]";
+        return "[Todo]";
     }
 
     @Override

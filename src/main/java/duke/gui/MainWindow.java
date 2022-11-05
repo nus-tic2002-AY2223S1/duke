@@ -208,7 +208,7 @@ public class MainWindow extends AnchorPane {
                     DialogBox.getDukeDialog(response, dukeImage, 0)
             );
         });
-        int randTime = (int) (Math.random() * (3000 - 1000));
+        int randTime = (int) (Math.random() * (2500 - 1000));
         Timer timer2 = new Timer((randTime), taskPerformer2);
         setTypingText();
         timer2.setRepeats(false);

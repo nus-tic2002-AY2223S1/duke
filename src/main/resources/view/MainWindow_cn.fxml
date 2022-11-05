@@ -101,7 +101,7 @@
             <MenuItem fx:id="clearChatButton" mnemonicParsing="false" onAction="#clearChatAction" text="清除聊天记录"/>
         </Menu>
         <Menu mnemonicParsing="false" text="帮助">
-            <MenuItem mnemonicParsing="false" onAction="#aboutAction" text="Github"/>
+            <MenuItem mnemonicParsing="false" onAction="#aboutAction" text="\@aaronangxz/duke"/>
         </Menu>
     </MenuBar>
 </AnchorPane>

@@ -81,7 +81,6 @@ tasks.withType(Test) {
 }
 
 apply plugin: 'java'
-
 apply plugin: 'jacoco'
 
 jacocoTestReport {
