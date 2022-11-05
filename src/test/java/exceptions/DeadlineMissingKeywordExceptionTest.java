@@ -10,7 +10,7 @@ public class DeadlineMissingKeywordExceptionTest {
     @Test
     public void DeadlineMissingKeywordExceptionConstructorTest() {
         DeadlineMissingKeywordException deadlineMissingKeywordException = new DeadlineMissingKeywordException();
-        assertEquals(" ☹ OOPS!!! The key word /by must exists in the deadline command.", deadlineMissingKeywordException.errorMsg);
+        assertEquals("OOPS!!! The key word /by must exists in the deadline command.", deadlineMissingKeywordException.errorMsg);
     }
 
     @Test

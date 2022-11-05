@@ -9,7 +9,7 @@ public class DoWithinPeriodWrongFormatExceptionTest {
     @Test
     public void DoWithinPeriodWrongFormatExceptionConstructorTest() {
         DoWithinPeriodWrongFormatException doWithinPeriodWrongFormatException = new DoWithinPeriodWrongFormatException();
-        assertEquals(" ☹ OOPS!!! Input has wrong format. DoWithinPeriod command should be: dowithinperiod {description} /between {start date} /and {end date}", doWithinPeriodWrongFormatException.errorMsg);
+        assertEquals("OOPS!!! Input has wrong format. DoWithinPeriod command should be: dowithinperiod {description} /between {start date} /and {end date}", doWithinPeriodWrongFormatException.errorMsg);
     }
 
     @Test

@@ -59,7 +59,7 @@ public class Parser {
             eventDatetimeString = eventDatetime.format(DateTimeFormatter.ofPattern("d MMM yyyy HHmm"));
             return new EventCommand(eventTask, eventDatetimeString);
         } catch (DateTimeParseException e) {
-            return new ErrorCommand(inputCommand + "\n" + " ☹ OOPS!!! event has the wrong datetime format. " + "Event date format should be {d/MM/yyyy HHmm}");
+            return new ErrorCommand(inputCommand + "\n" + "OOPS!!! event has the wrong datetime format. " + "Event date format should be {d/MM/yyyy HHmm}");
         }
     }
 
@@ -80,7 +80,7 @@ public class Parser {
             deadlineString = deadlineDatetime.format(DateTimeFormatter.ofPattern("d MMM yyyy HHmm"));
             return new DeadlineCommand(deadLineTask, deadlineString);
         } catch (DateTimeParseException e) {
-            return new ErrorCommand(inputCommand + "\n" + " ☹ OOPS!!! deadline has the wrong datetime format. " + "Deadline format should be {d/MM/yyyy HHmm}");
+            return new ErrorCommand(inputCommand + "\n" + "OOPS!!! deadline has the wrong datetime format. " + "Deadline format should be {d/MM/yyyy HHmm}");
         }
     }
 
@@ -112,7 +112,7 @@ public class Parser {
             taskDatetimeString = taskDatetime.format(DateTimeFormatter.ofPattern("d MMM yyyy HHmm"));
             return new FindtaskCommand(taskDatetimeString);
         } catch (DateTimeParseException e) {
-            return new ErrorCommand(inputCommand + "\n" + " ☹ OOPS!!! event has the wrong datetime format. " + "Event date format should be {d/MM/yyyy HHmm}");
+            return new ErrorCommand(inputCommand + "\n" + "OOPS!!! event has the wrong datetime format. " + "Event date format should be {d/MM/yyyy HHmm}");
         }
     }
 
@@ -165,10 +165,10 @@ public class Parser {
                 endPeriodDateString = endPeriodDate.format(DateTimeFormatter.ofPattern("d MMM yyyy"));
                 return new DoWithinPeriodCommand(doWithinPeriodTask, startPeriodDateString, endPeriodDateString);
             } else {
-                return new ErrorCommand(inputCommand + "\n" + " ☹ OOPS!!! " + "The end period date should be after start period date");
+                return new ErrorCommand(inputCommand + "\n" + "OOPS!!! " + "The end period date should be after start period date");
             }
         } catch (DateTimeParseException e) {
-            return new ErrorCommand(inputCommand + "\n" + " ☹ OOPS!!! task has the wrong date format. " + "DoWithinPeriod date format should be {d/MM/yyyy}");
+            return new ErrorCommand(inputCommand + "\n" + "OOPS!!! task has the wrong date format. " + "DoWithinPeriod date format should be {d/MM/yyyy}");
         }
     }
 

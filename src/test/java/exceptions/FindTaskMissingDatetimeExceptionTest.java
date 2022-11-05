@@ -10,7 +10,7 @@ public class FindTaskMissingDatetimeExceptionTest {
     @Test
     public void FindTaskMissingDatetimeExceptionConstructorTest() {
         FindTaskMissingDatetimeException findTaskMissingDatetimeException = new FindTaskMissingDatetimeException();
-        assertEquals(" ☹ OOPS!!! The datetime of a findtask command cannot be empty.", findTaskMissingDatetimeException.errorMsg);
+        assertEquals("OOPS!!! The datetime of a findtask command cannot be empty.", findTaskMissingDatetimeException.errorMsg);
     }
 
     @Test

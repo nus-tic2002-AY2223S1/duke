@@ -10,13 +10,13 @@ public class DoWithinPeriodMissingKeywordExceptionTest {
     @Test
     public void DoWithinPeriodMissingKeywordExceptionConstructorTest() {
         DoWithinPeriodMissingKeywordException doWithinPeriodMissingKeywordException = new DoWithinPeriodMissingKeywordException("/between");
-        assertEquals(" ☹ OOPS!!! The key word /between must exists in the dowithinperiod command.", doWithinPeriodMissingKeywordException.errorMsg);
+        assertEquals("OOPS!!! The key word /between must exists in the dowithinperiod command.", doWithinPeriodMissingKeywordException.errorMsg);
     }
 
     @Test
     public void DoWithinPeriodMissingKeywordExceptionAnotherConstructorTest() {
         DoWithinPeriodMissingKeywordException doWithinPeriodMissingKeywordException = new DoWithinPeriodMissingKeywordException("/and");
-        assertEquals(" ☹ OOPS!!! The key word /and must exists in the dowithinperiod command.", doWithinPeriodMissingKeywordException.errorMsg);
+        assertEquals("OOPS!!! The key word /and must exists in the dowithinperiod command.", doWithinPeriodMissingKeywordException.errorMsg);
     }
 
     @Test

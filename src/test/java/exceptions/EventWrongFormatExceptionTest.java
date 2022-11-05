@@ -10,7 +10,7 @@ public class EventWrongFormatExceptionTest {
     @Test
     public void EventWrongFormatExceptionConstructorTest() {
         EventWrongFormatException eventWrongFormatException = new EventWrongFormatException();
-        assertEquals(" ☹ OOPS!!! Input has wrong format. Event command should be: event {description} /at {date}", eventWrongFormatException.errorMsg);
+        assertEquals("OOPS!!! Input has wrong format. Event command should be: event {description} /at {date}", eventWrongFormatException.errorMsg);
     }
 
     @Test

@@ -10,7 +10,7 @@ public class DeadlineWrongFormatExceptionTest {
     @Test
     public void DeadlineWrongFormatExceptionConstructorTest() {
         DeadlineWrongFormatException deadlineWrongFormatException = new DeadlineWrongFormatException();
-        assertEquals(" ☹ OOPS!!! Input has wrong format. Task.Deadline command should be: deadline {description} /by {deadline}", deadlineWrongFormatException.errorMsg);
+        assertEquals("OOPS!!! Input has wrong format. Deadline command should be: deadline {description} /by {deadline}", deadlineWrongFormatException.errorMsg);
     }
 
     @Test

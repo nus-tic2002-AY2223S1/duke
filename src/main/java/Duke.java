@@ -55,7 +55,7 @@ public class Duke {
 
     private static void checkDeleteInput(String input, int taskListSize) throws InputNumberFormatException, InputWrongFormatException, InputIndexOutOfBoundsException {
         if (input.split(" ").length != 2) {
-            throw new InputWrongFormatException(" ☹ OOPS!!! Input has wrong format. Delete command should be: delete {index to delete}");
+            throw new InputWrongFormatException("OOPS!!! Input has wrong format. Delete command should be: delete {index to delete}");
         } else if (!input.split(" ")[1].matches("-?\\d+(\\.\\d+)?")) { // Check if numeric
             throw new InputNumberFormatException(input);
         } else {
@@ -65,7 +65,7 @@ public class Duke {
 
     private static void checkMarkInput(String input, int taskListSize) throws InputWrongFormatException, InputNumberFormatException, InputIndexOutOfBoundsException {
         if (input.split(" ").length != 2) {
-            throw new InputWrongFormatException(" ☹ OOPS!!! Input has wrong format. Mark command should be: mark {index to mark}");
+            throw new InputWrongFormatException("OOPS!!! Input has wrong format. Mark command should be: mark {index to mark}");
         } else if (!input.split(" ")[1].matches("-?\\d+(\\.\\d+)?")) { // Check if numeric
             throw new InputNumberFormatException(input);
         } else {
@@ -75,7 +75,7 @@ public class Duke {
 
     private static void checkUnmarkInput(String input, int taskListSize) throws InputWrongFormatException, InputNumberFormatException, InputIndexOutOfBoundsException {
         if (input.split(" ").length != 2) {
-            throw new InputWrongFormatException(" ☹ OOPS!!! Input has wrong format. Unmark command should be: unmark {index to unmark}");
+            throw new InputWrongFormatException("OOPS!!! Input has wrong format. Unmark command should be: unmark {index to unmark}");
         } else if (!input.split(" ")[1].matches("-?\\d+(\\.\\d+)?")) { // Check if numeric
             throw new InputNumberFormatException(input);
         } else {
@@ -85,7 +85,7 @@ public class Duke {
 
     private static void checkPriorityInput(String input, int taskListSize) throws InputWrongFormatException, InputNumberFormatException, InputWrongPriorityException, InputIndexOutOfBoundsException {
         if (input.split(" ").length != 3) {
-            throw new InputWrongFormatException(" ☹ OOPS!!! Input has wrong format. Priority command should be: priority {task index} {priority}");
+            throw new InputWrongFormatException("OOPS!!! Input has wrong format. Priority command should be: priority {task index} {priority}");
         } else if (!input.split(" ")[1].matches("-?\\d+(\\.\\d+)?")) { // Check if numeric
             throw new InputNumberFormatException(input);
         } else if (!(input.split(" ")[2].equals("low") || input.split(" ")[2].equals("medium") || input.split(" ")[2].equals("high"))) {

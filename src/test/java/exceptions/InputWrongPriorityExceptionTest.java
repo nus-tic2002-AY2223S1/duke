@@ -10,7 +10,7 @@ public class InputWrongPriorityExceptionTest {
     @Test
     public void InputWrongPriorityExceptionConstructorTest() {
         InputWrongPriorityException inputWrongPriorityExceptions = new InputWrongPriorityException();
-        assertEquals(" ☹ OOPS!!! Priority can only be either low, medium, or high", inputWrongPriorityExceptions.errorMsg);
+        assertEquals("OOPS!!! Priority can only be either low, medium, or high", inputWrongPriorityExceptions.errorMsg);
     }
 
     @Test

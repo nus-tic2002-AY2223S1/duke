@@ -9,7 +9,7 @@ public class FindMissingKeywordExceptionTest {
     @Test
     public void FindMissingKeywordExceptionConstructorTest() {
         FindMissingKeywordException findMissingKeywordException = new FindMissingKeywordException();
-        assertEquals(" ☹ OOPS!!! Keyword is missing. The find command should be: find {keyword}", findMissingKeywordException.errorMsg);
+        assertEquals("OOPS!!! Keyword is missing. The find command should be: find {keyword}", findMissingKeywordException.errorMsg);
     }
 
     @Test

@@ -9,7 +9,7 @@ public class TodoMissingDescriptionExceptionTest {
     @Test
     public void TodoMissingDescriptionExceptionConstructorTest() {
         TodoMissingDescriptionException todoMissingDescriptionException = new TodoMissingDescriptionException();
-        assertEquals(" ☹ OOPS!!! The description of a todo cannot be empty.", todoMissingDescriptionException.errorMsg);
+        assertEquals("OOPS!!! The description of a todo cannot be empty.", todoMissingDescriptionException.errorMsg);
     }
 
     @Test

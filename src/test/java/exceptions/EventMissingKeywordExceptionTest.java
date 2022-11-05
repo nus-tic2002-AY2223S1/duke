@@ -10,7 +10,7 @@ public class EventMissingKeywordExceptionTest {
     @Test
     public void EventMissingKeywordExceptionConstructorTest() {
         EventMissingKeywordException eventMissingKeywordException = new EventMissingKeywordException();
-        assertEquals(" ☹ OOPS!!! The key word /at must exists in the event command.", eventMissingKeywordException.errorMsg);
+        assertEquals("OOPS!!! The key word /at must exists in the event command.", eventMissingKeywordException.errorMsg);
     }
 
     @Test
