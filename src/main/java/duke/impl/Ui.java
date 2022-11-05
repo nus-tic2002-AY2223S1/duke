@@ -217,7 +217,6 @@ public abstract class Ui {
 
     public String printGetArchiveIndexErrorMessage(int size) {
         return sendGenericWarning(String.format(UiMessage.ERROR_GET_ARCHIVE_INDEX.getText(), size));
-
     }
 
     public String printIsIntegerErrorMessage() {
