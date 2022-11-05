@@ -13,7 +13,8 @@ public class DateProcessorTest {
     @Test
     public void dateTimeToUnixInvalidTest() {
         String s = ".1/4/1999 0000";
-        DukeException expected = new DukeException("✖ Unparseable date: \".1/4/1999 0000\"");
+        DukeException expected = new DukeException("✖ I could not recognise this date. "
+                + "Unparseable date: \".1/4/1999 0000\"");
 
         try {
             DateProcessor.dateTimeToUnix(s);
@@ -25,7 +26,8 @@ public class DateProcessorTest {
     @Test
     public void dateTimeToUnixPseudoValidDayTest() {
         String s = "32/12/1999 0000";
-        DukeException expected = new DukeException("✖ Unparseable date: \"32/12/1999 0000\"");
+        DukeException expected = new DukeException("✖ I could not recognise this date. "
+                + "Unparseable date: \"32/12/1999 0000\"");
 
         try {
             DateProcessor.dateTimeToUnix(s);
@@ -37,7 +39,8 @@ public class DateProcessorTest {
     @Test
     public void dateTimeToUnixPseudoValidMonthTest() {
         String s = "30/13/1999 0000";
-        DukeException expected = new DukeException("✖ Unparseable date: \"30/13/1999 0000\"");
+        DukeException expected = new DukeException("✖ I could not recognise this date. "
+                + "Unparseable date: \"30/13/1999 0000\"");
 
         try {
             DateProcessor.dateTimeToUnix(s);
@@ -49,7 +52,8 @@ public class DateProcessorTest {
     @Test
     public void dateTimeToUnixPseudoValidDayMonthTest() {
         String s = "31/02/1999 0000";
-        DukeException expected = new DukeException("✖ Unparseable date: \"31/02/1999 0000\"");
+        DukeException expected = new DukeException("✖ I could not recognise this date. "
+                + "Unparseable date: \"31/02/1999 0000\"");
 
         try {
             DateProcessor.dateTimeToUnix(s);
@@ -61,7 +65,8 @@ public class DateProcessorTest {
     @Test
     public void dateTimeToUnixNoTimeTest() throws DukeException {
         String s = "1/11/2022";
-        DukeException expected = new DukeException("✖ Unparseable date: \"1/11/2022\"");
+        DukeException expected = new DukeException("✖ I could not recognise this date. "
+                + "Unparseable date: \"1/11/2022\"");
         try {
             DateProcessor.dateTimeToUnix(s);
         } catch (DukeException e) {
@@ -85,7 +90,8 @@ public class DateProcessorTest {
     @Test
     public void dateToUnixInvalidTest() {
         String s = ".1/4/1999";
-        DukeException expected = new DukeException("✖ Unparseable date: \".1/4/1999 0000\"");
+        DukeException expected = new DukeException("✖ I could not recognise this date. "
+                + "Unparseable date: \".1/4/1999 0000\"");
         try {
             DateProcessor.dateToUnix(s);
         } catch (DukeException e) {
@@ -96,7 +102,8 @@ public class DateProcessorTest {
     @Test
     public void dateToUnixPseudoValidDayTest() {
         String s = "32/4/1999";
-        DukeException expected = new DukeException("✖ Unparseable date: \"32/4/1999 0000\"");
+        DukeException expected = new DukeException("✖ I could not recognise this date. "
+                + "Unparseable date: \"32/4/1999 0000\"");
         try {
             DateProcessor.dateToUnix(s);
         } catch (DukeException e) {
@@ -120,7 +127,7 @@ public class DateProcessorTest {
     @Test
     public void unixToStringValidTest() {
         long l = 1667260800;
-        String expected = "Tue 01 Nov 2022, 08:00";
+        String expected = "Tue 01 Nov 2022, 8:00 AM";
         String actual = DateProcessor.unixToString(l);
         assertEquals(expected, actual);
     }
@@ -236,7 +243,8 @@ public class DateProcessorTest {
     @Test
     public void processDatePseudoValidDayTest() {
         String s = "32/12/0000";
-        DukeException expected = new DukeException("✖ Unparseable date: \"32/12/0000 0000\"");
+        DukeException expected = new DukeException("✖ I could not recognise this date. "
+                + "Unparseable date: \"32/12/0000 0000\"");
         try {
             System.out.println(DateProcessor.processDate(s));
         } catch (DukeException e) {

@@ -30,7 +30,6 @@ public class Database {
             System.exit(0);
             return null;
         }
-        System.out.println("Opened database successfully");
         return c;
     }
 
@@ -50,7 +49,6 @@ public class Database {
                     + "'message' TEXT NOT NULL, "
                     + "'timestamp' INTEGER NOT NULL,"
                     + "PRIMARY KEY('id' AUTOINCREMENT));";
-            System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
             c.commit();
@@ -58,8 +56,28 @@ public class Database {
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
-        System.out.println("Table created successfully");
     }
+
+    /**
+     * Drop a table
+     */
+    public static void dropTable() {
+        Connection c = init();
+        Statement stmt = null;
+
+        try {
+            String tb = "chat_tab";
+            stmt = c.createStatement();
+            String sql = "DROP TABLE IF EXISTS " + tb + ";";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            c.commit();
+            c.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    }
+
 
     /**
      * Insert into table
@@ -73,7 +91,6 @@ public class Database {
             stmt = c.createStatement();
             String sql = "INSERT INTO chat_tab (sender,message,timestamp) VALUES (%s,'%s',%s);";
             String q = String.format(sql, o.getSender(), o.getMessage().replace("'", "''"), o.getTimestamp());
-            System.out.println(q);
             stmt.executeUpdate(q);
             stmt.close();
             c.commit();
@@ -82,7 +99,6 @@ public class Database {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println("Records created successfully");
     }
 
     private static boolean isEmpty(String s) {

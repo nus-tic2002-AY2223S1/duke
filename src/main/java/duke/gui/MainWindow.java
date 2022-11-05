@@ -37,9 +37,14 @@ import javafx.stage.Stage;
  * Main window of the chat. Container of dialogBox, menu bar and buttons.
  */
 public class MainWindow extends AnchorPane {
-    private static final String MODE_CACHE_DIR = "data/tmp/";
+    private static final String CACHE_DIR = "data/tmp/";
     private static final String MODE_CACHE_FILE_PATH = "data/tmp/mode";
+    private static final String LIST_CACHE_FILE_PATH = "data/tmp/list";
     private static final String DARK_CSS_FILE_PATH = "/view/dark.css";
+    @FXML
+    private MenuItem listOnLaunchButton;
+    @FXML
+    private MenuItem clearChatButton;
     @FXML
     private Parent rootPane;
     @FXML
@@ -47,6 +52,7 @@ public class MainWindow extends AnchorPane {
     private Duke duke;
     private boolean newChat = true;
     private boolean isDark = false;
+    private boolean isListOnLaunch = false;
     @FXML
     private Label listButton;
     @FXML
@@ -122,14 +128,11 @@ public class MainWindow extends AnchorPane {
         }
         c.close();
 
-        if (newChat) {
-            String[] s = duke.getWelcome();
-            for (String str : s) {
-                dialogContainer.getChildren().addAll(
-                        DialogBox.getDukeDialog(str, dukeImage, 0)
-                );
-            }
-            newChat = false;
+        String[] s = duke.getWelcome(isListOnLaunch);
+        for (String str : s) {
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getDukeDialog(str, dukeImage, 0)
+            );
         }
     }
 
@@ -273,18 +276,49 @@ public class MainWindow extends AnchorPane {
                     Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))
                             .toExternalForm());
         }
-        cacheState(isDark);
+        cacheMode(isDark);
     }
 
-    private void cacheState(boolean isDark) throws IOException {
-        Files.createDirectories(Paths.get(MODE_CACHE_DIR));
+    private void cacheMode(boolean isDark) throws IOException {
+        Files.createDirectories(Paths.get(CACHE_DIR));
         FileWriter writer = new FileWriter(MODE_CACHE_FILE_PATH);
-        writer.write(isDark ? "dark=1" : "dark=0");
+        writer.write(isDark ? "dark=1" : "dark=0" + System.lineSeparator());
         writer.close();
     }
 
     public void setDarkModeText() {
         isDark = true;
         darkModeButton.setText("\u2713 Dark Mode");
+    }
+
+    public void setListOnLaunchText() {
+        isListOnLaunch = true;
+        listOnLaunchButton.setText("\u2713 List on launch");
+    }
+
+    @FXML
+    private void clearChatAction() {
+        Database.dropTable();
+        refreshAction();
+    }
+
+    @FXML
+    private void toggleListOnLaunch() throws IOException {
+        Scene s = rootPane.getScene();
+        if (isListOnLaunch) {
+            isListOnLaunch = false;
+            listOnLaunchButton.setText("List on launch");
+        } else {
+            isListOnLaunch = true;
+            listOnLaunchButton.setText("\u2713 List on launch");
+        }
+        cacheLaunch(isListOnLaunch);
+    }
+
+    private void cacheLaunch(boolean isShow) throws IOException {
+        Files.createDirectories(Paths.get(CACHE_DIR));
+        FileWriter writer = new FileWriter(LIST_CACHE_FILE_PATH);
+        writer.write(isShow ? "list=1" : "list=0" + System.lineSeparator());
+        writer.close();
     }
 }
