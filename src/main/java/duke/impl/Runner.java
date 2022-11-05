@@ -70,6 +70,7 @@ public class Runner {
     }
 
     protected Ui ui;
+
     protected DateProcessor d;
 
     protected boolean isExit;
@@ -85,13 +86,14 @@ public class Runner {
         arrayList = a;
         switch (l) {
         case CN:
-            ui = new Ui_cn();
+            ui = new UiCn();
             break;
         case EN:
-            ui = new Ui_en();
+            ui = new UiEn();
             break;
+        default:
         }
-        d = new DateProcessor();
+        d = new DateProcessor(l);
     }
 
     public void run(ArrayList<Task> tasks) throws DukeException {
@@ -505,7 +507,7 @@ public class Runner {
                 this.fileMap.put(i, listOfFile.getName());
                 s.append(ui
                         .sendGenericPlain(i + ". "
-                                + DateProcessor.unixToString(translateFileNameToDateTime(listOfFile.getName()))));
+                                + d.unixToString(translateFileNameToDateTime(listOfFile.getName()))));
                 i++;
             }
         }

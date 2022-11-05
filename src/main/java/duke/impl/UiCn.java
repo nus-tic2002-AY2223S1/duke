@@ -1,17 +1,17 @@
 package duke.impl;
 
+import java.text.ParseException;
+import java.util.ArrayList;
+
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.utils.DateProcessor;
 
-import java.util.ArrayList;
-
 /**
  * Main class to generate text responses
  */
-public class Ui_cn extends Ui {
-    private LocaleRegion locale;
-    private DateProcessor d;
+public class UiCn extends Ui {
+    protected String format = "%s";
 
     /**
      * Enum of messages
@@ -44,24 +44,20 @@ public class Ui_cn extends Ui {
         }
     }
 
-    protected String format = "%s";
 
-    public Ui_cn(LocaleRegion l) {
-        this.locale = l;
-        d = new DateProcessor();
+    public UiCn(LocaleRegion l) {
     }
 
-    public Ui_cn() {
-        d = new DateProcessor();
+    public UiCn() {
     }
 
     @Override
-    protected String sendConfirmedOutput(StringBuilder message) {
+    public String sendConfirmedOutput(StringBuilder message) {
         return sendConfirmation(UiMessage.GENERIC_FORMATTED.getText(), String.valueOf(message));
     }
 
     @Override
-    protected String sendGenericPlain(String message) {
+    public String sendGenericPlain(String message) {
         return sendPlain(UiMessage.GENERIC_FORMATTED.getText(), message);
     }
 
@@ -137,7 +133,7 @@ public class Ui_cn extends Ui {
             return new String[]{sendInfo(UiMessage.INFO_WELCOME_EXISTING.getText(), t.getLastInfo()[0]),
                     printList(t.getList(), true),
                     sendPlain(UiMessage.INFO_LAST_SAVED.getText(),
-                            DateProcessor.unixToString(Long.parseLong(t.getLastInfo()[1])))};
+                            DateProcessor.unixToStringCn(Long.parseLong(t.getLastInfo()[1])))};
         } else {
             return new String[]{sendInfo(UiMessage.INFO_WELCOME.getText(), "")};
         }
@@ -258,4 +254,89 @@ public class Ui_cn extends Ui {
         }
         return sendConfirmedOutput(s);
     }
+
+
+    @Override
+    public String printInvalidDateFormat() {
+        return sendGenericWarning("日期格式无效。 日期格式必须是 dd/mm/yyyy。");
+    }
+
+    @Override
+    public String printInvalidMonthFormat() {
+        return sendGenericWarning("月份无效。 月份必须是 01 ~ 12。");
+    }
+
+    @Override
+    public String printInvalidYearFormat() {
+        return sendGenericWarning("年份无效。 年份必须是 yyyy。");
+    }
+
+    @Override
+    public String printInvalidDateTimeFormat() {
+        return sendGenericWarning("日期/时间格式无效。 日期时间格式必须是 dd/mm/yyyy HHmm。");
+    }
+
+    @Override
+    public String printInvalidTimeFormat() {
+        return sendGenericWarning("时间格式无效。 时间格式必须是 0000 ~ 2359。");
+    }
+
+    @Override
+    public String printInconsistentTimeRangeFormat() {
+        return sendGenericWarning("区间格式无效。 开始和结束格式必须一致。 "
+                + "区间格式必须是 \n\tdd/mm/yyyy - dd/mm/yyyy "
+                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+    }
+
+    @Override
+    public String printInvalidTimeRangeFormat() {
+        return sendGenericWarning("格式无效。 "
+                + "区间格式必须是 \n\tdd/mm/yyyy  "
+                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n"
+                + "\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+    }
+
+    @Override
+    public String printUnspecifiedTimeRangeFormat() {
+        return sendGenericWarning("请指定区间。 "
+                + "区间格式必须是 \n\tdd/mm/yyyy - dd/mm/yyyy "
+                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+    }
+
+    @Override
+    public String printInvalidTDateSeparatorFormat() {
+        return sendGenericWarning("日期区间必须使用 '-' 区隔");
+    }
+
+    @Override
+    public String printParseExceptionMessage(ParseException e) {
+        return sendGenericFatal("我不理解这个日期。 " + e.getMessage());
+    }
+
+    @Override
+    public String getEventLabel() {
+        return "「事件」";
+    }
+
+    @Override
+    public String getDeadlineLabel() {
+        return "「期限」";
+    }
+
+
+    @Override
+    public String getTodoLabel() {
+        return "「待办」";
+    }
+
+    @Override
+    public String getEventHeader() {
+        return "日期：";
+    }
+
+    @Override
+    public String getHeader() {
+        return "截止：";
+    }
+
 }

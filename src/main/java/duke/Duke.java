@@ -5,7 +5,12 @@ import java.io.FileNotFoundException;
 import static duke.orm.Database.logDuke;
 import static duke.orm.Database.logUser;
 
-import duke.impl.*;
+import duke.impl.Cmd;
+import duke.impl.Parser;
+import duke.impl.Storage;
+import duke.impl.Ui;
+import duke.impl.UiCn;
+import duke.impl.UiEn;
 import duke.orm.Database;
 import duke.tasks.TaskList;
 
@@ -24,7 +29,8 @@ public class Duke {
      *
      * @param path File path to read previous records from.
      */
-    public Duke(String path) {
+    public Duke(String path, Ui.LocaleRegion l) {
+        setLocale(l);
         db = new Database();
         db.createTable();
         p = new Parser();
@@ -73,13 +79,12 @@ public class Duke {
         this.locale = l;
         switch (locale) {
         case CN:
-            System.out.println("setLocale: CN");
-            ui = new Ui_cn();
+            ui = new UiCn();
             break;
         case EN:
-            System.out.println("setLocale: EN");
-            ui = new Ui_en();
+            ui = new UiEn();
             break;
+        default:
         }
     }
 }

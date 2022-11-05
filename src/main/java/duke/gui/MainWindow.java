@@ -23,6 +23,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -41,12 +42,13 @@ public class MainWindow extends AnchorPane {
     private static final String CACHE_DIR = "data/tmp/";
     private static final String MODE_CACHE_FILE_PATH = "data/tmp/mode";
     private static final String LIST_CACHE_FILE_PATH = "data/tmp/list";
+    private static final String LOCALE_CACHE_FILE_PATH = "data/tmp/il8n";
     private static final String DARK_CSS_FILE_PATH = "/view/dark.css";
     private Duke duke;
+
     private boolean newChat = true;
     private boolean isDark = false;
     private boolean isListOnLaunch = false;
-
     private Ui.LocaleRegion locale;
     @FXML
     private Label listButton;
@@ -83,13 +85,19 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Label sendButton;
     @FXML
-    private MenuItem listOnLaunchButton;
+    private CheckMenuItem listOnLaunchButton;
     @FXML
     private MenuItem clearChatButton;
     @FXML
     private Parent rootPane;
     @FXML
-    private MenuItem darkModeButton;
+    private CheckMenuItem darkModeButton;
+    @FXML
+    private CheckMenuItem enButton;
+    @FXML
+    private CheckMenuItem cnButton;
+    @FXML
+    private Menu menuSettings;
 
     @FXML
     public void initialize() {
@@ -98,7 +106,6 @@ public class MainWindow extends AnchorPane {
 
     public void setDuke(Duke d) throws SQLException {
         duke = d;
-
         //restore chat
         Connection c = Database.init();
         Statement stmt;
@@ -196,16 +203,40 @@ public class MainWindow extends AnchorPane {
         userInput.clear();
 
         ActionListener taskPerformer2 = evt -> Platform.runLater(() -> {
-            status.setText("Online");
+            setOnlineText();
             dialogContainer.getChildren().addAll(
                     DialogBox.getDukeDialog(response, dukeImage, 0)
             );
         });
-        int randTime = (int) (Math.random() * (2000 - 1000));
+        int randTime = (int) (Math.random() * (3000 - 1000));
         Timer timer2 = new Timer((randTime), taskPerformer2);
-        status.setText("Typing...");
+        setTypingText();
         timer2.setRepeats(false);
         timer2.start();
+    }
+
+    private void setOnlineText() {
+        switch (locale) {
+        case EN:
+            status.setText("Online");
+            break;
+        case CN:
+            status.setText("在线");
+            break;
+        default:
+        }
+    }
+
+    private void setTypingText() {
+        switch (locale) {
+        case EN:
+            status.setText("Typing...");
+            break;
+        case CN:
+            status.setText("输入中...");
+            break;
+        default:
+        }
     }
 
     @FXML
@@ -267,22 +298,16 @@ public class MainWindow extends AnchorPane {
         Scene s = rootPane.getScene();
         if (isDark) {
             isDark = false;
-            switch (locale) {
-            case EN:
-                darkModeButton.setText("Dark Mode");
-                break;
-            case CN:
-                darkModeButton.setText("夜间模式");
-            }
             s.getStylesheets().remove(
                     Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))
                             .toExternalForm());
         } else {
-            setDarkModeText();
+            isDark = true;
             s.getStylesheets().add(
                     Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))
                             .toExternalForm());
         }
+        darkModeButton.setSelected(isDark);
         cacheMode(isDark);
     }
 
@@ -295,24 +320,12 @@ public class MainWindow extends AnchorPane {
 
     public void setDarkModeText() {
         isDark = true;
-        switch (locale) {
-        case EN:
-            darkModeButton.setText("\u2713 Dark Mode");
-            break;
-        case CN:
-            darkModeButton.setText("\u2713 夜间模式");
-        }
+        darkModeButton.setSelected(true);
     }
 
     public void setListOnLaunchText() {
         isListOnLaunch = true;
-        switch (locale) {
-        case EN:
-            listOnLaunchButton.setText("\u2713 List on launch");
-            break;
-        case CN:
-            listOnLaunchButton.setText("\u2713 启动显示任务列表");
-        }
+        listOnLaunchButton.setSelected(true);
     }
 
     @FXML
@@ -323,19 +336,8 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private void toggleListOnLaunch() throws IOException {
-        Scene s = rootPane.getScene();
-        if (isListOnLaunch) {
-            isListOnLaunch = false;
-            switch (locale) {
-            case EN:
-                listOnLaunchButton.setText("List on launch");
-                break;
-            case CN:
-                listOnLaunchButton.setText("启动显示任务列表");
-            }
-        } else {
-            setListOnLaunchText();
-        }
+        isListOnLaunch = !isListOnLaunch;
+        listOnLaunchButton.setSelected(isListOnLaunch);
         cacheLaunch(isListOnLaunch);
     }
 
@@ -348,5 +350,48 @@ public class MainWindow extends AnchorPane {
 
     public void setLocale(Ui.LocaleRegion l) {
         locale = l;
+        switch (l) {
+        case EN:
+            enButton.setSelected(true);
+            break;
+        case CN:
+            cnButton.setSelected(true);
+            break;
+        default:
+        }
+    }
+
+    @FXML
+    private void setLocaleEnAction() throws IOException {
+        enButton.setSelected(true);
+        cnButton.setSelected(false);
+        setLocale(Ui.LocaleRegion.EN);
+        cacheLocale(Ui.LocaleRegion.EN);
+        refreshAction();
+    }
+
+    @FXML
+    private void setLocaleCnAction() throws IOException {
+        enButton.setSelected(true);
+        cnButton.setSelected(false);
+        setLocale(Ui.LocaleRegion.CN);
+        cacheLocale(Ui.LocaleRegion.CN);
+        refreshAction();
+    }
+
+    private void cacheLocale(Ui.LocaleRegion l) throws IOException {
+        Files.createDirectories(Paths.get(CACHE_DIR));
+        FileWriter writer = new FileWriter(LOCALE_CACHE_FILE_PATH);
+
+        switch (l) {
+        case EN:
+            writer.write("il8n=en" + System.lineSeparator());
+            break;
+        case CN:
+            writer.write("il8n=cn" + System.lineSeparator());
+            break;
+        default:
+        }
+        writer.close();
     }
 }

@@ -13,23 +13,25 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.CheckMenuItem?>
 <AnchorPane fx:id="rootPane" maxHeight="1000.0" maxWidth="800.0" minHeight="1000.0" minWidth="800.0" prefHeight="1000.0"
             prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="duke.gui.MainWindow">
-    <Label fx:id="chatLabel" alignment="CENTER" layoutY="28.0" prefHeight="26.0" prefWidth="800.0" text="杜克">
+    <Label fx:id="chatLabel" alignment="CENTER" layoutY="34.0" prefHeight="26.0" prefWidth="800.0" text="杜克">
         <font>
             <Font size="20.0"/>
         </font>
     </Label>
-    <Label fx:id="status" alignment="CENTER" contentDisplay="CENTER" layoutY="54.0" prefHeight="17.0" prefWidth="800.0"
-           text="在线"/>
-    <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" hvalue="1.0" layoutY="75.0" prefHeight="865.0" prefWidth="800.0"
+    <Label fx:id="status" alignment="CENTER" contentDisplay="CENTER" layoutY="60.0" prefHeight="17.0" prefWidth="800.0"
+           style="-fx-text-fill: &quot;61a3ff&quot;;" text="在线"/>
+    <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" hvalue="1.0" layoutY="85.0" prefHeight="855.0" prefWidth="800.0"
                 vvalue="1.0">
         <VBox fx:id="dialogContainer"/>
     </ScrollPane>
-    <TextField fx:id="userInput" layoutX="14.0" layoutY="949.0" maxHeight="41.0" maxWidth="638.0" minHeight="41.0"
+    <TextField fx:id="userInput" layoutX="11.0" layoutY="949.0" maxHeight="41.0" maxWidth="638.0" minHeight="41.0"
                minWidth="511.0" onAction="#handleUserInput" prefHeight="41.0" prefWidth="638.0"
-               AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="148.0">
+               style="-fx-background-radius: 10;"
+               AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="151.0">
         <padding>
             <Insets bottom="10.0" left="5.0" right="5.0" top="10.0"/>
         </padding>
@@ -81,13 +83,19 @@
     </HBox>
     <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="27.0" prefWidth="800.0">
         <Menu fx:id="menuFile" mnemonicParsing="false" text="文件">
-            <MenuItem fx:id="darkModeButton" mnemonicParsing="false" onAction="#toggleDarkMode" text="夜间模式"/>
             <MenuItem fx:id="menuRefreshButton" mnemonicParsing="false" onAction="#refreshAction" text="刷新"/>
             <MenuItem fx:id="menuCloseButton" mnemonicParsing="false" onAction="#exitAction" text="退出"/>
         </Menu>
+        <Menu fx:id="menuSettings" mnemonicParsing="false" text="设置">
+            <CheckMenuItem fx:id="listOnLaunchButton" mnemonicParsing="false" onAction="#toggleListOnLaunch"
+                           text="启动显示任务列表"/>
+            <CheckMenuItem fx:id="darkModeButton" mnemonicParsing="false" onAction="#toggleDarkMode" text="夜间模式"/>
+            <Menu mnemonicParsing="false" text="语言">
+                <CheckMenuItem fx:id="enButton" mnemonicParsing="false" text="英文" onAction="#setLocaleEnAction"/>
+                <CheckMenuItem fx:id="cnButton" mnemonicParsing="false" text="简体中文" onAction="#setLocaleCnAction"/>
+            </Menu>
+        </Menu>
         <Menu mnemonicParsing="false" text="工具">
-            <MenuItem fx:id="listOnLaunchButton" mnemonicParsing="false" onAction="#toggleListOnLaunch"
-                      text="启动显示任务列表"/>
             <MenuItem fx:id="menuArchiveButton" mnemonicParsing="false" onAction="#archiveAction" text="归档"/>
             <MenuItem fx:id="menuRestoreButton" mnemonicParsing="false" onAction="#restoreAction" text="恢复"/>
             <MenuItem fx:id="clearChatButton" mnemonicParsing="false" onAction="#clearChatAction" text="清除聊天记录"/>

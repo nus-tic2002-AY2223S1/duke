@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
     private final String path = "data/save/output";
-    private final Duke duke = new Duke(path);
+    private Duke duke;
 
     private Ui.LocaleRegion l;
 
@@ -29,6 +29,7 @@ public class Main extends Application {
     public void start(Stage stage) {
         try {
             FXMLLoader fxmlLoader = loadLocale();
+            duke = new Duke(path, l);
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
@@ -94,14 +95,14 @@ public class Main extends Application {
             }
             String[] ss = path.split("=");
             if (Objects.equals(ss[0], "il8n") && Objects.equals(ss[1], "cn")) {
-                duke.setLocale(Ui.LocaleRegion.CN);
+
                 fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow_cn.fxml"));
                 l = Ui.LocaleRegion.CN;
                 return fxmlLoader;
             }
         }
-        duke.setLocale(Ui.LocaleRegion.EN);
-        fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
+
+        fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow_en.fxml"));
         l = Ui.LocaleRegion.EN;
         return fxmlLoader;
     }

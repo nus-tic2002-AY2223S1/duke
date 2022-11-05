@@ -1,6 +1,6 @@
 package duke.tasks;
 
-import duke.utils.DateProcessor;
+import java.io.IOException;
 
 /**
  * Inherited Task for Todo
@@ -22,9 +22,17 @@ public class Todo extends Task {
 
     @Override
     public String toString() {
+        try {
+            initLocale();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        String label = String.format("\t%s", ui.getTodoLabel());
+
         return (this.due == 0
-                ? "\t[T]" + super.toString()
-                : "\t[T]" + super.toString() + " (by: " + DateProcessor.unixToString(this.due) + ")");
+                ? label + super.toString()
+                : label + super.toString() + " (" + ui.getHeader() + d.unixToString(this.due) + ")");
     }
 
     @Override
@@ -41,4 +49,5 @@ public class Todo extends Task {
     public String getIsDone() {
         return this.isDone ? "1" : "0";
     }
+
 }

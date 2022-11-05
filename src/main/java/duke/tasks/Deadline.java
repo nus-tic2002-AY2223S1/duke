@@ -1,6 +1,6 @@
 package duke.tasks;
 
-import duke.utils.DateProcessor;
+import java.io.IOException;
 
 /**
  * Inherited Task for Deadline
@@ -22,9 +22,17 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
+        try {
+            initLocale();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        String label = String.format("\t%s", ui.getDeadlineLabel());
+
         return (this.due == 0
-                ? "\t[D]" + super.toString()
-                : "\t[D]" + super.toString() + " (by: " + DateProcessor.unixToString(this.due) + ")");
+                ? label + super.toString()
+                : label + super.toString() + " (" + ui.getHeader() + d.unixToString(this.due) + ")");
     }
 
     @Override

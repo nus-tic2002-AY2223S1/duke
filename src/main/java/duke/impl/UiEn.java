@@ -1,17 +1,17 @@
 package duke.impl;
 
+import java.text.ParseException;
+import java.util.ArrayList;
+
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.utils.DateProcessor;
 
-import java.util.ArrayList;
-
 /**
  * Main class to generate text responses
  */
-public class Ui_en extends Ui {
-    private LocaleRegion locale;
-    private DateProcessor d;
+public class UiEn extends Ui {
+    protected String format = "%s";
 
     /**
      * Enum of messages
@@ -45,24 +45,19 @@ public class Ui_en extends Ui {
         }
     }
 
-    protected String format = "%s";
-
-    public Ui_en(LocaleRegion l) {
-        this.locale = l;
-        d = new DateProcessor();
+    public UiEn(LocaleRegion l) {
     }
 
-    public Ui_en() {
-        d = new DateProcessor();
+    public UiEn() {
     }
 
     @Override
-    protected String sendConfirmedOutput(StringBuilder message) {
+    public String sendConfirmedOutput(StringBuilder message) {
         return sendConfirmation(UiMessage.GENERIC_FORMATTED.getText(), String.valueOf(message));
     }
 
     @Override
-    protected String sendGenericPlain(String message) {
+    public String sendGenericPlain(String message) {
         return sendPlain(UiMessage.GENERIC_FORMATTED.getText(), message);
     }
 
@@ -143,7 +138,7 @@ public class Ui_en extends Ui {
             return new String[]{sendInfo(UiMessage.INFO_WELCOME_EXISTING.getText(), t.getLastInfo()[0]),
                     printList(t.getList(), true),
                     sendPlain(UiMessage.INFO_LAST_SAVED.getText(),
-                            DateProcessor.unixToString(Long.parseLong(t.getLastInfo()[1])))};
+                            DateProcessor.unixToStringEn(Long.parseLong(t.getLastInfo()[1])))};
         } else {
             return new String[]{sendInfo(UiMessage.INFO_WELCOME.getText(), "")};
         }
@@ -268,5 +263,87 @@ public class Ui_en extends Ui {
             buildList(tasks, withIndex, s);
         }
         return sendConfirmedOutput(s);
+    }
+
+    @Override
+    public String printInvalidDateFormat() {
+        return sendGenericWarning("Invalid date format. Date time has to be dd/mm/yyyy.");
+    }
+
+    @Override
+    public String printInvalidMonthFormat() {
+        return sendGenericWarning("Invalid month format. Month has to be between 01 ~ 12.");
+    }
+
+    @Override
+    public String printInvalidYearFormat() {
+        return sendGenericWarning("Invalid year format. Year has to be yyyy.");
+    }
+
+    @Override
+    public String printInvalidDateTimeFormat() {
+        return sendGenericWarning("Invalid date/time format. Date time has to be dd/mm/yyyy HHmm.");
+    }
+
+    @Override
+    public String printInvalidTimeFormat() {
+        return sendGenericWarning("Invalid time format. Time has to be 0000 ~ 2359.");
+    }
+
+    @Override
+    public String printInconsistentTimeRangeFormat() {
+        return sendGenericWarning("Invalid time range. Range start and end should be consistent. "
+                + "Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy "
+                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+    }
+
+    @Override
+    public String printInvalidTimeRangeFormat() {
+        return sendGenericWarning("Invalid format. "
+                + "Range has to be \n\tdd/mm/yyyy  "
+                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n"
+                + "\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+    }
+
+    @Override
+    public String printUnspecifiedTimeRangeFormat() {
+        return sendGenericWarning("Specify a range. "
+                + "Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy "
+                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+    }
+
+    @Override
+    public String printInvalidTDateSeparatorFormat() {
+        return sendGenericWarning("Date range should be separated by '-'");
+    }
+
+    @Override
+    public String printParseExceptionMessage(ParseException e) {
+        return sendGenericFatal("I could not recognise this date. " + e.getMessage());
+    }
+
+    @Override
+    public String getEventLabel() {
+        return "[E]";
+    }
+
+    @Override
+    public String getDeadlineLabel() {
+        return "[D]";
+    }
+
+    @Override
+    public String getTodoLabel() {
+        return "[T]";
+    }
+
+    @Override
+    public String getEventHeader() {
+        return "At: ";
+    }
+
+    @Override
+    public String getHeader() {
+        return "By: ";
     }
 }

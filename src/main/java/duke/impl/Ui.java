@@ -1,5 +1,6 @@
 package duke.impl;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import duke.tasks.Task;
@@ -10,13 +11,6 @@ import duke.utils.DateProcessor;
  * Main class to generate text responses
  */
 public abstract class Ui {
-    private LocaleRegion locale;
-    private DateProcessor d;
-
-    public abstract String printSelectedList(ArrayList<Task> tasks, Boolean withIndex, String date);
-
-    public abstract String printFoundList(ArrayList<Task> tasks, Boolean withIndex, String keyword);
-
     /**
      * Enum of locales
      */
@@ -56,6 +50,9 @@ public abstract class Ui {
         }
     }
 
+    /**
+     * Enum of Messages
+     */
     public enum UiMessage {
         GENERIC(""),
         GENERIC_FORMATTED("%s"),
@@ -88,51 +85,48 @@ public abstract class Ui {
     protected String format = "%s";
 
     public Ui(LocaleRegion l) {
-        this.locale = l;
-        d = new DateProcessor();
     }
 
     public Ui() {
-        d = new DateProcessor();
     }
 
 
-    protected String sendConfirmedOutput(StringBuilder message) {
-        return sendConfirmation(Ui_en.UiMessage.GENERIC_FORMATTED.getText(), String.valueOf(message));
+    public String sendConfirmedOutput(StringBuilder message) {
+        return sendConfirmation(UiEn.UiMessage.GENERIC_FORMATTED.getText(), String.valueOf(message));
     }
 
-    protected String sendGenericPlain(String message) {
-        return sendPlain(Ui_en.UiMessage.GENERIC_FORMATTED.getText(), message);
+    public String sendGenericPlain(String message) {
+        return sendPlain(UiEn.UiMessage.GENERIC_FORMATTED.getText(), message);
     }
 
 
     public String sendGenericInfo(String message) {
-        return sendInfo(Ui_en.UiMessage.GENERIC_FORMATTED.getText(), message);
+        return sendInfo(UiEn.UiMessage.GENERIC_FORMATTED.getText(), message);
     }
 
 
     public String sendGenericWarning(String message) {
-        return sendWarning(Ui_en.UiMessage.GENERIC_FORMATTED.getText(), message);
+        return sendWarning(UiEn.UiMessage.GENERIC_FORMATTED.getText(), message);
     }
 
 
     public String sendGenericFatal(String message) {
-        return sendFatal(Ui_en.UiMessage.GENERIC_FORMATTED.getText(), message);
+        return sendFatal(UiEn.UiMessage.GENERIC_FORMATTED.getText(), message);
     }
 
 
     public String sendGenericConfirmation(String message) {
-        return sendConfirmation(Ui_en.UiMessage.GENERIC_FORMATTED.getText(), message);
+        return sendConfirmation(UiEn.UiMessage.GENERIC_FORMATTED.getText(), message);
     }
 
 
     public String sendProcessActionError(String message) {
-        return sendFatal(Ui_en.UiMessage.ERROR_PROCESS_ACTION.getText(), message);
+        return sendFatal(UiEn.UiMessage.ERROR_PROCESS_ACTION.getText(), message);
     }
 
 
     public String sendProcessCommandError(String message) {
-        return sendFatal(Ui_en.UiMessage.ERROR_PROCESS_COMMAND.getText(), message);
+        return sendFatal(UiEn.UiMessage.ERROR_PROCESS_COMMAND.getText(), message);
     }
 
     protected String sendPlain(String s, String m) {
@@ -199,7 +193,7 @@ public abstract class Ui {
             return new String[]{sendInfo(UiMessage.INFO_WELCOME_EXISTING.getText(), t.getLastInfo()[0]),
                     printList(t.getList(), true),
                     sendPlain(UiMessage.INFO_LAST_SAVED.getText(),
-                            DateProcessor.unixToString(Long.parseLong(t.getLastInfo()[1])))};
+                            DateProcessor.unixToStringEn(Long.parseLong(t.getLastInfo()[1])))};
         } else {
             return new String[]{sendInfo(UiMessage.INFO_WELCOME.getText(), "")};
         }
@@ -245,5 +239,140 @@ public abstract class Ui {
             s.append(tasks.get(i).toString())
                     .append(suffix);
         }
+    }
+
+    /**
+     * Display task list after performing keyword search.
+     *
+     * @param tasks     List of tasks found
+     * @param withIndex Whether to display index
+     * @param keyword   Keyword used in search
+     * @return Message of search result
+     */
+    public String printFoundList(ArrayList<Task> tasks, Boolean withIndex, String keyword) {
+        StringBuilder s = new StringBuilder();
+        if (tasks.size() == 0) {
+            s.append("You have no task with keyword '")
+                    .append(keyword)
+                    .append("'");
+        } else {
+            s.append("Here are the task(s) that contains '")
+                    .append(keyword)
+                    .append("':\n");
+            buildList(tasks, withIndex, s);
+        }
+        return sendConfirmedOutput(s);
+    }
+
+    /**
+     * Display task list after performing date search.
+     *
+     * @param tasks     List of tasks on this day
+     * @param withIndex Whether to display index
+     * @param date      Date used in search
+     * @return Message of search result
+     */
+    public String printSelectedList(ArrayList<Task> tasks, Boolean withIndex, String date) {
+        StringBuilder s = new StringBuilder();
+        if (tasks.size() == 0) {
+            s.append("You have no task scheduled on ")
+                    .append(date);
+        } else {
+            s.append("Here are the task(s) scheduled on this day:\n");
+            buildList(tasks, withIndex, s);
+        }
+        return sendConfirmedOutput(s);
+    }
+
+    public String printInvalidDateFormat() {
+        return sendGenericWarning("Invalid date format. Date time has to be dd/mm/yyyy.");
+    }
+
+    public String printInvalidMonthFormat() {
+        return sendGenericWarning("Invalid month format. Month has to be between 01 ~ 12.");
+    }
+
+    public String printInvalidYearFormat() {
+        return sendGenericWarning("Invalid year format. Year has to be yyyy.");
+    }
+
+    public String printInvalidDateTimeFormat() {
+        return sendGenericWarning("Invalid date/time format. Date time has to be dd/mm/yyyy HHmm.");
+    }
+
+    public String printInvalidTimeFormat() {
+        return sendGenericWarning("Invalid time format. Time has to be 0000 ~ 2359.");
+    }
+
+    /**
+     * Print inconsistent time range format error message.
+     *
+     * @return Error message
+     */
+    public String printInconsistentTimeRangeFormat() {
+        return sendGenericWarning("Invalid time range. Range start and end should be consistent. "
+                + "Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy "
+                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+    }
+
+    /**
+     * Print invalid time range format error message.
+     *
+     * @return Error message
+     */
+    public String printInvalidTimeRangeFormat() {
+        return sendGenericWarning("Invalid format. "
+                + "Range has to be \n\tdd/mm/yyyy  "
+                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n"
+                + "\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+    }
+
+    /**
+     * Print unspecified time range format error message.
+     *
+     * @return Error message
+     */
+    public String printUnspecifiedTimeRangeFormat() {
+        return sendGenericWarning("Specify a range. "
+                + "Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy "
+                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+    }
+
+    /**
+     * Print invalid date separator format error message.
+     *
+     * @return Error message
+     */
+    public String printInvalidTDateSeparatorFormat() {
+        return sendGenericWarning("Date range should be separated by '-'");
+    }
+
+    /**
+     * Print parse exception error message.
+     *
+     * @return Error message
+     */
+    public String printParseExceptionMessage(ParseException e) {
+        return sendGenericFatal("I could not recognise this date. " + e.getMessage());
+    }
+
+    public String getEventLabel() {
+        return "[E]";
+    }
+
+    public String getDeadlineLabel() {
+        return "[D]";
+    }
+
+    public String getTodoLabel() {
+        return "[T]";
+    }
+
+    public String getEventHeader() {
+        return "At: ";
+    }
+
+    public String getHeader() {
+        return "By: ";
     }
 }
