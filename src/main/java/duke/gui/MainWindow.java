@@ -16,6 +16,7 @@ import java.util.Objects;
 import javax.swing.Timer;
 
 import duke.Duke;
+import duke.impl.Ui;
 import duke.orm.Database;
 import duke.orm.DatabaseObject;
 import javafx.application.Platform;
@@ -41,18 +42,12 @@ public class MainWindow extends AnchorPane {
     private static final String MODE_CACHE_FILE_PATH = "data/tmp/mode";
     private static final String LIST_CACHE_FILE_PATH = "data/tmp/list";
     private static final String DARK_CSS_FILE_PATH = "/view/dark.css";
-    @FXML
-    private MenuItem listOnLaunchButton;
-    @FXML
-    private MenuItem clearChatButton;
-    @FXML
-    private Parent rootPane;
-    @FXML
-    private MenuItem darkModeButton;
     private Duke duke;
     private boolean newChat = true;
     private boolean isDark = false;
     private boolean isListOnLaunch = false;
+
+    private Ui.LocaleRegion locale;
     @FXML
     private Label listButton;
     @FXML
@@ -79,7 +74,6 @@ public class MainWindow extends AnchorPane {
     private MenuItem menuArchiveButton;
     @FXML
     private MenuItem menuRestoreButton;
-
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -88,6 +82,14 @@ public class MainWindow extends AnchorPane {
     private TextField userInput;
     @FXML
     private Label sendButton;
+    @FXML
+    private MenuItem listOnLaunchButton;
+    @FXML
+    private MenuItem clearChatButton;
+    @FXML
+    private Parent rootPane;
+    @FXML
+    private MenuItem darkModeButton;
 
     @FXML
     public void initialize() {
@@ -265,13 +267,18 @@ public class MainWindow extends AnchorPane {
         Scene s = rootPane.getScene();
         if (isDark) {
             isDark = false;
-            darkModeButton.setText("Dark Mode");
+            switch (locale) {
+            case EN:
+                darkModeButton.setText("Dark Mode");
+                break;
+            case CN:
+                darkModeButton.setText("夜间模式");
+            }
             s.getStylesheets().remove(
                     Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))
                             .toExternalForm());
         } else {
-            isDark = true;
-            darkModeButton.setText("\u2713 Dark Mode");
+            setDarkModeText();
             s.getStylesheets().add(
                     Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))
                             .toExternalForm());
@@ -288,12 +295,24 @@ public class MainWindow extends AnchorPane {
 
     public void setDarkModeText() {
         isDark = true;
-        darkModeButton.setText("\u2713 Dark Mode");
+        switch (locale) {
+        case EN:
+            darkModeButton.setText("\u2713 Dark Mode");
+            break;
+        case CN:
+            darkModeButton.setText("\u2713 夜间模式");
+        }
     }
 
     public void setListOnLaunchText() {
         isListOnLaunch = true;
-        listOnLaunchButton.setText("\u2713 List on launch");
+        switch (locale) {
+        case EN:
+            listOnLaunchButton.setText("\u2713 List on launch");
+            break;
+        case CN:
+            listOnLaunchButton.setText("\u2713 启动显示任务列表");
+        }
     }
 
     @FXML
@@ -307,10 +326,15 @@ public class MainWindow extends AnchorPane {
         Scene s = rootPane.getScene();
         if (isListOnLaunch) {
             isListOnLaunch = false;
-            listOnLaunchButton.setText("List on launch");
+            switch (locale) {
+            case EN:
+                listOnLaunchButton.setText("List on launch");
+                break;
+            case CN:
+                listOnLaunchButton.setText("启动显示任务列表");
+            }
         } else {
-            isListOnLaunch = true;
-            listOnLaunchButton.setText("\u2713 List on launch");
+            setListOnLaunchText();
         }
         cacheLaunch(isListOnLaunch);
     }
@@ -320,5 +344,9 @@ public class MainWindow extends AnchorPane {
         FileWriter writer = new FileWriter(LIST_CACHE_FILE_PATH);
         writer.write(isShow ? "list=1" : "list=0" + System.lineSeparator());
         writer.close();
+    }
+
+    public void setLocale(Ui.LocaleRegion l) {
+        locale = l;
     }
 }

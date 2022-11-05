@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.CheckMenuItem?>
 <AnchorPane fx:id="rootPane" maxHeight="1000.0" maxWidth="800.0" minHeight="1000.0" minWidth="800.0" prefHeight="1000.0"
             prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="duke.gui.MainWindow">
@@ -86,11 +87,16 @@
             <MenuItem fx:id="menuCloseButton" mnemonicParsing="false" onAction="#exitAction" text="Quit"/>
         </Menu>
         <Menu mnemonicParsing="false" text="Tools">
+            <Menu mnemonicParsing="false" text="Language">
+                <CheckMenuItem mnemonicParsing="false" text="EN"/>
+                <CheckMenuItem mnemonicParsing="false" text="CN"/>
+            </Menu>
             <MenuItem fx:id="listOnLaunchButton" mnemonicParsing="false" onAction="#toggleListOnLaunch"
                       text="List on launch"/>
             <MenuItem fx:id="menuArchiveButton" mnemonicParsing="false" onAction="#archiveAction" text="Archive"/>
             <MenuItem fx:id="menuRestoreButton" mnemonicParsing="false" onAction="#restoreAction" text="Restore"/>
             <MenuItem fx:id="clearChatButton" mnemonicParsing="false" onAction="#clearChatAction" text="Clear History"/>
+
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
             <MenuItem mnemonicParsing="false" onAction="#aboutAction" text="Github"/>

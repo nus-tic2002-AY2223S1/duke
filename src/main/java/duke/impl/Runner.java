@@ -29,7 +29,6 @@ import duke.utils.Encoder;
 public class Runner {
     private static final String ARCHIVE_CACHE_DIR = "data/tmp/";
     private static final String ARCHIVE_CACHE_FILE_PATH = "data/tmp/archives";
-
     private static final String SAVED_DIR = "data/save/";
     private static final String SAVED_FILE_PATH = "data/save/output";
     private static final String ARCHIVE_DIR = "data/archives/";
@@ -71,6 +70,8 @@ public class Runner {
     }
 
     protected Ui ui;
+    protected DateProcessor d;
+
     protected boolean isExit;
     protected ArrayList<Task> arrayList;
     protected Map<Integer, String> fileMap = new HashMap<Integer, String>();
@@ -80,9 +81,17 @@ public class Runner {
      *
      * @param a Task list to execute
      */
-    public Runner(ArrayList<Task> a) {
+    public Runner(ArrayList<Task> a, Ui.LocaleRegion l) {
         arrayList = a;
-        ui = new Ui();
+        switch (l) {
+        case CN:
+            ui = new Ui_cn();
+            break;
+        case EN:
+            ui = new Ui_en();
+            break;
+        }
+        d = new DateProcessor();
     }
 
     public void run(ArrayList<Task> tasks) throws DukeException {
@@ -266,7 +275,7 @@ public class Runner {
             } else {
                 long[] convertedTimeRange;
                 try {
-                    convertedTimeRange = DateProcessor.processDateTimeRange(eventByInput[1].trim());
+                    convertedTimeRange = d.processDateTimeRange(eventByInput[1].trim());
                 } catch (DukeException e) {
                     throw new DukeException(e.getMessage());
                 }
@@ -282,7 +291,7 @@ public class Runner {
                 arrayList.add(new Deadline(deadlineByInput[0].trim(), 0));
             } else {
                 try {
-                    convertedTime = DateProcessor.processDateTime(deadlineByInput[1].trim());
+                    convertedTime = d.processDateTime(deadlineByInput[1].trim());
                 } catch (DukeException e) {
                     throw new DukeException(e.getMessage());
                 }
@@ -298,7 +307,7 @@ public class Runner {
                 arrayList.add(new Todo(todoByInput[0].trim(), 0));
             } else {
                 try {
-                    convertedTime = DateProcessor.processDateTime(todoByInput[1].trim());
+                    convertedTime = d.processDateTime(todoByInput[1].trim());
                 } catch (DukeException e) {
                     throw new DukeException(e.getMessage());
                 }
@@ -401,7 +410,7 @@ public class Runner {
         }
 
         try {
-            return DateProcessor.processDate(s[1]);
+            return d.processDate(s[1]);
         } catch (DukeException e) {
             throw new DukeException(e.getMessage());
         }

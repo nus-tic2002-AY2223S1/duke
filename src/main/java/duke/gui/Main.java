@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 import duke.Duke;
+import duke.impl.Ui;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,14 +23,17 @@ public class Main extends Application {
     private final String path = "data/save/output";
     private final Duke duke = new Duke(path);
 
+    private Ui.LocaleRegion l;
+
     @Override
     public void start(Stage stage) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
+            FXMLLoader fxmlLoader = loadLocale();
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
             stage.setResizable(false);
+            fxmlLoader.<MainWindow>getController().setLocale(l);
             isDarkMode(scene, fxmlLoader);
             isListOnLaunch(fxmlLoader);
             fxmlLoader.<MainWindow>getController().setDuke(duke);
@@ -76,5 +80,29 @@ public class Main extends Application {
                 fxmlLoader.<MainWindow>getController().setListOnLaunchText();
             }
         }
+    }
+
+    private FXMLLoader loadLocale() throws IOException {
+        FXMLLoader fxmlLoader = null;
+        String path = "";
+        Files.createDirectories(Paths.get("data/tmp/"));
+        File f = new File("data/tmp/il8n");
+        if (f.exists() && !f.isDirectory()) {
+            Scanner scn = new Scanner(f);
+            if (scn.hasNext()) {
+                path = scn.nextLine();
+            }
+            String[] ss = path.split("=");
+            if (Objects.equals(ss[0], "il8n") && Objects.equals(ss[1], "cn")) {
+                duke.setLocale(Ui.LocaleRegion.CN);
+                fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow_cn.fxml"));
+                l = Ui.LocaleRegion.CN;
+                return fxmlLoader;
+            }
+        }
+        duke.setLocale(Ui.LocaleRegion.EN);
+        fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
+        l = Ui.LocaleRegion.EN;
+        return fxmlLoader;
     }
 }

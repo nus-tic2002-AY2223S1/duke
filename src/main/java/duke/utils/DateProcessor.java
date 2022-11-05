@@ -7,12 +7,13 @@ import java.time.Instant;
 import java.util.TimeZone;
 
 import duke.impl.Ui;
+import duke.impl.Ui_en;
 
 /**
  * Util Processor to process date and time
  */
 public class DateProcessor {
-    private static Ui ui = new Ui();
+    private static Ui ui = new Ui_en();
     private static final String TIME_ZONE = "GMT+8:00";
     private static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy HHmm");
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
@@ -20,6 +21,7 @@ public class DateProcessor {
     private static final DateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm a");
 
     public DateProcessor() {
+
     }
 
     private static String printInvalidDateFormat() {
@@ -100,7 +102,7 @@ public class DateProcessor {
      * @return UNIX time converted from s
      * @throws DukeException Exception
      */
-    public static long processDateTime(String s) throws DukeException {
+    public long processDateTime(String s) throws DukeException {
         String[] parsed = s.split(" ", 2);
 
         if (parsed.length != 2) {
@@ -133,7 +135,7 @@ public class DateProcessor {
      * @return Start and end UNIX time converted from s
      * @throws DukeException Exception
      */
-    public static long[] processDateTimeRange(String s) throws DukeException {
+    public long[] processDateTimeRange(String s) throws DukeException {
         // 1/1/1999 0900 - 2/2/1999 0900
         // 1/1/1999 - 2/2/1999
         // 1/1/1999
@@ -202,7 +204,7 @@ public class DateProcessor {
      * @return UNIX time of s
      * @throws DukeException Exception
      */
-    public static long processDate(String s) throws DukeException {
+    public long processDate(String s) throws DukeException {
         try {
             checkDate(s);
         } catch (DukeException e) {

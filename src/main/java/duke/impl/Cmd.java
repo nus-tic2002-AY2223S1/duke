@@ -38,9 +38,9 @@ public class Cmd {
      * @param tasks Array of Tasks
      * @return Message to display in GUI
      */
-    public String run(ArrayList<Task> tasks) {
+    public String run(ArrayList<Task> tasks, Ui.LocaleRegion l) {
         arrayList = tasks;
-        this.r = new Runner(arrayList);
+        this.r = new Runner(arrayList, l);
         switch (this.t) {
         case RETURN:
             break;

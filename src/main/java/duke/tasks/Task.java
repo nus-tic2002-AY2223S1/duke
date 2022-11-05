@@ -1,5 +1,7 @@
 package duke.tasks;
 
+import duke.utils.DateProcessor;
+
 /**
  * Main Class for Tasks
  */
@@ -7,8 +9,11 @@ public class Task {
     protected String description;
     protected String type = "Task";
     protected long due = 0;
+
     protected long to = 0;
     protected boolean isDone;
+
+    protected DateProcessor d;
 
     /**
      * Initialized a Task

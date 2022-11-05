@@ -1,61 +1,21 @@
 package duke.impl;
 
-import java.util.ArrayList;
-
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.utils.DateProcessor;
 
+import java.util.ArrayList;
+
 /**
  * Main class to generate text responses
  */
-public abstract class Ui {
+public class Ui_en extends Ui {
     private LocaleRegion locale;
     private DateProcessor d;
 
-    public abstract String printSelectedList(ArrayList<Task> tasks, Boolean withIndex, String date);
-
-    public abstract String printFoundList(ArrayList<Task> tasks, Boolean withIndex, String keyword);
-
     /**
-     * Enum of locales
+     * Enum of messages
      */
-    public enum LocaleRegion {
-        EN, CN;
-    }
-
-    /**
-     * Enum of icon types
-     */
-    public enum UiIcon {
-        /**
-         * Icon of FATAL messages
-         */
-        FATAL("\u2716"),
-        /**
-         * Icon of WARNING messages
-         */
-        WARNING("\u0021"),
-        /**
-         * Icon of INFO messages
-         */
-        INFO("\u00bb"),
-        /**
-         * Icon of CONFIRMATION messages
-         */
-        CONFIRMATION("\u2714");
-
-        public final String icon;
-
-        private UiIcon(String icon) {
-            this.icon = icon;
-        }
-
-        public String getIcon() {
-            return this.icon;
-        }
-    }
-
     public enum UiMessage {
         GENERIC(""),
         GENERIC_FORMATTED("%s"),
@@ -87,98 +47,81 @@ public abstract class Ui {
 
     protected String format = "%s";
 
-    public Ui(LocaleRegion l) {
+    public Ui_en(LocaleRegion l) {
         this.locale = l;
         d = new DateProcessor();
     }
 
-    public Ui() {
+    public Ui_en() {
         d = new DateProcessor();
     }
 
-
+    @Override
     protected String sendConfirmedOutput(StringBuilder message) {
-        return sendConfirmation(Ui_en.UiMessage.GENERIC_FORMATTED.getText(), String.valueOf(message));
+        return sendConfirmation(UiMessage.GENERIC_FORMATTED.getText(), String.valueOf(message));
     }
 
+    @Override
     protected String sendGenericPlain(String message) {
-        return sendPlain(Ui_en.UiMessage.GENERIC_FORMATTED.getText(), message);
+        return sendPlain(UiMessage.GENERIC_FORMATTED.getText(), message);
     }
 
-
+    @Override
     public String sendGenericInfo(String message) {
-        return sendInfo(Ui_en.UiMessage.GENERIC_FORMATTED.getText(), message);
+        return sendInfo(UiMessage.GENERIC_FORMATTED.getText(), message);
     }
 
-
+    @Override
     public String sendGenericWarning(String message) {
-        return sendWarning(Ui_en.UiMessage.GENERIC_FORMATTED.getText(), message);
+        return sendWarning(UiMessage.GENERIC_FORMATTED.getText(), message);
     }
 
-
+    @Override
     public String sendGenericFatal(String message) {
-        return sendFatal(Ui_en.UiMessage.GENERIC_FORMATTED.getText(), message);
+        return sendFatal(UiMessage.GENERIC_FORMATTED.getText(), message);
     }
 
-
+    @Override
     public String sendGenericConfirmation(String message) {
-        return sendConfirmation(Ui_en.UiMessage.GENERIC_FORMATTED.getText(), message);
+        return sendConfirmation(UiMessage.GENERIC_FORMATTED.getText(), message);
     }
 
-
+    @Override
     public String sendProcessActionError(String message) {
-        return sendFatal(Ui_en.UiMessage.ERROR_PROCESS_ACTION.getText(), message);
+        return sendFatal(UiMessage.ERROR_PROCESS_ACTION.getText(), message);
     }
 
-
+    @Override
     public String sendProcessCommandError(String message) {
-        return sendFatal(Ui_en.UiMessage.ERROR_PROCESS_COMMAND.getText(), message);
+        return sendFatal(UiMessage.ERROR_PROCESS_COMMAND.getText(), message);
     }
 
-    protected String sendPlain(String s, String m) {
-        return String.format("%s%n", String.format(s, m));
-    }
-
-    protected String sendWarning(String s, String m) {
-        return String.format(this.format,
-                String.format("%s %s", UiIcon.WARNING.getIcon(), String.format(s, m)));
-    }
-
-    protected String sendInfo(String s, String m) {
-        return String.format(this.format,
-                String.format("%s %s", UiIcon.INFO.getIcon(), String.format(s, m)));
-    }
-
-    protected String sendFatal(String s, String m) {
-        return String.format(this.format,
-                String.format("%s %s", UiIcon.FATAL.getIcon(), String.format(s, m)));
-    }
-
-    protected String sendConfirmation(String s, String m) {
-        return String.format(this.format,
-                String.format("%s %s", UiIcon.CONFIRMATION.getIcon(), String.format(s, m)));
-    }
-
+    @Override
     public String sendCommandUnknownError() {
         return sendFatal(UiMessage.ERROR_COMMAND_UNKNOWN.getText(), "");
     }
 
+    @Override
     public String sendProcessFindDateError() {
         return sendFatal(UiMessage.ERROR_FIND_DATE.getText(), "");
     }
 
+    @Override
     public String sendProcessFindTaskError() {
         return sendFatal(UiMessage.ERROR_FIND_TASK.getText(), "");
     }
 
+    @Override
     public String sendProcessViewScheduleError() {
         return sendFatal(UiMessage.ERROR_VIEW_SCHEDULE.getText(), "");
     }
 
+    @Override
     public String sendProcessRestoreError() {
         return sendFatal(UiMessage.ERROR_RESTORE.getText(), "");
     }
 
+    @Override
     public String sendProcessArchiveError() {
         return sendFatal(UiMessage.ERROR_ARCHIVE.getText(), "");
     }
@@ -191,6 +134,7 @@ public abstract class Ui {
      * @param t TaskList loaded from file
      * @return Welcome message text
      */
+    @Override
     public String[] sendWelcomeMessage(TaskList t, boolean shouldList) {
         if (t.getLastInfo() != null) {
             if (!shouldList) {
@@ -209,11 +153,58 @@ public abstract class Ui {
         return sendInfo(UiMessage.INFO_GOODBYE.getText(), "");
     }
 
-    public abstract String printNewTasks(String task, int size);
+    /**
+     * Display message after adding new tasks
+     *
+     * @param task Description of task added
+     * @param size Current number of tasks
+     * @return Message
+     */
+    @Override
+    public String printNewTasks(String task, int size) {
+        StringBuilder s = new StringBuilder();
+        s.append("Got it. I've added this task:\n\t")
+                .append(task)
+                .append("\n\tNow you have ")
+                .append(size)
+                .append(size > 1 ? " tasks " : " task ")
+                .append("in the list.");
+        return sendConfirmedOutput(s);
+    }
 
-    public abstract String printTaskRemovedByIndex(String task, int size);
+    /**
+     * Display message after removing task by index
+     *
+     * @param task Description of task removed
+     * @param size Current number of tasks
+     * @return Message
+     */
+    @Override
+    public String printTaskRemovedByIndex(String task, int size) {
+        StringBuilder s = new StringBuilder();
+        s.append("Noted. I've removed this task:\n\t")
+                .append(task)
+                .append("\n\tNow you have ")
+                .append(size)
+                .append(size > 1 ? " tasks " : " task ")
+                .append("in the list.");
+        return sendConfirmedOutput(s);
+    }
 
-    public abstract String printMarkTask(String task, Boolean isMark);
+    /**
+     * Display message after marking task as completed
+     *
+     * @param task   Description of task removed
+     * @param isMark Mark state of task
+     * @return Message
+     */
+    @Override
+    public String printMarkTask(String task, Boolean isMark) {
+        StringBuilder s = new StringBuilder();
+        s.append(isMark ? "Nice! I've marked this task as done:\n" : "OK, I've marked this task as not done yet:\n")
+                .append(task);
+        return sendConfirmedOutput(s);
+    }
 
     /**
      * Display all tasks
@@ -222,6 +213,7 @@ public abstract class Ui {
      * @param withIndex Whether to print with index
      * @return List of tasks
      */
+    @Override
     public String printList(ArrayList<Task> tasks, Boolean withIndex) {
         StringBuilder s = new StringBuilder();
         if (tasks.size() == 0) {
@@ -233,17 +225,48 @@ public abstract class Ui {
         return sendConfirmedOutput(s);
     }
 
-    void buildList(ArrayList<Task> tasks, Boolean withIndex, StringBuilder s) {
-        for (int i = 0; i < tasks.size(); i++) {
-            String suffix = "";
-            if (i != tasks.size() - 1) {
-                suffix = "\n";
-            }
-            if (withIndex) {
-                s.append(i + 1).append(".");
-            }
-            s.append(tasks.get(i).toString())
-                    .append(suffix);
+    /**
+     * Display all tasks selected by date
+     *
+     * @param tasks     An array of available tasks
+     * @param withIndex Whether to print with index
+     * @param date      Selected date
+     * @return List of tasks
+     */
+    @Override
+    public String printSelectedList(ArrayList<Task> tasks, Boolean withIndex, String date) {
+        StringBuilder s = new StringBuilder();
+        if (tasks.size() == 0) {
+            s.append("You have no task scheduled on ")
+                    .append(date);
+        } else {
+            s.append("Here are the task(s) scheduled on this day:\n");
+            buildList(tasks, withIndex, s);
         }
+        return sendConfirmedOutput(s);
+    }
+
+    /**
+     * Display all tasks selected by keyword
+     *
+     * @param tasks     An array of available tasks
+     * @param withIndex Whether to print with index
+     * @param keyword   Selected keyword
+     * @return List of tasks
+     */
+    @Override
+    public String printFoundList(ArrayList<Task> tasks, Boolean withIndex, String keyword) {
+        StringBuilder s = new StringBuilder();
+        if (tasks.size() == 0) {
+            s.append("You have no task with keyword '")
+                    .append(keyword)
+                    .append("'");
+        } else {
+            s.append("Here are the task(s) that contains '")
+                    .append(keyword)
+                    .append("':\n");
+            buildList(tasks, withIndex, s);
+        }
+        return sendConfirmedOutput(s);
     }
 }
