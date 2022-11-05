@@ -1,3 +1,5 @@
+package duke.task;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Creates an ArrayList of Task objects to store the List of Task.
+ * Creates an ArrayList of duke.task.Task objects to store the List of duke.task.Task.
  * Encapsulates the methods such as List, Add, Delete, Mark and Un-mark to manipulate the ArrayList.
  * Saves the ArrayList to a local directory and overwrites the existing file.
  */
@@ -14,7 +16,7 @@ public class TaskList {
     List<Task> tasks = new ArrayList<>();
 
     /**
-     * Prints out the contents of the ArrayList of Task with ordered numbering.
+     * Prints out the contents of the ArrayList of duke.task.Task with ordered numbering.
      * Prints out and error message "The list is empty" if it is an empty list.
      */
     public void listTask() {
@@ -33,7 +35,7 @@ public class TaskList {
     }
 
     /**
-     * Adds a To-do Task to the ArrayList.
+     * Adds a To-do duke.task.Task to the ArrayList.
      * @param lineArray an Array to store the result of a string split.
      */
     public void addToDo(String[] lineArray) {
@@ -51,7 +53,7 @@ public class TaskList {
     }
 
     /**
-     * Adds a Deadline Task to the ArrayList.
+     * Adds a duke.task.Deadline duke.task.Task to the ArrayList.
      * @param lineArray an Array to store the result of a string split.
      */
     public void addDeadLine(String[] lineArray) {
@@ -78,7 +80,7 @@ public class TaskList {
     }
 
     /**
-     * Adds an Event Task to the ArrayList.
+     * Adds an duke.task.Event duke.task.Task to the ArrayList.
      * @param lineArray an Array to store the result of a String split
      */
     public void addEvent(String[] lineArray) {
@@ -104,7 +106,7 @@ public class TaskList {
     }
 
     /**
-     * Marks a Task as completed in the ArrayList.
+     * Marks a duke.task.Task as completed in the ArrayList.
      * @param lineArray a String array to store the result of a String split
      */
     public void markTask(String[] lineArray) {
@@ -119,7 +121,7 @@ public class TaskList {
     }
 
     /**
-     * Marks a Task as uncomplete in the ArrayList.
+     * Marks a duke.task.Task as uncomplete in the ArrayList.
      * @param lineArray a String array to store the result of a String split
      */
     public void unmarkTask(String[] lineArray) {
@@ -134,7 +136,7 @@ public class TaskList {
     }
 
     /**
-     * Deletes a Task in the ArrayList.
+     * Deletes a duke.task.Task in the ArrayList.
      * @param lineArray a String array to store the result of a String split
      */
     public void deleteTask(String[] lineArray) {
@@ -167,7 +169,7 @@ public class TaskList {
     /**
      * Checks if there are existing content in the file.
      * Adds existing content in the file to the ArrayList.
-     * @param existingContent ArrayList of Task object.
+     * @param existingContent ArrayList of duke.task.Task object.
      */
     public void existingTaskList(List<Task> existingContent) {
         if (!existingContent.equals(null)) {

@@ -1,3 +1,8 @@
+package duke.session;
+
+import duke.repository.Repository;
+import duke.task.TaskList;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -33,7 +38,7 @@ public class Session {
         System.out.println("System booting up...\n" + logo);
 
         System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t Hello! I'm Duke");
+        System.out.println("\t Hello! I'm duke.Duke");
         System.out.println("\t What can I do for you?");
         System.out.println("\t-----------------------------------------------------------------");
         System.out.println();

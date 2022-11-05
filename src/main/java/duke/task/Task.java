@@ -1,16 +1,14 @@
-public class Task {
+package duke.task;
 
-    // properties
+public class Task {
     protected String description;
     protected boolean isDone;
 
-    // constructors
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
-    // methods
     public String getDescription() {
         return description;
     }

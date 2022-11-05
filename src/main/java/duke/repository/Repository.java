@@ -1,3 +1,10 @@
+package duke.repository;
+
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.Todo;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +54,7 @@ public class Repository {
     }
 
     /**
-     * Returns an array list of Task objects.
+     * Returns an array list of duke.task.Task objects.
      * @return array list.
      * @throws IOException If an I/O error occurred.
      */

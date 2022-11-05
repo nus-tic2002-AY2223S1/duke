@@ -1,3 +1,8 @@
+package duke;
+
+import duke.repository.Repository;
+import duke.session.Session;
+
 import java.io.IOException;
 
 public class Duke {
