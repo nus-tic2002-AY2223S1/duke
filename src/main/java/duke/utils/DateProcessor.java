@@ -16,8 +16,8 @@ import duke.impl.UiEn;
 public class DateProcessor {
     private static Ui ui;
     private static final String TIME_ZONE = "GMT+8:00";
-    private static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HHmm");
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy HHmm");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
     private static SimpleDateFormat dateTimeFormatSeparator = new SimpleDateFormat("E dd MMM yyyy, h:mm a");
     private static SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
 
@@ -30,15 +30,11 @@ public class DateProcessor {
         switch (l) {
         case EN:
             ui = new UiEn();
-            dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HHmm");
-            dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             dateTimeFormatSeparator = new SimpleDateFormat("E dd MMM yyyy, h:mm a");
             timeFormat = new SimpleDateFormat("hh:mm a");
             break;
         case CN:
             ui = new UiCn();
-            dateTimeFormat = new SimpleDateFormat("yy年MMMd日 hmm", new Locale("zh", "CN"));
-            dateFormat = new SimpleDateFormat("yy年MMMd日", new Locale("zh", "CN"));
             dateTimeFormatSeparator = new SimpleDateFormat("yy年MMMd日, ah:mm", new Locale("zh", "CN"));
             timeFormat = new SimpleDateFormat("ahh:mm", new Locale("zh", "CN"));
             break;
@@ -206,9 +202,9 @@ public class DateProcessor {
      */
     public long dateTimeToUnix(String s) throws DukeException {
         try {
-            dateTimeFormat.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
-            dateTimeFormat.setLenient(false);
-            return dateTimeFormat.parse(s).toInstant().getEpochSecond();
+            DATE_TIME_FORMAT.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
+            DATE_TIME_FORMAT.setLenient(false);
+            return DATE_TIME_FORMAT.parse(s).toInstant().getEpochSecond();
         } catch (ParseException e) {
             throw new DukeException(ui.printParseExceptionMessage(e));
         }
@@ -222,9 +218,9 @@ public class DateProcessor {
      */
     public long dateToUnix(String s) throws DukeException {
         try {
-            dateFormat.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
-            dateFormat.setLenient(false);
-            return dateFormat.parse(s + " 0000").toInstant().getEpochSecond();
+            DATE_FORMAT.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
+            DATE_FORMAT.setLenient(false);
+            return DATE_FORMAT.parse(s + " 0000").toInstant().getEpochSecond();
         } catch (ParseException e) {
             throw new DukeException(ui.printParseExceptionMessage(e));
         }
