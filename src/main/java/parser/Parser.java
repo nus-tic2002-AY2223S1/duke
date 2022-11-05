@@ -10,13 +10,17 @@ public class Parser {
 
     public static LocalDateTime parseStringToDateTime(String input) throws IllegalContentException {
         input = input.trim();
-
-        if (Pattern.matches("[0-9]{1,2}([/\\-])[0-9]{1,2}([/\\-])[0-9]{4} [0-9]{4}", input)) {
+        //12-12-2022 2222
+        if (Pattern.matches("[0-9]{1,2}(/)[0-9]{1,2}(/)[0-9]{4} [0-9]{4}", input)) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
-
             return LocalDateTime.parse(input, formatter);
+            
+        } else if (Pattern.matches("[0-9]{1,2}(-)[0-9]{1,2}(-)[0-9]{4} [0-9]{4}", input)) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
+            return LocalDateTime.parse(input, formatter);
+            
         } else {
-            throw new IllegalContentException("☹ OOPS!!! The input date format is incorrect.");
+            throw new IllegalContentException("☹ OOPS!!! The input date time format is incorrect.");
         }
     }
 

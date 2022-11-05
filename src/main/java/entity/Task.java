@@ -1,7 +1,5 @@
 package entity;
 
-import util.PrintUtil;
-
 public class Task {
 
     private String description = "";

@@ -3,10 +3,8 @@ package manager;
 import entity.Command;
 import exception.IllegalActionException;
 import exception.IllegalContentException;
+import javafx.application.Platform;
 import util.CommandType;
-import util.PrintUtil;
-
-import static util.CommandType.*;
 
 
 public class CommandManager {
@@ -64,8 +62,7 @@ public class CommandManager {
     
     private void setDescriptionDateTime(Command cmd, String content, String regex) throws IllegalContentException {
         String description = content.substring(0, content.lastIndexOf(regex));
-        String datetime = content.substring(content.lastIndexOf(regex));
-        
+        String datetime = content.substring(content.lastIndexOf(regex) + 4);
         if (description.isEmpty()) {
             throw new IllegalContentException("☹ OOPS!!! The description of a " + cmd.getCommand() + " cannot be empty.");
         }
@@ -91,46 +88,38 @@ public class CommandManager {
         }
     }
     
-    public void executeUserInput(String[] inputArr) {
-        try {
-            Command cmd = stringToCommandObj(inputArr);
+    public String executeUserInput(String[] inputArr) throws IllegalActionException, IllegalContentException {
+        
+        String executionResult = "";
+        
+        Command cmd = stringToCommandObj(inputArr);
+        
+        switch (CommandType.valueOf(cmd.getCommand().toUpperCase())) {
+        case LIST:
+            executionResult = taskManager.getTaskListString();
+            break;
+        case MARK:
+        case UNMARK:
+            executionResult = taskManager.getUpdateTaskResult(cmd);
+            break;
+        case DELETE:
+            executionResult = taskManager.getDeleteTaskResult(cmd);
             
-            switch (CommandType.valueOf(cmd.getCommand().toUpperCase())) {
-            case LIST:
-                taskManager.printList();
-                break;
-            case MARK:
-            case UNMARK:
-                try {
-                    taskManager.updateTaskStatus(cmd);
-                } catch (IllegalActionException e) {
-                    PrintUtil.printErrorMessage(e);
-                }
-                break;
-            case DELETE:
-                try {
-                    taskManager.deleteTask(cmd);
-                } catch (IllegalContentException e) {
-                    PrintUtil.printErrorMessage(e);
-                }
-                break;
-            case BYE:
-                PrintUtil.printByeMessage();
-                break;
-            case FIND:
-                taskManager.findTask(cmd);
-                break;
-            default:
-                try {
-                    taskManager.addTask(cmd);
-                } catch (IllegalContentException e) {
-                    PrintUtil.printErrorMessage(e);
-                }
-                break;
-            }
-            
-        } catch (IllegalContentException e) {
-            PrintUtil.printErrorMessage(e);
+            break;
+        case BYE:
+            //            executionResult = "Bye. Hope to see you again soon!";
+            Platform.exit();
+            System.exit(0);
+            break;
+        case FIND:
+            executionResult = taskManager.getFindTaskResult(cmd);
+            break;
+        default:
+            executionResult = taskManager.getAddTaskResult(cmd);
+            break;
         }
+        
+        return executionResult;
     }
+    
 }

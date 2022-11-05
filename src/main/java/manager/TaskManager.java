@@ -1,13 +1,12 @@
 package manager;
 
 import entity.*;
-import exception.IllegalContentException;
 import exception.IllegalActionException;
+import exception.IllegalContentException;
 import parser.Parser;
 import util.CommandType;
 import util.PrintUtil;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -40,15 +39,15 @@ public class TaskManager {
         return instance;
     }
     
-    public void printList() {
+    public String getTaskListString() {
         StringBuilder printStr = new StringBuilder("Here are the tasks in your list: \n");
         for (int i = 0; i < taskList.size(); i++) {
             Task t = taskList.get(i);
             printStr.append(String.format("\t %d.%s\n", i + 1, t.getDetails()));
         }
-        
-        PrintUtil.printWithIndentation(printStr.toString());
+        return printStr.toString();
     }
+    
     
     public void printFindResult(ArrayList<Task> result) {
         StringBuilder printStr = new StringBuilder("Here are the matching tasks in your list: \n");
@@ -60,7 +59,9 @@ public class TaskManager {
         PrintUtil.printWithIndentation(printStr.toString());
     }
     
-    public void updateTaskStatus(Command cmd) throws IllegalActionException {
+    public String getUpdateTaskResult(Command cmd) throws IllegalActionException {
+        
+        String result = "";
         
         if (cmd.getIndex() != -1) {
             int index = cmd.getIndex();
@@ -73,20 +74,23 @@ public class TaskManager {
             } else {
                 t.updateStatus();
                 if (t.isDone()) {
-                    PrintUtil.printWithIndentation("Nice! I've marked this task as done:\n\t   " + t.getDetails());
+                    result = "Nice! I've marked this task as done:\n\t   " + t.getDetails();
                 } else {
-                    PrintUtil.printWithIndentation("OK, I've marked this task as not done yet:\n\t   " + t.getDetails());
+                    result = "OK, I've marked this task as not done yet:\n\t   " + t.getDetails();
                 }
                 onTaskListChanged();
             }
         }
-    }
-    
-    public void addTask(Command cmd) throws IllegalContentException {
         
+        return result;
+    }
+
+    public String getAddTaskResult(Command cmd) throws IllegalContentException {
+        
+        String result = "";
         Task task = null;
         
-        switch (CommandType.valueOf(cmd.getCommand())) {
+        switch (CommandType.valueOf(cmd.getCommand().toUpperCase())) {
         case ADD:
             task = new Task(cmd.getDescription());
             break;
@@ -103,15 +107,22 @@ public class TaskManager {
         
         if (task != null) {
             taskList.add(task);
-            PrintUtil.printAddedMessage(task, taskList.size());
+    
+            result = "Got it. I've added this task: \n\t   ";
+            result += task.getDetails();
+            result += "\n\t Now you have " + taskList.size() + " tasks in the list.";
+            
+//            PrintUtil.printAddedMessage(task, taskList.size());
             onTaskListChanged();
         }
+        
+        return result;
     }
     
-    public void deleteTask(Command cmd) throws IllegalContentException {
+    public String getDeleteTaskResult(Command cmd) throws IllegalContentException {
         
-        Task task = null;
-        String intExpr = "/\\d+";
+        String result = "";
+        Task task;
         
         if (cmd.getIndex() == -1) {
             throw new IllegalContentException("☹ OOPS!!! The description of a " + cmd.getCommand() + " must be a number.");
@@ -121,10 +132,15 @@ public class TaskManager {
             int index = cmd.getIndex();
             task = taskList.get(index);
             taskList.remove(index);
-            PrintUtil.printDeletedMessage(task, taskList.size());
+            
+            result = "Noted. I've removed this task: \n\t   ";
+            result += task.getDetails();
+            result += "\n\t Now you have " + taskList.size() + " tasks in the list.";
             onTaskListChanged();
         }
+        return result;
     }
+    
     
     private void onTaskListChanged() {
         try {
@@ -164,13 +180,19 @@ public class TaskManager {
         }
     }
     
-    public void findTask(Command cmd) {
-        ArrayList<Task> result = new ArrayList<>();
+    public String getFindTaskResult(Command cmd) {
+        ArrayList<Task> resultArr = new ArrayList<>();
         for (Task task : taskList) {
             if (task.getDetails().contains(cmd.getDescription())) {
-                result.add(task);
+                resultArr.add(task);
             }
         }
-        printFindResult(result);
+        
+        StringBuilder resultStr = new StringBuilder("Here are the matching tasks in your list: \n");
+        for (int i = 0; i < resultArr.size(); i++) {
+            Task t = resultArr.get(i);
+            resultStr.append(String.format("\t %d.%s\n", i + 1, t.getDetails()));
+        }
+        return resultStr.toString();
     }
 }
