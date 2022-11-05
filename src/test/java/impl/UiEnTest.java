@@ -96,7 +96,7 @@ public class UiEnTest {
 
     @Test
     public void sendProcessFindDateErrorTest() {
-        String expected = "✖ The date to search cannot be empty.";
+        String expected = "✖ The date to search cannot be empty.\n\t ➤ day <date>";
         String actual = u.sendProcessFindDateError();
         System.out.println(actual);
         assertEquals(expected, actual);
@@ -104,23 +104,15 @@ public class UiEnTest {
 
     @Test
     public void sendProcessFindTaskErrorTest() {
-        String expected = "✖ The keyword to search cannot be empty.";
+        String expected = "✖ The keyword to search cannot be empty.\n\t ➤ find <keyword>";
         String actual = u.sendProcessFindTaskError();
         System.out.println(actual);
         assertEquals(expected, actual);
     }
 
     @Test
-    public void sendProcessViewScheduleErrorTest() {
-        String expected = "✖ The date to search cannot be empty.";
-        String actual = u.sendProcessViewScheduleError();
-        System.out.println(actual);
-        assertEquals(expected, actual);
-    }
-
-    @Test
     public void sendProcessRestoreErrorTest() {
-        String expected = "✖ The file selection to restore cannot be empty.";
+        String expected = "✖ The file selection to restore cannot be empty.\n\t ➤ restore <index>";
         String actual = u.sendProcessRestoreError();
         System.out.println(actual);
         assertEquals(expected, actual);

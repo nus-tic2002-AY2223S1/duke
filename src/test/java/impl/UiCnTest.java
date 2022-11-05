@@ -87,7 +87,7 @@ public class UiCnTest {
     @Test
     public void sendCommandUnknownErrorTest() {
         String expected = "✖ 抱歉， 我不明白你的意思 :( "
-                + "\n新增一个 Todo / Deadline / Event. "
+                + "\n新增一个 待办Todo / 期限Deadline / 事件Event. "
                 + "\n\t ➤ Todo <Task Name>";
         String actual = u.sendCommandUnknownError();
         System.out.println(actual);
@@ -96,7 +96,7 @@ public class UiCnTest {
 
     @Test
     public void sendProcessFindDateErrorTest() {
-        String expected = "✖ 日期搜索不能为空。";
+        String expected = "✖ 日期搜索不能为空。\n\t ➤ day <日期>";
         String actual = u.sendProcessFindDateError();
         System.out.println(actual);
         assertEquals(expected, actual);
@@ -104,23 +104,15 @@ public class UiCnTest {
 
     @Test
     public void sendProcessFindTaskErrorTest() {
-        String expected = "✖ 关键字搜索不能为空。";
+        String expected = "✖ 关键字搜索不能为空。\n\t ➤ find <关键字>";
         String actual = u.sendProcessFindTaskError();
         System.out.println(actual);
         assertEquals(expected, actual);
     }
 
     @Test
-    public void sendProcessViewScheduleErrorTest() {
-        String expected = "✖ The date to search cannot be empty.";
-        String actual = u.sendProcessViewScheduleError();
-        System.out.println(actual);
-        assertEquals(expected, actual);
-    }
-
-    @Test
     public void sendProcessRestoreErrorTest() {
-        String expected = "✖ 恢复文件选择不能为空。";
+        String expected = "✖ 恢复文件选择不能为空。\n\t ➤ restore <索引>";
         String actual = u.sendProcessRestoreError();
         System.out.println(actual);
         assertEquals(expected, actual);
