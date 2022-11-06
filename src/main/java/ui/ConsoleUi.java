@@ -9,6 +9,7 @@ import static common.constants.CommonConstant.DASHES;
 import static common.constants.CommonConstant.DELETED;
 import static common.constants.CommonConstant.HELLO_GREETING;
 import static common.constants.CommonConstant.LOGO;
+import static common.constants.CommonConstant.MATCHING_TASK_LIST;
 import static common.constants.CommonConstant.PROMPT;
 import static common.constants.CommonConstant.TAB;
 import static common.constants.CommonConstant.TOTAL_NO_OF_TASKS;
@@ -70,5 +71,12 @@ public class ConsoleUi implements Ui {
     public void printMarkedTask(String command, String input, Task task) {
         System.out.println(String.format(command, input));
         System.out.println(TAB + task);
+    }
+
+    /**
+     * Return prints matching task list when find command is used
+     */
+    public void printMatchingTaskList() {
+        System.out.println(MATCHING_TASK_LIST);
     }
 }

@@ -3,6 +3,7 @@ package common.constants;
 public class CommonConstant {
     // integer
     public static final int ZERO_VAL = 0;
+
     public static final int INIT_INT_VAL = 1;
 
     // string
@@ -53,6 +54,8 @@ public class CommonConstant {
     public static final String MARKED_ICON = "X";
 
     public static final String MARKED_TASK = "Nice! Task %s is successfully marked.";
+
+    public static final String MATCHING_TASK_LIST = "Here are the matching tasks in your list: ";
 
     public static final String OPEN_BRACKET = "(";
 

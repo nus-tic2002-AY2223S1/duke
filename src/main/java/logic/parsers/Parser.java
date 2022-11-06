@@ -12,6 +12,7 @@ import logic.commands.AddEventCommand;
 import logic.commands.AddTodoCommand;
 import logic.commands.ByeCommand;
 import logic.commands.DeleteCommand;
+import logic.commands.FindCommand;
 import logic.commands.HelpCommand;
 import logic.commands.ListCommand;
 import logic.commands.MarkCommand;
@@ -39,6 +40,7 @@ public class Parser {
         Command addTodoCom = new AddTodoCommand(ui, chat);
         Command byeCom = new ByeCommand(ui, chat);
         Command deleteCom = new DeleteCommand(ui, chat);
+        Command findCom = new FindCommand(ui, chat);
         Command helpCom = new HelpCommand(ui, chat);
         Command listCom = new ListCommand(ui, chat);
         Command markCom = new MarkCommand(ui, chat);
@@ -71,6 +73,9 @@ public class Parser {
                 break;
             case todo:
                 addTodoCom.execute();
+                break;
+            case find:
+                findCom.execute();
                 break;
             default:
                 break;
