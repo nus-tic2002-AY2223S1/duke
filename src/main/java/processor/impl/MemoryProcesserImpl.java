@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
@@ -128,7 +129,8 @@ public class MemoryProcesserImpl implements MemoryProcessor {
             return Optional.empty();
         }
         try {
-            Task deadline = new Deadline(taskRowDto[2], taskRowDto[3]);
+            LocalDate deadlineDate = LocalDate.parse(taskRowDto[3]);
+            Task deadline = new Deadline(taskRowDto[2], deadlineDate);
             markTaskDoneFromRow(taskRowDto[1], deadline);
             return Optional.of(deadline);
         } catch (EmptyDescriptionException e) {

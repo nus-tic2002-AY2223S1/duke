@@ -8,11 +8,14 @@ import exceptions.MissingSlashCommandDetailsException;
 import exceptions.MissingSlashCommandException;
 import exceptions.MoreThanOneSlashCommandException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
 import static utils.CommonStrings.AT;
 import static utils.CommonStrings.BY;
 import static utils.ErrorMessages.CREATE_DEADLINE_ERR_MSG;
+import static utils.ErrorMessages.CREATE_DEADLINE_INVALID_DATE_ERR_MSG;
 import static utils.ErrorMessages.CREATE_DEADLINE_MORE_THAN_ONE_BY_ERR_MSG;
 import static utils.ErrorMessages.CREATE_DEADLINE_NO_BY_DETAILS_ERR_MSG;
 import static utils.ErrorMessages.CREATE_DEADLINE_NO_BY_ERR_MSG;
@@ -47,13 +50,16 @@ public class Converter {
         userInput = removeFirstWord(userInput);
         try {
             String[] deadlineInputs = splitStrings(userInput, BY);
-            return Optional.of(new Deadline(deadlineInputs[0], deadlineInputs[1]));
+            LocalDate deadlineDate = LocalDate.parse(deadlineInputs[1]);
+            return Optional.of(new Deadline(deadlineInputs[0], deadlineDate));
         } catch (MissingSlashCommandException e) {
             speak(CREATE_DEADLINE_NO_BY_ERR_MSG);
         } catch (MoreThanOneSlashCommandException e) {
             speak(CREATE_DEADLINE_MORE_THAN_ONE_BY_ERR_MSG);
         } catch (MissingSlashCommandDetailsException | ArrayIndexOutOfBoundsException e) {
             speak(CREATE_DEADLINE_NO_BY_DETAILS_ERR_MSG);
+        } catch (DateTimeParseException e) {
+            speak(CREATE_DEADLINE_INVALID_DATE_ERR_MSG);
         } catch (Exception e) {
             speak(CREATE_DEADLINE_ERR_MSG);
         }

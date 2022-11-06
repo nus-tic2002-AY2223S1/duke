@@ -21,6 +21,8 @@ public class ErrorMessages {
             CREATE_DEADLINE_ERR_MSG + "\n" +
                     "DEADLINE must have description before \"/by\"\n" +
                     "DEADLINE must have due date after \"/by\"";
+    public static final String CREATE_DEADLINE_INVALID_DATE_ERR_MSG =
+            CREATE_DEADLINE_ERR_MSG + "\nDEADLINE DATE must be in the format \"yyyy-mm-dd\" (e.g. 1995-12-26)";
     public static final String CREATE_EVENT_ERR_MSG =
             "EVENT was NOT created successfully";
     public static final String CREATE_EVENT_NO_AT_ERR_MSG =
