@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class Duke {
     public static final String EXIT_COMMAND  ="bye";
     public static final String LIST_COMMAND  ="list";
@@ -23,12 +24,20 @@ public class Duke {
         String input ="";
         input = scanner.nextLine();
         while(!input.equals(EXIT_COMMAND)){
-            executeCommand(input,inputList);
+            try{
+                executeCommand(input,inputList);
+            } catch (UnknownCommandException | EmptyDescriptionException| MissingTimeException e) {
+                printDivider();
+                System.out.println("\t"+e.getMessage());
+                printDivider();
+            }
+
             input = scanner.nextLine();
         }
 
     }
-    private static void executeCommand(String command,List<Task> tasks){
+    private static void executeCommand(String command,List<Task> tasks)
+            throws UnknownCommandException, EmptyDescriptionException,MissingTimeException{
         String[] inputs = command.split(" ");
         String[] commandArgs;
         switch(inputs[0]){
@@ -45,22 +54,23 @@ public class Duke {
                 break;
             case TODO_COMMAND:
                 commandArgs = splitCommandArgs(command);
+                validateDescritionNotEmpty(TODO_COMMAND,commandArgs[0]);
                 addTodo(tasks,commandArgs[0]);
                 break;
             case DEADLINE_COMMAND:
                 commandArgs = splitCommandArgs(command);
+                validateDescritionNotEmpty(DEADLINE_COMMAND,commandArgs[0]);
+                validateTimeFormatisPresent(EVENT_COMMAND,2,commandArgs);
                 addDeadline(tasks,commandArgs[0],commandArgs[1]);
                 break;
             case EVENT_COMMAND:
                 commandArgs = splitCommandArgs(command);
+                validateDescritionNotEmpty(EVENT_COMMAND,commandArgs[0]);
+                validateTimeFormatisPresent(EVENT_COMMAND,2,commandArgs);
                 addEvent(tasks,commandArgs[0],commandArgs[1]);
                 break;
             default:
-                //previously default just adds whatever string input.
-                // Now it has to be Deadline ,Event or todoo:0.
-                System.out.println("");
-                break;
-
+                throw new UnknownCommandException();
         }
     }
 
@@ -104,6 +114,16 @@ public class Duke {
         Deadline d = new Deadline(desc,time);
         tasks.add(d);
         printTaskAddAcknowledge(d, tasks.size());
+    }
+    private static void validateTimeFormatisPresent(String name,int expectedLength,String[] command)throws MissingTimeException{
+        if (command.length != expectedLength){
+            throw new MissingTimeException();
+        }
+    }
+    private static void validateDescritionNotEmpty(String name,String desc)throws EmptyDescriptionException{
+        if (desc.isEmpty()){
+            throw new EmptyDescriptionException(name);
+        }
     }
 
     private static void mark(List<Task> tasks,String taskIndex){
