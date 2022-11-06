@@ -1,7 +1,9 @@
 package taskList;
 
-import ui.UI;
 
+import parser.Parser;
+import ui.UI;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import static ui.ErrorMessages.*;
@@ -105,9 +107,9 @@ public class TaskList {
         ui.UI.printLine();
         if (inputSplit[0].length() == 4) {
             try {
-                String todoTask = input.substring(5);
-                Todo newTodoTask = new Todo(todoTask);
-                addTask(newTodoTask);
+//                String todoTask = input.substring(5);
+//                Todo newTodoTask = new Todo(todoTask);
+                addTask(Parser.parseTodoInput(input));
             } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
                 printError(INVALID_TODO_INPUT);
             }
@@ -122,6 +124,7 @@ public class TaskList {
                 String[] deadlineItemSplit = (input.substring(9)).split(" /by ");
                 String deadlineTask = deadlineItemSplit[0];
                 String deadlineBy = deadlineItemSplit[1];
+//                LocalDateTime deadlineDate = LocalDateTime.parse(deadlineBy);
                 Deadline task = new Deadline(deadlineTask, deadlineBy);
                 addTask(task);
             } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
