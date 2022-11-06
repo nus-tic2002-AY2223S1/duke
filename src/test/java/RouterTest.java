@@ -1,4 +1,5 @@
 import Data.DataInterface;
+import Data.FileInfo;
 import Logic.BotCallback;
 import Tasks.TaskInterface;
 import Tasks.Todo;
@@ -46,7 +47,7 @@ public class RouterTest {
         UISpy uispy = new UISpy();
         DataInterface dataspy = new DataSpy("a", "b");
         DelegateSpy delegate = new DelegateSpy();
-        Router router = new Router(uispy, dataspy);
+        Router router = new Router(uispy, dataspy, null);
         router.delegate = delegate;
         delegate.data.add(new Todo("clean house"));
         TaskInterface t = new Todo("new task");
@@ -64,7 +65,7 @@ public class RouterTest {
     public void showListWhenHasFewTasksTest() throws InterruptedException {
         UISpy uispy = new UISpy();
         DataInterface dataspy = new DataSpy("a", "b");
-        Router router = new Router(uispy, dataspy);
+        Router router = new Router(uispy, dataspy, null);
         DelegateSpy delegate = new DelegateSpy();
         router.delegate = delegate;
         ArrayList<TaskInterface> list = new ArrayList<>();
@@ -81,7 +82,7 @@ public class RouterTest {
     public void markSuccessTest() {
         UISpy uispy = new UISpy();
         DataSpy dataspy = new DataSpy("a", "b");
-        Router router = new Router(uispy, dataspy);
+        Router router = new Router(uispy, dataspy, null);
         TaskInterface t = new Todo("house work");
         DelegateSpy delegate = new DelegateSpy();
         router.delegate = delegate;
@@ -103,7 +104,7 @@ public class RouterTest {
     public void markFaildTest() {
         UISpy uispy = new UISpy();
         DataSpy dataspy = new DataSpy("a", "b");
-        Router router = new Router(uispy, dataspy);
+        Router router = new Router(uispy, dataspy, null);
         TaskInterface t = new Todo("house work");
         DelegateSpy delegate = new DelegateSpy();
         router.delegate = delegate;
@@ -124,7 +125,7 @@ public class RouterTest {
     public void deleteTaskTest() throws InterruptedException {
         UISpy uispy = new UISpy();
         DataSpy dataspy = new DataSpy("a", "b");
-        Router router = new Router(uispy, dataspy);
+        Router router = new Router(uispy, dataspy, null);
         TaskInterface t = new Todo("house work");
         DelegateSpy delegate = new DelegateSpy();
 
@@ -153,7 +154,7 @@ public class RouterTest {
     private Router initialize(String name, String path, String folder) {
         UIInterface a = new UISpy();
         DataInterface b = new DataSpy(path, folder);
-        Router c = new Router(a, b);
+        Router c = new Router(a, b, null);
         return c;
     }
 
@@ -199,6 +200,11 @@ public class RouterTest {
         @Override
         public void add(TaskInterface task) {
             data.add(task);
+        }
+
+        @Override
+        public void changeFile(String path) {
+            this.path = path;
         }
     }
 
@@ -264,6 +270,36 @@ public class RouterTest {
 
         @Override
         public void customError(String text) {
+
+        }
+
+        @Override
+        public void unexpectedError() {
+
+        }
+
+        @Override
+        public void addFileSuccess(String text) {
+
+        }
+
+        @Override
+        public void addFileFailed(String text) {
+
+        }
+
+        @Override
+        public void showFiles(ArrayList<FileInfo> files) {
+
+        }
+
+        @Override
+        public void setActiveSuccess(String alias) {
+
+        }
+
+        @Override
+        public void getActiveFile(String alias) {
 
         }
     }
