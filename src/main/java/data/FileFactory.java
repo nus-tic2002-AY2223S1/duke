@@ -23,6 +23,7 @@ public class FileFactory implements FileInterface {
     }
 
     private void setupFile() {
+        assert(!path.isEmpty());
         try {
             //check if folder exists
             File dir = new File(folder);
@@ -40,6 +41,7 @@ public class FileFactory implements FileInterface {
     }
 
     private void addDefaultRecord() {
+        assert(file.isFile());
         String record = "";
         record += defaultFile + "|" + "1" + "|" + "default";
         record += "\n";
@@ -54,6 +56,7 @@ public class FileFactory implements FileInterface {
 
     @Override
     public ArrayList<FileInfo> getAllFile() {
+        assert(file.isFile());
         ArrayList<FileInfo> arr = new ArrayList<>();
         try {
             Scanner s = new Scanner(file); // create a Scanner using the File as the source
@@ -69,6 +72,7 @@ public class FileFactory implements FileInterface {
 
     @Override
     public void setActive(String alias) throws IOException {
+        assert(file.isFile());
         List<String> lines = Files.readAllLines(Path.of(file.getAbsolutePath()), StandardCharsets.UTF_8);
         int i = 0;
         while(i < lines.size()) {
@@ -89,6 +93,7 @@ public class FileFactory implements FileInterface {
 
     @Override
     public FileInfo getActiveFile() throws IOException, IndexOutOfBoundsException {
+        assert(file.isFile());
         List<String> lines = Files.readAllLines(Path.of(file.getAbsolutePath()), StandardCharsets.UTF_8);
         int i = 0;
         while(i < lines.size()) {
@@ -103,6 +108,7 @@ public class FileFactory implements FileInterface {
 
     @Override
     public boolean addNewFile(String alias) throws IOException {
+        assert(file.isFile());
         ArrayList<FileInfo> allFiles = getAllFile();
         for(FileInfo each : allFiles) {
             if(each.getAlias() == alias) {

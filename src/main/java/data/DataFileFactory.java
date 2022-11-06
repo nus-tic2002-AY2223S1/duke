@@ -31,6 +31,8 @@ public class DataFileFactory implements DataInterface {
     }
 
     private void setupFile() {
+        assert (!folder.isEmpty());
+        assert(!path.isEmpty());
         try {
             //check if folder exists
             File dir = new File(folder);
@@ -47,6 +49,7 @@ public class DataFileFactory implements DataInterface {
     }
     @Override
     public ArrayList<TaskInterface> loadData() throws FileNotFoundException, UnsupportedTaskType {
+        assert(file.isFile());
         ArrayList<TaskInterface> arr = new ArrayList<>();
         Scanner s = new Scanner(file); // create a Scanner using the File as the source
         while (s.hasNext()) {
@@ -63,6 +66,7 @@ public class DataFileFactory implements DataInterface {
 
     @Override
     public void delete(TaskInterface task) throws IOException, IndexOutOfBoundsException {
+        assert(file.isFile());
         String t = convertTaskToString(task);
         List<String> lines = Files.readAllLines(Path.of(file.getAbsolutePath()), StandardCharsets.UTF_8);
         int index = lines.indexOf(t);
@@ -72,6 +76,7 @@ public class DataFileFactory implements DataInterface {
 
     @Override
     public void add(TaskInterface task) throws IOException {
+        assert(file.isFile());
         String text = convertTaskToString(task);
         text += "\n";
         FileWriter fw = new FileWriter(file, true);
@@ -86,6 +91,7 @@ public class DataFileFactory implements DataInterface {
     }
 
     private void replaceByTask(String newString, long id) throws IOException, UnsupportedTaskType {
+        assert(file.isFile());
         List<String> lines = Files.readAllLines(Path.of(file.getAbsolutePath()), StandardCharsets.UTF_8);
         int i = 0;
         while(i < lines.size()) {
