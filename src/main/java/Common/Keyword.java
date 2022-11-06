@@ -1,7 +1,7 @@
 package Common;
 
 public enum Keyword {
-    Bye, List, Mark, Unmark, Delete, Load, Create, Files, Active, None;
+    Bye, List, Mark, Unmark, Delete, Load, Create, Files, Active, Find, None;
 
     public static Keyword getKeyword(String key) {
         if(key.toLowerCase().startsWith("bye")) {
@@ -22,6 +22,8 @@ public enum Keyword {
             return Files;
         } else if(key.toLowerCase().startsWith("active")) {
             return Active;
+        } else if(key.toLowerCase().startsWith("find")) {
+            return Find;
         } else {
             return None;
         }
@@ -42,6 +44,7 @@ public enum Keyword {
                 return list.length == 2 && list[1].matches("^-?\\d+$");
             case Load:
             case Create:
+            case Find:
                 return list.length == 2;
             case None:
                 return true;
@@ -62,6 +65,7 @@ public enum Keyword {
                 return key.toString() + " required 1 parameter and it must be a number. e.g: " + key.toString() + " 1";
             case Load:
             case Create:
+            case Find:
                 return key.toString() + " required 1 parameter and it must be a string. e.g: " + key.toString() + " house";
             case None:
                 return "";

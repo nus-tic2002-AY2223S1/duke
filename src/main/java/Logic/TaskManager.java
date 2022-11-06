@@ -87,11 +87,6 @@ public class TaskManager implements BotCallback {
     }
 
     public void showList() {
-        ArrayList<String> list = new ArrayList<>();
-        int i = 1;
-        for(TaskInterface task: tasks) {
-            list.add(task.getString());
-        }
         router.showList(tasks);
     }
 
@@ -140,7 +135,19 @@ public class TaskManager implements BotCallback {
     }
 
     public void showInvalidFormat(String valid, String invalid) {
+
         router.showInvalidFormat(valid, invalid);
+    }
+
+    public void find(String keyword) {
+        ArrayList<TaskInterface> list = new ArrayList<>();
+        int i = 1;
+        for(TaskInterface task: tasks) {
+            if(task.getString().contains(keyword)) {
+                list.add(task);
+            }
+        }
+        router.showFilteredList(list);
     }
 
     @Override

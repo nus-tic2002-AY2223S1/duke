@@ -46,6 +46,9 @@ public class Duke {
                 bot.createNewFile(part);
             } else if (key == Keyword.Active) {
                 bot.getActiveFile();
+            } else if (key == Keyword.Find) {
+                String part = line.split(" ")[1];
+                bot.find(part);
             } else {
                 bot.add(line);
             }

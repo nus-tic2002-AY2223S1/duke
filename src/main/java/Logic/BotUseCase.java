@@ -138,4 +138,12 @@ public abstract class BotUseCase {
      */
     public void showInvalidFormat(String valid, String invalid){};
 
+    /**
+     * shows the filtered tasks by keyword
+     *
+     * @return void
+     * @param tasks filtered tasks
+     */
+    public void showFilteredList(ArrayList<TaskInterface> tasks) {}
+
 }

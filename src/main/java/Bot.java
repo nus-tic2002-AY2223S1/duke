@@ -48,4 +48,8 @@ public class Bot {
     public void invalidFormat(String valid, String invalid){
         taskManager.showInvalidFormat(valid, invalid);
     }
+
+    public void find(String keyword) {
+        taskManager.find(keyword);
+    }
 }

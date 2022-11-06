@@ -147,6 +147,18 @@ public class DukeUI implements UIInterface {
         seperator();
     }
 
+    @Override
+    public void showFilteredList(ArrayList<TaskInterface> lists) {
+        seperator();
+        printlntab("Here are the matching tasks in your list:");
+        int i = 1;
+        for(TaskInterface each : lists) {
+            printlntab(i + ". " + each.getString());
+            i++;
+        }
+        seperator();
+    }
+
     private void seperator() {
         System.out.println("\t---------------------------------------------");
     }

@@ -145,4 +145,12 @@ public interface UIInterface {
      * @param invalid is the user entered invalid command
      */
     public void invalidCommandFormat(String valid, String invalid);
+    /**
+     * shows the filtered tasks by keyword
+     * If there is no task, the lists will be empty
+     *
+     * @return void
+     * @param lists the list of tasks
+     */
+    public void showFilteredList(ArrayList<TaskInterface> lists);
 }

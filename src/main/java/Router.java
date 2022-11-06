@@ -136,5 +136,12 @@ public class Router extends BotUseCase {
         ui.invalidCommandFormat(valid, invalid);
     }
 
+    @Override
     public void customError(String text) { ui.customError(text); }
+
+    @Override
+    public void showFilteredList(ArrayList<TaskInterface> tasks) {
+        ui.showFilteredList( tasks);
+    }
+
 }
