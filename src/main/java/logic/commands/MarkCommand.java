@@ -34,6 +34,6 @@ public class MarkCommand extends Command {
 
         Task task = chat.getTaskList().get(Integer.parseInt(description) - INIT_INT_VAL);
         task.markDone();
-        ui.printMarkedTask(MARKED_TASK, description, task);
+        ui.printUpdatedMarkedTask(MARKED_TASK, description, task);
     }
 }

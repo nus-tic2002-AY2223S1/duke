@@ -1,6 +1,6 @@
 package model;
 
-import common.enums.TypeEnum;
+import common.enums.CommandTypeEnum;
 
 import static common.constants.CommonConstant.CLOSE_BRACKET;
 import static common.constants.CommonConstant.CLOSE_SQ_BRACKET;
@@ -8,7 +8,7 @@ import static common.constants.CommonConstant.OPEN_BRACKET;
 import static common.constants.CommonConstant.OPEN_SQ_BRACKET;
 import static common.constants.CommonConstant.EVENT_AT;
 import static common.constants.CommonConstant.SPACE;
-import static common.enums.TypeEnum.E;
+import static common.enums.CommandTypeEnum.E;
 import static common.utils.DateUtil.dateConverter;
 
 public class Event extends Task {
@@ -20,7 +20,12 @@ public class Event extends Task {
     }
 
     @Override
-    public TypeEnum getType() {
+    public void setTime(String at) {
+         this.at = dateConverter(at);
+    }
+
+    @Override
+    public CommandTypeEnum getType() {
         return E;
     }
 

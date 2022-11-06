@@ -5,9 +5,11 @@ public enum CommandEnum {
     deadline,
     delete,
     event,
+    find,
     help,
     list,
     mark,
     todo,
     unmark,
+    update;
 }

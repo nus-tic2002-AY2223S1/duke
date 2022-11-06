@@ -12,10 +12,12 @@ import logic.commands.AddEventCommand;
 import logic.commands.AddTodoCommand;
 import logic.commands.ByeCommand;
 import logic.commands.DeleteCommand;
+import logic.commands.FindCommand;
 import logic.commands.HelpCommand;
 import logic.commands.ListCommand;
 import logic.commands.MarkCommand;
 import logic.commands.UnmarkCommand;
+import logic.commands.UpdateCommand;
 import model.Chat;
 import ui.ConsoleUi;
 
@@ -39,41 +41,46 @@ public class Parser {
         Command addTodoCom = new AddTodoCommand(ui, chat);
         Command byeCom = new ByeCommand(ui, chat);
         Command deleteCom = new DeleteCommand(ui, chat);
+        Command findCom = new FindCommand(ui, chat);
         Command helpCom = new HelpCommand(ui, chat);
         Command listCom = new ListCommand(ui, chat);
         Command markCom = new MarkCommand(ui, chat);
         Command unmarkCom = new UnmarkCommand(ui, chat);
+        Command updateCom = new UpdateCommand(ui, chat);
 
         switch (chat.getCommand()) {
-            case bye:
-                byeCom.execute();
-                break;
-            case list:
-                listCom.execute();
-                break;
-            case mark:
-                markCom.execute();
-                break;
-            case unmark:
-                unmarkCom.execute();
-                break;
-            case delete:
-                deleteCom.execute();
-                break;
-            case help:
-                helpCom.execute();
-                break;
-            case deadline:
-                addDeadlineCom.execute();
-                break;
-            case event:
-                addEventCom.execute();
-                break;
-            case todo:
-                addTodoCom.execute();
-                break;
-            default:
-                break;
+        case bye:
+            byeCom.execute();
+            break;
+        case list:
+            listCom.execute();
+            break;
+        case mark:
+            markCom.execute();
+            break;
+        case unmark:
+            unmarkCom.execute();
+            break;
+        case delete:
+            deleteCom.execute();
+            break;
+        case help:
+            helpCom.execute();
+            break;
+        case deadline:
+            addDeadlineCom.execute();
+            break;
+        case event:
+            addEventCom.execute();
+            break;
+        case todo:
+            addTodoCom.execute();
+            break;
+        case find:
+            findCom.execute();
+            break;
+        default:
+            updateCom.execute();
         }
     }
 }

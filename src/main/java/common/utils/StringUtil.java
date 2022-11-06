@@ -1,14 +1,19 @@
 package common.utils;
 
 import common.enums.CommandEnum;
+import common.enums.UpdateTypeEnum;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static common.constants.CommonConstant.AT;
 import static common.constants.CommonConstant.BY;
 import static common.constants.CommonConstant.INIT_INT_VAL;
 import static common.constants.CommonConstant.SPACE;
 import static common.constants.CommonConstant.ZERO_VAL;
-import static common.constants.ErrorMessage.EXCEPTION_ERROR_MSG;
 import static common.constants.CommonConstant.DELIMITER;
+import static common.constants.ErrorMessage.EXCEPTION_ERROR_MSG;
 
 public class StringUtil {
     /**
@@ -76,5 +81,35 @@ public class StringUtil {
         }
 
         return substring;
+    }
+
+    /**
+     * Return update id in a string
+     *
+     * @param   sentence    sentence from user input
+     */
+    public static String getUpdateIdFromString(String sentence) {
+        List<String> words = new ArrayList<>(Arrays.asList(sentence.split("\\s+")));
+        return words.get(0); // update id is position 1 - (1 from command)
+    }
+
+    /**
+     * Return updateEnumType in a string
+     *
+     * @param   sentence    sentence from user input
+     */
+    public static UpdateTypeEnum getUpdateEnumTypeFromString(String sentence) {
+        List<String> words = new ArrayList<>(Arrays.asList(sentence.split("\\s+")));
+        return UpdateTypeEnum.valueOf(words.get(1)); // updateTypeEnum is position 2 - (1 from command)
+    }
+
+    /**
+     * Return update description in a string
+     *
+     * @param   sentence    sentence from user input
+     */
+    public static String getUpdateDescriptionFromString(String sentence) {
+        List<String> words = new ArrayList<>(Arrays.asList(sentence.split("\\s+")));
+        return words.get(2); // updateTypeEnum is position 3 - (1 from command)
     }
 }

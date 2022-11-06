@@ -2,9 +2,11 @@ package logic.file;
 
 import model.Task;
 
-import static common.constants.CommonConstant.*;
-import static common.enums.TypeEnum.D;
-import static common.enums.TypeEnum.E;
+import static common.constants.CommonConstant.PIPE;
+import static common.constants.CommonConstant.INIT_INT_VAL;
+import static common.constants.CommonConstant.ZERO_VAL;
+import static common.enums.CommandTypeEnum.D;
+import static common.enums.CommandTypeEnum.E;
 
 public class FileEncoder {
     private FileEncoder() {}
