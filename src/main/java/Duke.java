@@ -1,190 +1,52 @@
-import Entity.Deadline;
-import Entity.Event;
-import Entity.Task;
-import Entity.Todo;
+import Command.Command;
+import exception.CommandInvalidException;
+import exception.LackDetailsException;
+import Storage.Storage;
+import Storage.TaskList;
+import Ui.Ui;
+import exception.UnknownException;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.FileNotFoundException;
 
 public class Duke {
-    public static String line = "\t____________________________________________________________";
-    private static ArrayList<Task> tasks = new ArrayList<Task>();
-    private static int taskCount = 0;
-    static String markUnmarkPattern = "(mark|unmark)\\s*(\\d+)";
-    static String todoPattern = "(todo) ([\\S\\s]*)";
-    static String deadlinePattern = "(deadline) ([\\S\\s]*)(\\/by) ([\\S\\s]*)";
-    static String eventPattern = "(event) ([\\S\\s]*)(\\/at )([\\S\\s]*)";
-    static String deletePattern = "(delete)\\s*(\\d+)";
+    private Storage storage;
+//    private TaskList tasks = TaskList.getInstance();
+    private TaskList tasks;
+    private Ui ui;
 
-    public static void addTask(Task t){
-        tasks.add(t);
-        taskCount++;
-        System.out.println("\tGot it. I have added this task:");
-        t.print();
-        System.out.println("\tNow you have " + taskCount + " tasks in the list.");
-    }
 
-    public static void deleteTask(int taskNumber){
-        if(1<=taskNumber && taskNumber<=taskCount){
-            Task temp = tasks.get(taskNumber-1);
-            tasks.remove(taskNumber-1);
-            taskCount--;
-            System.out.println("\tNoted. I have removed this task:");
-            temp.print();
-            System.out.println("\tNow you have " + taskCount + " tasks in the list.");
-        } else {
-            System.out.println("\tPlease input a valid task number");
+    public Duke(String filePath){
+        ui = new Ui();
+        storage = new Storage(filePath);
+        try {
+            tasks = new TaskList (storage.load());
+        } catch (FileNotFoundException e) {
+            ui.showLoadingError();
+            tasks = new TaskList();
         }
     }
 
-    public static void printTasks(){
-        System.out.println("\t Here are the tasks in your list:");
-        for (int i = 0; i < taskCount; i++){
-            System.out.print("\t "+(i+1)+".");
-            tasks.get(i).print();
+    public void run(){
+        ui.showWelcome();
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                String fullCommand = ui.readCommand();
+                ui.showLine(); // show the divider line ("_______")
+                Command c =  new Parser().parse(fullCommand);
+                c.execute(tasks, ui, storage);
+                isExit = c.isExit();
+            } catch (LackDetailsException | UnknownException | CommandInvalidException e) {
+                ui.showError(e.getMessage());
+            } finally {
+                ui.showLine();
+            }
         }
-    }
-
-    public static String inputCleaner(String input){
-        return input.trim();
-    }
-
-    public static String getFirstInputWord(String input){
-        String[] arrayOfInput = input.split(" ",2);
-//        System.out.println(arrayOfInput[0]);
-        return arrayOfInput[0];
-    }
-
-    public static void printException(String input){
-        try{
-            throw new LackDetailsException("☹ OOPS!!! The description of a " + input + " cannot be empty.");
-        } catch (LackDetailsException e){
-            System.out.println("\t"+e.getMessage());
-        }
-    }
-
-    public static void testing(){
-//        tasks[0] = new Entity.Deadline("return book", "Monday");
-//        tasks[0].print();
-//        addTask(new Deadline("return book", "Monday"));
-//        addTask(new Event("event project", "Monday","2-4pm"));
-//        getFirstInputWord("retyrb viij");
-
     }
 
     public static void main(String[] args) {
-
-//        testing();
-        String greeting = line + "\n\tHello! I'm Duke\n" +
-                "\tWhat can I do for you?\n"
-                +line;
-        System.out.println(greeting);
-
-        Scanner in = new Scanner(System.in);
-        String input = inputCleaner(in.nextLine());
-
-        while(input!=null){
-
-            System.out.println(line);
-            String firstWord = getFirstInputWord(input);
-
-            if(input.equalsIgnoreCase("bye")){
-                System.out.println("\tBye. Hope to see you again soon!");
-                break;
-            }
-            
-            switch(firstWord) {
-                case "list":
-                    printTasks();
-                    break;
-
-                case "mark":
-                    Pattern r = Pattern.compile(markUnmarkPattern);
-                    Matcher m = r.matcher(input);
-                    if (m.find()) {
-                        int taskNumber = Integer.parseInt(m.group(2));
-                        if (m.group(1).equalsIgnoreCase("mark")) {
-                            tasks.get(taskNumber -1).updateStatus(true);
-                        }
-                    } else {
-                        System.out.println("NO MATCH");
-                    }
-                    break;
-
-                case "unmark":
-                    r = Pattern.compile(markUnmarkPattern);
-                    m = r.matcher(input);
-                    if (m.find()) {
-                        int taskNumber = Integer.parseInt(m.group(2));
-                        if (m.group(1).equalsIgnoreCase("unmark")) {
-                            tasks.get(taskNumber -1).updateStatus(false);
-                        }
-                    } else {
-                        System.out.println("NO MATCH");
-                    }
-                    break;
-
-                case"todo":
-                    r = Pattern.compile(todoPattern);
-                    m = r.matcher(input);
-                    if(m.find()){
-                        addTask(new Todo(m.group(2)));
-                    }else{
-                        printException(input);
-                    }
-                   break;
-
-                case "deadline":
-                    r = Pattern.compile(deadlinePattern);
-                    m = r.matcher(input);
-                    if(m.find()){
-                        String descrp = m.group(2);
-                        String by = m.group(4);
-                        addTask(new Deadline(descrp,by));
-                    }else{
-                        printException(input);
-                    }
-                    break;
-
-                case "event":
-                    r = Pattern.compile(eventPattern);
-                    m = r.matcher(input);
-                    if(m.find()){
-                        String descrp = m.group(2);
-                        String at = m.group(4);
-                        addTask(new Event(descrp,at));
-                    }else {
-                        printException(input);
-                    }
-                    break;
-
-                case "delete":
-                    r = Pattern.compile(deletePattern);
-                    m = r.matcher(input);
-                    if(m.find()){
-                        deleteTask(Integer.valueOf(m.group(2)));
-                    }else {
-                        printException(input);
-                    }
-                    break;
-
-                default:
-                    try{
-                        throw new LackDetailsException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-                    } catch (LackDetailsException e){
-                        System.out.println("\t"+e.getMessage());
-                    }
-
-            }
-            System.out.println(line);
-            input = inputCleaner(in.nextLine());
-
-        }
-
+        new Duke("data/tasks.txt").run();
     }
-
 }
 
 

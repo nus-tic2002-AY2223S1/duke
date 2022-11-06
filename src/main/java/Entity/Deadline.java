@@ -8,11 +8,18 @@ public class Deadline extends Task {
     public Deadline(String description, String by) {
         super(description);
         this.by = by;
+        this.type = "D";
     }
 
     @Override
     public void print(){
         System.out.println(getDescription());
+    }
+
+    @Override
+    public String toDisk() {
+//        D | 0 | return book | June 6th
+        return type + " | " + ((isDone) ? "1" : "0") + " | " + description + " | "+by;
     }
 
     @Override

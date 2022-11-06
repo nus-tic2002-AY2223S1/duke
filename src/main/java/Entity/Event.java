@@ -7,6 +7,7 @@ public class Event extends Task{
     public Event(String description, String at) {
         super(description);
         this.at = at;
+        this.type = "E";
 //        this.time = time;
     }
 
@@ -17,8 +18,14 @@ public class Event extends Task{
     }
 
     @Override
+    public String toDisk() {
+//        E | 0 | project meeting | Aug 6th 2-4pm
+        return type + " | " + ((isDone) ? "1" : "0") + " | " + description + " | "+at;
+    }
+
+    @Override
     public String getDescription() {
-        String description = String.format("\t [E][%s] %s (at: %s) ",this.getStatusIcon(),this.description,at);
+        String description = String.format("\t [%s][%s] %s (at: %s) ",this.type,this.getStatusIcon(),this.description,at);
         return description;
     }
 }

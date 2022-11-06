@@ -4,6 +4,7 @@ import jdk.jshell.spi.ExecutionControl;
 
 public class Task {
     protected String description;
+    protected String type;
     protected boolean isDone;
     static int taskCount =0;
 
@@ -11,6 +12,12 @@ public class Task {
         this.description = description;
         this.isDone = false;
         taskCount ++;
+    }
+
+    public Task(String description, String type, boolean isDone) {
+        this.description = description;
+        this.type = type;
+        this.isDone = isDone;
     }
 
     public String getStatusIcon() {
@@ -23,16 +30,14 @@ public class Task {
 
     public void updateStatus(boolean isDone){
         this.isDone = isDone;
-        if(isDone){
-//            System.out.println(line);
-            System.out.println("\tNice! I've marked this task as done:");
-        }else {
-            System.out.println("\tOK, I've marked this task as not done yet:");
-        }
-        this.print();
+    }
+
+    public String toDisk() {
+        return type + " | " + ((isDone) ? "1" : "0") + " | " + description;
     }
 
     public void print(){
+//        System.out.println("print task");
         String icon = String.format("\t[%s] ",this.getStatusIcon());
         System.out.println(icon + description);
     }
