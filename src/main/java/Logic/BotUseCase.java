@@ -1,6 +1,7 @@
 package Logic;
 
 import CustomException.UnsupportedTaskType;
+import Data.FileInfo;
 import Tasks.TaskInterface;
 
 import java.io.FileNotFoundException;
@@ -93,5 +94,30 @@ public abstract class BotUseCase {
      * @return void
      */
     public void loadData(){};
+    /**
+     * get called to load the active file
+     *
+     * @return void
+     */
+    public void loadActiveFile(){};
+
+    /**
+     * get called to add new storage file
+     *
+     * @return void
+     */
+    public void addNewFile(String alias){};
+
+    /**
+     * get called to show all the storage file
+     *
+     * @return void
+     */
+    public void showAllFiles(){};
+
+    public void setActiveFile(String alias){};
+
+    public void getActiveFile() {};
+
 
 }

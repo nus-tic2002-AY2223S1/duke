@@ -32,4 +32,16 @@ public class Bot {
     public void goodbye() {
         taskManager.goodbye();
     }
+
+    public void showFiles() { taskManager.showFiles(); }
+
+    public void setActiveFile(String alias) {
+        taskManager.setActiveFile(alias);
+    };
+    public void createNewFile(String alias) {
+        taskManager.createNewFile(alias);
+    };
+    public void getActiveFile() {
+        taskManager.getActiveFile();
+    }
 }

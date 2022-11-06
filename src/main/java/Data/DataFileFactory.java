@@ -44,7 +44,6 @@ public class DataFileFactory implements DataInterface {
         } catch (IOException e) {
 
         }
-
     }
     @Override
     public ArrayList<TaskInterface> loadData() throws FileNotFoundException, UnsupportedTaskType {
@@ -78,6 +77,12 @@ public class DataFileFactory implements DataInterface {
         FileWriter fw = new FileWriter(file, true);
         fw.write(text);
         fw.close();
+    }
+
+    @Override
+    public void changeFile(String path) {
+        this.path = folder + "/" + path;
+        setupFile();
     }
 
     private void replaceByTask(String newString, long id) throws IOException, UnsupportedTaskType {

@@ -19,6 +19,7 @@ public class TaskManager implements BotCallback {
     public TaskManager(BotUseCase router) {
         this.router = router;
         this.router.delegate = this;
+        router.loadActiveFile();
         router.loadData();
     }
 
@@ -120,6 +121,22 @@ public class TaskManager implements BotCallback {
 
     public void goodbye() {
         router.goodbye();
+    }
+
+    public void showFiles() {
+        router.showAllFiles();
+    }
+
+    public void setActiveFile(String alias) {
+        router.setActiveFile(alias);
+    }
+
+    public void createNewFile(String alias) {
+        router.addNewFile(alias);
+    }
+
+    public void getActiveFile() {
+        router.getActiveFile();
     }
 
     @Override

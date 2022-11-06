@@ -48,4 +48,12 @@ public interface DataInterface {
      * @throws IOException couldnt read the file
      */
     public void add(TaskInterface task) throws IOException;
+
+    /**
+     * add a way to change to other existing files
+     *
+     * @return void
+     * @throws IOException couldnt read the file
+     */
+    public void changeFile(String path);
 }

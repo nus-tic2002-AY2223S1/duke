@@ -1,5 +1,6 @@
 package UI;
 
+import Data.FileInfo;
 import Tasks.TaskInterface;
 
 import java.util.ArrayList;
@@ -97,6 +98,46 @@ public class DukeUI implements UIInterface {
     public void customError(String text) {
         printlntab(text);
     }
+    @Override
+    public void unexpectedError() {
+        printlntab("Unfortunately unexpected error has occur, please try again or restart the system!");
+    }
+
+    @Override
+    public void addFileSuccess(String text) {
+        seperator();
+        printlntab("Successfully added new save file with alias " + text);
+        printlntab(text +" is the current active file");
+        seperator();
+    }
+
+    @Override
+    public void addFileFailed(String text) {
+        printlntab("Please choose other alias, " + text + " is already exist");
+    }
+
+    @Override
+    public void showFiles(ArrayList<FileInfo> files) {
+        seperator();
+        printlntab("Here are the saved files:");
+        int i = 1;
+        for(FileInfo each: files) {
+            printlntab(i + ". " + each.getAlias() + (each.isActive() ? " [Active]" : ""));
+            i++;
+        }
+        seperator();
+    }
+
+    @Override
+    public void setActiveSuccess(String alias){
+        printlntab("Successfully activate " + alias + " file");
+    }
+
+    @Override
+    public void getActiveFile(String alias) {
+        printlntab("Your current active file is "+ alias);
+    }
+
     private void seperator() {
         System.out.println("\t---------------------------------------------");
     }

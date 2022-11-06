@@ -1,4 +1,6 @@
 import Data.DataInterface;
+import Data.FileInfo;
+import Data.FileInterface;
 import Logic.BotUseCase;
 import Tasks.TaskInterface;
 import UI.UIInterface;
@@ -11,10 +13,12 @@ import java.util.ArrayList;
 public class Router extends BotUseCase {
     UIInterface ui;
     DataInterface data;
+    FileInterface fileData;
 
-    public Router(UIInterface ui, DataInterface data) {
+    public Router(UIInterface ui, DataInterface data, FileInterface fileData) {
         this.ui = ui;
         this.data = data;
+        this.fileData = fileData;
     }
 
     @Override
@@ -73,6 +77,57 @@ public class Router extends BotUseCase {
     public void unsupportedFormat(String text) { ui.unsupportedFormat(text); }
     @Override
     public void goodbye() { ui.goodbye(); }
+    @Override
+    public void loadActiveFile() {
+        try {
+            FileInfo info = fileData.getActiveFile();
+            data.changeFile(info.getPath());
+            this.loadData();
+        } catch (Exception e) {
+
+        }
+    }
+    @Override
+    public void addNewFile(String alias) {
+        try {
+            if(fileData.addNewFile(alias)) {
+                FileInfo file = fileData.getActiveFile();
+                data.changeFile(file.getPath());
+                ui.addFileSuccess(alias);
+                this.loadData();
+            } else {
+                ui.addFileFailed(alias);
+            }
+        } catch (Exception e) {
+            ui.unexpectedError();
+        }
+    }
+    @Override
+    public void showAllFiles() {
+        ArrayList<FileInfo> files = fileData.getAllFile();
+        ui.showFiles(files);
+    }
+
+    @Override
+    public void setActiveFile(String alias) {
+        try {
+            fileData.setActive(alias);
+            this.loadActiveFile();
+            ui.setActiveSuccess(alias);
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void getActiveFile() {
+        try {
+            FileInfo file = fileData.getActiveFile();
+            ui.getActiveFile(file.getAlias());
+        } catch (IOException e) {
+
+        }
+    }
     @Override
     public void invalidFormat(String text) { ui.invalidFormat(text); }
 

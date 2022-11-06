@@ -1,6 +1,7 @@
 package UI;
 
 import CustomException.UnsupportedTaskType;
+import Data.FileInfo;
 import Tasks.TaskInterface;
 
 import java.io.FileNotFoundException;
@@ -94,4 +95,40 @@ public interface UIInterface {
      * @param text the error message from logic
      */
     public void customError(String text);
+
+    /**
+     * get called when unexpected exception happen
+     *
+     * @return void
+     */
+    public void unexpectedError();
+
+    /**
+     * get called when successfully create new file to save
+     *
+     * @return void
+     */
+    public void addFileSuccess(String text);
+    /**
+     * get called when fail to create new file to save due to the alias is exist
+     *
+     * @return void
+     */
+    public void addFileFailed(String text);
+
+    /**
+     * get called when need to show all the storage files
+     *
+     * @return void
+     */
+    public void showFiles(ArrayList<FileInfo> files);
+
+    /**
+     * get called when successfully set active an alias
+     *
+     * @return void
+     */
+    public void setActiveSuccess(String alias);
+
+    public void getActiveFile(String alias);
 }
