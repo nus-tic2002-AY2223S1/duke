@@ -60,10 +60,6 @@ public class DateProcessor {
         if (Integer.parseInt(parsed[1]) > 12 || Integer.parseInt(parsed[1]) < 1) {
             throw new DukeException(ui.printInvalidMonthFormat());
         }
-
-        if (Integer.parseInt(parsed[1]) > 12 || Integer.parseInt(parsed[1]) < 1) {
-            throw new DukeException(ui.printInvalidMonthFormat());
-        }
     }
 
     private static String concatDateTime(String date, String time) {
@@ -114,7 +110,11 @@ public class DateProcessor {
         // 1/1/1999 0900 - 2/2/1999 0900
         // 1/1/1999 - 2/2/1999
         // 1/1/1999
-        String[] parsedRange = s.split("-", 2);
+        String[] parsedRange = s.split("-");
+
+        if (parsedRange.length > 2) {
+            throw new DukeException(ui.printTooManyTimeRangesFormat());
+        }
 
         if (parsedRange.length == 1) {
             if (!s.contains("-")) {
@@ -137,10 +137,6 @@ public class DateProcessor {
                 return null;
             }
             return new long[]{timeFrom, timeFrom + 86399};
-        }
-
-        if (parsedRange.length != 2) {
-            throw new DukeException(ui.printUnspecifiedTimeRangeFormat());
         }
 
         String[] parsedDateFrom = parsedRange[0].trim().split(" ", 2);

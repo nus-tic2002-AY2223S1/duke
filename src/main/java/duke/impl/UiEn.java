@@ -71,7 +71,9 @@ public class UiEn extends Ui {
         ERROR_INVALID_DATE_SEPARATOR_FORMAT("Date range should be separated by '-'"),
         ERROR_PARSE_EXCEPTION("I could not recognise this date. %s"),
         ERROR_DATE_END_BEFORE_START_ERROR("End is earlier than start. Time travel is not allowed."),
-        ERROR_DATE_START_EQUALS_END_ERROR("Start and end are the same.");
+        ERROR_DATE_START_EQUALS_END_ERROR("Start and end are the same."),
+
+        ERROR_TOO_MANY_TIME_RANGES_ERROR("You can only specify one range.");
 
         public final String text;
 
@@ -382,6 +384,11 @@ public class UiEn extends Ui {
     @Override
     public String printUnspecifiedTimeRangeFormat() {
         return sendGenericWarning(UiMessage.ERROR_UNSPECIFIED_TIME_RANGE_FORMAT.getText());
+    }
+
+    @Override
+    public String printTooManyTimeRangesFormat() {
+        return sendGenericWarning(UiMessage.ERROR_TOO_MANY_TIME_RANGES_ERROR.getText());
     }
 
     @Override

@@ -71,7 +71,8 @@ public class UiCn extends Ui {
         ERROR_INVALID_DATE_SEPARATOR_FORMAT("日期区间必须使用 '-' 区隔"),
         ERROR_PARSE_EXCEPTION("我不理解这个日期。 %s"),
         ERROR_DATE_END_BEFORE_START_ERROR("结束早于开始。穿越时空不被允许。"),
-        ERROR_DATE_START_EQUALS_END_ERROR("开始和结束时间相同。");
+        ERROR_DATE_START_EQUALS_END_ERROR("开始和结束时间相同。"),
+        ERROR_TOO_MANY_TIME_RANGES_ERROR("只接受指定一个区间。");
 
         public final String text;
 
@@ -385,6 +386,11 @@ public class UiCn extends Ui {
     @Override
     public String printUnspecifiedTimeRangeFormat() {
         return sendGenericWarning(UiMessage.ERROR_UNSPECIFIED_TIME_RANGE_FORMAT.getText());
+    }
+
+    @Override
+    public String printTooManyTimeRangesFormat() {
+        return sendGenericWarning(UiMessage.ERROR_TOO_MANY_TIME_RANGES_ERROR.getText());
     }
 
     @Override

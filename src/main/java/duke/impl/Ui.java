@@ -177,6 +177,8 @@ public abstract class Ui {
 
     public abstract String printUnspecifiedTimeRangeFormat();
 
+    public abstract String printTooManyTimeRangesFormat();
+
     public abstract String printInvalidTDateSeparatorFormat();
 
     public abstract String printParseExceptionMessage(ParseException e);

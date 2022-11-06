@@ -336,6 +336,17 @@ public class DateProcessorEnTest {
     }
 
     @Test
+    public void processDateTimRangeNoSeparatorMultipleTest() {
+        String s = "2/4/1999-3/4/1999-3/4/1999";
+        DukeException expected = new DukeException("! You can only specify one range.");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
     public void processDateTimRangeDayToDayValidTest() {
         String s = "1/4/1999 - 2/4/1999";
         long expected1 = 922896000;
