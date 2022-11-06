@@ -15,14 +15,14 @@ public class UpdateParser {
      */
     public static void parseUpdate(UpdateTypeEnum updateType, String description, Task task) {
         switch (updateType) {
-            case desc:
-                task.setDescription(description);
-                break;
-            case date:
-                task.setTime(description);
-                break;
-            default:
-                break;
+        case desc:
+            task.setDescription(description);
+            break;
+        case date:
+            task.setTime(description);
+            break;
+        default:
+            break;
         }
     }
 }

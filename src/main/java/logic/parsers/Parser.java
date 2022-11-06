@@ -49,38 +49,38 @@ public class Parser {
         Command updateCom = new UpdateCommand(ui, chat);
 
         switch (chat.getCommand()) {
-            case bye:
-                byeCom.execute();
-                break;
-            case list:
-                listCom.execute();
-                break;
-            case mark:
-                markCom.execute();
-                break;
-            case unmark:
-                unmarkCom.execute();
-                break;
-            case delete:
-                deleteCom.execute();
-                break;
-            case help:
-                helpCom.execute();
-                break;
-            case deadline:
-                addDeadlineCom.execute();
-                break;
-            case event:
-                addEventCom.execute();
-                break;
-            case todo:
-                addTodoCom.execute();
-                break;
-            case find:
-                findCom.execute();
-                break;
-            default:
-                updateCom.execute();
+        case bye:
+            byeCom.execute();
+            break;
+        case list:
+            listCom.execute();
+            break;
+        case mark:
+            markCom.execute();
+            break;
+        case unmark:
+            unmarkCom.execute();
+            break;
+        case delete:
+            deleteCom.execute();
+            break;
+        case help:
+            helpCom.execute();
+            break;
+        case deadline:
+            addDeadlineCom.execute();
+            break;
+        case event:
+            addEventCom.execute();
+            break;
+        case todo:
+            addTodoCom.execute();
+            break;
+        case find:
+            findCom.execute();
+            break;
+        default:
+            updateCom.execute();
         }
     }
 }
