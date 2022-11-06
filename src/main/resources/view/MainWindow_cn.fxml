@@ -68,8 +68,8 @@
                 <Tooltip text="任务列表"/>
             </tooltip>
         </Label>
-        <Label fx:id="refreshButton" alignment="CENTER" onMouseClicked="#refreshAction"
-               style="-fx-graphic: url('/view/icons8-reset-35.png');">
+        <Label fx:id="helpButton" alignment="CENTER" onMouseClicked="#helpAction"
+               style="-fx-graphic: url('/view/icons8-ask-35.png');">
             <padding>
                 <Insets bottom="5.0" left="2.0" right="2.0" top="5.0"/>
             </padding>
@@ -91,7 +91,8 @@
                            text="启动显示任务列表"/>
             <CheckMenuItem fx:id="darkModeButton" mnemonicParsing="false" onAction="#toggleDarkMode" text="夜间模式"/>
             <Menu mnemonicParsing="false" text="语言">
-                <CheckMenuItem fx:id="enButton" mnemonicParsing="false" text="英文" onAction="#setLocaleEnAction"/>
+                <CheckMenuItem fx:id="enButton" mnemonicParsing="false" text="English US"
+                               onAction="#setLocaleEnAction"/>
                 <CheckMenuItem fx:id="cnButton" mnemonicParsing="false" text="简体中文" onAction="#setLocaleCnAction"/>
             </Menu>
         </Menu>

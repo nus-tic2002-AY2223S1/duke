@@ -57,11 +57,17 @@ public class Main extends Application {
                 scene.getStylesheets().add(
                         Objects.requireNonNull(
                                 getClass().getResource("/view/dark.css")).toExternalForm());
+                scene.getStylesheets().remove(
+                        Objects.requireNonNull(
+                                getClass().getResource("/view/light.css")).toExternalForm());
                 fxmlLoader.<MainWindow>getController().setDarkModeText();
             } else {
                 scene.getStylesheets().add(
                         Objects.requireNonNull(
                                 getClass().getResource("/view/light.css")).toExternalForm());
+                scene.getStylesheets().remove(
+                        Objects.requireNonNull(
+                                getClass().getResource("/view/dark.css")).toExternalForm());
             }
         }
     }

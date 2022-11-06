@@ -76,18 +76,27 @@ public class DateProcessor {
     public long processDateTime(String s) throws DukeException {
         String[] parsed = s.split(" ", 2);
 
-        if (parsed.length != 2) {
+        if (parsed.length > 2) {
             throw new DukeException(ui.printInvalidDateTimeFormat());
-        }
-
-        if (!isTimeFormatValid(parsed[1])) {
-            throw new DukeException(ui.printInvalidTimeFormat());
         }
 
         try {
             checkDate(parsed[0]);
         } catch (DukeException e) {
             throw new DukeException(e.getMessage());
+        }
+
+        //only date
+        if (parsed.length == 1) {
+            try {
+                return dateToUnix(parsed[0]);
+            } catch (DukeException e) {
+                throw new DukeException(e.getMessage());
+            }
+        }
+
+        if (!isTimeFormatValid(parsed[1])) {
+            throw new DukeException(ui.printInvalidTimeFormat());
         }
 
         try {
