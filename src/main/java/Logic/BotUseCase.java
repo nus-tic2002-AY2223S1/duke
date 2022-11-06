@@ -115,8 +115,18 @@ public abstract class BotUseCase {
      */
     public void showAllFiles(){};
 
+    /**
+     * sets the new active file by alias
+     *
+     * @return void
+     */
     public void setActiveFile(String alias){};
 
+    /**
+     * gets the current active files
+     *
+     * @return void
+     */
     public void getActiveFile() {};
 
 

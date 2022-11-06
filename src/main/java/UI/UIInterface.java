@@ -130,5 +130,10 @@ public interface UIInterface {
      */
     public void setActiveSuccess(String alias);
 
+    /**
+     * shows the current active file alias
+     *
+     * @return void
+     */
     public void getActiveFile(String alias);
 }
