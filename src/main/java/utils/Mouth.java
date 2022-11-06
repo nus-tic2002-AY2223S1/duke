@@ -1,5 +1,6 @@
 package utils;
 
+import domain.TaskList;
 import domain.task.Task;
 
 import java.util.List;
@@ -24,5 +25,9 @@ public class Mouth {
             System.out.println(FIVE_SPACE + (i+1) + ": " + t);
         }
         System.out.println(UNDERSCORES);
+    }
+
+    public static void speak(TaskList taskList) {
+        speak(taskList.getTaskList());
     }
 }

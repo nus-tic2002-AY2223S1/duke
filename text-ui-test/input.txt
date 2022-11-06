@@ -60,6 +60,17 @@ delete read book
 delete 200
 delete 99999999
 
+======== clear all data ========
+delete 1
+delete 1
+delete 1
+delete 1
+delete 1
+delete 1
+delete 1
+delete 1
+delete 1
+delete 1
 
 
 bye

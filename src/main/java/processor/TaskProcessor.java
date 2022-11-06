@@ -1,19 +1,17 @@
 package processor;
 
-import domain.task.Task;
-
-import java.util.List;
+import domain.TaskList;
 
 public interface TaskProcessor {
-    void markTask(String userInput, List<Task> taskList);
+    void markTask(String userInput, TaskList taskList);
 
-    void unmarkTask(String userInput, List<Task> taskList);
+    void unmarkTask(String userInput, TaskList taskList);
 
-    void addTodo(String userInput, List<Task> taskList);
+    void addTodo(String userInput, TaskList taskList);
 
-    void addDeadline(String userInput, List<Task> taskList);
+    void addDeadline(String userInput, TaskList taskList);
 
-    void addEvent(String userInput, List<Task> taskList);
+    void addEvent(String userInput, TaskList taskList);
 
-    void deleteTask(String userInput, List<Task> taskList);
+    void deleteTask(String userInput, TaskList taskList);
 }

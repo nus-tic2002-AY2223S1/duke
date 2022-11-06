@@ -1,10 +1,8 @@
 package processor;
 
-import domain.task.Task;
-
-import java.util.List;
+import domain.TaskList;
 
 public interface MemoryProcessor {
-    void save(List<Task> taskList);
-    void load(List<Task> taskList);
+    void save(TaskList taskList);
+    void load(TaskList taskList);
 }

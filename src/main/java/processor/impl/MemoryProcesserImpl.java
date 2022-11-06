@@ -1,5 +1,6 @@
 package processor.impl;
 
+import domain.TaskList;
 import domain.task.Deadline;
 import domain.task.Event;
 import domain.task.Task;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
@@ -26,8 +26,8 @@ public class MemoryProcesserImpl implements MemoryProcessor {
     private static final String PATH_FROM_DISK = "data\\cliftonIsJavaPro.txt";
 
     @Override
-    public void save(List<Task> taskList) {
-        String rows = taskList.stream()
+    public void save(TaskList taskList) {
+        String rows = taskList.getTaskList().stream()
                 .map(this::getRowFromTask)
                 .collect(Collectors.joining("\n"));
         // System.out.println("\n\n\nrows saved:"); todo change this to log line
@@ -36,7 +36,7 @@ public class MemoryProcesserImpl implements MemoryProcessor {
     }
 
     @Override
-    public void load(List<Task> taskList) {
+    public void load(TaskList taskList) {
         // pass the path to the file as a parameter
         File file = new File(PATH_FROM_DISK);
         Scanner sc;
@@ -49,7 +49,7 @@ public class MemoryProcesserImpl implements MemoryProcessor {
 
         while (sc.hasNextLine()) {
             String nextLine = sc.nextLine();
-            getTaskFromRow(nextLine).ifPresent(taskList::add);
+            getTaskFromRow(nextLine).ifPresent(taskList::addTask);
         }
     }
 

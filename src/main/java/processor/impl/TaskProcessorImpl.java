@@ -1,10 +1,9 @@
 package processor.impl;
 
+import domain.TaskList;
 import domain.task.Task;
 import exceptions.InvalidIntegerException;
 import processor.TaskProcessor;
-
-import java.util.List;
 
 import static utils.Converter.getDeadlineFromUserInput;
 import static utils.Converter.getEventFromUserInput;
@@ -24,7 +23,7 @@ import static utils.TaskUtil.getTaskIndexFromUserInput;
 
 public class TaskProcessorImpl implements TaskProcessor {
 
-    public void markTask(String userInput, List<Task> taskList) {
+    public void markTask(String userInput, TaskList taskList) {
         getTaskFromTaskList(taskList, userInput).ifPresent(task -> {
             if (task.isDone()) {
                 // if task is already done, scold the user
@@ -36,7 +35,7 @@ public class TaskProcessorImpl implements TaskProcessor {
         });
     }
 
-    public void unmarkTask(String userInput, List<Task> taskList) {
+    public void unmarkTask(String userInput, TaskList taskList) {
         getTaskFromTaskList(taskList, userInput).ifPresent(task -> {
             if (!task.isDone()) {
                 // if task is already not done, scold the user
@@ -49,24 +48,23 @@ public class TaskProcessorImpl implements TaskProcessor {
     }
 
 
-    public void addTodo(String userInput, List<Task> taskList) {
+    public void addTodo(String userInput, TaskList taskList) {
         getTodoFromUserInput(userInput).ifPresent(todo -> addTask(todo, taskList));
     }
 
-    public void addDeadline(String userInput, List<Task> taskList) {
+    public void addDeadline(String userInput, TaskList taskList) {
         getDeadlineFromUserInput(userInput).ifPresent(deadline -> addTask(deadline, taskList));
     }
 
-    public void addEvent(String userInput, List<Task> taskList) {
+    public void addEvent(String userInput, TaskList taskList) {
         getEventFromUserInput(userInput).ifPresent(event -> addTask(event, taskList));
     }
 
-    public void deleteTask(String userInput, List<Task> taskList) {
+    public void deleteTask(String userInput, TaskList taskList) {
         try {
             int index = getTaskIndexFromUserInput(userInput);
-            Task task = taskList.get(index);
-            taskList.remove(index);
-            Task.deleteTask();
+            Task task = taskList.getTask(index);
+            taskList.removeTask(index);
             speak(taskRemovedMsg(task));
         } catch (IndexOutOfBoundsException e) {
             speak(NUMBER_OUT_OF_RANGE_ERR_MSG);
@@ -77,8 +75,8 @@ public class TaskProcessorImpl implements TaskProcessor {
         }
     }
 
-    private void addTask(Task task, List<Task> taskList) {
-        taskList.add(task);
-        speak(addedTaskMsg(task));
+    private void addTask(Task task, TaskList taskList) {
+        taskList.addTask(task);
+        speak(addedTaskMsg(task, taskList.getTaskCount()));
     }
 }

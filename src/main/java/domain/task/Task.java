@@ -1,24 +1,12 @@
 package domain.task;
 
 public class Task {
-    private static int count = 0;
-    protected int index;
     protected String description;
     protected boolean isDone;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
-        count++;
-        index = count;
-    }
-
-    public static int getCount() {
-        return count;
-    }
-
-    public static void deleteTask() {
-        count--;
     }
 
     public String getDescription() {

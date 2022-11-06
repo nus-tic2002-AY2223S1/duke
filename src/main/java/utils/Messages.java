@@ -19,8 +19,8 @@ public class Messages {
         return "Nice! I've marked this task as not done yet:\n" + task;
     }
 
-    public static String addedTaskMsg(Task task) {
-        return "Got it. I've added this task:\n" + task + "\nNow you have " + (Task.getCount()) + " tasks in the list.";
+    public static String addedTaskMsg(Task task, int count) {
+        return "Got it. I've added this task:\n" + task + "\nNow you have " + count + " tasks in the list.";
     }
 
     public static String taskRemovedMsg(Task task) {

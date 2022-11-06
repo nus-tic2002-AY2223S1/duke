@@ -9,7 +9,7 @@ import java.util.List;
 public class TaskList {
     private final List<Task> taskList;
 
-     public TaskList() {
+    public TaskList() {
          taskList = new ArrayList<>();
      }
 
@@ -25,7 +25,15 @@ public class TaskList {
          taskList.add(task);
     }
 
-    public void deleteTask(int index) {
+    public void removeTask(int index) {
         taskList.remove(index);
+    }
+
+    public Task getTask(int index) throws IndexOutOfBoundsException {
+        return taskList.get(index);
+    }
+
+    public int getTaskCount() {
+        return taskList.size();
     }
 }

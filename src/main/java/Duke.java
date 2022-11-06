@@ -1,11 +1,9 @@
-import domain.task.Task;
+import domain.TaskList;
 import processor.MemoryProcessor;
 import processor.TaskProcessor;
 import processor.impl.MemoryProcesserImpl;
 import processor.impl.TaskProcessorImpl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import static utils.CommonStrings.GOODBYE;
@@ -20,7 +18,7 @@ public class Duke {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        List<Task> taskList = new ArrayList<>();
+        TaskList taskList = new TaskList();
         TaskProcessor taskProcessor = new TaskProcessorImpl();
         MemoryProcessor memoryProcessor = new MemoryProcesserImpl();
 
