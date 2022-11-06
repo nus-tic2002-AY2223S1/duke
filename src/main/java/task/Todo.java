@@ -1,7 +1,5 @@
 package task;
 
-import java.util.ArrayList;
-
 public class Todo extends Task{
 
 

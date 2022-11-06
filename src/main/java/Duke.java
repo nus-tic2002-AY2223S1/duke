@@ -1,66 +1,76 @@
 import engine.*;
 import java.io.File;
 import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 import formatting.Helper;
 import storage.Storage;
 import cat.Nala;
 
 public class Duke {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Parser p = Parser.getInstance();
 
         Helper.separator();
         System.out.println("Hello! I'm Nala the Annoying Cat!\n" + "What can I do for you?\n Protip: Type !help for a list of commands!");
+        System.out.println("For event and deadline, please type in the dd/MM/yyyy HHmm (24 hr) format :)");
         Helper.separator();
-        while (true) {
-            //tokenizer
-            Nala.nalaBehaviour();
-            String incomingText = userInput();
-            p.stringToToken(incomingText);
 
-            if (p.front().equalsIgnoreCase("!help")) {
-                System.out.println("Here's the list of commands:\n" +
-                                    "todo [description] - create a todo \n" +
-                                     "event [description] /at [date or time] - create an event\n"+
-                                    "deadline [description] /by [date or time] - create a deadline\n"+
-                                    "mark [index] - mark a task as done\n"+
-                                    "unmark [index] - mark a task as not done\n"+
-                                    "delete [index] - delete a task\n"+
-                                    "list - shows the current list of tasks\n"+
-                                    "print - saves the tasklist to a .txt file\n"+
-                                    "bye or end - say goodbye to Nala :(");
-            }
-            else if (p.front().equalsIgnoreCase("mark")) {
-                parseMark();
-            }
+            while (true) {
+                try {
+                //tokenizer
+                Nala.nalaBehaviour();
+                String incomingText = userInput();
+                p.stringToToken(incomingText);
 
-            else if (p.front().equalsIgnoreCase("unmark")){
-                parseUnmark();
-            }
+                if (p.front().equalsIgnoreCase("!help")) {
+                    System.out.println("Here's the list of commands:\n" +
+                                        "todo [description] - create a todo \n" +
+                                         "event [description] /at [date or time] - create an event\n"+
+                                        "deadline [description] /by [date or time] - create a deadline\n"+
+                                        "mark [index] - mark a task as done\n"+
+                                        "unmark [index] - mark a task as not done\n"+
+                                        "delete [index] - delete a task\n"+
+                                        "list - shows the current list of tasks\n"+
+                                        "print - saves the tasklist to a .txt file\n"+
+                                        "bye or end - say goodbye to Nala :(");
+                }
+                else if (p.front().equalsIgnoreCase("mark")) {
+                    parseMark();
+                }
 
-            else if (p.front().equalsIgnoreCase("bye") || p.front().equalsIgnoreCase("end")) {
-                parseBye();
-                break;
-            }
+                else if (p.front().equalsIgnoreCase("unmark")){
+                    parseUnmark();
+                }
 
-            else if (incomingText.equalsIgnoreCase("list")) {
-                parseShowlist();
-            }
+                else if (p.front().equalsIgnoreCase("bye") || p.front().equalsIgnoreCase("end")) {
+                    parseBye();
+                    break;
+                }
 
-            else if (p.front().equalsIgnoreCase("delete")){
-                parseDelete();
-            }
+                else if (incomingText.equalsIgnoreCase("list")) {
+                    parseShowlist();
+                }
 
-            else if (p.front().equalsIgnoreCase("print")){
-                parsePrint();
-            }
+                else if (p.front().equalsIgnoreCase("delete")){
+                    parseDelete();
+                }
 
+                else if (p.front().equalsIgnoreCase("print")){
+                    parsePrint();
+                }
 
-            else { //add new task
-                parseAddTask();
-            }
-            p.clear();
+                else { //add new task
+                    parseAddTask();
+                }
+                p.clear();
+            } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    Nala.nalaConfused();
+                }
         }
     }
 
@@ -182,7 +192,6 @@ public class Duke {
         TaskList t = TaskList.getInstance();
         String incomingTaskName;
         String incomingType;
-        String incomingDate;
 
         switch (p.front().toLowerCase()){
             case ("todo"):
@@ -207,6 +216,7 @@ public class Duke {
                 break;
 
             case ("deadline"):
+                String incomingDate;
                 if (p.getTokenContains("/at")){
                     Nala.nalaSyntaxError("Event");
                     break;
@@ -239,11 +249,13 @@ public class Duke {
                     Nala.nalaSyntaxError("DeadlineNoBy");
                     break;
                 }
-                t.addNewTask(incomingTaskName, incomingType, incomingDate);
+                t.addNewTask(incomingTaskName, incomingType, parseDate(incomingDate));
                 p.clear();
                 break;
 
             case  ("event"):
+                String incomingStartDate;
+                String incomingEndDate;
                 if (p.getTokenContains("/by")){
                     Nala.nalaSyntaxError("Deadline");
                     break;
@@ -261,13 +273,27 @@ public class Duke {
                         }
                     }
                     p.expect("/at");
-                    incomingDate = p.tokenToString();
+                    StringBuilder DateString = new StringBuilder();
+                    DateString.append(p.front());
+                    p.next();
+                    DateString.append(" ").append(p.front());
+                    p.next();
+                    incomingStartDate = DateString.toString();
+
+                    p.expect("to");
+                    StringBuilder DateString2 = new StringBuilder();
+                    DateString2.append(p.front());
+                    p.next();
+                    DateString2.append(" ").append(p.front());
+                    p.next();
+                    incomingEndDate = DateString2.toString();
+
                     incomingTaskName = TaskNameString.toString();
                     if (incomingTaskName.isBlank()){
                         Nala.nalaSyntaxError("BlankEvent");
                         break;
                     }
-                    if (incomingDate.isBlank()){
+                    if (incomingStartDate.isBlank() || incomingEndDate.isBlank()){
                         Nala.nalaSyntaxError("NoDate");
                         break;
                     }
@@ -276,14 +302,26 @@ public class Duke {
                     Nala.nalaSyntaxError("EventNoAt");
                     break;
                 }
-                t.addNewTask(incomingTaskName, incomingType, incomingDate);
+                t.addNewTask(incomingTaskName, incomingType, parseDate(incomingStartDate), parseDate(incomingEndDate));
                 p.clear();
                 break;
             default:
                 Nala.nalaConfused();
 
         }
+    }
 
+    public static Date parseDate(String dateString) throws Exception {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HHmm");
+        Date incomingDate = format.parse(dateString);
+        Date currentDate = new Date();
+        int compare = incomingDate.compareTo(currentDate);
+
+        if (compare < 0) {
+            throw new Exception("Meow :( Date is before today");
+        }
+
+        return incomingDate;
     }
 
     public static String userInput() {

@@ -56,7 +56,7 @@ public class Storage {
         }
     }
 
-    public void populateFile() throws Exception{
+    public void populateFile() {
         //check if directory exists
         String fileNameTxt = fileName.concat(".txt");
         Path directory = Paths.get(System.getProperty("user.home"), "Desktop", "dukeFile",fileNameTxt);

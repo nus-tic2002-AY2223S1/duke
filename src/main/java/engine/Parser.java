@@ -42,13 +42,17 @@ public class Parser {
         remainingTokens.clear();
     }
 
-    public void expect(String symbol) throws Exception {
-        if (match(symbol)){
-            next();
-            return;
+    public void expect(String symbol) {
+        try{
+            if (match(symbol)){
+                next();
+                return;
+            }
         }
-
-        throw new Exception("Invalid syntax. You typed: " + front() + ". Expected: " + symbol + ".");
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Invalid syntax. You typed: " + front() + ". Expected: " + symbol + ".");
+        }
     }
 
     public boolean match(String symbol){

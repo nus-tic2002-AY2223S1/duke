@@ -1,5 +1,7 @@
 package engine;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import formatting.Helper;
 import task.*;
@@ -36,12 +38,24 @@ public class TaskList {
     }
 
 
-    public void addNewTask(String incomingTaskName, String incomingType, String incomingDate){
+    public void addNewTask(String incomingTaskName, String incomingType, Date fromDate, Date toDate) throws ParseException {
+        switch (incomingType){
+            case ("event"):
+                TaskList.add(new Event(incomingTaskName, fromDate, toDate));
+                break;
+        }
+
+        Helper.separator();
+        System.out.println("Added: " + TaskList.size() + "." + incomingTaskName +  " (at: " + fromDate + " to " + toDate +  ")" + "\nYou have " + TaskList.size()+ " tasks in the list!");
+        Helper.separator();
+    }
+
+    public void addNewTask(String incomingTaskName, String incomingType, Date incomingDate) throws ParseException {
         switch (incomingType){
 
-            case ("event"):
-                TaskList.add(new Event(incomingTaskName, incomingDate));
-                break;
+/*            case ("event"):
+                TaskList.add(new Event(incomingTaskName, incomingDate, incomingDate));
+                break;*/
 
             case ("deadline"):
                 TaskList.add(new Deadline(incomingTaskName, incomingDate));
