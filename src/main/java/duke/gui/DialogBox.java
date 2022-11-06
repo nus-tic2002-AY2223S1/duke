@@ -32,7 +32,6 @@ public class DialogBox extends HBox {
     private Label meta;
     @FXML
     private ImageView displayPicture;
-    
     @FXML
     private Parent rootPane;
 
