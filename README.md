@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/aaronangxz/duke/branch/master/graph/badge.svg?token=dXmyYZTFcY)](https://codecov.io/gh/aaronangxz/duke)
+
 # duke project template
 
 This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are

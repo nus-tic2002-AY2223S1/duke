@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import duke.impl.Runner;
 import duke.impl.Ui;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
