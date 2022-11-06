@@ -121,6 +121,8 @@ public abstract class Ui {
 
     public abstract String sendProcessRestoreError();
 
+    public abstract String printNoArchiveFileFoundError();
+
     public abstract String sendProcessArchiveError();
 
     public abstract String printProcessArchiveMessage();

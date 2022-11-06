@@ -33,11 +33,12 @@ public class UiEn extends Ui {
         INFO_ARCHIVE("Successfully archived records."),
         ERROR_ARCHIVE_SELECTION("The file selection to archive cannot be empty."),
         ERROR_ARCHIVE("Failed to archive records."),
+        ERROR_ARCHIVE_NO_FILE_FOUND("You have no archived records yet."),
         INFO_RESTORE("Successfully restored record."),
         ERROR_RESTORE("Failed to retrieve archive records."),
         ERROR_RESTORE_SELECTION("The file selection to restore cannot be empty.\n\t \u27a4 restore <index>"),
         ERROR_RESTORE_NO_RECORD("Failed to restore records."),
-        INFO_LIST_FILES_HEADER("Select from the files below by entering restore <index>."),
+        INFO_LIST_FILES_HEADER("Select from the files below by entering restore <index>.\n"),
         INFO_LIST_FILES_FOOTER("Chat will be refreshed after restoring."),
         ERROR_GET_INDEX("This is not a valid index. Choose from the  %s tasks."),
         ERROR_GET_ARCHIVE_INDEX("This is not a valid index. Choose from the  %s records."),
@@ -171,6 +172,11 @@ public class UiEn extends Ui {
     @Override
     public String sendProcessRestoreError() {
         return sendFatal(UiMessage.ERROR_RESTORE_SELECTION.getText(), "");
+    }
+
+    @Override
+    public String printNoArchiveFileFoundError() {
+        return sendFatal(UiMessage.ERROR_ARCHIVE_NO_FILE_FOUND.getText(), "");
     }
 
     @Override
