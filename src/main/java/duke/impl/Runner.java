@@ -29,7 +29,6 @@ import duke.utils.Encoder;
 public class Runner {
     private static final String ARCHIVE_CACHE_DIR = "data/tmp/";
     private static final String ARCHIVE_CACHE_FILE_PATH = "data/tmp/archives";
-
     private static final String SAVED_DIR = "data/save/";
     private static final String SAVED_FILE_PATH = "data/save/output";
     private static final String ARCHIVE_DIR = "data/archives/";
@@ -71,22 +70,28 @@ public class Runner {
     }
 
     protected Ui ui;
-    protected boolean isExit;
+
+    protected DateProcessor d;
     protected ArrayList<Task> arrayList;
-    protected Map<Integer, String> fileMap = new HashMap<Integer, String>();
+    protected Map<Integer, String> fileMap = new HashMap<>();
 
     /**
      * Initializes TaskList and IO of Runner object.
      *
      * @param a Task list to execute
      */
-    public Runner(ArrayList<Task> a) {
+    public Runner(ArrayList<Task> a, Ui.LocaleRegion l) {
         arrayList = a;
-        ui = new Ui();
-    }
-
-    public void run(ArrayList<Task> tasks) throws DukeException {
-        arrayList = tasks;
+        switch (l) {
+        case CN:
+            ui = new UiCn();
+            break;
+        case EN:
+            ui = new UiEn();
+            break;
+        default:
+        }
+        d = new DateProcessor(l);
     }
 
     public String printList(Boolean withIndex) {
@@ -121,14 +126,6 @@ public class Runner {
         return ui.sendCommandUnknownError();
     }
 
-    private String printFatalMessage(String message) {
-        return ui.sendGenericFatal(message);
-    }
-
-    private String printWarningMessage(String message) {
-        return ui.sendGenericWarning(message);
-    }
-
     private String printProcessCommandMessage(String message) {
         return ui.sendProcessCommandError(message);
     }
@@ -146,15 +143,15 @@ public class Runner {
     }
 
     private String printProcessArchiveMessage() {
-        return ui.sendGenericConfirmation("Successfully archived records.");
+        return ui.printProcessArchiveMessage();
     }
 
     private String printProcessArchiveFailureMessage() {
-        return ui.sendGenericFatal("Failed to archive records.");
+        return ui.printProcessArchiveFailureMessage();
     }
 
     private String printProcessRestoreMessage() {
-        return ui.sendGenericConfirmation("Successfully restored record.");
+        return ui.printProcessRestoreMessage();
     }
 
     private String printProcessRestoreFailureMessage() {
@@ -166,11 +163,11 @@ public class Runner {
     }
 
     private String printListFilesHeaderMessage() {
-        return ui.sendGenericInfo("Select from the files below by entering restore <index>.\n");
+        return ui.printListFilesHeaderMessage();
     }
 
     private String printListFilesFooterMessage() {
-        return ui.sendGenericInfo("Chat will be refreshed after restoring.");
+        return ui.printListFilesFooterMessage();
     }
 
     private String getCurrentUserName() {
@@ -192,10 +189,24 @@ public class Runner {
 
         int i = Integer.parseInt(s) - 1;
         if (i < 0 || i >= this.arrayList.size()) {
-            throw new DukeException(
-                    printWarningMessage("This is not a valid index. Choose from the "
-                            + this.arrayList.size()
-                            + " tasks."));
+            throw new DukeException(ui.printGetIndexErrorMessage(this.arrayList.size()));
+        }
+        return i;
+    }
+
+    private int getArchiveIndex(String s) throws DukeException, IOException {
+        try {
+            if (!isInteger(s)) {
+                return -1;
+            }
+        } catch (DukeException e) {
+            throw new DukeException(e.getMessage());
+        }
+
+        int archiveSize = getArchiveSize();
+        int i = Integer.parseInt(s) - 1;
+        if (i < 0 || i >= archiveSize) {
+            throw new DukeException(ui.printGetArchiveIndexErrorMessage(archiveSize));
         }
         return i;
     }
@@ -205,7 +216,7 @@ public class Runner {
             Integer.parseInt(s);
             return true;
         } catch (NumberFormatException | NullPointerException e) {
-            throw new DukeException(printFatalMessage("Enter the numeric item index."));
+            throw new DukeException(ui.printIsIntegerErrorMessage());
         }
     }
 
@@ -249,7 +260,7 @@ public class Runner {
                     return printIoException(e.getMessage());
                 }
             default:
-                return ("Unknown Command");
+                return (ui.printUnknownCommandErrorMessage());
             }
         }
         return "";
@@ -266,7 +277,7 @@ public class Runner {
             } else {
                 long[] convertedTimeRange;
                 try {
-                    convertedTimeRange = DateProcessor.processDateTimeRange(eventByInput[1].trim());
+                    convertedTimeRange = d.processDateTimeRange(eventByInput[1].trim());
                 } catch (DukeException e) {
                     throw new DukeException(e.getMessage());
                 }
@@ -282,7 +293,7 @@ public class Runner {
                 arrayList.add(new Deadline(deadlineByInput[0].trim(), 0));
             } else {
                 try {
-                    convertedTime = DateProcessor.processDateTime(deadlineByInput[1].trim());
+                    convertedTime = d.processDateTime(deadlineByInput[1].trim());
                 } catch (DukeException e) {
                     throw new DukeException(e.getMessage());
                 }
@@ -298,7 +309,7 @@ public class Runner {
                 arrayList.add(new Todo(todoByInput[0].trim(), 0));
             } else {
                 try {
-                    convertedTime = DateProcessor.processDateTime(todoByInput[1].trim());
+                    convertedTime = d.processDateTime(todoByInput[1].trim());
                 } catch (DukeException e) {
                     throw new DukeException(e.getMessage());
                 }
@@ -309,7 +320,7 @@ public class Runner {
             }
             break;
         default:
-            throw new DukeException("Unknown Command");
+            throw new DukeException(ui.printUnknownCommandErrorMessage());
         }
     }
 
@@ -349,7 +360,7 @@ public class Runner {
         File fileToMove = new File(ARCHIVE_DIR + path);
         File toReplace = new File(SAVED_FILE_PATH);
         Files.copy(fileToMove.toPath(), toReplace.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        TaskList t = new TaskList(new Scanner(new File(toReplace.toString())));
+        new TaskList(new Scanner(new File(toReplace.toString())));
     }
 
     private boolean archiveFile() throws IOException {
@@ -401,7 +412,7 @@ public class Runner {
         }
 
         try {
-            return DateProcessor.processDate(s[1]);
+            return d.processDate(s[1]);
         } catch (DukeException e) {
             throw new DukeException(e.getMessage());
         }
@@ -496,7 +507,7 @@ public class Runner {
                 this.fileMap.put(i, listOfFile.getName());
                 s.append(ui
                         .sendGenericPlain(i + ". "
-                                + DateProcessor.unixToString(translateFileNameToDateTime(listOfFile.getName()))));
+                                + d.unixToString(translateFileNameToDateTime(listOfFile.getName()))));
                 i++;
             }
         }
@@ -510,24 +521,39 @@ public class Runner {
         return String.valueOf(s);
     }
 
+    private int getArchiveSize() throws IOException {
+        Files.createDirectories(Paths.get(ARCHIVE_DIR));
+        File folder = new File(ARCHIVE_DIR);
+        File[] listOfFiles = folder.listFiles();
+        assert listOfFiles != null;
+        return listOfFiles.length - 1;
+    }
+
     protected String processRestore(String[] s) {
         try {
             if (s.length == 1) {
                 return listFiles();
             }
         } catch (IOException e) {
-            return printIoException("failed to retrieve archive records.");
+            return ui.printProcessRestoreErrorMessage();
         }
 
         if (s[1].trim().equals("")) {
             return printProcessRestoreFailureMessage();
         }
 
+        int idx;
         try {
-            restoreFile(Integer.parseInt(s[1]));
+            idx = getArchiveIndex(s[1]);
+        } catch (DukeException | IOException e) {
+            return e.getMessage();
+        }
+
+        try {
+            restoreFile(idx);
             return printProcessRestoreMessage();
         } catch (IOException e) {
-            return printIoException("failed to restore records");
+            return ui.printProcessRestoreNoRecordMessage();
         }
     }
 }

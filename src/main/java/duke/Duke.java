@@ -9,6 +9,8 @@ import duke.impl.Cmd;
 import duke.impl.Parser;
 import duke.impl.Storage;
 import duke.impl.Ui;
+import duke.impl.UiCn;
+import duke.impl.UiEn;
 import duke.orm.Database;
 import duke.tasks.TaskList;
 
@@ -16,20 +18,20 @@ import duke.tasks.TaskList;
  * Main class of Duke
  **/
 public class Duke {
-    private Database db;
-    private final Ui ui;
+    private Ui ui;
     private TaskList t;
     private final Parser p;
+    private Ui.LocaleRegion locale;
 
     /**
      * Initialize IO, Parser, and restore previous records. (If any)
      *
      * @param path File path to read previous records from.
      */
-    public Duke(String path) {
-        db = new Database();
+    public Duke(String path, Ui.LocaleRegion l) {
+        setLocale(l);
+        Database db = new Database();
         db.createTable();
-        ui = new Ui();
         p = new Parser();
         Storage s = new Storage(path);
         try {
@@ -67,8 +69,21 @@ public class Duke {
     private String inter(String s) {
         logUser(s);
         Cmd c = p.readInText(s).parse();
-        String resp = c.run(t.getList());
+        String resp = c.run(t.getList(), locale);
         logDuke(resp);
         return resp;
+    }
+
+    public void setLocale(Ui.LocaleRegion l) {
+        this.locale = l;
+        switch (locale) {
+        case CN:
+            ui = new UiCn();
+            break;
+        case EN:
+            ui = new UiEn();
+            break;
+        default:
+        }
     }
 }

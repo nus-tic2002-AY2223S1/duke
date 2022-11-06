@@ -1,12 +1,13 @@
 package duke.tasks;
 
-import duke.utils.DateProcessor;
+import java.io.IOException;
 
 /**
  * Inherited Task for Event
  */
 public class Event extends Task {
     protected String type = "E";
+
 
     /**
      * Initialized an Event Task
@@ -31,17 +32,25 @@ public class Event extends Task {
 
     @Override
     public String toString() {
+        try {
+            initLocale();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        String label = String.format("\t%s", ui.getEventLabel());
+
         if (this.due == 0) {
-            return "\t[E]" + super.toString();
+            return label + super.toString();
         }
 
         if (this.to == 0) {
-            return "\t[E]" + super.toString()
-                    + " (at: " + DateProcessor.unixToString(this.due) + ")";
+            return label + super.toString()
+                    + " (" + d.unixToString(this.due) + ")";
         }
-        return "\t[E]" + super.toString()
-                + " (" + DateProcessor.unixToString(this.due)
-                + " ~ " + DateProcessor.unixToString(this.to) + ")";
+        return label + super.toString()
+                + " (" + d.unixToString(this.due)
+                + " ~ " + d.unixToString(this.to) + ")";
     }
 
     @Override

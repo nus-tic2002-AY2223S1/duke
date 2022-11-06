@@ -1,68 +1,45 @@
 package duke.utils;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import duke.impl.Ui;
+import duke.impl.UiCn;
+import duke.impl.UiEn;
 
 /**
  * Util Processor to process date and time
  */
 public class DateProcessor {
-    private static Ui ui = new Ui();
+    private static Ui ui;
     private static final String TIME_ZONE = "GMT+8:00";
-    private static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy HHmm");
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
-    private static final DateFormat DATE_TIME_FORMAT_SEPARATOR = new SimpleDateFormat("E dd MMM yyyy, h:mm a");
-    private static final DateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm a");
+    private static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy HHmm");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+    private static SimpleDateFormat dateTimeFormatSeparator = new SimpleDateFormat("E dd MMM yyyy, h:mm a");
+    private static SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
 
-    public DateProcessor() {
-    }
-
-    private static String printInvalidDateFormat() {
-        return ui.sendGenericWarning("Invalid date format. Date time has to be dd/mm/yyyy.");
-    }
-
-    private static String printInvalidMonthFormat() {
-        return ui.sendGenericWarning("Invalid month format. Month has to be between 01 ~ 12.");
-    }
-
-    private static String printInvalidYearFormat() {
-        return ui.sendGenericWarning("Invalid year format. Year has to be yyyy.");
-    }
-
-    private static String printInvalidDateTimeFormat() {
-        return ui.sendGenericWarning("Invalid date/time format. Date time has to be dd/mm/yyyy HHmm.");
-    }
-
-    private static String printInvalidTimeFormat() {
-        return ui.sendGenericWarning("Invalid time format. Time has to be 0000 ~ 2359.");
-    }
-
-    private static String printInconsistentTimeRangeFormat() {
-        return ui.sendGenericWarning("Invalid time range. Range start and end should be consistent. "
-                + "Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy "
-                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
-    }
-
-    private static String printInvalidTimeRangeFormat() {
-        return ui.sendGenericWarning("Invalid format. "
-                + "Range has to be \n\tdd/mm/yyyy  "
-                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n"
-                + "\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
-    }
-
-    private static String printUnspecifiedTimeRangeFormat() {
-        return ui.sendGenericWarning("Specify a range. "
-                + "Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy "
-                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
-    }
-
-    private static String printInvalidTDateSeparatorFormat() {
-        return ui.sendGenericWarning("Date range should be separated by '-'");
+    /**
+     * Initialize DataProcessor with corresponding locale
+     *
+     * @param l Locale region
+     */
+    public DateProcessor(Ui.LocaleRegion l) {
+        switch (l) {
+        case EN:
+            ui = new UiEn();
+            dateTimeFormatSeparator = new SimpleDateFormat("E dd MMM yyyy, h:mm a");
+            timeFormat = new SimpleDateFormat("hh:mm a");
+            break;
+        case CN:
+            ui = new UiCn();
+            dateTimeFormatSeparator = new SimpleDateFormat("yy年MMMd日, ah:mm", new Locale("zh", "CN"));
+            timeFormat = new SimpleDateFormat("ahh:mm", new Locale("zh", "CN"));
+            break;
+        default:
+        }
     }
 
     private static boolean isTimeFormatValid(String t) {
@@ -73,19 +50,15 @@ public class DateProcessor {
         String[] parsed = d.split("/", 3);
 
         if (parsed.length != 3) {
-            throw new DukeException(printInvalidDateFormat());
+            throw new DukeException(ui.printInvalidDateFormat());
         }
 
         if (parsed[2].length() != 4) {
-            throw new DukeException(printInvalidYearFormat());
+            throw new DukeException(ui.printInvalidYearFormat());
         }
 
         if (Integer.parseInt(parsed[1]) > 12 || Integer.parseInt(parsed[1]) < 1) {
-            throw new DukeException(printInvalidMonthFormat());
-        }
-
-        if (Integer.parseInt(parsed[1]) > 12 || Integer.parseInt(parsed[1]) < 1) {
-            throw new DukeException(printInvalidMonthFormat());
+            throw new DukeException(ui.printInvalidMonthFormat());
         }
     }
 
@@ -100,15 +73,15 @@ public class DateProcessor {
      * @return UNIX time converted from s
      * @throws DukeException Exception
      */
-    public static long processDateTime(String s) throws DukeException {
+    public long processDateTime(String s) throws DukeException {
         String[] parsed = s.split(" ", 2);
 
         if (parsed.length != 2) {
-            throw new DukeException(printInvalidDateTimeFormat());
+            throw new DukeException(ui.printInvalidDateTimeFormat());
         }
 
         if (!isTimeFormatValid(parsed[1])) {
-            throw new DukeException(printInvalidTimeFormat());
+            throw new DukeException(ui.printInvalidTimeFormat());
         }
 
         try {
@@ -133,15 +106,23 @@ public class DateProcessor {
      * @return Start and end UNIX time converted from s
      * @throws DukeException Exception
      */
-    public static long[] processDateTimeRange(String s) throws DukeException {
+    public long[] processDateTimeRange(String s) throws DukeException {
         // 1/1/1999 0900 - 2/2/1999 0900
         // 1/1/1999 - 2/2/1999
         // 1/1/1999
-        String[] parsedRange = s.split("-", 2);
+        String[] parsedRange = s.split("-");
+
+        if (parsedRange.length > 2) {
+            throw new DukeException(ui.printTooManyTimeRangesFormat());
+        }
 
         if (parsedRange.length == 1) {
+            if (!s.contains("-")) {
+                throw new DukeException(ui.printInvalidTDateSeparatorFormat());
+            }
+
             if (s.contains(" ")) {
-                throw new DukeException(printInvalidTimeRangeFormat());
+                throw new DukeException(ui.printInvalidTimeRangeFormat());
             }
             //all day event
             // 1/1/1999 0000 - 1/1/1999 2359
@@ -158,14 +139,6 @@ public class DateProcessor {
             return new long[]{timeFrom, timeFrom + 86399};
         }
 
-        if (parsedRange.length != 2) {
-            throw new DukeException(printUnspecifiedTimeRangeFormat());
-        }
-
-        if (!s.contains("-")) {
-            throw new DukeException(printInvalidTDateSeparatorFormat());
-        }
-
         String[] parsedDateFrom = parsedRange[0].trim().split(" ", 2);
         String[] parsedDateTo = parsedRange[1].trim().split(" ", 2);
 
@@ -175,6 +148,14 @@ public class DateProcessor {
             try {
                 timeStart = processDate(parsedDateFrom[0].trim());
                 timeEnd = processDate(parsedDateTo[0].trim());
+
+                if (timeEnd - timeStart == 0) {
+                    return new long[]{timeStart};
+                }
+
+                if (timeEnd - timeStart < 0) {
+                    throw new DukeException(ui.printDateStartBeforeEndError());
+                }
             } catch (DukeException e) {
                 throw new DukeException(e.getMessage());
             }
@@ -182,7 +163,7 @@ public class DateProcessor {
         }
 
         if (parsedDateFrom.length == 1 || parsedDateTo.length == 1) {
-            throw new DukeException(printInconsistentTimeRangeFormat());
+            throw new DukeException(ui.printInconsistentTimeRangeFormat());
         }
 
         // time to time
@@ -190,7 +171,15 @@ public class DateProcessor {
         long timeTo = processDateTime(parsedRange[1].trim());
 
         if (timeFrom == -1 || timeTo == -1) {
-            throw new DukeException(printInconsistentTimeRangeFormat());
+            throw new DukeException(ui.printInconsistentTimeRangeFormat());
+        }
+
+        if (timeTo - timeFrom == 0) {
+            throw new DukeException(ui.printDateStartEqualsEndError());
+        }
+
+        if (timeTo - timeFrom < 0) {
+            throw new DukeException(ui.printDateStartBeforeEndError());
         }
         return new long[]{timeFrom, timeTo};
     }
@@ -202,7 +191,7 @@ public class DateProcessor {
      * @return UNIX time of s
      * @throws DukeException Exception
      */
-    public static long processDate(String s) throws DukeException {
+    public long processDate(String s) throws DukeException {
         try {
             checkDate(s);
         } catch (DukeException e) {
@@ -223,13 +212,13 @@ public class DateProcessor {
      * @return UNIX time of s
      * @throws DukeException Exception
      */
-    public static long dateTimeToUnix(String s) throws DukeException {
+    public long dateTimeToUnix(String s) throws DukeException {
         try {
             DATE_TIME_FORMAT.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
             DATE_TIME_FORMAT.setLenient(false);
             return DATE_TIME_FORMAT.parse(s).toInstant().getEpochSecond();
         } catch (ParseException e) {
-            throw new DukeException(ui.sendGenericFatal("I could not recognise this date. " + e.getMessage()));
+            throw new DukeException(ui.printParseExceptionMessage(e));
         }
     }
 
@@ -239,14 +228,27 @@ public class DateProcessor {
      * @param s Date string
      * @return UNIX time of s
      */
-    public static long dateToUnix(String s) throws DukeException {
+    public long dateToUnix(String s) throws DukeException {
         try {
             DATE_FORMAT.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
             DATE_FORMAT.setLenient(false);
             return DATE_FORMAT.parse(s + " 0000").toInstant().getEpochSecond();
         } catch (ParseException e) {
-            throw new DukeException(ui.sendGenericFatal("I could not recognise this date. " + e.getMessage()));
+            throw new DukeException(ui.printParseExceptionMessage(e));
         }
+    }
+
+
+    /**
+     * Conversion of UNIX time to date string in 'E dd MMM yyyy, HH:mm' format
+     *
+     * @param timeStamp UNIX timestamp
+     * @return Date time string
+     */
+    public String unixToString(long timeStamp) {
+        dateTimeFormatSeparator.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
+        dateTimeFormatSeparator.setLenient(false);
+        return dateTimeFormatSeparator.format(new java.util.Date(timeStamp * 1000));
     }
 
     /**
@@ -255,10 +257,24 @@ public class DateProcessor {
      * @param timeStamp UNIX timestamp
      * @return Date time string
      */
-    public static String unixToString(long timeStamp) {
-        DATE_TIME_FORMAT_SEPARATOR.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
-        DATE_TIME_FORMAT_SEPARATOR.setLenient(false);
-        return DATE_TIME_FORMAT_SEPARATOR.format(new java.util.Date(timeStamp * 1000));
+    public static String unixToStringEn(long timeStamp) {
+        SimpleDateFormat staticEn = new SimpleDateFormat("E dd MMM yyyy, h:mm a");
+        staticEn.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
+        staticEn.setLenient(false);
+        return staticEn.format(new java.util.Date(timeStamp * 1000));
+    }
+
+    /**
+     * Conversion of UNIX time to date string in 'E dd MMM yyyy, HH:mm' format
+     *
+     * @param timeStamp UNIX timestamp
+     * @return Date time string
+     */
+    public static String unixToStringCn(long timeStamp) {
+        SimpleDateFormat staticCn = new SimpleDateFormat("yy年MMMd日, ah:mm", new Locale("zh", "CN"));
+        staticCn.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
+        staticCn.setLenient(false);
+        return staticCn.format(new java.util.Date(timeStamp * 1000));
     }
 
     /**
@@ -267,10 +283,10 @@ public class DateProcessor {
      * @param timeStamp UNIX timestamp
      * @return Time string
      */
-    public static String unixToSimplifiedString(long timeStamp) {
-        TIME_FORMAT.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
-        TIME_FORMAT.setLenient(false);
-        return TIME_FORMAT.format(new java.util.Date(timeStamp * 1000));
+    public String unixToSimplifiedString(long timeStamp) {
+        timeFormat.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
+        timeFormat.setLenient(false);
+        return timeFormat.format(new java.util.Date(timeStamp * 1000));
     }
 
     /**
@@ -279,9 +295,8 @@ public class DateProcessor {
      *
      * @return Time string of current time
      */
-    public static String getMetaTimeStamp() {
-        long unixTime = Instant.now().getEpochSecond();
-        return unixToSimplifiedString(unixTime);
+    public String getMetaTimeStamp() {
+        return unixToSimplifiedString(Instant.now().getEpochSecond());
     }
 
     public static String getTimeNowString() {

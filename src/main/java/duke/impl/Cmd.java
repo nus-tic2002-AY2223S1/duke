@@ -13,7 +13,7 @@ public class Cmd {
      */
     public enum CmdTypes {
         UNKNOWN_CMD, PRINT_LIST, MARK_TASK, UNMARK_TASK, ADD_TODO, ADD_DEADLINE, ADD_EVENT, DELETE_TASK, FIND_DATE,
-        FIND_TASK, ARCHIVE, RESTORE, RETURN, EXIT;
+        FIND_TASK, ARCHIVE, RESTORE, RETURN, EXIT
     }
 
     protected CmdTypes t;
@@ -38,9 +38,9 @@ public class Cmd {
      * @param tasks Array of Tasks
      * @return Message to display in GUI
      */
-    public String run(ArrayList<Task> tasks) {
+    public String run(ArrayList<Task> tasks, Ui.LocaleRegion l) {
         arrayList = tasks;
-        this.r = new Runner(arrayList);
+        this.r = new Runner(arrayList, l);
         switch (this.t) {
         case RETURN:
             break;

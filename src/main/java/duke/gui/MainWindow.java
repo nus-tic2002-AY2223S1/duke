@@ -16,12 +16,14 @@ import java.util.Objects;
 import javax.swing.Timer;
 
 import duke.Duke;
+import duke.impl.Ui;
 import duke.orm.Database;
 import duke.orm.DatabaseObject;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -40,19 +42,12 @@ public class MainWindow extends AnchorPane {
     private static final String CACHE_DIR = "data/tmp/";
     private static final String MODE_CACHE_FILE_PATH = "data/tmp/mode";
     private static final String LIST_CACHE_FILE_PATH = "data/tmp/list";
+    private static final String LOCALE_CACHE_FILE_PATH = "data/tmp/il8n";
     private static final String DARK_CSS_FILE_PATH = "/view/dark.css";
-    @FXML
-    private MenuItem listOnLaunchButton;
-    @FXML
-    private MenuItem clearChatButton;
-    @FXML
-    private Parent rootPane;
-    @FXML
-    private MenuItem darkModeButton;
     private Duke duke;
-    private boolean newChat = true;
     private boolean isDark = false;
     private boolean isListOnLaunch = false;
+    private Ui.LocaleRegion locale;
     @FXML
     private Label listButton;
     @FXML
@@ -79,7 +74,6 @@ public class MainWindow extends AnchorPane {
     private MenuItem menuArchiveButton;
     @FXML
     private MenuItem menuRestoreButton;
-
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -88,6 +82,20 @@ public class MainWindow extends AnchorPane {
     private TextField userInput;
     @FXML
     private Label sendButton;
+    @FXML
+    private CheckMenuItem listOnLaunchButton;
+    @FXML
+    private MenuItem clearChatButton;
+    @FXML
+    private Parent rootPane;
+    @FXML
+    private CheckMenuItem darkModeButton;
+    @FXML
+    private CheckMenuItem enButton;
+    @FXML
+    private CheckMenuItem cnButton;
+    @FXML
+    private Menu menuSettings;
 
     @FXML
     public void initialize() {
@@ -96,11 +104,10 @@ public class MainWindow extends AnchorPane {
 
     public void setDuke(Duke d) throws SQLException {
         duke = d;
-
         //restore chat
         Connection c = Database.init();
         Statement stmt;
-        ResultSet r = null;
+        ResultSet r;
         try {
             stmt = c.createStatement();
             String sql = "SELECT id, sender, message, timestamp FROM "
@@ -179,7 +186,9 @@ public class MainWindow extends AnchorPane {
         }
 
         String[] ss = input.split(" ");
-        if (ss.length == 2 && Objects.equals(ss[0], "restore")) {
+        if (ss.length == 2
+                && Objects.equals(ss[0], "restore")
+                && Objects.equals(response, "Successfully restored record.")) {
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input, userImage, 0),
                     DialogBox.getDukeDialog(response, dukeImage, 0)
@@ -194,16 +203,40 @@ public class MainWindow extends AnchorPane {
         userInput.clear();
 
         ActionListener taskPerformer2 = evt -> Platform.runLater(() -> {
-            status.setText("Online");
+            setOnlineText();
             dialogContainer.getChildren().addAll(
                     DialogBox.getDukeDialog(response, dukeImage, 0)
             );
         });
-        int randTime = (int) (Math.random() * (2000 - 1000));
+        int randTime = (int) (Math.random() * (2500 - 1000));
         Timer timer2 = new Timer((randTime), taskPerformer2);
-        status.setText("Typing...");
+        setTypingText();
         timer2.setRepeats(false);
         timer2.start();
+    }
+
+    private void setOnlineText() {
+        switch (locale) {
+        case EN:
+            status.setText("Online");
+            break;
+        case CN:
+            status.setText("在线");
+            break;
+        default:
+        }
+    }
+
+    private void setTypingText() {
+        switch (locale) {
+        case EN:
+            status.setText("Typing...");
+            break;
+        case CN:
+            status.setText("输入中...");
+            break;
+        default:
+        }
     }
 
     @FXML
@@ -265,17 +298,16 @@ public class MainWindow extends AnchorPane {
         Scene s = rootPane.getScene();
         if (isDark) {
             isDark = false;
-            darkModeButton.setText("Dark Mode");
             s.getStylesheets().remove(
                     Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))
                             .toExternalForm());
         } else {
             isDark = true;
-            darkModeButton.setText("\u2713 Dark Mode");
             s.getStylesheets().add(
                     Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))
                             .toExternalForm());
         }
+        darkModeButton.setSelected(isDark);
         cacheMode(isDark);
     }
 
@@ -288,12 +320,12 @@ public class MainWindow extends AnchorPane {
 
     public void setDarkModeText() {
         isDark = true;
-        darkModeButton.setText("\u2713 Dark Mode");
+        darkModeButton.setSelected(true);
     }
 
     public void setListOnLaunchText() {
         isListOnLaunch = true;
-        listOnLaunchButton.setText("\u2713 List on launch");
+        listOnLaunchButton.setSelected(true);
     }
 
     @FXML
@@ -304,14 +336,8 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private void toggleListOnLaunch() throws IOException {
-        Scene s = rootPane.getScene();
-        if (isListOnLaunch) {
-            isListOnLaunch = false;
-            listOnLaunchButton.setText("List on launch");
-        } else {
-            isListOnLaunch = true;
-            listOnLaunchButton.setText("\u2713 List on launch");
-        }
+        isListOnLaunch = !isListOnLaunch;
+        listOnLaunchButton.setSelected(isListOnLaunch);
         cacheLaunch(isListOnLaunch);
     }
 
@@ -319,6 +345,53 @@ public class MainWindow extends AnchorPane {
         Files.createDirectories(Paths.get(CACHE_DIR));
         FileWriter writer = new FileWriter(LIST_CACHE_FILE_PATH);
         writer.write(isShow ? "list=1" : "list=0" + System.lineSeparator());
+        writer.close();
+    }
+
+    public void setLocale(Ui.LocaleRegion l) {
+        locale = l;
+        switch (l) {
+        case EN:
+            enButton.setSelected(true);
+            break;
+        case CN:
+            cnButton.setSelected(true);
+            break;
+        default:
+        }
+    }
+
+    @FXML
+    private void setLocaleEnAction() throws IOException {
+        enButton.setSelected(true);
+        cnButton.setSelected(false);
+        setLocale(Ui.LocaleRegion.EN);
+        cacheLocale(Ui.LocaleRegion.EN);
+        refreshAction();
+    }
+
+    @FXML
+    private void setLocaleCnAction() throws IOException {
+        enButton.setSelected(true);
+        cnButton.setSelected(false);
+        setLocale(Ui.LocaleRegion.CN);
+        cacheLocale(Ui.LocaleRegion.CN);
+        refreshAction();
+    }
+
+    private void cacheLocale(Ui.LocaleRegion l) throws IOException {
+        Files.createDirectories(Paths.get(CACHE_DIR));
+        FileWriter writer = new FileWriter(LOCALE_CACHE_FILE_PATH);
+
+        switch (l) {
+        case EN:
+            writer.write("il8n=en" + System.lineSeparator());
+            break;
+        case CN:
+            writer.write("il8n=cn" + System.lineSeparator());
+            break;
+        default:
+        }
         writer.close();
     }
 }

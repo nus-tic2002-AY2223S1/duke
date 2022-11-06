@@ -28,7 +28,7 @@
 }
 
 .separator *.line {
-    -fx-background-color: #3C3C3C;
+    -fx-background-color: #565555;
     -fx-border-style: solid;
     -fx-border-width: 1px;
 }
@@ -80,4 +80,8 @@
 
 #sendButton:hover {
     -fx-graphic: url('/view/icons8-send-35.png');
+}
+
+#statusTag {
+    -fx-text-fill: #61a3ff;
 }

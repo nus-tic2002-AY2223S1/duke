@@ -1,8 +1,14 @@
 package duke.gui;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.Objects;
+import java.util.Scanner;
 
+import duke.impl.Ui;
 import duke.utils.DateProcessor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +32,7 @@ public class DialogBox extends HBox {
     private Label meta;
     @FXML
     private ImageView displayPicture;
+    @FXML
     private Parent rootPane;
 
     private DialogBox(String text, Image img, String userSpecific, boolean isDuke, String ts) {
@@ -65,9 +72,9 @@ public class DialogBox extends HBox {
     public static DialogBox getUserDialog(String text, Image img, int ts) {
         String timestamp;
         if (ts == 0) {
-            timestamp = DateProcessor.getMetaTimeStamp();
+            timestamp = loadLocale().getMetaTimeStamp();
         } else {
-            timestamp = DateProcessor.unixToSimplifiedString(ts);
+            timestamp = loadLocale().unixToSimplifiedString(ts);
         }
         return new DialogBox(text, img, "-fx-background-color: #90ee90", false, timestamp);
     }
@@ -75,12 +82,33 @@ public class DialogBox extends HBox {
     public static DialogBox getDukeDialog(String text, Image img, int ts) {
         String timestamp;
         if (ts == 0) {
-            timestamp = DateProcessor.getMetaTimeStamp();
+            timestamp = loadLocale().getMetaTimeStamp();
         } else {
-            timestamp = DateProcessor.unixToSimplifiedString(ts);
+            timestamp = loadLocale().unixToSimplifiedString(ts);
         }
         var db = new DialogBox(text, img, "", true, timestamp);
         db.flip();
         return db;
+    }
+
+    private static DateProcessor loadLocale() {
+        String path = "";
+        try {
+            Files.createDirectories(Paths.get("data/tmp/"));
+            File f = new File("data/tmp/il8n");
+            if (f.exists() && !f.isDirectory()) {
+                Scanner scn = new Scanner(f);
+                if (scn.hasNext()) {
+                    path = scn.nextLine();
+                }
+                String[] ss = path.split("=");
+                if (Objects.equals(ss[0], "il8n") && Objects.equals(ss[1], "cn")) {
+                    return new DateProcessor(Ui.LocaleRegion.CN);
+                }
+            }
+        } catch (IOException e) {
+            return new DateProcessor(Ui.LocaleRegion.EN);
+        }
+        return new DateProcessor(Ui.LocaleRegion.EN);
     }
 }

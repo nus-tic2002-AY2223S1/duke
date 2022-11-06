@@ -19,7 +19,7 @@ public class Database {
      * Initialize Database Connection
      */
     public static Connection init() {
-        Connection c = null;
+        Connection c;
         try {
             Files.createDirectories(Paths.get("data/tmp/"));
             Class.forName("org.sqlite.JDBC");
@@ -38,7 +38,7 @@ public class Database {
      */
     public void createTable() {
         Connection c = init();
-        Statement stmt = null;
+        Statement stmt;
 
         try {
             String tb = "chat_tab";
@@ -63,7 +63,7 @@ public class Database {
      */
     public static void dropTable() {
         Connection c = init();
-        Statement stmt = null;
+        Statement stmt;
 
         try {
             String tb = "chat_tab";
@@ -84,7 +84,7 @@ public class Database {
      */
     public static void insert(DatabaseObject o) {
         Connection c = init();
-        Statement stmt = null;
+        Statement stmt;
 
         try {
             c.setAutoCommit(false);

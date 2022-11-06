@@ -58,7 +58,7 @@ public class Parser {
      * @return Cmd Object of parsed command input.
      */
     public Cmd parse() {
-        switch (this.in[0].trim()) {
+        switch (this.in[0].toLowerCase().trim()) {
         case "list":
             return new Cmd(Cmd.CmdTypes.PRINT_LIST, null);
         case "mark":
