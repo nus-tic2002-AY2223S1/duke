@@ -138,6 +138,15 @@ public class DukeUI implements UIInterface {
         printlntab("Your current active file is "+ alias);
     }
 
+    @Override
+    public void invalidCommandFormat(String valid, String invalid) {
+        seperator();
+        printlntab("You have entered wrong format for the command");
+        printlntab("Your command: " + invalid);
+        printlntab("Reason: " + valid);
+        seperator();
+    }
+
     private void seperator() {
         System.out.println("\t---------------------------------------------");
     }

@@ -129,5 +129,13 @@ public abstract class BotUseCase {
      */
     public void getActiveFile() {};
 
+    /**
+     * shows the invalid command format
+     *
+     * @return void
+     * @param valid valid is the valid format
+     * @param invalid invalid is the invalid format which the user has entered
+     */
+    public void showInvalidFormat(String valid, String invalid){};
 
 }

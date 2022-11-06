@@ -131,5 +131,10 @@ public class Router extends BotUseCase {
     @Override
     public void invalidFormat(String text) { ui.invalidFormat(text); }
 
+    @Override
+    public void showInvalidFormat(String valid, String invalid) {
+        ui.invalidCommandFormat(valid, invalid);
+    }
+
     public void customError(String text) { ui.customError(text); }
 }

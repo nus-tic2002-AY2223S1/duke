@@ -20,6 +20,11 @@ public class Duke {
         line = in.nextLine();
         while (Keyword.getKeyword(line) != Keyword.Bye) {
             Keyword key = Keyword.getKeyword(line);
+            if(Keyword.validateFormat(line) == false ){
+                bot.invalidFormat(Keyword.validFormat(key), line);
+                line = in.nextLine();
+                continue;
+            }
             if (key == Keyword.List) {
                 bot.showList();
             } else if (key == Keyword.Mark) {

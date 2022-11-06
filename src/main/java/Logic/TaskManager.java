@@ -139,6 +139,10 @@ public class TaskManager implements BotCallback {
         router.getActiveFile();
     }
 
+    public void showInvalidFormat(String valid, String invalid) {
+        router.showInvalidFormat(valid, invalid);
+    }
+
     @Override
     public void loadData(ArrayList<TaskInterface> tasks) {
         this.tasks = tasks;

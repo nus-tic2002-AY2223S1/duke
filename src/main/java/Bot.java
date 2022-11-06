@@ -44,4 +44,8 @@ public class Bot {
     public void getActiveFile() {
         taskManager.getActiveFile();
     }
+
+    public void invalidFormat(String valid, String invalid){
+        taskManager.showInvalidFormat(valid, invalid);
+    }
 }

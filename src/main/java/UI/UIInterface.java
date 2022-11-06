@@ -136,4 +136,13 @@ public interface UIInterface {
      * @return void
      */
     public void getActiveFile(String alias);
+
+    /**
+     * shows the invalid and valid format for the command that user has entered
+     *
+     * @return void
+     * @param valid is how the valid command should required
+     * @param invalid is the user entered invalid command
+     */
+    public void invalidCommandFormat(String valid, String invalid);
 }
