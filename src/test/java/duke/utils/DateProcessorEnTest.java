@@ -314,7 +314,10 @@ public class DateProcessorEnTest {
     @Test
     public void processDateTimRangeNoSeparatorTest() {
         String s = "2/4/1999 3/4/1999";
-        DukeException expected = new DukeException("! Date range should be separated by '-'");
+        DukeException expected = new DukeException("! Invalid format. "
+                + "Range has to be \n\tdd/mm/yyyy  "
+                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n"
+                + "\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
         try {
             d.processDateTimeRange(s);
         } catch (DukeException e) {

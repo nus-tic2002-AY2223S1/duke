@@ -50,7 +50,7 @@ public class UiEn extends Ui {
         INFO_RESTORE("Successfully restored record."),
         ERROR_RESTORE("Failed to retrieve archive records."),
         ERROR_RESTORE_SELECTION("The file selection to restore cannot be empty.\n\t \u27a4 restore <index>"),
-        ERROR_RESTORE_NO_RECORD("Failed to restore records."),
+        ERROR_RESTORE_NO_RECORD("Type restore to check the list of archives first!"),
         INFO_LIST_FILES_HEADER("Select from the files below by entering restore <index>.\n"),
         INFO_LIST_FILES_FOOTER("Chat will be refreshed after restoring."),
         ERROR_GET_INDEX("This is not a valid index. Choose from the  %s tasks."),
@@ -218,7 +218,7 @@ public class UiEn extends Ui {
     }
 
     @Override
-    public String printProcessRestoreNoRecordMessage() {
+    public String printProcessRestoreNoRecordMessage(String e) {
         return sendGenericWarning(UiMessage.ERROR_RESTORE_NO_RECORD.getText());
     }
 

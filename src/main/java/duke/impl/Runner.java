@@ -208,7 +208,7 @@ public class Runner {
         }
 
         int archiveSize = getArchiveSize();
-        int i = Integer.parseInt(s) - 1;
+        int i = Integer.parseInt(s);
         if (i < 0 || i >= archiveSize) {
             throw new DukeException(ui.printGetArchiveIndexErrorMessage(archiveSize));
         }
@@ -562,7 +562,7 @@ public class Runner {
             restoreFile(idx);
             return printProcessRestoreMessage();
         } catch (IOException e) {
-            return ui.printProcessRestoreNoRecordMessage();
+            return ui.printProcessRestoreNoRecordMessage(e.getMessage());
         }
     }
 }

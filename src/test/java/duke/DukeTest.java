@@ -20,7 +20,6 @@ public class DukeTest {
         Ui.LocaleRegion l = Ui.LocaleRegion.EN;
         Duke d = new Duke(path, l);
 
-        //expected
         TaskList expected = new TaskList();
         expected.addTask(new Todo("TestTask1", 0));
         expected.addTask(new Event("TestTask2", new long[]{0}));

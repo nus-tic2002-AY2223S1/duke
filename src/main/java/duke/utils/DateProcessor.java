@@ -74,7 +74,7 @@ public class DateProcessor {
      * @throws DukeException Exception
      */
     public long processDateTime(String s) throws DukeException {
-        String[] parsed = s.split(" ", 2);
+        String[] parsed = s.split(" ");
 
         if (parsed.length > 2) {
             throw new DukeException(ui.printInvalidDateTimeFormat());
@@ -126,12 +126,11 @@ public class DateProcessor {
         }
 
         if (parsedRange.length == 1) {
-            if (!s.contains("-")) {
-                throw new DukeException(ui.printInvalidTDateSeparatorFormat());
-            }
-
             if (s.contains(" ")) {
                 throw new DukeException(ui.printInvalidTimeRangeFormat());
+            }
+            if (!s.contains("-")) {
+                throw new DukeException(ui.printInvalidTDateSeparatorFormat());
             }
             //all day event
             // 1/1/1999 0000 - 1/1/1999 2359
@@ -147,6 +146,7 @@ public class DateProcessor {
             }
             return new long[]{timeFrom, timeFrom + 86399};
         }
+
 
         String[] parsedDateFrom = parsedRange[0].trim().split(" ", 2);
         String[] parsedDateTo = parsedRange[1].trim().split(" ", 2);

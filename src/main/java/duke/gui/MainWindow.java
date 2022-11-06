@@ -235,6 +235,7 @@ public class MainWindow extends AnchorPane {
         switch (locale) {
         case EN:
             status.setText("Typing...");
+
             break;
         case CN:
             status.setText("输入中...");

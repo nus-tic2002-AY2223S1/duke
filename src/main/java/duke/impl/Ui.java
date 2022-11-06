@@ -133,7 +133,7 @@ public abstract class Ui {
 
     public abstract String printProcessRestoreErrorMessage();
 
-    public abstract String printProcessRestoreNoRecordMessage();
+    public abstract String printProcessRestoreNoRecordMessage(String e);
 
     public abstract String printListFilesHeaderMessage();
 
