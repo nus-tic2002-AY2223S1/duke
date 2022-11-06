@@ -45,6 +45,17 @@ public class Duke {
     }
     
     public String getGreetingMessage(){
-        return "Hello! I'm main.Duke\n \t What can I do for you?";
+        return "Hello! I'm Duke\nWhat can I do for you?\n\n" +
+                "1. To list all existing tasks, enter \"list\".\n" +
+                "2. To add a normal task, enter \"add [task content]\".\n" +
+                "3. To add a todo task, enter \"todo [task content]\".\n" +
+                "4. To add a deadline task, enter \"deadline [task content] /by [deadline datetime]\".\n" +
+                "5. To add a event task, enter \"event [task content] /by [event datetime]\"\n" +
+                "6. To mark a task as done, enter \"mark [task index]\".\n" +
+                "7. To unmark a task as done, enter \"unmark [task index]\".\n" +
+                "8. To sort task list,  enter \"sort by [sorting method]\".\n" +
+                "9. To exit chatbot, enter \"bye\".\n" +
+                "10. The format of deadline/event datetime could be \"dd-MM-yyyy HHmm\" or \"dd/MM/yyyy HHmm\".\n" +
+                "11. The sorting method could be \"name\" or \"date\".";
     }
 }

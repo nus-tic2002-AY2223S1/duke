@@ -45,7 +45,7 @@ public class TaskManager {
         StringBuilder printStr = new StringBuilder("Here are the tasks in your list: \n");
         for (int i = 0; i < taskList.size(); i++) {
             Task t = taskList.get(i);
-            printStr.append(String.format("\t %d.%s\n", i + 1, t.getDetails()));
+            printStr.append(String.format("%d.%s\n", i + 1, t.getDetails()));
         }
         return printStr.toString();
     }
@@ -76,9 +76,9 @@ public class TaskManager {
             } else {
                 t.updateStatus();
                 if (t.isDone()) {
-                    result = "Nice! I've marked this task as done:\n\t   " + t.getDetails();
+                    result = "Nice! I've marked this task as done:\n" + t.getDetails();
                 } else {
-                    result = "OK, I've marked this task as not done yet:\n\t   " + t.getDetails();
+                    result = "OK, I've marked this task as not done yet:\n" + t.getDetails();
                 }
                 onTaskListChanged();
             }
@@ -110,9 +110,9 @@ public class TaskManager {
         if (task != null) {
             taskList.add(task);
             
-            result = "Got it. I've added this task: \n\t   ";
+            result = "Got it. I've added this task: \n";
             result += task.getDetails();
-            result += "\n\t Now you have " + taskList.size() + " tasks in the list.";
+            result += "\nNow you have " + taskList.size() + " tasks in the list.";
             
             onTaskListChanged();
         }
@@ -134,9 +134,9 @@ public class TaskManager {
             task = taskList.get(index);
             taskList.remove(index);
             
-            result = "Noted. I've removed this task: \n\t   ";
+            result = "Noted. I've removed this task: \n";
             result += task.getDetails();
-            result += "\n\t Now you have " + taskList.size() + " tasks in the list.";
+            result += "\nNow you have " + taskList.size() + " tasks in the list.";
             onTaskListChanged();
         }
         return result;
@@ -192,7 +192,7 @@ public class TaskManager {
         StringBuilder resultStr = new StringBuilder("Here are the matching tasks in your list: \n");
         for (int i = 0; i < resultArr.size(); i++) {
             Task t = resultArr.get(i);
-            resultStr.append(String.format("\t %d.%s\n", i + 1, t.getDetails()));
+            resultStr.append(String.format("%d.%s\n", i + 1, t.getDetails()));
         }
         return resultStr.toString();
     }

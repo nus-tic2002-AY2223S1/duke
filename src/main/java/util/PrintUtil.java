@@ -3,10 +3,10 @@ package util;
 import entity.Task;
 
 public class PrintUtil {
-    public static String breaker = "\t____________________________________________________________\n";
+    public static String breaker = "____________________________________________________________\n";
 
     public static void printWithIndentation(String content) {
-        System.out.printf("%s\t %s\n%s", breaker, content, breaker);
+        System.out.printf("%s%s\n%s", breaker, content, breaker);
 
     }
     

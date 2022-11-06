@@ -23,7 +23,7 @@ public class DialogBox extends HBox {
         displayPicture = iv;
         
         text.setWrapText(true);
-        text.setPadding(new Insets(15, 30, 15, 30));
+        text.setPadding(new Insets(10, 10, 10, 10));
         displayPicture.setFitWidth(50.0);
         displayPicture.setFitHeight(50.0);
         
