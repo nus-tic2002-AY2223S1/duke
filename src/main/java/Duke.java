@@ -19,7 +19,6 @@ public class Duke {
         Storage.mainCaller();
     }
 
-
     private void start(String[] launchArgs) throws InvalidStorageFilePathException, IOException {
         this.ui = new UI();
         this.taskList = new TaskList();
@@ -30,11 +29,11 @@ public class Duke {
                 String[] inputSplit = input.split(" ");
 
                 // enter bye to end chat
-                if (input.startsWith("bye"))
+                if (input.equals("bye"))
                     exit();
 
                 // to list all items
-                else if (input.startsWith("list"))
+                else if (input.equals("list"))
                     taskList.listTask();
 
                 // mark items
@@ -47,15 +46,15 @@ public class Duke {
 
                 // to do task
                 else if (input.startsWith("todo"))
-                    taskList.todoTask(input);
+                    taskList.todoTask(input, inputSplit);
 
-                // deadinput task
+                // deadline task
                 else if (input.startsWith("deadline"))
-                    taskList.deadlineTask(input);
+                    taskList.deadlineTask(input, inputSplit);
 
                 // event task
                 else if (input.startsWith("event"))
-                    taskList.eventTask(input);
+                    taskList.eventTask(input, inputSplit);
 
                 // delete task
                 else if (input.startsWith("delete")) {

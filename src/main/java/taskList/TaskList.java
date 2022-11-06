@@ -77,11 +77,11 @@ public class TaskList {
         }
     }
 
-    public void unmarkTask(String[] lineSpaceSplit) {
+    public void unmarkTask(String[] inputSplit) {
         if (!checkEmptyTaskList()) {
             try {
-                if (Integer.parseInt(String.valueOf(lineSpaceSplit[0].length())) == 6) {
-                    int unmarkedIndex = Integer.parseInt(lineSpaceSplit[1]);
+                if (Integer.parseInt(String.valueOf(inputSplit[0].length())) == 6) {
+                    int unmarkedIndex = Integer.parseInt(inputSplit[1]);
                     try {
                         Task unmarkedTask = taskList.get(unmarkedIndex - 1);
                         unmarkedTask.markAsUndone();
@@ -101,11 +101,11 @@ public class TaskList {
         }
     }
 
-    public void todoTask(String line) {
+    public void todoTask(String input, String[] inputSplit) {
         ui.UI.printLine();
-        if (line.length() > 5) {
+        if (inputSplit[0].length() == 4) {
             try {
-                String todoTask = line.substring(5);
+                String todoTask = input.substring(5);
                 Todo newTodoTask = new Todo(todoTask);
                 addTask(newTodoTask);
             } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
@@ -115,11 +115,11 @@ public class TaskList {
         printLine();
     }
 
-    public void deadlineTask(String line) {
+    public void deadlineTask(String input, String[] inputSplit) {
         printLine();
-        if (line.length() > 9) {
+        if (inputSplit[0].length() ==8) {
             try {
-                String[] deadlineItemSplit = (line.substring(9)).split(" /by ");
+                String[] deadlineItemSplit = (input.substring(9)).split(" /by ");
                 String deadlineTask = deadlineItemSplit[0];
                 String deadlineBy = deadlineItemSplit[1];
                 Deadline task = new Deadline(deadlineTask, deadlineBy);
@@ -131,11 +131,11 @@ public class TaskList {
         printLine();
     }
 
-    public void eventTask(String line) {
+    public void eventTask(String input, String[] inputSplit) {
         printLine();
-        if (line.length() > 6) {
+        if (inputSplit[0].length() == 5) {
             try {
-                String[] eventItemSplit = (line.substring(6)).split(" /at ");
+                String[] eventItemSplit = (input.substring(6)).split(" /at ");
                 String eventTask = eventItemSplit[0];
                 String eventAt = eventItemSplit[1];
                 Event task = new Event(eventTask, eventAt);
