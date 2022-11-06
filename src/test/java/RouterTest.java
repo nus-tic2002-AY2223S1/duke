@@ -302,5 +302,15 @@ public class RouterTest {
         public void getActiveFile(String alias) {
 
         }
+
+        @Override
+        public void invalidCommandFormat(String valid, String invalid) {
+            
+        }
+
+        @Override
+        public void showFilteredList(ArrayList<TaskInterface> lists) {
+
+        }
     }
 }
