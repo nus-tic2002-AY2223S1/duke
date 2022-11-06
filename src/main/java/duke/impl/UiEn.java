@@ -23,8 +23,8 @@ public class UiEn extends Ui {
         INFO_WELCOME_EXISTING("Hello again, %s! Welcome back. What can I do for you?"),
         INFO_LAST_SAVED("[Last Modified on %s]"),
         INFO_GOODBYE("Bye. Hope to see you again soon!"),
-        INFO_HELP("I can understand the commands below:\n\n" +
-                "list: List your current tasks.\n"
+        INFO_HELP("I can understand the commands below:\n\n"
+                + "list: List your current tasks.\n"
                 + "todo <name>: Add a Todo task.\n"
                 + "event <name>: Add an event.\n"
                 + "deadline <name>: Add a deadline.\n"

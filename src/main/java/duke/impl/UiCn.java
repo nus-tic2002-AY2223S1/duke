@@ -23,8 +23,8 @@ public class UiCn extends Ui {
         INFO_WELCOME_EXISTING("欢迎回来，%s！需要什么帮助吗？"),
         INFO_LAST_SAVED("[最后修改于 %s]"),
         INFO_GOODBYE("再见！"),
-        INFO_HELP("我能明白以下指令：\n\n" +
-                "list: 列出全部任务\n"
+        INFO_HELP("我能明白以下指令：\n\n"
+                + "list: 列出全部任务\n"
                 + "todo <描述>: 新增一个待办事项\n"
                 + "event <描述>: 新增一个事件\n"
                 + "deadline <描述>: 新增一个期限\n"
