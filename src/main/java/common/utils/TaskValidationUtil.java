@@ -16,12 +16,11 @@ import static common.constants.CommonConstant.INIT_INT_VAL;
 
 public class TaskValidationUtil {
     /**
-     * regexValidation validates the string format in regular expression
+     * Return validates the string format in regular expression
      *
-     * @param {String} regex
-     * @param {Chat} chat
-     * @throws InvalidTaskDescriptionException
-     * @return {void}
+     * @param   regex   regular expression of the respective validation
+     * @param   chat
+     * @throws  InvalidTaskDescriptionException
      */
     public static void regexValidation(String regex, Chat chat) throws InvalidTaskDescriptionException {
         Pattern pattern = Pattern.compile(regex);
@@ -33,12 +32,11 @@ public class TaskValidationUtil {
     }
 
     /**
-     * duplicatedTaskValidation validates if there is duplicated task entered by user
+     * Return validates if there is duplicated task entered by user
      *
-     * @param {String} description
-     * @param {Chat} chat
-     * @throws DuplicatedTaskException
-     * @return {void}
+     * @param   description description from user input
+     * @param   chat
+     * @throws  DuplicatedTaskException
      */
     public static void duplicatedTaskValidation(String description, Chat chat) throws DuplicatedTaskException {
         for (Task task : chat.getTaskList()) {
@@ -49,11 +47,10 @@ public class TaskValidationUtil {
     }
 
     /**
-     * emptyTaskListValidation validates if the task list is empty
+     * Return validates if the task list is empty
      *
-     * @param {Chat} chat
-     * @throws EmptyTaskListException
-     * @return {void}
+     * @param   chat
+     * @throws  EmptyTaskListException
      */
     public static void emptyTaskListValidation(Chat chat) throws EmptyTaskListException {
         if (chat.getTaskList().isEmpty()) {
@@ -62,12 +59,11 @@ public class TaskValidationUtil {
     }
 
     /**
-     * notExistTaskValidation validates if task is existing in task list
+     * Return validates if task is existing in task list
      *
-     * @param {String} description
-     * @param {Chat} chat
-     * @throws NotExistTaskException
-     * @return {void}
+     * @param   description description from user input
+     * @param   chat
+     * @throws  NotExistTaskException
      */
     public static void notExistTaskValidation(String description, Chat chat) throws NotExistTaskException {
         if ((Integer.parseInt(description) - INIT_INT_VAL) >= chat.getTaskList().size()) {
@@ -76,12 +72,11 @@ public class TaskValidationUtil {
     }
 
     /**
-     * markedTaskValidation validates if task has already been marked
+     * Return validates if task has already been marked
      *
-     * @param {String} description
-     * @param {Chat} chat
-     * @throws MarkedTaskException
-     * @return {void}
+     * @param   description description from user input
+     * @param   chat
+     * @throws  MarkedTaskException
      */
     public static void markedTaskValidation(String description, Chat chat) throws MarkedTaskException {
         Task task = chat.getTaskList().get(Integer.parseInt(description) - INIT_INT_VAL);
@@ -91,12 +86,11 @@ public class TaskValidationUtil {
     }
 
     /**
-     * unmarkedTaskValidation validates if task has already been unmarked
+     * Return validates if task has already been unmarked
      *
-     * @param {String} description
-     * @param {Chat} chat
-     * @throws UnmarkedTaskException
-     * @return {void}
+     * @param   description description from user input
+     * @param   chat
+     * @throws  UnmarkedTaskException
      */
     public static void unmarkedTaskValidation(String description, Chat chat) throws UnmarkedTaskException {
         Task task = chat.getTaskList().get(Integer.parseInt(description) - INIT_INT_VAL);

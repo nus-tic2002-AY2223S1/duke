@@ -9,9 +9,7 @@ public class ByeCommand extends Command {
     }
 
     /**
-     * execute prints bye greeting
-     *
-     * @return {void}
+     * Return prints bye greeting
      */
     @Override
     public void execute() {

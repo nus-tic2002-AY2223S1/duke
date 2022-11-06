@@ -17,12 +17,11 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * execute prints delete item from task list
+     * Return prints delete item from task list
      *
-     * @throws EmptyTaskListException
-     * @throws InvalidTaskDescriptionException
-     * @throws NotExistTaskException
-     * @return {void}
+     * @throws  EmptyTaskListException
+     * @throws  InvalidTaskDescriptionException
+     * @throws  NotExistTaskException
      */
     @Override
     public void execute() throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException {

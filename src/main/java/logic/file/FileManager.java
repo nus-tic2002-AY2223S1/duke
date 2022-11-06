@@ -18,11 +18,10 @@ public class FileManager {
     public static final String FILE_PATH = "./data/duke.txt";
 
     /**
-     * writeFile writes file content
+     * Return writes file content in duke.txt
      *
-     * @throws FileException
-     * @param {Chat} chat
-     * @return {void}
+     * @throws  FileException
+     * @param   chat
      */
     public static void writeFile(Chat chat) throws FileException {
         try {
@@ -37,11 +36,10 @@ public class FileManager {
     }
 
     /**
-     * loadFile creates and loads file
+     * Return creates and loads file in duke.txt
      *
-     * @throws FileException
-     * @param {Chat} chat
-     * @return {void}
+     * @param   chat
+     * @throws  FileException
      */
     public static void loadFile(Chat chat) throws FileException {
         try {

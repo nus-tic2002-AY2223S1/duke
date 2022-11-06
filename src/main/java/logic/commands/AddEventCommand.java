@@ -16,9 +16,10 @@ public class AddEventCommand extends Command {
     }
 
     /**
-     * execute adds event and prints event item added to taskList array
+     * Return adds event and prints event item added to taskList array
      *
-     * @return {void}
+     * @throws  DuplicatedTaskException
+     * @throws  InvalidTaskDescriptionException
      */
     @Override
     public void execute() throws DuplicatedTaskException, InvalidTaskDescriptionException {

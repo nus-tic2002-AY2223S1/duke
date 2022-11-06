@@ -2,8 +2,8 @@ package model;
 
 import common.enums.TypeEnum;
 
-import static common.constants.SymbolConstant.CLOSE_SQ_BRACKET;
-import static common.constants.SymbolConstant.OPEN_SQ_BRACKET;
+import static common.constants.CommonConstant.CLOSE_SQ_BRACKET;
+import static common.constants.CommonConstant.OPEN_SQ_BRACKET;
 import static common.enums.TypeEnum.T;
 
 public class ToDo extends Task {

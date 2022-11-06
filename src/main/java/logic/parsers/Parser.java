@@ -22,15 +22,16 @@ import ui.ConsoleUi;
 public class Parser {
     public Parser() {}
     /**
-     * parseChat returns parse chat
+     * Return parse chat
      *
-     * @throws EmptyTaskListException
-     * @throws InvalidTaskDescriptionException
-     * @throws NotExistTaskException
-     * @throws MarkedTaskException
-     * @throws UnmarkedTaskException
-     * @throws DuplicatedTaskException
-     * @return {void}
+     * @param   ui
+     * @param   chat
+     * @throws  EmptyTaskListException
+     * @throws  InvalidTaskDescriptionException
+     * @throws  NotExistTaskException
+     * @throws  MarkedTaskException
+     * @throws  UnmarkedTaskException
+     * @throws  DuplicatedTaskException
      */
     public static void parseChat(ConsoleUi ui, Chat chat) throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException, MarkedTaskException, UnmarkedTaskException, DuplicatedTaskException {
         Command addDeadlineCom = new AddDeadlineCommand(ui, chat);

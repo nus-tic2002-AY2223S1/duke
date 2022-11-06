@@ -15,9 +15,10 @@ public class AddTodoCommand extends Command {
     }
 
     /**
-     * execute adds todo and prints todo item added to taskList array
+     * Return adds todo and prints todo item added to taskList array
      *
-     * @return {void}
+     * @throws  DuplicatedTaskException
+     * @throws  InvalidTaskDescriptionException
      */
     @Override
     public void execute() throws DuplicatedTaskException, InvalidTaskDescriptionException {

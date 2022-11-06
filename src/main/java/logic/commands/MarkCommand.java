@@ -20,13 +20,12 @@ public class MarkCommand extends Command {
     }
 
     /**
-     * execute marks a task
+     * Return marks a task
      *
-     * @throws EmptyTaskListException
-     * @throws InvalidTaskDescriptionException
-     * @throws NotExistTaskException
-     * @throws MarkedTaskException
-     * @return {void}
+     * @throws  EmptyTaskListException
+     * @throws  InvalidTaskDescriptionException
+     * @throws  NotExistTaskException
+     * @throws  MarkedTaskException
      */
     @Override
     public void execute() throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException, MarkedTaskException {

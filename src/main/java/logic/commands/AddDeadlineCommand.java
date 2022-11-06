@@ -16,9 +16,10 @@ public class AddDeadlineCommand extends Command {
     }
 
     /**
-     * execute adds deadline and prints deadline item added to taskList array
+     * Return adds deadline and prints deadline item added to taskList array
      *
-     * @return {void}
+     * @throws  DuplicatedTaskException
+     * @throws  InvalidTaskDescriptionException
      */
     @Override
     public void execute() throws DuplicatedTaskException, InvalidTaskDescriptionException {
