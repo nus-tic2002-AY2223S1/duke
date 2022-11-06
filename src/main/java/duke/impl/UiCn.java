@@ -31,8 +31,8 @@ public class UiCn extends Ui {
         ERROR_FIND_DATE_INPUT("日期搜索不能为空。\n\t \u27a4 day <日期>"),
         ERROR_FIND_TASK_INPUT("关键字搜索不能为空。\n\t \u27a4 find <关键字>"),
         INFO_ARCHIVE("成功归档。"),
-        ERROR_ARCHIVE_SELECTION("归档文件不能为空。"),
         ERROR_ARCHIVE("归档失败。"),
+        ERROR_ARCHIVE_SELECTION("归档文件不能为空。"),
         INFO_RESTORE("成功恢复记录。"),
         ERROR_RESTORE("查找归档记录失败。"),
         ERROR_RESTORE_SELECTION("恢复文件选择不能为空。\n\t \u27a4 restore <索引>"),
@@ -42,7 +42,36 @@ public class UiCn extends Ui {
         ERROR_GET_INDEX("索引不存在。 请从%s个任务中选择。"),
         ERROR_GET_ARCHIVE_INDEX("索引不存在。 请从%s个归档中选择。"),
         ERROR_IS_INTEGER("请输入数字。"),
-        ERROR_UNKNOWN_COMMAND("未知指令。");
+        ERROR_UNKNOWN_COMMAND("未知指令。"),
+        INFO_ADD_TASK("好的. 我已新增以下任务：\n\t%s\n\t您现在有%s个任务。"),
+        INFO_REMOVE_TASK("好的。我已移除以下任务：\n\t%s\n\t您现在有%s个任务。"),
+        INFO_MARK_TASK("好！我已标记此任务为完成：\n%s"),
+        INFO_UNMARK_TASK("好，我已标记此任务为未完成：\n%s"),
+        INFO_PRINT_TASK("您的任务如下：\n%s"),
+        INFO_PRINT_NO_TASK("目前没有任务。"),
+        INFO_PRINT_DAY_TASK("您在这一天的任务如下：\n%s"),
+        INFO_PRINT_NO_DAY_TASK("您在%s这一天没有任何任务。"),
+        INFO_PRINT_FIND_TASK("包含关键词 '%s' 的任务如下：\n%s"),
+        INFO_PRINT_NO_FIND_TASK("您没有任何包含 '%s' 的任务。"),
+        ERROR_INVALID_DATE_FORMAT("日期格式无效。日期必须是 dd/mm/yyyy。"),
+        ERROR_INVALID_MONTH_FORMAT("月份格式无效。 月份必须介于 1 ~ 12。"),
+        ERROR_INVALID_YEAR_FORMAT("年份格式无效。年份必须是 yyyy。"),
+        ERROR_INVALID_DATE_TIME_FORMAT("日期/时间格式无效。 日期时间格式必须是 dd/mm/yyyy HHmm。"),
+        ERROR_INVALID_TIME_FORMAT("时间格式无效。 时间格式必须是 0000 ~ 2359。"),
+        ERROR_INCONSISTENT_TIME_RANGE_FORMAT("区间格式无效。 开始和结束格式必须一致。"
+                + "区间格式必须是\n\tdd/mm/yyyy - dd/mm/yyyy "
+                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm。"),
+        ERROR_INVALID_TIME_RANGE_FORMAT("格式无效。"
+                + "区间格式必须是\n\tdd/mm/yyyy  "
+                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n"
+                + "\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm。"),
+        ERROR_UNSPECIFIED_TIME_RANGE_FORMAT("请指定区间。"
+                + "区间格式必须是\n\tdd/mm/yyyy - dd/mm/yyyy "
+                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm。"),
+        ERROR_INVALID_DATE_SEPARATOR_FORMAT("日期区间必须使用 '-' 区隔"),
+        ERROR_PARSE_EXCEPTION("我不理解这个日期。 %s"),
+        ERROR_DATE_END_BEFORE_START_ERROR("结束早于开始。穿越时空不被允许。"),
+        ERROR_DATE_START_EQUALS_END_ERROR("开始和结束时间相同。");
 
         public final String text;
 
@@ -55,6 +84,26 @@ public class UiCn extends Ui {
         }
     }
 
+    /**
+     * Enum of task labels.
+     */
+    public enum UiLabel {
+        LABEL_DEADLINE("「期限」"),
+        LABEL_EVENT("「事件」"),
+        LABEL_TODO("「待办」"),
+        LABEL_EVENT_HEADER("日期："),
+        LABEL_HEADER("截止：");
+
+        public final String text;
+
+        UiLabel(String text) {
+            this.text = text;
+        }
+
+        public String getText() {
+            return this.text;
+        }
+    }
 
     public UiCn(LocaleRegion l) {
     }
@@ -63,8 +112,8 @@ public class UiCn extends Ui {
     }
 
     @Override
-    public String sendConfirmedOutput(StringBuilder message) {
-        return sendConfirmation(UiMessage.GENERIC_FORMATTED.getText(), String.valueOf(message));
+    public String sendConfirmedOutput(String message) {
+        return sendConfirmation(UiMessage.GENERIC_FORMATTED.getText(), message);
     }
 
     @Override
@@ -206,6 +255,7 @@ public class UiCn extends Ui {
         }
     }
 
+    @Override
     public String sendGoodbyeMessage() {
         return sendInfo(UiMessage.INFO_GOODBYE.getText(), "");
     }
@@ -219,13 +269,7 @@ public class UiCn extends Ui {
      */
     @Override
     public String printNewTasks(String task, int size) {
-        StringBuilder s = new StringBuilder();
-        s.append("好的. 我已新增以下任务：\n\t")
-                .append(task)
-                .append("\n\t您现在有")
-                .append(size)
-                .append("个任务。");
-        return sendConfirmedOutput(s);
+        return sendConfirmedOutput(String.format(UiMessage.INFO_ADD_TASK.getText(), task, size));
     }
 
     /**
@@ -237,13 +281,7 @@ public class UiCn extends Ui {
      */
     @Override
     public String printTaskRemovedByIndex(String task, int size) {
-        StringBuilder s = new StringBuilder();
-        s.append("好的。我已移除以下任务：\n\t")
-                .append(task)
-                .append("\n\t您现在有")
-                .append(size)
-                .append("个任务。");
-        return sendConfirmedOutput(s);
+        return sendConfirmedOutput(String.format(UiMessage.INFO_REMOVE_TASK.getText(), task, size));
     }
 
     /**
@@ -255,10 +293,9 @@ public class UiCn extends Ui {
      */
     @Override
     public String printMarkTask(String task, Boolean isMark) {
-        StringBuilder s = new StringBuilder();
-        s.append(isMark ? "好！我已标记此任务为完成：\n" : "好，我已标记此任务为未完成：\n")
-                .append(task);
-        return sendConfirmedOutput(s);
+        return (isMark
+                ? sendConfirmedOutput(String.format(UiMessage.INFO_MARK_TASK.getText(), task))
+                : sendConfirmedOutput(String.format(UiMessage.INFO_UNMARK_TASK.getText(), task)));
     }
 
     /**
@@ -270,14 +307,10 @@ public class UiCn extends Ui {
      */
     @Override
     public String printList(ArrayList<Task> tasks, Boolean withIndex) {
-        StringBuilder s = new StringBuilder();
         if (tasks.size() == 0) {
-            s.append("目前没有任务。");
-        } else {
-            s.append("您的任务如下：\n");
-            buildList(tasks, withIndex, s);
+            return sendConfirmedOutput(UiMessage.INFO_PRINT_NO_TASK.getText());
         }
-        return sendConfirmedOutput(s);
+        return sendConfirmedOutput(String.format(UiMessage.INFO_PRINT_TASK.getText(), buildList(tasks, withIndex)));
     }
 
     /**
@@ -290,14 +323,10 @@ public class UiCn extends Ui {
      */
     @Override
     public String printSelectedList(ArrayList<Task> tasks, Boolean withIndex, String date) {
-        StringBuilder s = new StringBuilder();
         if (tasks.size() == 0) {
-            s.append("您在").append(date).append("这一天没有任何任务。");
-        } else {
-            s.append("您在这一天的任务如下：\n");
-            buildList(tasks, withIndex, s);
+            return sendConfirmedOutput(String.format(UiMessage.INFO_PRINT_NO_DAY_TASK.getText(), date));
         }
-        return sendConfirmedOutput(s);
+        return sendConfirmedOutput(String.format(UiMessage.INFO_PRINT_DAY_TASK.getText(), buildList(tasks, withIndex)));
     }
 
     /**
@@ -310,100 +339,96 @@ public class UiCn extends Ui {
      */
     @Override
     public String printFoundList(ArrayList<Task> tasks, Boolean withIndex, String keyword) {
-        StringBuilder s = new StringBuilder();
         if (tasks.size() == 0) {
-            s.append("您没有任何包含 '")
-                    .append(keyword).append("' 的任务。");
-        } else {
-            s.append("包含关键词 '")
-                    .append(keyword).append("' 的任务如下：\n");
-            buildList(tasks, withIndex, s);
+            return sendConfirmedOutput(String.format(UiMessage.INFO_PRINT_NO_FIND_TASK.getText(), keyword));
         }
-        return sendConfirmedOutput(s);
+        return sendConfirmedOutput(
+                String.format(
+                        UiMessage.INFO_PRINT_FIND_TASK.getText(), keyword, buildList(tasks, withIndex)));
     }
-
 
     @Override
     public String printInvalidDateFormat() {
-        return sendGenericWarning("日期格式无效。 日期格式必须是 dd/mm/yyyy。");
+        return sendGenericWarning(UiMessage.ERROR_INVALID_DATE_FORMAT.getText());
     }
 
     @Override
     public String printInvalidMonthFormat() {
-        return sendGenericWarning("月份无效。 月份必须是 01 ~ 12。");
+        return sendGenericWarning(UiMessage.ERROR_INVALID_MONTH_FORMAT.getText());
     }
 
     @Override
     public String printInvalidYearFormat() {
-        return sendGenericWarning("年份无效。 年份必须是 yyyy。");
+        return sendGenericWarning(UiMessage.ERROR_INVALID_YEAR_FORMAT.getText());
     }
 
     @Override
     public String printInvalidDateTimeFormat() {
-        return sendGenericWarning("日期/时间格式无效。 日期时间格式必须是 dd/mm/yyyy HHmm。");
+        return sendGenericWarning(UiMessage.ERROR_INVALID_DATE_TIME_FORMAT.getText());
     }
 
     @Override
     public String printInvalidTimeFormat() {
-        return sendGenericWarning("时间格式无效。 时间格式必须是 0000 ~ 2359。");
+        return sendGenericWarning(UiMessage.ERROR_INVALID_TIME_FORMAT.getText());
     }
 
     @Override
     public String printInconsistentTimeRangeFormat() {
-        return sendGenericWarning("区间格式无效。 开始和结束格式必须一致。 "
-                + "区间格式必须是 \n\tdd/mm/yyyy - dd/mm/yyyy "
-                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+        return sendGenericWarning(UiMessage.ERROR_INCONSISTENT_TIME_RANGE_FORMAT.getText());
     }
 
     @Override
     public String printInvalidTimeRangeFormat() {
-        return sendGenericWarning("格式无效。 "
-                + "区间格式必须是 \n\tdd/mm/yyyy  "
-                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n"
-                + "\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+        return sendGenericWarning(UiMessage.ERROR_INVALID_TIME_RANGE_FORMAT.getText());
     }
 
     @Override
     public String printUnspecifiedTimeRangeFormat() {
-        return sendGenericWarning("请指定区间。 "
-                + "区间格式必须是 \n\tdd/mm/yyyy - dd/mm/yyyy "
-                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+        return sendGenericWarning(UiMessage.ERROR_UNSPECIFIED_TIME_RANGE_FORMAT.getText());
     }
 
     @Override
     public String printInvalidTDateSeparatorFormat() {
-        return sendGenericWarning("日期区间必须使用 '-' 区隔");
+        return sendGenericWarning(UiMessage.ERROR_INVALID_DATE_SEPARATOR_FORMAT.getText());
     }
 
     @Override
     public String printParseExceptionMessage(ParseException e) {
-        return sendGenericFatal("我不理解这个日期。 " + e.getMessage());
+        return sendGenericFatal(String.format(UiMessage.ERROR_PARSE_EXCEPTION.getText(), e.getMessage()));
+    }
+
+    @Override
+    public String printDateStartBeforeEndError() {
+        return sendGenericWarning(UiMessage.ERROR_DATE_END_BEFORE_START_ERROR.getText());
+    }
+
+    @Override
+    public String printDateStartEqualsEndError() {
+        return sendGenericWarning(UiMessage.ERROR_DATE_START_EQUALS_END_ERROR.getText());
     }
 
     @Override
     public String getEventLabel() {
-        return "「事件」";
+        return UiLabel.LABEL_EVENT.getText();
     }
 
     @Override
     public String getDeadlineLabel() {
-        return "「期限」";
+        return UiLabel.LABEL_DEADLINE.getText();
     }
-
 
     @Override
     public String getTodoLabel() {
-        return "「待办」";
+        return UiLabel.LABEL_TODO.getText();
     }
 
     @Override
     public String getEventHeader() {
-        return "日期：";
+        return UiLabel.LABEL_EVENT_HEADER.getText();
     }
 
     @Override
     public String getHeader() {
-        return "截止：";
+        return UiLabel.LABEL_HEADER.getText();
     }
-
 }

@@ -42,11 +42,61 @@ public class UiEn extends Ui {
         ERROR_GET_INDEX("This is not a valid index. Choose from the  %s tasks."),
         ERROR_GET_ARCHIVE_INDEX("This is not a valid index. Choose from the  %s records."),
         ERROR_IS_INTEGER("Enter the numeric item index."),
-        ERROR_UNKNOWN_COMMAND("Unknown Command.");
+        ERROR_UNKNOWN_COMMAND("Unknown Command."),
+        INFO_ADD_TASK("Okay, I have added the following task:\n\t%s\n\tYou now have %s."),
+        INFO_REMOVE_TASK("Okay, I have removed the following task:\n\t%s\n\tYou now have %s."),
+        INFO_MARK_TASK("Okay! I have marked the following task as completed:\n%s"),
+        INFO_UNMARK_TASK("Okay, I have marked the following task as incomplete:\n%s"),
+        INFO_PRINT_TASK("Here are your task(s):\n%s"),
+        INFO_PRINT_NO_TASK("You do not have any tasks at the moment."),
+        INFO_PRINT_DAY_TASK("These are your tasks on this day:\n%s"),
+        INFO_PRINT_NO_DAY_TASK("You do not have any tasks on %s."),
+        INFO_PRINT_FIND_TASK("These are your tasks that contains '%s':\n%s"),
+        INFO_PRINT_NO_FIND_TASK("You do not have any tasks that contains '%s'."),
+        ERROR_INVALID_DATE_FORMAT("Invalid date format. Date time has to be dd/mm/yyyy."),
+        ERROR_INVALID_MONTH_FORMAT("Invalid month format. Month has to be between 01 ~ 12."),
+        ERROR_INVALID_YEAR_FORMAT("Invalid year format. Year has to be yyyy."),
+        ERROR_INVALID_DATE_TIME_FORMAT("Invalid date/time format. Date time has to be dd/mm/yyyy HHmm."),
+        ERROR_INVALID_TIME_FORMAT("Invalid time format. Time has to be 0000 ~ 2359."),
+        ERROR_INCONSISTENT_TIME_RANGE_FORMAT("Invalid time range. Range start and end should be consistent. "
+                + "Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy "
+                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm."),
+        ERROR_INVALID_TIME_RANGE_FORMAT("Invalid format. "
+                + "Range has to be \n\tdd/mm/yyyy  "
+                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n"
+                + "\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm."),
+        ERROR_UNSPECIFIED_TIME_RANGE_FORMAT("Specify a range. "
+                + "Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy "
+                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm."),
+        ERROR_INVALID_DATE_SEPARATOR_FORMAT("Date range should be separated by '-'"),
+        ERROR_PARSE_EXCEPTION("I could not recognise this date. %s"),
+        ERROR_DATE_END_BEFORE_START_ERROR("End is earlier than start. Time travel is not allowed."),
+        ERROR_DATE_START_EQUALS_END_ERROR("Start and end are the same.");
 
         public final String text;
 
         UiMessage(String text) {
+            this.text = text;
+        }
+
+        public String getText() {
+            return this.text;
+        }
+    }
+
+    /**
+     * Enum of task labels.
+     */
+    public enum UiLabel {
+        LABEL_DEADLINE("[Deadline]"),
+        LABEL_EVENT("[Event]"),
+        LABEL_TODO("[Todo]"),
+        LABEL_EVENT_HEADER("At: "),
+        LABEL_HEADER("By: ");
+
+        public final String text;
+
+        UiLabel(String text) {
             this.text = text;
         }
 
@@ -62,8 +112,8 @@ public class UiEn extends Ui {
     }
 
     @Override
-    public String sendConfirmedOutput(StringBuilder message) {
-        return sendConfirmation(UiMessage.GENERIC_FORMATTED.getText(), String.valueOf(message));
+    public String sendConfirmedOutput(String message) {
+        return sendConfirmation(UiMessage.GENERIC_FORMATTED.getText(), message);
     }
 
     @Override
@@ -205,27 +255,16 @@ public class UiEn extends Ui {
         }
     }
 
+    @Override
     public String sendGoodbyeMessage() {
         return sendInfo(UiMessage.INFO_GOODBYE.getText(), "");
     }
 
-    /**
-     * Display message after adding new tasks
-     *
-     * @param task Description of task added
-     * @param size Current number of tasks
-     * @return Message
-     */
     @Override
     public String printNewTasks(String task, int size) {
-        StringBuilder s = new StringBuilder();
-        s.append("Got it. I've added this task:\n\t")
-                .append(task)
-                .append("\n\tNow you have ")
-                .append(size)
-                .append(size > 1 ? " tasks " : " task ")
-                .append("in the list.");
-        return sendConfirmedOutput(s);
+        return sendConfirmedOutput(
+                String.format(
+                        UiMessage.INFO_ADD_TASK.getText(), task, size < 2 ? size + " task" : size + " tasks"));
     }
 
     /**
@@ -237,14 +276,9 @@ public class UiEn extends Ui {
      */
     @Override
     public String printTaskRemovedByIndex(String task, int size) {
-        StringBuilder s = new StringBuilder();
-        s.append("Noted. I've removed this task:\n\t")
-                .append(task)
-                .append("\n\tNow you have ")
-                .append(size)
-                .append(size > 1 ? " tasks " : " task ")
-                .append("in the list.");
-        return sendConfirmedOutput(s);
+        return sendConfirmedOutput(
+                String.format(
+                        UiMessage.INFO_REMOVE_TASK.getText(), task, size < 2 ? size + " task" : size + " tasks"));
     }
 
     /**
@@ -256,10 +290,9 @@ public class UiEn extends Ui {
      */
     @Override
     public String printMarkTask(String task, Boolean isMark) {
-        StringBuilder s = new StringBuilder();
-        s.append(isMark ? "Nice! I've marked this task as done:\n" : "OK, I've marked this task as not done yet:\n")
-                .append(task);
-        return sendConfirmedOutput(s);
+        return (isMark
+                ? sendConfirmedOutput(String.format(UiMessage.INFO_MARK_TASK.getText(), task))
+                : sendConfirmedOutput(String.format(UiMessage.INFO_UNMARK_TASK.getText(), task)));
     }
 
     /**
@@ -271,14 +304,10 @@ public class UiEn extends Ui {
      */
     @Override
     public String printList(ArrayList<Task> tasks, Boolean withIndex) {
-        StringBuilder s = new StringBuilder();
         if (tasks.size() == 0) {
-            s.append("You have no task.");
-        } else {
-            s.append("Here are the task(s) in your list:\n");
-            buildList(tasks, withIndex, s);
+            return sendConfirmedOutput(UiMessage.INFO_PRINT_NO_TASK.getText());
         }
-        return sendConfirmedOutput(s);
+        return sendConfirmedOutput(String.format(UiMessage.INFO_PRINT_TASK.getText(), buildList(tasks, withIndex)));
     }
 
     /**
@@ -291,15 +320,10 @@ public class UiEn extends Ui {
      */
     @Override
     public String printSelectedList(ArrayList<Task> tasks, Boolean withIndex, String date) {
-        StringBuilder s = new StringBuilder();
         if (tasks.size() == 0) {
-            s.append("You have no task scheduled on ")
-                    .append(date);
-        } else {
-            s.append("Here are the task(s) scheduled on this day:\n");
-            buildList(tasks, withIndex, s);
+            return sendConfirmedOutput(String.format(UiMessage.INFO_PRINT_NO_DAY_TASK.getText(), date));
         }
-        return sendConfirmedOutput(s);
+        return sendConfirmedOutput(String.format(UiMessage.INFO_PRINT_DAY_TASK.getText(), buildList(tasks, withIndex)));
     }
 
     /**
@@ -312,99 +336,96 @@ public class UiEn extends Ui {
      */
     @Override
     public String printFoundList(ArrayList<Task> tasks, Boolean withIndex, String keyword) {
-        StringBuilder s = new StringBuilder();
         if (tasks.size() == 0) {
-            s.append("You have no task with keyword '")
-                    .append(keyword)
-                    .append("'");
-        } else {
-            s.append("Here are the task(s) that contains '")
-                    .append(keyword)
-                    .append("':\n");
-            buildList(tasks, withIndex, s);
+            return sendConfirmedOutput(String.format(UiMessage.INFO_PRINT_NO_FIND_TASK.getText(), keyword));
         }
-        return sendConfirmedOutput(s);
+        return sendConfirmedOutput(
+                String.format(
+                        UiMessage.INFO_PRINT_FIND_TASK.getText(), keyword, buildList(tasks, withIndex)));
     }
 
     @Override
     public String printInvalidDateFormat() {
-        return sendGenericWarning("Invalid date format. Date time has to be dd/mm/yyyy.");
+        return sendGenericWarning(UiMessage.ERROR_INVALID_DATE_FORMAT.getText());
     }
 
     @Override
     public String printInvalidMonthFormat() {
-        return sendGenericWarning("Invalid month format. Month has to be between 01 ~ 12.");
+        return sendGenericWarning(UiMessage.ERROR_INVALID_MONTH_FORMAT.getText());
     }
 
     @Override
     public String printInvalidYearFormat() {
-        return sendGenericWarning("Invalid year format. Year has to be yyyy.");
+        return sendGenericWarning(UiMessage.ERROR_INVALID_YEAR_FORMAT.getText());
     }
 
     @Override
     public String printInvalidDateTimeFormat() {
-        return sendGenericWarning("Invalid date/time format. Date time has to be dd/mm/yyyy HHmm.");
+        return sendGenericWarning(UiMessage.ERROR_INVALID_DATE_TIME_FORMAT.getText());
     }
 
     @Override
     public String printInvalidTimeFormat() {
-        return sendGenericWarning("Invalid time format. Time has to be 0000 ~ 2359.");
+        return sendGenericWarning(UiMessage.ERROR_INVALID_TIME_FORMAT.getText());
     }
 
     @Override
     public String printInconsistentTimeRangeFormat() {
-        return sendGenericWarning("Invalid time range. Range start and end should be consistent. "
-                + "Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy "
-                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+        return sendGenericWarning(UiMessage.ERROR_INCONSISTENT_TIME_RANGE_FORMAT.getText());
     }
 
     @Override
     public String printInvalidTimeRangeFormat() {
-        return sendGenericWarning("Invalid format. "
-                + "Range has to be \n\tdd/mm/yyyy  "
-                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n"
-                + "\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+        return sendGenericWarning(UiMessage.ERROR_INVALID_TIME_RANGE_FORMAT.getText());
     }
 
     @Override
     public String printUnspecifiedTimeRangeFormat() {
-        return sendGenericWarning("Specify a range. "
-                + "Range has to be \n\tdd/mm/yyyy - dd/mm/yyyy "
-                + "\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+        return sendGenericWarning(UiMessage.ERROR_UNSPECIFIED_TIME_RANGE_FORMAT.getText());
     }
 
     @Override
     public String printInvalidTDateSeparatorFormat() {
-        return sendGenericWarning("Date range should be separated by '-'");
+        return sendGenericWarning(UiMessage.ERROR_INVALID_DATE_SEPARATOR_FORMAT.getText());
     }
 
     @Override
     public String printParseExceptionMessage(ParseException e) {
-        return sendGenericFatal("I could not recognise this date. " + e.getMessage());
+        return sendGenericFatal(String.format(UiMessage.ERROR_PARSE_EXCEPTION.getText(), e.getMessage()));
+    }
+
+    @Override
+    public String printDateStartBeforeEndError() {
+        return sendGenericWarning(UiMessage.ERROR_DATE_END_BEFORE_START_ERROR.getText());
+    }
+
+    @Override
+    public String printDateStartEqualsEndError() {
+        return sendGenericWarning(UiMessage.ERROR_DATE_START_EQUALS_END_ERROR.getText());
     }
 
     @Override
     public String getEventLabel() {
-        return "[Event]";
+        return UiLabel.LABEL_EVENT.getText();
     }
 
     @Override
     public String getDeadlineLabel() {
-        return "[Deadline]";
+        return UiLabel.LABEL_DEADLINE.getText();
     }
 
     @Override
     public String getTodoLabel() {
-        return "[Todo]";
+        return UiLabel.LABEL_TODO.getText();
     }
 
     @Override
     public String getEventHeader() {
-        return "At: ";
+        return UiLabel.LABEL_EVENT_HEADER.getText();
     }
 
     @Override
     public String getHeader() {
-        return "By: ";
+        return UiLabel.LABEL_HEADER.getText();
     }
 }

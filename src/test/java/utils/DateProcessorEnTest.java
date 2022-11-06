@@ -276,4 +276,147 @@ public class DateProcessorEnTest {
             assertEquals(expected.getMessage(), e.getMessage());
         }
     }
+
+    @Test
+    public void processDateTimRangeNoRangeTest() {
+        String s = "2/4/1999";
+        long expected1 = 922982400;
+        long expected2 = 923068799;
+        try {
+            long[] actual = d.processDateTimeRange(s);
+            assertEquals(expected1, actual[0]);
+            assertEquals(expected2, actual[1]);
+        } catch (DukeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeNoEndDateTest() {
+        String s = "2/4/1999-";
+        DukeException expected = new DukeException("! Invalid date format. Date time has to be dd/mm/yyyy.");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeNoStartDateTest() {
+        String s = "-2/4/1999";
+        DukeException expected = new DukeException("! Invalid date format. Date time has to be dd/mm/yyyy.");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeNoSeparatorTest() {
+        String s = "2/4/1999 3/4/1999";
+        DukeException expected = new DukeException("! Date range should be separated by '-'");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeNoSeparatorNoSpaceTest() {
+        String s = "2/4/19993/4/1999";
+        DukeException expected = new DukeException("! Date range should be separated by '-'");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeDayToDayValidTest() {
+        String s = "1/4/1999 - 2/4/1999";
+        long expected1 = 922896000;
+        long expected2 = 923068799;
+        try {
+            long[] actual = d.processDateTimeRange(s);
+            assertEquals(expected1, actual[0]);
+            assertEquals(expected2, actual[1]);
+        } catch (DukeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeDayToDayInvalidEndBeforeStartTest() {
+        String s = "2/4/1999 - 1/4/1999";
+        DukeException expected = new DukeException("! End is earlier than start. Time travel is not allowed.");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeDayToDayIdenticalTest() {
+        String s = "1/4/1999 - 1/4/1999";
+        long expected1 = 922896000;
+        try {
+            long[] actual = d.processDateTimeRange(s);
+            assertEquals(expected1, actual[0]);
+        } catch (DukeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeTimeToTimeInvalidEndBeforeStartTest() {
+        String s = "1/4/1999 2359 - 1/4/1999 0000";
+        DukeException expected = new DukeException("! End is earlier than start. Time travel is not allowed.");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeTimeToTimeIdenticalTest() {
+        String s = "2/4/1999 0000 - 2/4/1999 0000";
+        DukeException expected = new DukeException("! Start and end are the same.");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeDateTimeToDateTest() {
+        String s = "1/4/1999 2359 - 2/4/1999";
+        DukeException expected =
+                new DukeException("! Invalid time range. Range start and end should be consistent. Range has to be "
+                        + "\n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeDateToDateTimeTest() {
+        String s = "1/4/1999 - 2/4/1999 0000";
+        DukeException expected =
+                new DukeException("! Invalid time range. Range start and end should be consistent. Range has to be "
+                        + "\n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm.");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
 }

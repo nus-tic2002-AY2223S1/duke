@@ -46,10 +46,10 @@ public class Event extends Task {
 
         if (this.to == 0) {
             return label + super.toString()
-                    + " (" + ui.getEventHeader() + d.unixToString(this.due) + ")";
+                    + " (" + d.unixToString(this.due) + ")";
         }
         return label + super.toString()
-                + " (" + ui.getEventHeader() + d.unixToString(this.due)
+                + " (" + d.unixToString(this.due)
                 + " ~ " + d.unixToString(this.to) + ")";
     }
 

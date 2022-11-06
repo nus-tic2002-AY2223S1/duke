@@ -15,8 +15,7 @@ public class UiCnTest {
 
     @Test
     public void sendConfirmedOutputTest() {
-        StringBuilder msg = new StringBuilder();
-        msg.append("MsgL1").append("MsgL2");
+        String msg = "MsgL1MsgL2";
         String expected = "✔ MsgL1MsgL2";
         String actual = u.sendConfirmedOutput(msg);
         assertEquals(expected, actual);

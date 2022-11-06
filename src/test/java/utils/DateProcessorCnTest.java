@@ -183,7 +183,7 @@ public class DateProcessorCnTest {
     @Test
     public void processDateTimeInvalidDateYearTest() {
         String s = "1/4/99 0900";
-        DukeException expected = new DukeException("! 年份无效。 年份必须是 yyyy。");
+        DukeException expected = new DukeException("! 年份格式无效。年份必须是 yyyy。");
         try {
             d.processDateTime(s);
         } catch (DukeException e) {
@@ -194,7 +194,7 @@ public class DateProcessorCnTest {
     @Test
     public void processDateTimeInvalidDateTest() {
         String s = "1/99 0900";
-        DukeException expected = new DukeException("! 日期格式无效。 日期格式必须是 dd/mm/yyyy。");
+        DukeException expected = new DukeException("! 日期格式无效。日期必须是 dd/mm/yyyy。");
         try {
             d.processDateTime(s);
         } catch (DukeException e) {
@@ -213,7 +213,7 @@ public class DateProcessorCnTest {
     @Test
     public void processDateInvalidYearTest() {
         String s = "1/4/99";
-        DukeException expected = new DukeException("! 年份无效。 年份必须是 yyyy。");
+        DukeException expected = new DukeException("! 年份格式无效。年份必须是 yyyy。");
         try {
             d.processDate(s);
         } catch (DukeException e) {
@@ -224,7 +224,7 @@ public class DateProcessorCnTest {
     @Test
     public void processDateInvalidDateTest() {
         String s = "1/4";
-        DukeException expected = new DukeException("! 日期格式无效。 日期格式必须是 dd/mm/yyyy。");
+        DukeException expected = new DukeException("! 日期格式无效。日期必须是 dd/mm/yyyy。");
         try {
             d.processDate(s);
         } catch (DukeException e) {
@@ -235,7 +235,7 @@ public class DateProcessorCnTest {
     @Test
     public void processDateInvalidTest() {
         String s = "-1/-1/0000";
-        DukeException expected = new DukeException("! 月份无效。 月份必须是 01 ~ 12。");
+        DukeException expected = new DukeException("! 月份格式无效。 月份必须介于 1 ~ 12。");
         try {
             System.out.println(d.processDate(s));
         } catch (DukeException e) {
@@ -258,7 +258,7 @@ public class DateProcessorCnTest {
     @Test
     public void processDatePseudoValidMonthTest() {
         String s = "1/13/0000";
-        DukeException expected = new DukeException("! 月份无效。 月份必须是 01 ~ 12。");
+        DukeException expected = new DukeException("! 月份格式无效。 月份必须介于 1 ~ 12。");
         try {
             System.out.println(d.processDate(s));
         } catch (DukeException e) {
@@ -269,9 +269,150 @@ public class DateProcessorCnTest {
     @Test
     public void processDatePseudoValidDayMonthTest() {
         String s = "32/13/0000";
-        DukeException expected = new DukeException("! 月份无效。 月份必须是 01 ~ 12。");
+        DukeException expected = new DukeException("! 月份格式无效。 月份必须介于 1 ~ 12。");
         try {
             System.out.println(d.processDate(s));
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeNoRangeTest() {
+        String s = "2/4/1999";
+        long expected1 = 922982400;
+        long expected2 = 923068799;
+        try {
+            long[] actual = d.processDateTimeRange(s);
+            assertEquals(expected1, actual[0]);
+            assertEquals(expected2, actual[1]);
+        } catch (DukeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeNoEndDateTest() {
+        String s = "2/4/1999-";
+        DukeException expected = new DukeException("! 日期格式无效。日期必须是 dd/mm/yyyy。");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeNoStartDateTest() {
+        String s = "-2/4/1999";
+        DukeException expected = new DukeException("! 日期格式无效。日期必须是 dd/mm/yyyy。");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeNoSeparatorTest() {
+        String s = "2/4/1999 3/4/1999";
+        DukeException expected = new DukeException("! 日期区间必须使用 '-' 区隔");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeNoSeparatorNoSpaceTest() {
+        String s = "2/4/19993/4/1999";
+        DukeException expected = new DukeException("! 日期区间必须使用 '-' 区隔");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeDayToDayValidTest() {
+        String s = "1/4/1999 - 2/4/1999";
+        long expected1 = 922896000;
+        long expected2 = 923068799;
+        try {
+            long[] actual = d.processDateTimeRange(s);
+            assertEquals(expected1, actual[0]);
+            assertEquals(expected2, actual[1]);
+        } catch (DukeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeDayToDayInvalidEndBeforeStartTest() {
+        String s = "2/4/1999 - 1/4/1999";
+        DukeException expected = new DukeException("! 结束早于开始。穿越时空不被允许。");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeDayToDayIdenticalTest() {
+        String s = "1/4/1999 - 1/4/1999";
+        long expected1 = 922896000;
+        try {
+            long[] actual = d.processDateTimeRange(s);
+            assertEquals(expected1, actual[0]);
+        } catch (DukeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeTimeToTimeInvalidEndBeforeStartTest() {
+        String s = "1/4/1999 2359 - 1/4/1999 0000";
+        DukeException expected = new DukeException("! 结束早于开始。穿越时空不被允许。");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeTimeToTimeIdenticalTest() {
+        String s = "2/4/1999 0000 - 2/4/1999 0000";
+        DukeException expected = new DukeException("! 开始和结束时间相同。");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeDateTimeToDateTest() {
+        String s = "1/4/1999 2359 - 2/4/1999";
+        DukeException expected = new DukeException("! 区间格式无效。 开始和结束格式必须一致。区间格式必须是"
+                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm。");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimRangeDateToDateTimeTest() {
+        String s = "1/4/1999 - 2/4/1999 0000";
+        DukeException expected = new DukeException("! 区间格式无效。 开始和结束格式必须一致。区间格式必须是"
+                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm。");
+        try {
+            d.processDateTimeRange(s);
         } catch (DukeException e) {
             assertEquals(expected.getMessage(), e.getMessage());
         }

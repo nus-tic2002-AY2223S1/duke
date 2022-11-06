@@ -15,8 +15,7 @@ public class UiEnTest {
 
     @Test
     public void sendConfirmedOutputTest() {
-        StringBuilder msg = new StringBuilder();
-        msg.append("MsgL1").append("MsgL2");
+        String msg = "MsgL1MsgL2";
         String expected = "✔ MsgL1MsgL2";
         String actual = u.sendConfirmedOutput(msg);
         assertEquals(expected, actual);
@@ -150,7 +149,7 @@ public class UiEnTest {
         tl.injectLastUserName("Name");
         Ui u = new UiEn();
         String expected1 = "» Hello again, Name! Welcome back. What can I do for you?";
-        String expected2 = "✔ Here are the task(s) in your list:\n1.[   ] Task1";
+        String expected2 = "✔ Here are your task(s):\n1.[   ] Task1";
         String expected3 = String.format("[Last Modified on %s]\n", dateString);
 
         String[] actual = u.sendWelcomeMessage(tl, true);
@@ -170,8 +169,8 @@ public class UiEnTest {
     @Test
     public void printNewTasksTest() {
         String taskName = "Task1";
-        String expected = "✔ Got it. I've added this task:\n\t"
-                + taskName + "\n\tNow you have 1 task in the list.";
+        String expected = "✔ Okay, I have added the following task:\n\t"
+                + taskName + "\n\tYou now have 1 task.";
         String actual = u.printNewTasks(taskName, 1);
         assertEquals(expected, actual);
     }
@@ -179,8 +178,8 @@ public class UiEnTest {
     @Test
     public void printTaskRemovedByIndexTest() {
         String taskName = "Task1";
-        String expected = "✔ Noted. I've removed this task:\n\t"
-                + taskName + "\n\tNow you have 0 task in the list.";
+        String expected = "✔ Okay, I have removed the following task:\n\t"
+                + taskName + "\n\tYou now have 0 task.";
         String actual = u.printTaskRemovedByIndex(taskName, 0);
         assertEquals(expected, actual);
     }
@@ -188,7 +187,7 @@ public class UiEnTest {
     @Test
     public void printMarkTaskTest() {
         String taskName = "Task1";
-        String expected = "✔ Nice! I've marked this task as done:\n" + taskName;
+        String expected = "✔ Okay! I have marked the following task as completed:\n" + taskName;
         String actual = u.printMarkTask(taskName, true);
         assertEquals(expected, actual);
     }
@@ -196,7 +195,7 @@ public class UiEnTest {
     @Test
     public void printListWithoutTaskTest() {
         TaskList tl = new TaskList();
-        String expected = "✔ You have no task.";
+        String expected = "✔ You do not have any tasks at the moment.";
         String actual = u.printList(tl.getList(), true);
         assertEquals(expected, actual);
     }
@@ -208,7 +207,7 @@ public class UiEnTest {
         tl.addTask(t);
         Task t1 = new Task("Task2");
         tl.addTask(t1);
-        String expected = "✔ Here are the task(s) in your list:\n1.[   ] Task1\n2.[   ] Task2";
+        String expected = "✔ Here are your task(s):\n1.[   ] Task1\n2.[   ] Task2";
         String actual = u.printList(tl.getList(), true);
         assertEquals(expected, actual);
     }
@@ -220,7 +219,7 @@ public class UiEnTest {
         tl.addTask(t);
         Task t1 = new Task("Task2");
         tl.addTask(t1);
-        String expected = "✔ Here are the task(s) in your list:\n[   ] Task1\n[   ] Task2";
+        String expected = "✔ Here are your task(s):\n[   ] Task1\n[   ] Task2";
         String actual = u.printList(tl.getList(), false);
         assertEquals(expected, actual);
     }
@@ -232,7 +231,7 @@ public class UiEnTest {
         tl.addTask(t);
         Task t1 = new Task("Task2");
         tl.addTask(t1);
-        String expected = "✔ Here are the task(s) scheduled on this day:\n1.[   ] Task1\n2.[   ] Task2";
+        String expected = "✔ These are your tasks on this day:\n1.[   ] Task1\n2.[   ] Task2";
         String actual = u.printSelectedList(tl.getList(), true, "1/1/1970");
         assertEquals(expected, actual);
     }
@@ -244,7 +243,7 @@ public class UiEnTest {
         tl.addTask(t);
         Task t1 = new Task("Task2");
         tl.addTask(t1);
-        String expected = "✔ Here are the task(s) scheduled on this day:\n[   ] Task1\n[   ] Task2";
+        String expected = "✔ These are your tasks on this day:\n[   ] Task1\n[   ] Task2";
         String actual = u.printSelectedList(tl.getList(), false, "1/1/1970");
         assertEquals(expected, actual);
     }
@@ -252,7 +251,7 @@ public class UiEnTest {
     @Test
     public void printSelectedListWithoutTaskTest() {
         TaskList tl = new TaskList();
-        String expected = "✔ You have no task scheduled on 1/1/1970";
+        String expected = "✔ You do not have any tasks on 1/1/1970.";
         String actual = u.printSelectedList(tl.getList(), true, "1/1/1970");
         assertEquals(expected, actual);
     }
@@ -264,7 +263,7 @@ public class UiEnTest {
         tl.addTask(t);
         Task t1 = new Task("Task2");
         tl.addTask(t1);
-        String expected = "✔ Here are the task(s) that contains 'keyword':\n1.[   ] Task1\n2.[   ] Task2";
+        String expected = "✔ These are your tasks that contains 'keyword':\n1.[   ] Task1\n2.[   ] Task2";
         String actual = u.printFoundList(tl.getList(), true, "keyword");
         assertEquals(expected, actual);
     }
@@ -276,7 +275,7 @@ public class UiEnTest {
         tl.addTask(t);
         Task t1 = new Task("Task2");
         tl.addTask(t1);
-        String expected = "✔ Here are the task(s) that contains 'keyword':\n[   ] Task1\n[   ] Task2";
+        String expected = "✔ These are your tasks that contains 'keyword':\n[   ] Task1\n[   ] Task2";
         String actual = u.printFoundList(tl.getList(), false, "keyword");
         assertEquals(expected, actual);
     }
@@ -284,7 +283,7 @@ public class UiEnTest {
     @Test
     public void printFoundListWithoutTaskTest() {
         TaskList tl = new TaskList();
-        String expected = "✔ You have no task with keyword 'keyword'";
+        String expected = "✔ You do not have any tasks that contains 'keyword'.";
         String actual = u.printFoundList(tl.getList(), true, "keyword");
         assertEquals(expected, actual);
     }

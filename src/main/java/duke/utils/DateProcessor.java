@@ -117,6 +117,10 @@ public class DateProcessor {
         String[] parsedRange = s.split("-", 2);
 
         if (parsedRange.length == 1) {
+            if (!s.contains("-")) {
+                throw new DukeException(ui.printInvalidTDateSeparatorFormat());
+            }
+
             if (s.contains(" ")) {
                 throw new DukeException(ui.printInvalidTimeRangeFormat());
             }
@@ -139,10 +143,6 @@ public class DateProcessor {
             throw new DukeException(ui.printUnspecifiedTimeRangeFormat());
         }
 
-        if (!s.contains("-")) {
-            throw new DukeException(ui.printInvalidTDateSeparatorFormat());
-        }
-
         String[] parsedDateFrom = parsedRange[0].trim().split(" ", 2);
         String[] parsedDateTo = parsedRange[1].trim().split(" ", 2);
 
@@ -152,6 +152,14 @@ public class DateProcessor {
             try {
                 timeStart = processDate(parsedDateFrom[0].trim());
                 timeEnd = processDate(parsedDateTo[0].trim());
+
+                if (timeEnd - timeStart == 0) {
+                    return new long[]{timeStart};
+                }
+
+                if (timeEnd - timeStart < 0) {
+                    throw new DukeException(ui.printDateStartBeforeEndError());
+                }
             } catch (DukeException e) {
                 throw new DukeException(e.getMessage());
             }
@@ -168,6 +176,14 @@ public class DateProcessor {
 
         if (timeFrom == -1 || timeTo == -1) {
             throw new DukeException(ui.printInconsistentTimeRangeFormat());
+        }
+
+        if (timeTo - timeFrom == 0) {
+            throw new DukeException(ui.printDateStartEqualsEndError());
+        }
+
+        if (timeTo - timeFrom < 0) {
+            throw new DukeException(ui.printDateStartBeforeEndError());
         }
         return new long[]{timeFrom, timeTo};
     }
