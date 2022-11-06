@@ -1,0 +1,4 @@
+ignore:
+  - "src/main/java/duke/gui"
+  - "src/main/java/duke/impl/Runner.java"
+  - "src/main/java/duke/orm/"
