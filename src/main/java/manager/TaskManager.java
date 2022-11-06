@@ -14,13 +14,13 @@ public class TaskManager {
     
     private static TaskManager instance;
     private static ArrayList<Task> taskList;
-    private FileManager fileManager;
+    private StorageManager storageManager;
     
     private TaskManager() {
         taskList = new ArrayList<>();
-        fileManager = FileManager.getInstance();
+        storageManager = StorageManager.getInstance();
         try {
-            convertDetailsToTaskList(fileManager.readFromFile());
+            convertDetailsToTaskList(storageManager.readFromFile());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (IllegalContentException e) {
@@ -144,7 +144,7 @@ public class TaskManager {
     
     private void onTaskListChanged() {
         try {
-            fileManager.writeToFile(getTasksFormattedString());
+            storageManager.writeToFile(getTasksFormattedString());
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e.getMessage());
         }

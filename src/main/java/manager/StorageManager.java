@@ -8,21 +8,21 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class FileManager {
+public class StorageManager {
 
-    private static FileManager instance;
+    private static StorageManager instance;
     private static final String DIRECTORY_PATH = "/data";
     private static final String FILE_NAME = "duke.txt";
     private static String projectDirectory;
  
-    private FileManager() {
+    private StorageManager() {
     }
     public static void newInstance() {
-        instance = new FileManager();
+        instance = new StorageManager();
         projectDirectory = System.getProperty("user.dir");
     }
 
-    public static FileManager getInstance() {
+    public static StorageManager getInstance() {
         if (instance == null) {
             newInstance();
         }
