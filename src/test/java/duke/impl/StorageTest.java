@@ -1,4 +1,4 @@
-package impl;
+package duke.impl;
 
 
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import duke.impl.Storage;
 import duke.tasks.Deadline;
 import duke.tasks.Event;
 import duke.tasks.Task;
