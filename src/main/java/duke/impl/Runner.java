@@ -499,6 +499,11 @@ public class Runner {
         File folder = new File(ARCHIVE_DIR);
         File[] listOfFiles = folder.listFiles();
         assert listOfFiles != null;
+
+        if (listOfFiles.length == 1 && listOfFiles[0].getName().equals(".gitkeep")) {
+            return ui.printNoArchiveFileFoundError();
+        }
+
         int i = 1;
         StringBuilder s = new StringBuilder();
         s.append(printListFilesHeaderMessage());

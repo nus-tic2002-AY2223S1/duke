@@ -32,12 +32,13 @@ public class UiCn extends Ui {
         ERROR_FIND_TASK_INPUT("关键字搜索不能为空。\n\t \u27a4 find <关键字>"),
         INFO_ARCHIVE("成功归档。"),
         ERROR_ARCHIVE("归档失败。"),
+        ERROR_ARCHIVE_NO_FILE_FOUND("不存在任何归档记录。"),
         ERROR_ARCHIVE_SELECTION("归档文件不能为空。"),
         INFO_RESTORE("成功恢复记录。"),
         ERROR_RESTORE("查找归档记录失败。"),
         ERROR_RESTORE_SELECTION("恢复文件选择不能为空。\n\t \u27a4 restore <索引>"),
         ERROR_RESTORE_NO_RECORD("恢复记录失败。"),
-        INFO_LIST_FILES_HEADER("输入归档记录对应的索引。 restore <索引>"),
+        INFO_LIST_FILES_HEADER("输入归档记录对应的索引。 restore <索引>\n"),
         INFO_LIST_FILES_FOOTER("聊天将会在恢复记录后刷新。"),
         ERROR_GET_INDEX("索引不存在。 请从%s个任务中选择。"),
         ERROR_GET_ARCHIVE_INDEX("索引不存在。 请从%s个归档中选择。"),
@@ -170,6 +171,11 @@ public class UiCn extends Ui {
     @Override
     public String sendProcessRestoreError() {
         return sendFatal(UiMessage.ERROR_RESTORE_SELECTION.getText(), "");
+    }
+
+    @Override
+    public String printNoArchiveFileFoundError() {
+        return sendFatal(UiMessage.ERROR_ARCHIVE_NO_FILE_FOUND.getText(), "");
     }
 
     @Override
