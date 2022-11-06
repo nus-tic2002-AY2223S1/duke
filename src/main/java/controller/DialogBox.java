@@ -18,6 +18,13 @@ public class DialogBox extends HBox {
     BackgroundSize bgSize;
     BackgroundImage bgImage;
     
+    /**
+     * DialogBox constructor
+     *
+     * @param l      Label variable to display message
+     * @param iv     image variable to display profile image
+     * @param isUser boolean value to identify if it is diaplay a user message
+     */
     public DialogBox(Label l, ImageView iv, boolean isUser) {
         text = l;
         displayPicture = iv;
@@ -57,10 +64,24 @@ public class DialogBox extends HBox {
         this.getChildren().setAll(tmp);
     }
     
+    /**
+     * Generate a DialogBox to display user message
+     *
+     * @param l  Label variable to display message
+     * @param iv image variable to display profile image
+     * @return A DialogBox to MainWindow
+     */
     public static DialogBox getUserDialog(Label l, ImageView iv) {
         return new DialogBox(l, iv, true);
     }
     
+    /**
+     * Generate a DialogBox to display Duke message
+     *
+     * @param l  Label variable to display message
+     * @param iv image variable to display profile image
+     * @return A DialogBox to MainWindow
+     */
     public static DialogBox getDukeDialog(Label l, ImageView iv) {
         return new DialogBox(l, iv, false);
     }

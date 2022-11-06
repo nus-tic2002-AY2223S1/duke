@@ -18,6 +18,11 @@ public class TaskManager {
     private static ArrayList<Task> taskList;
     private StorageManager storageManager;
     
+    /**
+     * TaskManager Constructor
+     * Initiates task list, StorageManager
+     * Retrieves last saved task information and adds all to task list
+     */
     private TaskManager() {
         taskList = new ArrayList<>();
         storageManager = StorageManager.getInstance();
@@ -30,10 +35,19 @@ public class TaskManager {
         }
     }
     
+    /**
+     * Creates a new instance of TaskManager class
+     */
     public static void newInstance() {
         instance = new TaskManager();
     }
     
+    /**
+     * Returns the current TaskManager instance
+     * If not exist, creates a new instance and return
+     *
+     * @return current TaskManager instance
+     */
     public static TaskManager getInstance() {
         if (instance == null) {
             newInstance();
@@ -41,6 +55,11 @@ public class TaskManager {
         return instance;
     }
     
+    /**
+     * Returns task information with display format
+     *
+     * @return task list information to display
+     */
     public String getTaskListString() {
         StringBuilder printStr = new StringBuilder("Here are the tasks in your list: \n");
         for (int i = 0; i < taskList.size(); i++) {
@@ -61,6 +80,14 @@ public class TaskManager {
         PrintUtil.printWithIndentation(printStr.toString());
     }
     
+    /**
+     * Takes in a mark or unmark command object and perform related action
+     * Returns execution result
+     *
+     * @param cmd mark or unmark command object
+     * @return execution result
+     * @throws IllegalActionException
+     */
     public String getUpdateTaskResult(Command cmd) throws IllegalActionException {
         
         String result = "";
@@ -87,6 +114,14 @@ public class TaskManager {
         return result;
     }
     
+    /**
+     * Takes in an add command object and perform related action
+     * Returns execution result
+     *
+     * @param cmd add command object
+     * @return execution result
+     * @throws IllegalActionException
+     */
     public String getAddTaskResult(Command cmd) throws IllegalContentException {
         
         String result = "";
@@ -120,6 +155,14 @@ public class TaskManager {
         return result;
     }
     
+    /**
+     * Takes in a delete command object and perform related action
+     * Returns execution result
+     *
+     * @param cmd delete command object
+     * @return execution result
+     * @throws IllegalActionException
+     */
     public String getDeleteTaskResult(Command cmd) throws IllegalContentException {
         
         String result = "";
@@ -143,6 +186,9 @@ public class TaskManager {
     }
     
     
+    /**
+     * Performs save task list to local action
+     */
     private void onTaskListChanged() {
         try {
             storageManager.writeToFile(getTasksFormattedString());
@@ -151,6 +197,11 @@ public class TaskManager {
         }
     }
     
+    /**
+     * Reformats task list to string with saving format
+     *
+     * @return task list information that can be used to save locally
+     */
     private String getTasksFormattedString() {
         StringBuilder result = new StringBuilder();
         
@@ -161,6 +212,13 @@ public class TaskManager {
         return result.toString();
     }
     
+    /**
+     * Converts task info strings to task objects
+     * Adds all task objects to taskList
+     *
+     * @param taskDetails tasks information list
+     * @throws IllegalContentException
+     */
     private void convertDetailsToTaskList(ArrayList<String> taskDetails) throws IllegalContentException {
         for (String detail : taskDetails) {
             String[] parts = detail.split(" \\| ");
@@ -181,6 +239,14 @@ public class TaskManager {
         }
     }
     
+    /**
+     * Takes in a find command object and perform related action
+     * Returns execution result
+     *
+     * @param cmd find command object
+     * @return execution result
+     * @throws IllegalActionException
+     */
     public String getFindTaskResult(Command cmd) {
         ArrayList<Task> resultArr = new ArrayList<>();
         for (Task task : taskList) {
@@ -197,7 +263,14 @@ public class TaskManager {
         return resultStr.toString();
     }
     
-    
+    /**
+     * Takes in a sort command object and perform related action
+     * Returns execution result
+     *
+     * @param cmd sort command object
+     * @return execution result
+     * @throws IllegalActionException
+     */
     public String getSortTaskResult(Command cmd) {
         if (cmd.getDescription().equals("name")) {
             taskList.sort(Task.descriptionComparator);

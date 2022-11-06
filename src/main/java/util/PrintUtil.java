@@ -10,7 +10,7 @@ public class PrintUtil {
 
     }
     
-    public static void printErrorMessage(Throwable e) {
+    public static void printErrorMessage(Exception e) {
         printWithIndentation(e.getMessage());
     }
     

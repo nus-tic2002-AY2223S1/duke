@@ -11,11 +11,23 @@ public class Duke {
     public static String[] inputArr; //["action", "content"]
     public static CommandManager commandManager;
     
+    /**
+     * Duke Constructor
+     * Initiate CommandManage instance here
+     */
     public Duke() {
         commandManager = CommandManager.getInstance();
     }
     
-    public void getUserInput(String input) throws IllegalActionException, EmptyActionException {
+    /**
+     * Validate user input
+     * And return exception if not valid
+     *
+     * @param input user input
+     * @throws IllegalActionException
+     * @throws EmptyActionException
+     */
+    public void validateUserInput(String input) throws IllegalActionException, EmptyActionException {
         if (input.isEmpty()) {
             throw new EmptyActionException();
         }
@@ -27,14 +39,18 @@ public class Duke {
         }
     }
     
+    
     /**
-     * You should have your own function to generate a response to user input.
-     * Replace this stub with your completed method.
+     * Takes in user input and execute it as a command
+     * Return Duke's response
+     *
+     * @param input user input
+     * @return Duke's response
      */
     public String getResponse(String input) {
         String executionResult = "";
         try {
-            getUserInput(input);
+            validateUserInput(input);
             executionResult = commandManager.executeUserInput(inputArr);
             
         } catch (IllegalActionException | EmptyActionException | IllegalContentException e) {
@@ -44,6 +60,11 @@ public class Duke {
         return executionResult;
     }
     
+    /**
+     * Return greeting message from Duke to display on application starts
+     *
+     * @return Greeting message
+     */
     public String getGreetingMessage(){
         return "Hello! I'm Duke\nWhat can I do for you?\n\n" +
                 "1. To list all existing tasks, enter \"list\".\n" +

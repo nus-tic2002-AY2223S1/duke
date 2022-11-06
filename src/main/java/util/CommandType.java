@@ -27,6 +27,12 @@ public enum CommandType {
         return this.cmd;
     }
     
+    /**
+     * Checks if inputted text matches one of the CommandType value
+     *
+     * @param text inputted text
+     * @return if inputted text is a CommandType
+     */
     public static boolean contains(String text) {
         for (CommandType ct : CommandType.values()) {
             cmdSet.add(ct.toString());

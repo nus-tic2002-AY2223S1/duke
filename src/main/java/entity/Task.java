@@ -8,47 +8,99 @@ public class Task {
     private String description = "";
     private boolean isDone = false;
     
-    public Task(String name) {
-        this.description = name.trim();
+    /**
+     * Task Constructor
+     *
+     * @param description task description
+     */
+    public Task(String description) {
+        this.description = description.trim();
     }
     
-    public Task(String name, boolean isDone) {
-        this.description = name.trim();
+    /**
+     * Task Constructor
+     *
+     * @param description task description
+     * @param isDone      indicate if the task is marked as done
+     */
+    public Task(String description, boolean isDone) {
+        this.description = description.trim();
         this.isDone = isDone;
     }
     
+    /**
+     * Return task description
+     *
+     * @return description variable
+     */
     public String getDescription() {
         return description;
     }
     
+    /**
+     * Set task description
+     *
+     * @param description description that user inputted
+     */
     public void setDescription(String description) {
         this.description = description;
     }
     
+    /**
+     * Toggle task isDone status
+     */
     public void updateStatus() {
         this.isDone = !isDone;
     }
     
+    /**
+     * Return task status
+     *
+     * @return isDone variable
+     */
     public boolean isDone() {
         return isDone;
     }
     
+    /**
+     * Return task status indicator
+     *
+     * @return status icon of task
+     */
     public String getStatusIcon() {
         return isDone ? "[X]" : "[ ]";
     }
     
+    /**
+     * Return task type indicator
+     *
+     * @return type icon of task
+     */
     public String getTypeIcon() {
         return " ";
     }
     
+    /**
+     * Return task detail in string type with specific format
+     *
+     * @return task details
+     */
     public String getDetails() {
         return String.format("[%s]%s %s", getTypeIcon(), getStatusIcon(), getDescription());
     }
     
+    /**
+     * Return task details for saving locally
+     *
+     * @return task details with saving format
+     */
     public String getSavingFormatDetails() {
         return String.format("%s | %d | %s\n", getTypeIcon(), isDone ? 1 : 0, getDescription());
     }
     
+    /**
+     * A Comparator that can sort task list by name in ascending order
+     */
     public static Comparator<Task> descriptionComparator = new Comparator<Task>() {
         
         public int compare(Task t1, Task t2) {
@@ -63,6 +115,9 @@ public class Task {
         }
     };
     
+    /**
+     * A Comparator that can sort task list by datetime in ascending order
+     */
     public static Comparator<Task> dateTimeComparator = new Comparator<Task>() {
         
         public int compare(Task t1, Task t2) {

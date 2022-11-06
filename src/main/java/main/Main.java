@@ -16,6 +16,15 @@ public class Main extends Application {
     
     private Duke duke;
     
+    /**
+     * Initiate FXMLLoader and load MainWindow
+     *
+     * @param stage the primary stage for this application, onto which
+     *              the application scene can be set.
+     *              Applications may create other stages, if needed, but they will not be
+     *              primary stages.
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         
@@ -27,21 +36,8 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setScene(scene);
             stage.show();
-            
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent windowEvent) {
-                    Platform.exit();
-                    System.exit(0);
-                }
-            });
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    
-    @Override
-    public void stop() throws Exception {
-        super.stop();
     }
 }
