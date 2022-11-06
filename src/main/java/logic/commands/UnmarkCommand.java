@@ -34,6 +34,6 @@ public class UnmarkCommand extends Command {
 
         Task task = chat.getTaskList().get(Integer.parseInt(description) - INIT_INT_VAL);
         task.unmarkDone();
-        ui.printMarkedTask(UNMARKED_TASK, description, task);
+        ui.printUpdatedMarkedTask(UNMARKED_TASK, description, task);
     }
 }

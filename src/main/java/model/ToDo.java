@@ -1,10 +1,10 @@
 package model;
 
-import common.enums.TypeEnum;
+import common.enums.CommandTypeEnum;
 
 import static common.constants.CommonConstant.CLOSE_SQ_BRACKET;
 import static common.constants.CommonConstant.OPEN_SQ_BRACKET;
-import static common.enums.TypeEnum.T;
+import static common.enums.CommandTypeEnum.T;
 
 public class ToDo extends Task {
 
@@ -13,7 +13,7 @@ public class ToDo extends Task {
     }
 
     @Override
-    public TypeEnum getType() {
+    public CommandTypeEnum getType() {
         return T;
     }
 

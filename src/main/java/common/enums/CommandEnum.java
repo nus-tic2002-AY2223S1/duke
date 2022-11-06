@@ -11,4 +11,5 @@ public enum CommandEnum {
     mark,
     todo,
     unmark,
+    update;
 }

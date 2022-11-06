@@ -17,6 +17,7 @@ import logic.commands.HelpCommand;
 import logic.commands.ListCommand;
 import logic.commands.MarkCommand;
 import logic.commands.UnmarkCommand;
+import logic.commands.UpdateCommand;
 import model.Chat;
 import ui.ConsoleUi;
 
@@ -45,6 +46,7 @@ public class Parser {
         Command listCom = new ListCommand(ui, chat);
         Command markCom = new MarkCommand(ui, chat);
         Command unmarkCom = new UnmarkCommand(ui, chat);
+        Command updateCom = new UpdateCommand(ui, chat);
 
         switch (chat.getCommand()) {
             case bye:
@@ -78,7 +80,7 @@ public class Parser {
                 findCom.execute();
                 break;
             default:
-                break;
+                updateCom.execute();
         }
     }
 }

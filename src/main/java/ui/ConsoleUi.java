@@ -68,7 +68,7 @@ public class ConsoleUi implements Ui {
      * @param   input input from user
      * @param   task
      */
-    public void printMarkedTask(String command, String input, Task task) {
+    public void printUpdatedMarkedTask(String command, String input, Task task) {
         System.out.println(String.format(command, input));
         System.out.println(TAB + task);
     }

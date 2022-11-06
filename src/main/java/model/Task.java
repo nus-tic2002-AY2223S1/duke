@@ -1,14 +1,15 @@
 package model;
 
-import common.enums.TypeEnum;
+import common.enums.CommandTypeEnum;
 
 import static common.constants.CommonConstant.CLOSE_SQ_BRACKET;
 import static common.constants.CommonConstant.OPEN_SQ_BRACKET;
 import static common.constants.CommonConstant.SPACE;
 import static common.constants.CommonConstant.MARKED_ICON;
-import static common.enums.TypeEnum.UNDEFINED;
+import static common.enums.CommandTypeEnum.UNDEFINED;
+import static common.utils.DateUtil.dateConverter;
 
-public class Task {
+public abstract class Task {
     protected String description;
 
     protected boolean isDone;
@@ -18,6 +19,14 @@ public class Task {
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setTime(String time) {
+        this.time = dateConverter(time);
     }
 
     public String getDescription() {
@@ -40,7 +49,7 @@ public class Task {
         isDone = false;
     }
 
-    public TypeEnum getType() {
+    public CommandTypeEnum getType() {
         return UNDEFINED;
     }
 

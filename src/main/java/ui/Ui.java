@@ -14,7 +14,7 @@ public interface Ui {
 
     void printAddedDeletedTask(Chat chat);
 
-    void printMarkedTask(String command, String input, Task task);
+    void printUpdatedMarkedTask(String command, String input, Task task);
 
     void printMatchingTaskList();
 }

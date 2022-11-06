@@ -1,6 +1,6 @@
 package common.enums;
 
-public enum TypeEnum {
+public enum CommandTypeEnum {
     D,
     E,
     T,

@@ -1,5 +1,6 @@
 package logic.validators;
 
+import common.enums.UpdateTypeEnum;
 import common.exceptions.EmptyTaskListException;
 import common.exceptions.DuplicatedTaskException;
 import common.exceptions.InvalidTaskDescriptionException;
@@ -146,6 +147,21 @@ public class Validator {
     public static void validateFind(Chat chat) throws EmptyTaskListException, InvalidTaskDescriptionException {
         String regex = chat.getCommand() + "\\s+.+";
         emptyTaskListValidation(chat);
+        regexValidation(regex, chat);
+    }
+
+    /**
+     * Return validates update command
+     *
+     * @param   chat
+     * @throws  EmptyTaskListException
+     * @throws  InvalidTaskDescriptionException
+     * @throws  NotExistTaskException
+     */
+    public static void validateUpdate(UpdateTypeEnum updateType, String id, Chat chat) throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException {
+        String regex = chat.getCommand() + "\\s+" + id + "\\s+" + updateType + "\\s+.+";
+        emptyTaskListValidation(chat);
+        notExistTaskValidation(id, chat);
         regexValidation(regex, chat);
     }
 }
