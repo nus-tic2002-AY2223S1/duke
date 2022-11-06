@@ -1,10 +1,10 @@
 package entity;
 
 public class Command {
-    private String command;
+    private String command = "";
     private int index = -1;
-    private String description;
-    private String datetime;
+    private String description = "";
+    private String datetime = "";
     
     public Command() {
     }

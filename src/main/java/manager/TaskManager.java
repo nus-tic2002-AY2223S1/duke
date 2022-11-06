@@ -9,6 +9,8 @@ import util.PrintUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class TaskManager {
     
@@ -84,7 +86,7 @@ public class TaskManager {
         
         return result;
     }
-
+    
     public String getAddTaskResult(Command cmd) throws IllegalContentException {
         
         String result = "";
@@ -107,12 +109,11 @@ public class TaskManager {
         
         if (task != null) {
             taskList.add(task);
-    
+            
             result = "Got it. I've added this task: \n\t   ";
             result += task.getDetails();
             result += "\n\t Now you have " + taskList.size() + " tasks in the list.";
             
-//            PrintUtil.printAddedMessage(task, taskList.size());
             onTaskListChanged();
         }
         
@@ -194,5 +195,19 @@ public class TaskManager {
             resultStr.append(String.format("\t %d.%s\n", i + 1, t.getDetails()));
         }
         return resultStr.toString();
+    }
+    
+    
+    public String getSortTaskResult(Command cmd) {
+        if (cmd.getDescription().equals("name")) {
+            taskList.sort(Task.descriptionComparator);
+        } else if (cmd.getDescription().equals("date")) {
+            taskList.sort(Task.dateTimeComparator);
+        } else {
+            return "☹ OOPS!!! The input sorting method is not found.";
+        }
+        
+        onTaskListChanged();
+        return "Noted. I've sorted tasks by " + cmd.getDescription() + ".\n" + getTaskListString();
     }
 }

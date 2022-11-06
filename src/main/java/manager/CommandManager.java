@@ -56,6 +56,10 @@ public class CommandManager {
             //set description + datetime
             setDescriptionDateTime(cmd, inputArr[1], "/at");
             break;
+        case SORT:
+            //set sort category
+            setDescription(cmd, inputArr[1].substring(inputArr[1].lastIndexOf("by") + 3));
+            break;
         }
         return cmd;
     }
@@ -104,7 +108,6 @@ public class CommandManager {
             break;
         case DELETE:
             executionResult = taskManager.getDeleteTaskResult(cmd);
-            
             break;
         case BYE:
             //            executionResult = "Bye. Hope to see you again soon!";
@@ -113,6 +116,9 @@ public class CommandManager {
             break;
         case FIND:
             executionResult = taskManager.getFindTaskResult(cmd);
+            break;
+        case SORT:
+            executionResult = taskManager.getSortTaskResult(cmd);
             break;
         default:
             executionResult = taskManager.getAddTaskResult(cmd);

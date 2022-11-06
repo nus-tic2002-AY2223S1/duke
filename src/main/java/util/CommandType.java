@@ -12,7 +12,8 @@ public enum CommandType {
     DEADLINE("deadline"),
     EVENT("event"),
     DELETE("delete"),
-    FIND("find");
+    FIND("find"),
+    SORT("sort");
     
     private String cmd;
     private static HashSet<String> cmdSet = new HashSet<>();
