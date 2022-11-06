@@ -44,6 +44,8 @@ public class MainWindow extends AnchorPane {
     private static final String LIST_CACHE_FILE_PATH = "data/tmp/list";
     private static final String LOCALE_CACHE_FILE_PATH = "data/tmp/il8n";
     private static final String DARK_CSS_FILE_PATH = "/view/dark.css";
+    private static final String LIGHT_CSS_FILE_PATH = "/view/light.css";
+
     private Duke duke;
     private boolean isDark = false;
     private boolean isListOnLaunch = false;
@@ -257,7 +259,7 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     private void refreshAction() {
-        Stage stage = (Stage) refreshButton.getScene().getWindow();
+        Stage stage = (Stage) rootPane.getScene().getWindow();
         Main m = new Main();
         m.start(stage);
         Scene s = rootPane.getScene();
@@ -305,6 +307,9 @@ public class MainWindow extends AnchorPane {
         Scene s = rootPane.getScene();
         if (isDark) {
             isDark = false;
+            s.getStylesheets().add(
+                    Objects.requireNonNull(getClass().getResource(LIGHT_CSS_FILE_PATH))
+                            .toExternalForm());
             s.getStylesheets().remove(
                     Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))
                             .toExternalForm());
@@ -312,6 +317,9 @@ public class MainWindow extends AnchorPane {
             isDark = true;
             s.getStylesheets().add(
                     Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))
+                            .toExternalForm());
+            s.getStylesheets().remove(
+                    Objects.requireNonNull(getClass().getResource(LIGHT_CSS_FILE_PATH))
                             .toExternalForm());
         }
         darkModeButton.setSelected(isDark);

@@ -23,7 +23,19 @@ public class UiCn extends Ui {
         INFO_WELCOME_EXISTING("欢迎回来，%s！需要什么帮助吗？"),
         INFO_LAST_SAVED("[最后修改于 %s]"),
         INFO_GOODBYE("再见！"),
-        INFO_HELP("我能明白以下指令：\n"),
+        INFO_HELP("我能明白以下指令：\n\n" +
+                "list: 列出全部任务\n"
+                + "todo <描述>: 新增一个待办事项\n"
+                + "event <描述>: 新增一个事件\n"
+                + "deadline <描述>: 新增一个期限\n"
+                + "mark <索引>: 标记任务完成\n"
+                + "unmark <索引>: 标记任务未完成\n"
+                + "delete <索引>: 删除任务\n"
+                + "day <dd/mm/yyyy>: 查找所有在这一天的任务\n"
+                + "find <关键字>: 查找所有包含此关键字的任务\n"
+                + "archive: 归档和重置聊天\n"
+                + "restore: 查看可恢复的归档记录\n"
+                + "restore <索引>: 恢复此归档记录\n"),
         ERROR_COMMAND_UNKNOWN("抱歉， 我不明白你的意思 :( "
                 + "\n新增一个 待办Todo / 期限Deadline / 事件Event. "
                 + "\n\t \u27a4 Todo <Task Name>"),

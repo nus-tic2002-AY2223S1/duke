@@ -94,7 +94,7 @@
                 <CheckMenuItem fx:id="enButton" mnemonicParsing="false" onAction="#setLocaleEnAction"
                                text="English US"/>
                 <CheckMenuItem fx:id="cnButton" mnemonicParsing="false" onAction="#setLocaleCnAction"
-                               text="Simplified Chinese"/>
+                               text="简体中文"/>
             </Menu>
         </Menu>
         <Menu mnemonicParsing="false" text="Tools">
