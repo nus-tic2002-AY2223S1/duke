@@ -37,7 +37,7 @@ public class Duke {
         try {
             t = new TaskList(s.load());
         } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+            System.err.printf("Duke.Duke: %s", e.getMessage());
             t = new TaskList();
         }
     }
@@ -85,5 +85,13 @@ public class Duke {
             break;
         default:
         }
+    }
+
+    public TaskList getTaskList() {
+        return this.t;
+    }
+
+    public Ui.LocaleRegion getLocale() {
+        return this.locale;
     }
 }

@@ -174,7 +174,7 @@ public class Runner {
         return ui.printListFilesFooterMessage();
     }
 
-    private String getCurrentUserName() {
+    public static String getCurrentUserName() {
         return System.getProperty("user.name");
     }
 

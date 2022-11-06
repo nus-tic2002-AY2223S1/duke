@@ -1,17 +1,15 @@
-package impl;
+package duke.impl;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import duke.impl.Ui;
-import duke.impl.UiCn;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 import duke.utils.DateProcessor;
 
-public class UiCnTest {
-    private static Ui u = new UiCn();
+public class UiEnTest {
+    private static Ui u = new UiEn();
 
     @Test
     public void sendConfirmedOutputTest() {
@@ -22,7 +20,7 @@ public class UiCnTest {
     }
 
     @Test
-    public void sendsendGenericPlainTest() {
+    public void sendGenericPlainTest() {
         String s = "Message";
         String expected = "Message\n";
         String actual = u.sendGenericPlain(s);
@@ -68,7 +66,7 @@ public class UiCnTest {
     @Test
     public void sendProcessActionErrorTest() {
         String s = "Error";
-        String expected = "✖ Error 选择不能为空。";
+        String expected = "✖ The selection to Error cannot be empty.";
         String actual = u.sendProcessActionError(s);
         System.out.println(actual);
         assertEquals(expected, actual);
@@ -77,7 +75,7 @@ public class UiCnTest {
     @Test
     public void sendProcessCommandErrorTest() {
         String s = "Error";
-        String expected = "✖ Error 描述不能为空。";
+        String expected = "✖ The description of Error cannot be empty.";
         String actual = u.sendProcessCommandError(s);
         System.out.println(actual);
         assertEquals(expected, actual);
@@ -85,8 +83,8 @@ public class UiCnTest {
 
     @Test
     public void sendCommandUnknownErrorTest() {
-        String expected = "✖ 抱歉， 我不明白你的意思 :( "
-                + "\n新增一个 待办Todo / 期限Deadline / 事件Event. "
+        String expected = "✖ I'm sorry, but I don't know what that means :( "
+                + "\nSpecify a Todo / Deadline / Event. "
                 + "\n\t ➤ Todo <Task Name>";
         String actual = u.sendCommandUnknownError();
         System.out.println(actual);
@@ -95,7 +93,7 @@ public class UiCnTest {
 
     @Test
     public void sendProcessFindDateErrorTest() {
-        String expected = "✖ 日期搜索不能为空。\n\t ➤ day <日期>";
+        String expected = "✖ The date to search cannot be empty.\n\t ➤ day <date>";
         String actual = u.sendProcessFindDateError();
         System.out.println(actual);
         assertEquals(expected, actual);
@@ -103,7 +101,7 @@ public class UiCnTest {
 
     @Test
     public void sendProcessFindTaskErrorTest() {
-        String expected = "✖ 关键字搜索不能为空。\n\t ➤ find <关键字>";
+        String expected = "✖ The keyword to search cannot be empty.\n\t ➤ find <keyword>";
         String actual = u.sendProcessFindTaskError();
         System.out.println(actual);
         assertEquals(expected, actual);
@@ -111,7 +109,7 @@ public class UiCnTest {
 
     @Test
     public void sendProcessRestoreErrorTest() {
-        String expected = "✖ 恢复文件选择不能为空。\n\t ➤ restore <索引>";
+        String expected = "✖ The file selection to restore cannot be empty.\n\t ➤ restore <index>";
         String actual = u.sendProcessRestoreError();
         System.out.println(actual);
         assertEquals(expected, actual);
@@ -119,7 +117,7 @@ public class UiCnTest {
 
     @Test
     public void sendProcessArchiveErrorTest() {
-        String expected = "✖ 归档文件不能为空。";
+        String expected = "✖ The file selection to archive cannot be empty.";
         String actual = u.sendProcessArchiveError();
         System.out.println(actual);
         assertEquals(expected, actual);
@@ -130,7 +128,7 @@ public class UiCnTest {
         TaskList tl = new TaskList();
         Task t = new Task("Task1");
         tl.addTask(t);
-        String expected = "» 你好，我是杜克。需要什么帮助吗？";
+        String expected = "» Hello from Duke. What can I do for you?";
         String[] actual = u.sendWelcomeMessage(tl, true);
         assertEquals(1, actual.length);
         assertEquals(expected, actual[0]);
@@ -138,7 +136,7 @@ public class UiCnTest {
 
     @Test
     public void sendWelcomeMessageReturningUserTest() {
-        DateProcessor d = new DateProcessor(Ui.LocaleRegion.CN);
+        DateProcessor d = new DateProcessor(Ui.LocaleRegion.EN);
         TaskList tl = new TaskList();
         Task t = new Task("Task1");
         tl.addTask(t);
@@ -147,9 +145,10 @@ public class UiCnTest {
         String dateString = d.unixToString(now);
         tl.injectLastInfo(timeStamp);
         tl.injectLastUserName("Name");
-        String expected1 = "» 欢迎回来，Name！需要什么帮助吗？";
-        String expected2 = "✔ 您的任务如下：\n1.[   ] Task1";
-        String expected3 = String.format("[最后修改于 %s]\n", dateString);
+        Ui u = new UiEn();
+        String expected1 = "» Hello again, Name! Welcome back. What can I do for you?";
+        String expected2 = "✔ Here are your task(s):\n1.[   ] Task1";
+        String expected3 = String.format("[Last Modified on %s]\n", dateString);
 
         String[] actual = u.sendWelcomeMessage(tl, true);
         assertEquals(3, actual.length);
@@ -160,7 +159,7 @@ public class UiCnTest {
 
     @Test
     public void sendGoodbyeMessageTest() {
-        String expected = "» 再见！";
+        String expected = "» Bye. Hope to see you again soon!";
         String actual = u.sendGoodbyeMessage();
         assertEquals(expected, actual);
     }
@@ -168,8 +167,8 @@ public class UiCnTest {
     @Test
     public void printNewTasksTest() {
         String taskName = "Task1";
-        String expected = "✔ 好的. 我已新增以下任务：\n\t"
-                + taskName + "\n\t您现在有1个任务。";
+        String expected = "✔ Okay, I have added the following task:\n\t"
+                + taskName + "\n\tYou now have 1 task.";
         String actual = u.printNewTasks(taskName, 1);
         assertEquals(expected, actual);
     }
@@ -177,8 +176,8 @@ public class UiCnTest {
     @Test
     public void printTaskRemovedByIndexTest() {
         String taskName = "Task1";
-        String expected = "✔ 好的。我已移除以下任务：\n\t"
-                + taskName + "\n\t您现在有0个任务。";
+        String expected = "✔ Okay, I have removed the following task:\n\t"
+                + taskName + "\n\tYou now have 0 task.";
         String actual = u.printTaskRemovedByIndex(taskName, 0);
         assertEquals(expected, actual);
     }
@@ -186,7 +185,7 @@ public class UiCnTest {
     @Test
     public void printMarkTaskTest() {
         String taskName = "Task1";
-        String expected = "✔ 好！我已标记此任务为完成：\n" + taskName;
+        String expected = "✔ Okay! I have marked the following task as completed:\n" + taskName;
         String actual = u.printMarkTask(taskName, true);
         assertEquals(expected, actual);
     }
@@ -194,7 +193,7 @@ public class UiCnTest {
     @Test
     public void printListWithoutTaskTest() {
         TaskList tl = new TaskList();
-        String expected = "✔ 目前没有任务。";
+        String expected = "✔ You do not have any tasks at the moment.";
         String actual = u.printList(tl.getList(), true);
         assertEquals(expected, actual);
     }
@@ -206,7 +205,7 @@ public class UiCnTest {
         tl.addTask(t);
         Task t1 = new Task("Task2");
         tl.addTask(t1);
-        String expected = "✔ 您的任务如下：\n1.[   ] Task1\n2.[   ] Task2";
+        String expected = "✔ Here are your task(s):\n1.[   ] Task1\n2.[   ] Task2";
         String actual = u.printList(tl.getList(), true);
         assertEquals(expected, actual);
     }
@@ -218,7 +217,7 @@ public class UiCnTest {
         tl.addTask(t);
         Task t1 = new Task("Task2");
         tl.addTask(t1);
-        String expected = "✔ 您的任务如下：\n[   ] Task1\n[   ] Task2";
+        String expected = "✔ Here are your task(s):\n[   ] Task1\n[   ] Task2";
         String actual = u.printList(tl.getList(), false);
         assertEquals(expected, actual);
     }
@@ -230,7 +229,7 @@ public class UiCnTest {
         tl.addTask(t);
         Task t1 = new Task("Task2");
         tl.addTask(t1);
-        String expected = "✔ 您在这一天的任务如下：\n1.[   ] Task1\n2.[   ] Task2";
+        String expected = "✔ These are your tasks on this day:\n1.[   ] Task1\n2.[   ] Task2";
         String actual = u.printSelectedList(tl.getList(), true, "1/1/1970");
         assertEquals(expected, actual);
     }
@@ -242,7 +241,7 @@ public class UiCnTest {
         tl.addTask(t);
         Task t1 = new Task("Task2");
         tl.addTask(t1);
-        String expected = "✔ 您在这一天的任务如下：\n[   ] Task1\n[   ] Task2";
+        String expected = "✔ These are your tasks on this day:\n[   ] Task1\n[   ] Task2";
         String actual = u.printSelectedList(tl.getList(), false, "1/1/1970");
         assertEquals(expected, actual);
     }
@@ -250,7 +249,7 @@ public class UiCnTest {
     @Test
     public void printSelectedListWithoutTaskTest() {
         TaskList tl = new TaskList();
-        String expected = "✔ 您在1/1/1970这一天没有任何任务。";
+        String expected = "✔ You do not have any tasks on 1/1/1970.";
         String actual = u.printSelectedList(tl.getList(), true, "1/1/1970");
         assertEquals(expected, actual);
     }
@@ -262,7 +261,7 @@ public class UiCnTest {
         tl.addTask(t);
         Task t1 = new Task("Task2");
         tl.addTask(t1);
-        String expected = "✔ 包含关键词 'keyword' 的任务如下：\n1.[   ] Task1\n2.[   ] Task2";
+        String expected = "✔ These are your tasks that contains 'keyword':\n1.[   ] Task1\n2.[   ] Task2";
         String actual = u.printFoundList(tl.getList(), true, "keyword");
         assertEquals(expected, actual);
     }
@@ -274,7 +273,7 @@ public class UiCnTest {
         tl.addTask(t);
         Task t1 = new Task("Task2");
         tl.addTask(t1);
-        String expected = "✔ 包含关键词 'keyword' 的任务如下：\n[   ] Task1\n[   ] Task2";
+        String expected = "✔ These are your tasks that contains 'keyword':\n[   ] Task1\n[   ] Task2";
         String actual = u.printFoundList(tl.getList(), false, "keyword");
         assertEquals(expected, actual);
     }
@@ -282,7 +281,7 @@ public class UiCnTest {
     @Test
     public void printFoundListWithoutTaskTest() {
         TaskList tl = new TaskList();
-        String expected = "✔ 您没有任何包含 'keyword' 的任务。";
+        String expected = "✔ You do not have any tasks that contains 'keyword'.";
         String actual = u.printFoundList(tl.getList(), true, "keyword");
         assertEquals(expected, actual);
     }

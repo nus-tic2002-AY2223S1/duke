@@ -1,11 +1,8 @@
-package impl;
+package duke.impl;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import duke.impl.Cmd;
-import duke.impl.Parser;
 
 public class ParserTest {
     @Test
