@@ -324,6 +324,7 @@ public class MainWindow extends AnchorPane {
         }
         darkModeButton.setSelected(isDark);
         cacheMode(isDark);
+        isListOnLaunch = false;
     }
 
     private void cacheMode(boolean isDark) throws IOException {
