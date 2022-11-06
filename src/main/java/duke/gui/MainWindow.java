@@ -49,6 +49,8 @@ public class MainWindow extends AnchorPane {
     private boolean isListOnLaunch = false;
     private Ui.LocaleRegion locale;
     @FXML
+    private Label helpButton;
+    @FXML
     private Label listButton;
     @FXML
     private Label refreshButton;
@@ -262,6 +264,11 @@ public class MainWindow extends AnchorPane {
         s.getStylesheets().add(
                 Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))
                         .toExternalForm());
+    }
+
+    @FXML
+    private void helpAction() {
+        handleMenuInput("help");
     }
 
     @FXML

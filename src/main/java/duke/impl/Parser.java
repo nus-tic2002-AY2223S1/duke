@@ -83,6 +83,8 @@ public class Parser {
             return new Cmd(Cmd.CmdTypes.ARCHIVE, this.in);
         case "restore":
             return new Cmd(Cmd.CmdTypes.RESTORE, this.in);
+        case "help":
+            return new Cmd(Cmd.CmdTypes.HELP, null);
         case "":
             return new Cmd(Cmd.CmdTypes.RETURN, null);
         default:

@@ -118,6 +118,10 @@ public class Runner {
         return ui.printTaskRemovedByIndex(t.toString(), arrayList.size());
     }
 
+    public String printHelpMessage() {
+        return ui.sendHelpMessage();
+    }
+
     public String printExitMessage() {
         return ui.sendGoodbyeMessage();
     }

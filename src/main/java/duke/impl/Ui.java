@@ -149,6 +149,8 @@ public abstract class Ui {
 
     public abstract String[] sendWelcomeMessage(TaskList t, boolean shouldList);
 
+    public abstract String sendHelpMessage();
+
     public abstract String sendGoodbyeMessage();
 
     public abstract String printNewTasks(String task, int size);

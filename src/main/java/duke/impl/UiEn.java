@@ -23,6 +23,19 @@ public class UiEn extends Ui {
         INFO_WELCOME_EXISTING("Hello again, %s! Welcome back. What can I do for you?"),
         INFO_LAST_SAVED("[Last Modified on %s]"),
         INFO_GOODBYE("Bye. Hope to see you again soon!"),
+        INFO_HELP("I can understand the commands below:\n\n" +
+                "list: List your current tasks.\n"
+                + "todo <name>: Add a Todo task.\n"
+                + "event <name>: Add an event.\n"
+                + "deadline <name>: Add a deadline.\n"
+                + "mark <index>: Mark a task as done.\n"
+                + "unmark <index>: Unmark a task.\n"
+                + "delete <index>: Delete a task.\n"
+                + "day <dd/mm/yyyy>: Find all tasks schedule on this day.\n"
+                + "find <keyword>: Find all tasks that contains this keyword.\n"
+                + "archive: Archive the current chat and start afresh.\n"
+                + "restore: View the list of available archives to restore.\n"
+                + "restore <index>: Select record to be restored.\n"),
         ERROR_COMMAND_UNKNOWN("I'm sorry, but I don't know what that means :( "
                 + "\nSpecify a Todo / Deadline / Event. "
                 + "\n\t \u27a4 Todo <Task Name>"),
@@ -261,6 +274,11 @@ public class UiEn extends Ui {
         } else {
             return new String[]{sendInfo(UiMessage.INFO_WELCOME.getText(), "")};
         }
+    }
+
+    @Override
+    public String sendHelpMessage() {
+        return sendInfo(UiMessage.INFO_HELP.getText(), "");
     }
 
     @Override

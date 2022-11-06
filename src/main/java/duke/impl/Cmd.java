@@ -13,7 +13,7 @@ public class Cmd {
      */
     public enum CmdTypes {
         UNKNOWN_CMD, PRINT_LIST, MARK_TASK, UNMARK_TASK, ADD_TODO, ADD_DEADLINE, ADD_EVENT, DELETE_TASK, FIND_DATE,
-        FIND_TASK, ARCHIVE, RESTORE, RETURN, EXIT
+        FIND_TASK, ARCHIVE, RESTORE, RETURN, HELP, EXIT
     }
 
     protected CmdTypes t;
@@ -68,6 +68,8 @@ public class Cmd {
             return r.processArchive();
         case RESTORE:
             return r.processRestore(input);
+        case HELP:
+            return r.printHelpMessage();
         case EXIT:
             return r.printExitMessage();
         default:

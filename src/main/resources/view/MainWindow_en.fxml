@@ -68,8 +68,8 @@
                 <Tooltip text="List"/>
             </tooltip>
         </Label>
-        <Label fx:id="refreshButton" alignment="CENTER" onMouseClicked="#refreshAction"
-               style="-fx-graphic: url('/view/icons8-reset-35.png');">
+        <Label fx:id="helpButton" alignment="CENTER" onMouseClicked="#helpAction"
+               style="-fx-graphic: url('/view/icons8-ask-35.png');">
             <padding>
                 <Insets bottom="5.0" left="2.0" right="2.0" top="5.0"/>
             </padding>

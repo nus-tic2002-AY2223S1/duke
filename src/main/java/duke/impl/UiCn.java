@@ -23,6 +23,7 @@ public class UiCn extends Ui {
         INFO_WELCOME_EXISTING("欢迎回来，%s！需要什么帮助吗？"),
         INFO_LAST_SAVED("[最后修改于 %s]"),
         INFO_GOODBYE("再见！"),
+        INFO_HELP("我能明白以下指令：\n"),
         ERROR_COMMAND_UNKNOWN("抱歉， 我不明白你的意思 :( "
                 + "\n新增一个 待办Todo / 期限Deadline / 事件Event. "
                 + "\n\t \u27a4 Todo <Task Name>"),
@@ -260,6 +261,11 @@ public class UiCn extends Ui {
         } else {
             return new String[]{sendInfo(UiMessage.INFO_WELCOME.getText(), "")};
         }
+    }
+
+    @Override
+    public String sendHelpMessage() {
+        return sendInfo(UiMessage.INFO_HELP.getText(), "");
     }
 
     @Override
