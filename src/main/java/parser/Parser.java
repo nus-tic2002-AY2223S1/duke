@@ -2,17 +2,9 @@
 package parser;
 
 import taskList.Deadline;
-import taskList.Task;
-import taskList.TaskList;
+import taskList.Event;
 import taskList.Todo;
 import ui.UI;
-
-import java.nio.channels.ScatteringByteChannel;
-
-import static ui.ErrorMessages.INVALID_TODO_INPUT;
-import static ui.ErrorMessages.TASK_NUMBER_OOB;
-import static ui.UI.printError;
-import static ui.UI.printLine;
 
 public class Parser {
     private static UI ui;
@@ -27,8 +19,23 @@ public class Parser {
 
     public static Todo parseTodoInput(String input) {
         String todoTask = input.substring(5);
-        Todo newTodoTask = new Todo(todoTask);
-        return newTodoTask;
+        Todo task = new Todo(todoTask);
+        return task;
+    }
+    public static Deadline parseDeadlineInput(String input) {
+        String[] deadlineItemSplit = (input.substring(9)).split(" /by ");
+        String deadlineTask = deadlineItemSplit[0];
+        String deadlineBy = deadlineItemSplit[1];
+        Deadline task = new Deadline(deadlineTask, deadlineBy);
+        return task;
+    }
+
+    public static Event parseEventInput(String input){
+        String[] eventItemSplit = (input.substring(6)).split(" /at ");
+        String eventTask = eventItemSplit[0];
+        String eventAt = eventItemSplit[1];
+        Event task = new Event(eventTask, eventAt);
+        return task;
     }
 }
 //    public static Deadline parseDeadlineInput(String input, String[] inputSplit){
