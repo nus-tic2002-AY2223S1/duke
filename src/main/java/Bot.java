@@ -1,5 +1,5 @@
-import Logic.BotUseCase;
-import Logic.TaskManager;
+import logic.BotUseCase;
+import logic.TaskManager;
 
 /**
  * Redirect the command to taskManager where has the logic

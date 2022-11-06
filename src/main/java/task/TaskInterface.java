@@ -1,8 +1,4 @@
-package Tasks;
-
-import CustomException.UnsupportedTaskType;
-
-import java.io.FileNotFoundException;
+package task;
 
 /**
  * The interface to represent a task

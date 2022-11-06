@@ -1,7 +1,7 @@
-package Data;
-import Common.TaskType;
-import CustomException.UnsupportedTaskType;
-import Tasks.*;
+package data;
+import common.TaskType;
+import exception.UnsupportedTaskType;
+import task.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;

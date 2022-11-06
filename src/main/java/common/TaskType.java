@@ -1,6 +1,6 @@
-package Common;
+package common;
 
-import CustomException.UnsupportedTaskType;
+import exception.UnsupportedTaskType;
 
 /**
  * The enum task type to represent each task that can be used

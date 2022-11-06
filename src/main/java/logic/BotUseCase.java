@@ -1,11 +1,7 @@
-package Logic;
+package logic;
 
-import CustomException.UnsupportedTaskType;
-import Data.FileInfo;
-import Tasks.TaskInterface;
+import task.TaskInterface;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**

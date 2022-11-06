@@ -1,9 +1,9 @@
-package Logic;
+package logic;
 
-import Common.TaskType;
-import CustomException.UnsupportedTaskType;
-import Tasks.*;
-import Tasks.TaskInterface;
+import common.TaskType;
+import exception.UnsupportedTaskType;
+import task.*;
+import task.TaskInterface;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;

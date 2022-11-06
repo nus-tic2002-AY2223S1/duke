@@ -1,21 +1,11 @@
-package Data;
-
-import Common.TaskType;
-import CustomException.UnsupportedTaskType;
-import Tasks.Deadline;
-import Tasks.Event;
-import Tasks.TaskInterface;
-import Tasks.Todo;
+package data;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

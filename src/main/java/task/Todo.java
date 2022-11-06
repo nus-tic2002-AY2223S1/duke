@@ -1,4 +1,4 @@
-package Tasks;
+package task;
 
 /**
  * A basic task

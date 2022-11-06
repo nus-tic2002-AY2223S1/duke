@@ -1,9 +1,9 @@
-import Data.DataInterface;
-import Data.FileInfo;
-import Logic.BotCallback;
-import Tasks.TaskInterface;
-import Tasks.Todo;
-import UI.UIInterface;
+import data.DataInterface;
+import data.FileInfo;
+import logic.BotCallback;
+import task.TaskInterface;
+import task.Todo;
+import ui.UIInterface;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;

@@ -1,9 +1,9 @@
-import Data.DataInterface;
-import Data.FileInfo;
-import Data.FileInterface;
-import Logic.BotUseCase;
-import Tasks.TaskInterface;
-import UI.UIInterface;
+import data.DataInterface;
+import data.FileInfo;
+import data.FileInterface;
+import logic.BotUseCase;
+import task.TaskInterface;
+import ui.UIInterface;
 import java.io.IOException;
 import java.util.ArrayList;
 

@@ -1,10 +1,9 @@
-import Common.Keyword;
-import Data.*;
-import Logic.BotUseCase;
-import UI.DukeUI;
-import UI.UIInterface;
+import common.Keyword;
+import data.*;
+import logic.BotUseCase;
+import ui.DukeUI;
+import ui.UIInterface;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 

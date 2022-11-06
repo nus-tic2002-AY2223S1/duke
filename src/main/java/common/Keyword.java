@@ -1,4 +1,4 @@
-package Common;
+package common;
 
 public enum Keyword {
     Bye, List, Mark, Unmark, Delete, Load, Create, Files, Active, Find, None;

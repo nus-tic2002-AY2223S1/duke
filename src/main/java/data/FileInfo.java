@@ -1,4 +1,4 @@
-package Data;
+package data;
 
 /**
  * The class to represent file info that we stored locally

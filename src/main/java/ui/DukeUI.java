@@ -1,7 +1,7 @@
-package UI;
+package ui;
 
-import Data.FileInfo;
-import Tasks.TaskInterface;
+import data.FileInfo;
+import task.TaskInterface;
 
 import java.util.ArrayList;
 
