@@ -21,7 +21,6 @@ public class Duke {
         ui = new UI();
         storage = new Storage();
         taskList = new TaskList();
-//        TaskList taskList = new TaskList();
         Storage.mainCaller();
     }
 
@@ -36,39 +35,32 @@ public class Duke {
                 String[] lineSpaceSplit = line.split(" ");
 
                 // enter bye to end chat
-                if (line.startsWith("bye")) {
+                if (line.startsWith("bye"))
                     exit();
-                }
 
                 // to list all items
-                else if (line.startsWith("list")) {
+                else if (line.startsWith("list"))
                     taskList.listTask();
-                }
 
                 // mark items
-                else if (line.startsWith("mark")) {
+                else if (line.startsWith("mark"))
                     taskList.markTask(line);
-                }
 
                 // unmarked items
-                else if (line.startsWith("unmark")) {
+                else if (line.startsWith("unmark"))
                     taskList.unmarkTask(lineSpaceSplit);
-                }
 
                 // to do task
-                else if (line.startsWith("todo")) {
+                else if (line.startsWith("todo"))
                     taskList.todoTask(line);
-                }
 
                 // deadline task
-                else if (line.startsWith("deadline")) {
+                else if (line.startsWith("deadline"))
                     taskList.deadlineTask(line);
-                }
 
                 // event task
-                else if (line.startsWith("event")) {
+                else if (line.startsWith("event"))
                     taskList.eventTask(line);
-                }
 
                 // delete task
                 else if (line.startsWith("delete")) {

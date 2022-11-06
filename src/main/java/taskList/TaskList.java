@@ -4,6 +4,7 @@ import ui.UI;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import static ui.ErrorMessages.*;
 import static ui.TaskMessages.*;
 import static ui.UI.*;
@@ -11,10 +12,11 @@ import static ui.UI.*;
 public class TaskList {
     //contains the task list e.g., it has operations to add/delete tasks in the list
     public static List<Task> taskList = new ArrayList<>();
+
     public TaskList() {
     }
 
-    public void addTask(Task task){
+    public void addTask(Task task) {
         taskList.add(task);
         printMessage(MESSAGE_TASK_ADDED);
         System.out.println(task);
@@ -22,14 +24,17 @@ public class TaskList {
     }
 
     public void deleteTask(String[] lineSpaceSplit) {
-        printLine();
-        int deleteIndex = Integer.parseInt(lineSpaceSplit[1]);
         try {
-            Task task = taskList.get(deleteIndex - 1);
-            taskList.remove(task);
-            printMessage(MESSAGE_TASK_REMOVED);
-            System.out.println(task);
-            System.out.println("\nNow you have " + taskList.size() + " tasks in the list.");
+            if (!checkEmptyTaskList() && (Integer.parseInt(String.valueOf(lineSpaceSplit[0].length()))) == 6) {
+                int deleteIndex = Integer.parseInt(lineSpaceSplit[1]);
+                Task task = taskList.get(deleteIndex - 1);
+                taskList.remove(task);
+                printMessage(MESSAGE_TASK_REMOVED);
+                printLine();
+                System.out.println(task);
+                System.out.println("\nNow you have " + taskList.size() + " tasks in the list.");
+
+            }
         } catch (IndexOutOfBoundsException e) {
             printLine();
             printError(TASK_NUMBER_OOB);
@@ -37,6 +42,7 @@ public class TaskList {
             printLine();
         }
     }
+
     public void listTask() {
         int taskCount = 0;
         ui.UI.printLine();
@@ -52,7 +58,7 @@ public class TaskList {
         if (!checkEmptyTaskList()) {
             try {
                 String[] lineSpaceSplit = line.split(" ");
-                if (Integer.parseInt(String.valueOf(lineSpaceSplit[0].length()))==4) {
+                if (Integer.parseInt(String.valueOf(lineSpaceSplit[0].length())) == 4) {
                     int markedIndex = Integer.parseInt(lineSpaceSplit[1]);
                     try {
                         Task markedTask = taskList.get(markedIndex - 1);
@@ -62,8 +68,7 @@ public class TaskList {
                         printError(TASK_NUMBER_OOB);
                         listTask();
                     }
-                }
-                else {
+                } else {
                     printLine();
                     printError(INVALID_MARK_INPUT);
                     printLine();
@@ -77,7 +82,7 @@ public class TaskList {
     public void unmarkTask(String[] lineSpaceSplit) {
         if (!checkEmptyTaskList()) {
             try {
-                if (Integer.parseInt(String.valueOf(lineSpaceSplit[0].length()))==6) {
+                if (Integer.parseInt(String.valueOf(lineSpaceSplit[0].length())) == 6) {
                     int unmarkedIndex = Integer.parseInt(lineSpaceSplit[1]);
                     try {
                         Task unmarkedTask = taskList.get(unmarkedIndex - 1);
@@ -87,14 +92,12 @@ public class TaskList {
                         printError(TASK_NUMBER_OOB);
                         listTask();
                     }
-                }
-                else {
+                } else {
                     printLine();
                     printError(INVALID_UNMARK_INPUT);
                     printLine();
                 }
-            }
-            catch (ArrayIndexOutOfBoundsException e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
                 UI.printArrayOOB();
             }
         }
@@ -110,8 +113,7 @@ public class TaskList {
             } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
                 printError(INVALID_TODO_INPUT);
             }
-        }
-        else printError(INVALID_TODO_INPUT);
+        } else printError(INVALID_TODO_INPUT);
         printLine();
     }
 
@@ -127,8 +129,7 @@ public class TaskList {
             } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
                 printError(INVALID_DEADLINE_INPUT);
             }
-        }
-        else printError(INVALID_DEADLINE_INPUT);
+        } else printError(INVALID_DEADLINE_INPUT);
         printLine();
     }
 
@@ -144,13 +145,12 @@ public class TaskList {
             } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
                 printTask(INVALID_EVENT_INPUT);
             }
-        }
-        else printError(INVALID_EVENT_INPUT);
+        } else printError(INVALID_EVENT_INPUT);
         printLine();
     }
 
-    public boolean checkEmptyTaskList (){
-        if (taskList.isEmpty()){
+    public boolean checkEmptyTaskList() {
+        if (taskList.isEmpty()) {
             printLine();
             printError(NO_TASK_FOUND);
             printLine();
