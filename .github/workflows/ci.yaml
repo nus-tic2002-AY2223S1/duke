@@ -28,6 +28,5 @@ jobs:
         run: ./gradlew jacocoTestReport
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
-        conf: codecov.yaml
         with:
           fail_ci_if_error: false
