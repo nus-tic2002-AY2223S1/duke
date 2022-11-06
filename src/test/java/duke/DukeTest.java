@@ -93,8 +93,7 @@ public class DukeTest {
         String path = "src/test/save_test/output_test.txt";
         Ui.LocaleRegion l = Ui.LocaleRegion.EN;
         Duke d = new Duke(path, l);
-        String compName = Runner.getCurrentUserName();
-        String expected1 = String.format("» Hello again, %s! Welcome back. What can I do for you?", compName);
+        String expected1 = "» Hello again, bytedance! Welcome back. What can I do for you?";
         String expected2 = "✔ Here are your task(s):\n"
                 + "1.\t[Todo][⦿] TestTask1\n"
                 + "2.\t[Event][   ] TestTask2\n"
@@ -112,8 +111,7 @@ public class DukeTest {
         String path = "src/test/save_test/output_test.txt";
         Ui.LocaleRegion l = Ui.LocaleRegion.EN;
         Duke d = new Duke(path, l);
-        String compName = Runner.getCurrentUserName();
-        String expected1 = String.format("» Hello again, %s! Welcome back. What can I do for you?", compName);
+        String expected1 = "» Hello again, bytedance! Welcome back. What can I do for you?";
         String[] actual = d.getWelcome(false);
 
         assertEquals(expected1, actual[0]);
