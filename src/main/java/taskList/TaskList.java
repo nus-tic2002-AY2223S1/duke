@@ -4,7 +4,6 @@ import ui.UI;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static ui.ErrorMessages.*;
 import static ui.TaskMessages.*;
 import static ui.UI.*;
@@ -53,7 +52,6 @@ public class TaskList {
         }
         printLine();
     }
-
     public void markTask(String line) {
         if (!checkEmptyTaskList()) {
             try {

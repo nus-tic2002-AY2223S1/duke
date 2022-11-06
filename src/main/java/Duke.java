@@ -5,11 +5,6 @@ import exceptions.InvalidStorageFilePathException;
 import storage.Storage;
 import taskList.*;
 import ui.UI;
-import static taskList.TaskList.*;
-import static ui.ErrorMessages.*;
-import static ui.UI.printError;
-import static ui.UI.printLine;
-
 
 public class Duke {
 
@@ -31,46 +26,40 @@ public class Duke {
         ui.printIntro();
 
         while (true) {
-                String line = UI.getUserCommand();
-                String[] lineSpaceSplit = line.split(" ");
+                String input = UI.getUserCommand();
+                String[] inputSplit = input.split(" ");
 
                 // enter bye to end chat
-                if (line.startsWith("bye"))
+                if (input.startsWith("bye"))
                     exit();
 
                 // to list all items
-                else if (line.startsWith("list"))
+                else if (input.startsWith("list"))
                     taskList.listTask();
 
                 // mark items
-                else if (line.startsWith("mark"))
-                    taskList.markTask(line);
+                else if (input.startsWith("mark"))
+                    taskList.markTask(input);
 
                 // unmarked items
-                else if (line.startsWith("unmark"))
-                    taskList.unmarkTask(lineSpaceSplit);
+                else if (input.startsWith("unmark"))
+                    taskList.unmarkTask(inputSplit);
 
                 // to do task
-                else if (line.startsWith("todo"))
-                    taskList.todoTask(line);
+                else if (input.startsWith("todo"))
+                    taskList.todoTask(input);
 
-                // deadline task
-                else if (line.startsWith("deadline"))
-                    taskList.deadlineTask(line);
+                // deadinput task
+                else if (input.startsWith("deadline"))
+                    taskList.deadlineTask(input);
 
                 // event task
-                else if (line.startsWith("event"))
-                    taskList.eventTask(line);
+                else if (input.startsWith("event"))
+                    taskList.eventTask(input);
 
                 // delete task
-                else if (line.startsWith("delete")) {
-                    if (!taskList.checkEmptyTaskList()) {
-                        try {
-                            taskList.deleteTask(lineSpaceSplit);
-                        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-                            UI.printArrayOOB();
-                        }
-                    }
+                else if (input.startsWith("delete")) {
+                    taskList.deleteTask(inputSplit);
                 }
 
                 // prompt user to enter valid input
@@ -91,10 +80,133 @@ public class Duke {
     }
 }
 
-
-//public class Duke {
-//    public static List<Task> taskList = new ArrayList<>();
 //
+////        storage = new Storage(filePath);
+//        storage.mainCaller();
+//    }
+//
+//
+//    private void run(String[] launchArgs) throws InvalidStorageFilePathException, IOException {
+//        start(launchArgs);
+//        runCommandLoopUntilExitCommand();
+//        exit();
+//    }
+//
+//    private void runCommandLoopUntilExitCommand() {
+//        Command command;
+//        do {
+//            String userCommandText = ui.getUserCommand();
+//            command = new Parser().parseCommand(userCommandText);
+//            Command c = Parser.parseCommand(userCommandText);
+//            c.execute();
+//
+//        } while (!command.isExit);
+//    }
+//
+//    private void start(String[] launchArgs) throws InvalidStorageFilePathException, IOException {
+//        try {
+//            this.ui = new UI();
+//            storage.mainCaller();
+//            ui.printIntro();
+//        } catch (InvalidStorageFilePathException e) {
+//            UI.printError(LOADING_ERROR);
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    //    Prints the Goodbye message and exits.
+//    private void exit() {
+//        ui.printBye();
+//        System.exit(0);
+//    }
+//
+//    public static void main(String... launchArgs) throws InvalidStorageFilePathException, IOException {
+//        new Duke().run(launchArgs);
+//    }
+//}
+//
+//
+//
+////        try {
+////            while (true) {
+////                String line = UI.getUserCommand();
+////                String[] lineSpaceSplit = line.split(" ");
+////
+////                // enter bye to end chat
+////                if (line.startsWith("bye")) {
+////                    exit();
+////                }
+////
+////                // to list all items
+////                else if (line.startsWith("list")) {
+////                    listTask();
+////                }
+////
+////                // mark items
+////                else if (line.startsWith("mark ")) {
+////                    System.out.println("mark test1");
+////                    if (!UI.checkEmptyTaskList()) {
+////                        try {
+////                            markTask(line);
+////                        } catch (ArrayIndexOutOfBoundsException e) {
+////                            UI.printArrayOOB();
+////                        }
+////                    }
+////                }
+////
+////                // unmarked items
+////                else if (line.startsWith("unmark ")) {
+////                    if (!UI.checkEmptyTaskList()) {
+////                        try {
+////                            unmarkTask(lineSpaceSplit);
+////                        } catch (ArrayIndexOutOfBoundsException e) {
+////                            UI.printArrayOOB();
+////                        }
+////                    }
+////                }
+////
+////                // to do task
+////                else if (line.startsWith("todo ")) {
+////                    todoTask(line);
+////                }
+////
+////                // deadline task
+////                else if (line.startsWith("deadline ")) {
+////                    deadlineTask(line);
+////                }
+////
+////                // event task
+////                else if (line.startsWith("event ")) {
+////                    eventTask(line);
+////                }
+////
+////                // delete task
+////                else if (line.startsWith("delete ")) {
+////                    if (!UI.checkEmptyTaskList()) {
+////                        try {
+////                            deleteTask(lineSpaceSplit);
+////                        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+////                            UI.printArrayOOB();
+////                        }
+////                    }
+////                }
+////
+////                // prompt user to enter valid input
+////                else
+////                    UI.printStandardError();
+////                Storage.mainCaller();
+////            }
+////        } catch (NullPointerException | InvalidStorageFilePathException | IOException e) {
+////            UI.printError(e.getMessage());
+////        }
+//
+////    }
+//
+//
+//>>>>>>> 6d8de54aa9ad1ade36257c22a9fb40709f0f283f
+////public class Duke {
+////    public static List<Task> taskList = new ArrayList<>();
+////
 //    public static void listTask() {
 //        int taskCount = 0;
 //        System.out.println("____________________________________________________________\n" +
