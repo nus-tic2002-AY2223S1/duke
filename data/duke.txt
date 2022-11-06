@@ -1,2 +1,0 @@
-T|0|hello
-E|0|fiod|ngaio

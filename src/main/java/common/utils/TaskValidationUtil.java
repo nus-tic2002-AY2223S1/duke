@@ -28,8 +28,6 @@ public class TaskValidationUtil {
         Matcher match = pattern.matcher(chat.getInput());
 
         if (!match.matches()) {
-            // throw date exception
-            
             throw new InvalidTaskDescriptionException();
         }
     }
