@@ -1,6 +1,6 @@
 import java.io.IOException;
 import java.util.List;
-
+import java.time.LocalDateTime;
 import exceptions.InvalidStorageFilePathException;
 import storage.Storage;
 import taskList.*;
@@ -34,13 +34,13 @@ public class Duke {
 
                 // to list all items
                 else if (input.equals("list"))
-                    taskList.listTask();
+                    taskList.listTask(inputSplit);
 
                 // mark items
                 else if (input.startsWith("mark"))
-                    taskList.markTask(input);
+                    taskList.markTask(inputSplit);
 
-                // unmarked items
+                // unmarked itemst
                 else if (input.startsWith("unmark"))
                     taskList.unmarkTask(inputSplit);
 

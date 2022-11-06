@@ -1,8 +1,11 @@
 package taskList;
 
+import java.time.LocalDateTime;
+
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected LocalDateTime dateTime;
 
     public Task(String description) {
         this.description = description;
@@ -10,6 +13,10 @@ public class Task {
     }
     public String getDescription(){
         return this.description;
+    }
+
+    public LocalDateTime getDate(){
+        return this.dateTime;
     }
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
