@@ -12,10 +12,9 @@ import static common.constants.CommonConstant.DELIMITER;
 
 public class StringUtil {
     /**
-     * getFirstWord returns the first word of the sentence
+     * Return the first word of the sentence
      *
-     * @param {String} sentence
-     * @return {String}
+     * @param   sentence    sentence from user input
      */
     public static String getFirstWord(String sentence) {
         int index = sentence.contains(SPACE) ? sentence.indexOf(SPACE) : ZERO_VAL;
@@ -33,10 +32,10 @@ public class StringUtil {
     }
 
     /**
-     * getDescriptionFromString returns the substring `description` in a string
+     * Return the substring `description` in a string
      *
-     * @param {String} sentence
-     * @return {String}
+     * @param   command
+     * @param   sentence    sentence from user input
      */
     public static String getDescriptionFromString(CommandEnum command, String sentence) {
         String commandString = command.toString();
@@ -56,10 +55,9 @@ public class StringUtil {
     }
 
     /**
-     * getTimeFromString returns the substring `time` in a string
+     * Return the substring `time` in a string
      *
-     * @param {String} sentence
-     * @return {String}
+     * @param   sentence    sentence from user input
      */
     public static String getTimeFromString(String sentence) {
         String separator = "";

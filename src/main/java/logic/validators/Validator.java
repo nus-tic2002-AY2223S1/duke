@@ -19,13 +19,12 @@ import static common.utils.TaskValidationUtil.notExistTaskValidation;
 
 public class Validator {
     /**
-     * validateTodo validates todo command
+     * Return validates todo command
      *
-     * @param {String} description
-     * @param {Chat} chat
-     * @throws InvalidTaskDescriptionException
-     * @throws DuplicatedTaskException
-     * @return {void}
+     * @param   description
+     * @param   chat
+     * @throws  InvalidTaskDescriptionException
+     * @throws  DuplicatedTaskException
      */
     public static void validateTodo(String description, Chat chat) throws InvalidTaskDescriptionException, DuplicatedTaskException {
         String regex = chat.getCommand() + "\\s+.+";
@@ -34,13 +33,12 @@ public class Validator {
     }
 
     /**
-     * validateEvent validates event command
+     * Return validates event command
      *
-     * @param {String} description
-     * @param {Chat} chat
-     * @throws InvalidTaskDescriptionException
-     * @throws DuplicatedTaskException
-     * @return {void}
+     * @param   description
+     * @param   chat
+     * @throws  InvalidTaskDescriptionException
+     * @throws  DuplicatedTaskException
      */
     public static void validateEvent(String description, Chat chat) throws InvalidTaskDescriptionException, DuplicatedTaskException {
         String regex = chat.getCommand() + "\\s+\\w+\\s+/" + AT + "\\s+\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])";
@@ -49,13 +47,12 @@ public class Validator {
     }
 
     /**
-     * validateDeadline validates deadline command
+     * Return validates deadline command
      *
-     * @param {String} description
-     * @param {Chat} chat
-     * @throws InvalidTaskDescriptionException
-     * @throws DuplicatedTaskException
-     * @return {void}
+     * @param   description
+     * @param   chat
+     * @throws  InvalidTaskDescriptionException
+     * @throws  DuplicatedTaskException
      */
     public static void validateDeadline(String description, Chat chat) throws InvalidTaskDescriptionException, DuplicatedTaskException {
         String regex = chat.getCommand() + "\\s+\\w+\\s+/" + BY + "\\s+\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])";
@@ -64,15 +61,14 @@ public class Validator {
     }
 
     /**
-     * validateMark validates mark command
+     * Return validates mark command
      *
-     * @param {String} description
-     * @param {Chat} chat
-     * @throws EmptyTaskListException
-     * @throws InvalidTaskDescriptionException
-     * @throws NotExistTaskException
-     * @throws MarkedTaskException
-     * @return {void}
+     * @param   description
+     * @param   chat
+     * @throws  EmptyTaskListException
+     * @throws  InvalidTaskDescriptionException
+     * @throws  NotExistTaskException
+     * @throws  MarkedTaskException
      */
     public static void validateMark(String description, Chat chat) throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException, MarkedTaskException {
         String regex = chat.getCommand() + "\\s+.+";
@@ -83,15 +79,14 @@ public class Validator {
     }
 
     /**
-     * validateUnmark validates unmark command
+     * Return validates unmark command
      *
-     * @param {String} description
-     * @param {Chat} chat
-     * @throws EmptyTaskListException
-     * @throws InvalidTaskDescriptionException
-     * @throws NotExistTaskException
-     * @throws UnmarkedTaskException
-     * @return {void}
+     * @param   description
+     * @param   chat
+     * @throws  EmptyTaskListException
+     * @throws  InvalidTaskDescriptionException
+     * @throws  NotExistTaskException
+     * @throws  UnmarkedTaskException
      */
     public static void validateUnmark(String description, Chat chat) throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException, UnmarkedTaskException {
         String regex = Chat.getCommand() + "\\s+.+";
@@ -102,14 +97,13 @@ public class Validator {
     }
 
     /**
-     * validateDelete validates delete command
+     * Return validates delete command
      *
-     * @param {String} description
-     * @param {Chat} chat
-     * @throws EmptyTaskListException
-     * @throws NotExistTaskException
-     * @throws InvalidTaskDescriptionException
-     * @return {void}
+     * @param   description
+     * @param   chat
+     * @throws  EmptyTaskListException
+     * @throws  NotExistTaskException
+     * @throws  InvalidTaskDescriptionException
      */
     public static void validateDelete(String description, Chat chat) throws EmptyTaskListException, NotExistTaskException, InvalidTaskDescriptionException {
         String regex = chat.getCommand() + "\\s+.+";
@@ -119,12 +113,11 @@ public class Validator {
     }
 
     /**
-     * validateList validates list command
+     * Return validates list command
      *
-     * @param {Chat} chat
-     * @throws EmptyTaskListException
-     * @throws InvalidTaskDescriptionException
-     * @return {void}
+     * @param   chat
+     * @throws  EmptyTaskListException
+     * @throws  InvalidTaskDescriptionException
      */
     public static void validateList(Chat chat) throws EmptyTaskListException, InvalidTaskDescriptionException {
         String regex = chat.getCommand().toString();
@@ -133,11 +126,10 @@ public class Validator {
     }
 
     /**
-     * validateHelp validates help command
+     * Return validates help command
      *
-     * @param {Chat} chat
-     * @throws InvalidTaskDescriptionException
-     * @return {void}
+     * @param   chat
+     * @throws  InvalidTaskDescriptionException
      */
     public static void validateHelp(Chat chat) throws InvalidTaskDescriptionException {
         String regex = chat.getCommand().toString();

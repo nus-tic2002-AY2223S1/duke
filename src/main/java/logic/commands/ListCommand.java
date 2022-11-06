@@ -19,11 +19,10 @@ public class ListCommand extends Command {
     }
 
     /**
-     * execute prints list of item in taskList array
+     * Return prints list of item in taskList array
      *
-     * @throws EmptyTaskListException
-     * @throws InvalidTaskDescriptionException
-     * @return {void}
+     * @throws  EmptyTaskListException
+     * @throws  InvalidTaskDescriptionException
      */
     @Override
     public void execute() throws EmptyTaskListException, InvalidTaskDescriptionException {

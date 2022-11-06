@@ -16,36 +16,28 @@ import static common.enums.CommandEnum.delete;
 
 public class ConsoleUi implements Ui {
     /**
-     * lineSeparator prints line
-     *
-     * @return {void}
+     * Return prints line
      */
     public void lineSeparator() {
         System.out.println(DASHES);
     }
 
     /**
-     * prompt prints the prefix bot for prompting user
-     *
-     * @return {void}
+     * Return prints the prefix bot for prompting user
      */
     public void prompt() {
         System.out.print(PROMPT);
     }
 
     /**
-     * printBye prints bye statement
-     *
-     * @return {void}
+     * Return prints bye statement
      */
     public void printBye() {
         System.out.println(BYE_GREETING);
     }
 
     /**
-     * printGreet prints greeting text
-     *
-     * @return {void}
+     * Return prints greeting text
      */
     public void printGreet() {
         System.out.println(LOGO);
@@ -55,11 +47,9 @@ public class ConsoleUi implements Ui {
     }
 
     /**
-     * printAddedDeletedTask prints when task is successfully added or deleted
+     * Return prints when task is successfully added or deleted
      *
-     * @param {String} input
-     * @param {Chat} chat
-     * @return {void}
+     * @param   chat
      */
     public void printAddedDeletedTask(Chat chat) {
         String commandMsg = chat.getCommand().equals(delete) ? DELETED : ADDED;
@@ -71,12 +61,11 @@ public class ConsoleUi implements Ui {
     }
 
     /**
-     * printMarkedTask prints when command task is successfully marked or unmarked
+     * Return prints when command task is successfully marked or unmarked
      *
-     * @param {String} command
-     * @param {String} input
-     * @param {Task} task
-     * @return {void}
+     * @param   command
+     * @param   input input from user
+     * @param   task
      */
     public void printMarkedTask(String command, String input, Task task) {
         System.out.println(String.format(command, input));

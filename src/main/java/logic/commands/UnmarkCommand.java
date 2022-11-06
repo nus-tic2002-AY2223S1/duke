@@ -20,13 +20,12 @@ public class UnmarkCommand extends Command {
     }
 
     /**
-     * execute unmarks a task
+     * Return unmarks a task
      *
-     * @throws EmptyTaskListException
-     * @throws InvalidTaskDescriptionException
-     * @throws NotExistTaskException
-     * @throws UnmarkedTaskException
-     * @return {void}
+     * @throws  EmptyTaskListException
+     * @throws  InvalidTaskDescriptionException
+     * @throws  NotExistTaskException
+     * @throws  UnmarkedTaskException
      */
     @Override
     public void execute() throws EmptyTaskListException, InvalidTaskDescriptionException, NotExistTaskException, UnmarkedTaskException {

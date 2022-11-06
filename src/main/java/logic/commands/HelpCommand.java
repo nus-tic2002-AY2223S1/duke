@@ -13,10 +13,9 @@ public class HelpCommand extends Command {
     }
 
     /**
-     * execute prints command usage
+     * Return prints command usage
      *
      * @throws InvalidTaskDescriptionException
-     * @return {void}
      */
     @Override
     public void execute() throws InvalidTaskDescriptionException {

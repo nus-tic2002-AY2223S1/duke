@@ -5,9 +5,9 @@ import java.time.format.DateTimeFormatter;
 
 public class DateUtil {
     /**
-     * dateConverter return date in MMM d yyyy
+     * Return date in MMM d yyyy
      *
-     * @return {String}
+     * @param   inputDate   date inputted by user
      */
     public static String dateConverter(String inputDate) {
         LocalDate date = LocalDate.parse(inputDate);
