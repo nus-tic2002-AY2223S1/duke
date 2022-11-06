@@ -16,5 +16,6 @@ public class ErrorMessages {
     public static final String LOADING_ERROR = "!!ERROR!! File not found.";
     public static final String NO_TASK_FOUND = "!!ERROR!! No Task is found. Please create a task.";
     public static final String INVALID_TASK_NUMBER = "!!ERROR!! Task number not detected. Please enter a valid input.";
+    public static final String INVALID_INPUT = "!!ERROR!! Invalid Input. Please enter a valid input.";
 }
 

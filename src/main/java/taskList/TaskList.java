@@ -4,6 +4,7 @@ package taskList;
 import parser.Parser;
 import ui.UI;
 import java.time.LocalDateTime;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import static ui.ErrorMessages.*;
@@ -37,6 +38,7 @@ public class TaskList {
                  listTask(inputSplit);
              }
         }
+        else printError(INVALID_DELETE_INPUT);
     }
 
     public void listTask(String[] inputSplit) {
@@ -81,39 +83,42 @@ public class TaskList {
 
 
     public void todoTask(String input, String[] inputSplit) {
-        printLine();
         try {
             if (checkValidCommand(inputSplit)) {
+                printLine();
                 addTask(Parser.parseTodoInput(input));
                 printLine();
             }
         } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
+            printLine();
             printError(INVALID_TODO_INPUT);
             printLine();
         }
     }
 
     public void deadlineTask(String input, String[] inputSplit) {
-        printLine();
         try {
             if (checkValidCommand(inputSplit)) {
+                printLine();
                 addTask(Parser.parseDeadlineInput(input));
                 printLine();
             }
         } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
+            printLine();
             printError(INVALID_DEADLINE_INPUT);
             printLine();
         }
     }
 
     public void eventTask(String input, String[] inputSplit) {
-        printLine();
         try {
             if (checkValidCommand(inputSplit)) {
+                printLine();
                 addTask(Parser.parseEventInput(input));
                 printLine();
             }
         } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
+            printLine();
             printError(INVALID_EVENT_INPUT);
             printLine();
         }
@@ -130,14 +135,43 @@ public class TaskList {
     }
 
     public boolean checkValidCommand(String[] inputSplit) {
-        if (inputSplit[0].equals("todo") || inputSplit[0] .equals("event")
-                || inputSplit[0].equals("deadline") || inputSplit[0] .equals("list")
-                || inputSplit[0].equals("mark") || inputSplit[0].equals("unmark")
-                || inputSplit[0].equals("delete")|| inputSplit[0].equals("bye")) {
-
+        if (inputSplit[0].equals("delete") && checkInteger(inputSplit[1])
+        && inputSplit.length == 2 )
             return true;
+
+        if (inputSplit[0].equals("todo") || inputSplit[0].equals("event") || inputSplit[0].equals("deadline")){
+            if (inputSplit.length>1)
+                return true;
         }
-        else {return false;}
+
+        if (inputSplit[0].equals("mark") && checkInteger(inputSplit[1])
+                && inputSplit.length == 2 )
+            return true;
+
+        if (inputSplit[0].equals("unmark") && checkInteger(inputSplit[1])
+                && inputSplit.length == 2 )
+            return true;
+
+        if (inputSplit[0].equals("list") && inputSplit.length == 1 )
+            return true;
+
+        if (inputSplit[0].equals("bye") && inputSplit.length == 1 )
+            return true;
+
+        else {
+            printLine();
+            printError(INVALID_INPUT);
+            printLine();
+            return false;}
+    }
+
+    public boolean checkInteger(String s){
+        try{
+            Integer.parseInt(s);
+        }catch(Exception e ){
+            return false;
+        }
+        return true;
     }
 
 
