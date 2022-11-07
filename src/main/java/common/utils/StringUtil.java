@@ -88,6 +88,7 @@ public class StringUtil {
      * Return update id in a string
      *
      * @param   sentence    sentence from user input
+     * @throws  InvalidTaskDescriptionException
      */
     public static String getUpdateIdFromString(String sentence) throws InvalidTaskDescriptionException {
         try {
@@ -102,6 +103,7 @@ public class StringUtil {
      * Return updateEnumType in a string
      *
      * @param   sentence    sentence from user input
+     * @throws  InvalidTaskDescriptionException
      */
     public static UpdateTypeEnum getUpdateEnumTypeFromString(String sentence) throws InvalidTaskDescriptionException {
         try {
@@ -116,6 +118,7 @@ public class StringUtil {
      * Return update description in a string
      *
      * @param   sentence    sentence from user input
+     * @throws  InvalidTaskDescriptionException
      */
     public static String getUpdateDescriptionFromString(String sentence) throws InvalidTaskDescriptionException {
         try {
