@@ -22,7 +22,10 @@ public class Repository {
         this.repoFileName = fileName;
     }
 
-    public void loadDirectory() throws IOException {
+    /**
+     * Atomically creates a new, empty directory if and only if a directory with this name does not yet exist.
+     */
+    public void loadDirectory() {
         File dir = new File(repoDirectory);
         if (dir.mkdir()) {
             System.out.printf("The %s directory has been created,\n" , repoDirectory);
