@@ -22,6 +22,11 @@ public class UpdateCommand extends Command {
 
     /**
      * Return update a task
+     *
+     * @throws  EmptyTaskListException
+     * @throws  UnmarkedTaskException
+     * @throws  InvalidTaskDescriptionException
+     * @throws  NotExistTaskException
      */
     @Override
     public void execute() throws EmptyTaskListException, UnmarkedTaskException, InvalidTaskDescriptionException, NotExistTaskException {
