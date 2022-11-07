@@ -9,9 +9,9 @@ public class Deadline extends Task {
     @Override
     public String getTask() {
         if(isDone) {
-            return "D|1|" + name + "|by " + due + "|";
+            return "D|1|" + name + "|" + due + "|";
         } else {
-            return "D|0|" + name  + "|by " + due + "|";
+            return "D|0|" + name  + "|" + due + "|";
         }
     }
 }

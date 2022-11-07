@@ -1,0 +1,7 @@
+T|0|homework
+D|0|report|by tmr|
+E|1|presentation|at 11 Nov|
+T|0|smile
+D|0|:)|by today|
+E|0|:(|at tomorrow|
+T|0|this
