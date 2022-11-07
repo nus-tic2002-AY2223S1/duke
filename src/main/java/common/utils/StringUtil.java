@@ -2,6 +2,7 @@ package common.utils;
 
 import common.enums.CommandEnum;
 import common.enums.UpdateTypeEnum;
+import common.exceptions.InvalidTaskDescriptionException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,9 +89,13 @@ public class StringUtil {
      *
      * @param   sentence    sentence from user input
      */
-    public static String getUpdateIdFromString(String sentence) {
-        List<String> words = new ArrayList<>(Arrays.asList(sentence.split("\\s+")));
-        return words.get(0); // update id is position 1 - (1 from command)
+    public static String getUpdateIdFromString(String sentence) throws InvalidTaskDescriptionException {
+        try {
+            List<String> words = new ArrayList<>(Arrays.asList(sentence.split("\\s+")));
+            return words.get(0); // update id is position 1 - (1 from command)
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidTaskDescriptionException();
+        }
     }
 
     /**
@@ -98,9 +103,13 @@ public class StringUtil {
      *
      * @param   sentence    sentence from user input
      */
-    public static UpdateTypeEnum getUpdateEnumTypeFromString(String sentence) {
-        List<String> words = new ArrayList<>(Arrays.asList(sentence.split("\\s+")));
-        return UpdateTypeEnum.valueOf(words.get(1)); // updateTypeEnum is position 2 - (1 from command)
+    public static UpdateTypeEnum getUpdateEnumTypeFromString(String sentence) throws InvalidTaskDescriptionException {
+        try {
+            List<String> words = new ArrayList<>(Arrays.asList(sentence.split("\\s+")));
+            return UpdateTypeEnum.valueOf(words.get(1)); // updateTypeEnum is position 2 - (1 from command)
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidTaskDescriptionException();
+        }
     }
 
     /**
@@ -108,8 +117,12 @@ public class StringUtil {
      *
      * @param   sentence    sentence from user input
      */
-    public static String getUpdateDescriptionFromString(String sentence) {
-        List<String> words = new ArrayList<>(Arrays.asList(sentence.split("\\s+")));
-        return words.get(2); // updateTypeEnum is position 3 - (1 from command)
+    public static String getUpdateDescriptionFromString(String sentence) throws InvalidTaskDescriptionException {
+        try {
+            List<String> words = new ArrayList<>(Arrays.asList(sentence.split("\\s+")));
+            return words.get(2); // updateTypeEnum is position 3 - (1 from command)
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidTaskDescriptionException();
+        }
     }
 }
