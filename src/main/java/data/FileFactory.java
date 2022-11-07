@@ -71,8 +71,11 @@ public class FileFactory implements FileInterface {
     }
 
     @Override
-    public void setActive(String alias) throws IOException {
+    public boolean setActive(String alias) throws IOException {
         assert(file.isFile());
+        if(checkExists(alias) == false) {
+            return false;
+        }
         List<String> lines = Files.readAllLines(Path.of(file.getAbsolutePath()), StandardCharsets.UTF_8);
         int i = 0;
         while(i < lines.size()) {
@@ -89,6 +92,7 @@ public class FileFactory implements FileInterface {
         }
 
         Files.write(Path.of(file.getAbsolutePath()), lines, StandardCharsets.UTF_8);
+        return true;
     }
 
     @Override
@@ -110,10 +114,8 @@ public class FileFactory implements FileInterface {
     public boolean addNewFile(String alias) throws IOException {
         assert(file.isFile());
         ArrayList<FileInfo> allFiles = getAllFile();
-        for(FileInfo each : allFiles) {
-            if(each.getAlias() == alias) {
-                return false;
-            }
+        if(checkExists(alias)) {
+            return false;
         }
         FileInfo newFile = new FileInfo("dukefile" + allFiles.size() + ".txt", true, alias);
         String text = convertFileInfoToString(newFile);
@@ -137,5 +139,15 @@ public class FileFactory implements FileInterface {
             return null;
         }
         return new FileInfo(texts[0], Integer.parseInt(texts[1]) == 1, texts[2]);
+    }
+
+    private boolean checkExists(String alias) {
+        ArrayList<FileInfo> allFiles = getAllFile();
+        for(FileInfo each : allFiles) {
+            if(each.getAlias().equalsIgnoreCase(alias)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -135,6 +135,13 @@ public interface UIInterface {
     public void setActiveSuccess(String alias);
 
     /**
+     * shows  when failed to set active on an alias
+     *
+     * @return void
+     */
+    public void setActiveFailed(String alias);
+
+    /**
      * shows the current active file alias
      *
      * @return void

@@ -146,7 +146,11 @@ public class DukeUI implements UIInterface {
 
     @Override
     public void setActiveSuccess(String alias){
-        printlntab("Successfully activate " + alias + " file");
+        printlntab("Successfully load " + alias + " file");
+    }
+    @Override
+    public void setActiveFailed(String alias) {
+        printlntab("Failed to load "+ alias +" file, please check if it is exist in the system");
     }
 
     @Override

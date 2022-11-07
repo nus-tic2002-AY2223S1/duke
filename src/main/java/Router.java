@@ -116,9 +116,13 @@ public class Router extends BotUseCase {
     @Override
     public void setActiveFile(String alias) {
         try {
-            fileData.setActive(alias);
-            this.loadActiveFile();
-            ui.setActiveSuccess(alias);
+            if(fileData.setActive(alias)) {
+                this.loadActiveFile();
+                ui.setActiveSuccess(alias);
+            } else {
+                ui.setActiveFailed(alias);
+            }
+
         } catch (Exception e) {
 
         }

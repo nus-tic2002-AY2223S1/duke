@@ -19,10 +19,10 @@ public interface FileInterface {
      * Set specific file to an active
      * if the file couldn't be found, nothing will be return
      *
-     * @return void
+     * @return boolean if its true means set active successful and if its false means alias is wrong
      * @param alias the alias name of the file
      */
-    public void setActive(String alias) throws IOException;
+    public boolean setActive(String alias) throws IOException;
     /**
      * get current active file
      *

@@ -305,6 +305,11 @@ public class RouterTest {
         }
 
         @Override
+        public void setActiveFailed(String alias) {
+
+        }
+
+        @Override
         public void getActiveFile(String alias) {
 
         }

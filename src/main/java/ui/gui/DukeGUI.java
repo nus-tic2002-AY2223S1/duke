@@ -87,7 +87,7 @@ public class DukeGUI implements UIInterface, ScreenDelegate {
         if(value == true) {
             screen.dukeReply("Nice! I've marked this task as done:\n" + task.getString());
         } else {
-            screen.dukeReply("OK, I've marked this task as not done yet\n:"+ task.getString());
+            screen.dukeReply("OK, I've marked this task as not done yet:\n"+ task.getString());
         }
     }
     @Override
@@ -146,7 +146,12 @@ public class DukeGUI implements UIInterface, ScreenDelegate {
 
     @Override
     public void setActiveSuccess(String alias){
-        screen.dukeReply("Successfully activate " + alias + " file");
+        screen.dukeReply("Successfully load " + alias + " file");
+    }
+
+    @Override
+    public void setActiveFailed(String alias) {
+        screen.dukeReply("Failed to load "+ alias +" file, please check if it is exist in the system");
     }
 
     @Override
