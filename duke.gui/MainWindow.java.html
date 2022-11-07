@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MainWindow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">test.exec</a> &gt; <a href="index.source.html" class="el_package">duke.gui</a> &gt; <span class="el_source">MainWindow.java</span></div><h1>MainWindow.java</h1><pre class="source lang-java linenums">package duke.gui;
+
+import java.awt.Desktop;
+import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Objects;
+import javax.swing.Timer;
+
+import duke.Duke;
+import duke.impl.Ui;
+import duke.orm.Database;
+import duke.orm.DatabaseObject;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+/**
+ * Main window of the chat. Container of dialogBox, menu bar and buttons.
+ */
+<span class="nc" id="L41">public class MainWindow extends AnchorPane {</span>
+    private static final String CACHE_DIR = &quot;data/tmp/&quot;;
+    private static final String MODE_CACHE_FILE_PATH = &quot;data/tmp/mode&quot;;
+    private static final String LIST_CACHE_FILE_PATH = &quot;data/tmp/list&quot;;
+    private static final String LOCALE_CACHE_FILE_PATH = &quot;data/tmp/il8n&quot;;
+    private static final String DARK_CSS_FILE_PATH = &quot;/view/dark.css&quot;;
+    private static final String LIGHT_CSS_FILE_PATH = &quot;/view/light.css&quot;;
+
+    private Duke duke;
+<span class="nc" id="L50">    private boolean isDark = false;</span>
+<span class="nc" id="L51">    private boolean isListOnLaunch = false;</span>
+    private Ui.LocaleRegion locale;
+    @FXML
+    private Label helpButton;
+    @FXML
+    private Label listButton;
+    @FXML
+    private Label refreshButton;
+    @FXML
+    private Label status;
+    @FXML
+    private Label chatLabel;
+<span class="nc" id="L63">    private final Image userImage = new Image(</span>
+<span class="nc" id="L64">            Objects.requireNonNull(</span>
+<span class="nc" id="L65">                    this.getClass().getResourceAsStream(&quot;/images/gigachad.png&quot;)));</span>
+<span class="nc" id="L66">    private final Image dukeImage = new Image(</span>
+<span class="nc" id="L67">            Objects.requireNonNull(</span>
+<span class="nc" id="L68">                    this.getClass().getResourceAsStream(&quot;/images/duke.png&quot;)));</span>
+    @FXML
+    private MenuItem menuCloseButton;
+    @FXML
+    private Menu menuFile;
+    @FXML
+    private MenuBar menuBar;
+    @FXML
+    private MenuItem menuRefreshButton;
+    @FXML
+    private MenuItem menuArchiveButton;
+    @FXML
+    private MenuItem menuRestoreButton;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private VBox dialogContainer;
+    @FXML
+    private TextField userInput;
+    @FXML
+    private Label sendButton;
+    @FXML
+    private CheckMenuItem listOnLaunchButton;
+    @FXML
+    private MenuItem clearChatButton;
+    @FXML
+    private Parent rootPane;
+    @FXML
+    private CheckMenuItem darkModeButton;
+    @FXML
+    private CheckMenuItem enButton;
+    @FXML
+    private CheckMenuItem cnButton;
+    @FXML
+    private Menu menuSettings;
+
+    @FXML
+    public void initialize() {
+<span class="nc" id="L106">        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());</span>
+<span class="nc" id="L107">    }</span>
+
+    public void setDuke(Duke d) throws SQLException {
+<span class="nc" id="L110">        duke = d;</span>
+        //restore chat
+<span class="nc" id="L112">        Connection c = Database.init();</span>
+        Statement stmt;
+        ResultSet r;
+        try {
+<span class="nc" id="L116">            stmt = c.createStatement();</span>
+<span class="nc" id="L117">            String sql = &quot;SELECT id, sender, message, timestamp FROM &quot;</span>
+                    + &quot;(SELECT * FROM chat_tab ORDER BY id DESC LIMIT 500) &quot;
+                    + &quot;ORDER BY id;&quot;;
+<span class="nc" id="L120">            r = stmt.executeQuery(sql);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">            if (!r.isBeforeFirst()) {</span>
+<span class="nc" id="L122">                System.out.println(&quot;No data&quot;);</span>
+            }
+<span class="nc bnc" id="L124" title="All 2 branches missed.">            while (r.next()) {</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">                if (r.getInt(2) == DatabaseObject.Sender.DUKE.getLabel()) {</span>
+<span class="nc" id="L126">                    dialogContainer.getChildren().addAll(</span>
+<span class="nc" id="L127">                            DialogBox.getDukeDialog(r.getString(3), dukeImage, r.getInt(4))</span>
+                    );
+                } else {
+<span class="nc" id="L130">                    dialogContainer.getChildren().addAll(</span>
+<span class="nc" id="L131">                            DialogBox.getUserDialog(r.getString(3), userImage, r.getInt(4)));</span>
+                }
+            }
+<span class="nc" id="L134">            stmt.close();</span>
+<span class="nc" id="L135">            c.commit();</span>
+<span class="nc" id="L136">        } catch (Exception e) {</span>
+<span class="nc" id="L137">            System.err.println(e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
+<span class="nc" id="L138">            System.exit(0);</span>
+<span class="nc" id="L139">        }</span>
+<span class="nc" id="L140">        c.close();</span>
+
+<span class="nc" id="L142">        String[] s = duke.getWelcome(isListOnLaunch);</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        for (String str : s) {</span>
+<span class="nc" id="L144">            dialogContainer.getChildren().addAll(</span>
+<span class="nc" id="L145">                    DialogBox.getDukeDialog(str, dukeImage, 0)</span>
+            );
+        }
+<span class="nc" id="L148">    }</span>
+
+    @FXML
+    private void handleUserInput() {
+<span class="nc" id="L152">        String input = userInput.getText();</span>
+<span class="nc" id="L153">        String response = duke.getResponse(input);</span>
+
+<span class="nc bnc" id="L155" title="All 2 branches missed.">        if (Objects.equals(input, &quot;&quot;)) {</span>
+<span class="nc" id="L156">            return;</span>
+        }
+
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        if (Objects.equals(input.trim(), &quot;&quot;)) {</span>
+<span class="nc" id="L160">            dialogContainer.getChildren().addAll(</span>
+<span class="nc" id="L161">                    DialogBox.getUserDialog(input, userImage, 0)</span>
+            );
+<span class="nc" id="L163">            userInput.clear();</span>
+<span class="nc" id="L164">            return;</span>
+        }
+
+<span class="nc bnc" id="L167" title="All 2 branches missed.">        if (Objects.equals(input, &quot;bye&quot;)) {</span>
+<span class="nc" id="L168">            dialogContainer.getChildren().addAll(</span>
+<span class="nc" id="L169">                    DialogBox.getUserDialog(input, userImage, 0)</span>
+            );
+<span class="nc" id="L171">            userInput.clear();</span>
+
+<span class="nc" id="L173">            ActionListener taskPerformer = evt -&gt; Platform.runLater(() -&gt; {</span>
+<span class="nc" id="L174">                dialogContainer.getChildren().addAll(</span>
+<span class="nc" id="L175">                        DialogBox.getDukeDialog(response, dukeImage, 0)</span>
+                );
+<span class="nc" id="L177">            });</span>
+<span class="nc" id="L178">            Timer timer = new Timer(500, taskPerformer);</span>
+<span class="nc" id="L179">            timer.setRepeats(false);</span>
+<span class="nc" id="L180">            timer.start();</span>
+
+<span class="nc" id="L182">            ActionListener taskPerformer1 = evt -&gt; Platform.runLater(() -&gt; {</span>
+<span class="nc" id="L183">                Stage stage = (Stage) userInput.getScene().getWindow();</span>
+<span class="nc" id="L184">                stage.close();</span>
+<span class="nc" id="L185">            });</span>
+<span class="nc" id="L186">            Timer timer1 = new Timer(2000, taskPerformer1);</span>
+<span class="nc" id="L187">            timer1.setRepeats(false);</span>
+<span class="nc" id="L188">            timer1.start();</span>
+<span class="nc" id="L189">            return;</span>
+        }
+
+<span class="nc" id="L192">        String[] ss = input.split(&quot; &quot;);</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">        if (ss.length == 2</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">                &amp;&amp; Objects.equals(ss[0], &quot;restore&quot;)</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">                &amp;&amp; Objects.equals(response, &quot;Successfully restored record.&quot;)) {</span>
+<span class="nc" id="L196">            dialogContainer.getChildren().addAll(</span>
+<span class="nc" id="L197">                    DialogBox.getUserDialog(input, userImage, 0),</span>
+<span class="nc" id="L198">                    DialogBox.getDukeDialog(response, dukeImage, 0)</span>
+            );
+<span class="nc" id="L200">            userInput.clear();</span>
+<span class="nc" id="L201">            refreshAction();</span>
+        }
+
+<span class="nc" id="L204">        dialogContainer.getChildren().addAll(</span>
+<span class="nc" id="L205">                DialogBox.getUserDialog(input, userImage, 0)</span>
+        );
+<span class="nc" id="L207">        userInput.clear();</span>
+
+<span class="nc" id="L209">        ActionListener taskPerformer2 = evt -&gt; Platform.runLater(() -&gt; {</span>
+<span class="nc" id="L210">            setOnlineText();</span>
+<span class="nc" id="L211">            dialogContainer.getChildren().addAll(</span>
+<span class="nc" id="L212">                    DialogBox.getDukeDialog(response, dukeImage, 0)</span>
+            );
+<span class="nc" id="L214">        });</span>
+<span class="nc" id="L215">        int randTime = (int) (Math.random() * (2500 - 1000));</span>
+<span class="nc" id="L216">        Timer timer2 = new Timer((randTime), taskPerformer2);</span>
+<span class="nc" id="L217">        setTypingText();</span>
+<span class="nc" id="L218">        timer2.setRepeats(false);</span>
+<span class="nc" id="L219">        timer2.start();</span>
+<span class="nc" id="L220">    }</span>
+
+    private void setOnlineText() {
+<span class="nc bnc" id="L223" title="All 3 branches missed.">        switch (locale) {</span>
+        case EN:
+<span class="nc" id="L225">            status.setText(&quot;Online&quot;);</span>
+<span class="nc" id="L226">            break;</span>
+        case CN:
+<span class="nc" id="L228">            status.setText(&quot;在线&quot;);</span>
+<span class="nc" id="L229">            break;</span>
+        default:
+        }
+<span class="nc" id="L232">    }</span>
+
+    private void setTypingText() {
+<span class="nc bnc" id="L235" title="All 3 branches missed.">        switch (locale) {</span>
+        case EN:
+<span class="nc" id="L237">            status.setText(&quot;Typing...&quot;);</span>
+
+<span class="nc" id="L239">            break;</span>
+        case CN:
+<span class="nc" id="L241">            status.setText(&quot;输入中...&quot;);</span>
+<span class="nc" id="L242">            break;</span>
+        default:
+        }
+<span class="nc" id="L245">    }</span>
+
+    @FXML
+    private void listAction() {
+<span class="nc" id="L249">        String response = duke.getResponse(&quot;list&quot;);</span>
+<span class="nc" id="L250">        ActionListener taskPerformer = evt -&gt; Platform.runLater(() -&gt; {</span>
+<span class="nc" id="L251">            dialogContainer.getChildren().addAll(</span>
+<span class="nc" id="L252">                    DialogBox.getDukeDialog(response, dukeImage, 0)</span>
+            );
+<span class="nc" id="L254">            userInput.clear();</span>
+<span class="nc" id="L255">        });</span>
+<span class="nc" id="L256">        Timer timer = new Timer(500, taskPerformer);</span>
+<span class="nc" id="L257">        timer.setRepeats(false);</span>
+<span class="nc" id="L258">        timer.start();</span>
+<span class="nc" id="L259">    }</span>
+
+    @FXML
+    private void refreshAction() {
+<span class="nc" id="L263">        Stage stage = (Stage) rootPane.getScene().getWindow();</span>
+<span class="nc" id="L264">        Main m = new Main();</span>
+<span class="nc" id="L265">        m.start(stage);</span>
+<span class="nc" id="L266">        Scene s = rootPane.getScene();</span>
+<span class="nc" id="L267">        s.getStylesheets().add(</span>
+<span class="nc" id="L268">                Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))</span>
+<span class="nc" id="L269">                        .toExternalForm());</span>
+<span class="nc" id="L270">    }</span>
+
+    @FXML
+    private void helpAction() {
+<span class="nc" id="L274">        handleMenuInput(&quot;help&quot;);</span>
+<span class="nc" id="L275">    }</span>
+
+    @FXML
+    private void exitAction() {
+<span class="nc" id="L279">        Stage stage = (Stage) menuBar.getScene().getWindow();</span>
+<span class="nc" id="L280">        stage.close();</span>
+<span class="nc" id="L281">    }</span>
+
+    @FXML
+    private void restoreAction() {
+<span class="nc" id="L285">        handleMenuInput(&quot;restore&quot;);</span>
+<span class="nc" id="L286">    }</span>
+
+    @FXML
+    private void archiveAction() {
+<span class="nc" id="L290">        handleMenuInput(&quot;archive&quot;);</span>
+<span class="nc" id="L291">    }</span>
+
+    @FXML
+    private void aboutAction() throws IOException, URISyntaxException {
+<span class="nc" id="L295">        Desktop.getDesktop().browse(new URI(&quot;https://github.com/aaronangxz/duke&quot;));</span>
+<span class="nc" id="L296">    }</span>
+
+    @FXML
+    private void handleMenuInput(String command) {
+<span class="nc" id="L300">        String response = duke.getResponse(command);</span>
+<span class="nc" id="L301">        dialogContainer.getChildren().addAll(</span>
+<span class="nc" id="L302">                DialogBox.getDukeDialog(response, dukeImage, 0)</span>
+        );
+<span class="nc" id="L304">    }</span>
+
+    @FXML
+    private void toggleDarkMode() throws IOException {
+<span class="nc" id="L308">        Scene s = rootPane.getScene();</span>
+<span class="nc bnc" id="L309" title="All 2 branches missed.">        if (isDark) {</span>
+<span class="nc" id="L310">            isDark = false;</span>
+<span class="nc" id="L311">            s.getStylesheets().add(</span>
+<span class="nc" id="L312">                    Objects.requireNonNull(getClass().getResource(LIGHT_CSS_FILE_PATH))</span>
+<span class="nc" id="L313">                            .toExternalForm());</span>
+<span class="nc" id="L314">            s.getStylesheets().remove(</span>
+<span class="nc" id="L315">                    Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))</span>
+<span class="nc" id="L316">                            .toExternalForm());</span>
+        } else {
+<span class="nc" id="L318">            isDark = true;</span>
+<span class="nc" id="L319">            s.getStylesheets().add(</span>
+<span class="nc" id="L320">                    Objects.requireNonNull(getClass().getResource(DARK_CSS_FILE_PATH))</span>
+<span class="nc" id="L321">                            .toExternalForm());</span>
+<span class="nc" id="L322">            s.getStylesheets().remove(</span>
+<span class="nc" id="L323">                    Objects.requireNonNull(getClass().getResource(LIGHT_CSS_FILE_PATH))</span>
+<span class="nc" id="L324">                            .toExternalForm());</span>
+        }
+<span class="nc" id="L326">        darkModeButton.setSelected(isDark);</span>
+<span class="nc" id="L327">        cacheMode(isDark);</span>
+<span class="nc" id="L328">        isListOnLaunch = false;</span>
+<span class="nc" id="L329">    }</span>
+
+    private void cacheMode(boolean isDark) throws IOException {
+<span class="nc" id="L332">        Files.createDirectories(Paths.get(CACHE_DIR));</span>
+<span class="nc" id="L333">        FileWriter writer = new FileWriter(MODE_CACHE_FILE_PATH);</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">        writer.write(isDark ? &quot;dark=1&quot; : &quot;dark=0&quot; + System.lineSeparator());</span>
+<span class="nc" id="L335">        writer.close();</span>
+<span class="nc" id="L336">    }</span>
+
+    public void setDarkModeText() {
+<span class="nc" id="L339">        isDark = true;</span>
+<span class="nc" id="L340">        darkModeButton.setSelected(true);</span>
+<span class="nc" id="L341">    }</span>
+
+    public void setListOnLaunchText() {
+<span class="nc" id="L344">        isListOnLaunch = true;</span>
+<span class="nc" id="L345">        listOnLaunchButton.setSelected(true);</span>
+<span class="nc" id="L346">    }</span>
+
+    @FXML
+    private void clearChatAction() {
+<span class="nc" id="L350">        Database.dropTable();</span>
+<span class="nc" id="L351">        refreshAction();</span>
+<span class="nc" id="L352">    }</span>
+
+    @FXML
+    private void toggleListOnLaunch() throws IOException {
+<span class="nc bnc" id="L356" title="All 2 branches missed.">        isListOnLaunch = !isListOnLaunch;</span>
+<span class="nc" id="L357">        listOnLaunchButton.setSelected(isListOnLaunch);</span>
+<span class="nc" id="L358">        cacheLaunch(isListOnLaunch);</span>
+<span class="nc" id="L359">    }</span>
+
+    private void cacheLaunch(boolean isShow) throws IOException {
+<span class="nc" id="L362">        Files.createDirectories(Paths.get(CACHE_DIR));</span>
+<span class="nc" id="L363">        FileWriter writer = new FileWriter(LIST_CACHE_FILE_PATH);</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">        writer.write(isShow ? &quot;list=1&quot; : &quot;list=0&quot; + System.lineSeparator());</span>
+<span class="nc" id="L365">        writer.close();</span>
+<span class="nc" id="L366">    }</span>
+
+    public void setLocale(Ui.LocaleRegion l) {
+<span class="nc" id="L369">        locale = l;</span>
+<span class="nc bnc" id="L370" title="All 3 branches missed.">        switch (l) {</span>
+        case EN:
+<span class="nc" id="L372">            enButton.setSelected(true);</span>
+<span class="nc" id="L373">            break;</span>
+        case CN:
+<span class="nc" id="L375">            cnButton.setSelected(true);</span>
+<span class="nc" id="L376">            break;</span>
+        default:
+        }
+<span class="nc" id="L379">    }</span>
+
+    @FXML
+    private void setLocaleEnAction() throws IOException {
+<span class="nc" id="L383">        enButton.setSelected(true);</span>
+<span class="nc" id="L384">        cnButton.setSelected(false);</span>
+<span class="nc" id="L385">        setLocale(Ui.LocaleRegion.EN);</span>
+<span class="nc" id="L386">        cacheLocale(Ui.LocaleRegion.EN);</span>
+<span class="nc" id="L387">        refreshAction();</span>
+<span class="nc" id="L388">    }</span>
+
+    @FXML
+    private void setLocaleCnAction() throws IOException {
+<span class="nc" id="L392">        enButton.setSelected(true);</span>
+<span class="nc" id="L393">        cnButton.setSelected(false);</span>
+<span class="nc" id="L394">        setLocale(Ui.LocaleRegion.CN);</span>
+<span class="nc" id="L395">        cacheLocale(Ui.LocaleRegion.CN);</span>
+<span class="nc" id="L396">        refreshAction();</span>
+<span class="nc" id="L397">    }</span>
+
+    private void cacheLocale(Ui.LocaleRegion l) throws IOException {
+<span class="nc" id="L400">        Files.createDirectories(Paths.get(CACHE_DIR));</span>
+<span class="nc" id="L401">        FileWriter writer = new FileWriter(LOCALE_CACHE_FILE_PATH);</span>
+
+<span class="nc bnc" id="L403" title="All 3 branches missed.">        switch (l) {</span>
+        case EN:
+<span class="nc" id="L405">            writer.write(&quot;il8n=en&quot; + System.lineSeparator());</span>
+<span class="nc" id="L406">            break;</span>
+        case CN:
+<span class="nc" id="L408">            writer.write(&quot;il8n=cn&quot; + System.lineSeparator());</span>
+<span class="nc" id="L409">            break;</span>
+        default:
+        }
+<span class="nc" id="L412">        writer.close();</span>
+<span class="nc" id="L413">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Cmd.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">test.exec</a> &gt; <a href="index.source.html" class="el_package">duke.impl</a> &gt; <span class="el_source">Cmd.java</span></div><h1>Cmd.java</h1><pre class="source lang-java linenums">package duke.impl;
+
+import java.util.ArrayList;
+
+import duke.tasks.Task;
+
+/**
+ * The middleware between Command Parser and Logic Implementations.
+ */
+public class Cmd {
+    /**
+     * Types of pre-defined Commands.
+     */
+<span class="fc" id="L14">    public enum CmdTypes {</span>
+<span class="fc" id="L15">        UNKNOWN_CMD, PRINT_LIST, MARK_TASK, UNMARK_TASK, ADD_TODO, ADD_DEADLINE, ADD_EVENT, DELETE_TASK, FIND_DATE,</span>
+<span class="fc" id="L16">        FIND_TASK, ARCHIVE, RESTORE, RETURN, HELP, EXIT</span>
+    }
+
+    protected CmdTypes t;
+    protected String[] input;
+    protected Runner r;
+    protected ArrayList&lt;Task&gt; arrayList;
+
+    /**
+     * Initialize the Cmd Object with CmdTypes and parsed input.
+     *
+     * @param c              The CmdType
+     * @param processedInput The parsed user input string
+     */
+<span class="fc" id="L30">    public Cmd(CmdTypes c, String[] processedInput) {</span>
+<span class="fc" id="L31">        this.t = c;</span>
+<span class="fc" id="L32">        this.input = processedInput;</span>
+<span class="fc" id="L33">    }</span>
+
+    /**
+     * Calls the corresponding logic implementation based on the input Command type.
+     * The tasks argument is mandatory, but is not required to be populated. i.e. empty list is acceptable.
+     * If tasks is not empty, command will be processed with existing tasks in mind and vice-versa.
+     * The locale argument is mandatory,and can be either Ui.LocaleRegion.En or Ui.LocaleRegion.Cn
+     * The language locale of Duke's reply will rely on this argument.
+     * &lt;p&gt;
+     * This method has a direct dependency on the Runner Class, which will be constructed upon initialization.
+     *
+     * @param tasks  An array of Tasks in ArrayList type to be processed.
+     * @param locale The Ui.LocaleRegion Enum to determine reply language.
+     * @return Message to display in GUI after processing commands.
+     */
+    public String run(ArrayList&lt;Task&gt; tasks, Ui.LocaleRegion locale) {
+<span class="fc" id="L49">        arrayList = tasks;</span>
+<span class="fc" id="L50">        this.r = new Runner(arrayList, locale);</span>
+<span class="pc bpc" id="L51" title="15 of 16 branches missed.">        switch (this.t) {</span>
+        case RETURN:
+<span class="nc" id="L53">            break;</span>
+        case UNKNOWN_CMD:
+<span class="nc" id="L55">            return r.printCommandUnknownMessage();</span>
+        case PRINT_LIST:
+<span class="nc" id="L57">            return r.printList(true);</span>
+        case MARK_TASK:
+<span class="nc" id="L59">            return r.processAction(Runner.Action.MARK, input);</span>
+        case UNMARK_TASK:
+<span class="nc" id="L61">            return r.processAction(Runner.Action.UNMARK, input);</span>
+        case ADD_TODO:
+<span class="fc" id="L63">            return r.processAddTask(Runner.Command.TODO, input);</span>
+        case ADD_DEADLINE:
+<span class="nc" id="L65">            return r.processAddTask(Runner.Command.DEADLINE, input);</span>
+        case ADD_EVENT:
+<span class="nc" id="L67">            return r.processAddTask(Runner.Command.EVENT, input);</span>
+        case DELETE_TASK:
+<span class="nc" id="L69">            return r.processAction(Runner.Action.DELETE, input);</span>
+        case FIND_DATE:
+<span class="nc" id="L71">            return r.processFindDate(input);</span>
+        case FIND_TASK:
+<span class="nc" id="L73">            return r.processFindTask(input);</span>
+        case ARCHIVE:
+<span class="nc" id="L75">            return r.processArchive();</span>
+        case RESTORE:
+<span class="nc" id="L77">            return r.processRestore(input);</span>
+        case HELP:
+<span class="nc" id="L79">            return r.printHelpMessage();</span>
+        case EXIT:
+<span class="nc" id="L81">            return r.printExitMessage();</span>
+        default:
+<span class="nc" id="L83">            return &quot;&quot;;</span>
+        }
+<span class="nc" id="L85">        return &quot;&quot;;</span>
+    }
+
+    /**
+     * Retrieves the input.
+     *
+     * @return An array of input
+     */
+    public String[] getInput() {
+<span class="fc" id="L94">        return this.input;</span>
+    }
+
+    /**
+     * Retrieves the CmdTypes enum.
+     *
+     * @return Cmd of CmdTypes enum
+     */
+    public CmdTypes getCmdTypes() {
+<span class="fc" id="L103">        return this.t;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

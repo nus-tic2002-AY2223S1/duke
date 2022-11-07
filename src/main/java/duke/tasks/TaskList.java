@@ -1,7 +1,7 @@
 package duke.tasks;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -21,8 +21,8 @@ public class TaskList {
      * @param s Scanner object from file read
      */
     public TaskList(Scanner s) {
-        Task[] arr = {};
-        this.arrayList = new ArrayList<>(Arrays.asList(arr));
+        assert s != null;
+        this.arrayList = new ArrayList<>(List.of());
 
         if (s.hasNext()) {
             lastUserName = s.nextLine();
@@ -35,6 +35,10 @@ public class TaskList {
         while (s.hasNext()) {
             String inputLine = s.nextLine();
             String[] parsed = Encoder.decode(inputLine).split(",");
+
+            if (parsed.length < 2) {
+                return;
+            }
 
             switch (parsed[0]) {
             case "E":
@@ -51,6 +55,7 @@ public class TaskList {
             default:
                 break;
             }
+
             if (Objects.equals(parsed[1], "1")) {
                 arrayList.get(arrayList.size() - 1).markTask();
             }
@@ -61,8 +66,7 @@ public class TaskList {
      * Initializes an empty list of Task
      */
     public TaskList() {
-        Task[] arr = {};
-        this.arrayList = new ArrayList<>(Arrays.asList(arr));
+        this.arrayList = new ArrayList<>(List.of());
     }
 
     public void addTask(Task t) {

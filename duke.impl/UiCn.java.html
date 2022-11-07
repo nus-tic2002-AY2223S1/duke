@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UiCn.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">test.exec</a> &gt; <a href="index.source.html" class="el_package">duke.impl</a> &gt; <span class="el_source">UiCn.java</span></div><h1>UiCn.java</h1><pre class="source lang-java linenums">package duke.impl;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+
+import duke.tasks.Task;
+import duke.tasks.TaskList;
+import duke.utils.DateProcessor;
+
+/**
+ * Main class to generate text responses
+ */
+public class UiCn extends Ui {
+<span class="pc" id="L14">    protected String format = &quot;%s&quot;;</span>
+
+    /**
+     * Enum of messages
+     */
+<span class="fc" id="L19">    public enum UiMessage {</span>
+<span class="fc" id="L20">        GENERIC(&quot;&quot;),</span>
+<span class="fc" id="L21">        GENERIC_FORMATTED(&quot;%s&quot;),</span>
+<span class="fc" id="L22">        INFO_WELCOME(&quot;你好，我是杜克。需要什么帮助吗？&quot;),</span>
+<span class="fc" id="L23">        INFO_WELCOME_EXISTING(&quot;欢迎回来，%s！需要什么帮助吗？&quot;),</span>
+<span class="fc" id="L24">        INFO_LAST_SAVED(&quot;[最后修改于 %s]&quot;),</span>
+<span class="fc" id="L25">        INFO_GOODBYE(&quot;再见！&quot;),</span>
+<span class="fc" id="L26">        INFO_HELP(&quot;我能明白以下指令：\n\n&quot;</span>
+                + &quot;list: 列出全部任务\n&quot;
+                + &quot;todo &lt;描述&gt;: 新增一个待办事项\n&quot;
+                + &quot;event &lt;描述&gt;: 新增一个事件\n&quot;
+                + &quot;deadline &lt;描述&gt;: 新增一个期限\n&quot;
+                + &quot;mark &lt;索引&gt;: 标记任务完成\n&quot;
+                + &quot;unmark &lt;索引&gt;: 标记任务未完成\n&quot;
+                + &quot;delete &lt;索引&gt;: 删除任务\n&quot;
+                + &quot;day &lt;dd/mm/yyyy&gt;: 查找所有在这一天的任务\n&quot;
+                + &quot;find &lt;关键字&gt;: 查找所有包含此关键字的任务\n&quot;
+                + &quot;archive: 归档和重置聊天\n&quot;
+                + &quot;restore: 查看可恢复的归档记录\n&quot;
+                + &quot;restore &lt;索引&gt;: 恢复此归档记录\n&quot;),
+<span class="fc" id="L39">        ERROR_COMMAND_UNKNOWN(&quot;抱歉， 我不明白你的意思 :( &quot;</span>
+                + &quot;\n新增一个 待办Todo / 期限Deadline / 事件Event. &quot;
+                + &quot;\n\t \u27a4 Todo &lt;Task Name&gt;&quot;),
+<span class="fc" id="L42">        ERROR_PROCESS_ACTION(&quot;%s 选择不能为空。&quot;),</span>
+<span class="fc" id="L43">        ERROR_PROCESS_COMMAND(&quot;%s 描述不能为空。&quot;),</span>
+<span class="fc" id="L44">        ERROR_FIND_DATE_INPUT(&quot;日期搜索不能为空。\n\t \u27a4 day &lt;日期&gt;&quot;),</span>
+<span class="fc" id="L45">        ERROR_FIND_TASK_INPUT(&quot;关键字搜索不能为空。\n\t \u27a4 find &lt;关键字&gt;&quot;),</span>
+<span class="fc" id="L46">        INFO_ARCHIVE(&quot;成功归档。&quot;),</span>
+<span class="fc" id="L47">        ERROR_ARCHIVE(&quot;归档失败。&quot;),</span>
+<span class="fc" id="L48">        ERROR_ARCHIVE_NO_FILE_FOUND(&quot;不存在任何归档记录。&quot;),</span>
+<span class="fc" id="L49">        ERROR_ARCHIVE_SELECTION(&quot;归档文件不能为空。&quot;),</span>
+<span class="fc" id="L50">        INFO_RESTORE(&quot;成功恢复记录。&quot;),</span>
+<span class="fc" id="L51">        ERROR_RESTORE(&quot;查找归档记录失败。&quot;),</span>
+<span class="fc" id="L52">        ERROR_RESTORE_SELECTION(&quot;恢复文件选择不能为空。\n\t \u27a4 restore &lt;索引&gt;&quot;),</span>
+<span class="fc" id="L53">        ERROR_RESTORE_NO_RECORD(&quot;请先输入restore查看可能恢复的归档。&quot;),</span>
+<span class="fc" id="L54">        INFO_LIST_FILES_HEADER(&quot;输入归档记录对应的索引。 restore &lt;索引&gt;\n&quot;),</span>
+<span class="fc" id="L55">        INFO_LIST_FILES_FOOTER(&quot;聊天将会在恢复记录后刷新。&quot;),</span>
+<span class="fc" id="L56">        ERROR_GET_INDEX(&quot;索引不存在。 请从%s个任务中选择。&quot;),</span>
+<span class="fc" id="L57">        ERROR_GET_ARCHIVE_INDEX(&quot;索引不存在。 请从%s个归档中选择。&quot;),</span>
+<span class="fc" id="L58">        ERROR_IS_INTEGER(&quot;请输入数字。&quot;),</span>
+<span class="fc" id="L59">        ERROR_UNKNOWN_COMMAND(&quot;未知指令。&quot;),</span>
+<span class="fc" id="L60">        INFO_ADD_TASK(&quot;好的. 我已新增以下任务：\n\t%s\n\t您现在有%s个任务。&quot;),</span>
+<span class="fc" id="L61">        INFO_REMOVE_TASK(&quot;好的。我已移除以下任务：\n\t%s\n\t您现在有%s个任务。&quot;),</span>
+<span class="fc" id="L62">        INFO_MARK_TASK(&quot;好！我已标记此任务为完成：\n%s&quot;),</span>
+<span class="fc" id="L63">        INFO_UNMARK_TASK(&quot;好，我已标记此任务为未完成：\n%s&quot;),</span>
+<span class="fc" id="L64">        INFO_PRINT_TASK(&quot;您的任务如下：\n%s&quot;),</span>
+<span class="fc" id="L65">        INFO_PRINT_NO_TASK(&quot;目前没有任务。&quot;),</span>
+<span class="fc" id="L66">        INFO_PRINT_DAY_TASK(&quot;您在这一天的任务如下：\n%s&quot;),</span>
+<span class="fc" id="L67">        INFO_PRINT_NO_DAY_TASK(&quot;您在%s这一天没有任何任务。&quot;),</span>
+<span class="fc" id="L68">        INFO_PRINT_FIND_TASK(&quot;包含关键词 '%s' 的任务如下：\n%s&quot;),</span>
+<span class="fc" id="L69">        INFO_PRINT_NO_FIND_TASK(&quot;您没有任何包含 '%s' 的任务。&quot;),</span>
+<span class="fc" id="L70">        ERROR_INVALID_DATE_FORMAT(&quot;日期格式无效。日期必须是 dd/mm/yyyy。&quot;),</span>
+<span class="fc" id="L71">        ERROR_INVALID_MONTH_FORMAT(&quot;月份格式无效。 月份必须介于 1 ~ 12。&quot;),</span>
+<span class="fc" id="L72">        ERROR_INVALID_YEAR_FORMAT(&quot;年份格式无效。年份必须是 yyyy。&quot;),</span>
+<span class="fc" id="L73">        ERROR_INVALID_DATE_TIME_FORMAT(&quot;日期/时间格式无效。 日期时间格式必须是 dd/mm/yyyy HHmm。&quot;),</span>
+<span class="fc" id="L74">        ERROR_INVALID_TIME_FORMAT(&quot;时间格式无效。 时间格式必须是 0000 ~ 2359。&quot;),</span>
+<span class="fc" id="L75">        ERROR_INCONSISTENT_TIME_RANGE_FORMAT(&quot;区间格式无效。 开始和结束格式必须一致。&quot;</span>
+                + &quot;区间格式必须是\n\tdd/mm/yyyy - dd/mm/yyyy &quot;
+                + &quot;\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm。&quot;),
+<span class="fc" id="L78">        ERROR_INVALID_TIME_RANGE_FORMAT(&quot;格式无效。&quot;</span>
+                + &quot;区间格式必须是\n\tdd/mm/yyyy  &quot;
+                + &quot;\n\tdd/mm/yyyy - dd/mm/yyyy \n&quot;
+                + &quot;\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm。&quot;),
+<span class="fc" id="L82">        ERROR_UNSPECIFIED_TIME_RANGE_FORMAT(&quot;请指定区间。&quot;</span>
+                + &quot;区间格式必须是\n\tdd/mm/yyyy - dd/mm/yyyy &quot;
+                + &quot;\n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm。&quot;),
+<span class="fc" id="L85">        ERROR_INVALID_DATE_SEPARATOR_FORMAT(&quot;日期区间必须使用 '-' 区隔&quot;),</span>
+<span class="fc" id="L86">        ERROR_PARSE_EXCEPTION(&quot;我不理解这个日期。 %s&quot;),</span>
+<span class="fc" id="L87">        ERROR_DATE_END_BEFORE_START_ERROR(&quot;结束早于开始。穿越时空不被允许。&quot;),</span>
+<span class="fc" id="L88">        ERROR_DATE_START_EQUALS_END_ERROR(&quot;开始和结束时间相同。&quot;),</span>
+<span class="fc" id="L89">        ERROR_TOO_MANY_TIME_RANGES_ERROR(&quot;只接受指定一个区间。&quot;);</span>
+
+        public final String text;
+
+<span class="fc" id="L93">        UiMessage(String text) {</span>
+<span class="fc" id="L94">            this.text = text;</span>
+<span class="fc" id="L95">        }</span>
+
+        public String getText() {
+<span class="fc" id="L98">            return this.text;</span>
+        }
+    }
+
+    /**
+     * Enum of task labels.
+     */
+<span class="nc" id="L105">    public enum UiLabel {</span>
+<span class="nc" id="L106">        LABEL_DEADLINE(&quot;「期限」&quot;),</span>
+<span class="nc" id="L107">        LABEL_EVENT(&quot;「事件」&quot;),</span>
+<span class="nc" id="L108">        LABEL_TODO(&quot;「待办」&quot;),</span>
+<span class="nc" id="L109">        LABEL_EVENT_HEADER(&quot;日期：&quot;),</span>
+<span class="nc" id="L110">        LABEL_HEADER(&quot;截止：&quot;);</span>
+
+        public final String text;
+
+<span class="nc" id="L114">        UiLabel(String text) {</span>
+<span class="nc" id="L115">            this.text = text;</span>
+<span class="nc" id="L116">        }</span>
+
+        public String getText() {
+<span class="nc" id="L119">            return this.text;</span>
+        }
+    }
+
+<span class="nc" id="L123">    public UiCn(LocaleRegion l) {</span>
+<span class="nc" id="L124">    }</span>
+
+<span class="fc" id="L126">    public UiCn() {</span>
+<span class="fc" id="L127">    }</span>
+
+    @Override
+    public String sendConfirmedOutput(String message) {
+<span class="fc" id="L131">        return sendConfirmation(UiMessage.GENERIC_FORMATTED.getText(), message);</span>
+    }
+
+    @Override
+    public String sendGenericPlain(String message) {
+<span class="fc" id="L136">        return sendPlain(UiMessage.GENERIC_FORMATTED.getText(), message);</span>
+    }
+
+    @Override
+    public String sendGenericInfo(String message) {
+<span class="fc" id="L141">        return sendInfo(UiMessage.GENERIC_FORMATTED.getText(), message);</span>
+    }
+
+    @Override
+    public String sendGenericWarning(String message) {
+<span class="fc" id="L146">        return sendWarning(UiMessage.GENERIC_FORMATTED.getText(), message);</span>
+    }
+
+    @Override
+    public String sendGenericFatal(String message) {
+<span class="fc" id="L151">        return sendFatal(UiMessage.GENERIC_FORMATTED.getText(), message);</span>
+    }
+
+    @Override
+    public String sendGenericConfirmation(String message) {
+<span class="fc" id="L156">        return sendConfirmation(UiMessage.GENERIC_FORMATTED.getText(), message);</span>
+    }
+
+    @Override
+    public String sendProcessActionError(String message) {
+<span class="fc" id="L161">        return sendFatal(UiMessage.ERROR_PROCESS_ACTION.getText(), message);</span>
+    }
+
+    @Override
+    public String sendProcessCommandError(String message) {
+<span class="fc" id="L166">        return sendFatal(UiMessage.ERROR_PROCESS_COMMAND.getText(), message);</span>
+    }
+
+    @Override
+    public String sendCommandUnknownError() {
+<span class="fc" id="L171">        return sendFatal(UiMessage.ERROR_COMMAND_UNKNOWN.getText(), &quot;&quot;);</span>
+    }
+
+    @Override
+    public String sendProcessFindDateError() {
+<span class="fc" id="L176">        return sendFatal(UiMessage.ERROR_FIND_DATE_INPUT.getText(), &quot;&quot;);</span>
+    }
+
+    @Override
+    public String sendProcessFindTaskError() {
+<span class="fc" id="L181">        return sendFatal(UiMessage.ERROR_FIND_TASK_INPUT.getText(), &quot;&quot;);</span>
+    }
+
+    @Override
+    public String sendProcessRestoreError() {
+<span class="fc" id="L186">        return sendFatal(UiMessage.ERROR_RESTORE_SELECTION.getText(), &quot;&quot;);</span>
+    }
+
+    @Override
+    public String printNoArchiveFileFoundError() {
+<span class="nc" id="L191">        return sendFatal(UiMessage.ERROR_ARCHIVE_NO_FILE_FOUND.getText(), &quot;&quot;);</span>
+    }
+
+    @Override
+    public String sendProcessArchiveError() {
+<span class="fc" id="L196">        return sendFatal(UiMessage.ERROR_ARCHIVE_SELECTION.getText(), &quot;&quot;);</span>
+    }
+
+    @Override
+    public String printProcessArchiveMessage() {
+<span class="nc" id="L201">        return sendGenericConfirmation(UiMessage.INFO_ARCHIVE.getText());</span>
+    }
+
+    @Override
+    public String printProcessArchiveFailureMessage() {
+<span class="nc" id="L206">        return sendGenericFatal(UiMessage.ERROR_ARCHIVE.getText());</span>
+    }
+
+    @Override
+    public String printProcessRestoreMessage() {
+<span class="nc" id="L211">        return sendGenericConfirmation(UiMessage.INFO_RESTORE.getText());</span>
+    }
+
+    @Override
+    public String printProcessRestoreErrorMessage() {
+<span class="nc" id="L216">        return sendGenericWarning(UiMessage.ERROR_RESTORE.getText());</span>
+    }
+
+    @Override
+    public String printProcessRestoreNoRecordMessage(String e) {
+<span class="nc" id="L221">        return sendGenericWarning(UiMessage.ERROR_RESTORE_NO_RECORD.getText());</span>
+    }
+
+    @Override
+    public String printListFilesHeaderMessage() {
+<span class="nc" id="L226">        return sendGenericInfo(UiMessage.INFO_LIST_FILES_HEADER.getText());</span>
+    }
+
+    @Override
+    public String printListFilesFooterMessage() {
+<span class="nc" id="L231">        return sendGenericInfo(UiMessage.INFO_LIST_FILES_FOOTER.getText());</span>
+    }
+
+    @Override
+    public String printGetIndexErrorMessage(int size) {
+<span class="nc" id="L236">        return sendGenericWarning(String.format(UiMessage.ERROR_GET_INDEX.getText(), size));</span>
+    }
+
+    @Override
+    public String printGetArchiveIndexErrorMessage(int size) {
+<span class="nc" id="L241">        return sendGenericWarning(String.format(UiMessage.ERROR_GET_ARCHIVE_INDEX.getText(), size));</span>
+
+    }
+
+    @Override
+    public String printIsIntegerErrorMessage() {
+<span class="nc" id="L247">        return sendGenericWarning(UiMessage.ERROR_IS_INTEGER.getText());</span>
+    }
+
+    @Override
+    public String printUnknownCommandErrorMessage() {
+<span class="nc" id="L252">        return sendGenericWarning(UiMessage.ERROR_UNKNOWN_COMMAND.getText());</span>
+    }
+
+    /**
+     * Generate welcome message
+     * If saved tasks are restored, display all tasks
+     * Else only display welcome message
+     *
+     * @param t TaskList loaded from file
+     * @return Welcome message text
+     */
+    @Override
+    public String[] sendWelcomeMessage(TaskList t, boolean shouldList) {
+<span class="fc bfc" id="L265" title="All 2 branches covered.">        if (t.getLastInfo() != null) {</span>
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">            if (!shouldList) {</span>
+<span class="nc" id="L267">                return new String[]{sendInfo(UiMessage.INFO_WELCOME_EXISTING.getText(), t.getLastInfo()[0])};</span>
+            }
+<span class="fc" id="L269">            return new String[]{sendInfo(UiMessage.INFO_WELCOME_EXISTING.getText(), t.getLastInfo()[0]),</span>
+<span class="fc" id="L270">                    printList(t.getList(), true),</span>
+<span class="fc" id="L271">                    sendPlain(UiMessage.INFO_LAST_SAVED.getText(),</span>
+<span class="fc" id="L272">                            DateProcessor.unixToStringCn(Long.parseLong(t.getLastInfo()[1])))};</span>
+        } else {
+<span class="fc" id="L274">            return new String[]{sendInfo(UiMessage.INFO_WELCOME.getText(), &quot;&quot;)};</span>
+        }
+    }
+
+    @Override
+    public String sendHelpMessage() {
+<span class="nc" id="L280">        return sendInfo(UiMessage.INFO_HELP.getText(), &quot;&quot;);</span>
+    }
+
+    @Override
+    public String sendGoodbyeMessage() {
+<span class="fc" id="L285">        return sendInfo(UiMessage.INFO_GOODBYE.getText(), &quot;&quot;);</span>
+    }
+
+    /**
+     * Display message after adding new tasks
+     *
+     * @param task Description of task added
+     * @param size Current number of tasks
+     * @return Message
+     */
+    @Override
+    public String printNewTasks(String task, int size) {
+<span class="fc" id="L297">        return sendConfirmedOutput(String.format(UiMessage.INFO_ADD_TASK.getText(), task, size));</span>
+    }
+
+    /**
+     * Display message after removing task by index
+     *
+     * @param task Description of task removed
+     * @param size Current number of tasks
+     * @return Message
+     */
+    @Override
+    public String printTaskRemovedByIndex(String task, int size) {
+<span class="fc" id="L309">        return sendConfirmedOutput(String.format(UiMessage.INFO_REMOVE_TASK.getText(), task, size));</span>
+    }
+
+    /**
+     * Display message after marking task as completed
+     *
+     * @param task   Description of task removed
+     * @param isMark Mark state of task
+     * @return Message
+     */
+    @Override
+    public String printMarkTask(String task, Boolean isMark) {
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">        return (isMark</span>
+<span class="fc" id="L322">                ? sendConfirmedOutput(String.format(UiMessage.INFO_MARK_TASK.getText(), task))</span>
+<span class="nc" id="L323">                : sendConfirmedOutput(String.format(UiMessage.INFO_UNMARK_TASK.getText(), task)));</span>
+    }
+
+    /**
+     * Display all tasks
+     *
+     * @param tasks     An array of available tasks
+     * @param withIndex Whether to print with index
+     * @return List of tasks
+     */
+    @Override
+    public String printList(ArrayList&lt;Task&gt; tasks, Boolean withIndex) {
+<span class="fc bfc" id="L335" title="All 2 branches covered.">        if (tasks.size() == 0) {</span>
+<span class="fc" id="L336">            return sendConfirmedOutput(UiMessage.INFO_PRINT_NO_TASK.getText());</span>
+        }
+<span class="fc" id="L338">        return sendConfirmedOutput(String.format(UiMessage.INFO_PRINT_TASK.getText(), buildList(tasks, withIndex)));</span>
+    }
+
+    /**
+     * Display all tasks selected by date
+     *
+     * @param tasks     An array of available tasks
+     * @param withIndex Whether to print with index
+     * @param date      Selected date
+     * @return List of tasks
+     */
+    @Override
+    public String printSelectedList(ArrayList&lt;Task&gt; tasks, Boolean withIndex, String date) {
+<span class="fc bfc" id="L351" title="All 2 branches covered.">        if (tasks.size() == 0) {</span>
+<span class="fc" id="L352">            return sendConfirmedOutput(String.format(UiMessage.INFO_PRINT_NO_DAY_TASK.getText(), date));</span>
+        }
+<span class="fc" id="L354">        return sendConfirmedOutput(String.format(UiMessage.INFO_PRINT_DAY_TASK.getText(), buildList(tasks, withIndex)));</span>
+    }
+
+    /**
+     * Display all tasks selected by keyword
+     *
+     * @param tasks     An array of available tasks
+     * @param withIndex Whether to print with index
+     * @param keyword   Selected keyword
+     * @return List of tasks
+     */
+    @Override
+    public String printFoundList(ArrayList&lt;Task&gt; tasks, Boolean withIndex, String keyword) {
+<span class="fc bfc" id="L367" title="All 2 branches covered.">        if (tasks.size() == 0) {</span>
+<span class="fc" id="L368">            return sendConfirmedOutput(String.format(UiMessage.INFO_PRINT_NO_FIND_TASK.getText(), keyword));</span>
+        }
+<span class="fc" id="L370">        return sendConfirmedOutput(</span>
+<span class="fc" id="L371">                String.format(</span>
+<span class="fc" id="L372">                        UiMessage.INFO_PRINT_FIND_TASK.getText(), keyword, buildList(tasks, withIndex)));</span>
+    }
+
+    @Override
+    public String printInvalidDateFormat() {
+<span class="fc" id="L377">        return sendGenericWarning(UiMessage.ERROR_INVALID_DATE_FORMAT.getText());</span>
+    }
+
+    @Override
+    public String printInvalidMonthFormat() {
+<span class="fc" id="L382">        return sendGenericWarning(UiMessage.ERROR_INVALID_MONTH_FORMAT.getText());</span>
+    }
+
+    @Override
+    public String printInvalidYearFormat() {
+<span class="fc" id="L387">        return sendGenericWarning(UiMessage.ERROR_INVALID_YEAR_FORMAT.getText());</span>
+    }
+
+    @Override
+    public String printInvalidDateTimeFormat() {
+<span class="nc" id="L392">        return sendGenericWarning(UiMessage.ERROR_INVALID_DATE_TIME_FORMAT.getText());</span>
+    }
+
+    @Override
+    public String printInvalidTimeFormat() {
+<span class="fc" id="L397">        return sendGenericWarning(UiMessage.ERROR_INVALID_TIME_FORMAT.getText());</span>
+    }
+
+    @Override
+    public String printInconsistentTimeRangeFormat() {
+<span class="fc" id="L402">        return sendGenericWarning(UiMessage.ERROR_INCONSISTENT_TIME_RANGE_FORMAT.getText());</span>
+    }
+
+    @Override
+    public String printInvalidTimeRangeFormat() {
+<span class="fc" id="L407">        return sendGenericWarning(UiMessage.ERROR_INVALID_TIME_RANGE_FORMAT.getText());</span>
+    }
+
+    @Override
+    public String printUnspecifiedTimeRangeFormat() {
+<span class="nc" id="L412">        return sendGenericWarning(UiMessage.ERROR_UNSPECIFIED_TIME_RANGE_FORMAT.getText());</span>
+    }
+
+    @Override
+    public String printTooManyTimeRangesFormat() {
+<span class="fc" id="L417">        return sendGenericWarning(UiMessage.ERROR_TOO_MANY_TIME_RANGES_ERROR.getText());</span>
+    }
+
+    @Override
+    public String printInvalidTDateSeparatorFormat() {
+<span class="fc" id="L422">        return sendGenericWarning(UiMessage.ERROR_INVALID_DATE_SEPARATOR_FORMAT.getText());</span>
+    }
+
+    @Override
+    public String printParseExceptionMessage(ParseException e) {
+<span class="fc" id="L427">        return sendGenericFatal(String.format(UiMessage.ERROR_PARSE_EXCEPTION.getText(), e.getMessage()));</span>
+    }
+
+    @Override
+    public String printDateStartBeforeEndError() {
+<span class="fc" id="L432">        return sendGenericWarning(UiMessage.ERROR_DATE_END_BEFORE_START_ERROR.getText());</span>
+    }
+
+    @Override
+    public String printDateStartEqualsEndError() {
+<span class="fc" id="L437">        return sendGenericWarning(UiMessage.ERROR_DATE_START_EQUALS_END_ERROR.getText());</span>
+    }
+
+    @Override
+    public String getEventLabel() {
+<span class="nc" id="L442">        return UiLabel.LABEL_EVENT.getText();</span>
+    }
+
+    @Override
+    public String getDeadlineLabel() {
+<span class="nc" id="L447">        return UiLabel.LABEL_DEADLINE.getText();</span>
+    }
+
+    @Override
+    public String getTodoLabel() {
+<span class="nc" id="L452">        return UiLabel.LABEL_TODO.getText();</span>
+    }
+
+    @Override
+    public String getEventHeader() {
+<span class="nc" id="L457">        return UiLabel.LABEL_EVENT_HEADER.getText();</span>
+    }
+
+    @Override
+    public String getHeader() {
+<span class="nc" id="L462">        return UiLabel.LABEL_HEADER.getText();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

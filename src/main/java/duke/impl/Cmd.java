@@ -33,14 +33,21 @@ public class Cmd {
     }
 
     /**
-     * Calls the corresponding implementation based on Command type.
+     * Calls the corresponding logic implementation based on the input Command type.
+     * The tasks argument is mandatory, but is not required to be populated. i.e. empty list is acceptable.
+     * If tasks is not empty, command will be processed with existing tasks in mind and vice-versa.
+     * The locale argument is mandatory,and can be either Ui.LocaleRegion.En or Ui.LocaleRegion.Cn
+     * The language locale of Duke's reply will rely on this argument.
+     * <p>
+     * This method has a direct dependency on the Runner Class, which will be constructed upon initialization.
      *
-     * @param tasks Array of Tasks
-     * @return Message to display in GUI
+     * @param tasks  An array of Tasks in ArrayList type to be processed.
+     * @param locale The Ui.LocaleRegion Enum to determine reply language.
+     * @return Message to display in GUI after processing commands.
      */
-    public String run(ArrayList<Task> tasks, Ui.LocaleRegion l) {
+    public String run(ArrayList<Task> tasks, Ui.LocaleRegion locale) {
         arrayList = tasks;
-        this.r = new Runner(arrayList, l);
+        this.r = new Runner(arrayList, locale);
         switch (this.t) {
         case RETURN:
             break;
