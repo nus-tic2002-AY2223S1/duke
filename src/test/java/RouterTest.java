@@ -212,6 +212,12 @@ public class RouterTest {
         public TaskInterface task;
         public int size;
         public ArrayList<TaskInterface> list = new ArrayList<>();
+
+        @Override
+        public void start() {
+
+        }
+
         @Override
         public void addSuccess(TaskInterface task) {
             this.task = task;
