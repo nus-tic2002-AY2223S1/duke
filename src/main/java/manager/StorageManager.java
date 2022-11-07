@@ -67,6 +67,7 @@ public class StorageManager {
      * @throws IOException
      */
     public void writeToFile(String formattedTasks) throws IOException {
+        assert formattedTasks != null : "String should not be null.";
         
         File file = createFileWithDir();
         

@@ -26,6 +26,7 @@ public class DialogBox extends HBox {
      * @param isUser boolean value to identify if it is diaplay a user message
      */
     private DialogBox(Label l, ImageView iv, boolean isUser) {
+        assert l != null && iv != null: "Element should not be null.";
         text = l;
         displayPicture = iv;
         
@@ -72,6 +73,7 @@ public class DialogBox extends HBox {
      * @return A DialogBox to MainWindow
      */
     public static DialogBox getUserDialog(Label l, ImageView iv) {
+        assert l != null && iv != null: "Element should not be null.";
         return new DialogBox(l, iv, true);
     }
     
@@ -83,6 +85,7 @@ public class DialogBox extends HBox {
      * @return A DialogBox to MainWindow
      */
     public static DialogBox getDukeDialog(Label l, ImageView iv) {
+        assert l != null && iv != null: "Element should not be null.";
         return new DialogBox(l, iv, false);
     }
 }

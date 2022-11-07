@@ -21,6 +21,8 @@ public class CommandParser {
      */
     public static Command parseStringArrToCommand(String[] inputArr) throws DukeException {
         
+        assert inputArr.length > 0: "Empty input array";
+        
         Command cmd = new Command();
         cmd.setCommand(inputArr[0]);
         
@@ -68,6 +70,7 @@ public class CommandParser {
      * @throws DukeException
      */
     private static void setDescriptionDateTime(Command cmd, String content, String splitter) throws DukeException {
+        assert cmd != null: "Command object is null";
         String description = content.substring(0, content.lastIndexOf(splitter));
         String datetime = content.substring(content.lastIndexOf(splitter) + 4);
         if (description.isEmpty()) {
@@ -89,6 +92,7 @@ public class CommandParser {
      * @throws DukeException
      */
     private static void setDescription(Command cmd, String content) throws DukeException {
+        assert cmd != null: "Command object is null";
         if (!content.isEmpty()) {
             cmd.setDescription(content);
         } else {
@@ -103,6 +107,7 @@ public class CommandParser {
      * @param cmd command object contains user input details
      */
     private static void setCommandIndex(Command cmd, String content) {
+        assert cmd != null: "Command object is null";
         if (content.matches("[0-9]+")) {
             cmd.setIndex(Integer.parseInt(content) - 1);
         }

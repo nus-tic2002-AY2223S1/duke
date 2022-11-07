@@ -44,7 +44,7 @@ public class CommandManager {
      * @throws DukeException
      */
     public String executeUserInput(String[] inputArr) throws DukeException {
-        
+        assert inputArr != null: "Input array is null";
         String executionResult = "";
         
         Command cmd = CommandParser.parseStringArrToCommand(inputArr);

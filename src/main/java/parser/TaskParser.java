@@ -22,6 +22,8 @@ public class TaskParser {
      * @param taskDetails tasks information list
      */
     public static ArrayList<Task> parseStringsToTasks(ArrayList<String> taskDetails) {
+        assert taskDetails != null : "Task info list should not be null.";
+        
         ArrayList<Task> tasks = new ArrayList<>();
         for (String detail : taskDetails) {
             String[] parts = detail.split(" \\| ");
@@ -50,6 +52,8 @@ public class TaskParser {
      * @return task list information that can be used to save locally
      */
     public static String parseTasksToStrings(ArrayList<Task> tasks) {
+        assert tasks != null : "Task list should not be null.";
+        
         StringBuilder result = new StringBuilder();
         
         for (Task task : tasks) {

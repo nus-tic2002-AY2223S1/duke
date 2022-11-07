@@ -54,6 +54,8 @@ public class TaskManager {
      * @return task list information to display
      */
     public String getTaskListString() {
+        assert taskList != null : "Task list should not be null.";
+        
         StringBuilder printStr = new StringBuilder("Here are the tasks in your list: \n");
         for (int i = 0; i < taskList.size(); i++) {
             Task t = taskList.get(i);
@@ -71,6 +73,8 @@ public class TaskManager {
      * @throws DukeException
      */
     public String getUpdateTaskResult(Command cmd) throws DukeException {
+        assert taskList != null : "Task list should not be null.";
+        assert cmd != null : "Command object should not be null.";
         
         String result = "";
         
@@ -105,6 +109,8 @@ public class TaskManager {
      * @throws DukeException
      */
     public String getAddTaskResult(Command cmd) throws DukeException {
+        assert taskList != null : "Task list should not be null.";
+        assert cmd != null : "Command object should not be null.";
         
         String result = "";
         Task task = null;
@@ -146,6 +152,8 @@ public class TaskManager {
      * @throws DukeException
      */
     public String getDeleteTaskResult(Command cmd) throws DukeException {
+        assert taskList != null : "Task list should not be null.";
+        assert cmd != null : "Command object should not be null.";
         
         String result = "";
         Task task;
@@ -175,6 +183,9 @@ public class TaskManager {
      * @return execution result
      */
     public String getFindTaskResult(Command cmd) {
+        assert taskList != null : "Task list should not be null.";
+        assert cmd != null : "Command object should not be null.";
+        
         ArrayList<Task> resultArr = new ArrayList<>();
         for (Task task : taskList) {
             if (task.getDetails().contains(cmd.getDescription())) {
@@ -198,6 +209,9 @@ public class TaskManager {
      * @return execution result
      */
     public String getSortTaskResult(Command cmd) {
+        assert taskList != null : "Task list should not be null.";
+        assert cmd != null : "Command object should not be null.";
+        
         if (cmd.getDescription().equals("name")) {
             taskList.sort(Task.descriptionComparator);
         } else if (cmd.getDescription().equals("date")) {
@@ -214,6 +228,9 @@ public class TaskManager {
      * Performs save task list to local action
      */
     private void onTaskListChanged() {
+        assert taskList != null : "Task list should not be null.";
+        assert storageManager != null : "StorageManager should not be null.";
+        
         try {
             storageManager.writeToFile(TaskParser.parseTasksToStrings(taskList));
         } catch (IOException e) {

@@ -27,6 +27,7 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
+        assert stage != null : "Stage should not be null.";
         
         try {
             duke = new Duke();

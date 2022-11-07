@@ -17,6 +17,8 @@ public class DatetimeParser {
      * @throws DukeException
      */
     public static LocalDateTime parseStringToDateTime(String input) throws DukeException {
+        assert input != null : "Input should not be null.";
+        
         input = input.trim();
         //12-12-2022 2222
         if (Pattern.matches("[0-9]{1,2}(/)[0-9]{1,2}(/)[0-9]{4} [0-9]{4}", input)) {
@@ -39,6 +41,7 @@ public class DatetimeParser {
      * @return datetime string
      */
     public static String parseDateTimeToString(LocalDateTime dateTime) {
+        assert dateTime != null : "DateTime should not be null.";
         return dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"));
     }
     
