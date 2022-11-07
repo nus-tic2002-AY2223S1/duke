@@ -1,14 +1,26 @@
+import common.Keyword;
 import logic.BotUseCase;
 import logic.TaskManager;
+import ui.UIDelegate;
+
+import java.util.Scanner;
 
 /**
  * Redirect the command to taskManager where has the logic
  */
-public class Bot {
+public class Bot implements UIDelegate {
     private TaskManager taskManager;
 
-    public Bot(BotUseCase router) {
+    public Bot() {
+
+    }
+
+    public void setup(BotUseCase router) {
         taskManager = new TaskManager(router);
+    }
+
+    public void start() {
+        taskManager.start();
     }
 
     public void add(String text) {
@@ -51,5 +63,46 @@ public class Bot {
 
     public void find(String keyword) {
         taskManager.find(keyword);
+    }
+
+    @Override
+    public boolean userInput(String line) {
+        if (Keyword.getKeyword(line) != Keyword.Bye) {
+            Keyword key = Keyword.getKeyword(line);
+            if(Keyword.validateFormat(line) == false){
+                this.invalidFormat(Keyword.validFormat(key), line);
+                return true;
+            }
+            if (key == Keyword.List) {
+                this.showList();
+            } else if (key == Keyword.Mark) {
+                String part = line.split(" ")[1];
+                this.mark(part, true);
+            } else if (key == Keyword.Unmark) {
+                String part = line.split(" ")[1];
+                this.mark(part, false);
+            } else if (key == Keyword.Delete) {
+                String part = line.split(" ")[1];
+                this.delete(part);
+            } else if (key == Keyword.Files) {
+                this.showFiles();
+            } else if (key == Keyword.Load) {
+                String part = line.split(" ")[1];
+                this.setActiveFile(part);
+            } else if (key == Keyword.Create) {
+                String part = line.split(" ")[1];
+                this.createNewFile(part);
+            } else if (key == Keyword.Active) {
+                this.getActiveFile();
+            } else if (key == Keyword.Find) {
+                String part = line.split(" ")[1];
+                this.find(part);
+            } else {
+                this.add(line);
+            }
+            return true;
+        }
+        this.goodbye();
+        return false;
     }
 }

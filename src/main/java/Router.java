@@ -22,6 +22,11 @@ public class Router extends BotUseCase {
     }
 
     @Override
+    public void start() {
+        this.ui.start();
+    }
+
+    @Override
     public void loadData() {
         try {
             ArrayList<TaskInterface> list = data.loadData();

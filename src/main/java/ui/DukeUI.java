@@ -3,15 +3,19 @@ package ui;
 import data.FileInfo;
 import task.TaskInterface;
 
+import java.rmi.server.UID;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * The command line UI for the duke by implementing UIInterface
  */
 public class DukeUI implements UIInterface {
     private String name;
-    public DukeUI(String name) {
+    private UIDelegate delegate;
+    public DukeUI(String name, UIDelegate delegate) {
         this.name = name;
+        this.delegate = delegate;
         welcome();
     }
     private void welcome() {
@@ -19,6 +23,16 @@ public class DukeUI implements UIInterface {
         printlntab("Hello! I'm "  + name);
         printlntab("What can I do for you?");
         seperator();
+    }
+
+    @Override
+    public void start() {
+        String line;
+        Scanner in = new Scanner(System.in);
+        line = in.nextLine();
+        while (delegate.userInput(line)) {
+            line = in.nextLine();
+        }
     }
     @Override
     public void goodbye() {

@@ -10,6 +10,12 @@ import java.util.ArrayList;
 public abstract class BotUseCase {
     public BotCallback delegate;
     /**
+     * Starts the bot
+     *
+     * @return void
+     */
+    public void start() {};
+    /**
      * get called when add keyword is process successfully
      * if the task is not add successful this will not get called
      *

@@ -10,6 +10,12 @@ import java.util.ArrayList;
  */
 public interface UIInterface {
     /**
+     * Starts the ui to get user input
+     *
+     * @return void
+     */
+    public void start();
+    /**
      * This will get called when the logic successfully add a new task
      * If the task is not add successfuly this function will not get called
      *

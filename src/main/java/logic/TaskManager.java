@@ -23,6 +23,10 @@ public class TaskManager implements BotCallback {
         router.loadData();
     }
 
+    public void start(){
+        this.router.start();
+    }
+
     public void addNewTask(String text) {
         try {
             if(text.indexOf(" ") == -1) {
