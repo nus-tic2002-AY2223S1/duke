@@ -7,7 +7,7 @@ import static common.constants.CommonConstant.OPEN_SQ_BRACKET;
 import static common.constants.CommonConstant.SPACE;
 import static common.constants.CommonConstant.MARKED_ICON;
 import static common.enums.CommandTypeEnum.UNDEFINED;
-import static common.utils.DateUtil.dateConverter;
+import static common.utils.DateUtil.dateTimeConverter;
 
 public abstract class Task {
     protected String description;
@@ -26,7 +26,7 @@ public abstract class Task {
     }
 
     public void setTime(String time) {
-        this.time = dateConverter(time);
+        this.time = dateTimeConverter(time);
     }
 
     public String getDescription() {

@@ -9,19 +9,19 @@ import static common.constants.CommonConstant.OPEN_SQ_BRACKET;
 import static common.constants.CommonConstant.EVENT_AT;
 import static common.constants.CommonConstant.SPACE;
 import static common.enums.CommandTypeEnum.E;
-import static common.utils.DateUtil.dateConverter;
+import static common.utils.DateUtil.dateTimeConverter;
 
 public class Event extends Task {
     protected String at;
 
     public Event(String description, String at) {
         super(description);
-        this.at = dateConverter(at);
+        this.at = dateTimeConverter(at);
     }
 
     @Override
     public void setTime(String at) {
-         this.at = dateConverter(at);
+         this.at = dateTimeConverter(at);
     }
 
     @Override
