@@ -1,10 +1,13 @@
 package nus.duke.tasklist;
 
 import nus.duke.enumerations.LegalCommandEnumerations;
+import nus.duke.enumerations.LegalTaskEnumerations;
 import nus.duke.storage.Storage;
+import nus.duke.task.Task;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static nus.duke.enumerations.LegalCommandEnumerations.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,6 +32,5 @@ class TaskListTest {
 	void taskProcessorReturnsCorrectTerminationValue() {
 		assertEquals(true, taskList.processTasks("EXIT", "EXIT"));
 	}
-
 
 }

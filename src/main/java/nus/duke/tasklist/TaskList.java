@@ -184,6 +184,12 @@ public class TaskList {
 				printTask(task);
 			}
 		}
+		for (int i = 0; i < taskList.size(); i++) {
+			String taskType = taskList.get(i).getTaskType();
+			if (taskType.equals(LegalTaskEnumerations.T.toString()) && taskList.get(i).getIsDone().equals("false")){
+				printTask(taskList.get(i));
+			}
+		}
 	}
 
 	/**
