@@ -1,10 +1,9 @@
 package main;
 
-import exception.EmptyActionException;
-import exception.IllegalActionException;
-import exception.IllegalContentException;
+import exception.DukeException;
 import manager.CommandManager;
 import util.CommandType;
+import util.ErrorMessage;
 
 public class Duke {
     
@@ -24,18 +23,17 @@ public class Duke {
      * And return exception if not valid
      *
      * @param input user input
-     * @throws IllegalActionException
-     * @throws EmptyActionException
+     * @throws DukeException
      */
-    public void validateUserInput(String input) throws IllegalActionException, EmptyActionException {
+    public void validateUserInput(String input) throws DukeException {
         if (input.isEmpty()) {
-            throw new EmptyActionException();
+            throw new DukeException(ErrorMessage.ERROR_MESSAGE_EMPTY_CONTENT.toString());
         }
         
         inputArr = input.split(" ", 2);
         inputArr[0] = inputArr[0].toLowerCase();
         if (!CommandType.contains(inputArr[0])) {
-            throw new IllegalActionException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            throw new DukeException(ErrorMessage.ERROR_MESSAGE_INVALID_ACTION.toString());
         }
     }
     
@@ -53,10 +51,10 @@ public class Duke {
             validateUserInput(input);
             executionResult = commandManager.executeUserInput(inputArr);
             
-        } catch (IllegalActionException | EmptyActionException | IllegalContentException e) {
-                executionResult = e.getMessage();
+        } catch (DukeException e) {
+            executionResult = e.getMessage();
         }
-    
+        
         return executionResult;
     }
     
@@ -65,7 +63,7 @@ public class Duke {
      *
      * @return Greeting message
      */
-    public String getGreetingMessage(){
+    public String getGreetingMessage() {
         return "Hello! I'm Duke\nWhat can I do for you?\n\n" +
                 "1. To list all existing tasks, enter \"list\".\n" +
                 "2. To add a normal task, enter \"add [task content]\".\n" +

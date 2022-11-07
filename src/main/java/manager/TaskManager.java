@@ -1,16 +1,14 @@
 package manager;
 
 import entity.*;
-import exception.IllegalActionException;
-import exception.IllegalContentException;
-import parser.Parser;
+import exception.DukeException;
+import parser.DatetimeParser;
+import parser.TaskParser;
 import util.CommandType;
-import util.PrintUtil;
+import util.ErrorMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 public class TaskManager {
     
@@ -26,19 +24,14 @@ public class TaskManager {
     private TaskManager() {
         taskList = new ArrayList<>();
         storageManager = StorageManager.getInstance();
-        try {
-            convertDetailsToTaskList(storageManager.readFromFile());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalContentException e) {
-            PrintUtil.printErrorMessage(e);
-        }
+        ArrayList<String> taskInfoList = storageManager.readFromFile();
+        taskList.addAll(TaskParser.parseStringsToTasks(taskInfoList));
     }
     
     /**
      * Creates a new instance of TaskManager class
      */
-    public static void newInstance() {
+    private static void newInstance() {
         instance = new TaskManager();
     }
     
@@ -69,26 +62,15 @@ public class TaskManager {
         return printStr.toString();
     }
     
-    
-    public void printFindResult(ArrayList<Task> result) {
-        StringBuilder printStr = new StringBuilder("Here are the matching tasks in your list: \n");
-        for (int i = 0; i < result.size(); i++) {
-            Task t = result.get(i);
-            printStr.append(String.format("\t %d.%s\n", i + 1, t.getDetails()));
-        }
-        
-        PrintUtil.printWithIndentation(printStr.toString());
-    }
-    
     /**
      * Takes in a mark or unmark command object and perform related action
      * Returns execution result
      *
      * @param cmd mark or unmark command object
      * @return execution result
-     * @throws IllegalActionException
+     * @throws DukeException
      */
-    public String getUpdateTaskResult(Command cmd) throws IllegalActionException {
+    public String getUpdateTaskResult(Command cmd) throws DukeException {
         
         String result = "";
         
@@ -97,9 +79,9 @@ public class TaskManager {
             Task t = taskList.get(index);
             
             if (cmd.getCommand().equals("mark") && t.isDone()) {
-                throw new IllegalActionException("☹ OOPS!!! This task already been marked as completed.");
+                throw new DukeException(ErrorMessage.ERROR_MESSAGE_ALREADY_MARKED.toString());
             } else if (cmd.getCommand().equals("unmark") && !t.isDone()) {
-                throw new IllegalActionException("☹ OOPS!!! This task already been marked as incomplete.");
+                throw new DukeException(ErrorMessage.ERROR_MESSAGE_ALREADY_UNMARKED.toString());
             } else {
                 t.updateStatus();
                 if (t.isDone()) {
@@ -120,9 +102,9 @@ public class TaskManager {
      *
      * @param cmd add command object
      * @return execution result
-     * @throws IllegalActionException
+     * @throws DukeException
      */
-    public String getAddTaskResult(Command cmd) throws IllegalContentException {
+    public String getAddTaskResult(Command cmd) throws DukeException {
         
         String result = "";
         Task task = null;
@@ -135,10 +117,10 @@ public class TaskManager {
             task = new ToDo(cmd.getDescription());
             break;
         case DEADLINE:
-            task = new Deadline(cmd.getDescription(), Parser.parseStringToDateTime(cmd.getDatetime()));
+            task = new Deadline(cmd.getDescription(), DatetimeParser.parseStringToDateTime(cmd.getDatetime()));
             break;
         case EVENT:
-            task = new Event(cmd.getCommand(), Parser.parseStringToDateTime(cmd.getDatetime()));
+            task = new Event(cmd.getCommand(), DatetimeParser.parseStringToDateTime(cmd.getDatetime()));
             break;
         }
         
@@ -161,17 +143,17 @@ public class TaskManager {
      *
      * @param cmd delete command object
      * @return execution result
-     * @throws IllegalActionException
+     * @throws DukeException
      */
-    public String getDeleteTaskResult(Command cmd) throws IllegalContentException {
+    public String getDeleteTaskResult(Command cmd) throws DukeException {
         
         String result = "";
         Task task;
         
         if (cmd.getIndex() == -1) {
-            throw new IllegalContentException("☹ OOPS!!! The description of a " + cmd.getCommand() + " must be a number.");
+            throw new DukeException(ErrorMessage.ERROR_MESSAGE_DELETE_NOT_NUMBER.toString());
         } else if (cmd.getIndex() > taskList.size()) {
-            throw new IllegalContentException("☹ OOPS!!! The description of a " + cmd.getCommand() + " must be a number that is not larger than the list size.");
+            throw new DukeException(ErrorMessage.ERROR_MESSAGE_DELETE_INDEX_OUT_OF_RANGE.toString());
         } else {
             int index = cmd.getIndex();
             task = taskList.get(index);
@@ -185,67 +167,12 @@ public class TaskManager {
         return result;
     }
     
-    
-    /**
-     * Performs save task list to local action
-     */
-    private void onTaskListChanged() {
-        try {
-            storageManager.writeToFile(getTasksFormattedString());
-        } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
-        }
-    }
-    
-    /**
-     * Reformats task list to string with saving format
-     *
-     * @return task list information that can be used to save locally
-     */
-    private String getTasksFormattedString() {
-        StringBuilder result = new StringBuilder();
-        
-        for (Task task : taskList) {
-            result.append(task.getSavingFormatDetails());
-        }
-        
-        return result.toString();
-    }
-    
-    /**
-     * Converts task info strings to task objects
-     * Adds all task objects to taskList
-     *
-     * @param taskDetails tasks information list
-     * @throws IllegalContentException
-     */
-    private void convertDetailsToTaskList(ArrayList<String> taskDetails) throws IllegalContentException {
-        for (String detail : taskDetails) {
-            String[] parts = detail.split(" \\| ");
-            switch (parts[0]) {
-            case "T":
-                taskList.add(new ToDo(parts[2], parts[1].equals("1")));
-                break;
-            case "E":
-                taskList.add(new Event(parts[2], Parser.parseStringToDateTime(parts[3]), parts[1].equals("1")));
-                break;
-            case "D":
-                taskList.add(new Deadline(parts[2], Parser.parseStringToDateTime(parts[3]), parts[1].equals("1")));
-                break;
-            default:
-                taskList.add(new Task(parts[2], parts[1].equals("1")));
-                break;
-            }
-        }
-    }
-    
     /**
      * Takes in a find command object and perform related action
      * Returns execution result
      *
      * @param cmd find command object
      * @return execution result
-     * @throws IllegalActionException
      */
     public String getFindTaskResult(Command cmd) {
         ArrayList<Task> resultArr = new ArrayList<>();
@@ -269,7 +196,6 @@ public class TaskManager {
      *
      * @param cmd sort command object
      * @return execution result
-     * @throws IllegalActionException
      */
     public String getSortTaskResult(Command cmd) {
         if (cmd.getDescription().equals("name")) {
@@ -283,4 +209,16 @@ public class TaskManager {
         onTaskListChanged();
         return "Noted. I've sorted tasks by " + cmd.getDescription() + ".\n" + getTaskListString();
     }
+    
+    /**
+     * Performs save task list to local action
+     */
+    private void onTaskListChanged() {
+        try {
+            storageManager.writeToFile(TaskParser.parseTasksToStrings(taskList));
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+    }
+    
 }

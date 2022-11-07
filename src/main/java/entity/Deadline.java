@@ -1,6 +1,6 @@
 package entity;
 
-import parser.Parser;
+import parser.DatetimeParser;
 
 import java.time.LocalDateTime;
 
@@ -37,7 +37,7 @@ public class Deadline extends Task {
      * @return deadline variable
      */
     public String getDeadline() {
-        return Parser.parseDateTimeToString(deadline);
+        return DatetimeParser.parseDateTimeToString(deadline);
     }
     
     /**

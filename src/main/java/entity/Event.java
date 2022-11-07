@@ -1,6 +1,6 @@
 package entity;
 
-import parser.Parser;
+import parser.DatetimeParser;
 
 import java.time.LocalDateTime;
 
@@ -36,7 +36,7 @@ public class Event extends Task {
      * @return time variable
      */
     public String getTime() {
-        return Parser.parseDateTimeToString(time);
+        return DatetimeParser.parseDateTimeToString(time);
     }
     
     /**

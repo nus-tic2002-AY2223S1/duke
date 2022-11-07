@@ -25,7 +25,7 @@ public class DialogBox extends HBox {
      * @param iv     image variable to display profile image
      * @param isUser boolean value to identify if it is diaplay a user message
      */
-    public DialogBox(Label l, ImageView iv, boolean isUser) {
+    private DialogBox(Label l, ImageView iv, boolean isUser) {
         text = l;
         displayPicture = iv;
         

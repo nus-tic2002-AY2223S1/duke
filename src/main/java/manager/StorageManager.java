@@ -1,6 +1,9 @@
 package manager;
 
+import exception.DukeException;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,7 +21,7 @@ public class StorageManager {
     /**
      * Create a new instance of StorageManager class
      */
-    public static void newInstance() {
+    private static void newInstance() {
         instance = new StorageManager();
         projectDirectory = System.getProperty("user.dir");
     }
@@ -77,12 +80,18 @@ public class StorageManager {
      * Read from saved file and return task information
      *
      * @return last saved task information list
-     * @throws IOException
      */
-    public ArrayList<String> readFromFile() throws IOException {
+    public ArrayList<String> readFromFile() {
         ArrayList<String> taskDetails = new ArrayList<>();
-        File file = createFileWithDir();
-        Scanner s = new Scanner(file);
+        File file = null;
+        Scanner s = null;
+        try {
+            file = createFileWithDir();
+            s = new Scanner(file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         while (s.hasNext()) {
             taskDetails.add(s.nextLine());
         }
