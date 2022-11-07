@@ -7,7 +7,6 @@ import util.ErrorMessage;
 
 public class Duke {
     
-    public static String[] inputArr; //["action", "content"]
     public static CommandManager commandManager;
     
     /**
@@ -25,16 +24,17 @@ public class Duke {
      * @param input user input
      * @throws DukeException
      */
-    public void validateUserInput(String input) throws DukeException {
+    public String[] validateUserInput(String input) throws DukeException {
         if (input.isEmpty()) {
             throw new DukeException(ErrorMessage.ERROR_MESSAGE_EMPTY_CONTENT.toString());
         }
         
-        inputArr = input.split(" ", 2);
+        String[] inputArr = input.split(" ", 2);
         inputArr[0] = inputArr[0].toLowerCase();
         if (!CommandType.contains(inputArr[0])) {
             throw new DukeException(ErrorMessage.ERROR_MESSAGE_INVALID_ACTION.toString());
         }
+        return inputArr;
     }
     
     
@@ -48,7 +48,7 @@ public class Duke {
     public String getResponse(String input) {
         String executionResult = "";
         try {
-            validateUserInput(input);
+            String[] inputArr = validateUserInput(input);
             executionResult = commandManager.executeUserInput(inputArr);
             
         } catch (DukeException e) {

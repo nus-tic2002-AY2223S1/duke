@@ -53,6 +53,8 @@ public class CommandParser {
             //set sort category
             setDescription(cmd, inputArr[1].substring(inputArr[1].lastIndexOf("by") + 3));
             break;
+        default:
+            throw new DukeException(ErrorMessage.ERROR_MESSAGE_INVALID_ACTION.toString());
         }
         return cmd;
     }
