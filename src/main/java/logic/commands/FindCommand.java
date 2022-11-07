@@ -20,6 +20,8 @@ public class FindCommand extends Command {
      * Return prints command usage
      *
      * @throws InvalidTaskDescriptionException
+     * @throws EmptyTaskListException
+     * @throws NotExistTaskException
      */
     @Override
     public void execute() throws InvalidTaskDescriptionException, EmptyTaskListException, NotExistTaskException {
