@@ -314,7 +314,10 @@ public class DateProcessorCnTest {
     @Test
     public void processDateTimRangeNoSeparatorTest() {
         String s = "2/4/1999 3/4/1999";
-        DukeException expected = new DukeException("! 日期区间必须使用 '-' 区隔");
+        DukeException expected = new DukeException("! 格式无效。"
+                + "区间格式必须是\n\tdd/mm/yyyy  "
+                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n"
+                + "\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm。");
         try {
             d.processDateTimeRange(s);
         } catch (DukeException e) {

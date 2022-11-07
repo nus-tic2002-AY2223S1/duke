@@ -47,7 +47,8 @@ public class DialogBox extends HBox {
         if (isDuke) {
             meta.setText(ts);
         } else {
-            meta.setText(ts + " \u2713");
+            meta.setText(ts);
+            meta.setStyle("-fx-graphic: url('/view/icons8-double-tick-15.png');");
         }
         dialog.setText(text);
         dialog.setStyle(userSpecific

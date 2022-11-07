@@ -50,7 +50,7 @@ public class UiCn extends Ui {
         INFO_RESTORE("成功恢复记录。"),
         ERROR_RESTORE("查找归档记录失败。"),
         ERROR_RESTORE_SELECTION("恢复文件选择不能为空。\n\t \u27a4 restore <索引>"),
-        ERROR_RESTORE_NO_RECORD("恢复记录失败。"),
+        ERROR_RESTORE_NO_RECORD("请先输入restore查看可能恢复的归档。"),
         INFO_LIST_FILES_HEADER("输入归档记录对应的索引。 restore <索引>\n"),
         INFO_LIST_FILES_FOOTER("聊天将会在恢复记录后刷新。"),
         ERROR_GET_INDEX("索引不存在。 请从%s个任务中选择。"),
@@ -217,7 +217,7 @@ public class UiCn extends Ui {
     }
 
     @Override
-    public String printProcessRestoreNoRecordMessage() {
+    public String printProcessRestoreNoRecordMessage(String e) {
         return sendGenericWarning(UiMessage.ERROR_RESTORE_NO_RECORD.getText());
     }
 

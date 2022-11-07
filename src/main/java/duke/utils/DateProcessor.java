@@ -74,7 +74,7 @@ public class DateProcessor {
      * @throws DukeException Exception
      */
     public long processDateTime(String s) throws DukeException {
-        String[] parsed = s.split(" ", 2);
+        String[] parsed = s.split(" ");
 
         if (parsed.length > 2) {
             throw new DukeException(ui.printInvalidDateTimeFormat());
@@ -107,13 +107,28 @@ public class DateProcessor {
     }
 
     /**
-     * Verification and translation of two date time
+     * Verification and translation of Event date time.
+     * Event accepts four types of date:
+     * - A range of date with time (dd/MM/yyyy HHmm - dd/MM/yyyy HHmm)
+     * - A range of date (dd/MM/yyyy - dd/MM/yyyy)
+     * - A single date (dd/MM/yyyy)
+     * - A single date with time (dd/MM/yyyy HHmm)
+     * <p>
+     * This method will not allow incorrect date format, such as:
+     * - 32nd day in a month
+     * - 13th month in a year
+     * - End time is earlier than start time
+     * - Start time is equals to end time
+     * - Start time and end time format are not consistent
+     * - Separator between ranges is incorrect
      *
-     * @param s Date Time string of format dd/MM/yyyy HHmm - dd/MM/yyyy HHmm
-     *          or dd/MM/yyyy - dd/MM/yyyy
-     *          or dd/MM/yyyy
-     * @return Start and end UNIX time converted from s
-     * @throws DukeException Exception
+     * @param s Date Time string of format
+     *          - dd/MM/yyyy HHmm - dd/MM/yyyy HHmm
+     *          - dd/MM/yyyy - dd/MM/yyyy
+     *          - dd/MM/yyyy
+     *          - dd/MM/yyyy HHmm
+     * @return Start and end in UNIX time converted from date time string
+     * @throws DukeException Exception when any of the checks fail
      */
     public long[] processDateTimeRange(String s) throws DukeException {
         // 1/1/1999 0900 - 2/2/1999 0900
@@ -126,12 +141,15 @@ public class DateProcessor {
         }
 
         if (parsedRange.length == 1) {
+            if (s.contains(" ")) {
+                try {
+                    return new long[]{processDateTime(parsedRange[0])};
+                } catch (DukeException e) {
+                    throw new DukeException(ui.printInvalidTimeRangeFormat());
+                }
+            }
             if (!s.contains("-")) {
                 throw new DukeException(ui.printInvalidTDateSeparatorFormat());
-            }
-
-            if (s.contains(" ")) {
-                throw new DukeException(ui.printInvalidTimeRangeFormat());
             }
             //all day event
             // 1/1/1999 0000 - 1/1/1999 2359
@@ -147,6 +165,7 @@ public class DateProcessor {
             }
             return new long[]{timeFrom, timeFrom + 86399};
         }
+
 
         String[] parsedDateFrom = parsedRange[0].trim().split(" ", 2);
         String[] parsedDateTo = parsedRange[1].trim().split(" ", 2);

@@ -50,7 +50,7 @@ public class UiEn extends Ui {
         INFO_RESTORE("Successfully restored record."),
         ERROR_RESTORE("Failed to retrieve archive records."),
         ERROR_RESTORE_SELECTION("The file selection to restore cannot be empty.\n\t \u27a4 restore <index>"),
-        ERROR_RESTORE_NO_RECORD("Failed to restore records."),
+        ERROR_RESTORE_NO_RECORD("Type restore to check the list of archives first!"),
         INFO_LIST_FILES_HEADER("Select from the files below by entering restore <index>.\n"),
         INFO_LIST_FILES_FOOTER("Chat will be refreshed after restoring."),
         ERROR_GET_INDEX("This is not a valid index. Choose from the  %s tasks."),
@@ -218,7 +218,7 @@ public class UiEn extends Ui {
     }
 
     @Override
-    public String printProcessRestoreNoRecordMessage() {
+    public String printProcessRestoreNoRecordMessage(String e) {
         return sendGenericWarning(UiMessage.ERROR_RESTORE_NO_RECORD.getText());
     }
 
@@ -254,23 +254,33 @@ public class UiEn extends Ui {
     }
 
     /**
-     * Generate welcome message
-     * If saved tasks are restored, display all tasks
-     * Else only display welcome message
+     * Generate a welcome message upon chat initialization.
+     * The tasks argument is mandatory, but the underlying list is not required to be populated.
+     * The shouldList argument is mandatory.
+     * <p>
+     * If tasks contains a list of tasks, and shouldList is true, the following will be displayed:
+     * - Welcome greeting message with username
+     * - List of tasks
+     * - Last modified date and time of task list
+     * If tasks contains no task, the following will be displayed:
+     * - Welcome greeting message with username
+     * <p>
+     * Message language is dependent on the Ui Locale Region.
      *
-     * @param t TaskList loaded from file
-     * @return Welcome message text
+     * @param tasks      TaskList loaded from file or an empty list.
+     * @param shouldList Toggle setting of List on Launch.
+     * @return Welcome message text.
      */
     @Override
-    public String[] sendWelcomeMessage(TaskList t, boolean shouldList) {
-        if (t.getLastInfo() != null) {
+    public String[] sendWelcomeMessage(TaskList tasks, boolean shouldList) {
+        if (tasks.getLastInfo() != null) {
             if (!shouldList) {
-                return new String[]{sendInfo(UiMessage.INFO_WELCOME_EXISTING.getText(), t.getLastInfo()[0])};
+                return new String[]{sendInfo(UiMessage.INFO_WELCOME_EXISTING.getText(), tasks.getLastInfo()[0])};
             }
-            return new String[]{sendInfo(UiMessage.INFO_WELCOME_EXISTING.getText(), t.getLastInfo()[0]),
-                    printList(t.getList(), true),
+            return new String[]{sendInfo(UiMessage.INFO_WELCOME_EXISTING.getText(), tasks.getLastInfo()[0]),
+                    printList(tasks.getList(), true),
                     sendPlain(UiMessage.INFO_LAST_SAVED.getText(),
-                            DateProcessor.unixToStringEn(Long.parseLong(t.getLastInfo()[1])))};
+                            DateProcessor.unixToStringEn(Long.parseLong(tasks.getLastInfo()[1])))};
         } else {
             return new String[]{sendInfo(UiMessage.INFO_WELCOME.getText(), "")};
         }

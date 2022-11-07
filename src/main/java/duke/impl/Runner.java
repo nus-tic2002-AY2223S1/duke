@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -208,7 +209,12 @@ public class Runner {
         }
 
         int archiveSize = getArchiveSize();
-        int i = Integer.parseInt(s) - 1;
+
+        if (archiveSize <= 0) {
+            throw new DukeException(ui.printNoArchiveFileFoundError());
+        }
+
+        int i = Integer.parseInt(s);
         if (i < 0 || i >= archiveSize) {
             throw new DukeException(ui.printGetArchiveIndexErrorMessage(archiveSize));
         }
@@ -431,8 +437,7 @@ public class Runner {
             return e.getMessage();
         }
 
-        Task[] arr = {};
-        ArrayList<Task> selected = new ArrayList<>(Arrays.asList(arr));
+        ArrayList<Task> selected = new ArrayList<>(List.of());
 
         for (Task t : this.arrayList) {
             if (t.getDue() >= d && t.getDue() <= d + 86400) {
@@ -469,8 +474,7 @@ public class Runner {
             return e.getMessage();
         }
 
-        Task[] arr = {};
-        ArrayList<Task> selected = new ArrayList<>(Arrays.asList(arr));
+        ArrayList<Task> selected = new ArrayList<>(List.of());
 
         for (Task t : this.arrayList) {
             if (Arrays.asList(t.getDescription().toLowerCase().split(" ")).contains(k.toLowerCase())) {
@@ -500,11 +504,11 @@ public class Runner {
 
     private String listFiles() throws IOException {
         Files.createDirectories(Paths.get(ARCHIVE_DIR));
-        File folder = new File(ARCHIVE_DIR);
-        File[] listOfFiles = folder.listFiles();
-        assert listOfFiles != null;
+        File[] listOfFiles = new File(ARCHIVE_DIR).listFiles();
+        assert listOfFiles != null : ui.printNoArchiveFileFoundError();
 
-        if (listOfFiles.length == 1 && listOfFiles[0].getName().equals(".gitkeep")) {
+        if (listOfFiles.length == 0
+                || (listOfFiles.length == 1 && listOfFiles[0].getName().equals(".gitkeep"))) {
             return ui.printNoArchiveFileFoundError();
         }
 
@@ -532,13 +536,13 @@ public class Runner {
 
     private int getArchiveSize() throws IOException {
         Files.createDirectories(Paths.get(ARCHIVE_DIR));
-        File folder = new File(ARCHIVE_DIR);
-        File[] listOfFiles = folder.listFiles();
-        assert listOfFiles != null;
+        File[] listOfFiles = new File(ARCHIVE_DIR).listFiles();
+        assert listOfFiles != null : ui.printNoArchiveFileFoundError();
         return listOfFiles.length - 1;
     }
 
     protected String processRestore(String[] s) {
+        assert s != null : ui.printProcessRestoreErrorMessage();
         try {
             if (s.length == 1) {
                 return listFiles();
@@ -562,7 +566,7 @@ public class Runner {
             restoreFile(idx);
             return printProcessRestoreMessage();
         } catch (IOException e) {
-            return ui.printProcessRestoreNoRecordMessage();
+            return ui.printProcessRestoreNoRecordMessage(e.getMessage());
         }
     }
 }
