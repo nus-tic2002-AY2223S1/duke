@@ -79,7 +79,7 @@ public class Ui {
      * Text UI to echo every task from the .txt file.
      */
     public static void echoTasksLoadingFromFile (Task added){
-        Ui.print(added.toString() + " added\n");
+        Ui.print(added.toString(1) + " added\n");
     }
     /**
      * Text UI to echo when adding or deleting tasks.

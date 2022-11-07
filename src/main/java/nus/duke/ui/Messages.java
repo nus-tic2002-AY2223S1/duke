@@ -20,7 +20,7 @@ public class Messages {
     public static final String MESSAGE_INDEX_NOT_NUMBER = "Index must be numbers!";
     public static final String MESSAGE_NO_TASK_DESCRIPTION = "Task description cannot be empty!\n";
     public static final String MESSAGE_NO_TASK_IN_LIST = "There is 0 tasks in the list. Please use keyword: todo, deadlines or events to add task if you wish to.\n";
-    public static final String MESSAGE_NO_KEYWORD_FOR_EVENT_DEADLINE = "Please use keyword \"/\" to represent date and time. E.g. /at 6 Aug 2022 1600\n";
+    public static final String MESSAGE_NO_KEYWORD_FOR_EVENT_DEADLINE = "Please use keyword \"/\" to represent date and time. E.g. /at 6/10/2022 1600\n";
     public static final String MESSAGE_WRONG_TIME_FORMAT = "Please key in correct time format. E.g. 1600.\n";
     public static final String MESSAGE_TASK_NUMBER_OUT_OF_RANGE = "Task number out of list range!\n";
     public static final String MESSAGE_NOT_A_TASK = "OOPS!!! I'm sorry, but I don't know what that means :-( \n"

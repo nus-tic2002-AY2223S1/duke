@@ -68,7 +68,42 @@ public class Command {
         this.dateAndTime1 = LocalDateTime.parse(date1 + " " + time1, TaskList.STORAGE_FORMATTER);
         this.dateAndTime2 = LocalDateTime.parse(date2 + " " + time2, TaskList.STORAGE_FORMATTER);
     }
-
+    /**
+     * Getter of the command.
+     */
+    public String getCommand() {
+        return this.command;
+    }
+    /**
+     * Getter of the description.
+     */
+    public String getDescription() {
+        return this.description;
+    }
+    /**
+     * Getter of the description.
+     */
+    public String getPreposition() {
+        return this.preposition;
+    }
+    /**
+     * Getter of the index.
+     */
+    public Integer getIndex() {
+        return this.index;
+    }
+    /**
+     * Getter of the dateAndTime1.
+     */
+    public LocalDateTime getDateAndTime1() {
+        return this.dateAndTime1;
+    }
+    /**
+     * Getter of the dateAndTime2.
+     */
+    public LocalDateTime getDateAndTime2() {
+        return this.dateAndTime2;
+    }
     /**
      * Extract the isExit of the current command.
      */
@@ -109,8 +144,7 @@ public class Command {
                 }
                 break;
             default:
-                ui.print(Messages.MESSAGE_NOT_A_TASK);
-
+                throw new DukeException(Messages.MESSAGE_NOT_A_TASK);
         }
     }
     /**

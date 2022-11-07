@@ -50,9 +50,8 @@ public class Parser {
                     checkDescription(split);
                 } catch (DukeException e){
                     throw new DukeException(e.getMessage());
-                } finally {
-                    userInput = new Command(split[0], split[1]);
                 }
+                userInput = new Command(split[0], split[1]);
                 break;
             case "deadline":
                 try {
@@ -133,9 +132,12 @@ public class Parser {
         if (!description.contains("/")){
             throw new DukeException(Messages.MESSAGE_NO_KEYWORD_FOR_EVENT_DEADLINE);
         } else {
+            if (isNumeric(String.valueOf(description.charAt(description.indexOf("/") - 1)))){
+                throw new DukeException(Messages.MESSAGE_NO_KEYWORD_FOR_EVENT_DEADLINE);
+            }
             String[] split = description.split("/", 2);
             ArrayList<String> splitFurther = new ArrayList<String> (Arrays.asList(split[1].split(" ")));
-            splitFurther.add(0 , split[0]);
+            splitFurther.add(0 , split[0].trim());
             return splitFurther;
         }
     }
@@ -190,10 +192,8 @@ public class Parser {
         switch (description.size()){
             case 3:
                 split = description.get(2).split("-", 2);
-                split[0].replace("/", "-");
-                split[1].replace("/", "-");
-                description.set(2, split[0]);
-                description.add(split[1]);
+                description.set(2, split[0].replace("/", "-"));
+                description.add(split[1].replace("/", "-"));
                 break;
             case 4:
                 split = description.get(3).split("-", 2);
@@ -223,8 +223,10 @@ public class Parser {
         for (int i = 0; i < description.size(); i++){
             if (description.get(i).contains("-")){
                 containDash = true;
-                if (description.get(i).indexOf("-") == description.get(i).length() - 1){
-                    throw new DukeException(Messages.MESSAGE_NO_END_DATETIME);
+                if (i == description.size() - 1) {
+                    if (description.get(i).indexOf("-") == description.get(i).length() - 1) {
+                        throw new DukeException(Messages.MESSAGE_NO_END_DATETIME);
+                    }
                 }
             }
         }
