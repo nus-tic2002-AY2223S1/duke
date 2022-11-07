@@ -1,7 +1,9 @@
-package ui;
+package ui.commandline;
 
 import data.FileInfo;
 import task.TaskInterface;
+import ui.UIDelegate;
+import ui.UIInterface;
 
 import java.rmi.server.UID;
 import java.util.ArrayList;
