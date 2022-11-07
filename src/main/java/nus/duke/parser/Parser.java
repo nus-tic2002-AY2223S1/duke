@@ -24,10 +24,10 @@ public class Parser {
 	 * @return The command specified in the task. For example, in "MARK 1", the command returned is "MARK".
 	 */
 	public static String getCommand(String userInput) {
-		if (userInput.length() == 4) {
-			return userInput.substring(0, 4);
+		int idx = userInput.indexOf(SPACE);
+		if (idx == -1){
+			return userInput;
 		} else {
-			int idx = userInput.indexOf(SPACE);
 			String command = userInput.substring(0, idx);
 			return command;
 		}

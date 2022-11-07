@@ -103,6 +103,8 @@ public abstract class Task {
 
 	public abstract String getDateInStr(String userInput);
 
+	public abstract LocalDate getDate();
+
 	public abstract String getTaskType();
 
 	public abstract String getTaskDetails();

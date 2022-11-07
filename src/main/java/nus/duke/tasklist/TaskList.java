@@ -5,6 +5,7 @@ import nus.duke.task.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import static nus.duke.frontend.CommonPrintStatements.*;
 
@@ -160,23 +161,28 @@ public class TaskList {
 	}
 
 	/**
-	 * Sorts and returns all the deadlines stored in the task list.
-	 * Take note that the Duke program only reminds a user of his deadlines.
+	 * Sorts and returns all deadline and event tasks stored in the task list.
+	 * Since there is no need for dates for Todos, Duke only reminds a user of his deadlines and events
 	 *
 	 * @return nothing. This is a void function.
 	 */
 	public void getReminders() {
-		ArrayList<Deadline> reminders = new ArrayList<Deadline>();
+		ArrayList<Task> reminders = new ArrayList<Task>();
+
 		for (int i = 0; i < taskList.size(); i++) {
-			if (taskList.get(i).getTaskType().equals(LegalTaskEnumerations.D.toString())) {
-				Deadline dl = (Deadline) taskList.get(i);
-				reminders.add(dl);
+			String taskType = taskList.get(i).getTaskType();
+			if (taskType.equals(LegalTaskEnumerations.D.toString()) || taskType.equals(LegalTaskEnumerations.E.toString())) {
+				Task task = taskList.get(i);
+				reminders.add(task);
 			}
 		}
 
-		Collections.sort(reminders, (d1, d2) -> d1.getDate().compareTo(d2.getDate()));
+		Collections.sort(reminders, (t1, t2) -> t1.getDate().compareTo(t2.getDate()));
 		for (int i = 0; i < reminders.size(); i++) {
-			printTask(reminders.get(i));
+			Task task = reminders.get(i);
+			if (task.getIsDone().equals("false")) {
+				printTask(task);
+			}
 		}
 	}
 
@@ -228,6 +234,11 @@ public class TaskList {
 			return false;
 		}
 
+		if (command.equals(LegalCommandEnumerations.REMINDERS.toString())) {
+			this.getReminders();
+			return false;
+		}
+
 		if (command.equals(LegalCommandEnumerations.MARK.toString())) {
 			this.markTask(getItemNumber(userInput));
 			return false;
@@ -243,18 +254,12 @@ public class TaskList {
 			return false;
 		}
 
-		if (command.equals(LegalCommandEnumerations.REMINDERS.toString())) {
-			this.getReminders();
-			return false;
-		}
-
 		if (command.equals(LegalCommandEnumerations.FILTER.toString())) {
 			int start = userInput.indexOf(SPACE) + 1;
 			String keyword = userInput.substring(start, userInput.length());
 			this.filter(keyword);
 			return false;
 		}
-
 
 		this.addTask(parsedString);
 		return false;

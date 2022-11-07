@@ -91,4 +91,14 @@ public class Event extends Task {
 			return userInput.substring(start, userInput.length() - 3).trim();
 		}
 	}
+
+	/**
+	 * Returns the date of the calling object.
+	 *
+	 * @return A date in LocalDate type.
+	 */
+	@Override
+	public LocalDate getDate() {
+		return this.localDate;
+	}
 }

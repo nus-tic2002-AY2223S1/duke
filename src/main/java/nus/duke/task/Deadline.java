@@ -27,15 +27,6 @@ public class Deadline extends Task {
 	}
 
 	/**
-	 * Returns the date of the calling deadline object.
-	 *
-	 * @return A date in LocalDate type.
-	 */
-	public LocalDate getDate() {
-		return this.localDate;
-	}
-
-	/**
 	 * Returns the task type
 	 * "T" for TODO.
 	 * "D" for DEADLINE.
@@ -84,5 +75,15 @@ public class Deadline extends Task {
 		} else {
 			return userInput.substring(start, userInput.length() - 3).trim();
 		}
+	}
+
+	/**
+	 * Returns the date of the calling object.
+	 *
+	 * @return A date in LocalDate type.
+	 */
+	@Override
+	public LocalDate getDate() {
+		return this.localDate;
 	}
 }
