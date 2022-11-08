@@ -76,10 +76,12 @@ public class Storage {
 				File file = new File(filePath);
 				Scanner s = new Scanner(file);
 				String line;
-				String command;
+				String command = EMPTY_STRING;
 				for (int count = 1; s.hasNext(); count++) {
 					line = s.nextLine();
-					command = parser.parse(line);
+					if (parser.parse(line)){
+						command = parser.getCommand(line);
+					}
 					hardDiskTaskList.processTasks(command, line);
 					hardDiskTaskList.processIsDone(count, line);
 				}

@@ -50,11 +50,15 @@ public class Duke {
 		s = new Scanner(System.in);
 		ui.startProgram();
 		boolean terminateProgram = false;
+		boolean noInputErrors = false;
 		String command;
 		do {
 			String userInput = ui.getUserInput(s);
-			command = parser.parse(userInput);
-			terminateProgram = tasks.processTasks(command, userInput);
+			noInputErrors = parser.parse(userInput);
+			if (noInputErrors){
+				command = parser.getCommand(userInput);
+				terminateProgram = tasks.processTasks(command, userInput);
+			}
 		} while (terminateProgram != true);
 		storage.saveTasks(tasks);
 		ui.exit();

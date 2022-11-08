@@ -204,10 +204,9 @@ public class Parser {
 	 * @param userInput The task keyed in by the user.
 	 * @return The command specified in the task.
 	 */
-	public static String parse(String userInput) {
+	public static boolean parse(String userInput) {
 		boolean hasError;
 		Scanner s;
-
 		try {
 			hasError = hasInputErrors(userInput);
 		} catch (EmptyTaskException ete) {
@@ -226,13 +225,17 @@ public class Parser {
 		}
 
 		if (hasError) {
-			Ui ui = new Ui();
-			s = new Scanner(System.in);
-			System.out.println(ASK_FOR_USER_INPUT_AFTER_ERROR_MESSAGE_WAS_DISPLAYED_MESSAGE);
-			String newUserInput = ui.getUserInput(s);
-			return newUserInput;
+			//Ui ui = new Ui();
+			//s = new Scanner(System.in);
+			//System.out.println(ASK_FOR_USER_INPUT_AFTER_ERROR_MESSAGE_WAS_DISPLAYED_MESSAGE);
+			//String newUserInput = ui.getUserInput(s);
+			//command = parse(newUserInput);
+			// command = getCommand(command);
+			return false; // i.e. it is false that there are no input errors.
 		} else {
-			return getCommand(userInput);
+			//command = getCommand(userInput);
+			return true;
 		}
+		//return command;
 	}
 }
