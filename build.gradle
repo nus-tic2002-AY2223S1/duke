@@ -57,6 +57,8 @@ test {
         showStackTraces true
         showStandardStreams = false
     }
+
+    exclude '**/GuiTest.class'
 }
 
 dependencies {
