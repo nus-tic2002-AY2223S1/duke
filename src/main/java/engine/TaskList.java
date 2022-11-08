@@ -61,7 +61,7 @@ public class TaskList {
         }
 
         separator();
-        System.out.println("added: " + TaskList.size() + "." + incomingTaskName +  " (by: " + incomingDate.format(formatter) + ")" + "\nYou have " + TaskList.size()+ " tasks in the list!");
+        System.out.println("added: " + TaskList.size() + "." + incomingTaskName +  " (by: " + incomingDate.format(FORMATTER) + ")" + "\nYou have " + TaskList.size()+ " tasks in the list!");
         separator();
     }
 

@@ -3,7 +3,7 @@ package task;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 
-import static formatting.Helper.formatter;
+import static formatting.Helper.FORMATTER;
 
 public class Event extends Task{
 
@@ -17,7 +17,7 @@ public class Event extends Task{
 
     @Override
     public String toString() {
-        return "[E]" + "[" + isMarkAsDone() + "] " + TaskName +  " (at: " + start.format(formatter) + " to " + end.format(formatter) +  ")";
+        return "[E]" + "[" + isMarkAsDone() + "] " + TaskName +  " (at: " + start.format(FORMATTER) + " to " + end.format(FORMATTER) +  ")";
     }
 
 }

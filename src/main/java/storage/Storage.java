@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static formatting.Helper.dukeFilePath;
+import static formatting.Helper.DUKEFILEPATH;
 
 public class Storage {
 
@@ -41,7 +41,7 @@ public class Storage {
 
     public void createFile() throws Exception {
         try {
-            File dir = new File(dukeFilePath);
+            File dir = new File(DUKEFILEPATH);
             if (!dir.exists()){ //check if directory exists
                 dir.mkdirs(); //function returns true if directory is created else returns false.
             }
@@ -52,7 +52,7 @@ public class Storage {
                     System.out.println(fileObj + " was created!");
                 }
                 else {
-                    System.out.println(fileName + ".txt already exists on" + dukeFilePath + "\n Please type a different filename, or type \"/e\" to go back to the main menu." );
+                    System.out.println(fileName + ".txt already exists on" + DUKEFILEPATH + "\n Please type a different filename, or type \"/e\" to go back to the main menu." );
                 }
         } catch (Exception e) {
             System.err.println(e);
@@ -89,7 +89,7 @@ public class Storage {
     }
 
     public static boolean validateStringFilenameUsingIO(String filename) throws IOException {
-        String validateFileName = dukeFilePath.concat(filename);
+        String validateFileName = DUKEFILEPATH.concat(filename);
         File file = new File(validateFileName);
         boolean created = false;
         try {

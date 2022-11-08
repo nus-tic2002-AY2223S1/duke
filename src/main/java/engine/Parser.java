@@ -272,11 +272,11 @@ public class Parser {
     }
 
     public static @NotNull LocalDateTime parseDate(String dateString) throws Exception {
-        LocalDateTime incomingDateTime = LocalDateTime.parse(dateString, formatter);
-        incomingDateTime.format(formatter);
+        LocalDateTime incomingDateTime = LocalDateTime.parse(dateString, FORMATTER);
+        incomingDateTime.format(FORMATTER);
 
         if (incomingDateTime.isBefore(LocalDateTime.now())) {
-            throw new Exception("Meow :( Date or time has already passed. The current date and time is " + LocalDateTime.now().format(formatter));
+            throw new Exception("Meow :( Date or time has already passed. The current date and time is " + LocalDateTime.now().format(FORMATTER));
         }
 
         return incomingDateTime;
@@ -294,7 +294,7 @@ public class Parser {
 
     public void stringToToken(String incomingText) {
         String[] strSplit = incomingText.split(" ");
-        remainingTokens = new ArrayList<String>(Arrays.asList(strSplit));
+        remainingTokens = new ArrayList<>(Arrays.asList(strSplit));
     }
 
     public String tokenToString(){

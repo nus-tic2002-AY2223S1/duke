@@ -3,12 +3,12 @@ package task;
 public abstract class Task {
 
     protected String TaskName;
-    private boolean MarkAsDone;
+    private boolean isMarkAsDone;
 
     //constructor
     public Task(String taskName) {
         this.TaskName = taskName;
-        this.MarkAsDone = false;
+        this.isMarkAsDone = false;
     }
 
     public String getTaskName() {
@@ -16,7 +16,7 @@ public abstract class Task {
     }
 
     public String isMarkAsDone() {
-        if (MarkAsDone) {
+        if (isMarkAsDone) {
             return "X";
         }
         else {
@@ -24,11 +24,11 @@ public abstract class Task {
         }
     }
     public void setMarkAsDone(){
-        this.MarkAsDone = true;
+        this.isMarkAsDone = true;
     }
 
     public void setMarkNotDone(){
-        this.MarkAsDone = false;
+        this.isMarkAsDone = false;
     }
 
     public abstract String toString();

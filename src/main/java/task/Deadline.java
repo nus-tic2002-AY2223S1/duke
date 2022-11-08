@@ -2,7 +2,7 @@ package task;
 
 import java.time.LocalDateTime;
 
-import static formatting.Helper.formatter;
+import static formatting.Helper.FORMATTER;
 
 public class Deadline extends Task{
 
@@ -15,6 +15,6 @@ public class Deadline extends Task{
 
     @Override
     public String toString() {
-        return "[D]" + "[" + isMarkAsDone() + "] " + TaskName + " (by: " + at.format(formatter) + ")";
+        return "[D]" + "[" + isMarkAsDone() + "] " + TaskName + " (by: " + at.format(FORMATTER) + ")";
     }
 }
