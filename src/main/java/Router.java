@@ -37,12 +37,12 @@ public class Router extends BotUseCase {
     }
     @Override
     public void addSuccess(TaskInterface task) {
+        ui.addSuccess(task);
         try {
             data.add(task);
         } catch (IOException e) {
 
         }
-        ui.addSuccess(task);
         int size = delegate.getSize();
         ui.displaySize(size);
     }
