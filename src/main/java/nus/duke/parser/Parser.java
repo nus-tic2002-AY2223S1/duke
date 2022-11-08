@@ -225,16 +225,9 @@ public class Parser {
 		}
 
 		if (hasError) {
-			//Ui ui = new Ui();
-			//s = new Scanner(System.in);
-			//System.out.println(ASK_FOR_USER_INPUT_AFTER_ERROR_MESSAGE_WAS_DISPLAYED_MESSAGE);
-			//String newUserInput = ui.getUserInput(s);
-			//command = parse(newUserInput);
-			// command = getCommand(command);
-			return false; // i.e. it is false that there are no input errors.
+			return false; // i.e. there are input errors
 		} else {
-			//command = getCommand(userInput);
-			return true;
+			return true; // i.e. there are no input errors.
 		}
 		//return command;
 	}
