@@ -126,7 +126,34 @@ public enum CommandExecutor {
             Command c = new UndefinedCommand();
             c.execute();
         }
+    },
+    TAG {
+        /**
+         * Tag command to tag a task by hashtag
+         *
+         * @param inputs user input
+         * @throws DukeException Duke exception
+         */
+        @Override
+        public void execute(String inputs) throws DukeException {
+            Command c = new TagCommand(inputs);
+            c.execute();
+        }
+    },
+    FIND {
+        /**
+         * Find command to find a task by string
+         *
+         * @param inputs user input
+         * @throws DukeException Duke exception
+         */
+        @Override
+        public void execute(String inputs) throws DukeException {
+            Command c = new FindCommand(inputs);
+            c.execute();
+        }
     };
+
 
     public abstract void execute(String inputs) throws DukeException;
 }

@@ -28,6 +28,7 @@ public class TaskList {
         task.addTags(Arrays.asList(tags));
         Ui.echoText("Task is tagged:\n      " + task);
     }
+
     /**
      * To add task to Tasks by user's command
      *
@@ -81,6 +82,15 @@ public class TaskList {
         int counter = 0;
         for (Task task : tasks)
             System.out.println(Ui.tab + ++counter + ". " + task);
+        System.out.println(Ui.tab + Ui.breakLine);
+    }
+
+    public void findTasks(String text) {
+        System.out.println(Ui.tab + Ui.breakLine);
+        int counter = 0;
+        for (Task task : tasks)
+            if (task.getDescription().contains(text))
+                System.out.println(Ui.tab + ++counter + ". " + task);
         System.out.println(Ui.tab + Ui.breakLine);
     }
 

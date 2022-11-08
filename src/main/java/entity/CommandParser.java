@@ -92,17 +92,18 @@ public class CommandParser {
      * @return command executor
      */
     public static Map<String, CommandExecutor> createMap() {
-        return Map.of(
-                "bye", CommandExecutor.BYE,
-                "list", CommandExecutor.LIST,
-                "mark", CommandExecutor.MARK,
-                "unmark", CommandExecutor.UNMARK,
-                "deadline", CommandExecutor.DEADLINE,
-                "todo", CommandExecutor.TODO,
-                "event", CommandExecutor.EVENT,
-                "delete", CommandExecutor.DELETE,
-                "save", CommandExecutor.SAVE
+        return Map.ofEntries(
+                Map.entry("bye", CommandExecutor.BYE),
+                Map.entry("list", CommandExecutor.LIST),
+                Map.entry("mark", CommandExecutor.MARK),
+                Map.entry("unmark", CommandExecutor.UNMARK),
+                Map.entry("deadline", CommandExecutor.DEADLINE),
+                Map.entry("todo", CommandExecutor.TODO),
+                Map.entry("event", CommandExecutor.EVENT),
+                Map.entry("delete", CommandExecutor.DELETE),
+                Map.entry("save", CommandExecutor.SAVE),
+                Map.entry("tag", CommandExecutor.TAG),
+                Map.entry("find", CommandExecutor.FIND)
         );
     }
-
 }
