@@ -7,9 +7,9 @@ public class Nala {
         Random rand = new Random();
         int nalaMood = rand.nextInt(9);
         if (nalaMood < 3) {
-            System.out.println("Nala hisses at you (she's on a bad day). Try typing that again (with the correct syntax :))");
+            System.out.println("Nala hisses at you (there is an error in your text). Try typing that again (with the correct syntax :))");
         } else {
-            System.out.println("Meow! I don't get what you're trying to say human. Could you repeat that again (with the correct syntax)?");
+            System.out.println("Meow :\\ There's an error in your text. Could you repeat that again (with the correct syntax)?");
         }
     }
 
@@ -37,7 +37,7 @@ public class Nala {
                 System.out.println("Meow! I can't create an Event for you without an \"/at\". Please create the task again!");
                 break;
             case "DeadlineNoBy":
-                System.out.println("Meow! I can't create an Event for you without a \"/by\". Please create the task again!");
+                System.out.println("Meow! I can't create an Deadline for you without a \"/by\". Please create the task again!");
                 break;
             case "BlankEvent":
                 System.out.println("Meow! I can't create an Event for you without a description! Please create the task again!");

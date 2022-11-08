@@ -2,11 +2,14 @@ package storage;
 import engine.TaskList;
 
 import java.io.File;  // Import the File class
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import static formatting.Helper.dukeFilePath;
 
 public class Storage {
 
@@ -38,18 +41,18 @@ public class Storage {
 
     public void createFile() throws Exception {
         try {
-            String path = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "dukeFile";
-            File dir = new File(path);
+            File dir = new File(dukeFilePath);
             if (!dir.exists()){ //check if directory exists
                 dir.mkdirs(); //function returns true if directory is created else returns false.
             }
+
             String fileNameTxt = fileName.concat(".txt");
             File fileObj = new File(dir, fileNameTxt);
                 if (fileObj.createNewFile()){ //Returns true if abstract file path does not exist, then creates the file. Returns false if filename already exists.
                     System.out.println(fileObj + " was created!");
                 }
                 else {
-                    System.out.println(fileName + ".txt already exists on" + path + "\n Please type a different filename, or type \"/e\" to stop saving." );
+                    System.out.println(fileName + ".txt already exists on" + dukeFilePath + "\n Please type a different filename, or type \"/e\" to go back to the main menu." );
                 }
         } catch (Exception e) {
             System.err.println(e);
@@ -83,5 +86,19 @@ public class Storage {
         String fileNameTxt = fileName.concat(".txt");
         Path directory = Paths.get(System.getProperty("user.home"), "Desktop", "dukeFile", fileNameTxt);
         return Files.exists(directory);
+    }
+
+    public static boolean validateStringFilenameUsingIO(String filename) throws IOException {
+        String validateFileName = dukeFilePath.concat(filename);
+        File file = new File(validateFileName);
+        boolean created = false;
+        try {
+            created = file.createNewFile();
+            return created;
+        } finally {
+            if (created) {
+                file.delete();
+            }
+        }
     }
 }
