@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Duke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -12,7 +12,7 @@ public class Duke {
        
         Task[] list = new Task[100];
         int next = 0, taskNo = 0;
-        String key, new_input, x, y;
+        String key, new_input;
 
         Scanner in = new Scanner(System.in);
 
@@ -31,6 +31,12 @@ public class Duke {
                     System.out.println(i+1 + ". " + list[i].description.toString());
                 }
             }
+            else if (key.equalsIgnoreCase("delete")) {
+                if (tokens[1].isEmpty() || Integer.parseInt(tokens[1]) > next) {
+                    throw new ArrayIndexOutOfBoundsException("Selected task does not exist");
+                }
+                
+            }
             else if (key.equalsIgnoreCase("mark")) {
                 taskNo = Integer.parseInt(tokens[1]) - 1;
                 System.out.println("Nice! I've marked this task as done:");
@@ -46,24 +52,31 @@ public class Duke {
                 System.out.println(list[taskNo].description.toString());
             }
             else if (key.equalsIgnoreCase("todo")) {
+                if (tokens[1].isEmpty()) {
+                    throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
+                }
                 new_input = input.replace(key, "[T][ ]");
                 list[next] = new Todo(new_input);
                 next++;
             }
             else if (key.equalsIgnoreCase("deadline")) {
+                if (tokens[1].isEmpty()) {
+                    throw new DukeException("OOPS!!! The description of a deadline cannot be empty.");
+                }
                 new_input = input.replace(key, "[D][ ]");
                 list[next] = new Deadline(new_input);
                 next++;
             }
             else if (key.equalsIgnoreCase("event")) {
+                if (tokens[1].isEmpty()) {
+                    throw new DukeException("OOPS!!! The description of a event cannot be empty.");
+                }
                 new_input = input.replace(key, "[E][ ]");
                 list[next] = new Event(new_input);
                 next++;
             }
             else {
-                    list[next] = new Task("[ ][ ] " + input);
-                    next++;
-                    System.out.println("added: " + input);
+                    throw new DukeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
             }                
         }  
     }
