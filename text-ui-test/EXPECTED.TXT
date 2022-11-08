@@ -12,17 +12,10 @@ todo read has been successfully added to the task list.
 Now you have 1 task(s) in the list!
 ------------------------------------------------------------------------------------------------------------------------
 bot@duke:~$ ------------------------------------------------------------------------------------------------------------------------
-event meeting /at monday 2pm-3pm has been successfully added to the task list.
-	[T][ ] read
-	[E][ ] meeting (at: monday 2pm-3pm)
-Now you have 2 task(s) in the list!
+common.exceptions.InvalidTaskDescriptionException: Invalid task description!
 ------------------------------------------------------------------------------------------------------------------------
 bot@duke:~$ ------------------------------------------------------------------------------------------------------------------------
-event work /at monday to friday has been successfully added to the task list.
-	[T][ ] read
-	[E][ ] meeting (at: monday 2pm-3pm)
-	[E][ ] work (at: monday to friday)
-Now you have 3 task(s) in the list!
+common.exceptions.InvalidTaskDescriptionException: Invalid task description!
 ------------------------------------------------------------------------------------------------------------------------
 bot@duke:~$ ------------------------------------------------------------------------------------------------------------------------
 Nice! Task 1 is successfully marked.
@@ -36,29 +29,20 @@ Okay, task 1 is successfully unmarked.
 	[T][ ] read
 ------------------------------------------------------------------------------------------------------------------------
 bot@duke:~$ ------------------------------------------------------------------------------------------------------------------------
-Nice! Task 2 is successfully marked.
-	[E][X] meeting (at: monday 2pm-3pm)
+common.exceptions.NotExistTaskException: Task does not exist in the task list.
 ------------------------------------------------------------------------------------------------------------------------
 bot@duke:~$ ------------------------------------------------------------------------------------------------------------------------
 Here are the tasks in your task list:
 1. [T][ ] read
-2. [E][X] meeting (at: monday 2pm-3pm)
-3. [E][ ] work (at: monday to friday)
 ------------------------------------------------------------------------------------------------------------------------
 bot@duke:~$ ------------------------------------------------------------------------------------------------------------------------
 todo sleep has been successfully added to the task list.
 	[T][ ] read
-	[E][X] meeting (at: monday 2pm-3pm)
-	[E][ ] work (at: monday to friday)
 	[T][ ] sleep
-Now you have 4 task(s) in the list!
+Now you have 2 task(s) in the list!
 ------------------------------------------------------------------------------------------------------------------------
 bot@duke:~$ ------------------------------------------------------------------------------------------------------------------------
-delete 3 has been successfully deleted to the task list.
-	[T][ ] read
-	[E][X] meeting (at: monday 2pm-3pm)
-	[T][ ] sleep
-Now you have 3 task(s) in the list!
+common.exceptions.NotExistTaskException: Task does not exist in the task list.
 ------------------------------------------------------------------------------------------------------------------------
 bot@duke:~$ ------------------------------------------------------------------------------------------------------------------------
 Bye! Hope to see you again soon!
