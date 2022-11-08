@@ -20,7 +20,7 @@ public class Todo extends Task {
      */
     @Override
     public String toFile() {
-        return "T" + " | " + getStatus() + " | " + description + "\n";
+        return "T" + " | " + getStatus() + " | "  + getTags() + " | " + description + "\n";
     }
 
     /**

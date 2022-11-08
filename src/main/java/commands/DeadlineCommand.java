@@ -21,6 +21,7 @@ public class DeadlineCommand extends Command {
         String[] deadlineDesc = CommandParser.getDeadlineDetails(inputBody);
         Deadline deadline = new Deadline(deadlineDesc[0],
                 LocalDateTime.parse(deadlineDesc[1].trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+
         instance.addTask(deadline);
     }
 }

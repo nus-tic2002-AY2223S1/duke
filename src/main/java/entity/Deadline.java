@@ -9,8 +9,9 @@ public class Deadline extends Task {
 
     /**
      * Deadline object constructor
+     *
      * @param description inputs description by user
-     * @param by inputs datetime by user
+     * @param by          inputs datetime by user
      */
     public Deadline(String description, LocalDateTime by) {
         super(description);
@@ -28,8 +29,9 @@ public class Deadline extends Task {
      */
     @Override
     public String toFile() {
-        return "D" + " | " + getStatus() + " | " + description + " | " + by + "\n";
+        return "D" + " | " + getStatus() + " | " + getTags() + " | " + description + " | " + by + "\n";
     }
+
     /**
      * Parse To-do object to string
      *

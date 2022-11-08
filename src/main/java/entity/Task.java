@@ -20,8 +20,8 @@ public class Task {
         this.isDone = false;
     }
 
-    public List<String> getTags() {
-        return tags;
+    public String getTags() {
+        return String.join(" ", tags);
     }
 
     public void addTags(List<String> tags) {
@@ -42,7 +42,7 @@ public class Task {
      * @return text to save to file
      */
     public String toFile() {
-        return getStatus() + " | " + description + "\n";
+        return getStatus() + " | " + getTags() + " | " + description + "\n";
     }
 
     /**
@@ -79,6 +79,6 @@ public class Task {
 
 
     public String toString() {
-        return "[" + getStatusIcon() + "] " + description;
+        return "[" + getStatusIcon() + "] Tags: [" + getTags() + "] " + description;
     }
 }

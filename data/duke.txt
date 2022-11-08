@@ -1,4 +1,4 @@
-T | 1 | byebye
-T | 0 | good morning
-D | 1 | assignment 1  | 2022-11-11T00:00
-E | 0 | project meeting  | 2022-11-12T00:00
+T | 1 | #fun | byebye
+T | 0 | #fun | good morning
+D | 1 | #fun | assignment 1 | 2022-11-11T00:00
+E | 0 | #fun | project meeting | 2022-11-12T00:00

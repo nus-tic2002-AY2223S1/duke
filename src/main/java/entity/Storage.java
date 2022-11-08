@@ -8,10 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class Storage extends TaskList {
     private final String filePath;
@@ -86,22 +83,27 @@ public class Storage extends TaskList {
      * @return a Task object
      */
     public Task generateTask(String line) {
-        String[] details = line.split(" \\| ");
+        String[] rawDetails = line.split(" \\|", -1);
+        String[] details = Arrays.stream(rawDetails).map(String::trim).toArray(o -> new String[rawDetails.length]);
         Task task = null;
         switch (details[0]) {
             case "T":
-                task = new Todo(details[2]);
+                task = new Todo(details[3]);
                 if (Objects.equals(details[1], "1")) task.markTask();
+                if (!Objects.equals(details[2], "")) task.addTags(List.of(CommandParser.getTags(details[2])));
                 break;
             case "D":
-                task = new Deadline(details[2],
-                        LocalDateTime.parse(details[3].replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                task = new Deadline(details[3],
+                        LocalDateTime.parse(details[4].replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
                 if (Objects.equals(details[1], "1")) task.markTask();
+                if (!Objects.equals(details[2], "")) task.addTags(List.of(CommandParser.getTags(details[2])));
                 break;
             case "E":
-                task = new Event(details[2],
-                        LocalDateTime.parse(details[3].replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                task = new Event(details[3],
+                        LocalDateTime.parse(details[4].replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
                 if (Objects.equals(details[1], "1")) task.markTask();
+                if (!Objects.equals(details[2], "")) task.addTags(List.of(CommandParser.getTags(details[2])));
+
                 break;
         }
         return task;

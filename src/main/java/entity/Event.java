@@ -18,7 +18,9 @@ public class Event extends Task {
         super(description);
         this.at = at;
     }
-
+    public LocalDateTime getAt() {
+        return at;
+    }
     /**
      * Parse To-do object to string
      *
@@ -26,7 +28,7 @@ public class Event extends Task {
      */
     @Override
     public String toFile() {
-        return "E" + " | " + getStatus() + " | " + description + " | " + at + "\n";
+        return "E" + " | " + getStatus() + " | "  + getTags() + " | " + description + " | " + at + "\n";
     }
 
     /**

@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TaskList {
@@ -22,6 +23,11 @@ public class TaskList {
         tasks.add(task);
     }
 
+    public void tagTask(int taskNo, String[] tags) {
+        Task task = tasks.get(taskNo);
+        task.addTags(Arrays.asList(tags));
+        Ui.echoText("Task is tagged:\n      " + task);
+    }
     /**
      * To add task to Tasks by user's command
      *

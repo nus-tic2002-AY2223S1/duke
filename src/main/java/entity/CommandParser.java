@@ -67,14 +67,20 @@ public class CommandParser {
      * @return description and time
      */
     public static String[] getEventDetails(String inputBody) {
-        return inputBody.split("/at", 2);
+        return Arrays.stream(inputBody.split("/at", 2)).map(String::trim).toArray(o -> new String[2]);
+    }
+
+    public static String[] getTags(String inputBody) {
+        String[] details = inputBody.split("(?=#)");
+        return Arrays.stream(details)
+                .map(String::trim).toArray(o -> new String[details.length]);
     }
 
     /**
      * Used for checking for invalid input
      *
      * @param inputs user input
-     * @return
+     * @return the number of parts of command key in by user
      */
     public static int countCommandParts(String inputs) {
         return inputs.split(" ", 2).length;
