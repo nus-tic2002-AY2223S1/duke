@@ -1,6 +1,7 @@
 package model;
 
 import common.enums.CommandTypeEnum;
+import common.enums.PeriodicalEnum;
 
 import static common.constants.CommonConstant.CLOSE_BRACKET;
 import static common.constants.CommonConstant.CLOSE_SQ_BRACKET;
@@ -14,8 +15,8 @@ import static common.utils.DateUtil.dateTimeConverter;
 public class Deadline extends Task {
     protected String by;
 
-    public Deadline(String description, String by) {
-        super(description);
+    public Deadline(PeriodicalEnum periodical, String description, String by) {
+        super(periodical, description);
         this.by = dateTimeConverter(by);
     }
 

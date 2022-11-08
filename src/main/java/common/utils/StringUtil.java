@@ -1,20 +1,28 @@
 package common.utils;
 
 import common.enums.CommandEnum;
+import common.enums.PeriodicalEnum;
 import common.enums.UpdateTypeEnum;
 import common.exceptions.InvalidTaskDescriptionException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import static common.constants.CommonConstant.AT;
-import static common.constants.CommonConstant.BY;
 import static common.constants.CommonConstant.INIT_INT_VAL;
 import static common.constants.CommonConstant.SPACE;
 import static common.constants.CommonConstant.ZERO_VAL;
 import static common.constants.CommonConstant.DELIMITER;
 import static common.constants.ErrorMessage.EXCEPTION_ERROR_MSG;
+import static common.enums.CommandEnum.deadline;
+import static common.enums.CommandEnum.event;
+import static common.enums.CommandEnum.todo;
+import static common.enums.UpdateTypeEnum.desc;
+import static logic.validators.Validator.dateTimeRegex;
+
+;
 
 public class StringUtil {
     /**
@@ -49,9 +57,10 @@ public class StringUtil {
         int index = sentence.indexOf(commandString);
 
         try {
-            if (substring.contains(DELIMITER)) { // filter string with delimiter if it has
-                substring = substring.substring(0, substring.lastIndexOf(DELIMITER) - 1);
+            if (substring.contains(DELIMITER)) { // filter string with DELIMITER if it has
+                substring = substring.substring(0, substring.indexOf(DELIMITER) - 1);
             }
+
             if (index > -1 && commandString.length() != 0) { // filter string with command
                 substring = substring.substring(index + INIT_INT_VAL + commandString.length());
             }
@@ -66,17 +75,37 @@ public class StringUtil {
      * @param   sentence    sentence from user input
      */
     public static String getTimeFromString(String sentence) {
-        String separator = "";
-        String substring = "";
+        String output = "";
 
         try {
-            if (sentence.contains(AT)) {
-                separator = DELIMITER + AT + SPACE;
-            } else if (sentence.contains(BY)) {
-                separator = DELIMITER + BY + SPACE;
+            Pattern pattern = Pattern.compile(dateTimeRegex);
+            Matcher matcher = pattern.matcher(sentence);
+            if (matcher.find()) {
+                output = matcher.group(1);
             }
-            int index = sentence.indexOf(separator);
-            substring = sentence.substring(index + (separator).length());
+        } catch (Exception e) {
+            System.out.println(String.format(EXCEPTION_ERROR_MSG, e));
+        }
+
+        return output;
+    }
+
+    /**
+     * Return the substring `periodical` in a string
+     *
+     * @param   sentence    sentence from user input
+     */
+    public static String getPeriodicalFromString(String sentence) {
+        String substring = String.valueOf(PeriodicalEnum.undefined);
+        int firstIndex = sentence.indexOf(DELIMITER);
+        int lastIndex = sentence.lastIndexOf(DELIMITER);
+
+        try {
+            if ((sentence.contains(String.valueOf(todo)) && sentence.contains(DELIMITER)) ||
+                    ((sentence.contains(String.valueOf(deadline)) || sentence.contains(String.valueOf(event)))
+                            && firstIndex != lastIndex)) {
+                substring = sentence.substring(lastIndex + INIT_INT_VAL);
+            }
         } catch (Exception e) {
             System.out.println(String.format(EXCEPTION_ERROR_MSG, e));
         }
@@ -123,7 +152,13 @@ public class StringUtil {
     public static String getUpdateDescriptionFromString(String sentence) throws InvalidTaskDescriptionException {
         try {
             List<String> words = new ArrayList<>(Arrays.asList(sentence.split("\\s+")));
-            return words.get(2); // updateTypeEnum is position 3 - (1 from command)
+            String updateDesc = "";
+            if (getUpdateEnumTypeFromString(sentence) == desc) {
+                updateDesc = words.get(2); // updateTypeEnum is position 2 - (1 from command)
+            } else {
+                updateDesc = words.get(2) + " " + words.get(3); // updateTypeEnum is position 3 and 5 - (1 from command)
+            }
+            return updateDesc;
         } catch (IndexOutOfBoundsException e) {
             throw new InvalidTaskDescriptionException();
         }

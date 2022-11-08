@@ -1,6 +1,7 @@
 package model;
 
 import common.enums.CommandTypeEnum;
+import common.enums.PeriodicalEnum;
 
 import static common.constants.CommonConstant.CLOSE_BRACKET;
 import static common.constants.CommonConstant.CLOSE_SQ_BRACKET;
@@ -14,8 +15,8 @@ import static common.utils.DateUtil.dateTimeConverter;
 public class Event extends Task {
     protected String at;
 
-    public Event(String description, String at) {
-        super(description);
+    public Event(PeriodicalEnum periodical, String description, String at) {
+        super(periodical, description);
         this.at = dateTimeConverter(at);
     }
 

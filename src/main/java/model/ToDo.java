@@ -1,15 +1,15 @@
 package model;
 
 import common.enums.CommandTypeEnum;
+import common.enums.PeriodicalEnum;
 
 import static common.constants.CommonConstant.CLOSE_SQ_BRACKET;
 import static common.constants.CommonConstant.OPEN_SQ_BRACKET;
 import static common.enums.CommandTypeEnum.T;
 
 public class ToDo extends Task {
-
-    public ToDo(String description) {
-        super(description);
+    public ToDo(PeriodicalEnum periodical, String description) {
+        super(periodical, description);
     }
 
     @Override

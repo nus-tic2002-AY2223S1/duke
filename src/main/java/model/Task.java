@@ -1,12 +1,15 @@
 package model;
 
 import common.enums.CommandTypeEnum;
+import common.enums.PeriodicalEnum;
 
+import static common.constants.CommonConstant.DASH;
 import static common.constants.CommonConstant.CLOSE_SQ_BRACKET;
 import static common.constants.CommonConstant.OPEN_SQ_BRACKET;
 import static common.constants.CommonConstant.SPACE;
 import static common.constants.CommonConstant.MARKED_ICON;
 import static common.enums.CommandTypeEnum.UNDEFINED;
+import static common.enums.PeriodicalEnum.undefined;
 import static common.utils.DateUtil.dateTimeConverter;
 
 public abstract class Task {
@@ -16,7 +19,10 @@ public abstract class Task {
 
     protected String time;
 
-    public Task(String description) {
+    protected PeriodicalEnum periodical;
+
+    public Task(PeriodicalEnum periodical, String description) {
+        this.periodical = periodical;
         this.description = description;
         this.isDone = false;
     }
@@ -59,6 +65,8 @@ public abstract class Task {
 
     @Override
     public String toString() {
-        return OPEN_SQ_BRACKET + getStatusIcon() + CLOSE_SQ_BRACKET + SPACE + description;
+        String periodicalValue = ((periodical != undefined) ? (SPACE + periodical + SPACE + DASH + SPACE) : SPACE);
+        return OPEN_SQ_BRACKET + getStatusIcon() + CLOSE_SQ_BRACKET +
+                periodicalValue + description;
     }
 }
