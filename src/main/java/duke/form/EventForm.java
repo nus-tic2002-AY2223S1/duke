@@ -32,7 +32,7 @@ public class EventForm extends TodoForm {
     }
 
     /**
-     * Get start time.
+     * Returns start time.
      *
      * @return Start time instance.
      */
@@ -41,7 +41,7 @@ public class EventForm extends TodoForm {
     }
 
     /**
-     * Set start time.
+     * Sets start time.
      *
      * @param startTime: Target start time.
      */
@@ -50,7 +50,7 @@ public class EventForm extends TodoForm {
     }
 
     /**
-     * Get end time.
+     * Returns end time.
      *
      * @return End time instance.
      */
@@ -59,7 +59,7 @@ public class EventForm extends TodoForm {
     }
 
     /**
-     * Set end time.
+     * Sets end time.
      *
      * @param endTime: Target end time.
      */

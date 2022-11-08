@@ -19,7 +19,7 @@ public class CommandTableDto {
     private List<List<String>> rows = new ArrayList<>();
 
     /**
-     * Get headers.
+     * Returns headers.
      *
      * @return Header data of table.
      */
@@ -28,7 +28,7 @@ public class CommandTableDto {
     }
 
     /**
-     * Set headers.
+     * Sets headers.
      *
      * @param headers: Target headers.
      */
@@ -37,7 +37,7 @@ public class CommandTableDto {
     }
 
     /**
-     * Get body in rows.
+     * Returns body in rows.
      *
      * @return Body data of table.
      */
@@ -46,7 +46,7 @@ public class CommandTableDto {
     }
 
     /**
-     * Set body data.
+     * Sets body data.
      *
      * @param rows: Target body data.
      */

@@ -52,7 +52,7 @@ public class ConsoleUI implements UI {
     };
 
     /**
-     * Render handler which used to render response entity after executing `show_command` command.
+     * Renders handler which used to render response entity after executing `show_command` command.
      */
     RenderHandler showCommandRenderHandler = responseDto -> {
         // render table data
@@ -64,7 +64,7 @@ public class ConsoleUI implements UI {
     };
 
     /**
-     * Render handler which used to render response entity after executing `list` command.
+     * Renders handler which used to render response entity after executing `list` command.
      */
     @SuppressWarnings("unchecked")
     RenderHandler listTaskRenderHandler = responseDto -> {
@@ -82,7 +82,7 @@ public class ConsoleUI implements UI {
     };
 
     /**
-     * Render handler which used to render response entity after executing `find` command.
+     * Renders handler which used to render response entity after executing `find` command.
      */
     @SuppressWarnings("unchecked")
     RenderHandler findTaskCommandHandler = responseDto -> {
@@ -101,7 +101,7 @@ public class ConsoleUI implements UI {
     };
 
     /**
-     * Render handler which used to render response entity after executing `bye` command
+     * Renders handler which used to render response entity after executing `bye` command
      * program will terminate after render complete.
      */
     RenderHandler existCommandHandler = responseDto -> {
@@ -125,7 +125,7 @@ public class ConsoleUI implements UI {
     }
 
     /**
-     * Render greeting message in console.
+     * Renders greeting message in console.
      */
     @Override
     public void renderGreetingMessage() {
@@ -176,7 +176,7 @@ public class ConsoleUI implements UI {
     }
 
     /**
-     * Render error message in console.
+     * Renders error message in console.
      *
      * @param errorMsg: Program error message.
      */
@@ -189,7 +189,7 @@ public class ConsoleUI implements UI {
     }
 
     /**
-     * Render error message in console.
+     * Renders error message in console.
      *
      * @param throwable: Program exception instance.
      */
@@ -203,7 +203,7 @@ public class ConsoleUI implements UI {
     }
 
     /**
-     * Get user raw input from console.
+     * Returns user raw input from console.
      *
      * @return Raw input in string.
      */
@@ -213,7 +213,7 @@ public class ConsoleUI implements UI {
     }
 
     /**
-     * Render response entity in console.
+     * Renders response entity in console.
      *
      * @param responseDto: Response entity.
      */

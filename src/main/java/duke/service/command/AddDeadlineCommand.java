@@ -23,7 +23,7 @@ public class AddDeadlineCommand extends Command {
     private AddDeadlineCommand() {}
 
     /**
-     * Get single instance.
+     * Returns single instance.
      *
      * @return Single instance of command.
      */
@@ -32,7 +32,7 @@ public class AddDeadlineCommand extends Command {
     }
 
     /**
-     * Add deadline task by given user input.
+     * Adds deadline task by given user input.
      *
      * @param form: Parsed input form from user.
      * @return Response entity after command execute.

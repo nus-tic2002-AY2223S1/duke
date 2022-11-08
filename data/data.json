@@ -1,5 +1,2 @@
-{"by":"2022-01-01 00:00","description":"task3","done":false,"type":"D"}
-{"description":"task4","done":false,"endTime":"2030-10-10 00:00","startTime":"2020-10-10 00:00","type":"E"}
-{"description":"mew-task1","done":false,"type":"T"}
-{"by":"1999-01-01 00:00","description":"new-task2","done":false,"type":"D"}
-{"description":"new-task3","done":false,"endTime":"2008-12-31 00:00","startTime":"1998-12-30 00:00","type":"E"}
+{"description":"tic2002 assignment","done":false,"type":"T"}
+{"description":"nus computing conference","done":false,"endTime":"2023-02-20 20:00","startTime":"2023-02-01 14:00","type":"E"}

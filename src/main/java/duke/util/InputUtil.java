@@ -18,7 +18,7 @@ public class InputUtil {
     private static final Scanner scanner = new Scanner(System.in);
 
     /**
-     * Read input from console and convert to string.
+     * Reads input from console and convert to string.
      *
      * @return Input from console.
      */

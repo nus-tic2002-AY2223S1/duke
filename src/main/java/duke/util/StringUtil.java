@@ -19,7 +19,7 @@ public class StringUtil {
     private StringUtil() {}
 
     /**
-     * Check if the string instance is null or ''.
+     * Returns a boolean to check if the string instance is null or ''.
      *
      * @param str: Input string instance.
      * @return Boolean value if the string is empty.
@@ -29,7 +29,7 @@ public class StringUtil {
     }
 
     /**
-     * Check if the string instance is null, '' or contain whitespaces only.
+     * Returns a boolean to check if the string instance is null, '' or contain whitespaces only.
      *
      * @param str: Input string instance.
      * @return Boolean value if the string is blank.
@@ -49,7 +49,7 @@ public class StringUtil {
     }
 
     /**
-     * Check if the input string is numeric.
+     * Returns a boolean to check if the input string is numeric.
      *
      * @param str: Input string instance.
      * @return True is given str is number.
@@ -59,7 +59,7 @@ public class StringUtil {
     }
 
     /**
-     * Remove trailing and leading space of given string instance.
+     * Removes trailing and leading space of given string instance.
      *
      * @param str: Input string instance.
      * @return Trimmed string instance.
@@ -72,7 +72,7 @@ public class StringUtil {
     }
 
     /**
-     * Join a list of object to a string by given delimiter.
+     * Returns a string instance by joining a list of object to a string by given delimiter.
      *
      * @param list: Target list instance.
      * @param delimiter: Delimiter used to join object.
@@ -86,7 +86,7 @@ public class StringUtil {
     }
 
     /**
-     * Convert a string to a list of string by given delimiter.
+     * Converts a string to a list of string by given delimiter.
      *
      * @param str: Target string instance.
      * @param delimiter: Delimiter appear in the string instance.

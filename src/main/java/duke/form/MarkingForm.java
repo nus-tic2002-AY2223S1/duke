@@ -26,7 +26,7 @@ public class MarkingForm extends Form {
     }
 
     /**
-     * Get index.
+     * Returns index.
      *
      * @return Index of task in the list.
      */
@@ -35,7 +35,7 @@ public class MarkingForm extends Form {
     }
 
     /**
-     * Set index.
+     * Sets index.
      *
      * @param index: Index of task in the list.
      */

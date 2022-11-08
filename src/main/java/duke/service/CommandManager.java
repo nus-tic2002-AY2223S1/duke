@@ -47,7 +47,7 @@ public class CommandManager {
     private CommandManager() {}
 
     /**
-     * Get command instance by given command name in runtime.
+     * Returns command instance by given command name in runtime.
      *
      * @param commandName: Name of command.
      */

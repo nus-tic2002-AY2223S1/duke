@@ -19,7 +19,7 @@ public class UndefinedCommand extends Command {
     private UndefinedCommand() {}
 
     /**
-     * Get single instance.
+     * Returns single instance.
      *
      * @return Single instance of command.
      */
@@ -28,7 +28,7 @@ public class UndefinedCommand extends Command {
     }
 
     /**
-     * Handle input which does not recognize by the program.
+     * Handles input which does not recognize by the program.
      *
      * @param form: Parsed input form from user.
      * @return Response entity after command execute.

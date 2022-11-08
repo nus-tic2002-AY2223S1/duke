@@ -36,7 +36,7 @@ public class Task {
     }
 
     /**
-     * Get readable string representation for labeling if task is done.
+     * Returns readable string representation for labeling if task is done.
      *
      * @return String instance which represents done or undone status of task.
      */
@@ -45,7 +45,7 @@ public class Task {
     }
 
     /**
-     * Get description.
+     * Returns description.
      *
      * @return Description of task.
      */
@@ -54,7 +54,7 @@ public class Task {
     }
 
     /**
-     * Set description.
+     * Sets description.
      *
      * @param description: Description of task.
      */
@@ -63,7 +63,7 @@ public class Task {
     }
 
     /**
-     * Check if the task is done.
+     * Returns a boolean value check if the task is done.
      *
      * @return True is the task is done, otherwise value is false.
      */
@@ -72,7 +72,7 @@ public class Task {
     }
 
     /**
-     * Set done flag.
+     * Sets done flag.
      *
      * @param done: Flag which label if the task is completed.
      */
@@ -81,7 +81,7 @@ public class Task {
     }
 
     /**
-     * Get type of the task.
+     * Returns type of the task.
      *
      * @return Type of the task.
      */
@@ -90,7 +90,7 @@ public class Task {
     }
 
     /**
-     * Set type of the task.
+     * Sets type of the task.
      *
      * @param type: Type of the task.
      */
@@ -99,7 +99,7 @@ public class Task {
     }
 
     /**
-     * Get string representation of task type.
+     * Returns string representation of task type.
      *
      * @return Type of the task.
      */
@@ -108,7 +108,7 @@ public class Task {
     }
 
     /**
-     * String representation of class.
+     * Returns string representation of class.
      *
      * @return Readable string representation for instance description.
      */

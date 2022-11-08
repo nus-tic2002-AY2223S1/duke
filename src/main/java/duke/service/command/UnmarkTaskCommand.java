@@ -24,7 +24,7 @@ public class UnmarkTaskCommand extends Command {
     private UnmarkTaskCommand() {}
 
     /**
-     * Get single instance.
+     * Returns single instance.
      *
      * @return Single instance of command.
      */
@@ -33,7 +33,7 @@ public class UnmarkTaskCommand extends Command {
     }
 
     /**
-     * Mark task as `undone` status.
+     * Marks task as `undone` status.
      *
      * @param form: Parsed input form from user.
      * @return Response entity after command execute.

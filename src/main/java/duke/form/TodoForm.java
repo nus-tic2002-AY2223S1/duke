@@ -26,7 +26,7 @@ public class TodoForm extends Form {
     }
 
     /**
-     * Get description.
+     * Returns description.
      *
      * @return Description of task.
      */
@@ -35,7 +35,7 @@ public class TodoForm extends Form {
     }
 
     /**
-     * Set description.
+     * Sets description.
      *
      * @param description: Description of task.
      */

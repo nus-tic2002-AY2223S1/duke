@@ -22,7 +22,7 @@ public class AsyncExecutor {
     private AsyncExecutor() {}
 
     /**
-     * Execute the task in separate thread, not blocking the main thread.
+     * Executes the task in separate thread, not blocking the main thread.
      *
      * @param runnable: Class which implement runnable interface.
      */

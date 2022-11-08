@@ -26,7 +26,7 @@ public class DukeException extends RuntimeException {
     }
 
     /**
-     * Set error code.
+     * Sets error code.
      *
      * @param code: Error code represent the type of exception.
      */
@@ -35,7 +35,7 @@ public class DukeException extends RuntimeException {
     }
 
     /**
-     * Get error message.
+     * Returns error message.
      *
      * @return Error message about the exception.
      */

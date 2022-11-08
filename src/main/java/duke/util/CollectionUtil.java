@@ -14,7 +14,7 @@ public class CollectionUtil {
     private CollectionUtil() {}
 
     /**
-     * Check if the given collection is empty.
+     * Returns a boolean to check if the given collection is empty.
      *
      * @param collection: Collection instance.
      * @return Boolean value define the collection is empty.
@@ -24,7 +24,7 @@ public class CollectionUtil {
     }
 
     /**
-     * Check if the given map is empty.
+     * Returns a boolean to check if the given map is empty.
      *
      * @param map: Map instance.
      * @return Boolean value define the map is empty.

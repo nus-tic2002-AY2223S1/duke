@@ -98,7 +98,7 @@ public enum CommandEnum {
     }
 
     /**
-     * Get command name.
+     * Returns command name.
      *
      * @return Name of command.
      */
@@ -107,7 +107,7 @@ public enum CommandEnum {
     }
 
     /**
-     * Get command description.
+     * Returns command description.
      *
      * @return Description of command.
      */
@@ -116,7 +116,7 @@ public enum CommandEnum {
     }
 
     /**
-     * Get command syntax.
+     * Returns command syntax.
      *
      * @return Syntax of command.
      */
@@ -125,7 +125,7 @@ public enum CommandEnum {
     }
 
     /**
-     * Get constant instance by given command name.
+     * Returns constant instance by given command name.
      *
      * @param name: Name of command.
      * @return Constants instance of command.

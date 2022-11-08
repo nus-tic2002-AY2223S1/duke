@@ -49,7 +49,7 @@ public class TaskManager {
     /**
      * Check if the initialization is completed.
      */
-    private static boolean initComplete = false;
+    private static boolean isInitComplete = false;
 
     /**
      * Final location to persist task data.
@@ -63,12 +63,12 @@ public class TaskManager {
     private TaskManager() {}
 
     /**
-     * Init task list from hard disk data.
+     * Loads task list from hard disk data in initialization
      *
      * @param dataFilePath: Input persistent data location from user.
      */
     public static void init(String dataFilePath) {
-        if (initComplete) {
+        if (isInitComplete) {
             System.out.println("init of task manager is completed");
             return;
         }
@@ -104,7 +104,7 @@ public class TaskManager {
                 .filter(Objects::nonNull)
                 .forEach(taskList::add);
 
-        initComplete = true;
+        isInitComplete = true;
     }
 
     private static JSONObject parseToJsonObj(String json) {
@@ -187,7 +187,7 @@ public class TaskManager {
     }
 
     /**
-     * Write task list data into hard disk method is called in daemon thread,
+     * Writes task list data into hard disk method is called in daemon thread,
      * resource modification can happen concurrently.
      */
     public synchronized void persistTask() {
@@ -199,7 +199,7 @@ public class TaskManager {
     }
 
     /**
-     * Linear search for the description of task, check if it contains the given keyword.
+     * Performs linear search for the description of task, check if it contains the given keyword.
      *
      * @param keyword: Keyword in the description of task.
      */
@@ -208,7 +208,7 @@ public class TaskManager {
     }
 
     /**
-     * Append new task to task list.
+     * Adds new task to task list.
      *
      * @param task: Task entity.
      */
@@ -217,7 +217,7 @@ public class TaskManager {
     }
 
     /**
-     * Get task instance by given index.
+     * Returns task instance by given index.
      *
      * @param index: Index of task in the list.
      */
@@ -226,7 +226,7 @@ public class TaskManager {
     }
 
     /**
-     * Remove task from list by given index.
+     * Removes task from list by given index.
      *
      * @param index: Index of task in the list.
      */
@@ -236,14 +236,14 @@ public class TaskManager {
     }
 
     /**
-     * Get task size.
+     * Returns task size.
      */
     public int getTaskSize() {
         return taskList.size();
     }
 
     /**
-     * Get task list instance. Make a copy of it is needed to prevent unintentional change of task entity.
+     * Returns task list instance. Make a copy of it is needed to prevent unintentional change of task entity.
      */
     public List<Task> getTaskList() {
         return taskList;

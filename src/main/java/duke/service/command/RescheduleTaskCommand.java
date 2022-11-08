@@ -33,7 +33,7 @@ public class RescheduleTaskCommand extends Command {
     private RescheduleTaskCommand() {}
 
     /**
-     * Get single instance.
+     * Returns single instance.
      *
      * @return Single instance of command.
      */
@@ -42,7 +42,7 @@ public class RescheduleTaskCommand extends Command {
     }
 
     /**
-     * Reschedule the task by given index and new schedule.
+     * Reschedules the task by given index and new schedule.
      *
      * @param form: Parsed input form from user.
      * @return Response entity after command execute.

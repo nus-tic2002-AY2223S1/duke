@@ -24,7 +24,7 @@ public class FindTaskCommand extends Command {
     private FindTaskCommand() {}
 
     /**
-     * Get single instance.
+     * Returns single instance.
      *
      * @return Single instance of command.
      */
@@ -33,7 +33,7 @@ public class FindTaskCommand extends Command {
     }
 
     /**
-     * Find the task from the given keyword description.
+     * Finds the task from the given keyword description.
      *
      * @param form: Parsed input form from user.
      * @return Response entity after command execute.

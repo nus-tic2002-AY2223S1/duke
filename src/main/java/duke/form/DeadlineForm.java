@@ -27,7 +27,7 @@ public class DeadlineForm extends TodoForm {
     }
 
     /**
-     * Get deadline time.
+     * Returns deadline time.
      *
      * @return Deadline time instance.
      */
@@ -36,7 +36,7 @@ public class DeadlineForm extends TodoForm {
     }
 
     /**
-     * Set deadline time.
+     * Sets deadline time.
      *
      * @param by: Target time.
      */

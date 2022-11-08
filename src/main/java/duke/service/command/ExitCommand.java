@@ -20,7 +20,7 @@ public class ExitCommand extends Command {
     private ExitCommand() {}
 
     /**
-     * Get single instance.
+     * Returns single instance.
      *
      * @return Single instance of command.
      */
@@ -29,7 +29,7 @@ public class ExitCommand extends Command {
     }
 
     /**
-     * Exit program, persist the task data.
+     * Exits program while persists the task data.
      *
      * @param form: Parsed input form from user.
      * @return Response entity after command execute.

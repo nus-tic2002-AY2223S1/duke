@@ -24,7 +24,7 @@ public class MarkTaskCommand extends Command {
     private MarkTaskCommand() {}
 
     /**
-     * Get single instance.
+     * Returns single instance.
      *
      * @return Single instance of command.
      */
@@ -33,7 +33,7 @@ public class MarkTaskCommand extends Command {
     }
 
     /**
-     * Mark task as `done` status.
+     * Marks task as `done` status.
      *
      * @param form: Parsed input form from user.
      * @return Response entity after command execute.

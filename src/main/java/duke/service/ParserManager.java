@@ -75,7 +75,7 @@ public class ParserManager {
     private static final RescheduleCommandParser RESCHEDULE_COMMAND_PARSER = new RescheduleCommandParser();
 
     /**
-     * Parse the console input from user.
+     * Parses the console input from user.
      *
      * @param input: Console input.
      * @return Form contain the parsed parameters.
@@ -129,7 +129,7 @@ public class ParserManager {
     private static class DefaultCommandParser implements Parser {
 
         /**
-         * Return what is given in the input.
+         * Returns what is given in the input.
          *
          * @param input: Input from console.
          * @return Parse form.
@@ -150,7 +150,7 @@ public class ParserManager {
     private static class MarkCommandParser implements Parser {
 
         /**
-         * Extract the index parameter from input.
+         * Extracts the index parameter from input.
          *
          * @param input: Input from console.
          * @return Parsed form.
@@ -185,7 +185,7 @@ public class ParserManager {
     private static class UnmarkCommandParser implements Parser {
 
         /**
-         * Extract the index parameter from input.
+         * Extracts the index parameter from input.
          *
          * @param input: Input from console.
          * @return Parsed form.
@@ -220,7 +220,7 @@ public class ParserManager {
     private static class DeleteCommandParser implements Parser {
 
         /**
-         * Extract the index parameter from input.
+         * Extracts the index parameter from input.
          *
          * @param input: Input from console.
          * @return Parsed form.
@@ -260,7 +260,7 @@ public class ParserManager {
         private static final Pattern findClausePattern = Pattern.compile("find (.*)");
 
         /**
-         * Extract the keyword parameter from input.
+         * Extracts the keyword parameter from input.
          *
          * @param input: Input from console.
          * @return Parsed form.
@@ -286,7 +286,7 @@ public class ParserManager {
     private static class RescheduleCommandParser implements Parser {
 
         /**
-         * Extract the index parameter from input.
+         * Extracts the index parameter from input.
          *
          * @param input: Input from console.
          * @return Parsed form.
@@ -326,7 +326,7 @@ public class ParserManager {
         private static final Pattern todoClausePattern = Pattern.compile("todo (.*)");
 
         /**
-         * Extract the description parameter from input.
+         * Extracts the description parameter from input.
          *
          * @param input: Input from console.
          * @return Parsed form.
@@ -357,7 +357,7 @@ public class ParserManager {
         private static final Pattern deadlineClausePattern = Pattern.compile("deadline ([\\s\\w\\W]*)/\\s*by (.*)");
 
         /**
-         * Extract the description, deadline time parameter from input.
+         * Extracts the description, deadline time parameter from input.
          *
          * @param input: Input from console.
          * @return Parsed form.
@@ -391,7 +391,7 @@ public class ParserManager {
         private static final Pattern eventClausePattern = Pattern.compile("event ([\\s\\w\\W]*)/\\s*at (.*)");
 
         /**
-         * Extract the description, start time and end time parameter from input.
+         * Extracts the description, start time and end time parameter from input.
          *
          * @param input: Input from console.
          * @return Parsed form.

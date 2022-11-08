@@ -44,7 +44,7 @@ public class Form {
     }
 
     /**
-     * Get command name.
+     * Returns command name.
      *
      * @return Command name.
      */
@@ -53,7 +53,7 @@ public class Form {
     }
 
     /**
-     * Set command name.
+     * Sets command name.
      *
      * @param command: Target command name.
      */
@@ -62,7 +62,7 @@ public class Form {
     }
 
     /**
-     * Get meta data.
+     * Returns meta data.
      *
      * @return Raw command input from user.
      */
@@ -71,7 +71,7 @@ public class Form {
     }
 
     /**
-     * Set meta data.
+     * Sets meta data.
      *
      * @param metaData: Raw command input from user.
      */

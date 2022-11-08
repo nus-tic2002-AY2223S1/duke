@@ -73,7 +73,7 @@ public class ResponseDto<T> {
     }
 
     /**
-     * Get command name.
+     * Returns command name.
      *
      * @return Name of command.
      */
@@ -82,7 +82,7 @@ public class ResponseDto<T> {
     }
 
     /**
-     * Set command name.
+     * Sets command name.
      *
      * @param commandName: Target command name.
      */
@@ -91,7 +91,7 @@ public class ResponseDto<T> {
     }
 
     /**
-     * Get message.
+     * Returns message.
      *
      * @return Message to render.
      */
@@ -100,7 +100,7 @@ public class ResponseDto<T> {
     }
 
     /**
-     * Set message.
+     * Sets message.
      *
      * @param message: Message to render.
      */
@@ -109,7 +109,7 @@ public class ResponseDto<T> {
     }
 
     /**
-     * Get render data.
+     * Returns render data.
      *
      * @return Data to render.
      */
@@ -118,7 +118,7 @@ public class ResponseDto<T> {
     }
 
     /**
-     * Set render data.
+     * Sets render data.
      *
      * @param data: Target render data.
      */

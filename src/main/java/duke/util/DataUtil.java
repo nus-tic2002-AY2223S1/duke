@@ -13,7 +13,7 @@ public class DataUtil {
     private DataUtil() {}
 
     /**
-     * Convert an object instance to string.
+     * Converts an object instance to string.
      *
      * @param object: Target object instance.
      * @return String instance of object.
@@ -28,7 +28,7 @@ public class DataUtil {
     }
 
     /**
-     * Convert a string instance to integer.
+     * Converts a string instance to integer.
      *
      * @param str: Target string instance.
      * @return Integer instance.
@@ -43,7 +43,7 @@ public class DataUtil {
     }
 
     /**
-     * Convert a string instance to long.
+     * Converts a string instance to long.
      *
      * @param str: Target string instance.
      * @return Long instance.

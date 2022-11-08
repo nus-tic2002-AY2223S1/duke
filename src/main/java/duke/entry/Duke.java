@@ -34,7 +34,7 @@ public class Duke {
     }
 
     /**
-     * Get data file location.
+     * Returns data file location.
      *
      * @return Data file location.
      */
@@ -43,7 +43,7 @@ public class Duke {
     }
 
     /**
-     * Init all components in the program.
+     * Inits all components in the program.
      */
     private void init() {
         // init Task Manager
@@ -51,7 +51,7 @@ public class Duke {
     }
 
     /**
-     * Entry method of the program, start application.
+     * Runs the program
      */
     public void run() {
         // init app components
@@ -77,7 +77,7 @@ public class Duke {
     }
 
     /**
-     * Main method of application.
+     * Runs the application, entry method of the application.
      *
      * @param args: Arguments from the user.
      */

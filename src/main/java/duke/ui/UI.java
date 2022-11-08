@@ -11,33 +11,33 @@ import duke.dto.ResponseDto;
 public interface UI {
 
     /**
-     * Display greeting message when program starts.
+     * Displays greeting message when program starts.
      */
     void renderGreetingMessage();
 
     /**
-     * Format duke exception message to prevent actual cause expose to user.
+     * Displays duke exception message to prevent actual cause expose to user.
      *
      * @param errorMsg: Program error message.
      */
     void renderDukeErrorMsg(String errorMsg);
 
     /**
-     * Display message for unknown exception, hide the actual root cause to user.
+     * Displays message for unknown exception, hide the actual root cause to user.
      *
      * @param throwable: Exception instance.
      */
     void renderUnknownErrorMsg(Throwable throwable);
 
     /**
-     * Display the message & data in response entity.
+     * Displays the message & data in response entity.
      *
      * @param responseDto: Response entity.
      */
     void renderResponse(ResponseDto<?> responseDto);
 
     /**
-     * Get user input in raw string.
+     * Returns user input in raw string.
      *
      * @return Raw input from user .
      */

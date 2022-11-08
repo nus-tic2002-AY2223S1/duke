@@ -18,7 +18,7 @@ public class FileUtil {
     private FileUtil() {}
 
     /**
-     * Read the content from given file instance.
+     * Reads the content from given file instance.
      *
      * @param file: File instance.
      * @return Content from file.
@@ -33,7 +33,7 @@ public class FileUtil {
     }
 
     /**
-     * Write data to the given file instance.
+     * Writes data to the given file instance.
      *
      * @param file: File instance.
      * @param data: Persistent data.

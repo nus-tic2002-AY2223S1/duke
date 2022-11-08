@@ -26,7 +26,7 @@ public class FindForm extends Form {
     }
 
     /**
-     * Get keyword.
+     * Returns keyword.
      *
      * @return Keyword used for search task description.
      */
@@ -35,7 +35,7 @@ public class FindForm extends Form {
     }
 
     /**
-     * Set keyword.
+     * Sets keyword.
      *
      * @param keyword: Keyword used for search task description.
      */

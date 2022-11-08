@@ -15,7 +15,7 @@ public class ExceptionUtil {
     }
 
     /**
-     * Return stack trace as string message.
+     * Returns stack trace as string message.
      *
      * @param ex: throwable instance.
      * @return Formatted stack trace.

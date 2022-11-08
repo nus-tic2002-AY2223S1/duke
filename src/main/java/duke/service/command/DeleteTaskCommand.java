@@ -24,7 +24,7 @@ public class DeleteTaskCommand extends Command {
     private DeleteTaskCommand() {}
 
     /**
-     * Get single instance.
+     * Returns single instance.
      *
      * @return Single instance of command.
      */
@@ -33,7 +33,7 @@ public class DeleteTaskCommand extends Command {
     }
 
     /**
-     * Delete task from list by given index.
+     * Deletes task from list by given index.
      *
      * @param form: Parsed input form from user.
      * @return Response entity after command execute.

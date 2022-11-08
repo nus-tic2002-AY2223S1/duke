@@ -22,7 +22,7 @@ public class AddTaskCommand extends Command {
     private AddTaskCommand() {}
 
     /**
-     * Get single instance.
+     * Returns single instance.
      *
      * @return Single instance of command.
      */
@@ -31,7 +31,7 @@ public class AddTaskCommand extends Command {
     }
 
     /**
-     * Add task by given input form.
+     * Adds task by given input form.
      *
      * @param form: Parsed input form from user.
      * @return Response entity after command execute.

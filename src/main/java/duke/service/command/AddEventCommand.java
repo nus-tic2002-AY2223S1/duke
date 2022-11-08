@@ -23,7 +23,7 @@ public class AddEventCommand extends Command {
     private AddEventCommand() {}
 
     /**
-     * Get single instance.
+     * Returns single instance.
      *
      * @return Single instance of command.
      */
@@ -32,7 +32,7 @@ public class AddEventCommand extends Command {
     }
 
     /**
-     * Add event by given user input.
+     * Adds event by given user input.
      *
      * @param form: Parsed input form from user.
      * @return Response entity after command execute.

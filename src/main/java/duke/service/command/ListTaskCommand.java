@@ -23,7 +23,7 @@ public class ListTaskCommand extends Command {
     private ListTaskCommand() {}
 
     /**
-     * Get single instance.
+     * Returns single instance.
      *
      * @return Single instance of command.
      */
@@ -32,7 +32,7 @@ public class ListTaskCommand extends Command {
     }
 
     /**
-     * List all tasks which currently stored in the program.
+     * Returns a list tasks which currently stored in the program.
      *
      * @param form: Parsed input form from user.
      * @return Response entity after command execute.

@@ -19,7 +19,7 @@ public class EchoCommand extends Command {
     private EchoCommand() {}
 
     /**
-     * Get single instance.
+     * Returns single instance.
      *
      * @return Single instance of command.
      */
@@ -28,7 +28,7 @@ public class EchoCommand extends Command {
     }
 
     /**
-     * Echo input which user enters.
+     * Prints input which user enters.
      *
      * @param form: Parsed input form from user.
      * @return Response entity after command execute.

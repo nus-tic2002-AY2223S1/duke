@@ -27,7 +27,7 @@ public class ShowCommand extends Command {
     private ShowCommand() {}
 
     /**
-     * Get single instance.
+     * Returns single instance.
      *
      * @return Single instance of command.
      */
@@ -36,7 +36,7 @@ public class ShowCommand extends Command {
     }
 
     /**
-     * List all supported commands in the program.
+     * Returns a table list which show the supported commands in the program.
      *
      * @param form: Parsed input form from user.
      * @return Response entity after command execute.

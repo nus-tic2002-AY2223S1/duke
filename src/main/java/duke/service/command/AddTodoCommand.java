@@ -23,7 +23,7 @@ public class AddTodoCommand extends Command {
     private AddTodoCommand() {}
 
     /**
-     * Get single instance.
+     * Returns single instance.
      *
      * @return Single instance of command.
      */
@@ -32,7 +32,7 @@ public class AddTodoCommand extends Command {
     }
 
     /**
-     * Add todo task by given user input.
+     * Adds todo task by given user input.
      *
      * @param form: Parsed input form from user.
      */

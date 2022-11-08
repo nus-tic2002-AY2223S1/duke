@@ -17,7 +17,7 @@ public class DateUtil {
     private DateUtil() {}
 
     /**
-     * Return localDateTime instance based on given input and pattern.
+     * Returns localDateTime instance based on given input and pattern.
      *
      * @param input: Date in text.
      * @param pattern: Date pattern.

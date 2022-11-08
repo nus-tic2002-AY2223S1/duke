@@ -41,7 +41,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Get deadline time.
+     * Returns deadline time.
      *
      * @return Deadline time instance.
      */
@@ -50,7 +50,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Set deadline time.
+     * Sets deadline time.
      *
      * @param by: Target time.
      */
@@ -59,7 +59,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * String representation of class.
+     * Returns string representation of class.
      *
      * @return Readable string representation for instance description.
      */
@@ -69,7 +69,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Custom representation of deadline.
+     * Returns the customised representation of deadline.
      *
      * @return Readable string representation for instance deadline.
      */

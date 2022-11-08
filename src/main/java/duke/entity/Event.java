@@ -48,7 +48,7 @@ public class Event extends Task {
     }
 
     /**
-     * Get start time.
+     * Returns start time.
      *
      * @return Start time instance.
      */
@@ -57,7 +57,7 @@ public class Event extends Task {
     }
 
     /**
-     * Set start time.
+     * Sets start time.
      *
      * @param startTime: Target start time.
      */
@@ -66,7 +66,7 @@ public class Event extends Task {
     }
 
     /**
-     * Get end time.
+     * Returns end time.
      *
      * @return End time instance.
      */
@@ -75,7 +75,7 @@ public class Event extends Task {
     }
 
     /**
-     * Set end time.
+     * Sets end time.
      *
      * @param endTime: Target end time.
      */
@@ -84,7 +84,7 @@ public class Event extends Task {
     }
 
     /**
-     * String representation of class.
+     * Returns string representation of class.
      *
      * @return Readable string representation for instance description.
      */
@@ -94,7 +94,7 @@ public class Event extends Task {
     }
 
     /**
-     * Custom representation of deadline.
+     * Returns customised representation of deadline.
      *
      * @return Readable string representation for instance deadline.
      */
