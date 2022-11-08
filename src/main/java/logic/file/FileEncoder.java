@@ -18,6 +18,8 @@ public class FileEncoder {
      * @param   task
      */
     public static String encodedTask(Task task) {
+        assert (task.getDescription().length() > 0) : "Task is able to write in the file";
+
         StringBuilder encodedChatBuilder = new StringBuilder();
 
         encodedChatBuilder.append(task.getType());
