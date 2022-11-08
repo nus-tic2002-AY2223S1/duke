@@ -11,6 +11,6 @@ public class DateUtil {
      */
     public static String dateTimeConverter(String inputDateTime) {
         LocalDateTime d = LocalDateTime.parse(inputDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        return d.format(DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm"));
+        return d.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm"));
     }
 }

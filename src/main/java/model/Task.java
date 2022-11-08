@@ -63,6 +63,10 @@ public abstract class Task {
         return time;
     }
 
+    public PeriodicalEnum getPeriodical() {
+        return periodical;
+    }
+
     @Override
     public String toString() {
         String periodicalValue = ((periodical != undefined) ? (SPACE + periodical + SPACE + DASH + SPACE) : SPACE);

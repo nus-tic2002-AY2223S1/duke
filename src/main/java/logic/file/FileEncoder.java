@@ -7,6 +7,7 @@ import static common.constants.CommonConstant.INIT_INT_VAL;
 import static common.constants.CommonConstant.ZERO_VAL;
 import static common.enums.CommandTypeEnum.D;
 import static common.enums.CommandTypeEnum.E;
+import static common.enums.PeriodicalEnum.undefined;
 
 public class FileEncoder {
     private FileEncoder() {}
@@ -25,9 +26,14 @@ public class FileEncoder {
         encodedChatBuilder.append(PIPE);
         encodedChatBuilder.append(task.getDescription());
 
-        if(task.getType() == D || task.getType() == E){
+        if (task.getType() == D || task.getType() == E){
             encodedChatBuilder.append(PIPE);
             encodedChatBuilder.append(task.getTime());
+        }
+
+        if (task.getPeriodical() != undefined) {
+            encodedChatBuilder.append(PIPE);
+            encodedChatBuilder.append(task.getPeriodical());
         }
 
         return encodedChatBuilder.toString();
