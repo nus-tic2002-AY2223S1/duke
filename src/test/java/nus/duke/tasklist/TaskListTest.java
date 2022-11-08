@@ -32,5 +32,4 @@ class TaskListTest {
 	void taskProcessorReturnsCorrectTerminationValue() {
 		assertEquals(true, taskList.processTasks("EXIT", "EXIT"));
 	}
-
 }

@@ -7,7 +7,7 @@ public class CommonPrintStatements {
 	public static final String FILE_WRITER_IOEXCEPTION_ERROR_MESSAGE = "[ERROR] IO Exception thrown by FileWriter";
 	public static final String TASK_CANNOT_BE_EMPTY_ERROR_MESSAGE = "[ERROR] Task cannot be empty";
 	public static final String INVALID_COMMAND_ERROR_MESSAGE = "[ERROR] This is not a valid command";
-	public static final String MISSING_KEYWORD_ERROR_MESSAGE = "[ERROR] You are missing a keywords such as //by for deadlines and //at or //on for events";
+	public static final String MISSING_KEYWORD_ERROR_MESSAGE = "[ERROR] You are missing a keywords such as /by for deadlines and /at or /on for events";
 	public static final String MISSING_DATE_ERROR_MESSAGE = "[ERROR] Please key in a date in the correct format i.e. dd/mm/yyyy is correct and dd-mm-yyyy is wrong";
 	public static final String ASK_FOR_USER_INPUT_AFTER_ERROR_MESSAGE_WAS_DISPLAYED_MESSAGE = "Please key in the correct command:";
 	public static final String ASK_FOR_USER_INPUT_MESSAGE = "ʕ •ᴥ•ʔ \uD83D\uDCAC Please key in a command from the command menu:";

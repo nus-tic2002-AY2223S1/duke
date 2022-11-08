@@ -25,7 +25,7 @@ public class Todo extends Task {
 		super(userInput);
 		LocalDate now = LocalDate.now(); // e.g 2022-11-23
 		LocalDate lastDay = now.with(lastDayOfYear()); // 2022-12-31
-		this.localDate = lastDay;
+		this.localDate = lastDay.plusYears(100);
 	}
 
 	/**

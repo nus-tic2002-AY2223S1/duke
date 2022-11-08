@@ -102,6 +102,8 @@ public class TaskList {
 	 */
 	public static void viewTaskList() {
 		for (int i = 0; i < taskList.size(); i++) {
+			int idx = i + 1;
+			System.out.print(idx + ". ");
 			printTask(taskList.get(i));
 		}
 	}
@@ -170,24 +172,19 @@ public class TaskList {
 		ArrayList<Task> reminders = new ArrayList<Task>();
 
 		for (int i = 0; i < taskList.size(); i++) {
-			String taskType = taskList.get(i).getTaskType();
-			if (taskType.equals(LegalTaskEnumerations.D.toString()) || taskType.equals(LegalTaskEnumerations.E.toString())) {
-				Task task = taskList.get(i);
-				reminders.add(task);
-			}
+			Task task = taskList.get(i);
+			reminders.add(task);
 		}
 
 		Collections.sort(reminders, (t1, t2) -> t1.getDate().compareTo(t2.getDate()));
+
+		int idx = 0;
 		for (int i = 0; i < reminders.size(); i++) {
 			Task task = reminders.get(i);
 			if (task.getIsDone().equals("false")) {
+				idx = idx + 1;
+				System.out.print(idx + ".  ");
 				printTask(task);
-			}
-		}
-		for (int i = 0; i < taskList.size(); i++) {
-			String taskType = taskList.get(i).getTaskType();
-			if (taskType.equals(LegalTaskEnumerations.T.toString()) && taskList.get(i).getIsDone().equals("false")){
-				printTask(taskList.get(i));
 			}
 		}
 	}

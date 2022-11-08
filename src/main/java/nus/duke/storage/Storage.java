@@ -85,7 +85,8 @@ public class Storage {
 				}
 				ui.showHardDiskLoadedMessage();
 			} else {
-				createHardDiskFile(filePath);
+				boolean successfullyCreated = createHardDiskFile(filePath);
+				assert(successfullyCreated == true);
 				ui.showHardDiskCreationMessage();
 			}
 		} catch (IOException ioe) {
