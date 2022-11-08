@@ -1,6 +1,7 @@
 package domain.aggregates.tracker;
 
 import application.helpers.CommonHelper;
+import domain.exceptions.DukeArgumentException;
 import domain.exceptions.DukeValidationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,8 @@ class EventTest {
             event = new Event("Task 1 /at Dec 15 2022 14:00");
         } catch (DukeValidationException ex){
             event = null;
+        }catch (DukeArgumentException ex) {
+            event = null;
         }
     }
 
@@ -54,6 +57,8 @@ class EventTest {
             assertEquals(false, newEvent.getIsDone());
         } catch (DukeValidationException ex){
             assert(false);
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 
@@ -72,6 +77,8 @@ class EventTest {
             Event newEvent = new Event(null);
             assertThrows(DukeValidationException.class, (Executable) newEvent);
         } catch (DukeValidationException ex){
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 
@@ -81,6 +88,8 @@ class EventTest {
             Event newEvent = new Event(" /at 2022-11-05");
             assertThrows(DukeValidationException.class, (Executable) newEvent);
         } catch (DukeValidationException ex){
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 
@@ -90,6 +99,8 @@ class EventTest {
             Event newEvent = new Event("Task 2");
             assertThrows(DukeValidationException.class, (Executable) newEvent);
         } catch (DukeValidationException ex){
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 
@@ -107,6 +118,8 @@ class EventTest {
             assertEquals("\t\t0.[E][ ] Task 2 (at: 15 December 2022)\n", outContent.toString());
         } catch (DukeValidationException ex){
             assert(false);
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 
@@ -117,6 +130,8 @@ class EventTest {
             assertEquals(true, event.equals(event2));
         } catch (DukeValidationException ex){
             assert(false);
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 
@@ -127,6 +142,8 @@ class EventTest {
             assertEquals(false, event.equals(event2));
         } catch (DukeValidationException ex){
             assert(false);
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 
@@ -147,6 +164,8 @@ class EventTest {
             assertEquals(false, event.equals(deadline));
         } catch (DukeValidationException ex){
             assert(false);
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 

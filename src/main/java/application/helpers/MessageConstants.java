@@ -1,8 +1,5 @@
 package application.helpers;
 
-/**
- * Messages shown in Duke
- */
 public final class MessageConstants {
     public static final String WELCOME = "\tHello again! How can i help you?";
     public static final String REPEAT = "\tI'm sorry. What do you mean?";
@@ -21,7 +18,7 @@ public final class MessageConstants {
     public static final String TASK_EXISTED_ERROR = "Oops! There is already an existing task.";
     public static final String TASK_VALIDATION_EMPTY_ERROR = "Oops! %s cannot be empty.";
     public static final String TASK_VALIDATION_FORMAT_ERROR = "Oops! Incorrect date format passed. Valid formats: %s";
-    public static final String TASK_VALIDATION_SIZE_ERROR = "Oops! Specified id is out of range.";
+    public static final String TASK_ARGUMENT_SIZE_ERROR = "Oops! Specified id is out of range.";
     public static final String TASK_ARGUMENT_ERROR = "Oops! That doesn't seem right. What do you mean?";
     public static final String TASK_GET_ERROR = "\tOops! There seems to be an issue retrieving previous task(s).";
     public static final String FILE_WRITE_ERROR = "\tOops! There seems to be an issue saving the task. Please try again.";

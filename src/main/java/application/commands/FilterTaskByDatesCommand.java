@@ -3,7 +3,7 @@ package application.commands;
 import application.helpers.CommonHelper;
 import domain.aggregates.storage.Storage;
 import domain.aggregates.tracker.Tracker;
-import domain.exceptions.DukeValidationException;
+import domain.exceptions.DukeArgumentException;
 
 import java.time.LocalDate;
 
@@ -12,10 +12,14 @@ public class FilterTaskByDatesCommand extends Command{
     private LocalDate end = null;
 
     /**
-     * Filter Task By Dates command default constructor
-     * Requires Tracker, Storage and date filter text
+     * Initialises FilterTaskByDatesCommand.
+     *
+     * @param tracker Tracker.
+     * @param storage Storage.
+     * @param input String.
+     * @throws DukeArgumentException if invalid arguments passed.
      */
-    public FilterTaskByDatesCommand(Tracker tracker, Storage storage, String input) throws DukeValidationException {
+    public FilterTaskByDatesCommand(Tracker tracker, Storage storage, String input) throws DukeArgumentException {
         super(tracker, storage);
         String[] splitInput = input.split("to");
         if(splitInput.length > 1) {
@@ -25,7 +29,7 @@ public class FilterTaskByDatesCommand extends Command{
     }
 
     /**
-     * Abstract method that is overwritten
+     * @inheritDoc
      * Handles filter by date range capability
      */
     @Override

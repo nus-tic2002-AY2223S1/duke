@@ -2,6 +2,7 @@ package domain.aggregates.tracker;
 
 import application.helpers.CommonHelper;
 import application.helpers.MessageConstants;
+import domain.exceptions.DukeArgumentException;
 import domain.exceptions.DukeValidationException;
 
 import java.time.LocalDate;
@@ -19,11 +20,13 @@ public class Event extends Task{
     private Pattern datePattern = Pattern.compile(".*([01]?[0-9]|2[0-3])");
 
     /**
-     * Event is a Task
-     * Event default constructor
-     * Conversion from string to LocalDate and LocalDateTime done based on regex expression to find HH:mm
+     * Creates a new Event by formatting given input to Name and Due Date Time.
+     *
+     * @param input String.
+     * @throws DukeArgumentException if invalid date string argument passed.
+     * @throws DukeValidationException if name or start date time properties are empty.
      */
-    public Event(String input) throws DukeValidationException {
+    public Event(String input) throws DukeValidationException, DukeArgumentException {
         super(input);
         String[] formattedInputs = CommonHelper.formatPassedName(input, "at");
         validate(formattedInputs);
@@ -36,7 +39,12 @@ public class Event extends Task{
     }
 
     /**
-     * Default constructor when converting values from .txt file to an Event object
+     * Creates a new Event with explicit values for Id, Name, Is Done and Start Date Time as it is converting values from .txt file.
+     *
+     * @param id Integer.
+     * @param name String.
+     * @param startDateTime String.
+     * @param isDone boolean.
      */
     public Event(int id, String name, String startDateTime, boolean isDone) {
         super(id, name, isDone);
@@ -44,8 +52,8 @@ public class Event extends Task{
     }
 
     /**
-     * Abstract method that is overwritten
-     * To print out task in this format: {id}.[{shortName}] [{isDone}] {name} (by: {startDateTime})
+     * @inheritDoc
+     * Prints out event in this format: {id}.[{shortName}] [{isDone}] {name} (by: {startDateTime}) .
      */
     @Override
     public void printItem(){
@@ -58,8 +66,8 @@ public class Event extends Task{
     }
 
     /**
-     * Abstract method that is overwritten
-     * Compares 2 objects to see if they are equal
+     * @inheritDoc
+     * If object of different type, it will be cast as Event and compare.
      */
     @Override
     public boolean equals(Object obj) {
@@ -71,8 +79,8 @@ public class Event extends Task{
     }
 
     /**
-     * Abstract method that is overwritten
-     * To convert object to string in this format: {id} | {shortName} | {isDone} | {name} | {startDateTime}
+     * @inheritDoc
+     * Convert event to string in this format: {id} | {shortName} | {isDone} | {name} | {startDateTime} .
      */
     @Override
     public String toString(){
@@ -80,8 +88,8 @@ public class Event extends Task{
     }
 
     /**
-     * Abstract method that is overwritten
-     * Retrieves all Events within the start and end datetime range
+     * @inheritDoc
+     * Retrieves all Events where start date time within the start and end datetime range.
      */
     @Override
     public boolean compare(LocalDate start, LocalDate end) {
@@ -92,8 +100,12 @@ public class Event extends Task{
         return (startDateTime.isAfter(start) || startDateTime.isEqual(start)) && (startDateTime.isBefore(end) || startDateTime.isEqual(end));
     }
 
+    /**
+     * @inheritDoc
+     * Postpones Event's start date time to either given or plus 1 by default.
+     */
     @Override
-    public void update(String remark, boolean isSpecified) throws DukeValidationException {
+    public void postpone(String remark, boolean isSpecified) throws DukeValidationException, DukeArgumentException {
         if(!CommonHelper.isEmptyOrNull(remark) && isSpecified) {
             if(dateTimePattern.matcher(remark.trim()).matches()) {
                 this.startDateTime = CommonHelper.convertStringToDateTime(remark.trim());
@@ -107,6 +119,11 @@ public class Event extends Task{
         }
     }
 
+    /**
+     * @inheritDoc
+     * Finds Events where either id or name or start date time matches.
+     * If exception, returns false.
+     */
     @Override
     public boolean find(String keyword) {
         boolean result;
@@ -130,8 +147,10 @@ public class Event extends Task{
     }
 
     /**
-     * Event validation
-     * Name and Start Date Time are mandatory
+     * Validates name and start date time passed from User Interface.
+     *
+     * @param formattedInputs String[].
+     * @throws DukeValidationException if name or start date time are empty.
      */
     private void validate(String[] formattedInputs) throws DukeValidationException{
         if(CommonHelper.isEmptyOrNull(formattedInputs[0])) {
@@ -142,7 +161,7 @@ public class Event extends Task{
     }
 
     /**
-     * Getters
+     * Getter of property.
      */
     public LocalDateTime getStartDateTime(){
         return this.startDateTime;

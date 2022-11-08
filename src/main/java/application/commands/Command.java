@@ -14,8 +14,10 @@ public abstract class Command{
     protected Storage storage;
 
     /**
-     * Command default constructor
-     * Requires Tracker and Storage to be used when executing
+     * Initialises Command.
+     *
+     * @param tracker Tracker.
+     * @param storage Storage.
      */
     public Command(Tracker tracker, Storage storage){
         this.tracker = tracker;
@@ -23,7 +25,13 @@ public abstract class Command{
     }
 
     /**
-     * Abstract method to be overwritten for handling command execution
+     * Executes command.
+     *
+     * @throws DukeExistedException if adds task that already exists.
+     * @throws DukeNotFoundException if modifies a task that does not exist.
+     * @throws DukeValidationException if required task properties are empty.
+     * @throws DukeFileException if unable to save changes to local file.
+     * @throws DukeArgumentException if invalid arguments passed.
      */
     public abstract void execute() throws DukeExistedException, DukeNotFoundException, DukeValidationException, DukeFileException, DukeArgumentException;
 }

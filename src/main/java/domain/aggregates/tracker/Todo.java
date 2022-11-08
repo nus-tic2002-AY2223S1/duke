@@ -14,22 +14,29 @@ public class Todo extends Task {
     protected String shortName = "T";
 
     /**
-     * Todo is a Task
-     * Todo default constructor
+     * Creates a new Todo.
+     *
+     * @param input String.
+     * @throws DukeValidationException if name is empty.
      */
     public Todo(String input) throws DukeValidationException {
         super(input);
     }
+
     /**
-     * Default constructor when converting values from .txt file to a Todo object
+     * Creates a new Todo with explicit values for Id, Name and Is Done as it is converting values from .txt file.
+     *
+     * @param id Integer.
+     * @param name String.
+     * @param isDone boolean.
      */
     public Todo(int id, String name, boolean isDone){
         super(id, name, isDone);
     }
 
     /**
-     * Abstract method that is overwritten
-     * To print out task in this format: {id}.[{shortName}] [{isDone}] {name}
+     * @inheritDoc
+     * Prints out deadline in this format: {id}.[{shortName}] [{isDone}] {name} .
      */
     @Override
     public void printItem(){
@@ -38,8 +45,8 @@ public class Todo extends Task {
     }
 
     /**
-     * Abstract method that is overwritten
-     * Compares 2 objects to see if they are equal
+     * @inheritDoc
+     * If object of different type, it will be cast as Todo and compare .
      */
     @Override
     public boolean equals(Object obj) {
@@ -51,8 +58,8 @@ public class Todo extends Task {
     }
 
     /**
-     * Abstract method that is overwritten
-     * To convert object to string in this format: {id} | {shortName} | {isDone} | {name}
+     * @inheritDoc
+     * Convert deadline to string in this format: {id} | {shortName} | {isDone} | {name} .
      */
     @Override
     public String toString(){
@@ -60,15 +67,32 @@ public class Todo extends Task {
     }
 
     /**
-     * Abstract method that is overwritten
-     * Not applicable for Todo
-     * Hence, return false by default
+     * @inheritDoc
+     * Not applicable for Todo.
+     *
+     * @return false.
      */
     @Override
     public boolean compare(LocalDate start, LocalDate end) {
         return false;
     }
 
+    /**
+     * @inheritDoc
+     * Not applicable for Todo.
+     *
+     * @throws DukeArgumentException if postpone for Todo.
+     */
+    @Override
+    public void postpone(String remarks, boolean isSpecified) throws DukeArgumentException {
+        throw new DukeArgumentException(String.format(MessageConstants.TASK_SNOOZE_NOT_APPLICABLE, this.id));
+    }
+
+    /**
+     * @inheritDoc
+     * Find Todos where either id or name matches.
+     * If exception, returns false.
+     */
     @Override
     public boolean find(String keyword) {
         boolean result = false;
@@ -80,8 +104,4 @@ public class Todo extends Task {
         return result;
     }
 
-    @Override
-    public void update(String remarks, boolean isSpecified) throws DukeArgumentException {
-        throw new DukeArgumentException(String.format(MessageConstants.TASK_SNOOZE_NOT_APPLICABLE, this.id));
-    }
 }

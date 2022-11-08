@@ -2,8 +2,7 @@ package domain.aggregates.tracker;
 
 import application.helpers.CommonHelper;
 import application.helpers.MessageConstants;
-import domain.exceptions.DukeArgumentException;
-import domain.exceptions.DukeValidationException;
+import domain.exceptions.*;
 
 import java.time.LocalDate;
 
@@ -16,9 +15,10 @@ public abstract class Task {
     protected boolean isDone;
 
     /**
-     * Task default constructor.
-     * Name is mandatory
-     * Is Done is set to false by default
+     * Creates a new Task with Name and Is Done flag to false.
+     *
+     * @param input String.
+     * @throws DukeValidationException if name or start date time properties are empty.
      */
     public Task(String input) throws DukeValidationException {
         if(CommonHelper.isEmptyOrNull(input)) {
@@ -29,7 +29,11 @@ public abstract class Task {
     }
 
     /**
-     * Task constructor when converting values from .txt file to a Task object
+     * Creates a new Task with explicit values for Id, Name and Is Done as it is converting values from .txt file.
+     *
+     * @param id Integer.
+     * @param name String.
+     * @param isDone boolean.
      */
     public Task(int id, String name, boolean isDone){
         this.id = id;
@@ -38,31 +42,54 @@ public abstract class Task {
     }
 
     /**
-     * Abstract method to be overwritten for printing Task
+     * Prints task in a friendly format.
      */
     public abstract void printItem();
 
     /**
-     * Abstract method to be overwritten for checking if 2 objects are equal
+     * Checks if 2 tasks are equal.
+     *
+     * @param task Object.
+     * @return boolean.
      */
-    public abstract boolean equals(Object t);
+    public abstract boolean equals(Object task);
 
     /**
-     * Abstract method to be overwritten for converting object to string
+     * Converts task object to string.
+     *
+     * @return String.
      */
     public abstract String toString();
 
     /**
-     * Abstract method to be overwritten for getting Task within the date range
+     * Checks if task is within the date range.
+     *
+     * @param start LocalDate.
+     * @param end LocalDate.
+     * @return boolean.
      */
     public abstract boolean compare(LocalDate start, LocalDate end);
 
-    public abstract void update(String remarks, boolean isSpecified) throws DukeValidationException, DukeArgumentException;
+    /**
+     * Postpones task based on passed date or by default by plus 1 day.
+     *
+     * @param date String.
+     * @param isDateSpecified boolean.
+     * @throws DukeValidationException if remarks is empty.
+     * @throws DukeArgumentException if invalid arguments passed.
+     */
+    public abstract void postpone(String date, boolean isDateSpecified) throws DukeValidationException, DukeArgumentException;
 
+    /**
+     * Finds Task that contains keyword.
+     *
+     * @param keyword String.
+     * @return boolean.
+     */
     public abstract boolean find(String keyword);
 
     /**
-     * Getters & Setters for properties
+     * Getters & Setters for properties.
      */
     public int getId() { return this.id; }
     public void setId(int i) { this.id = i; }

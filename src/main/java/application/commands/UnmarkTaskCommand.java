@@ -2,6 +2,7 @@ package application.commands;
 
 import domain.aggregates.storage.Storage;
 import domain.aggregates.tracker.Tracker;
+import domain.exceptions.DukeArgumentException;
 import domain.exceptions.DukeFileException;
 import domain.exceptions.DukeNotFoundException;
 import domain.exceptions.DukeValidationException;
@@ -10,8 +11,11 @@ public class UnmarkTaskCommand extends Command{
     private final int id;
 
     /**
-     * Unmark Task command default constructor
-     * Requires Tracker, Storage and ID
+     * Initialises UnmarkTaskCommand.
+     *
+     * @param tracker Tracker.
+     * @param storage Storage.
+     * @param id Integer.
      */
     public UnmarkTaskCommand(Tracker tracker, Storage storage, int id) {
         super(tracker, storage);
@@ -19,12 +23,12 @@ public class UnmarkTaskCommand extends Command{
     }
 
     /**
-     * Abstract method that is overwritten
-     * Handles unmark capability - Mark task in Tracker as not done
+     * @inheritDoc
+     * Handles unmark task as done and Updates to local data file.
      */
     @Override
-    public void execute() throws DukeFileException, DukeValidationException, DukeNotFoundException {
-        if(this.tracker.hasItemUpdated(id, false)) {
+    public void execute() throws DukeFileException, DukeArgumentException, DukeNotFoundException {
+        if(this.tracker.hasItemStateUpdated(id, false)) {
             this.storage.override(tracker.tasks);
         }
     }

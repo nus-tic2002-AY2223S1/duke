@@ -16,10 +16,8 @@ public class Ui {
     private Storage storage;
     private RequestController controller;
 
-
     /**
-     * Default constructor for UI
-     * Initialises Storage, Tracker and Request Controller
+     * Initialises User Interface with new Storage, Tracker and Request Controller.
      */
     public Ui(){
         try {
@@ -32,8 +30,7 @@ public class Ui {
     }
 
     /**
-     * Initialise UI
-     * Call intro and conversation methods
+     * Calls introduction and starts conversation.
      */
     public void initialise(){
         introduction();
@@ -41,7 +38,7 @@ public class Ui {
     }
 
     /**
-     * Display Curio Logo and welcome message
+     * Displays Curio Logo and welcome message.
      */
     private void introduction(){
         String logo =
@@ -55,11 +52,8 @@ public class Ui {
     }
 
     /**
-     * Initialise scanner
-     * Format input - removing keyword
-     * Redirect to the respective request controller for each keyword with the expected input format
-     * If throws DukeException, continue as it has been handled by the respective methods
-     * Else, print Exception trace with a general error message
+     * Initialises scanner and processes each request by converting to an ActionKeyword enum. For each keyword, the respective controller request is called with the expected parameters.
+     * If throws DukeException, continue as error handling is already done. Else, prints Exception trace with a general error message.
      */
     private void conversation(){
         String input = "";
@@ -83,20 +77,20 @@ public class Ui {
                         controller.deadline(input.replace(ActionKeyword.DEADLINE.label,"").trim());
                         break;
                     case MARK:
-                        controller.mark(CommonHelper.getNumber(input.replaceAll("[^0-9]", "").trim()));
+                        controller.mark(CommonHelper.getNumber(input.replaceAll("[^-?[0-9]]", "").trim()));
                         break;
                     case UNMARK:
-                        controller.unmark(CommonHelper.getNumber(input.replaceAll("[^0-9]", "").trim()));
+                        controller.unmark(CommonHelper.getNumber(input.replaceAll("[^-?[0-9]]", "").trim()));
                         break;
                     case DELETE:
-                        controller.delete(CommonHelper.getNumber(input.replaceAll("[^0-9]", "").trim()));
+                        controller.delete(CommonHelper.getNumber(input.replaceAll("[^-?[0-9]]", "").trim()));
                         break;
                     case FILTER:
                         controller.filter(input.replace(ActionKeyword.FILTER.label,"").trim());
                         break;
                     case SNOOZE:
                         boolean isDateSpecified = input.contains("/");
-                        int id = CommonHelper.getNumber(input.split("/")[0].replaceAll("[^0-9]", "").trim());
+                        int id = CommonHelper.getNumber(input.split("/")[0].replaceAll("[^-?[0-9]]", "").trim());
                         controller.snooze(id, input.replace(ActionKeyword.SNOOZE.label,"").replace("/", "").replace(String.valueOf(id), "").trim(), isDateSpecified);
                         break;
                     case FIND:

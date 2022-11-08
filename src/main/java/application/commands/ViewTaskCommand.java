@@ -2,26 +2,25 @@ package application.commands;
 
 import domain.aggregates.storage.Storage;
 import domain.aggregates.tracker.Tracker;
-import domain.exceptions.DukeFileException;
-import domain.exceptions.DukeNotFoundException;
-import domain.exceptions.DukeValidationException;
 
 public class ViewTaskCommand extends Command{
 
     /**
-     * Delete Task command default constructor
-     * Requires Tracker and Storage
+     * Initialises ViewTaskCommand.
+     *
+     * @param tracker Tracker.
+     * @param storage Storage.
      */
     public ViewTaskCommand(Tracker tracker, Storage storage) {
         super(tracker, storage);
     }
 
     /**
-     * Abstract method that is overwritten
-     * Handles view capability - Display list of tasks in Tracker
+     * @inheritDoc
+     * Handles display of all tasks
      */
     @Override
-    public void execute() throws DukeFileException, DukeValidationException, DukeNotFoundException {
+    public void execute() {
         this.tracker.showList();
     }
 }

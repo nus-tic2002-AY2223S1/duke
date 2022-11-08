@@ -1,5 +1,6 @@
 package domain.aggregates.tracker;
 
+import domain.exceptions.DukeArgumentException;
 import domain.exceptions.DukeValidationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +28,8 @@ class DeadlineTest {
             deadline = new Deadline("Task 1 /by Dec 15 2022 14:00");
         } catch (DukeValidationException ex) {
             deadline = null;
+        } catch (DukeArgumentException ex) {
+            deadline = null;
         }
     }
 
@@ -53,6 +56,8 @@ class DeadlineTest {
             assertEquals(false, newDeadline.getIsDone());
         } catch (DukeValidationException ex) {
             assert (false);
+        } catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 
@@ -71,6 +76,8 @@ class DeadlineTest {
             Deadline newDeadline = new Deadline(null);
             assertThrows(DukeValidationException.class, (Executable) newDeadline);
         } catch (DukeValidationException ex) {
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 
@@ -80,6 +87,8 @@ class DeadlineTest {
             Deadline newDeadline = new Deadline(" /by 2022-11-05");
             assertThrows(DukeValidationException.class, (Executable) newDeadline);
         } catch (DukeValidationException ex) {
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 
@@ -89,6 +98,8 @@ class DeadlineTest {
             Deadline newDeadline = new Deadline("Task 2");
             assertThrows(DukeValidationException.class, (Executable) newDeadline);
         } catch (DukeValidationException ex) {
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 
@@ -106,6 +117,8 @@ class DeadlineTest {
             assertEquals("\t\t0.[D][ ] Task 2 (by: 15 December 2022)\n", outContent.toString());
         } catch (DukeValidationException ex) {
             assert (false);
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 
@@ -116,6 +129,8 @@ class DeadlineTest {
             assertEquals(true, deadline.equals(deadline2));
         } catch (DukeValidationException ex) {
             assert (false);
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 
@@ -125,6 +140,8 @@ class DeadlineTest {
             Deadline deadline2 = new Deadline("Task 2 /by Dec 23 2022 20:00");
             assertEquals(false, deadline.equals(deadline2));
         } catch (DukeValidationException ex) {
+            assert (false);
+        }catch (DukeArgumentException ex) {
             assert (false);
         }
     }
@@ -145,6 +162,8 @@ class DeadlineTest {
             Event event = new Event("Task 2/at 2022-12-13");
             assertEquals(false, deadline.equals(event));
         } catch (DukeValidationException ex) {
+            assert (false);
+        }catch (DukeArgumentException ex) {
             assert (false);
         }
     }

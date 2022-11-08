@@ -10,8 +10,11 @@ public class AddTaskCommand extends Command{
     private final Task task;
 
     /**
-     * Add Task command default constructor
-     * Requires Tracker, Storage and Task
+     * Initialises AddTaskCommand.
+     *
+     * @param tracker Tracker.
+     * @param storage Storage.
+     * @param task Task.
      */
     public AddTaskCommand(Tracker tracker, Storage storage, Task task) {
         super(tracker, storage);
@@ -19,8 +22,8 @@ public class AddTaskCommand extends Command{
     }
 
     /**
-     * Abstract method that is overwritten
-     * Handles the add capability - Adding to Tracker and Appending to local data file
+     * @inheritDoc
+     * Handles add task and Appends to local data file.
      */
     @Override
     public void execute() throws DukeExistedException, DukeFileException {

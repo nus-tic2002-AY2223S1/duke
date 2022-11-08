@@ -3,8 +3,7 @@ package application.helpers;
 import domain.exceptions.DukeArgumentException;
 
 /**
- * ActionKeyword enum represents the keyword that is entered to redirect according
- * Add label to assist in conversion
+ * Represents the keywords that is entered in the UI to redirect accordingly.
  */
 public enum ActionKeyword {
     TODO("todo"),
@@ -27,7 +26,10 @@ public enum ActionKeyword {
     }
 
     /**
-     * Convert input string to an Enum
+     * Converts string label to an ActionKeyword enum.
+     *
+     * @param label String.
+     * @throws DukeArgumentException if invalid arguments passed.
      */
     public static ActionKeyword get(String label) throws DukeArgumentException {
         try {

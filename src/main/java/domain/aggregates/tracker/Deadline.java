@@ -2,6 +2,7 @@ package domain.aggregates.tracker;
 
 import application.helpers.CommonHelper;
 import application.helpers.MessageConstants;
+import domain.exceptions.DukeArgumentException;
 import domain.exceptions.DukeValidationException;
 
 import java.time.LocalDate;
@@ -19,11 +20,13 @@ public class Deadline extends Task{
     private Pattern datePattern = Pattern.compile(".*([01]?[0-9]|2[0-3])");
 
     /**
-     * Deadline is a Task
-     * Deadline default constructor
-     * Conversion from string to LocalDate and LocalDateTime done based on regex expression to find HH:mm
+     * Creates a new Deadline by formatting given input to Name and Due Date Time.
+     *
+     * @param input String.
+     * @throws DukeArgumentException if invalid date string argument passed.
+     * @throws DukeValidationException if name or due date time properties are empty.
      */
-    public Deadline(String input) throws DukeValidationException {
+    public Deadline(String input) throws DukeArgumentException, DukeValidationException {
         super(input);
         String[] formattedInputs = CommonHelper.formatPassedName(input, "by");
         validate(formattedInputs);
@@ -36,7 +39,12 @@ public class Deadline extends Task{
     }
 
     /**
-     * Default constructor when converting values from .txt file to a Deadline object
+     * Creates a new Deadline with explicit values for Id, Name, Is Done and Due Date Time as it is converting values from .txt file.
+     *
+     * @param id Integer.
+     * @param name String.
+     * @param dueDateTime String.
+     * @param isDone boolean.
      */
     public Deadline(int id, String name, String dueDateTime, boolean isDone) {
         super(id, name, isDone);
@@ -44,8 +52,8 @@ public class Deadline extends Task{
     }
 
     /**
-     * Abstract method that is overwritten
-     * To print out task in this format: {id}.[{shortName}] [{isDone}] {name} (by: {dueDateTime})
+     * @inheritDoc
+     * Prints out deadline in this format: {id}.[{shortName}] [{isDone}] {name} (by: {dueDateTime}).
      */
     @Override
     public void printItem(){
@@ -56,9 +64,10 @@ public class Deadline extends Task{
         String displayText = String.format("\t\t%d.[%s][%s] %s (by: %s)", this.id, this.shortName, this.isDone ? "X":" ", this.name, this.dueDateTime.format(DateTimeFormatter.ofPattern(format)));
         CommonHelper.printMessage(displayText);
     }
+
     /**
-     * Abstract method that is overwritten
-     * Compares 2 objects to see if they are equal
+     * @inheritDoc
+     * If object of different type, it will cast as Deadline and compare.
      */
     @Override
     public boolean equals(Object obj) {
@@ -70,8 +79,8 @@ public class Deadline extends Task{
     }
 
     /**
-     * Abstract method that is overwritten
-     * To convert object to string in this format: {id} | {shortName} | {isDone} | {name} | {dueDateTime}
+     * @inheritDoc
+     * Convert deadline to string in this format: {id} | {shortName} | {isDone} | {name} | {dueDateTime} .
      */
     @Override
     public String toString(){
@@ -79,8 +88,8 @@ public class Deadline extends Task{
     }
 
     /**
-     * Abstract method that is overwritten
-     * Retrieves all Deadlines within the start and end datetime range
+     * @inheritDoc
+     * Retrieves all Deadlines where due date time within the start and end datetime range.
      */
     @Override
     public boolean compare(LocalDate start, LocalDate end) {
@@ -91,8 +100,12 @@ public class Deadline extends Task{
         return (dueDateTime.isAfter(start) || dueDateTime.isEqual(start)) && (dueDateTime.isBefore(end) || dueDateTime.isEqual(end));
     }
 
+    /**
+     * @inheritDoc
+     * Postpones Deadline's due date time to either given or plus 1 by default.
+     */
     @Override
-    public void update(String remark, boolean isSpecified) throws DukeValidationException {
+    public void postpone(String remark, boolean isSpecified) throws DukeValidationException, DukeArgumentException {
         if(!CommonHelper.isEmptyOrNull(remark) && isSpecified) {
             if(dateTimePattern.matcher(remark.trim()).matches()) {
                 this.dueDateTime = CommonHelper.convertStringToDateTime(remark.trim());
@@ -106,6 +119,11 @@ public class Deadline extends Task{
         }
     }
 
+    /**
+     * @inheritDoc
+     * Find Deadlines where either id or name or due date time matches.
+     * If exception, returns false.
+     */
     @Override
     public boolean find(String keyword) {
         boolean result;
@@ -129,8 +147,10 @@ public class Deadline extends Task{
     }
 
     /**
-     * Deadline validation
-     * Name and Due Date Time are mandatory
+     * Validates name and due date time passed from User Interface.
+     *
+     * @param formattedInputs String[].
+     * @throws DukeValidationException if name or due date time are empty.
      */
     private void validate(String[] formattedInputs) throws DukeValidationException{
         if(CommonHelper.isEmptyOrNull(formattedInputs[0])) {
@@ -141,7 +161,7 @@ public class Deadline extends Task{
     }
 
     /**
-     * Getters
+     * Getter of property
      */
     public LocalDateTime getDueDateTime(){
         return this.dueDateTime;

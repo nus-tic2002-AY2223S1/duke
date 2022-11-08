@@ -13,6 +13,15 @@ public class SnoozeTaskCommand extends Command{
     private String newDateTime;
     private boolean isNewDateTimeSpecified;
 
+    /**
+     * Initialises SnoozeTaskCommand.
+     *
+     * @param tracker Tracker.
+     * @param storage Storage.
+     * @param id Integer.
+     * @param newDateTime String.
+     * @param isNewDateTimeSpecified boolean.
+     */
     public SnoozeTaskCommand(Tracker tracker, Storage storage, int id, String newDateTime, boolean isNewDateTimeSpecified){
         super(tracker, storage);
         this.id = id;
@@ -20,6 +29,11 @@ public class SnoozeTaskCommand extends Command{
         this.isNewDateTimeSpecified = isNewDateTimeSpecified;
     }
 
+    /**
+     * @inheritDoc
+     * Handles snooze task to given date else plus 1 day to task's current date time.
+     * Applicable for Event and Deadline task type only.
+     */
     @Override
     public void execute() throws DukeFileException, DukeValidationException, DukeNotFoundException, DukeArgumentException {
         if(this.tracker.hasItemSnoozed(id, newDateTime, isNewDateTimeSpecified)) {

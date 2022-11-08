@@ -28,8 +28,10 @@ public class RequestController {
     private Storage storage;
 
     /**
-     * Request controller default constructor
-     * Requires Tracker and Storage
+     * Initialises RequestController which is bridge between UI and Domain communication.
+     *
+     * @param tracker Tracker.
+     * @param storage Storage.
      */
     public RequestController(Tracker tracker, Storage storage) {
         this.tracker = tracker;
@@ -37,146 +39,152 @@ public class RequestController {
     }
 
     /**
-     * List keyword behaviour: Calls View Task Command Handler
+     * Calls ViewTaskCommand to display tasks.
      */
-    public void list() throws DukeValidationException, DukeFileException, DukeNotFoundException {
-        viewTaskCommandHandler();
-    }
-
-    /**
-     * Todo keyword behaviour: Calls Add Task Command Handler with new Task - Todo
-     */
-    public void todo(String input) throws DukeValidationException, DukeExistedException, DukeFileException {
-        addTaskCommandHandler(new Todo(input));
-    }
-
-    /**
-     * Event keyword behaviour: Calls Add Task Command Handler with new Task - Event
-     */
-    public void event(String input) throws DukeValidationException, DukeExistedException, DukeFileException {
-        addTaskCommandHandler(new Event(input));
-    }
-
-    /**
-     * Deadline keyword behaviour: Calls Add Task Command Handler with new Task - Deadline
-     */
-    public void deadline(String input) throws DukeValidationException, DukeExistedException, DukeFileException {
-        addTaskCommandHandler(new Deadline(input));
-    }
-
-    /**
-     * Mark keyword behaviour: Calls Mark Task Command Handler with is done flag
-     */
-    public void mark(int input) throws DukeValidationException, DukeFileException, DukeNotFoundException {
-        markTaskCommandHandler(input);
-    }
-
-    /**
-     * Unmark keyword behaviour: Calls Unmark Task Command Handler with inverse is done flag
-     */
-    public void unmark(int input) throws DukeValidationException, DukeFileException, DukeNotFoundException {
-        unmarkTaskCommandHandler(input);
-    }
-
-    /**
-     * Delete keyword behaviour: Calls Delete Task Command Handler with Task ID
-     */
-    public void delete(int input) throws DukeValidationException, DukeFileException, DukeNotFoundException {
-        deleteTaskCommandHandler(input);
-    }
-
-    /**
-     * Filter keyword behaviour: Calls Filter Task By Dates Command Handler with date range in string
-     */
-    public void filter(String date) throws DukeValidationException {
-        filterTaskByDatesCommandHandler(date);
-    }
-
-    /**
-     * Snooze keyword behaviour: Calls Snooze Task with new date in string
-     */
-    public void snooze(int id, String date, boolean isDateSpecified) throws DukeValidationException, DukeNotFoundException, DukeFileException, DukeArgumentException {
-        snoozeTaskCommandHandler(id, date, isDateSpecified);
-    }
-
-    public void find(String keyword) throws DukeValidationException {
-        findTaskCommandHandler(keyword);
-    }
-
-    /**
-     * Hello keyword behaviour: Display Welcome message
-     */
-    public void hello(){
-
-        CommonHelper.printMessage(MessageConstants.WELCOME);
-    }
-
-    /**
-     * Bye keyword behaviour: Display End message
-     */
-    public void bye(){
-
-        CommonHelper.printMessage(MessageConstants.END);
-    }
-
-    /**
-     * Executes View Task Command Handler
-     */
-    private void viewTaskCommandHandler() throws DukeFileException, DukeValidationException, DukeNotFoundException {
+    public void list() {
         ViewTaskCommand command = new ViewTaskCommand(tracker, storage);
         command.execute();
     }
 
     /**
-     * Executes Add Task Command Handler
+     * Creates new Todo based on the input specified and calls addTaskCommand private method.
+     *
+     * @param input String.
+     * @throws DukeExistedException if adds task that already exists.
+     * @throws DukeValidationException if required task properties are empty.
+     * @throws DukeFileException if unable to save changes to local file.
      */
-    private void addTaskCommandHandler(Task task) throws DukeExistedException, DukeFileException {
-        AddTaskCommand command = new AddTaskCommand(tracker, storage, task);
-        command.execute();
+    public void todo(String input) throws DukeValidationException, DukeExistedException, DukeFileException {
+        addTaskCommand(new Todo(input));
     }
 
     /**
-     * Executes Mark Task Command Handler
+     * Creates new Event based on the input specified and calls addTaskCommand private method.
+     *
+     * @param input String.
+     * @throws DukeExistedException if adds task that already exists.
+     * @throws DukeValidationException if required task properties are empty.
+     * @throws DukeFileException if unable to save changes to local file.
+     * @throws DukeArgumentException if invalid arguments passed.
      */
-    private void markTaskCommandHandler(int id) throws DukeValidationException, DukeNotFoundException, DukeFileException {
+    public void event(String input) throws DukeValidationException, DukeExistedException, DukeFileException, DukeArgumentException {
+        addTaskCommand(new Event(input));
+    }
+
+    /**
+     * Creates new Deadline based on the input specified and calls addTaskCommand private method.
+     *
+     * @param input String.
+     * @throws DukeExistedException if adds task that already exists.
+     * @throws DukeValidationException if required task properties are empty.
+     * @throws DukeFileException if unable to save changes to local file.
+     * @throws DukeArgumentException if invalid arguments passed.
+     */
+    public void deadline(String input) throws DukeValidationException, DukeExistedException, DukeFileException, DukeArgumentException {
+        addTaskCommand(new Deadline(input));
+    }
+
+    /**
+     * Calls Mark Task Command to set done to true.
+     *
+     * @param id Integer.
+     * @throws DukeNotFoundException if modifies a task that does not exist.
+     * @throws DukeArgumentException if invalid arguments passed.
+     * @throws DukeFileException if unable to save changes to local file.
+     */
+    public void mark(int id) throws DukeArgumentException, DukeFileException, DukeNotFoundException {
         MarkTaskCommand command = new MarkTaskCommand(tracker, storage, id);
         command.execute();
     }
 
     /**
-     * Executes Unmark Task Command Handler
+     * Calls Unmark Task Command to set done to false.
+     *
+     * @param id Integer.
+     * @throws DukeNotFoundException if modifies a task that does not exist.
+     * @throws DukeArgumentException if invalid arguments passed.
+     * @throws DukeFileException if unable to save changes to local file.
      */
-    private void unmarkTaskCommandHandler(int id) throws DukeValidationException, DukeNotFoundException, DukeFileException {
+    public void unmark(int id) throws DukeArgumentException, DukeFileException, DukeNotFoundException {
         UnmarkTaskCommand command = new UnmarkTaskCommand(tracker, storage, id);
         command.execute();
     }
 
     /**
-     * Executes Delete Task Command Handler
+     * Calls Delete Task Command to delete task.
+     *
+     * @param id Integer.
+     * @throws DukeNotFoundException if modifies a task that does not exist.
+     * @throws DukeArgumentException if invalid arguments passed.
+     * @throws DukeFileException if unable to save changes to local file.
      */
-    private void deleteTaskCommandHandler(int id) throws DukeValidationException, DukeNotFoundException, DukeFileException {
+    public void delete(int id) throws DukeArgumentException, DukeFileException, DukeNotFoundException {
         DeleteTaskCommand command = new DeleteTaskCommand(tracker, storage, id);
         command.execute();
     }
 
     /**
-     * Executes Filter Task By Dates Command Handler
+     * Calls Filter Task Command with the date range that is passed.
+     *
+     * @param date String.
+     * @throws DukeArgumentException if invalid arguments passed.
      */
-    private void filterTaskByDatesCommandHandler(String date) throws DukeValidationException {
+    public void filter(String date) throws DukeArgumentException {
         FilterTaskByDatesCommand command = new FilterTaskByDatesCommand(tracker, storage, date);
         command.execute();
     }
 
     /**
-     * Executes Snooze Task Command Handler
+     * Calls Snooze Task Command with new date.
+     * If date is specified, it will be passed as a property to assist in validation and condition to apply default snooze.
+     *
+     * @param id Integer.
+     * @param date String.
+     * @param isDateSpecified Boolean.
+     * @throws DukeNotFoundException if modifies a task that does not exist.
+     * @throws DukeValidationException if date is empty.
+     * @throws DukeFileException if unable to save changes to local file.
+     * @throws DukeArgumentException if invalid arguments passed.
      */
-    private void snoozeTaskCommandHandler(int id, String date, boolean isDateSpecified) throws DukeValidationException, DukeNotFoundException, DukeFileException, DukeArgumentException {
+    public void snooze(int id, String date, boolean isDateSpecified) throws DukeValidationException, DukeNotFoundException, DukeFileException, DukeArgumentException {
         SnoozeTaskCommand command = new SnoozeTaskCommand(tracker, storage, id, date, isDateSpecified);
         command.execute();
     }
 
-    private void findTaskCommandHandler(String keyword) throws DukeValidationException {
+    /**
+     * Calls Find Task Command with keyword.
+     * Checks if keyword matches either the name or date or dateTime.
+     *
+     * @param keyword String.
+     * @throws DukeValidationException if keyword is empty.
+     */
+    public void find(String keyword) throws DukeValidationException {
         FindTaskCommand command = new FindTaskCommand(tracker, storage, keyword);
+        command.execute();
+    }
+
+    /**
+     * Displays welcome message.
+     */
+    public void hello(){
+        CommonHelper.printMessage(MessageConstants.WELCOME);
+    }
+
+    /**
+     * Displays goodbye message.
+     */
+    public void bye(){
+        CommonHelper.printMessage(MessageConstants.END);
+    }
+
+    /**
+     * Calls AddTaskCommand to add new task.
+     *
+     * @throws DukeExistedException if adds task that already exists.
+     * @throws DukeFileException if unable to save changes to local file.
+     */
+    private void addTaskCommand(Task task) throws DukeExistedException, DukeFileException {
+        AddTaskCommand command = new AddTaskCommand(tracker, storage, task);
         command.execute();
     }
 }

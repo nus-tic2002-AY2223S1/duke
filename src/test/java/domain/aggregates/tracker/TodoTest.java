@@ -1,5 +1,6 @@
 package domain.aggregates.tracker;
 
+import domain.exceptions.DukeArgumentException;
 import domain.exceptions.DukeValidationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -90,6 +91,8 @@ public class TodoTest {
             assertEquals(false, todo.equals(event));
         } catch (DukeValidationException ex){
             assert(false);
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 
@@ -100,6 +103,8 @@ public class TodoTest {
             assertEquals(false, todo.equals(deadline));
         } catch (DukeValidationException ex){
             assert(false);
+        }catch (DukeArgumentException ex) {
+            assert (false);
         }
     }
 

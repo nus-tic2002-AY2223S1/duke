@@ -8,8 +8,11 @@ public class FindTaskCommand extends Command{
     private String keyword = null;
 
     /**
-     * Filter Task By Dates command default constructor
-     * Requires Tracker, Storage and date filter text
+     * Initialises FindTaskCommand.
+     *
+     * @param tracker Tracker.
+     * @param storage Storage.
+     * @param keyword String.
      */
     public FindTaskCommand(Tracker tracker, Storage storage, String keyword){
         super(tracker, storage);
@@ -17,8 +20,8 @@ public class FindTaskCommand extends Command{
     }
 
     /**
-     * Abstract method that is overwritten
-     * Handles filter by date range capability
+     * @inheritDoc
+     * Handles filter by date range capability.
      */
     @Override
     public void execute() throws DukeValidationException {
