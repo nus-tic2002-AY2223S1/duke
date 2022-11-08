@@ -5,5 +5,5 @@ package nus.duke.exceptions;
  * Commands not listed in the command menu are invalid or illegal commands.
  */
 public class InvalidCommandException extends Exception {
-	// no other code needed
+    // no other code needed
 }

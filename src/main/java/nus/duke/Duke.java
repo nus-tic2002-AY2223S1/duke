@@ -22,54 +22,54 @@ import static nus.duke.frontend.CommonPrintStatements.*;
  * @since Oct 2022
  */
 public class Duke {
-	private Storage storage;
-	private TaskList tasks;
-	private Ui ui;
-	private Parser parser;
-	Scanner s;
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+    private Parser parser;
+    Scanner s;
 
-	public Duke(String filePath) {
-		boolean isEmpty = filePath.isEmpty();
-		assert (isEmpty == false);
-		try {
-			storage = new Storage(filePath);
-			ArrayList<Task> hardDiskTaskList = storage.load();
-			tasks = new TaskList(hardDiskTaskList);
-		} catch (IOException ioe) {
-			System.out.println(FILE_WRITER_IOEXCEPTION_ERROR_MESSAGE);
-		}
-	}
+    public Duke(String filePath) {
+        boolean isEmpty = filePath.isEmpty();
+        assert (isEmpty == false);
+        try {
+            storage = new Storage(filePath);
+            ArrayList<Task> hardDiskTaskList = storage.load();
+            tasks = new TaskList(hardDiskTaskList);
+        } catch (IOException ioe) {
+            System.out.println(FILE_WRITER_IOEXCEPTION_ERROR_MESSAGE);
+        }
+    }
 
-	/**
-	 * Starts the Duke program and keeps the program running until it is terminated.
-	 *
-	 * @return nothing. This is a void function.
-	 */
-	public void run() {
-		ui = new Ui();
-		parser = new Parser();
-		s = new Scanner(System.in);
-		ui.startProgram();
-		boolean terminateProgram = false;
-		boolean noInputErrors = false;
-		String command;
-		do {
-			String userInput = ui.getUserInput(s);
-			noInputErrors = parser.parse(userInput);
-			if (noInputErrors) {
-				command = parser.getCommand(userInput);
-				terminateProgram = tasks.processTasks(command, userInput);
-			}
-		} while (terminateProgram != true);
-		storage.saveTasks(tasks);
-		ui.exit();
-	}
+    /**
+     * Starts the Duke program and keeps the program running until it is terminated.
+     *
+     * @return nothing. This is a void function.
+     */
+    public void run() {
+        ui = new Ui();
+        parser = new Parser();
+        s = new Scanner(System.in);
+        ui.startProgram();
+        boolean terminateProgram = false;
+        boolean noInputErrors = false;
+        String command;
+        do {
+            String userInput = ui.getUserInput(s);
+            noInputErrors = parser.parse(userInput);
+            if (noInputErrors) {
+                command = parser.getCommand(userInput);
+                terminateProgram = tasks.processTasks(command, userInput);
+            }
+        } while (terminateProgram != true);
+        storage.saveTasks(tasks);
+        ui.exit();
+    }
 
-	/**
-	 * Entry point to the Duke program.
-	 * The filepath was intentionally fixed for ease of use i.e. just run the program.
-	 */
-	public static void main(String[] args) {
-		new Duke("/Users/rebecca/Desktop/Duke/data/DukeTasks.txt").run();
-	}
+    /**
+     * Entry point to the Duke program.
+     * The filepath was intentionally fixed for ease of use i.e. just run the program.
+     */
+    public static void main(String[] args) {
+        new Duke("/Users/rebecca/Desktop/Duke/data/DukeTasks.txt").run();
+    }
 }

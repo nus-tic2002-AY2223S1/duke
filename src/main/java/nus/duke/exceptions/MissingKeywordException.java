@@ -5,5 +5,5 @@ package nus.duke.exceptions;
  * For example, deadlines must include "/by" as a date needs to be supplied.
  */
 public class MissingKeywordException extends Exception {
-	// no other code needed
+    // no other code needed
 }
