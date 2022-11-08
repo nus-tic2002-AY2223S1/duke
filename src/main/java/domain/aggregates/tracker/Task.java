@@ -20,10 +20,11 @@ public abstract class Task {
      * Name is mandatory
      * Is Done is set to false by default
      */
-    public Task(String n) throws DukeValidationException {
-        if(CommonHelper.isEmptyOrNull(n))
+    public Task(String input) throws DukeValidationException {
+        if(CommonHelper.isEmptyOrNull(input)) {
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Description"));
-        this.name = n.trim();
+        }
+        this.name = input.trim();
         this.isDone = false;
     }
 

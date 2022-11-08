@@ -21,7 +21,7 @@ public class StorageRepository implements IStorageRepository{
      * If file does not exist, initialised file will be saved and adds a header
      * If any error occurred when saving, DukeFileException is thrown
      */
-    public File init() throws DukeFileException {
+    public File initialise() throws DukeFileException {
         File file = new File(StorageConstants.FILE_PATH);
         file.setWritable(true);
         file.setReadable(true);

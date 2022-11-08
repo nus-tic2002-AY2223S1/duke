@@ -15,12 +15,13 @@ public class FilterTaskByDatesCommand extends Command{
      * Filter Task By Dates command default constructor
      * Requires Tracker, Storage and date filter text
      */
-    public FilterTaskByDatesCommand(Tracker tracker, Storage storage, String s) throws DukeValidationException {
+    public FilterTaskByDatesCommand(Tracker tracker, Storage storage, String input) throws DukeValidationException {
         super(tracker, storage);
-        String[] f = s.split("to");
-        if(f.length > 1)
-            end = CommonHelper.convertStringToDate(f[1].trim()).toLocalDate();
-        start = CommonHelper.convertStringToDate(f[0].trim()).toLocalDate();
+        String[] splitInput = input.split("to");
+        if(splitInput.length > 1) {
+            end = CommonHelper.convertStringToDate(splitInput[1].trim()).toLocalDate();
+        }
+        start = CommonHelper.convertStringToDate(splitInput[0].trim()).toLocalDate();
     }
 
     /**

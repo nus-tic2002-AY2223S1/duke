@@ -24,7 +24,8 @@ public class DeleteTaskCommand extends Command{
      */
     @Override
     public void execute() throws DukeFileException, DukeValidationException, DukeNotFoundException {
-        if(this.tracker.deleteItem(id))
+        if(this.tracker.hasItemDeleted(id)) {
             this.storage.override(tracker.tasks);
+        }
     }
 }

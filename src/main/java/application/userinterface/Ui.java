@@ -1,12 +1,12 @@
-package application.userInterface;
+package application.userinterface;
 
 import application.controllers.RequestController;
 import application.helpers.ActionKeyword;
 import application.helpers.CommonHelper;
 import application.helpers.MessageConstants;
 import domain.aggregates.storage.Storage;
-import domain.aggregates.tracker.*;
-import domain.exceptions.*;
+import domain.aggregates.tracker.Tracker;
+import domain.exceptions.DukeException;
 
 import java.util.Scanner;
 
@@ -35,15 +35,15 @@ public class Ui {
      * Initialise UI
      * Call intro and conversation methods
      */
-    public void init(){
-        intro();
+    public void initialise(){
+        introduction();
         conversation();
     }
 
     /**
      * Display Curio Logo and welcome message
      */
-    private void intro(){
+    private void introduction(){
         String logo =
                 " _____             _   \n"
                         + "/  __ \\_   _ _  __|_| ___\n"
@@ -62,45 +62,45 @@ public class Ui {
      * Else, print Exception trace with a general error message
      */
     private void conversation(){
-        String inp = "";
+        String input = "";
         Scanner scanner = new Scanner(System.in);
 
         while(true) {
             try {
-                inp = scanner.nextLine();
-                ActionKeyword action = ActionKeyword.get(inp);
+                input = scanner.nextLine();
+                ActionKeyword action = ActionKeyword.get(input);
                 switch (action){
                     case LIST:
                         controller.list();
                         break;
                     case TODO:
-                        controller.todo(inp.replace(ActionKeyword.TODO.label,"").trim());
+                        controller.todo(input.replace(ActionKeyword.TODO.label,"").trim());
                         break;
                     case EVENT:
-                        controller.event(inp.replace(ActionKeyword.EVENT.label,"").trim());
+                        controller.event(input.replace(ActionKeyword.EVENT.label,"").trim());
                         break;
                     case DEADLINE:
-                        controller.deadline(inp.replace(ActionKeyword.DEADLINE.label,"").trim());
+                        controller.deadline(input.replace(ActionKeyword.DEADLINE.label,"").trim());
                         break;
                     case MARK:
-                        controller.mark(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()));
+                        controller.mark(CommonHelper.getNumber(input.replaceAll("[^0-9]", "").trim()));
                         break;
                     case UNMARK:
-                        controller.unmark(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()));
+                        controller.unmark(CommonHelper.getNumber(input.replaceAll("[^0-9]", "").trim()));
                         break;
                     case DELETE:
-                        controller.delete(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()));
+                        controller.delete(CommonHelper.getNumber(input.replaceAll("[^0-9]", "").trim()));
                         break;
                     case FILTER:
-                        controller.filter(inp.replace(ActionKeyword.FILTER.label,"").trim());
+                        controller.filter(input.replace(ActionKeyword.FILTER.label,"").trim());
                         break;
                     case SNOOZE:
-                        boolean isDateSpecified = inp.contains("/");
-                        int id = CommonHelper.getNumber(inp.split("/")[0].replaceAll("[^0-9]", "").trim());
-                        controller.snooze(id, inp.replace(ActionKeyword.SNOOZE.label,"").replace("/", "").replace(String.valueOf(id), "").trim(), isDateSpecified);
+                        boolean isDateSpecified = input.contains("/");
+                        int id = CommonHelper.getNumber(input.split("/")[0].replaceAll("[^0-9]", "").trim());
+                        controller.snooze(id, input.replace(ActionKeyword.SNOOZE.label,"").replace("/", "").replace(String.valueOf(id), "").trim(), isDateSpecified);
                         break;
                     case FIND:
-                        controller.find(inp.replace(ActionKeyword.FIND.label,"").trim());
+                        controller.find(input.replace(ActionKeyword.FIND.label,"").trim());
                         break;
                     case HI:
                     case HELLO:
@@ -121,5 +121,4 @@ public class Ui {
             }
         }
     }
-
 }

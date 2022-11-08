@@ -2,12 +2,15 @@ package domain.aggregates.tracker;
 
 import application.helpers.CommonHelper;
 import application.helpers.MessageConstants;
-import domain.exceptions.*;
+import domain.exceptions.DukeExistedException;
+import domain.exceptions.DukeFileException;
+import domain.exceptions.DukeNotFoundException;
+import domain.exceptions.DukeValidationException;
+import domain.exceptions.DukeArgumentException;
 import domain.repositories.ITaskRepository;
 import domain.repositories.TaskRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -32,9 +35,9 @@ public class Tracker {
     /**
      * Iterate each task in tasks and call the printItem() method
      */
-    private void printList(ArrayList<Task> t){
-        for(int i = 0; i < t.size(); i++){
-            t.get(i).printItem();
+    private void printList(ArrayList<Task> taskList){
+        for(int i = 0; i < taskList.size(); i++){
+            taskList.get(i).printItem();
         }
     }
 
@@ -60,13 +63,13 @@ public class Tracker {
         }
     }
 
-    private void printResults(ArrayList<Task> t){
-        if(t.size() > 0) {
-            CommonHelper.printMessage(String.format(MessageConstants.FILTER_RESULTS_FOUND, t.size()));
-            printList(t);
-        }
-        else
+    private void printResults(ArrayList<Task> taskList){
+        if(taskList.size() > 0) {
+            CommonHelper.printMessage(String.format(MessageConstants.FILTER_RESULTS_FOUND, taskList.size()));
+            printList(taskList);
+        } else {
             CommonHelper.printMessage(MessageConstants.NO_RESULTS_FOUND);
+        }
     }
 
     /**
@@ -76,7 +79,7 @@ public class Tracker {
      * Add task and print it
      * If encountered an error while adding, print GENERAL_ERROR message
      */
-    public boolean addItem(Task task) throws DukeExistedException {
+    public boolean hasItemAdded(Task task) throws DukeExistedException {
         _taskRepository.validateTask(tasks, task);
         task.setId(_taskRepository.getLastId(tasks) + 1);
         if(tasks.add(task)) {
@@ -95,8 +98,8 @@ public class Tracker {
      * Set the IsDone flag accordingly
      * Display respective message (MARK or UNMARK)
      */
-    public boolean updateItem(int n, boolean isDone) throws DukeValidationException, DukeNotFoundException {
-        Task task = _taskRepository.validateTask(tasks, n);
+    public boolean hasItemUpdated(int id, boolean isDone) throws DukeValidationException, DukeNotFoundException {
+        Task task = _taskRepository.validateTask(tasks, id);
         if(task != null) {
             task.setIsDone(isDone);
             if (isDone) {
@@ -116,8 +119,8 @@ public class Tracker {
      * Remove and print item
      * If encountered an error while removing, print GENERAL_ERROR message
      */
-    public boolean deleteItem(int n) throws DukeValidationException, DukeNotFoundException {
-        Task task = _taskRepository.validateTask(tasks, n);
+    public boolean hasItemDeleted(int id) throws DukeValidationException, DukeNotFoundException {
+        Task task = _taskRepository.validateTask(tasks, id);
         if(task != null) {
             if (tasks.remove(task)) {
                 CommonHelper.printMessage(MessageConstants.DELETE_TASK);
@@ -139,18 +142,19 @@ public class Tracker {
      * If no results, print NO_RESULTS_FOUND message
      */
     public void filterByDates(LocalDate start, LocalDate end){
-        ArrayList<Task> filtered = this.tasks.stream().filter(x -> x.compare(start, end)).collect(Collectors.toCollection(ArrayList<Task>::new));
-        printResults(filtered);
+        ArrayList<Task> results = this.tasks.stream().filter(x -> x.compare(start, end)).collect(Collectors.toCollection(ArrayList<Task>::new));
+        printResults(results);
     }
 
-    public boolean snooze(int n, String newDateTime, boolean isNewDateTimeSpecified) throws DukeValidationException, DukeNotFoundException, DukeArgumentException {
-        Task task = _taskRepository.validateTask(tasks, n);
+    public boolean hasItemSnoozed(int id, String newDateTime, boolean isNewDateTimeSpecified) throws DukeValidationException, DukeArgumentException, DukeNotFoundException {
+        Task task = _taskRepository.validateTask(tasks, id);
         if(task != null){
             task.update(newDateTime, isNewDateTimeSpecified);
-            if(CommonHelper.isEmptyOrNull(newDateTime) && !isNewDateTimeSpecified)
+            if(CommonHelper.isEmptyOrNull(newDateTime) && !isNewDateTimeSpecified) {
                 CommonHelper.printMessage(MessageConstants.DEFAULT_SNOOZE_TASK);
-            else
+            } else {
                 CommonHelper.printMessage(MessageConstants.SNOOZE_TASK);
+            }
             printTask(task);
             return true;
         }
@@ -158,8 +162,9 @@ public class Tracker {
     }
 
     public void find(String keyword) throws DukeValidationException {
-        if(CommonHelper.isEmptyOrNull(keyword))
+        if(CommonHelper.isEmptyOrNull(keyword)) {
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "keyword"));
+        }
         ArrayList<Task> results = this.tasks.stream().filter(x -> x.find(keyword)).collect(Collectors.toCollection(ArrayList<Task>::new));
         printResults(results);
     }

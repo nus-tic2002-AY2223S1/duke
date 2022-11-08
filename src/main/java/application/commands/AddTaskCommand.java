@@ -24,7 +24,8 @@ public class AddTaskCommand extends Command{
      */
     @Override
     public void execute() throws DukeExistedException, DukeFileException {
-        if(this.tracker.addItem(task))
+        if(this.tracker.hasItemAdded(task)) {
             this.storage.saveItem(task.toString());
+        }
     }
 }

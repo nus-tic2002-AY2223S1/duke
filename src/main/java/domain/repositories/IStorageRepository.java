@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public interface IStorageRepository {
-    public File init() throws DukeFileException;
+    public File initialise() throws DukeFileException;
 
     public void write(File file, String row) throws DukeFileException;
 

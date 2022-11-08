@@ -23,15 +23,16 @@ public class Deadline extends Task{
      * Deadline default constructor
      * Conversion from string to LocalDate and LocalDateTime done based on regex expression to find HH:mm
      */
-    public Deadline(String n) throws DukeValidationException {
-        super(n);
-        String[] f = CommonHelper.formatPassedName(n, "by");
-        validate(f);
-        this.name = f[0].trim();
-        if(dateTimePattern.matcher(f[1].trim()).matches())
-            this.dueDateTime = CommonHelper.convertStringToDateTime(f[1].trim());
-        else if(datePattern.matcher(f[1].trim()).matches())
-            this.dueDateTime = CommonHelper.convertStringToDate(f[1].trim());
+    public Deadline(String input) throws DukeValidationException {
+        super(input);
+        String[] formattedInputs = CommonHelper.formatPassedName(input, "by");
+        validate(formattedInputs);
+        this.name = formattedInputs[0].trim();
+        if(dateTimePattern.matcher(formattedInputs[1].trim()).matches()) {
+            this.dueDateTime = CommonHelper.convertStringToDateTime(formattedInputs[1].trim());
+        } else if(datePattern.matcher(formattedInputs[1].trim()).matches()) {
+            this.dueDateTime = CommonHelper.convertStringToDate(formattedInputs[1].trim());
+        }
     }
 
     /**
@@ -49,8 +50,9 @@ public class Deadline extends Task{
     @Override
     public void printItem(){
         String format = "[dd MMMM yyyy, hh:mm a]";
-        if(this.dueDateTime.format(DateTimeFormatter.ofPattern("HH:mm")).equals("00:00"))
+        if(this.dueDateTime.format(DateTimeFormatter.ofPattern("HH:mm")).equals("00:00")) {
             format = "[dd MMMM yyyy]";
+        }
         String displayText = String.format("\t\t%d.[%s][%s] %s (by: %s)", this.id, this.shortName, this.isDone ? "X":" ", this.name, this.dueDateTime.format(DateTimeFormatter.ofPattern(format)));
         CommonHelper.printMessage(displayText);
     }
@@ -60,10 +62,11 @@ public class Deadline extends Task{
      */
     @Override
     public boolean equals(Object obj) {
-        if(this.getClass() != obj.getClass())
+        if(this.getClass() != obj.getClass()) {
             return false;
-        Deadline d = (Deadline) obj;
-        return d.shortName.equals(this.shortName) && d.name.equals(this.name) && d.dueDateTime.equals(this.dueDateTime);
+        }
+        Deadline deadline = (Deadline) obj;
+        return deadline.shortName.equals(this.shortName) && deadline.name.equals(this.name) && deadline.dueDateTime.equals(this.dueDateTime);
     }
 
     /**
@@ -72,7 +75,7 @@ public class Deadline extends Task{
      */
     @Override
     public String toString(){
-        return String.format("%d | %s | %d | %s | %s", this.id, this.shortName, CommonHelper.boolToInt(this.isDone), this.name, this.dueDateTime);
+        return String.format("%d | %s | %d | %s | %s", this.id, this.shortName, CommonHelper.booleanToInteger(this.isDone), this.name, this.dueDateTime);
     }
 
     /**
@@ -81,23 +84,26 @@ public class Deadline extends Task{
      */
     @Override
     public boolean compare(LocalDate start, LocalDate end) {
-        LocalDate _dueDateTime = this.dueDateTime.toLocalDate();
-        if(end == null)
-            return _dueDateTime.isEqual(start);
-        return (_dueDateTime.isAfter(start) || _dueDateTime.isEqual(start)) && (_dueDateTime.isBefore(end) || _dueDateTime.isEqual(end));
+        LocalDate dueDateTime = this.dueDateTime.toLocalDate();
+        if(end == null) {
+            return dueDateTime.isEqual(start);
+        }
+        return (dueDateTime.isAfter(start) || dueDateTime.isEqual(start)) && (dueDateTime.isBefore(end) || dueDateTime.isEqual(end));
     }
 
     @Override
-    public void update(String remarks, boolean isSpecified) throws DukeValidationException {
-        if(!CommonHelper.isEmptyOrNull(remarks) && isSpecified) {
-            if(dateTimePattern.matcher(remarks.trim()).matches())
-                this.dueDateTime = CommonHelper.convertStringToDateTime(remarks.trim());
-            else if(datePattern.matcher(remarks.trim()).matches())
-                this.dueDateTime = CommonHelper.convertStringToDate(remarks.trim());
-        } else if(!isSpecified)
+    public void update(String remark, boolean isSpecified) throws DukeValidationException {
+        if(!CommonHelper.isEmptyOrNull(remark) && isSpecified) {
+            if(dateTimePattern.matcher(remark.trim()).matches()) {
+                this.dueDateTime = CommonHelper.convertStringToDateTime(remark.trim());
+            } else if(datePattern.matcher(remark.trim()).matches()) {
+                this.dueDateTime = CommonHelper.convertStringToDate(remark.trim());
+            }
+        } else if(!isSpecified) {
             this.dueDateTime = this.dueDateTime.plusDays(1);
-        else
+        } else {
             throw new DukeValidationException(MessageConstants.TASK_SNOOZE_DATETIME_NOT_PASSED);
+        }
     }
 
     @Override
@@ -105,17 +111,17 @@ public class Deadline extends Task{
         boolean result;
         try {
             result = this.id == CommonHelper.getNumber(keyword);
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             result = this.name.toLowerCase().contains(keyword.toLowerCase());
             try {
                 if (!result){
-                    if (dateTimePattern.matcher(keyword.trim()).matches())
+                    if (dateTimePattern.matcher(keyword.trim()).matches()) {
                         result = this.dueDateTime.equals(CommonHelper.convertStringToDateTime(keyword.trim()));
-                    else if (datePattern.matcher(keyword.trim()).matches())
+                    } else if (datePattern.matcher(keyword.trim()).matches()) {
                         result = this.dueDateTime.toLocalDate().equals(CommonHelper.convertStringToDate(keyword.trim()).toLocalDate());
+                    }
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 result = false;
             }
         }
@@ -126,11 +132,12 @@ public class Deadline extends Task{
      * Deadline validation
      * Name and Due Date Time are mandatory
      */
-    private void validate(String[] f) throws DukeValidationException{
-        if(CommonHelper.isEmptyOrNull(f[0]))
+    private void validate(String[] formattedInputs) throws DukeValidationException{
+        if(CommonHelper.isEmptyOrNull(formattedInputs[0])) {
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Description"));
-        else if(CommonHelper.isEmptyOrNull(f[1]))
+        } else if(CommonHelper.isEmptyOrNull(formattedInputs[1])) {
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Due Date Time"));
+        }
     }
 
     /**

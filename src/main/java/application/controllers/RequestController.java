@@ -1,13 +1,26 @@
 package application.controllers;
 
-import application.commands.*;
+import application.commands.AddTaskCommand;
+import application.commands.DeleteTaskCommand;
+import application.commands.FilterTaskByDatesCommand;
+import application.commands.FindTaskCommand;
+import application.commands.MarkTaskCommand;
+import application.commands.UnmarkTaskCommand;
+import application.commands.SnoozeTaskCommand;
+import application.commands.ViewTaskCommand;
 import application.helpers.CommonHelper;
 import application.helpers.MessageConstants;
 import domain.aggregates.storage.Storage;
-import domain.aggregates.tracker.*;
-import domain.exceptions.*;
-
-import java.text.ParseException;
+import domain.aggregates.tracker.Tracker;
+import domain.aggregates.tracker.Task;
+import domain.aggregates.tracker.Todo;
+import domain.aggregates.tracker.Event;
+import domain.aggregates.tracker.Deadline;
+import domain.exceptions.DukeExistedException;
+import domain.exceptions.DukeFileException;
+import domain.exceptions.DukeNotFoundException;
+import domain.exceptions.DukeValidationException;
+import domain.exceptions.DukeArgumentException;
 
 public class RequestController {
 
@@ -47,7 +60,7 @@ public class RequestController {
     /**
      * Deadline keyword behaviour: Calls Add Task Command Handler with new Task - Deadline
      */
-    public void deadline(String input) throws DukeValidationException, DukeExistedException, DukeFileException, ParseException {
+    public void deadline(String input) throws DukeValidationException, DukeExistedException, DukeFileException {
         addTaskCommandHandler(new Deadline(input));
     }
 
@@ -94,6 +107,7 @@ public class RequestController {
      * Hello keyword behaviour: Display Welcome message
      */
     public void hello(){
+
         CommonHelper.printMessage(MessageConstants.WELCOME);
     }
 
@@ -101,6 +115,7 @@ public class RequestController {
      * Bye keyword behaviour: Display End message
      */
     public void bye(){
+
         CommonHelper.printMessage(MessageConstants.END);
     }
 

@@ -1,8 +1,6 @@
 package domain.exceptions;
 
 public class DukeException extends Exception {
-    private String code;
-
     /**
      * Base Exception
      * Default constructor with string message
@@ -26,16 +24,16 @@ public class DukeException extends Exception {
      */
     private DukeExceptionCode getExceptionCode(Exception ex){
         String className = ex.getClass().getName().toLowerCase();
-        if(className.contains("notfound"))
+        if(className.contains("notfound")) {
             return DukeExceptionCode.NotFound;
-        else if(className.contains("existed"))
+        } else if(className.contains("existed")) {
             return DukeExceptionCode.Existed;
-        else if(className.contains("validation"))
+        } else if(className.contains("validation")) {
             return DukeExceptionCode.Validation;
-        else if(className.contains("argument"))
+        } else if(className.contains("argument")) {
             return DukeExceptionCode.Argument;
-        else
+        } else {
             return DukeExceptionCode.Other;
-
+        }
     }
 }

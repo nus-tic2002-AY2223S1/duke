@@ -22,14 +22,14 @@ public class Storage {
      */
     public Storage() throws DukeFileException {
         _storageRepository = new StorageRepository();
-        this.file = _storageRepository.init();
+        this.file = _storageRepository.initialise();
     }
 
     /**
      * Add new record to file
      */
-    public void saveItem(String s) throws DukeFileException {
-        _storageRepository.write(file, s);
+    public void saveItem(String row) throws DukeFileException {
+        _storageRepository.write(file, row);
     }
 
     /**

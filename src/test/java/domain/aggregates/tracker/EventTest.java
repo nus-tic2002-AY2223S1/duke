@@ -13,7 +13,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class EventTest {
 
@@ -36,7 +37,7 @@ class EventTest {
     }
 
     @Test
-    void eventInit(){
+    void eventInit_dateTime(){
         assertEquals(0, event.getId());
         assertEquals("Task 1", event.getName());
         assertEquals(LocalDateTime.parse("Dec 15 2022 14:00", DateTimeFormatter.ofPattern("[MMM dd yyyy HH:mm]")), event.getStartDateTime());
@@ -130,7 +131,7 @@ class EventTest {
     }
 
     @Test
-    void testEquals_differentTask_todo_false() {
+    void testEquals_againstTodo_false() {
         try {
             Todo todo = new Todo("Task 2");
             assertEquals(false, event.equals(todo));
@@ -140,7 +141,7 @@ class EventTest {
     }
 
     @Test
-    void testEquals_differentTask_deadline_false() {
+    void testEquals_againstDeadline_false() {
         try {
             Deadline deadline = new Deadline("Task 2/by 2022-12-13");
             assertEquals(false, event.equals(deadline));
@@ -165,12 +166,12 @@ class EventTest {
     }
 
     @Test
-    void compare_startDate_endDate_true() {
+    void compare_startDateEndDate_true() {
         assertEquals(true, event.compare(LocalDate.of(2022, 12, 15),LocalDate.of(2022, 12, 23)));
     }
 
     @Test
-    void compare_startDate_endDate_false() {
+    void compare_startDateEndDate_false() {
         assertEquals(false, event.compare(LocalDate.of(2022, 11, 15),LocalDate.of(2022, 11, 23)));
     }
 

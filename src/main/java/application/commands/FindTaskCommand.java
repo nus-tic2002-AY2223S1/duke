@@ -1,11 +1,8 @@
 package application.commands;
 
-import application.helpers.CommonHelper;
 import domain.aggregates.storage.Storage;
 import domain.aggregates.tracker.Tracker;
 import domain.exceptions.DukeValidationException;
-
-import java.time.LocalDate;
 
 public class FindTaskCommand extends Command{
     private String keyword = null;
@@ -14,9 +11,9 @@ public class FindTaskCommand extends Command{
      * Filter Task By Dates command default constructor
      * Requires Tracker, Storage and date filter text
      */
-    public FindTaskCommand(Tracker tracker, Storage storage, String s){
+    public FindTaskCommand(Tracker tracker, Storage storage, String keyword){
         super(tracker, storage);
-        keyword = s;
+        this.keyword = keyword;
     }
 
     /**

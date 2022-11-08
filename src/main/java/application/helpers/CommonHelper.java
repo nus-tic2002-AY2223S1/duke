@@ -11,20 +11,21 @@ public class CommonHelper {
     /**
      * Split input into Name and Remark and returns an array with 2 string objects
      */
-    public static String[] formatPassedName(String n, String keyword){
+    public static String[] formatPassedName(String input, String keyword){
         String[] formatted = new String[2];
-        Integer idx = n.indexOf("/");
-        if(idx > 0 && idx < n.length()) {
-            formatted[0] = n.substring(0, idx).trim();
-            if(n.contains(keyword)){
-                Integer keywordIdx = n.indexOf(keyword);
-                formatted[1] = n.substring(keywordIdx+2).trim();
+        Integer idx = input.indexOf("/");
+        if(idx > 0 && idx < input.length()) {
+            formatted[0] = input.substring(0, idx).trim();
+            if(input.contains(keyword)){
+                Integer keywordIdx = input.indexOf(keyword);
+                formatted[1] = input.substring(keywordIdx+2).trim();
             } else {
-                formatted[1] = n.substring(idx+1).trim();
+                formatted[1] = input.substring(idx+1).trim();
             }
         }
-        else
-            formatted[0] = n.replace("/", "").trim();
+        else {
+            formatted[0] = input.replace("/", "").trim();
+        }
         return formatted;
     }
 
@@ -48,8 +49,9 @@ public class CommonHelper {
      * Returns integer result
      */
     public static int getNumber(String text) throws DukeValidationException {
-        if(CommonHelper.isEmptyOrNull(text))
+        if(CommonHelper.isEmptyOrNull(text)) {
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Id"));
+        }
         return Integer.parseInt(text);
     }
 
@@ -57,7 +59,7 @@ public class CommonHelper {
      * Convert boolean to an integer
      * Returns integer result
      */
-    public static int boolToInt(boolean b) {
+    public static int booleanToInteger(boolean b) {
         return Boolean.compare(b, false);
     }
 

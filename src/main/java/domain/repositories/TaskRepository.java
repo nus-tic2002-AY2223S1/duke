@@ -2,8 +2,15 @@ package domain.repositories;
 
 import application.helpers.MessageConstants;
 import application.helpers.StorageConstants;
-import domain.aggregates.tracker.*;
-import domain.exceptions.*;
+import domain.aggregates.tracker.Task;
+import domain.aggregates.tracker.Todo;
+import domain.aggregates.tracker.Event;
+import domain.aggregates.tracker.Deadline;
+import domain.aggregates.tracker.TaskType;
+import domain.exceptions.DukeExistedException;
+import domain.exceptions.DukeFileException;
+import domain.exceptions.DukeNotFoundException;
+import domain.exceptions.DukeValidationException;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,8 +26,8 @@ public class TaskRepository implements ITaskRepository {
     /**
      * Find first item by ID
      */
-    public Optional<Task> getItem(ArrayList<Task> tasks, int n){
-        return tasks.stream().filter(x -> x.getId() == n).findFirst();
+    public Optional<Task> getItem(ArrayList<Task> tasks, int id){
+        return tasks.stream().filter(x -> x.getId() == id).findFirst();
     }
 
     /**
@@ -34,8 +41,9 @@ public class TaskRepository implements ITaskRepository {
      * Find last item ID
      */
     public int getLastId(ArrayList<Task> tasks){
-        if(tasks.size() == 0)
+        if(tasks.size() == 0) {
             return 0;
+        }
         return tasks.get(tasks.size() - 1).getId();
     }
 
@@ -44,14 +52,16 @@ public class TaskRepository implements ITaskRepository {
      * Return Task object if successfully validated
      * Else, DukeValidationException thrown with respective error messages
      */
-    public Task validateTask(ArrayList<Task> tasks, int n) throws DukeNotFoundException, DukeValidationException {
-        if(n < 0)
+    public Task validateTask(ArrayList<Task> tasks, int id) throws DukeNotFoundException, DukeValidationException {
+        if(id < 0) {
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Id"));
-        else if(n == 0 || n > getLastId(tasks))
+        } else if(id == 0 || id > getLastId(tasks)) {
             throw new DukeValidationException(MessageConstants.TASK_VALIDATION_SIZE_ERROR);
-        Optional<Task> task = getItem(tasks, n);
-        if(task.isEmpty())
+        }
+        Optional<Task> task = getItem(tasks, id);
+        if(task.isEmpty()) {
             throw new DukeNotFoundException(MessageConstants.TASK_NOT_FOUND_ERROR);
+        }
         return task.get();
     }
 
@@ -60,8 +70,9 @@ public class TaskRepository implements ITaskRepository {
      * If exists, DukeExistedException is thrown
      */
     public void validateTask(ArrayList<Task> tasks, Task task) throws DukeExistedException {
-        if(!getItem(tasks, task).isEmpty())
+        if(!getItem(tasks, task).isEmpty()) {
             throw new DukeExistedException(MessageConstants.TASK_EXISTED_ERROR);
+        }
     }
 
     /**
@@ -73,26 +84,26 @@ public class TaskRepository implements ITaskRepository {
     public ArrayList<Task> convertToTaskList() throws DukeFileException {
         ArrayList<Task> tasks = new ArrayList<>(100);
         try {
-            Scanner scnr = new Scanner(new FileReader(StorageConstants.FILE_PATH));
-            String[] str;
-            scnr.nextLine();
-            while (scnr.hasNext()) {
-                str = scnr.nextLine().split(" \\| ");
+            Scanner scanner = new Scanner(new FileReader(StorageConstants.FILE_PATH));
+            String[] rows;
+            scanner.nextLine();
+            while (scanner.hasNext()) {
+                rows = scanner.nextLine().split(" \\| ");
                 Task task = null;
-                switch (TaskType.valueOf(str[1])) {
+                switch (TaskType.valueOf(rows[1])) {
                     case T:
-                        task = new Todo(Integer.valueOf(str[0]), str[3], Boolean.valueOf(str[2]));
+                        task = new Todo(Integer.valueOf(rows[0]), rows[3], Boolean.valueOf(rows[2]));
                         break;
                     case E:
-                        task = new Event(Integer.valueOf(str[0]), str[3], str[4], Boolean.valueOf(str[2]));
+                        task = new Event(Integer.valueOf(rows[0]), rows[3], rows[4], Boolean.valueOf(rows[2]));
                         break;
                     case D:
-                        task = new Deadline(Integer.valueOf(str[0]), str[3], str[4], Boolean.valueOf(str[2]));
+                        task = new Deadline(Integer.valueOf(rows[0]), rows[3], rows[4], Boolean.valueOf(rows[2]));
                         break;
                 }
                 tasks.add(task);
             }
-            scnr.close();
+            scanner.close();
         } catch (IOException ex){
             throw new DukeFileException(MessageConstants.TASK_GET_ERROR);
         }

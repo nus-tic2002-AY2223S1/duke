@@ -17,8 +17,8 @@ public class Todo extends Task {
      * Todo is a Task
      * Todo default constructor
      */
-    public Todo(String n) throws DukeValidationException {
-        super(n);
+    public Todo(String input) throws DukeValidationException {
+        super(input);
     }
     /**
      * Default constructor when converting values from .txt file to a Todo object
@@ -43,10 +43,11 @@ public class Todo extends Task {
      */
     @Override
     public boolean equals(Object obj) {
-        if(this.getClass() != obj.getClass())
+        if(this.getClass() != obj.getClass()) {
             return false;
-        Todo t = (Todo) obj;
-        return t.shortName.equals(this.shortName) && t.name.equals(this.name);
+        }
+        Todo todo = (Todo) obj;
+        return todo.shortName.equals(this.shortName) && todo.name.equals(this.name);
     }
 
     /**
@@ -55,7 +56,7 @@ public class Todo extends Task {
      */
     @Override
     public String toString(){
-        return String.format("%d | %s | %d | %s", this.id, this.shortName, CommonHelper.boolToInt(this.isDone), this.name);
+        return String.format("%d | %s | %d | %s", this.id, this.shortName, CommonHelper.booleanToInteger(this.isDone), this.name);
     }
 
     /**
@@ -73,8 +74,7 @@ public class Todo extends Task {
         boolean result = false;
         try {
             result = this.id == CommonHelper.getNumber(keyword);
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             result = this.name.toLowerCase().contains(keyword.toLowerCase());
         }
         return result;

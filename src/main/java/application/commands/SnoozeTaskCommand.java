@@ -22,7 +22,8 @@ public class SnoozeTaskCommand extends Command{
 
     @Override
     public void execute() throws DukeFileException, DukeValidationException, DukeNotFoundException, DukeArgumentException {
-        if(this.tracker.snooze(id, newDateTime, isNewDateTimeSpecified))
+        if(this.tracker.hasItemSnoozed(id, newDateTime, isNewDateTimeSpecified)) {
             this.storage.override(tracker.tasks);
+        }
     }
 }

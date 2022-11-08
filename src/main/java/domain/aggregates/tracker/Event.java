@@ -4,7 +4,6 @@ import application.helpers.CommonHelper;
 import application.helpers.MessageConstants;
 import domain.exceptions.DukeValidationException;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,15 +23,16 @@ public class Event extends Task{
      * Event default constructor
      * Conversion from string to LocalDate and LocalDateTime done based on regex expression to find HH:mm
      */
-    public Event(String n) throws DukeValidationException {
-        super(n);
-        String[] f = CommonHelper.formatPassedName(n, "at");
-        validate(f);
-        this.name = f[0].trim();
-        if(dateTimePattern.matcher(f[1].trim()).matches())
-            this.startDateTime = CommonHelper.convertStringToDateTime(f[1].trim());
-        else if(datePattern.matcher(f[1].trim()).matches())
-            this.startDateTime = CommonHelper.convertStringToDate(f[1].trim());
+    public Event(String input) throws DukeValidationException {
+        super(input);
+        String[] formattedInputs = CommonHelper.formatPassedName(input, "at");
+        validate(formattedInputs);
+        this.name = formattedInputs[0].trim();
+        if(dateTimePattern.matcher(formattedInputs[1].trim()).matches()) {
+            this.startDateTime = CommonHelper.convertStringToDateTime(formattedInputs[1].trim());
+        } else if(datePattern.matcher(formattedInputs[1].trim()).matches()) {
+            this.startDateTime = CommonHelper.convertStringToDate(formattedInputs[1].trim());
+        }
     }
 
     /**
@@ -50,8 +50,9 @@ public class Event extends Task{
     @Override
     public void printItem(){
         String format = "[dd MMMM yyyy, hh:mm a]";
-        if(this.startDateTime.format(DateTimeFormatter.ofPattern("HH:mm")).equals("00:00"))
+        if(this.startDateTime.format(DateTimeFormatter.ofPattern("HH:mm")).equals("00:00")) {
             format = "[dd MMMM yyyy]";
+        }
         String displayText = String.format("\t\t%d.[%s][%s] %s (at: %s)", this.id, this.shortName, this.isDone ? "X":" ", this.name, this.startDateTime.format(DateTimeFormatter.ofPattern(format)));
         CommonHelper.printMessage(displayText);
     }
@@ -62,10 +63,11 @@ public class Event extends Task{
      */
     @Override
     public boolean equals(Object obj) {
-        if(this.getClass() != obj.getClass())
+        if(this.getClass() != obj.getClass()) {
             return false;
-        Event e = (Event)obj;
-        return e.shortName.equals(this.shortName) && e.name.equals(this.name) && e.startDateTime.equals(this.startDateTime);
+        }
+        Event event = (Event)obj;
+        return event.shortName.equals(this.shortName) && event.name.equals(this.name) && event.startDateTime.equals(this.startDateTime);
     }
 
     /**
@@ -74,7 +76,7 @@ public class Event extends Task{
      */
     @Override
     public String toString(){
-        return String.format("%d | %s | %d | %s | %s", this.id, this.shortName, CommonHelper.boolToInt(this.isDone), this.name, this.startDateTime.toString());
+        return String.format("%d | %s | %d | %s | %s", this.id, this.shortName, CommonHelper.booleanToInteger(this.isDone), this.name, this.startDateTime.toString());
     }
 
     /**
@@ -83,23 +85,26 @@ public class Event extends Task{
      */
     @Override
     public boolean compare(LocalDate start, LocalDate end) {
-        LocalDate _startDateTime = this.startDateTime.toLocalDate();
-        if(end == null)
-            return _startDateTime.isEqual(start);
-        return (_startDateTime.isAfter(start) || _startDateTime.isEqual(start)) && (_startDateTime.isBefore(end) || _startDateTime.isEqual(end));
+        LocalDate startDateTime = this.startDateTime.toLocalDate();
+        if(end == null) {
+            return startDateTime.isEqual(start);
+        }
+        return (startDateTime.isAfter(start) || startDateTime.isEqual(start)) && (startDateTime.isBefore(end) || startDateTime.isEqual(end));
     }
 
     @Override
-    public void update(String remarks, boolean isSpecified) throws DukeValidationException {
-        if(!CommonHelper.isEmptyOrNull(remarks) && isSpecified) {
-            if(dateTimePattern.matcher(remarks.trim()).matches())
-                this.startDateTime = CommonHelper.convertStringToDateTime(remarks.trim());
-            else if(datePattern.matcher(remarks.trim()).matches())
-                this.startDateTime = CommonHelper.convertStringToDate(remarks.trim());
-        } else if(!isSpecified)
+    public void update(String remark, boolean isSpecified) throws DukeValidationException {
+        if(!CommonHelper.isEmptyOrNull(remark) && isSpecified) {
+            if(dateTimePattern.matcher(remark.trim()).matches()) {
+                this.startDateTime = CommonHelper.convertStringToDateTime(remark.trim());
+            } else if(datePattern.matcher(remark.trim()).matches()) {
+                this.startDateTime = CommonHelper.convertStringToDate(remark.trim());
+            }
+        } else if(!isSpecified) {
             this.startDateTime = this.startDateTime.plusDays(1);
-        else
+        } else {
             throw new DukeValidationException(MessageConstants.TASK_SNOOZE_DATETIME_NOT_PASSED);
+        }
     }
 
     @Override
@@ -107,17 +112,17 @@ public class Event extends Task{
         boolean result;
         try {
             result = this.id == CommonHelper.getNumber(keyword);
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             result = this.name.toLowerCase().contains(keyword.toLowerCase());
             try {
                 if (!result){
-                    if(dateTimePattern.matcher(keyword.trim()).matches())
+                    if(dateTimePattern.matcher(keyword.trim()).matches()) {
                         result = this.startDateTime.equals(CommonHelper.convertStringToDateTime(keyword.trim()));
-                    else if(datePattern.matcher(keyword.trim()).matches())
+                    } else if(datePattern.matcher(keyword.trim()).matches()) {
                         result = this.startDateTime.equals(CommonHelper.convertStringToDate(keyword.trim()));
+                    }
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 result = false;
             }
         }
@@ -128,11 +133,12 @@ public class Event extends Task{
      * Event validation
      * Name and Start Date Time are mandatory
      */
-    private void validate(String[] f) throws DukeValidationException{
-        if(CommonHelper.isEmptyOrNull(f[0]))
+    private void validate(String[] formattedInputs) throws DukeValidationException{
+        if(CommonHelper.isEmptyOrNull(formattedInputs[0])) {
             throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Description"));
-        else if(CommonHelper.isEmptyOrNull(f[1]))
-            throw new DukeValidationException(String.format(MessageConstants. TASK_VALIDATION_EMPTY_ERROR, "Start Date Time"));
+        } else if(CommonHelper.isEmptyOrNull(formattedInputs[1])) {
+            throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "Start Date Time"));
+        }
     }
 
     /**

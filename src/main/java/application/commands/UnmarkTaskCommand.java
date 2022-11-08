@@ -24,7 +24,8 @@ public class UnmarkTaskCommand extends Command{
      */
     @Override
     public void execute() throws DukeFileException, DukeValidationException, DukeNotFoundException {
-        if(this.tracker.updateItem(id, false))
+        if(this.tracker.hasItemUpdated(id, false)) {
             this.storage.override(tracker.tasks);
+        }
     }
 }
