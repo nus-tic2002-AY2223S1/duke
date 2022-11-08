@@ -1,10 +1,16 @@
 package engine;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
 
-import formatting.Helper;
-import task.*;
+import task.Deadline;
+import task.Event;
+import task.Task;
+import task.Todo;
+
+import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
+import static formatting.Helper.*;
 
 
 public class TaskList {
@@ -38,70 +44,62 @@ public class TaskList {
     }
 
 
-    public void addNewTask(String incomingTaskName, String incomingType, Date fromDate, Date toDate) throws ParseException {
-        switch (incomingType){
-            case ("event"):
-                TaskList.add(new Event(incomingTaskName, fromDate, toDate));
-                break;
+    public void addNewTask(String incomingTaskName, String incomingType, LocalDateTime fromDate, LocalDateTime toDate) throws ParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern ("d/MM/yyyy HHmm");
+        if ("event".equals(incomingType)) {
+            TaskList.add(new Event(incomingTaskName, fromDate, toDate));
         }
 
-        Helper.separator();
-        System.out.println("Added: " + TaskList.size() + "." + incomingTaskName +  " (at: " + fromDate + " to " + toDate +  ")" + "\nYou have " + TaskList.size()+ " tasks in the list!");
-        Helper.separator();
+        separator();
+        System.out.println("Added: " + TaskList.size() + "." + incomingTaskName +  " (at: " + fromDate.format(formatter) + " to " + toDate.format(formatter) +  ")" + "\nYou have " + TaskList.size()+ " tasks in the list!");
+        separator();
     }
 
-    public void addNewTask(String incomingTaskName, String incomingType, Date incomingDate) throws ParseException {
-        switch (incomingType){
-
-/*            case ("event"):
-                TaskList.add(new Event(incomingTaskName, incomingDate, incomingDate));
-                break;*/
-
-            case ("deadline"):
-                TaskList.add(new Deadline(incomingTaskName, incomingDate));
-                break;
+    public void addNewTask(String incomingTaskName, String incomingType, LocalDateTime incomingDate) {
+        if ("deadline".equals(incomingType)) {
+            TaskList.add(new Deadline(incomingTaskName, incomingDate));
         }
 
-        Helper.separator();
-        System.out.println("added: " + TaskList.size() + "." + incomingTaskName + "\nYou have " + TaskList.size()+ " tasks in the list!");
-        Helper.separator();
+        separator();
+        System.out.println("added: " + TaskList.size() + "." + incomingTaskName +  " (by: " + incomingDate.format(formatter) + ")" + "\nYou have " + TaskList.size()+ " tasks in the list!");
+        separator();
     }
 
     public void addNewTask(String incomingTaskName){
 
         TaskList.add(new Todo(incomingTaskName));
 
-        Helper.separator();
+        separator();
         System.out.println("added: " + TaskList.size() + "." + incomingTaskName + "\nYou have " + TaskList.size()+ " tasks in the list!");
-        Helper.separator();
+        separator();
     }
 
     public void deleteTask(int TaskIndex){
         int i = TaskIndex-1;
         if (i> TaskList.size()){
-            Helper.separator();
+            separator();
             System.out.println("Uh oh! Task " + TaskIndex + " is not found :(. Task " + TaskIndex + " is NOT deleted.");
             showTodoList();
-            Helper.separator();
+            separator();
         }
         else{
             String toBeDeleted = TaskList.get(i).toString();
             TaskList.remove(i);
-            Helper.separator();
+            separator();
             System.out.println("Done! " +TaskIndex+". "+toBeDeleted+" has been deleted. The task list has been updated: ");
             showTodoList();
         }
     }
 
     public void showTodoList(){
-        Helper.separator();
+        separator();
         for (int i = 0; i< TaskList.size(); i++){
 
             System.out.println(i+1+"."+TaskList.get(i).toString());
 
         }
         System.out.println("There are " + TaskList.size() + " tasks in the list!");
-        Helper.separator();
+        separator();
     }
 
 
@@ -109,24 +107,23 @@ public class TaskList {
     public void changeToMarkAsDone(int TaskIndex){
         int i = TaskIndex-1;
         if (i> TaskList.size()){
-            Helper.separator();
+            separator();
             System.out.println("Uh oh! Task " + TaskIndex + " is not found :(");
             showTodoList();
-            Helper.separator();
+            separator();
         }
         else{
             if (TaskList.get(i).isMarkAsDone().equals(" ")){
                 TaskList.get(i).setMarkAsDone();
-                Helper.separator();
+                separator();
                 System.out.println("Nice! I've marked this task as done: ");
             }
             else {
-                Helper.separator();
+                separator();
                 System.out.println("This task has already been marked as done!");
             }
             System.out.println(TaskIndex+". "+TaskList.get(i).toString());
-            Helper.separator();
-            Helper.newline();
+            separator();
         }
 
     }
@@ -140,16 +137,15 @@ public class TaskList {
         else{
             if (TaskList.get(i).isMarkAsDone().equals("X")){
                 TaskList.get(i).setMarkNotDone();
-                Helper.separator();
+                separator();
                 System.out.println("Meow, I've marked this task as not done yet: ");
             }
             else {
-                Helper.separator();
+                separator();
                 System.out.println("This task has already been marked as not done!");
             }
             System.out.println(TaskIndex+". "+TaskList.get(i).toString());
-            Helper.separator();
-            Helper.newline();
+            separator();
         }
 
     }

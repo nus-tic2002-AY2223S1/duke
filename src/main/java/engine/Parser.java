@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 
 public class Parser {
-    public String tokenToString;
     ArrayList<String> remainingTokens;
 
     private Parser() {
@@ -46,7 +45,6 @@ public class Parser {
         try{
             if (match(symbol)){
                 next();
-                return;
             }
         }
         catch (Exception e){

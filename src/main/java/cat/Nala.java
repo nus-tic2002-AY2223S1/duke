@@ -17,11 +17,11 @@ public class Nala {
         Random rand = new Random();
         int nalaMood = rand.nextInt(8);
         if (nalaMood < 3) {
-            System.out.println("Nala meows at you");
+            System.out.println("(Nala meows at you)");
         } else if (nalaMood < 6){
-            System.out.println("Nala purrs");
+            System.out.println("(Nala purrs)");
         } else {
-            System.out.println("Nala ignores you");
+            System.out.println("(Nala takes a nap)");
         }
     }
 

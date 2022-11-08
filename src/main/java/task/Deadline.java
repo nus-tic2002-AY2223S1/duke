@@ -1,25 +1,20 @@
 package task;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.util.Optional;
+
+import java.time.LocalDateTime;
+
+import static formatting.Helper.formatter;
 
 public class Deadline extends Task{
 
-    private Date at;
+    private LocalDateTime at;
 
-    public Deadline(String taskName) {
-        super(taskName);
-    }
-    public Deadline(String taskName, Date at) {
+    public Deadline(String taskName, LocalDateTime at) {
         super(taskName);
         this.at = at;
     }
 
     @Override
     public String toString() {
-        return "[D]" + "[" + isMarkAsDone() + "] " + TaskName + " (by: " + at + ")";
+        return "[D]" + "[" + isMarkAsDone() + "] " + TaskName + " (by: " + at.format(formatter) + ")";
     }
 }

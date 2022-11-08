@@ -1,23 +1,24 @@
-import engine.*;
-import java.io.File;
-import java.util.Scanner;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-
-import formatting.Helper;
-import storage.Storage;
 import cat.Nala;
+import engine.Parser;
+import engine.TaskList;
+import storage.Storage;
+
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
+import static formatting.Helper.formatter;
+import static formatting.Helper.separator;
 
 public class Duke {
     public static void main(String[] args) {
         Parser p = Parser.getInstance();
 
-        Helper.separator();
-        System.out.println("Hello! I'm Nala the Annoying Cat!\n" + "What can I do for you?\n Protip: Type !help for a list of commands!");
-        System.out.println("For event and deadline, please type in the dd/MM/yyyy HHmm (24 hr) format :)");
-        Helper.separator();
+        separator();
+        System.out.println("Hello! I'm Nala the Annoying Cat!\n" + "What can I do for you?\nProtip: Type !help for a list of commands!");
+        System.out.println("For event and deadline, please type dates and time in the dd/mm/yyyy HHmm (24 hr) format :) (e.g. 31/12/2022 2359)");
+        separator();
 
             while (true) {
                 try {
@@ -29,8 +30,8 @@ public class Duke {
                 if (p.front().equalsIgnoreCase("!help")) {
                     System.out.println("Here's the list of commands:\n" +
                                         "todo [description] - create a todo \n" +
-                                         "event [description] /at [date or time] - create an event\n"+
-                                        "deadline [description] /by [date or time] - create a deadline\n"+
+                                         "event [description] /at [start date and time, dd/mm/yyyy HHmm] to [end date and time, dd/mm/yyyy HHmm] - create an event\n"+
+                                        "deadline [description] /by [date and time, dd/mm/yyyy HHmm] - create a deadline\n"+
                                         "mark [index] - mark a task as done\n"+
                                         "unmark [index] - mark a task as not done\n"+
                                         "delete [index] - delete a task\n"+
@@ -150,9 +151,9 @@ public class Duke {
 
     public static void parseBye() {
         Parser p = Parser.getInstance();
-        Helper.separator();
+        separator();
         System.out.println("Goodbye! Hope to see you again soon!");
-        Helper.separator();
+        separator();
         p.clear();
     }
 
@@ -302,7 +303,10 @@ public class Duke {
                     Nala.nalaSyntaxError("EventNoAt");
                     break;
                 }
-                t.addNewTask(incomingTaskName, incomingType, parseDate(incomingStartDate), parseDate(incomingEndDate));
+                LocalDateTime startDate = parseDate(incomingStartDate);
+                LocalDateTime endDate = parseDate(incomingEndDate);
+                validateTwoDates(startDate,endDate);
+                t.addNewTask(incomingTaskName, incomingType, startDate, endDate);
                 p.clear();
                 break;
             default:
@@ -311,18 +315,23 @@ public class Duke {
         }
     }
 
-    public static Date parseDate(String dateString) throws Exception {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HHmm");
-        Date incomingDate = format.parse(dateString);
-        Date currentDate = new Date();
-        int compare = incomingDate.compareTo(currentDate);
+    public static LocalDateTime parseDate(String dateString) throws Exception {
+        LocalDateTime incomingDateTime = LocalDateTime.parse(dateString, formatter);
+        incomingDateTime.format(formatter);
 
-        if (compare < 0) {
-            throw new Exception("Meow :( Date is before today");
+        if (incomingDateTime.isBefore(LocalDateTime.now())) {
+            throw new Exception("Meow :( Date or time has already passed. The current date and time is " + LocalDateTime.now().format(formatter));
         }
 
-        return incomingDate;
+        return incomingDateTime;
     }
+
+    public static void validateTwoDates(LocalDateTime startDate, LocalDateTime endDate) throws Exception {
+
+        if (startDate.isAfter(endDate)) throw new Exception("Meow :( Start Date cannot be after End Date.");
+        else if (startDate.isEqual(endDate)) throw new Exception("Meow :( Start Date cannot be the same as End Date.");
+    }
+
 
     public static String userInput() {
         Scanner in = new Scanner(System.in);

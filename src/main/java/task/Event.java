@@ -1,17 +1,15 @@
 package task;
+
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+
+import static formatting.Helper.formatter;
 
 public class Event extends Task{
 
-    private Date start;
-    private Date end;
-    public Event(String taskName, Date start, Date end) throws ParseException {
+    private LocalDateTime start;
+    private LocalDateTime end;
+    public Event(String taskName, LocalDateTime start, LocalDateTime end) throws ParseException {
         super(taskName);
         this.start = start;
         this.end = end;
@@ -19,7 +17,7 @@ public class Event extends Task{
 
     @Override
     public String toString() {
-        return "[E]" + "[" + isMarkAsDone() + "] " + TaskName +  " (at: " + start + " to " + end +  ")";
+        return "[E]" + "[" + isMarkAsDone() + "] " + TaskName +  " (at: " + start.format(formatter) + " to " + end.format(formatter) +  ")";
     }
 
 }
