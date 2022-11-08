@@ -3,8 +3,6 @@ package nus.duke.task;
 import nus.duke.enumerations.LegalTaskEnumerations;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import static java.time.temporal.TemporalAdjusters.lastDayOfYear;
 import static nus.duke.frontend.CommonPrintStatements.*;
 

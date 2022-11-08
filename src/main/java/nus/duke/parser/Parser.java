@@ -3,11 +3,9 @@ package nus.duke.parser;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import nus.duke.frontend.*;
 import nus.duke.exceptions.*;
 import nus.duke.enumerations.*;
-
 import static nus.duke.frontend.CommonPrintStatements.*;
 
 /**
@@ -49,7 +47,6 @@ public class Parser {
 		} else {
 			return false;
 		}
-
 	}
 
 	/**
@@ -229,6 +226,5 @@ public class Parser {
 		} else {
 			return true; // i.e. there are no input errors.
 		}
-		//return command;
 	}
 }

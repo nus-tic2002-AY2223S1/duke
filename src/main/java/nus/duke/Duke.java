@@ -17,9 +17,9 @@ import static nus.duke.frontend.CommonPrintStatements.*;
  * Users interact with the Duke program by chatting with Dobby, a chatbot named after an elf in Harry Potter.
  * Dobby is assisted by his friend Pooh Bear.
  *
- * @author  ANG Poh Ye
+ * @author ANG Poh Ye
  * @version 1.0
- * @since   Oct 2022
+ * @since Oct 2022
  */
 public class Duke {
 	private Storage storage;
@@ -30,7 +30,7 @@ public class Duke {
 
 	public Duke(String filePath) {
 		boolean isEmpty = filePath.isEmpty();
-		assert(isEmpty == false);
+		assert (isEmpty == false);
 		try {
 			storage = new Storage(filePath);
 			ArrayList<Task> hardDiskTaskList = storage.load();
@@ -42,6 +42,7 @@ public class Duke {
 
 	/**
 	 * Starts the Duke program and keeps the program running until it is terminated.
+	 *
 	 * @return nothing. This is a void function.
 	 */
 	public void run() {
@@ -55,7 +56,7 @@ public class Duke {
 		do {
 			String userInput = ui.getUserInput(s);
 			noInputErrors = parser.parse(userInput);
-			if (noInputErrors){
+			if (noInputErrors) {
 				command = parser.getCommand(userInput);
 				terminateProgram = tasks.processTasks(command, userInput);
 			}

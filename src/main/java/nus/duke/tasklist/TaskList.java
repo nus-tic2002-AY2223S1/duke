@@ -2,10 +2,8 @@ package nus.duke.tasklist;
 
 import nus.duke.enumerations.*;
 import nus.duke.task.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import static nus.duke.frontend.CommonPrintStatements.*;
 

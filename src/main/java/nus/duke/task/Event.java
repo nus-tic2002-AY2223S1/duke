@@ -1,11 +1,9 @@
 package nus.duke.task;
 
 import nus.duke.enumerations.LegalTaskEnumerations;
-
+import static nus.duke.frontend.CommonPrintStatements.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import static nus.duke.frontend.CommonPrintStatements.*;
 
 /**
  * Represents a event task

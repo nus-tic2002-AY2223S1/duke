@@ -1,7 +1,6 @@
 package nus.duke.frontend;
 
 import java.util.Scanner;
-
 import static nus.duke.frontend.CommonPrintStatements.*;
 
 /**
