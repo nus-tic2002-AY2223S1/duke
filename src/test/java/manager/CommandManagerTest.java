@@ -17,10 +17,4 @@ class CommandManagerTest {
         String[] input = new String[]{"list"};
         CommandManager.getInstance().executeUserInput(input);
     }
-    
-    @Test
-    void executeInvalidActionTest() {
-        String[] input = new String[]{"blah"};
-        assertEquals(ErrorMessage.ERROR_MESSAGE_INVALID_ACTION.toString(), CommandManager.getInstance().executeUserInput(input));
-    }
 }

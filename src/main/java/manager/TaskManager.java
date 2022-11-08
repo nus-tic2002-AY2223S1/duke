@@ -57,10 +57,16 @@ public class TaskManager {
         assert taskList != null : "Task list should not be null.";
         
         StringBuilder printStr = new StringBuilder("Here are the tasks in your list: \n");
-        for (int i = 0; i < taskList.size(); i++) {
-            Task t = taskList.get(i);
-            printStr.append(String.format("%d.%s\n", i + 1, t.getDetails()));
+        if (taskList.size() > 0){
+            for (int i = 0; i < taskList.size(); i++) {
+                Task t = taskList.get(i);
+                printStr.append(String.format("%d.%s\n", i + 1, t.getDetails()));
+            }
+        }else{
+            printStr = new StringBuilder("You do not have any tasks yet.");
         }
+        
+
         return printStr.toString();
     }
     
@@ -194,10 +200,15 @@ public class TaskManager {
         }
         
         StringBuilder resultStr = new StringBuilder("Here are the matching tasks in your list: \n");
-        for (int i = 0; i < resultArr.size(); i++) {
-            Task t = resultArr.get(i);
-            resultStr.append(String.format("%d.%s\n", i + 1, t.getDetails()));
+        if (resultArr.size() > 0){
+            for (int i = 0; i < resultArr.size(); i++) {
+                Task t = resultArr.get(i);
+                resultStr.append(String.format("%d.%s\n", i + 1, t.getDetails()));
+            }
+        }else{
+            resultStr = new StringBuilder("There are no matching tasks.");
         }
+      
         return resultStr.toString();
     }
     

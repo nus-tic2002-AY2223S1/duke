@@ -2,13 +2,10 @@ package main;
 
 import controller.MainWindow;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -23,10 +20,9 @@ public class Main extends Application {
      *              the application scene can be set.
      *              Applications may create other stages, if needed, but they will not be
      *              primary stages.
-     * @throws Exception
      */
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         assert stage != null : "Stage should not be null.";
         
         try {

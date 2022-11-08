@@ -52,7 +52,7 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         
         Label userText = new Label(tfInput.getText());
-        Label dukeText = new Label(duke.getResponse(tfInput.getText()));
+        Label dukeText = new Label(duke.getResponse(tfInput.getText().trim()));
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(userText, new ImageView(userImage)),
                 DialogBox.getDukeDialog(dukeText, new ImageView(dukeImage))
