@@ -1,7 +1,6 @@
 package engine;
 
 import cat.Nala;
-import org.jetbrains.annotations.NotNull;
 import storage.Storage;
 
 import java.io.File;
@@ -39,22 +38,28 @@ public class Parser {
             if (userFilename.equalsIgnoreCase("/e")){
                 break;
             }
-            else if (!validateStringFilenameUsingIO(s.getFileName())){
+
+            //validateStringFilenameUsingIO cannot catch / and \
+            else if (userFilename.contains("/") || userFilename.contains("\\")){
                 System.out.println("You tried to create a file with restricted characters! Please try again, or type \"/e\" to go back to the main menu." );
-            }
-            else if (!s.checkExistence()){
-                s.createFile();
-                s.populateFile();
-                break;
-            }
-            else{
-                System.out.println(userFilename + ".txt already exists on " + System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "dukeFile" + "\n Please type a different filename, or type \"/e\" to go back to the main menu!" );
+                continue;
             }
 
-
+            try{
+                validateStringFilenameUsingIO(s.getFileName());
+                if (!s.checkExistence()) {
+                    s.createFile();
+                    s.populateFile();
+                    break;
+                }
+                else{
+                    System.out.println(userFilename + ".txt already exists on " + System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "dukeFile" + "\n Please type a different filename, or type \"/e\" to go back to the main menu!" );
+                }
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+                continue;
+            }
         }
-
-
     }
 
     public static void parseMark(){
@@ -129,16 +134,11 @@ public class Parser {
         try{
             String indexString = p.front();
             int index = Integer.parseInt(indexString);
-            t.changeToMarkNotDone(index);
             t.deleteTask(index);
-        }
-        catch (NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             System.out.println("Meow! " + p.front() + " is not a valid integer.");
             t.showTodoList();
-        }
-        catch (IndexOutOfBoundsException e)
-        {
+        } catch (IndexOutOfBoundsException e) {
             System.out.println("Meow! " + p.front() + " is not in the list.");
             t.showTodoList();
         }
@@ -271,7 +271,7 @@ public class Parser {
         }
     }
 
-    public static @NotNull LocalDateTime parseDate(String dateString) throws Exception {
+    public static LocalDateTime parseDate(String dateString) throws Exception {
         LocalDateTime incomingDateTime = LocalDateTime.parse(dateString, FORMATTER);
         incomingDateTime.format(FORMATTER);
 
@@ -282,10 +282,24 @@ public class Parser {
         return incomingDateTime;
     }
 
-    public static void validateTwoDates(@NotNull LocalDateTime startDate, LocalDateTime endDate) throws Exception {
+    public static void validateTwoDates( LocalDateTime startDate, LocalDateTime endDate) throws Exception {
 
-        if (startDate.isAfter(endDate)) throw new Exception("Meow :( Start Date cannot be after End Date.");
-        else if (startDate.isEqual(endDate)) throw new Exception("Meow :( Start Date cannot be the same as End Date.");
+        if (startDate.isAfter(endDate)) throw new Exception("Meow :( Start Date/Time cannot be after End Date/Time.");
+        else if (startDate.isEqual(endDate)) throw new Exception("Meow :( Start Date/Time cannot be the same as End Date/Time.");
+    }
+
+    public static void parseFind() {
+        Parser p = getInstance();
+        TaskList t = TaskList.getInstance();
+        p.next();
+        String keyword = p.front();
+        p.next();
+        if (p.remainingTokens.isEmpty()){
+            t.showFilteredTodoList(keyword);
+        } else {
+            System.out.println("Meow! The keyword should only consist of 1 word.");
+            return;
+        }
     }
 
     public boolean getTokenContains(String token) {

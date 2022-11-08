@@ -88,13 +88,14 @@ public class Storage {
         return Files.exists(directory);
     }
 
-    public static boolean validateStringFilenameUsingIO(String filename) throws IOException {
+    public static void validateStringFilenameUsingIO(String filename) throws IOException {
         String validateFileName = DUKEFILEPATH.concat(filename);
         File file = new File(validateFileName);
         boolean created = false;
         try {
             created = file.createNewFile();
-            return created;
+        } catch (Exception e) {
+            System.out.println("You tried to create a file with restricted characters! Please try again, or type \"/e\" to go back to the main menu." );
         } finally {
             if (created) {
                 file.delete();

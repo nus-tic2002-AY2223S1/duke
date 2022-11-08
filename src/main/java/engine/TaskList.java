@@ -102,6 +102,23 @@ public class TaskList {
         separator();
     }
 
+    public void showFilteredTodoList(String keyword){
+        int size = 0;
+        separator();
+        for (int i = 0; i< TaskList.size(); i++){
+            if (TaskList.get(i).getTaskName().contains(keyword)){
+                size++;
+                System.out.println(size+"."+TaskList.get(i).toString());
+            }
+        }
+        if (size == 0) {
+            System.out.println("No tasks found!");
+        } else {
+            System.out.println("There are " + size + " tasks in the list containing " + keyword + "!");
+            separator();
+        }
+    }
+
 
 
     public void changeToMarkAsDone(int TaskIndex){

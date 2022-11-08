@@ -29,6 +29,7 @@ public class Duke {
                                         "unmark [index] - mark a task as not done\n"+
                                         "delete [index] - delete a task\n"+
                                         "list - shows the current list of tasks\n"+
+                                        "find [keyword] - finds tasks in the list that contains keyword\n"+
                                         "print - saves the tasklist to a .txt file\n"+
                                         "bye or end - say goodbye to Nala :(");
                 }
@@ -55,6 +56,10 @@ public class Duke {
 
                 else if (p.front().equalsIgnoreCase("print")){
                     Parser.parsePrint();
+                }
+
+                else if (p.front().equalsIgnoreCase("find")){
+                    Parser.parseFind();
                 }
 
                 else { //add new task
