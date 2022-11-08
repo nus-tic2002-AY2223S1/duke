@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static common.enums.PeriodicalEnum.daily;
 import static logic.file.FileEncoder.encodedTask;
 import static logic.file.FileManager.FILE_PATH;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -27,12 +28,12 @@ public class FileEncoderTest {
             pw.flush();
 
             Path filePath = Paths.get(FILE_PATH);
-            Task task = new Task("homework");
+            Task task = new Task(daily, "homework");
 
             encodedTask(task);
 
             BufferedReader reader = Files.newBufferedReader(filePath, Charset.forName("UTF-8"));
-            assertNotEquals("D|0|homework|Nov 14 2022", reader.readLine());
+            assertNotEquals("D|0|homework|Nov 14 2022 10:30", reader.readLine());
         } catch (IOException e) {
             System.out.println(e);
         }

@@ -12,7 +12,7 @@ import static common.enums.CommandTypeEnum.UNDEFINED;
 import static common.enums.PeriodicalEnum.undefined;
 import static common.utils.DateUtil.dateTimeConverter;
 
-public abstract class Task {
+public class Task {
     protected String description;
 
     protected boolean isDone;
