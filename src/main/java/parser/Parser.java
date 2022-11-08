@@ -6,12 +6,16 @@ import taskList.Event;
 import taskList.Todo;
 import ui.UI;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 public class Parser {
     private static UI ui;
 
-
     Parser() {
-
     }
 
     protected static void parse(String userInput) {
@@ -29,13 +33,24 @@ public class Parser {
         Deadline task = new Deadline(deadlineTask, deadlineBy);
         return task;
     }
-
     public static Event parseEventInput(String input){
         String[] eventItemSplit = (input.substring(6)).split(" /at ");
         String eventTask = eventItemSplit[0];
         String eventAt = eventItemSplit[1];
         Event task = new Event(eventTask, eventAt);
         return task;
+    }
+
+    public static LocalDate StringToDate(String s){
+//        LocalDate date = LocalDate.parse(s);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
+        LocalDate date = LocalDate.parse(s, formatter);
+        return date;
+    }
+
+    public static String DateToString (LocalDate d){
+        String string = d.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+        return string;
     }
 }
 //    public static Deadline parseDeadlineInput(String input, String[] inputSplit){

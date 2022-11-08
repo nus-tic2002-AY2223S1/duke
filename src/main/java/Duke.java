@@ -34,23 +34,24 @@ public class Duke {
 
                 // to list all items
                 else if (input.equals("list"))
-                    taskList.listTask(inputSplit);
+                    taskList.listTask(inputSplit, input);
 
                 // mark items
                 else if (input.startsWith("mark"))
-                    taskList.markTask(inputSplit);
+                    taskList.markTask(inputSplit, input);
 
-                // unmarked itemst
+                // unmarked items
                 else if (input.startsWith("unmark"))
-                    taskList.unmarkTask(inputSplit);
+                    taskList.unmarkTask(inputSplit, input);
 
                 // to do task
                 else if (input.startsWith("todo"))
                     taskList.todoTask(input, inputSplit);
 
                 // deadline task
-                else if (input.startsWith("deadline"))
+                else if (input.startsWith("deadline")) {
                     taskList.deadlineTask(input, inputSplit);
+                }
 
                 // event task
                 else if (input.startsWith("event"))
@@ -58,7 +59,7 @@ public class Duke {
 
                 // delete task
                 else if (input.startsWith("delete")) {
-                    taskList.deleteTask(inputSplit);
+                    taskList.deleteTask(inputSplit, input);
                 }
 
                 // prompt user to enter valid input

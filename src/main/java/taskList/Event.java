@@ -1,8 +1,9 @@
 package taskList;
 
+import parser.Parser;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Event extends Task {
     protected String at;
@@ -15,14 +16,16 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (at: " + at + ")";
+        return "[E]" + super.toString() + " (at: " + convertDateFormat(getDate()) + ")";
     }
 
-    public LocalDate thisDate(){return this.localDate;}
-
-    public String formatDate(){
-        String date = localDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
-        return date;
+//    public LocalDate thisDate(){return this.localDate;}
+    @Override
+    public LocalDate getDate() {
+        return Parser.StringToDate(this.at);
+    }
+    public String convertDateFormat(LocalDate at){
+        return Parser.DateToString(at);
     }
 
 
