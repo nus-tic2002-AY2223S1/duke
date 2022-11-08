@@ -2,6 +2,7 @@ package domain.aggregates.tracker;
 
 import application.helpers.CommonHelper;
 import application.helpers.MessageConstants;
+import domain.exceptions.DukeArgumentException;
 import domain.exceptions.DukeValidationException;
 
 import java.time.LocalDate;
@@ -55,7 +56,7 @@ public abstract class Task {
      */
     public abstract boolean compare(LocalDate start, LocalDate end);
 
-    public abstract void update(String remarks) throws DukeValidationException;
+    public abstract void update(String remarks, boolean isSpecified) throws DukeValidationException, DukeArgumentException;
 
     /**
      * Getters & Setters for properties

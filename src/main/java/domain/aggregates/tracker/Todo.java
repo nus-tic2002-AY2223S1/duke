@@ -1,6 +1,8 @@
 package domain.aggregates.tracker;
 
 import application.helpers.CommonHelper;
+import application.helpers.MessageConstants;
+import domain.exceptions.DukeArgumentException;
 import domain.exceptions.DukeValidationException;
 
 import java.time.LocalDate;
@@ -67,6 +69,7 @@ public class Todo extends Task {
     }
 
     @Override
-    public void update(String remarks) {
+    public void update(String remarks, boolean isSpecified) throws DukeArgumentException {
+        throw new DukeArgumentException(String.format(MessageConstants.TASK_SNOOZE_NOT_APPLICABLE, this.id));
     }
 }

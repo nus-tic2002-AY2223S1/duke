@@ -5,10 +5,7 @@ import application.helpers.CommonHelper;
 import application.helpers.MessageConstants;
 import domain.aggregates.storage.Storage;
 import domain.aggregates.tracker.*;
-import domain.exceptions.DukeExistedException;
-import domain.exceptions.DukeFileException;
-import domain.exceptions.DukeNotFoundException;
-import domain.exceptions.DukeValidationException;
+import domain.exceptions.*;
 
 import java.text.ParseException;
 
@@ -85,8 +82,8 @@ public class RequestController {
     /**
      * Snooze keyword behaviour: Calls Snooze Task with new date in string
      */
-    public void snooze(int id, String date) throws DukeValidationException, DukeNotFoundException, DukeFileException {
-        snoozeTaskCommandHandler(id, date);
+    public void snooze(int id, String date, boolean isDateSpecified) throws DukeValidationException, DukeNotFoundException, DukeFileException, DukeArgumentException {
+        snoozeTaskCommandHandler(id, date, isDateSpecified);
     }
 
     /**
@@ -154,8 +151,8 @@ public class RequestController {
     /**
      * Executes Snooze Task Command Handler
      */
-    private void snoozeTaskCommandHandler(int id, String date) throws DukeValidationException, DukeNotFoundException, DukeFileException {
-        SnoozeTaskCommand command = new SnoozeTaskCommand(tracker, storage, id, date);
+    private void snoozeTaskCommandHandler(int id, String date, boolean isDateSpecified) throws DukeValidationException, DukeNotFoundException, DukeFileException, DukeArgumentException {
+        SnoozeTaskCommand command = new SnoozeTaskCommand(tracker, storage, id, date, isDateSpecified);
         command.execute();
     }
 }

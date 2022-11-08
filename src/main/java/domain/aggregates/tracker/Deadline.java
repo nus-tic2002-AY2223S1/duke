@@ -87,14 +87,16 @@ public class Deadline extends Task{
     }
 
     @Override
-    public void update(String remarks) throws DukeValidationException {
-        if(!CommonHelper.isEmptyOrNull(remarks)) {
+    public void update(String remarks, boolean isSpecified) throws DukeValidationException {
+        if(!CommonHelper.isEmptyOrNull(remarks) && isSpecified) {
             if (p.matcher(remarks.trim()).matches())
                 this.dueDateTime = CommonHelper.convertStringToDateTime(remarks.trim());
             else
                 this.dueDateTime = CommonHelper.convertStringToDate(remarks.trim());
-        } else
+        } else if(!isSpecified)
             this.dueDateTime = this.dueDateTime.plusDays(1);
+        else
+            throw new DukeValidationException(MessageConstants.TASK_SNOOZE_DATETIME_NOT_PASSED);
     }
 
     /**

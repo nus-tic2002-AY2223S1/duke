@@ -95,8 +95,9 @@ public class Ui {
                         controller.filter(inp.replace("filter","").trim());
                         break;
                     case SNOOZE:
-                        int id = CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim());
-                        controller.snooze(id, inp.replace("snooze","").replace(String.valueOf(id), "").trim());
+                        boolean isDateSpecified = inp.contains("/");
+                        int id = CommonHelper.getNumber(inp.split("/")[0].replaceAll("[^0-9]", "").trim());
+                        controller.snooze(id, inp.replace("snooze","").replace("/", "").replace(String.valueOf(id), "").trim(), isDateSpecified);
                         break;
                     case HI:
                     case HELLO:

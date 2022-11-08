@@ -139,11 +139,11 @@ public class Tracker {
             CommonHelper.printMessage(MessageConstants.NO_RESULTS_FOUND);
     }
 
-    public boolean snooze(int n, String newDateTime) throws DukeValidationException, DukeNotFoundException {
+    public boolean snooze(int n, String newDateTime, boolean isNewDateTimeSpecified) throws DukeValidationException, DukeNotFoundException, DukeArgumentException {
         Task task = _taskRepository.validateTask(tasks, n);
         if(task != null){
-            task.update(newDateTime);
-            if(CommonHelper.isEmptyOrNull(newDateTime))
+            task.update(newDateTime, isNewDateTimeSpecified);
+            if(CommonHelper.isEmptyOrNull(newDateTime) && !isNewDateTimeSpecified)
                 CommonHelper.printMessage(MessageConstants.DEFAULT_SNOOZE_TASK);
             else
                 CommonHelper.printMessage(MessageConstants.SNOOZE_TASK);

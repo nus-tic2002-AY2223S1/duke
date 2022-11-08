@@ -2,10 +2,7 @@ package application.commands;
 
 import domain.aggregates.storage.Storage;
 import domain.aggregates.tracker.Tracker;
-import domain.exceptions.DukeExistedException;
-import domain.exceptions.DukeFileException;
-import domain.exceptions.DukeNotFoundException;
-import domain.exceptions.DukeValidationException;
+import domain.exceptions.*;
 
 public abstract class Command{
     protected Tracker tracker;
@@ -23,5 +20,5 @@ public abstract class Command{
     /**
      * Abstract method to be overwritten for handling command execution
      */
-    public abstract void execute() throws DukeExistedException, DukeNotFoundException, DukeValidationException, DukeFileException;
+    public abstract void execute() throws DukeExistedException, DukeNotFoundException, DukeValidationException, DukeFileException, DukeArgumentException;
 }
