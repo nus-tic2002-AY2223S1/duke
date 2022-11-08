@@ -19,6 +19,7 @@ public class ParserTest {
         } catch (DukeException e){
         }
     }
+    @DisplayName("Test for succeed cases.")
     @Test
     void succeedingTest() {
         //Correct parsing of a "bye" command.
@@ -44,6 +45,11 @@ public class ParserTest {
         initEach("delete 1");
         assertEquals("delete", userInput.getCommand());
         assertEquals(0, userInput.getIndex());
+
+        //Correct parsing of a "find" command.
+        initEach("find book");
+        assertEquals("find", userInput.getCommand());
+        assertEquals("book", userInput.getDescription());
 
         //Correct parsing of a "todo" command.
         initEach("todo plan for travel");
@@ -75,6 +81,17 @@ public class ParserTest {
         initEach("event trip to Japan /at 11/11/2022-12/11/2022");
         assertEquals(LocalDateTime.parse("11-11-2022" + " " + Parser.DEFAULT_START_TIME, TaskList.STORAGE_FORMATTER), userInput.getDateAndTime1());
         assertEquals(LocalDateTime.parse("12-11-2022" + " " + Parser.DEFAULT_TIME, TaskList.STORAGE_FORMATTER), userInput.getDateAndTime2());
+        //Correct parsing of a "DoAfter" command with date/time format DD/MM/YYYY hhmm.
+        initEach("go park after 11/11/2022 1800");
+        assertEquals("DoAfter", userInput.getCommand());
+        assertEquals("go park", userInput.getDescription());
+        assertEquals(LocalDateTime.parse("11-11-2022" + " " + "18:00:00", TaskList.STORAGE_FORMATTER), userInput.getDateAndTime1());
+            //same command with date/time format DD/MM/YYYY.
+        initEach("go park after 11/11/2022");
+        assertEquals(LocalDateTime.parse("11-11-2022" + " " + Parser.DEFAULT_TIME, TaskList.STORAGE_FORMATTER), userInput.getDateAndTime1());
+            //same command with taskBefore instead of specific date/time.
+        initEach("go park after work");
+        assertEquals("work", userInput.getTaskBefore());
     }
 
     @DisplayName("Exceptional test for Parse class.")

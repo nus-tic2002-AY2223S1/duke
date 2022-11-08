@@ -4,6 +4,10 @@ package nus.duke.parser;
 import nus.duke.data.DukeException;
 import nus.duke.ui.Messages;
 
+import javax.swing.text.DateFormatter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -17,86 +21,184 @@ public class Parser {
      * @return An executable command.
      * @throws DukeException
      * when the user input is empty or
-     * when the index input with command "mark", "unmark" and "delete" cannot be parsed to an integer or
-     * when wrong date and time format is used when adding "deadline" and "event" or
      * when the user input is out of duke scope.
      */
     public static Command parse (String command) throws DukeException {
+        Command userInput;
+        ArrayList<String> description;
         if (command.isEmpty()){
             throw new DukeException(Messages.MESSAGE_EMPTY_INPUT);
         }
+        if (command.contains("after")){
+            userInput = addDoAfter(command);
+            return userInput;
+        }
         String[] split = command.split(" ",2);
-        ArrayList<String> description;
-        Command userInput;
         switch (split[0]){
             case "bye":
                 userInput = new Command(split[0], true);
                 break;
             case "list":
-                userInput  = new Command(split[0]);
+                userInput = new Command(split[0]);
+                break;
+            case "find":
+                userInput = new Command(split[0], split[1]);
                 break;
             case "mark":
             case "unmark":
             case "delete":
-                if (isNumeric(split[1])) {
-                    int index = Integer.parseInt(split[1]) - 1;
-                    userInput = new Command(split[0], index);
-                } else {
-                    throw new DukeException(Messages.MESSAGE_INDEX_NOT_NUMBER);
-                }
+                userInput = addCommandWithIndex(split);
                 break;
             case "todo":
-                try {
-                    checkDescription(split);
-                } catch (DukeException e){
-                    throw new DukeException(e.getMessage());
-                }
-                userInput = new Command(split[0], split[1]);
+                userInput = addTodo(split);
                 break;
             case "deadline":
-                try {
-                    checkDescription(split);
-                    description = splitDescription(split[1]);
-                    description = checkDateAndTime(split[0], description);
-                } catch (DukeException e){
-                    throw new DukeException(e.getMessage());
-                }
-                if (description.size() == 3) {
-                    userInput = new Command(split[0], description.get(0), description.get(1), description.get(2), DEFAULT_TIME);
-                } else if (description.size() ==4) {
-                    userInput = new Command(split[0], description.get(0), description.get(1), description.get(2), description.get(3));
-                } else {
-                    throw new DukeException(Messages.MESSAGE_WRONG_DEADLINE_DATE_TIME_FORMAT);
-                }
+                userInput = addDeadline(split);
                 break;
             case "event":
-                try {
-                    checkDescription(split);
-                    description = splitDescription(split[1]);
-                    description = checkDateAndTime(split[0], description);
-                } catch (DukeException e){
-                    throw new DukeException(e.getMessage());
-                }
-                if (description.size() == 4) {
-                    userInput = new Command(split[0], description.get(0), description.get(1), description.get(2), DEFAULT_START_TIME, description.get(3), DEFAULT_TIME);
-                }
-                else if (description.size() == 5) {
-                    userInput = new Command(split[0], description.get(0), description.get(1), description.get(2), description.get(3), description.get(2), description.get(4));
-                }
-                else {
-                    userInput = new Command(split[0], description.get(0), description.get(1), description.get(2), description.get(3), description.get(4), description.get(5));
-                }
+                userInput = addEvent(split);
                 break;
             default:
                 throw new DukeException(Messages.MESSAGE_NOT_A_TASK);
         }
-
         return userInput;
     }
 
     /**
+     * Take in a DoAfter type user command and create a Command class object.
+     *
+     * @param command Command that input by the user.
+     * @return User command.
+     * @throws DukeException
+     * when the DoAfter command format is not correct.
+     */
+    public static Command addDoAfter(String command) throws DukeException{
+        Command userInput;
+        ArrayList<String> description;
+        String[] split = command.split("after", 2);
+        if (split.length != 2) {
+            throw new DukeException(Messages.MESSAGE_DOAFTER_FORMAT);
+        }
+        String reformedCommand = split[0] + "/after" + split[1];
+        description = splitDescription(reformedCommand);
+        if (description.size() < 3){
+            throw new DukeException(Messages.MESSAGE_DOAFTER_FORMAT);
+        }
+        if (description.size() <= 4 && isDate(description.get(2))) {
+            if (description.size() == 3) {
+                userInput = new Command("DoAfter", description.get(0), description.get(2).replace("/", "-"), DEFAULT_TIME);
+            } else {
+                try {
+                    description.set(3, formatTime(description.get(3)));
+                } catch (DukeException e) {
+                    throw e;
+                }
+                userInput = new Command("DoAfter", description.get(0), description.get(2).replace("/", "-"), description.get(3));
+            }
+        } else {
+            userInput = new Command("DoAfter", split[0].trim(), split[1].trim());
+        }
+        return userInput;
+    }
+
+    /**
+     * Take in a command type user command that requires an index and create a Command object.
+     *
+     * @param split Split the command that input by the user in a "command type" + "index" format.
+     * @return User command as a Command object.
+     * @throws DukeException
+     * when the index input with command "mark", "unmark" and "delete" cannot be parsed to an integer.
+     */
+    public static Command addCommandWithIndex(String[] split) throws DukeException{
+        Command userInput;
+        if (isNumeric(split[1])) {
+            int index = Integer.parseInt(split[1]) - 1;
+            userInput = new Command(split[0], index);
+        } else {
+            throw new DukeException(Messages.MESSAGE_INDEX_NOT_NUMBER);
+        }
+        return userInput;
+    }
+
+    /**
+     * Take in a Todo type user command and create a Command object.
+     *
+     * @param split Split the command that input by the user in a "command type" + "command body" format.
+     * @return User command as a Command object.
+     */
+    public static Command addTodo(String[] split) throws DukeException{
+        Command userInput;
+        try {
+            checkDescription(split);
+        } catch (DukeException e){
+            throw new DukeException(e.getMessage());
+        }
+        userInput = new Command(split[0], split[1]);
+        return userInput;
+    }
+
+    /**
+     * Take in a Deadline type user command and create a Command object.
+     *
+     * @param split Split the command that input by the user in a "command type" + "command body" format.
+     * @return User command as a Command object.
+     * @throws DukeException
+     * when wrong date and time format is used when adding "deadline".
+     */
+    public static Command addDeadline(String[] split) throws DukeException{
+        Command userInput;
+        ArrayList<String> description;
+        try {
+            checkDescription(split);
+            description = splitDescription(split[1]);
+            description = checkDateAndTime(split[0], description);
+        } catch (DukeException e){
+            throw new DukeException(e.getMessage());
+        }
+        if (description.size() == 3) {
+            userInput = new Command(split[0], description.get(0), description.get(1), description.get(2), DEFAULT_TIME);
+        } else if (description.size() ==4) {
+            userInput = new Command(split[0], description.get(0), description.get(1), description.get(2), description.get(3));
+        } else {
+            throw new DukeException(Messages.MESSAGE_WRONG_DEADLINE_DATE_TIME_FORMAT);
+        }
+        return userInput;
+    }
+
+    /**
+     * Take in an Event type user command and create a Command object.
+     *
+     * @param split Split the command that input by the user in a "command type" + "command body" format.
+     * @return User command as a Command object.
+     */
+    public static Command addEvent(String[] split) throws DukeException{
+        Command userInput;
+        ArrayList<String> description;
+        try {
+            checkDescription(split);
+            description = splitDescription(split[1]);
+            description = checkDateAndTime(split[0], description);
+        } catch (DukeException e){
+            throw new DukeException(e.getMessage());
+        }
+        if (description.size() == 4) {
+            userInput = new Command(split[0], description.get(0), description.get(1),
+                    description.get(2), DEFAULT_START_TIME, description.get(3), DEFAULT_TIME);
+        }
+        else if (description.size() == 5) {
+            userInput = new Command(split[0], description.get(0), description.get(1),
+                    description.get(2), description.get(3), description.get(2), description.get(4));
+        }
+        else {
+            userInput = new Command(split[0], description.get(0), description.get(1),
+                    description.get(2), description.get(3), description.get(4), description.get(5));
+        }
+        return userInput;
+    }
+    /**
      * Take in a String to check it can be parsed to double format.
      *
+     * @param strNum String to be checked.
      * @return true or false.
      */
     public static boolean isNumeric(String strNum) {
@@ -185,7 +287,7 @@ public class Parser {
      * Format the date/time for event command.
      *
      * @return An ArrayList of the fully split and formatted description for event.
-     * @throws DukeException for wrong date/time format.
+     * @throws DukeException for wrong Event date/time format.
      */
     public static ArrayList<String> FormatDateAndTimeForEvent(ArrayList<String> description) throws DukeException {
         String[] split;
@@ -238,7 +340,7 @@ public class Parser {
      * Format the time in a HH:mm:ss format.
      *
      */
-    public static String formatTime(String timeString) throws DukeException{
+    public static String formatTime(String timeString) throws DukeException {
         int time;
         int hour;
         int minute;
@@ -252,5 +354,18 @@ public class Parser {
         timeString = String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + "00";
         return timeString;
     }
-
+    /**
+     * Check if a given string is a date in "dd/MM/yyyy" format.
+     *
+     * @return true if yes, false if is not.
+     */
+    public static boolean isDate(String dateString) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate.parse(dateString, dateFormatter);
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+        return true;
+    }
 }

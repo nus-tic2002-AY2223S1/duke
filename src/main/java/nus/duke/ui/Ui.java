@@ -89,4 +89,8 @@ public class Ui {
         print("  " + toEcho + "\n");
         print("Now you have " + TaskList.getListCount() + " tasks in the list.\n");
     }
+
+    public static void echoMatch(String toEcho) {
+        print("  " + toEcho + "\n");
+    }
 }

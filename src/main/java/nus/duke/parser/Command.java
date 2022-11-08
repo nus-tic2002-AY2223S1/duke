@@ -16,10 +16,12 @@ import java.util.ArrayList;
 public class Command {
     static private String command;
     static private String description;
+    static private String taskBefore = null;
     static private LocalDateTime dateAndTime1;
     static private LocalDateTime dateAndTime2;
     static private String preposition;
     static private int index;
+    static private int compareCount = 0;
     private boolean isEXit = false;
 
     /**
@@ -48,6 +50,23 @@ public class Command {
     public Command(String command, String description) {
         this.command = command;
         this.description = description;
+    }
+
+    /**
+     * Command constructor for the "after" command after a specific task.
+     */
+    public Command(String command, String description, String taskBefore) {
+        this.command = command;
+        this.description = description;
+        this.taskBefore = taskBefore;
+    }
+    /**
+     * Command constructor for the "after" command after a specific date/time.
+     */
+    public Command(String command, String description, String date1, String time1) {
+        this.command = command;
+        this.description = description;
+        this.dateAndTime1 = LocalDateTime.parse(date1 + " " + time1, TaskList.STORAGE_FORMATTER);
     }
     /**
      * Command constructor for the "deadline" command.
@@ -93,6 +112,12 @@ public class Command {
         return this.index;
     }
     /**
+     * Getter of the dateAndTime2.
+     */
+    public String getTaskBefore() {
+        return this.taskBefore;
+    }
+    /**
      * Getter of the dateAndTime1.
      */
     public LocalDateTime getDateAndTime1() {
@@ -134,9 +159,13 @@ public class Command {
             case "list":
                 tasks.printList();
                 break;
+            case "find":
+                findCommand(list);
+                break;
             case "todo":
             case "deadline":
             case "event":
+            case "DoAfter":
                 try {
                     addCommand(tasks, ui, storage);
                 } catch (DukeException e){
@@ -189,6 +218,16 @@ public class Command {
         ui.echo(removedTask, "removed");
     }
     /**
+     * Search existing task list and find tasks matching to the keywords provided in the command.
+     *
+     */
+    public void findCommand(ArrayList<Task> list) {
+        Ui.print("Here are the matching tasks in your list:\n");
+        list.forEach(Task ->compare(Task));
+        Ui.print(compareCount + " task(s) found.\n");
+        compareCount = 0;
+    }
+    /**
      * Add three types of tasks "todo", "deadline" & "event" to the task list, save to a .txt file and echo off.
      */
     public void addCommand (TaskList tasks, Ui ui, Storage storage) throws DukeException {
@@ -211,6 +250,14 @@ public class Command {
             case "event":
                 list.add(new Event(description, preposition, dateAndTime1, dateAndTime2));
                 break;
+            case "DoAfter":
+                if (taskBefore == null) {
+                    list.add(new DoAfter(description, dateAndTime1));
+                } else {
+                    list.add(new DoAfter(description, taskBefore));
+                    taskBefore = null;
+                }
+                break;
             default:
         }
         tasks.changeListCount("+");
@@ -223,7 +270,16 @@ public class Command {
     public void byeCommand (Ui ui){
         ui.showByeMessage();
     }
-
+    /**
+     * Compare given task's description with the description in the find command. Print if there is a match.
+     *
+     */
+    public void compare(Task task) {
+        if (task.getDescription().contains(description)){
+            compareCount ++;
+            Ui.echoMatch(compareCount + ": " + task.toString(1) );
+        }
+    }
     /**
      * Checker before adding command, scan through the task list for any existing duplicated task.
      *
@@ -247,7 +303,8 @@ public class Command {
                     break;
                 case "event":
                     if(list.get(i).getDescription().equals(description)){
-                        if (list.get(i).getDateAndTime(1).equals(dateAndTime1.format(TaskList.DISPLAY_FORMATTER) + "-" + dateAndTime2.format(TaskList.DISPLAY_FORMATTER))) {
+                        if (list.get(i).getDateAndTime(1).equals(dateAndTime1.format(TaskList.DISPLAY_FORMATTER)
+                                + "-" + dateAndTime2.format(TaskList.DISPLAY_FORMATTER))) {
                             throw new DukeException(Messages.MESSAGE_DUPLICATE_TASK);
                         }
                     }

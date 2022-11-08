@@ -18,6 +18,7 @@ public class Event extends Task{
     public String getDescription() {
         return super.getDescription();
     }
+    @Override
     public String getDateAndTime(int mode) {
         DateTimeFormatter format;
         switch (mode) {

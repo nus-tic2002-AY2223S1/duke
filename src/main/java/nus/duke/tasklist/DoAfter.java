@@ -3,20 +3,27 @@ package nus.duke.tasklist;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 /**
- * Represents a Deadline task type extends from Task.
+ * Represents a DoAfter task type extends from Task.
  */
-public class Deadline extends Task {
+public class DoAfter extends Task {
 
-    protected String preposition;
-    static private LocalDateTime dateAndTime;
+    private String taskBefore = null;
+    private LocalDateTime dateAndTime;
     /**
-     * Constructor for Deadline task type.
+     * Constructor for DoAfter task type with specific date.
      */
-    public Deadline(String description, String preposition, LocalDateTime dateAndTime) {
+    public DoAfter(String description, LocalDateTime dateAndTime) {
         super(description);
-        this.preposition = preposition;
         this.dateAndTime = dateAndTime;
     }
+    /**
+     * Constructor for DoAfter task type with specific task.
+     */
+    public DoAfter(String description, String taskBefore) {
+        super(description);
+        this.taskBefore = taskBefore;
+    }
+
     public String getDescription() {
         return super.getDescription();
     }
@@ -39,6 +46,10 @@ public class Deadline extends Task {
     }
     @Override
     public String toString(int mode) {
-        return "[D]" +  super.toString(1) + " (" + preposition + ": " + this.getDateAndTime(mode) + ")";
+        if (taskBefore != null){
+            return "[A]" +  super.toString(1) + " (After" + ": " + this.taskBefore + ")";
+        } else {
+            return "[A]" + super.toString(1) + " (After" + ": " + this.getDateAndTime(mode) + ")";
+        }
     }
 }

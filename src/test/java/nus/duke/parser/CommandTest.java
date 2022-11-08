@@ -8,8 +8,9 @@ import nus.duke.tasklist.TaskList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test cases for Command class.")
 public class CommandTest {
@@ -34,13 +35,13 @@ public class CommandTest {
     void exceptionTesting(){
         //Exception test case for out of list range case for mark, unmark, delete.
         //List count = 2;
-        initEach("mark 3");
+        initEach("mark 100");
         DukeException exception = assertThrows(DukeException.class, ()->userInput.execute(taskList, ui, storage));
         assertEquals(Messages.MESSAGE_TASK_NUMBER_OUT_OF_RANGE, exception.getMessage());
-        initEach("unmark 3");
+        initEach("unmark 100");
         exception = assertThrows(DukeException.class, ()->userInput.execute(taskList, ui, storage));
         assertEquals(Messages.MESSAGE_TASK_NUMBER_OUT_OF_RANGE, exception.getMessage());
-        initEach("delete 4");
+        initEach("delete 100");
         exception = assertThrows(DukeException.class, ()->userInput.execute(taskList, ui, storage));
         assertEquals(Messages.MESSAGE_TASK_NUMBER_OUT_OF_RANGE, exception.getMessage());
         //Exceptional test case for duplicated task.
