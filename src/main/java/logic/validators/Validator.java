@@ -11,6 +11,7 @@ import model.Chat;
 
 import static common.constants.CommonConstant.AT;
 import static common.constants.CommonConstant.BY;
+import static common.constants.CommonConstant.DELIMITER;
 import static common.utils.TaskValidationUtil.duplicatedTaskValidation;
 import static common.utils.TaskValidationUtil.emptyTaskListValidation;
 import static common.utils.TaskValidationUtil.regexValidation;
@@ -19,6 +20,10 @@ import static common.utils.TaskValidationUtil.unmarkedTaskValidation;
 import static common.utils.TaskValidationUtil.notExistTaskValidation;
 
 public class Validator {
+    public static final String dateTimeRegex = "(\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])\\s+([01]?[0-9]|2[0-3]):[0-5][0-9])";
+
+    public static final String periodicalRegex = "/\\w+";
+
     /**
      * Return validates todo command
      *
@@ -42,7 +47,15 @@ public class Validator {
      * @throws  DuplicatedTaskException
      */
     public static void validateEvent(String description, Chat chat) throws InvalidTaskDescriptionException, DuplicatedTaskException {
-        String regex = chat.getCommand() + "\\s+(\\w+\\s+)+/" + AT + "\\s+\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])";
+        String regex;
+        int firstIndex = chat.getInput().indexOf(DELIMITER);
+        int lastIndex = chat.getInput().lastIndexOf(DELIMITER);
+        if (firstIndex != lastIndex) {
+            regex = chat.getCommand() + "\\s+(\\w+\\s+)+/" + AT + "\\s+" + dateTimeRegex + "\\s+" + periodicalRegex;
+        } else {
+            regex = chat.getCommand() + "\\s+(\\w+\\s+)+/" + AT + "\\s+" + dateTimeRegex;
+        }
+
         regexValidation(regex, chat);
         duplicatedTaskValidation(description, chat);
     }
@@ -56,7 +69,15 @@ public class Validator {
      * @throws  DuplicatedTaskException
      */
     public static void validateDeadline(String description, Chat chat) throws InvalidTaskDescriptionException, DuplicatedTaskException {
-        String regex = chat.getCommand() + "\\s+(\\w+\\s+)+/" + BY + "\\s+\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])";
+        String regex;
+        int firstIndex = chat.getInput().indexOf(DELIMITER);
+        int lastIndex = chat.getInput().lastIndexOf(DELIMITER);
+        if (firstIndex != lastIndex) {
+            regex = chat.getCommand() + "\\s+(\\w+\\s+)+/" + BY + "\\s+" + dateTimeRegex + "\\s+" + periodicalRegex;
+        } else {
+            regex = chat.getCommand() + "\\s+(\\w+\\s+)+/" + BY + "\\s+" + dateTimeRegex;
+        }
+
         regexValidation(regex, chat);
         duplicatedTaskValidation(description, chat);
     }

@@ -25,7 +25,7 @@ public class FileManagerTest {
         try {
             Path filePath = Paths.get(FILE_PATH);
             ArrayList<Task> taskList = new ArrayList<>();
-            Chat chat = new Chat(deadline, "deadline homework /by 2022-11-14", taskList);
+            Chat chat = new Chat(deadline, "deadline homework /by 2022-11-14 11:30", taskList);
             int testFileSizeInBytes = 25;
 
             Files.createDirectories(filePath.getParent());

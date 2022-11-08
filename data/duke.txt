@@ -1,0 +1,2 @@
+T|0|homework
+E|1|meeting|Dec 12 2022 11:00|daily

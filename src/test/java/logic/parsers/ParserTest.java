@@ -22,11 +22,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ParserTest {
     @Test
     @DisplayName("happy path - add deadline command")
-    public void parseChatHappyPathTest() throws EmptyTaskListException, DuplicatedTaskException, UnmarkedTaskException, InvalidTaskDescriptionException, NotExistTaskException, MarkedTaskException {
+    public void parseChatHappyPathTest() throws EmptyTaskListException, DuplicatedTaskException, UnmarkedTaskException, NotExistTaskException, MarkedTaskException {
         try {
             ConsoleUi ui = new ConsoleUi();
             ArrayList<Task> taskList = new ArrayList<>();
-            Chat chat = new Chat(deadline, "deadline homework /by 2022-11-14", taskList);
+            Chat chat = new Chat(deadline, "deadline homework /by 2022-11-14 12:30", taskList);
 
             Command addDeadlineCom = new AddDeadlineCommand(ui, chat);
             addDeadlineCom.execute();
@@ -38,7 +38,7 @@ public class ParserTest {
 
     @Test
     @DisplayName("unhappy path - add deadline command")
-    public void parseChatUnhappyPathTest() throws EmptyTaskListException, DuplicatedTaskException, UnmarkedTaskException, InvalidTaskDescriptionException, NotExistTaskException, MarkedTaskException {
+    public void parseChatUnhappyPathTest() throws EmptyTaskListException, DuplicatedTaskException, UnmarkedTaskException, NotExistTaskException, MarkedTaskException {
         try {
             ConsoleUi ui = new ConsoleUi();
             ArrayList<Task> taskList = new ArrayList<>();

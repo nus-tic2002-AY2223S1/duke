@@ -44,6 +44,7 @@ public class FileManager {
     public static void loadFile(Chat chat) throws FileException {
         try {
             Path filePath = Paths.get(FILE_PATH);
+            assert (!Files.exists(filePath)) : "File is supposed to exist";
 
             // if file does not exist, create file
             if (!Files.exists(filePath)) {
