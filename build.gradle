@@ -23,7 +23,7 @@ repositories {
 dependencies {
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.39.3.0'
 
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.0'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.9.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.0'
     String javaFxVersion = '11'
@@ -40,6 +40,9 @@ dependencies {
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'win'
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'mac'
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'linux'
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testCompile "org.testfx:testfx-junit5:4.0.16-alpha"
+    testCompile "org.testfx:testfx-core:4.0.16-alpha"
 }
 
 test {
@@ -57,7 +60,7 @@ test {
 }
 
 dependencies {
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.0'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.9.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.0'
 }
 
