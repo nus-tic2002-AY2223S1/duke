@@ -1,14 +1,12 @@
 package ui.gui;
 
 import data.FileInfo;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import task.TaskInterface;
 import ui.UIDelegate;
 import ui.UIInterface;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class DukeGUI implements UIInterface, ScreenDelegate {
     private String name;

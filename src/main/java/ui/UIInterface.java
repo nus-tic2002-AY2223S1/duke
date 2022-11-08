@@ -20,6 +20,7 @@ public interface UIInterface {
      * If the task is not add successfuly this function will not get called
      *
      * @return void
+     * @param task the newly added task
      */
     public void addSuccess(TaskInterface task);
     /**

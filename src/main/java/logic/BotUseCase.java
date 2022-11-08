@@ -1,11 +1,10 @@
 package logic;
 
 import task.TaskInterface;
-
 import java.util.ArrayList;
 
 /**
- * The class that can be extend to handle all the bot logic
+ * The class that can be extend to listen to when specific bot logic happens
  */
 public abstract class BotUseCase {
     public BotCallback delegate;
