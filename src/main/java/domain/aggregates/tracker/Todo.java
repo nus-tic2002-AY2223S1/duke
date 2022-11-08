@@ -69,6 +69,18 @@ public class Todo extends Task {
     }
 
     @Override
+    public boolean find(String keyword) {
+        boolean result = false;
+        try {
+            result = this.id == CommonHelper.getNumber(keyword);
+        } catch (Exception ex)
+        {
+            result = this.name.toLowerCase().contains(keyword.toLowerCase());
+        }
+        return result;
+    }
+
+    @Override
     public void update(String remarks, boolean isSpecified) throws DukeArgumentException {
         throw new DukeArgumentException(String.format(MessageConstants.TASK_SNOOZE_NOT_APPLICABLE, this.id));
     }

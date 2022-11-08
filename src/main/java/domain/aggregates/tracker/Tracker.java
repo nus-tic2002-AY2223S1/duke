@@ -60,6 +60,15 @@ public class Tracker {
         }
     }
 
+    private void printResults(ArrayList<Task> t){
+        if(t.size() > 0) {
+            CommonHelper.printMessage(String.format(MessageConstants.FILTER_RESULTS_FOUND, t.size()));
+            printList(t);
+        }
+        else
+            CommonHelper.printMessage(MessageConstants.NO_RESULTS_FOUND);
+    }
+
     /**
      * Add task to tracker - returns boolean (Success: True, Error: False)
      * Validate task against existing tasks to make sure no duplicate records are added
@@ -131,12 +140,7 @@ public class Tracker {
      */
     public void filterByDates(LocalDate start, LocalDate end){
         ArrayList<Task> filtered = this.tasks.stream().filter(x -> x.compare(start, end)).collect(Collectors.toCollection(ArrayList<Task>::new));
-        if(filtered.size() > 0) {
-            CommonHelper.printMessage(String.format(MessageConstants.FILTER_RESULTS_FOUND, filtered.size()));
-            printList(filtered);
-        }
-        else
-            CommonHelper.printMessage(MessageConstants.NO_RESULTS_FOUND);
+        printResults(filtered);
     }
 
     public boolean snooze(int n, String newDateTime, boolean isNewDateTimeSpecified) throws DukeValidationException, DukeNotFoundException, DukeArgumentException {
@@ -151,5 +155,12 @@ public class Tracker {
             return true;
         }
         return false;
+    }
+
+    public void find(String keyword) throws DukeValidationException {
+        if(CommonHelper.isEmptyOrNull(keyword))
+            throw new DukeValidationException(String.format(MessageConstants.TASK_VALIDATION_EMPTY_ERROR, "keyword"));
+        ArrayList<Task> results = this.tasks.stream().filter(x -> x.find(keyword)).collect(Collectors.toCollection(ArrayList<Task>::new));
+        printResults(results);
     }
 }

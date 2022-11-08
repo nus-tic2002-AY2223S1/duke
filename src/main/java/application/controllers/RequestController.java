@@ -86,6 +86,10 @@ public class RequestController {
         snoozeTaskCommandHandler(id, date, isDateSpecified);
     }
 
+    public void find(String keyword) throws DukeValidationException {
+        findTaskCommandHandler(keyword);
+    }
+
     /**
      * Hello keyword behaviour: Display Welcome message
      */
@@ -153,6 +157,11 @@ public class RequestController {
      */
     private void snoozeTaskCommandHandler(int id, String date, boolean isDateSpecified) throws DukeValidationException, DukeNotFoundException, DukeFileException, DukeArgumentException {
         SnoozeTaskCommand command = new SnoozeTaskCommand(tracker, storage, id, date, isDateSpecified);
+        command.execute();
+    }
+
+    private void findTaskCommandHandler(String keyword) throws DukeValidationException {
+        FindTaskCommand command = new FindTaskCommand(tracker, storage, keyword);
         command.execute();
     }
 }

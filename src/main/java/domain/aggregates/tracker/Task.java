@@ -58,6 +58,8 @@ public abstract class Task {
 
     public abstract void update(String remarks, boolean isSpecified) throws DukeValidationException, DukeArgumentException;
 
+    public abstract boolean find(String keyword);
+
     /**
      * Getters & Setters for properties
      */

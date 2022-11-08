@@ -74,13 +74,13 @@ public class Ui {
                         controller.list();
                         break;
                     case TODO:
-                        controller.todo(inp.replace("todo","").trim());
+                        controller.todo(inp.replace(ActionKeyword.TODO.label,"").trim());
                         break;
                     case EVENT:
-                        controller.event(inp.replace("event","").trim());
+                        controller.event(inp.replace(ActionKeyword.EVENT.label,"").trim());
                         break;
                     case DEADLINE:
-                        controller.deadline(inp.replace("deadline","").trim());
+                        controller.deadline(inp.replace(ActionKeyword.DEADLINE.label,"").trim());
                         break;
                     case MARK:
                         controller.mark(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()));
@@ -92,12 +92,15 @@ public class Ui {
                         controller.delete(CommonHelper.getNumber(inp.replaceAll("[^0-9]", "").trim()));
                         break;
                     case FILTER:
-                        controller.filter(inp.replace("filter","").trim());
+                        controller.filter(inp.replace(ActionKeyword.FILTER.label,"").trim());
                         break;
                     case SNOOZE:
                         boolean isDateSpecified = inp.contains("/");
                         int id = CommonHelper.getNumber(inp.split("/")[0].replaceAll("[^0-9]", "").trim());
-                        controller.snooze(id, inp.replace("snooze","").replace("/", "").replace(String.valueOf(id), "").trim(), isDateSpecified);
+                        controller.snooze(id, inp.replace(ActionKeyword.SNOOZE.label,"").replace("/", "").replace(String.valueOf(id), "").trim(), isDateSpecified);
+                        break;
+                    case FIND:
+                        controller.find(inp.replace(ActionKeyword.FIND.label,"").trim());
                         break;
                     case HI:
                     case HELLO:

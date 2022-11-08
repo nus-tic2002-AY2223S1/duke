@@ -18,7 +18,8 @@ public enum ActionKeyword {
     HELLO("hello"),
     BYE("bye"),
     FILTER("filter"),
-    SNOOZE("snooze");
+    SNOOZE("snooze"),
+    FIND("find");
 
     public final String label;
     private ActionKeyword(String label) {

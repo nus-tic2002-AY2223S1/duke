@@ -15,7 +15,8 @@ public class Deadline extends Task{
      */
     protected LocalDateTime dueDateTime;
     protected String shortName = "D";
-    private Pattern p = Pattern.compile(".*([01]?[0-9]|2[0-3]):[0-5][0-9].*");
+    private Pattern dateTimePattern = Pattern.compile(".*([01]?[0-9]|2[0-3]):[0-5][0-9].*");
+    private Pattern datePattern = Pattern.compile(".*([01]?[0-9]|2[0-3])");
 
     /**
      * Deadline is a Task
@@ -27,9 +28,9 @@ public class Deadline extends Task{
         String[] f = CommonHelper.formatPassedName(n, "by");
         validate(f);
         this.name = f[0].trim();
-        if(p.matcher(f[1].trim()).matches())
+        if(dateTimePattern.matcher(f[1].trim()).matches())
             this.dueDateTime = CommonHelper.convertStringToDateTime(f[1].trim());
-        else
+        else if(datePattern.matcher(f[1].trim()).matches())
             this.dueDateTime = CommonHelper.convertStringToDate(f[1].trim());
     }
 
@@ -89,14 +90,36 @@ public class Deadline extends Task{
     @Override
     public void update(String remarks, boolean isSpecified) throws DukeValidationException {
         if(!CommonHelper.isEmptyOrNull(remarks) && isSpecified) {
-            if (p.matcher(remarks.trim()).matches())
+            if(dateTimePattern.matcher(remarks.trim()).matches())
                 this.dueDateTime = CommonHelper.convertStringToDateTime(remarks.trim());
-            else
+            else if(datePattern.matcher(remarks.trim()).matches())
                 this.dueDateTime = CommonHelper.convertStringToDate(remarks.trim());
         } else if(!isSpecified)
             this.dueDateTime = this.dueDateTime.plusDays(1);
         else
             throw new DukeValidationException(MessageConstants.TASK_SNOOZE_DATETIME_NOT_PASSED);
+    }
+
+    @Override
+    public boolean find(String keyword) {
+        boolean result;
+        try {
+            result = this.id == CommonHelper.getNumber(keyword);
+        } catch (Exception ex)
+        {
+            result = this.name.toLowerCase().contains(keyword.toLowerCase());
+            try {
+                if (!result){
+                    if (dateTimePattern.matcher(keyword.trim()).matches())
+                        result = this.dueDateTime.equals(CommonHelper.convertStringToDateTime(keyword.trim()));
+                    else if (datePattern.matcher(keyword.trim()).matches())
+                        result = this.dueDateTime.toLocalDate().equals(CommonHelper.convertStringToDate(keyword.trim()).toLocalDate());
+                }
+            }catch (Exception e){
+                result = false;
+            }
+        }
+        return result;
     }
 
     /**
