@@ -87,11 +87,14 @@ public class Ui implements AutoCloseable {
         print("Oops! " + e.getMessage());
     }
     public void printWelcome() {
-        String logo = "    =    |\\    | |     | ======   |=====\n"
-                + "   / \\   | \\   |  |   |  ||       |     =\n"
-                + "  /___\\  |  \\  |   | |   ||====   |=====\n"
-                + " /-----\\ |   \\ |    |    ||       |   \\\n"
-                + "/       \\|    \\|    |    ======   |    \\\n";
+        String logo =
+
+                "     ___  _   ___   _____________ \n" +
+                "    / _ \\| \\ | \\ \\ / |  ___| ___ \\\n" +
+                "   / /_\\ |  \\| |\\ V /| |__ | |_/ /\n" +
+                "   |  _  | . ` | \\ / |  __||    / \n" +
+                "   | | | | |\\  | | | | |___| |\\ \\ \n" +
+                "   \\_| |_\\_| \\_/ \\_/ \\____/\\_| \\_|";
         System.out.println( logo);
         print(
                 "Hello! I'm Anyer.\n"
