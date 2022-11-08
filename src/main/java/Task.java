@@ -27,4 +27,7 @@ public class Task {
         return description.toString();
     }
 
+    public int getTaskCount() {
+        return taskCount;
+    }
 }

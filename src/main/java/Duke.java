@@ -10,8 +10,9 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         System.out.println("\nHello! I'm Duke\nWhat can I do for you?\n");
        
-        Task[] list = new Task[100];
-        int next = 0, taskNo = 0;
+        Collections list = new Collections();
+        //Task[] list = new Task[100];
+        int next = 0;
         String key, new_input;
 
         Scanner in = new Scanner(System.in);
@@ -26,37 +27,38 @@ public class Duke {
                     return;
             }
             else if (key.equalsIgnoreCase("list")) {
-                System.out.println("Here are the task in your list:\n");
-                for (int i = 0; i < next; i++) {
-                    System.out.println(i+1 + ". " + list[i].description.toString());
+                if (list.getCount() == 0) {
+                    System.out.println("List is empty!");
+                    continue;
+                }   else {
+                        System.out.println("Here are the task in your list:\n");
+                    for (int i = 1; i <= list.getCount(); i++) {
+                        System.out.println(i + ". " + list.getTasks().get(i-1).getDescription());
+                    }
                 }
             }
             else if (key.equalsIgnoreCase("delete")) {
                 if (tokens[1].isEmpty() || Integer.parseInt(tokens[1]) > next) {
                     throw new ArrayIndexOutOfBoundsException("Selected task does not exist");
+                } else {
+                    list.deleteTask(Integer.valueOf(tokens[1]));
                 }
                 
             }
             else if (key.equalsIgnoreCase("mark")) {
-                taskNo = Integer.parseInt(tokens[1]) - 1;
-                System.out.println("Nice! I've marked this task as done:");
-                list[taskNo].mark();
-                list[taskNo].description.replace(4, 5, "X");;
-                System.out.println(list[taskNo].description.toString());
+                list.markTask(Integer.valueOf(tokens[1]) - 1);
             }
             else if (key.equalsIgnoreCase("unmark")) {
-                taskNo = Integer.parseInt(tokens[1]) - 1;
-                System.out.println("OK, I've marked this task as not done yet:");
-                list[taskNo].unmark();
-                list[taskNo].description.replace(4, 5, " ");
-                System.out.println(list[taskNo].description.toString());
+                    int j = Integer.valueOf(tokens[1]) - 1;
+                    list.unmarkTask(Integer.valueOf(tokens[1]) - 1);
             }
             else if (key.equalsIgnoreCase("todo")) {
                 if (tokens[1].isEmpty()) {
                     throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
                 }
                 new_input = input.replace(key, "[T][ ]");
-                list[next] = new Todo(new_input);
+                Task temp = new Todo(new_input);
+                list.addTask(temp);
                 next++;
             }
             else if (key.equalsIgnoreCase("deadline")) {
@@ -64,7 +66,8 @@ public class Duke {
                     throw new DukeException("OOPS!!! The description of a deadline cannot be empty.");
                 }
                 new_input = input.replace(key, "[D][ ]");
-                list[next] = new Deadline(new_input);
+                Task temp = new Deadline(new_input);
+                list.addTask(temp);
                 next++;
             }
             else if (key.equalsIgnoreCase("event")) {
@@ -72,7 +75,8 @@ public class Duke {
                     throw new DukeException("OOPS!!! The description of a event cannot be empty.");
                 }
                 new_input = input.replace(key, "[E][ ]");
-                list[next] = new Event(new_input);
+                Task temp = new Event(new_input);
+                list.addTask(temp);
                 next++;
             }
             else {
