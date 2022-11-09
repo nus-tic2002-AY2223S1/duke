@@ -1,5 +1,6 @@
 package duke.gui;
 
+
 import java.awt.Desktop;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
@@ -349,6 +350,11 @@ public class MainWindow extends AnchorPane {
     private void clearChatAction() {
         Database.dropTable();
         refreshAction();
+    }
+
+    @FXML
+    public static void clearChat() {
+        Database.dropTable();
     }
 
     @FXML

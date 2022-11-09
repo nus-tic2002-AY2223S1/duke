@@ -17,18 +17,21 @@
 <AnchorPane fx:id="rootPane" maxHeight="1000.0" maxWidth="800.0" minHeight="1000.0" minWidth="800.0" prefHeight="1000.0"
             prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="duke.gui.MainWindow">
-    <Label fx:id="chatLabel" alignment="CENTER" layoutY="34.0" prefHeight="26.0" prefWidth="800.0" text="Duke">
+    <Label id="chatLabel" fx:id="chatLabel" alignment="CENTER" layoutY="34.0" prefHeight="26.0" prefWidth="800.0"
+           text="Duke">
         <font>
             <Font size="20.0"/>
         </font>
     </Label>
-    <Label fx:id="status" alignment="CENTER" contentDisplay="CENTER" layoutY="60.0" prefHeight="17.0" prefWidth="800.0"
+    <Label id="status" fx:id="status" alignment="CENTER" contentDisplay="CENTER" layoutY="60.0" prefHeight="17.0"
+           prefWidth="800.0"
            style="-fx-text-fill: &quot;61a3ff&quot;;" text="Online"/>
     <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" hvalue="1.0" layoutY="85.0" prefHeight="855.0" prefWidth="800.0"
                 vvalue="1.0">
         <VBox fx:id="dialogContainer"/>
     </ScrollPane>
-    <TextField fx:id="userInput" layoutX="11.0" layoutY="949.0" maxHeight="41.0" maxWidth="638.0" minHeight="41.0"
+    <TextField id="userInput" fx:id="userInput" layoutX="11.0" layoutY="949.0" maxHeight="41.0" maxWidth="638.0"
+               minHeight="41.0"
                minWidth="511.0" onAction="#handleUserInput" prefHeight="41.0" prefWidth="638.0"
                style="-fx-background-radius: 10;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="11.0"
                AnchorPane.rightAnchor="151.0">
@@ -56,7 +59,7 @@
                 <Tooltip text="Send"/>
             </tooltip>
         </Label>
-        <Label fx:id="listButton" alignment="CENTER" onMouseClicked="#listAction"
+        <Label id="listButton" fx:id="listButton" alignment="CENTER" onMouseClicked="#listAction"
                style="-fx-graphic: url('/view/icons8-reminders-35.png');">
             <padding>
                 <Insets bottom="5.0" left="2.0" right="2.0" top="5.0"/>
@@ -68,7 +71,7 @@
                 <Tooltip text="List"/>
             </tooltip>
         </Label>
-        <Label fx:id="helpButton" alignment="CENTER" onMouseClicked="#helpAction"
+        <Label id="helpButton" fx:id="helpButton" alignment="CENTER" onMouseClicked="#helpAction"
                style="-fx-graphic: url('/view/icons8-ask-35.png');">
             <padding>
                 <Insets bottom="5.0" left="2.0" right="2.0" top="5.0"/>
@@ -83,7 +86,8 @@
     </HBox>
     <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="27.0" prefWidth="800.0">
         <Menu fx:id="menuFile" mnemonicParsing="false" text="File">
-            <MenuItem fx:id="menuRefreshButton" mnemonicParsing="false" onAction="#refreshAction" text="Refresh"/>
+            <MenuItem id="menuRefreshButton" fx:id="menuRefreshButton" mnemonicParsing="false" onAction="#refreshAction"
+                      text="Refresh"/>
             <MenuItem fx:id="menuCloseButton" mnemonicParsing="false" onAction="#exitAction" text="Quit"/>
         </Menu>
         <Menu fx:id="menuSettings" mnemonicParsing="false" text="Settings">
