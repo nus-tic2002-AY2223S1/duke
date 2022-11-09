@@ -15,8 +15,10 @@ import static ui.UI.*;
 
 public class TaskList {
     //contains the task list e.g., it has operations to add/delete tasks in the list
+
     public static List<Task> taskList = new ArrayList<>();
 
+    // to add task into task list and print message
     public void addTask(Task task) {
         taskList.add(task);
         printMessage(MESSAGE_TASK_ADDED);
@@ -24,7 +26,9 @@ public class TaskList {
         System.out.println("\nNow you have " + taskList.size() + " tasks in the list.");
     }
 
+    // to delete task into task list and print message
     public void deleteTask(String[] inputSplit, String input) {
+        // to ensure that list is not empty and whether the input is valid
         if (!checkEmptyTaskList() && checkValidCommand(inputSplit, input)) {
             try {
                 int deleteIndex = Integer.parseInt(inputSplit[1]);
@@ -42,8 +46,10 @@ public class TaskList {
         } else printError(INVALID_DELETE_INPUT);
     }
 
+    // to print the list of task
     public void listTask(String[] inputSplit, String input) {
         int taskCount = 0;
+        // to ensure that list is not empty and whether the input is valid
         if (!checkEmptyTaskList() && checkValidCommand(inputSplit, input)) {
             printLine();
             System.out.println("Here are the tasks in your list:");
@@ -55,7 +61,9 @@ public class TaskList {
         }
     }
 
+    // to mark into task list and print message
     public void markTask(String[] inputSplit, String input) {
+        // to ensure that list is not empty and whether the input is valid
         if (!checkEmptyTaskList() && checkValidCommand(inputSplit, input)) {
             try {
                 int markedIndex = Integer.parseInt(inputSplit[1]);
@@ -69,7 +77,9 @@ public class TaskList {
         }
     }
 
+    // to unmark into task list and print message
     public void unmarkTask(String[] inputSplit, String input) {
+        // to ensure that list is not empty and whether the input is valid
         if (!checkEmptyTaskList() && checkValidCommand(inputSplit, input)) {
             try {
                 int unmarkedIndex = Integer.parseInt(inputSplit[1]);
@@ -83,8 +93,10 @@ public class TaskList {
         }
     }
 
+    // to add todo task into task list and print message
     public void todoTask(String input, String[] inputSplit) {
         try {
+            // to check if the input is valid
             if (checkValidCommand(inputSplit, input)) {
                 printLine();
                 addTask(Parser.parseTodoInput(input));
@@ -97,8 +109,10 @@ public class TaskList {
         }
     }
 
+    // to add deadline task into task list and print message
     public void deadlineTask(String input, String[] inputSplit) {
         try {
+            // to check if input is valid
             if (checkValidCommand(inputSplit, input)) {
                 printLine();
                 addTask(Parser.parseDeadlineInput(input));
@@ -111,8 +125,10 @@ public class TaskList {
         }
     }
 
+    // to add event task into task list and print message
     public void eventTask(String input, String[] inputSplit) {
         try {
+            // to check if input is valid
             if (checkValidCommand(inputSplit, input)) {
                 printLine();
                 addTask(Parser.parseEventInput(input));
@@ -125,6 +141,7 @@ public class TaskList {
         }
     }
 
+    // check for empty list, return true if list is empty
     public boolean checkEmptyTaskList() {
         if (taskList.isEmpty()) {
             printLine();
@@ -135,16 +152,21 @@ public class TaskList {
         return false;
     }
 
+    // check for input, return true if input is valid
     public boolean checkValidCommand(String[] inputSplit, String input) {
         try {
+            // if task name is delete, checks format of input
             if (inputSplit[0].equals("delete") && checkInteger(inputSplit[1])
                     && inputSplit.length == 2)
                 return true;
 
+            // if task name is delete and format of input
             if (inputSplit[0].equals("todo") && inputSplit.length > 1)
                 return true;
 
+            // if task name is deadline
             if (inputSplit[0].equals("deadline")) {
+                // check if input contains "by", input format and date format
                 if (!checkDeadlineContainsBy(input) || inputSplit.length < 2 || !checkDateInput(inputSplit,input)) {
                     printLine();
                     printError(INVALID_DEADLINE_INPUT);
@@ -153,7 +175,9 @@ public class TaskList {
                 } else return true;
             }
 
+            // if task name is event
             if (inputSplit[0].equals("event")) {
+                // check if input contains "at", input format and date format
                 if (!checkEventContainsAt(input) || inputSplit.length < 2 || !checkDateInput(inputSplit,input)) {
                     printLine();
                     printError(INVALID_EVENT_INPUT);
@@ -162,28 +186,35 @@ public class TaskList {
                 }
                 else return true;
             }
-
+            // if task name is mark
             if (inputSplit[0].equals("mark")) {
+                // check for mark input format
                 if (checkInteger(inputSplit[1]) && inputSplit.length == 2)
                     return true;
             }
-
-            if (inputSplit[0].equals("unmark") && checkInteger(inputSplit[1]) && inputSplit.length == 2)
+            // if task name is unmark
+            if (inputSplit[0].equals("unmark")) {
+                // check for unmark input format
+                if (checkInteger(inputSplit[1]) && inputSplit.length == 2)
                 return true;
-
+            }
+            // check for list input format
             if (inputSplit[0].equals("list") && inputSplit.length == 1)
                 return true;
 
+            // check for bye input format
             if (inputSplit[0].equals("bye") && inputSplit.length == 1)
                 return true;
 
             else {
+                // print error if input is invalid and return false
                 printLine();
                 printError(INVALID_INPUT);
                 printLine();
                 return false;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
+            // print error if exception and return false
             printLine();
             printError(INVALID_INPUT);
             printLine();
@@ -191,17 +222,21 @@ public class TaskList {
         }
     }
 
+    // check if Event input contains "at", if contains at, return true
     public boolean checkEventContainsAt(String input){
         if (input.contains(" /at "))
             return true;
         else return false;
     }
+
+    // check if Deadline input contains "/by", if contains by, return true
     public boolean checkDeadlineContainsBy(String input){
         if (input.contains(" /by "))
             return true;
         else return false;
     }
 
+    // check if string is an integer
     public boolean checkInteger(String s){
         try{
             Integer.parseInt(s);
@@ -211,6 +246,7 @@ public class TaskList {
         return true;
     }
 
+    // check if date is in the correct pattern ("dd-MM-yyyy"). if pattern matches input, return true
     public boolean checkDateInput(String[] inputSplit, String input){
         String datePattern = "\\d{1,2}-\\d{1,2}-\\d{4}";
         try {
@@ -234,6 +270,8 @@ public class TaskList {
             return false;
         }
     }
+
+    // to validate that date exists
     public boolean validateDateFormat(String input){
         SimpleDateFormat sdfrmt = new SimpleDateFormat("dd-MM-yyyy");
         sdfrmt.setLenient(false);
@@ -244,7 +282,7 @@ public class TaskList {
         /* Date format is invalid */
         catch (ParseException e)
         {
-            System.out.println(input+" is Invalid Date format");
+            System.out.println(input+" is an INVALID Date format");
             return false;
         }
         /* Return true if date format is valid */
@@ -253,11 +291,12 @@ public class TaskList {
     }
 
 
+    // get task list size
     public int size() {
-        int count = taskList.size();
-        return count;
+        return taskList.size();
     }
 
+    // get task list
     public List<Task> getTaskList() {
         return this.taskList;
     }

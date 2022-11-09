@@ -14,16 +14,19 @@ public class Event extends Task {
         this.at = at;
     }
 
+    // event string to print
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (at: " + convertDateFormat(getDate()) + ")";
     }
 
-//    public LocalDate thisDate(){return this.localDate;}
+    // convert String date to LocalDate format
     @Override
     public LocalDate getDate() {
         return Parser.StringToDate(this.at);
     }
+
+    // convert LocalDate to ideal date format
     public String convertDateFormat(LocalDate at){
         return Parser.DateToString(at);
     }

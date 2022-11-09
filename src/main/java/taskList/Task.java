@@ -2,45 +2,48 @@ package taskList;
 
 import java.time.LocalDate;
 
+import static ui.TaskMessages.*;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
-    protected LocalDate localDate;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
+
     public String getDescription(){
         return this.description;
     }
 
 
+    // mark done task with X
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "X" : " ");
     }
 
+    // return isDone is true if task is "mark" and print message
     public void markAsDone(){
         this.isDone=true;
-        System.out.println("____________________________________________________________\n" +
-                "Nice! I've marked this task as done: \n "+this.getDescription()+
-                "\n____________________________________________________________" );
+        ui.UI.printLine();
+        ui.UI.printMessage(MESSAGE_MARKED_TASK + this.getDescription());
+        ui.UI.printLine();
     }
 
+    // return isDone is false if task is "unmark" and print message
     public void markAsUndone(){
         this.isDone=false;
-        System.out.println("____________________________________________________________\n" +
-                "OK, I've marked this task as not done yet: \n" + this.getDescription()
-                + "\n____________________________________________________________");
+        ui.UI.printLine();
+        ui.UI.printMessage(MESSAGE_UNMARKED_TASK + this.getDescription());
+        ui.UI.printLine();
     }
 
+    // string to print
     public String toString() {
         return "[" + this.getStatusIcon() + "]   " + this.getDescription();
     }
 
-    //    public LocalDate thisDate(){return this.localDate;}
+    // get date for event and deadline
     public LocalDate getDate() { return null; }
-
-    //    public LocalDate thisDate(){return this.localDate;}
-
 }

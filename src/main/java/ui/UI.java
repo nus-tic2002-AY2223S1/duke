@@ -7,14 +7,17 @@ import static ui.TaskMessages.*;
 
 public class UI {
 
+    // print task
     public static void printTask(String task){
         System.out.println(task.toString());
     }
 
+    // print line for formatting
     public static void printLine(){
         System.out.println("____________________________________________________________");
     }
 
+    // print intro logo
     public static void printIntro(){
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -26,16 +29,22 @@ public class UI {
         printLine();
     }
 
+    // to simplify printing of error
     public static void printError(String message) {
         System.out.println(message);
     }
+
+    // to simplify printing of messages
     public static void printMessage(String message) {
         System.out.println(message);
     }
+
+    // to simplify printing general errors
     public static void printStandardError() {
         System.out.println("Sorry, I don't understand what you mean!");
     }
 
+    // to retrieve and store user command
     public static String getUserCommand() {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter Task Action: ");
@@ -44,6 +53,7 @@ public class UI {
         return fullInputLine;
     }
 
+    // print bye message
     public static void printBye(){
         System.out.println(MESSAGE_EXIT);
     }

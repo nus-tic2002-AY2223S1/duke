@@ -9,23 +9,12 @@ import java.io.IOException;
 import java.io.FileWriter;
 
 public class Storage {
-//    private Storage storage;
     private static TaskList taskList;
-    private static String path;
-//    private UI ui;
 
     public static String homeDirectory(){
         String homeDirectory = System.getProperty("user.home");
         return homeDirectory;
     }
-//    private static void writeToFile(TaskList taskList) throws IOException {
-//        // write to file
-//        FileWriter fw = new FileWriter(path);
-//        for (Task arr : taskList) {
-//            fw.write(arr.toString() + System.lineSeparator());
-//        }
-//        fw.close();
-//    }
 
     private static void writeLineToFile(String filePath, Task task) throws IOException {
         // write to file
@@ -46,6 +35,7 @@ public class Storage {
         File home = new File(homeDirectory());
         taskList = new TaskList();
 
+        // if file path does not exist, throw exception
         if (!home.exists()) {
             throw new InvalidStorageFilePathException();
         }
