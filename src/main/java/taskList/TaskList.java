@@ -235,7 +235,7 @@ public class TaskList {
         }
     }
     public boolean validateDateFormat(String input){
-        SimpleDateFormat sdfrmt = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat sdfrmt = new SimpleDateFormat("dd-MM-yyyy");
         sdfrmt.setLenient(false);
         try
         {
