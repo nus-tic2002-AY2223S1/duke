@@ -21,16 +21,21 @@ public class CommandParser {
      */
     public static Command parseStringArrToCommand(String[] inputArr) throws DukeException {
         
-        assert inputArr.length > 0: "Empty input array";
+        assert inputArr.length > 0 : "Empty input array";
         
         Command cmd = new Command();
         cmd.setCommand(inputArr[0]);
+        CommandType type = CommandType.valueOf(cmd.getCommand().toUpperCase());
         
         if (inputArr.length < 2) {
-            return cmd;
+            if (type == CommandType.LIST || type == CommandType.BYE) {
+                return cmd;
+            } else {
+                throw new DukeException(ErrorMessage.ERROR_MESSAGE_DESCRIPTION_EMPTY.toString());
+            }
         }
         
-        switch (CommandType.valueOf(cmd.getCommand().toUpperCase())) {
+        switch (type) {
         case MARK:
         case UNMARK:
         case DELETE:
@@ -70,7 +75,12 @@ public class CommandParser {
      * @throws DukeException
      */
     private static void setDescriptionDateTime(Command cmd, String content, String splitter) throws DukeException {
-        assert cmd != null: "Command object is null";
+        assert cmd != null : "Command object is null";
+        
+        if (!content.contains(splitter)) {
+            throw new DukeException(ErrorMessage.ERROR_MESSAGE_DATETIME_EMPTY.toString());
+        }
+        
         String description = content.substring(0, content.lastIndexOf(splitter));
         String datetime = content.substring(content.lastIndexOf(splitter) + 4);
         if (description.isEmpty()) {
@@ -92,7 +102,7 @@ public class CommandParser {
      * @throws DukeException
      */
     private static void setDescription(Command cmd, String content) throws DukeException {
-        assert cmd != null: "Command object is null";
+        assert cmd != null : "Command object is null";
         if (!content.isEmpty()) {
             cmd.setDescription(content);
         } else {
@@ -107,7 +117,7 @@ public class CommandParser {
      * @param cmd command object contains user input details
      */
     private static void setCommandIndex(Command cmd, String content) {
-        assert cmd != null: "Command object is null";
+        assert cmd != null : "Command object is null";
         if (content.matches("[0-9]+")) {
             cmd.setIndex(Integer.parseInt(content) - 1);
         }

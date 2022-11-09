@@ -57,16 +57,16 @@ public class TaskManager {
         assert taskList != null : "Task list should not be null.";
         
         StringBuilder printStr = new StringBuilder("Here are the tasks in your list: \n");
-        if (taskList.size() > 0){
+        if (taskList.size() > 0) {
             for (int i = 0; i < taskList.size(); i++) {
                 Task t = taskList.get(i);
                 printStr.append(String.format("%d.%s\n", i + 1, t.getDetails()));
             }
-        }else{
+        } else {
             printStr = new StringBuilder("You do not have any tasks yet.");
         }
         
-
+        
         return printStr.toString();
     }
     
@@ -132,7 +132,7 @@ public class TaskManager {
             task = new Deadline(cmd.getDescription(), DatetimeParser.parseStringToDateTime(cmd.getDatetime()));
             break;
         case EVENT:
-            task = new Event(cmd.getCommand(), DatetimeParser.parseStringToDateTime(cmd.getDatetime()));
+            task = new Event(cmd.getDescription(), DatetimeParser.parseStringToDateTime(cmd.getDatetime()));
             break;
         }
         
@@ -166,7 +166,7 @@ public class TaskManager {
         
         if (cmd.getIndex() == -1) {
             throw new DukeException(ErrorMessage.ERROR_MESSAGE_DELETE_NOT_NUMBER.toString());
-        } else if (cmd.getIndex() > taskList.size()) {
+        } else if (cmd.getIndex() > taskList.size() - 1) {
             throw new DukeException(ErrorMessage.ERROR_MESSAGE_DELETE_INDEX_OUT_OF_RANGE.toString());
         } else {
             int index = cmd.getIndex();
@@ -200,15 +200,15 @@ public class TaskManager {
         }
         
         StringBuilder resultStr = new StringBuilder("Here are the matching tasks in your list: \n");
-        if (resultArr.size() > 0){
+        if (resultArr.size() > 0) {
             for (int i = 0; i < resultArr.size(); i++) {
                 Task t = resultArr.get(i);
                 resultStr.append(String.format("%d.%s\n", i + 1, t.getDetails()));
             }
-        }else{
+        } else {
             resultStr = new StringBuilder("There are no matching tasks.");
         }
-      
+        
         return resultStr.toString();
     }
     
