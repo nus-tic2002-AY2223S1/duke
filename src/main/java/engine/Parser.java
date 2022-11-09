@@ -74,14 +74,10 @@ public class Parser {
             String indexString = p.front();
             int index = Integer.parseInt(indexString);
             t.changeToMarkAsDone(index);
-        }
-        catch (NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             System.out.println("Meow! " + p.front() + " is not a valid integer.");
             t.showTodoList();
-        }
-        catch (IndexOutOfBoundsException e)
-        {
+        } catch (IndexOutOfBoundsException e) {
             System.out.println("Meow! " + p.front() + " is not in the list. "+ p.front() +" is not marked as done.");
             t.showTodoList();
         }
