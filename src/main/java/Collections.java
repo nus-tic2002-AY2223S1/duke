@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Collections {
-    protected List<Task> taskslist;
+    protected static List<Task> taskslist;
     protected static int taskId = 1;
 
     public Collections(){
@@ -17,7 +17,7 @@ public class Collections {
         return taskId;
     }
 
-    public List<Task> getTasks() {
+    public List<Task> getList() {
         return taskslist;
     }
 
