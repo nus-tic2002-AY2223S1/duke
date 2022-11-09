@@ -8,6 +8,14 @@ public class Deadline extends Task{
 
     private LocalDateTime at;
 
+    public LocalDateTime getAt() {
+        return at;
+    }
+    @Override
+    public void setAt(LocalDateTime at) {
+        this.at = at;
+    }
+
     public Deadline(String taskName, LocalDateTime at) {
         super(taskName);
         this.at = at;

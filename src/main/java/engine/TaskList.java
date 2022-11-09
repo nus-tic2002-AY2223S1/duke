@@ -171,5 +171,27 @@ public class TaskList {
 
     }
 
+    public void snoozeDeadline(int index, int duration, String unitTime){
+        LocalDateTime updatedDeadline;
+        LocalDateTime tempDeadline = (LocalDateTime) TaskList.get(index).getAt();
+
+        if (unitTime.equals("weeks")){
+            updatedDeadline = tempDeadline.plusWeeks(duration);
+            TaskList.get(index).setAt(updatedDeadline);
+        } else if (unitTime.equals("days")){
+            updatedDeadline = tempDeadline.plusDays(duration);
+            TaskList.get(index).setAt(updatedDeadline);
+        } else if (unitTime.equals("hours")){
+            updatedDeadline = tempDeadline.plusHours(duration);
+            TaskList.get(index).setAt(updatedDeadline);
+        } else if (unitTime.equals("minutes")){
+            updatedDeadline = tempDeadline.plusMinutes(duration);
+            TaskList.get(index).setAt(updatedDeadline);
+        }
+        System.out.println("Snoozed task " + (index+1) + " for " + duration + " " + unitTime);
+        showTodoList();
+
+    }
+
 
 }

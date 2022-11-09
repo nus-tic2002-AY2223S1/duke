@@ -3,6 +3,8 @@ package engine;
 import cat.Nala;
 import storage.Storage;
 import task.Deadline;
+import task.Event;
+import task.Todo;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -304,12 +306,15 @@ public class Parser {
         Parser p = Parser.getInstance();
         TaskList t = TaskList.getInstance();
         int taskIndex;
-        int snoozeValue;
+        int snoozeDuration;
         String snoozeType;
+
+        next();
+
         try {
-            taskIndex = Integer.parseInt(p.front());
-            if (!t.get(taskIndex).getClass().equals(Deadline.class)){
-                System.out.println("Meow! " + taskIndex + " is not a Deadline.");
+            taskIndex = Integer.parseInt(p.front())-1;
+            if (t.get(taskIndex) instanceof Event || t.get(taskIndex) instanceof Todo){
+                System.out.println("Meow! Task " + (taskIndex+1) + " is not a Deadline.");
                 t.showTodoList();
                 return;
             }
@@ -318,16 +323,38 @@ public class Parser {
             System.out.println("Meow! You did not type a number (taskIndex)");
             return;
         }
+
+        p.expect("for");
+
         try {
-            snoozeValue = Integer.parseInt(p.front());
-            next();
+            snoozeDuration = Integer.parseInt(p.front());
         } catch (NumberFormatException e) {
-            System.out.println("Meow! You did not type a number (snoozeValue)");
+            System.out.println("Meow! You did not type a number (snoozeDuration)");
             return;
         }
+
         next();
+
         try {
-            snoozeType = p.front();
+            if (p.front().equalsIgnoreCase("week") || p.front().equalsIgnoreCase("weeks")){
+                snoozeType = "weeks";
+                t.snoozeDeadline(taskIndex, snoozeDuration,snoozeType);
+            }
+            else if (p.front().equalsIgnoreCase("day") || p.front().equalsIgnoreCase("days")){
+                snoozeType = "days";
+                t.snoozeDeadline(taskIndex, snoozeDuration,snoozeType);
+            }
+            else if (p.front().equalsIgnoreCase("hours") || p.front().equalsIgnoreCase("hour") || p.front().equalsIgnoreCase("hrs") || p.front().equalsIgnoreCase("hr") || p.front().equalsIgnoreCase("h")){
+                snoozeType = "hours";
+                t.snoozeDeadline(taskIndex, snoozeDuration,snoozeType);
+            }
+            else if (p.front().equalsIgnoreCase("minutes") || p.front().equalsIgnoreCase("mins") || p.front().equalsIgnoreCase("min") || p.front().equalsIgnoreCase("m")){
+                snoozeType = "minutes";
+                t.snoozeDeadline(taskIndex, snoozeDuration,snoozeType);
+            }
+            else {
+                System.out.println("Meow! Unit of time not recognised, please try again");
+            }
             next();
         } catch (Exception e) {
             System.out.println(e);

@@ -1,5 +1,7 @@
 package task;
 
+import java.time.LocalDateTime;
+
 public abstract class Task {
 
     protected String TaskName;
@@ -31,5 +33,14 @@ public abstract class Task {
         this.isMarkAsDone = false;
     }
 
+
+
     public abstract String toString();
+
+    public Object getAt() {
+        return null;
+    }
+
+    public void setAt(LocalDateTime updatedDeadline) {
+    }
 }
