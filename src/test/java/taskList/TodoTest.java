@@ -12,8 +12,8 @@ public class TodoTest {
 
     @Test
     public void ToDoStringTest() {
-        ToDo todo = new ToDo("Purchase stamps for mailing");
-        assertEquals("[T][ ] Purchase stamps for mailing", todo.toString());
+        Todo todo = new Todo("Purchase stamps for mailing");
+        assertEquals("[T][ ]   Purchase stamps for mailing", todo.toString());
     }
 
 }
