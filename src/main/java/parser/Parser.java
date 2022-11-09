@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
 public class Parser {
@@ -41,7 +42,7 @@ public class Parser {
         return task;
     }
 
-    public static LocalDate StringToDate(String s){
+    public static LocalDate StringToDate(String s) {
 //        LocalDate date = LocalDate.parse(s);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
         LocalDate date = LocalDate.parse(s, formatter);

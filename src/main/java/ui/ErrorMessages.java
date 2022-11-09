@@ -5,8 +5,8 @@ import taskList.TaskList;
 public class ErrorMessages {
 
     public static final String TASK_NUMBER_OOB = "!!ERROR!! Task Number out of range. Please enter a valid input.";
-    public static final String INVALID_EVENT_INPUT = "!!ERROR!! Invalid Event input.\nPlease enter a valid input (E.g. event project meeting /at Mon 2-4pm).";
-    public static final String INVALID_DEADLINE_INPUT = "!!ERROR!! Invalid Deadline input.\nPlease enter a valid input (E.g. deadline return book /by Sunday).";
+    public static final String INVALID_EVENT_INPUT = "!!ERROR!! Invalid Event input.\nPlease enter a valid input (E.g. event project meeting /at dd-MM-yyyy).";
+    public static final String INVALID_DEADLINE_INPUT = "!!ERROR!! Invalid Deadline input.\nPlease enter a valid input (E.g. deadline return book /by dd-MM-yyyy).";
     public static final String INVALID_MARK_INPUT = "!!ERROR!! Invalid mark input.\nPlease enter a valid input (E.g. mark 1).";
     public static final String INVALID_UNMARK_INPUT = "!!ERROR!! Invalid unmark input.\nPlease enter a valid input (E.g. unmark 1).";
     public static final String INVALID_DELETE_INPUT = "!!ERROR!! Invalid Delete input.\nPlease enter a valid input (E.g. delete 1).";

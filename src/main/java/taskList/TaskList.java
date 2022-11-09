@@ -2,7 +2,12 @@ package taskList;
 
 
 import parser.Parser;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import static ui.ErrorMessages.*;
 import static ui.TaskMessages.*;
@@ -99,7 +104,7 @@ public class TaskList {
                 addTask(Parser.parseDeadlineInput(input));
                 printLine();
             }
-        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException | DateTimeParseException e) {
             printLine();
             printError(INVALID_DEADLINE_INPUT);
             printLine();
@@ -113,7 +118,7 @@ public class TaskList {
                 addTask(Parser.parseEventInput(input));
                 printLine();
             }
-        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException | DateTimeParseException e) {
             printLine();
             printError(INVALID_EVENT_INPUT);
             printLine();
@@ -208,15 +213,43 @@ public class TaskList {
 
     public boolean checkDateInput(String[] inputSplit, String input){
         String datePattern = "\\d{1,2}-\\d{1,2}-\\d{4}";
-        if (inputSplit[0].equals("deadline")){
-            String by = (input.substring(9)).split(" /by ")[1];
-            return by.matches(datePattern);
+        try {
+            if (inputSplit[0].equals("deadline")) {
+                String by = (input.substring(9)).split(" /by ")[1];
+                if (validateDateFormat(by))
+                    return by.matches(datePattern);
+            }
+            if (inputSplit[0].equals("event")) {
+                String at = (input.substring(6)).split(" /at ")[1];
+                if (validateDateFormat(at))
+                    return at.matches(datePattern);
+            }
+            return false;
         }
-        if (inputSplit[0].equals("event")){
-            String by = (input.substring(6)).split(" /at ")[1];
-            return by.matches(datePattern);
+
+        catch (IllegalArgumentException e){
+            printLine();
+            printError(INVALID_INPUT);
+            printLine();
+            return false;
         }
-        return false;
+    }
+    public boolean validateDateFormat(String input){
+        SimpleDateFormat sdfrmt = new SimpleDateFormat("MM/dd/yyyy");
+        sdfrmt.setLenient(false);
+        try
+        {
+            Date javaDate = sdfrmt.parse(input);
+        }
+        /* Date format is invalid */
+        catch (ParseException e)
+        {
+            System.out.println(input+" is Invalid Date format");
+            return false;
+        }
+        /* Return true if date format is valid */
+        return true;
+
     }
 
 
