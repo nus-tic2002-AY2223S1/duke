@@ -1,7 +1,11 @@
+package duke.data;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+
+import duke.tasks.Task;
 
 public class Storage {
 
@@ -9,7 +13,7 @@ public class Storage {
         File f = new File(filePath);
     }
 
-    static void save(String filePath, List<Task> list) throws IOException {
+    public static void save(String filePath, List<Task> list) throws IOException {
         // write to file
         FileWriter fw = new FileWriter(filePath);
         for (int i = 0; i < list.size(); i++) {

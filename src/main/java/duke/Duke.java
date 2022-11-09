@@ -1,4 +1,11 @@
+package duke;
+
 import java.util.Scanner;
+
+import duke.tasks.*;
+import duke.ui.Ui;
+import duke.data.Storage;
+import duke.exceptions.DukeException;
 
 public class Duke {
     public static void main(String[] args) throws Exception {
@@ -83,7 +90,7 @@ public class Duke {
                     Ui.unknown();
             }
 
-            Storage.save("mytasks.txt", list.getList()); 
+            Storage.save("duke/mytasks.txt", list.getList()); 
         }  
     }
 }
