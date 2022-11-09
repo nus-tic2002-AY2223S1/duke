@@ -22,3 +22,7 @@ Prerequisites: JDK 11, update Intellij to the most recent version.
    | |_| | |_| |   <  __/
    |____/ \__,_|_|\_\___|
    ```
+### Sourcetree personal token issue
+go to-> setting -> Path -> select the link -> clicke edit ->use below formet
+
+https://{personal-access-token>@github.com}/{<my-repo>}.git>
