@@ -1,4 +1,3 @@
-//TODO: Add your code here
 public class Todo extends Task {
     protected boolean isDone;
 
@@ -14,5 +13,4 @@ public class Todo extends Task {
         super(d);
         isDone = false;
     }
-
 };

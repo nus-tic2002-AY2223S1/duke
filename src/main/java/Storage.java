@@ -9,7 +9,7 @@ public class Storage {
         File f = new File(filePath);
     }
 
-    static void writeToFile(String filePath, List<Task> list) throws IOException {
+    static void save(String filePath, List<Task> list) throws IOException {
         // write to file
         FileWriter fw = new FileWriter(filePath);
         for (int i = 0; i < list.size(); i++) {

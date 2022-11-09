@@ -5,7 +5,6 @@ public class Task {
     public Task(String d) {
         this.description = new StringBuilder(d);
         this.isDone = false;
-        System.out.println(description);
     }
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
