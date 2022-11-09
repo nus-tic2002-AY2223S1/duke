@@ -25,6 +25,7 @@ public class Duke {
                                         "todo [description] - create a todo \n" +
                                          "event [description] /at [start date and time, dd/mm/yyyy HHmm] to [end date and time, dd/mm/yyyy HHmm] - create an event\n"+
                                         "deadline [description] /by [date and time, dd/mm/yyyy HHmm] - create a deadline\n"+
+                                        "snooze [index] for [duration][metric time] - snooze a deadline. e.g. snooze 5 for 2 hours\n"+
                                         "mark [index] - mark a task as done\n"+
                                         "unmark [index] - mark a task as not done\n"+
                                         "delete [index] - delete a task\n"+
@@ -60,6 +61,10 @@ public class Duke {
 
                 else if (p.front().equalsIgnoreCase("find")){
                     Parser.parseFind();
+                }
+
+                else if (p.front().equalsIgnoreCase("snooze")){
+                    Parser.parseSnooze();
                 }
 
                 else { //add new task

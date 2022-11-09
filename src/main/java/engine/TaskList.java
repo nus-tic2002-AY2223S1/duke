@@ -35,6 +35,10 @@ public class TaskList {
         return instance;
     }
 
+    public Object get(int taskIndex) {
+        return TaskList.get(taskIndex);
+    }
+
     public int getTLSize(){
         return TaskList.size();
     }

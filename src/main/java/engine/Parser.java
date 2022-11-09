@@ -2,18 +2,21 @@ package engine;
 
 import cat.Nala;
 import storage.Storage;
+import task.Deadline;
 
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static formatting.Helper.*;
+import static formatting.Helper.separator;
+import static formatting.Helper.userInput;
+import static formatting.Helper.FORMATTER;
 import static storage.Storage.validateStringFilenameUsingIO;
 
 
 public class Parser {
-    ArrayList<String> remainingTokens;
+    static ArrayList<String> remainingTokens;
 
     private Parser() {
         remainingTokens = new ArrayList<>();
@@ -67,7 +70,7 @@ public class Parser {
         TaskList t = TaskList.getInstance();
         //mark something as done. e.g. mark 5
         //delete the "mark"
-        p.next();
+        next();
 
         //parse the index to changeToMarkAsDone
         try{
@@ -87,7 +90,7 @@ public class Parser {
         Parser p = getInstance();
         TaskList t = TaskList.getInstance();
         //mark something as not done. e.g. unmark 5
-        p.next();
+        next();
         //parse the index to changeToMarkNotDone
         try{
             String indexString = p.front();
@@ -115,9 +118,8 @@ public class Parser {
     }
 
     public static void parseShowlist() {
-        Parser p = getInstance();
         TaskList t = TaskList.getInstance();
-        p.next();
+        next();
         t.showTodoList();
     }
 
@@ -125,7 +127,7 @@ public class Parser {
         Parser p = getInstance();
         TaskList t = TaskList.getInstance();
         //delete a task. e.g. delete 5
-        p.next();
+        next();
         //parse the index to deleteTask
         try{
             String indexString = p.front();
@@ -157,7 +159,7 @@ public class Parser {
                     break;
                 }
                 else{
-                    p.next();
+                    next();
                     incomingTaskName = p.tokenToString();
                     if (incomingTaskName.isBlank()){
                         Nala.nalaSyntaxError("BlankTodo");
@@ -176,14 +178,14 @@ public class Parser {
                 }
                 else if (p.getTokenContains("/by")){
                     incomingType = p.front();
-                    p.next();
+                    next();
                     StringBuilder TaskNameString= new StringBuilder();
                     if (!p.front().equalsIgnoreCase("/by")){
                         TaskNameString.append(p.front());
-                        p.next();
+                        next();
                         while (!p.front().equalsIgnoreCase("/by")){
                             TaskNameString.append(" ").append(p.front());
-                            p.next();
+                            next();
                         }
                     }
                     p.expect("/by");
@@ -215,30 +217,30 @@ public class Parser {
                 }
                 else if (p.getTokenContains("/at")){
                     incomingType = p.front();
-                    p.next();
+                    next();
                     StringBuilder TaskNameString= new StringBuilder();
                     if (!p.front().equalsIgnoreCase("/at")){
                         TaskNameString.append(p.front());
-                        p.next();
+                        next();
                         while (!p.front().equalsIgnoreCase("/at")){
                             TaskNameString.append(" ").append(p.front());
-                            p.next();
+                            next();
                         }
                     }
                     p.expect("/at");
                     StringBuilder DateString = new StringBuilder();
                     DateString.append(p.front());
-                    p.next();
+                    next();
                     DateString.append(" ").append(p.front());
-                    p.next();
+                    next();
                     incomingStartDate = DateString.toString();
 
                     p.expect("to");
                     StringBuilder DateString2 = new StringBuilder();
                     DateString2.append(p.front());
-                    p.next();
+                    next();
                     DateString2.append(" ").append(p.front());
-                    p.next();
+                    next();
                     incomingEndDate = DateString2.toString();
 
                     incomingTaskName = TaskNameString.toString();
@@ -287,15 +289,51 @@ public class Parser {
     public static void parseFind() {
         Parser p = getInstance();
         TaskList t = TaskList.getInstance();
-        p.next();
+        next();
         String keyword = p.front();
-        p.next();
-        if (p.remainingTokens.isEmpty()){
+        next();
+        if (remainingTokens.isEmpty()){
             t.showFilteredTodoList(keyword);
         } else {
             System.out.println("Meow! The keyword should only consist of 1 word.");
             return;
         }
+    }
+
+    public static void parseSnooze() {
+        Parser p = Parser.getInstance();
+        TaskList t = TaskList.getInstance();
+        int taskIndex;
+        int snoozeValue;
+        String snoozeType;
+        try {
+            taskIndex = Integer.parseInt(p.front());
+            if (!t.get(taskIndex).getClass().equals(Deadline.class)){
+                System.out.println("Meow! " + taskIndex + " is not a Deadline.");
+                t.showTodoList();
+                return;
+            }
+            next();
+        } catch (NumberFormatException e) {
+            System.out.println("Meow! You did not type a number (taskIndex)");
+            return;
+        }
+        try {
+            snoozeValue = Integer.parseInt(p.front());
+            next();
+        } catch (NumberFormatException e) {
+            System.out.println("Meow! You did not type a number (snoozeValue)");
+            return;
+        }
+        next();
+        try {
+            snoozeType = p.front();
+            next();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
     }
 
     public boolean getTokenContains(String token) {
@@ -312,7 +350,7 @@ public class Parser {
     }
 
     public String front() { return remainingTokens.get(0); }
-    public void next(){
+    public static void next(){
         remainingTokens.remove(0);
     }
 
