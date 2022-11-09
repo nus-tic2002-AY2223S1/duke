@@ -1,9 +1,8 @@
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 public class Collections {
-    protected ArrayList<Task> taskslist;
-//    protected HashMap<Integer, Task> taskslist;
+    protected List<Task> taskslist;
     protected static int taskId = 1;
 
     public Collections(){
@@ -18,14 +17,15 @@ public class Collections {
         return taskId;
     }
 
-    public ArrayList<Task> getTasks() {
+    public List<Task> getTasks() {
         return taskslist;
     }
 
     public void addTask(Task type) {
-        // Task task1 = new Task(description);
+        System.out.println("Got it. I've added this task:");
         taskslist.add(type);
         taskId++;
+        System.out.println("Now you have " + getCount() + " in the list.");
     }
 
     public Task findTask(int id){
@@ -48,7 +48,7 @@ public class Collections {
     }
 
     public void deleteTask(int id) {
-        StringBuilder selection = new StringBuilder(taskslist.get(id).description);
+        StringBuilder selection = new StringBuilder(taskslist.get(id-1).description);
         System.out.println("Noted. I've removed this task: ");
         System.out.println(selection.toString());
         taskslist.remove(id-1);

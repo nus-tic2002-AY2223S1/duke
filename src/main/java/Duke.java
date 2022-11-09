@@ -43,7 +43,6 @@ public class Duke {
                 } else {
                     list.deleteTask(Integer.valueOf(tokens[1]));
                 }
-                
             }
             else if (key.equalsIgnoreCase("mark")) {
                 list.markTask(Integer.valueOf(tokens[1]) - 1);
