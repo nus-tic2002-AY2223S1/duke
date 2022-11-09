@@ -9,12 +9,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static formatting.Helper.DUKEDIRECTORY;
 import static formatting.Helper.DUKEFILEPATH;
 
 public class Storage {
-
-
-
 
     private String fileName;
 
@@ -61,8 +59,7 @@ public class Storage {
 
     public void populateFile() {
         //check if directory exists
-        String fileNameTxt = fileName.concat(".txt");
-        Path directory = Paths.get(System.getProperty("user.home"), "Desktop", "dukeFile",fileNameTxt);
+        Path directory = DUKEDIRECTORY();
         boolean directoryExists = Files.exists(directory);
 
         if (directoryExists) {
@@ -83,8 +80,7 @@ public class Storage {
     }
 
     public boolean checkExistence(){
-        String fileNameTxt = fileName.concat(".txt");
-        Path directory = Paths.get(System.getProperty("user.home"), "Desktop", "dukeFile", fileNameTxt);
+        Path directory = DUKEDIRECTORY();
         return Files.exists(directory);
     }
 
