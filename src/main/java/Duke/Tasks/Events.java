@@ -1,3 +1,8 @@
+package Duke.Tasks;
+
+/**
+ * Represents an Event in the task list.
+ */
 public class Events extends Task{
 
     protected String due;
@@ -6,7 +11,9 @@ public class Events extends Task{
         this.due = due;
     }
     public String getDescription() {
-        String mark = this.getStatus() ? "[X]" : "[ ]";
-        return "[D]" + mark + " " + description + " (" + due + ")";
+        return "[E]" + super.getDescription() + " (" + due +")";
+    }
+    public String getDatetime(){
+        return due;
     }
 }
