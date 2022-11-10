@@ -8,10 +8,12 @@ public class Event extends Task {
         super(description, taskType);
         this.my_by = by;
         my_Event = ParseDate(my_by);
+        super.my_TaskDate = my_Event;
     }
 
     public void setEvent(String date) {
         my_by = date;
+        my_Event = ParseDate(my_by);
     }
 
     public String getEvent() {

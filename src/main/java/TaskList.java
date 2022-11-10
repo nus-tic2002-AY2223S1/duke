@@ -1,5 +1,4 @@
 import java.io.*;
-import java.nio.file.*;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -100,29 +99,39 @@ public class TaskList {
             case "deadline":
                 myTaskList[task_count] = new Deadline(description, "deadline", date);
                 //check date, if clash
-                // int i = 0;
-             //   boolean free_time = true;
-               // while (myTaskList[task_count].equals(myTaskList[i])){ //new task compare with old task, only if the task is a D or E/ if match delete the new task
-               //     free_time = IsFreeTime(myTaskList[task_count].my_taskdate, myTaskList[i].my_taskdate);
-               //     ++i;
-                //}
-               // if(!free_time){
-               //     myTaskList[task_count] = myTaskList[task_count + 1];
-               // }
-              break;
+                int i = 0;
+                boolean free_time = true;
+                while (i < task_count){ //new task compare with old task, only if the task is a D or E/ if match delete the new task
+                    if(myTaskList[i].myTaskType.equals("todo")){
+                        ++i;
+                        continue;
+                    }
+                    free_time = IsFreeTime(myTaskList[task_count].my_TaskDate, myTaskList[i].my_TaskDate);
+                    ++i;
+                }
+                if(!free_time){
+                    myTaskList[task_count] = myTaskList[task_count + 1];
+                }
+                break;
+
             case "event":
                 myTaskList[task_count] = new Event(description, "event", date);
                 //check date, if clash
-              //  i = 0;
-              //  free_time = true;
-               // while (myTaskList[task_count].equals(myTaskList[i])){ //new task compare with old task, only if the task is a D or E/ if match delete the new task
-               //     free_time = IsFreeTime(myTaskList[task_count].my_taskdate, myTaskList[i].my_taskdate);
-                //    ++i;
-              //  }
-             //   if(!free_time){
-              //      myTaskList[task_count] = myTaskList[task_count + 1];
-              //  }
-                break;
+                i = 0;
+                free_time = true;
+                while (i < task_count){ //new task compare with old task, only if the task is a D or E/ if match delete the new task
+                    if(myTaskList[i].myTaskType.equals("todo")){
+                        ++i;
+                        continue;
+                    }
+                    free_time = IsFreeTime(myTaskList[task_count].my_TaskDate, myTaskList[i].my_TaskDate);
+                    ++i;
+                 }
+                 if(!free_time){
+                      myTaskList[task_count] = myTaskList[task_count + 1];
+                 }
+                 break;
+
             case "todo":
                 myTaskList[task_count] = new ToDo(description, "todo");
                 break;
@@ -136,8 +145,11 @@ public class TaskList {
         String data = myTaskList[task_count].myTaskType + " | " +
                         myTaskList[task_count].isDone + " | " +
                         myTaskList[task_count].description;
-                         // + " | " + date; // to update for event and deadline
 
+        // to update for event and deadline return book /by Sunday
+        if (myTaskList[task_count].myTaskType.equals("event") || myTaskList[task_count].myTaskType.equals("deadline")){
+            data = data + " | " + date;
+        }
         //write to file
         try{
             appendToFile(file,data);
@@ -174,16 +186,21 @@ public class TaskList {
         String description = "";
 
         int dateDivider = 0;
+        int dateCounter = 0;
 
         for(int i = 1; i < words.length; i++){
-            if(words[i].startsWith("/")){
-                dateDivider = i;
+            if(dateCounter == 3){
                 break;
             }
             if(words[i].startsWith("|") || words[i].startsWith("false") || words[i].startsWith("true")){
+                if(words[i].startsWith("|")){
+                    dateCounter++;
+                }
+                dateDivider++;
                 continue;
             }
             description = description + words[i] + " ";
+            dateDivider++;
         }
 
         String date = "";

@@ -1,6 +1,4 @@
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 public class Deadline extends Task {
     protected String my_by;
@@ -10,10 +8,12 @@ public class Deadline extends Task {
         super(description, tasktype);
         my_by = by;
         my_Deadline = ParseDate(my_by);
+        super.my_TaskDate = my_Deadline;
     }
 
     public void setDeadline(String date) {
         my_by = date;
+        my_Deadline = ParseDate(my_by);
     }
 
     public String getDeadline() {

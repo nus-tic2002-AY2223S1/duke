@@ -1,11 +1,12 @@
 import java.io.*;
 import java.time.LocalDate;
 
-
 abstract class Task {
     protected String description;
     protected boolean isDone;
     protected String myTaskType;
+
+    protected LocalDate my_TaskDate;
 
     //constructor
     public Task(String description, String TaskType) {
