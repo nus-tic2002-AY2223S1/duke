@@ -58,7 +58,7 @@ public class Parser {
                 parserUtility.help();
             } else if (commandLine.equalsIgnoreCase("syntax")) {
                 if (lineArray.length == 2) {
-                    if (lineArray[1].equalsIgnoreCase("todo") || lineArray[1].equalsIgnoreCase("deadline") || lineArray[1].equalsIgnoreCase("event")) {
+                    if (lineArray[1].equalsIgnoreCase("todo") || lineArray[1].equalsIgnoreCase("deadline") || lineArray[1].equalsIgnoreCase("event") || lineArray[1].equalsIgnoreCase("find")) {
                         parserUtility.syntaxHelp(lineArray[1]);
                     } else {
                         parserUtility.invalidCommand();
@@ -88,6 +88,14 @@ public class Parser {
                 parserTaskList.addEvent(lineArray);
                 parserTaskList.saveTaskList(parserRepo.getFileDirectory());
             } else if (commandLine.equalsIgnoreCase("find")) {
+                if (lineArray.length < 2) {
+                    parserUtility.invalidSearchTermWord(commandLine);
+                    continue;
+                }
+                if (lineArray.length > 2) {
+                    parserUtility.invalidCommand();
+                    continue;
+                }
                 parserTaskList.findTask(lineArray[1]);
             } else {
                 parserUtility.invalidCommand();

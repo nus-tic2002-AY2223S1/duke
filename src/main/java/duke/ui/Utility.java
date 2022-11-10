@@ -30,6 +30,7 @@ public class Utility {
         System.out.println("  - todo                  | <keyword> <description>");
         System.out.println("  - deadline              | <keyword> <description> /by <yyyy-mm-dd hh:mm:ss>");
         System.out.println("  - event                 | <keyword> <description> /at <yyyy-mm-dd hh:mm:ss>");
+        System.out.println("  - find                  | <keyword> <word>");
         System.out.println();
         System.out.println("List of keywords alias and syntax");
         System.out.println("  - /t                    | <keyword alias> <description>");
@@ -38,17 +39,23 @@ public class Utility {
         System.out.println("-----------------------------------------------------------------------------------------");
     }
 
-    public void invalidDescription(String task) {
+    public void invalidDescription(String keyword) {
         System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t " + "The description of a/an " + task +  " task cannot be empty.");
+        System.out.println("\t " + "The description of the " + keyword +  " keyword cannot be empty.");
+        System.out.println("\t-----------------------------------------------------------------");
+    }
+
+    public void invalidSearchTermWord(String keyword) {
+        System.out.println("\t-----------------------------------------------------------------");
+        System.out.println("\t " + "The search term word of the " + keyword +  " keyword cannot be empty.");
         System.out.println("\t-----------------------------------------------------------------");
     }
 
     public void invalidCommand() {
         System.out.println("\t-----------------------------------------------------------------");
         System.out.println("\t " + "Invalid command or keyword syntax");
-        System.out.println("\t " + "Use the help command to open the help page to read instructions");
-        System.out.println("\t " + "Use the syntax <keyword> command to view examples of valid keyword syntax, e.g syntax deadline");
+        System.out.println("\t " + "Use the 'help' command to open the help page to read instructions");
+        System.out.println("\t " + "Use the 'syntax <keyword>' command to view examples of valid keyword syntax, e.g syntax deadline");
         System.out.println("\t-----------------------------------------------------------------");
     }
 
@@ -57,27 +64,37 @@ public class Utility {
             System.out.println("\t-----------------------------------------------------------------");
             System.out.println("\t Syntax  : <keyword> <description>");
             System.out.println("\t Example : todo buy bread on the way home");
+            System.out.println("\t Syntax  : <keyword alias> <description>");
+            System.out.println("\t Example : /t buy bread on the way home");
             System.out.println("\t-----------------------------------------------------------------");
         }
         if (task.equalsIgnoreCase("deadline")) {
             System.out.println("\t-----------------------------------------------------------------");
             System.out.println("\t Syntax  : <keyword> <description> /by <yyyy-mm-dd hh:mm:ss>");
             System.out.println("\t Example : deadline complete homework /by 2022-10-19 23:59:59");
+            System.out.println("\t Syntax  : <keyword alias> <description> /by <yyyy-mm-dd hh:mm:ss>");
             System.out.println("\t Example : /d complete homework /by 2022-10-19 23:59:59");
             System.out.println("\t-----------------------------------------------------------------");
         }
         if (task.equalsIgnoreCase("event")) {
             System.out.println("\t-----------------------------------------------------------------");
-            System.out.println("\t Syntax  : <keyword alias> /at <yyyy-mm-dd hh:mm:ss>");
+            System.out.println("\t Syntax  : <keyword> <description> /at <yyyy-mm-dd hh:mm:ss>");
             System.out.println("\t Example : event attend wedding /at 2022-10-20 19:00:00");
+            System.out.println("\t Syntax  : <keyword alias> <description> /at <yyyy-mm-dd hh:mm:ss>");
             System.out.println("\t Example : /e attend wedding /at 2022-10-20 19:00:00");
+            System.out.println("\t-----------------------------------------------------------------");
+        }
+        if (task.equalsIgnoreCase("find")) {
+            System.out.println("\t-----------------------------------------------------------------");
+            System.out.println("\t Syntax  : <keyword> <search_term>");
+            System.out.println("\t Example : find book");
             System.out.println("\t-----------------------------------------------------------------");
         }
     }
 
     public void deadlineDateNotPresent() {
         System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t Oops! Date and time not present or missing /by command, please re-enter deadline task with the date and time in the following format:");
+        System.out.println("\t Oops! Date and time not present or missing '/by' command, please re-enter deadline task with the date and time in the following format:");
         System.out.println("\t Syntax  : <keyword> <description> /by <yyyy-mm-dd hh:mm:ss>");
         System.out.println("\t Example : deadline complete homework /by 2022-10-19 23:59:59");
         System.out.println("\t Example : /d complete homework /by 2022-10-19 23:59:59");
@@ -86,7 +103,7 @@ public class Utility {
 
     public void eventDateNotPresent() {
         System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t Oops! Date and time not present or missing /at command, please re-enter event task with the date and time in the following format:");
+        System.out.println("\t Oops! Date and time not present or missing '/at' command, please re-enter event task with the date and time in the following format:");
         System.out.println("\t Syntax  : <keyword alias> /at <yyyy-mm-dd hh:mm:ss>");
         System.out.println("\t Example : event attend wedding /at 2022-10-20 19:00:00");
         System.out.println("\t Example : /e attend wedding /at 2022-10-20 19:00:00");
