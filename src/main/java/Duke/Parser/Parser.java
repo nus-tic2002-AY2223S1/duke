@@ -1,7 +1,19 @@
-package Duke;
+package Duke.Parser;
 
-import Duke.Commands.*;
-import Duke.Tasks.*;
+
+import Duke.Commands.Command;
+import Duke.Commands.AddCommand;
+import Duke.Commands.ExitCommand;
+import Duke.Commands.ListCommand;
+import Duke.Commands.UnmarkCommand;
+import Duke.Commands.MarkCommand;
+import Duke.Commands.DeleteCommand;
+import Duke.Commands.TagCommand;
+import Duke.Commands.FindCommand;
+import Duke.Tasks.Task;
+import Duke.Tasks.Todo;
+import Duke.Tasks.Events;
+import Duke.Tasks.Deadlines;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -82,7 +94,7 @@ public class Parser {
                 return new Events(argumentArr[0],argumentArr[1]);
             default:
                 System.out.println("Invalid command");
-                //throw new Duke.InvalidTaskCreation();
+                //throw new Duke.Exceptions.InvalidTaskCreation();
                 return null;
         }
     }

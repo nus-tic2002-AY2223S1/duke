@@ -1,7 +1,7 @@
 package Duke.Commands;
 
-import Duke.TaskList;
-import Duke.Storage;
+import Duke.Tasks.TaskList;
+import Duke.Storage.Storage;
 import Duke.Tasks.Task;
 
 
@@ -18,9 +18,8 @@ public class AddCommand extends Command {
     @Override
     public String execute(Storage storage, TaskList taskList) {
         taskList.addTask(task);
-        String output = "Got it! I have added this task to your list:\n  "
+        return "Got it! I have added this task to your list:\n  "
                 + task.getDescription()
                 + "\nNow you have " + taskList.getSize() + " tasks in the list.";
-        return output;
     }
 }

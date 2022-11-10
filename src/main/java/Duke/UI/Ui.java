@@ -1,4 +1,6 @@
-package Duke;
+package Duke.UI;
+
+import Duke.Common.Messages;
 
 import java.io.InputStream;
 import java.io.PrintStream;

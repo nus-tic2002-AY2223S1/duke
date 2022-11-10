@@ -1,4 +1,4 @@
-package Duke;
+package Duke.Common;
 
 /**
  * Container for messages.

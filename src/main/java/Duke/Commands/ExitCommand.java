@@ -1,8 +1,8 @@
 package Duke.Commands;
 
-import Duke.Messages;
-import Duke.TaskList;
-import Duke.Storage;
+import Duke.Common.Messages;
+import Duke.Tasks.TaskList;
+import Duke.Storage.Storage;
 
 /**
  * Terminates the program.

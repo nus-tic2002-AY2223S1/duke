@@ -1,7 +1,7 @@
 package Duke.Commands;
 
-import Duke.Storage;
-import Duke.TaskList;
+import Duke.Storage.Storage;
+import Duke.Tasks.TaskList;
 import Duke.Tasks.Task;
 
 /**
