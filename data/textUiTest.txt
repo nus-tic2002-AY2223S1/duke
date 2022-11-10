@@ -1,0 +1,4 @@
+1. [T][X]  read book
+2. [T][ ]  buy book
+3. [T][X]  buy pen
+4. [T][ ]  buy marker

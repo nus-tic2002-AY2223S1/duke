@@ -1,7 +1,7 @@
 package duke;
 
 import duke.repository.Repository;
-import duke.session.Session;
+import duke.ui.Parser;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ public class Duke {
         String directory = "./data/";
         String fileName = "textUiTest.txt";
         Repository repo = new Repository(directory, fileName);
-        Session tracking = new Session(repo);
-        tracking.start();
+        Parser parser = new Parser(repo);
+        parser.start();
     }
 }

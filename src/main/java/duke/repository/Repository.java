@@ -44,7 +44,6 @@ public class Repository {
             System.out.println();
         } else {
             System.out.printf("Opening %s file.\n" , repoFileName);
-            System.out.println();
         }
     }
 

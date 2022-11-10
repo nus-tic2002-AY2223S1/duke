@@ -1,5 +1,9 @@
 package duke.task;
 
+import duke.ui.FormatTimeMatcher;
+import duke.ui.GregorianDateMatcher;
+import duke.ui.Utility;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,6 +18,9 @@ import java.util.List;
  */
 public class TaskList {
     List<Task> tasks = new ArrayList<>();
+    Utility taskListUtility = new Utility();
+    GregorianDateMatcher taskListDateMatcher = new GregorianDateMatcher();
+    FormatTimeMatcher taskListTimeMatcher = new FormatTimeMatcher();
 
     /**
      * Prints out the contents of the ArrayList of duke.task.Task with ordered numbering.
@@ -21,7 +28,6 @@ public class TaskList {
      */
     public void listTask() {
         System.out.println("\t-----------------------------------------------------------------");
-        // if list is empty, prints empty list message
         if (tasks.size() == 0) {
             System.out.println("\t The list is empty");
         } else {
@@ -39,7 +45,6 @@ public class TaskList {
      * @param lineArray an Array to store the result of a string split.
      */
     public void addToDo(String[] lineArray) {
-        // piece the task description back together
         String descriptionLine = "";
         for (int i = 1; i < lineArray.length; i++) {
             descriptionLine += " " + lineArray[i];
@@ -57,26 +62,37 @@ public class TaskList {
      * @param lineArray an Array to store the result of a string split.
      */
     public void addDeadLine(String[] lineArray) {
-        // piece the task description back together
         String descriptionLine = "";
+        boolean isDatePresent = false;
         int indexOfDelimiter = 0;
         for (int i = 1; i < lineArray.length; i++) {
             if (lineArray[i].equalsIgnoreCase("/by")) {
                 indexOfDelimiter = i;
+                isDatePresent = true;
                 break;
             }
             descriptionLine += " " + lineArray[i];
         }
-        String date = lineArray[indexOfDelimiter+1];
-        String time = lineArray[indexOfDelimiter+2];
-        String dateTime = date + "T" + time;
-        LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
-        System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t " + "Got it. I've added this task: ");
-        tasks.add(new Deadline(descriptionLine, localDateTime));
-        System.out.println("\t\t " + tasks.get(tasks.size()-1));
-        System.out.println("\t " + "Now you have " + tasks.size() + " tasks in the list.");
-        System.out.println("\t-----------------------------------------------------------------");
+        if (isDatePresent) {
+            String date = lineArray[indexOfDelimiter+1];
+            boolean isValidDate = taskListDateMatcher.matches(date);
+            String time = lineArray[indexOfDelimiter + 2];
+            boolean isValidTime = taskListTimeMatcher.matches(time);
+            if (isValidDate && isValidTime) {
+                String dateTime = date + "T" + time;
+                LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
+                System.out.println("\t-----------------------------------------------------------------");
+                System.out.println("\t " + "Got it. I've added this task: ");
+                tasks.add(new Deadline(descriptionLine, localDateTime));
+                System.out.println("\t\t " + tasks.get(tasks.size() - 1));
+                System.out.println("\t " + "Now you have " + tasks.size() + " tasks in the list.");
+                System.out.println("\t-----------------------------------------------------------------");
+            } else {
+                taskListUtility.invalidDeadlineDate();
+            }
+        } else {
+            taskListUtility.deadlineDateNotPresent();
+        }
     }
 
     /**
@@ -85,24 +101,37 @@ public class TaskList {
      */
     public void addEvent(String[] lineArray) {
         String descriptionLine = "";
+        boolean isDatePresent = false;
         int indexOfDelimiter = 0;
         for (int i = 1; i < lineArray.length; i++) {
             if (lineArray[i].equalsIgnoreCase("/at")) {
                 indexOfDelimiter = i;
+                isDatePresent = true;
                 break;
             }
             descriptionLine += " " + lineArray[i];
         }
-        String date = lineArray[indexOfDelimiter+1];
-        String time = lineArray[indexOfDelimiter+2];
-        String dateTime = date + "T" + time;
-        LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
-        System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t " + "Got it. I've added this task: ");
-        tasks.add(new Event(descriptionLine, localDateTime));
-        System.out.println("\t\t " + tasks.get(tasks.size()-1));
-        System.out.println("\t " + "Now you have " + tasks.size() + " tasks in the list.");
-        System.out.println("\t-----------------------------------------------------------------");
+        if (isDatePresent) {
+            String date = lineArray[indexOfDelimiter+1];
+            boolean isValidDate = taskListDateMatcher.matches(date);
+            String time = lineArray[indexOfDelimiter + 2];
+            boolean isValidTime = taskListTimeMatcher.matches(time);
+            if (isValidDate && isValidTime) {
+                String dateTime = date + "T" + time;
+                LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
+                System.out.println("\t-----------------------------------------------------------------");
+                System.out.println("\t " + "Got it. I've added this task: ");
+                tasks.add(new Event(descriptionLine, localDateTime));
+                System.out.println("\t\t " + tasks.get(tasks.size()-1));
+                System.out.println("\t " + "Now you have " + tasks.size() + " tasks in the list.");
+                System.out.println("\t-----------------------------------------------------------------");
+            } else {
+                taskListUtility.invalidEventDate();
+            }
+
+        } else {
+            taskListUtility.eventDateNotPresent();
+        }
     }
 
     /**
@@ -110,7 +139,6 @@ public class TaskList {
      * @param lineArray a String array to store the result of a String split
      */
     public void markTask(String[] lineArray) {
-        // get the index of the to do list to mark
         int inputIndex = Integer.parseInt(lineArray[1]);
         int arrayIndex = inputIndex - 1;
         tasks.get(arrayIndex).setDone(true);
@@ -125,7 +153,6 @@ public class TaskList {
      * @param lineArray a String array to store the result of a String split
      */
     public void unmarkTask(String[] lineArray) {
-        // get the index of the to do list to unmark
         int inputIndex = Integer.parseInt(lineArray[1]);
         int arrayIndex = inputIndex - 1;
         tasks.get(arrayIndex).setDone(false);
@@ -177,6 +204,19 @@ public class TaskList {
                 tasks.add(existingContent.get(i));
             }
         }
+    }
+
+    public void findTask(String keyword) {
+        int count = 1;
+        System.out.println("\t-----------------------------------------------------------------");
+        System.out.println("\t " + "Here are the matching task(s) in your list:");
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).description.contains(keyword)) {
+                count += i;
+                System.out.println("\t " + count + ". " + tasks.get(i));
+            }
+        }
+        System.out.println("\t-----------------------------------------------------------------");
     }
 
 }
