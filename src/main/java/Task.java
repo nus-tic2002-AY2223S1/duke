@@ -1,20 +1,24 @@
 import java.io.*;
 import java.time.LocalDate;
 
-abstract class Task {
+abstract class Task
+{
     protected String description;
     protected boolean isDone;
     protected String myTaskType;
 
     protected LocalDate my_TaskDate;
+    protected String my_td;
 
     //constructor
-    public Task(String description, String TaskType) {
+    public Task(String description, String TaskType)
+    {
         this.description = description;
         this.myTaskType = TaskType;
     }
 
-    private void markTaskFromFile(String filePath) throws IOException {
+    private void markTaskFromFile(String filePath) throws IOException
+    {
         //replace the task in the file to true
         File inputFile = new File(filePath);
         String Content = "";
@@ -23,8 +27,10 @@ abstract class Task {
         String currentLine ;
         String lineToRemove = this.myTaskType + " | " + this.isDone + " | " + this.description;
 
-        while((currentLine = reader.readLine()) != null) {//read current line from tasks.txt till it null
-            if(currentLine.trim().equals(lineToRemove.trim())){
+        while((currentLine = reader.readLine()) != null)
+        {//read current line from tasks.txt till it null
+            if(currentLine.trim().equals(lineToRemove.trim()))
+            {
                 String markLine = this.myTaskType + " | " + "true" + " | " + this.description;
                 Content = Content + markLine + System.lineSeparator();
                 continue;
@@ -38,7 +44,8 @@ abstract class Task {
         reader.close();
     }
 
-    private void unmarkTaskFromFile(String filePath) throws IOException {
+    private void unmarkTaskFromFile(String filePath) throws IOException
+    {
         //replace the task in the file to true
         File inputFile = new File(filePath);
         String Content = "";
@@ -47,7 +54,8 @@ abstract class Task {
         String currentLine ;
         String lineToRemove = this.myTaskType + " | " + this.isDone + " | " + this.description;
 
-        while((currentLine = reader.readLine()) != null) {//read current line from tasks.txt till it null
+        while((currentLine = reader.readLine()) != null)
+        {//read current line from tasks.txt till it null
             if(currentLine.trim().equals(lineToRemove.trim())){
                 String markLine = this.myTaskType + " | " + "false" + " | " + this.description;
                 Content = Content + markLine + System.lineSeparator();
@@ -62,7 +70,8 @@ abstract class Task {
         reader.close();
     }
 
-    public void markAsDone() throws IOException {
+    public void markAsDone() throws IOException
+    {
         //mark true in tasks.txt
         markTaskFromFile("data/tasks.txt");
 
@@ -71,7 +80,8 @@ abstract class Task {
         System.out.println("[X] " + description);
     }
 
-    public void markAsNotDone() throws IOException {
+    public void markAsNotDone() throws IOException
+    {
         //mark false in tasks.txt
         unmarkTaskFromFile("data/tasks.txt");
 
@@ -81,56 +91,61 @@ abstract class Task {
     }
 
     //get method
-    public String getTaskTypeIcon() {
+    public String getTaskTypeIcon()
+    {
         return myTaskType;
     }
 
-    public String getStatusIcon() {
+    public String getStatusIcon()
+    {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
     //set method
-    public void setIsDone(boolean trueOrFalse){
+    public void setIsDone(boolean trueOrFalse)
+    {
         this.isDone = trueOrFalse;
     }
 
-    public LocalDate ParseDate(String date){
+    public LocalDate ParseDate(String date)
+    {
         //find the date if only day of the week is given in the String
         String[] words = date.split(" ");
 
         //search for day of the week
         int valueOfDayMention = 0;
 
-        for(int i = 1; i < words.length; i++){
+        for(int i = 0; i < words.length; i++)
+        {
             words[i] = words[i].toUpperCase();
         }
 
-        for(int i = 1; i < words.length; i++){
-            if(words[i].equals("MONDAY")){
+        for (String word : words) {
+            if (word.equals("MON")) {
                 valueOfDayMention = 1;
                 break;
             }
-            if(words[i].equals("TUESDAY")){
+            if (word.equals("TUES")) {
                 valueOfDayMention = 2;
                 break;
             }
-            if(words[i].equals("WEDNESDAY")){
+            if (word.equals("WED")) {
                 valueOfDayMention = 3;
                 break;
             }
-            if(words[i].equals("THURSDAY")){
+            if (word.equals("THURS")) {
                 valueOfDayMention = 4;
                 break;
             }
-            if(words[i].equals("FRIDAY")){
+            if (word.equals("FRI")) {
                 valueOfDayMention = 5;
                 break;
             }
-            if(words[i].equals("SATURDAY")){
+            if (word.equals("SAT")) {
                 valueOfDayMention = 6;
                 break;
             }
-            if(words[i].equals("SUNDAY")){
+            if (word.equals("SUN")) {
                 valueOfDayMention = 7;
                 break;
             }
@@ -140,12 +155,14 @@ abstract class Task {
         LocalDate today = LocalDate.now();
         int valueOfToday = today.getDayOfWeek().getValue();
 
-        if(valueOfToday == 0){ //parse the date if no dayOfWeek is mentioned
+        if(valueOfDayMention == 0)
+        { //parse the date if no dayOfWeek is mentioned
             return LocalDate.parse(date);
         }
 
         //Compare today to valueOfDayMention
-        if( valueOfToday > valueOfDayMention){
+        if( valueOfToday > valueOfDayMention)
+        {
             valueOfDayMention += 7;
         }
 
@@ -156,7 +173,8 @@ abstract class Task {
     }
 
     //override
-    public String toString(){
+    public String toString()
+    {
         return "[" + getStatusIcon() + "] "  + description;
     }
 }

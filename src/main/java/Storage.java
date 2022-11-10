@@ -1,14 +1,18 @@
 import java.io.*;
 import java.util.Scanner;
 
-public class Storage {
+public class Storage
+{
     private static File f;
     //constructor
-    public Storage(String filePath){
+    public Storage(String filePath)
+    {
+
         // create a data folder to hold the file
         File f1 = new File("data");
         boolean bool = f1.mkdir();
-        if(bool){
+        if(bool)
+        {
             System.out.println("Folder is created successfully");
         }
 
@@ -16,7 +20,8 @@ public class Storage {
         f = new File(filePath);
     }
 
-    public static String load() throws IOException {
+    public static String load() throws IOException
+    {
         Scanner scan = new Scanner(f);
 
         String fileContent = "";

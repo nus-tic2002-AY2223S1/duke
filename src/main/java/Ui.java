@@ -1,15 +1,19 @@
 import java.util.Scanner;
 
-public class Ui {
+public class Ui
+{
     //constructor
-    Ui(){
+    Ui()
+    {
 
     }
-    protected static void showLoadingError() {
+    protected static void showLoadingError()
+    {
         System.out.println("There is no TaskList");
     }
 
-    protected static void showWelcome(){
+    protected static void showWelcome()
+    {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -19,16 +23,19 @@ public class Ui {
 
         System.out.println("Hello! I'm Duke. \nWhat can I do for you?");
     }
-    protected static void showLine(){
+    protected static void showLine()
+    {
         System.out.println("____________________________________________________________________________");
     }
 
-    protected static String readCommand(){
+    protected static String readCommand()
+    {
         Scanner in = new Scanner(System.in); //readCommand
         return in.nextLine(); //readCommand
     }
 
-    protected static void showError(String Message){
+    protected static void showError(String Message)
+    {
         System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
     }
 }

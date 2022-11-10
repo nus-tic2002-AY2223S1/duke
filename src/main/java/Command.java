@@ -1,26 +1,33 @@
-abstract class Command {
+abstract class Command
+{
 
-    protected static void AddCommand(){
-
-    }
-
-    protected static void DeleteCommand(){
+    protected static void AddCommand()
+    {
 
     }
 
-    protected static void MarkCommand(){
+    protected static void DeleteCommand()
+    {
 
     }
 
-    protected static void UnmarkCommand(){
+    protected static void MarkCommand()
+    {
 
     }
 
-    protected static void ExitCommand(){
+    protected static void UnmarkCommand()
+    {
 
     }
 
-    protected static void execute(TaskList tasks, Ui ui, Storage store){
+    protected static void ExitCommand()
+    {
+
+    }
+
+    protected static void execute(TaskList tasks, Ui ui, Storage store)
+    {
 
     }
 }
