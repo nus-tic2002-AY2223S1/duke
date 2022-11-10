@@ -5,6 +5,7 @@ import parser.Parser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,7 +28,7 @@ public class TaskList {
     }
 
     // to delete task into task list and print message
-    public void deleteTask(String[] inputSplit, String input) {
+    public void deleteTask(String input, String[] inputSplit) {
         // to ensure that list is not empty and whether the input is valid
         if (!checkEmptyTaskList() && checkValidCommand(inputSplit, input)) {
             try {
@@ -141,6 +142,27 @@ public class TaskList {
         }
     }
 
+    // view task schedule
+    public void scheduleTask(String input, String[] inputSplit) {
+            // to check if input is valid
+        String scheduleDate = Parser.parseScheduleInput(input);
+        Integer count = 0;
+            if (checkValidCommand(inputSplit, input)) {
+                printMessage("Tasks on: " + Parser.StringToDate(scheduleDate));
+                for (Task task : taskList){
+                    if (Parser.StringToDate(scheduleDate).isEqual(task.getDate())) {
+                        printMessage(task.toString());
+                        count += 1;
+                    }
+                }
+                if (count == 0)
+                    printMessage("No task is found on " + Parser.StringToDate(scheduleDate));
+            }
+            else{
+                printError(INVALID_INPUT);
+            }
+    }
+
     // check for empty list, return true if list is empty
     public boolean checkEmptyTaskList() {
         if (taskList.isEmpty()) {
@@ -181,6 +203,18 @@ public class TaskList {
                 if (!checkEventContainsAt(input) || inputSplit.length < 2 || !checkDateInput(inputSplit,input)) {
                     printLine();
                     printError(INVALID_EVENT_INPUT);
+                    printLine();
+                    return false;
+                }
+                else return true;
+            }
+
+            // if taskname is schedule
+            if (inputSplit[0].equals("schedule")){
+                // checks for date format
+                if (!checkDateInput(inputSplit,input)){
+                    printLine();
+                    printError(INVALID_INPUT);
                     printLine();
                     return false;
                 }
@@ -259,6 +293,11 @@ public class TaskList {
                 String at = (input.substring(6)).split(" /at ")[1];
                 if (validateDateFormat(at))
                     return at.matches(datePattern);
+            }
+            if (inputSplit[0].equals("schedule")) {
+                String scheduleDate = inputSplit[2];
+                if (validateDateFormat(scheduleDate))
+                    return scheduleDate.matches(datePattern);
             }
             return false;
         }

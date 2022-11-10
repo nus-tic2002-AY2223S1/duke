@@ -58,7 +58,12 @@ public class Duke {
 
                 // delete task
                 else if (input.startsWith("delete")) {
-                    taskList.deleteTask(inputSplit, input);
+                    taskList.deleteTask(input, inputSplit);
+                }
+
+                // view scheduled task for the date
+                else if (input.startsWith("schedule for")) {
+                    taskList.scheduleTask(input, inputSplit);
                 }
 
                 // prompt user to enter valid input

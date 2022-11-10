@@ -35,6 +35,11 @@ public class Parser {
         Event task = new Event(eventTask, eventAt);
         return task;
     }
+    public static String parseScheduleInput(String input){
+        String[] scheduleDateSplit = input.split(" ");
+        String scheduleDate = scheduleDateSplit[2];
+        return scheduleDate;
+    }
 
     // convert input date to LocalDate format
     public static LocalDate StringToDate(String s) {
