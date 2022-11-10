@@ -11,7 +11,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import static formatting.Helper.*;
-
+/**
+ * The TaskList class contains an ArrayList of Tasks, <code>TaskList</code>.
+ * The <code>TaskList</code> is private and hence cannot be modified unless accessed by a method such as addNewTask() and deleteTask().
+ * The class also has methods for displaying the task list, displaying a filtered task list, snoozing a task and marking a task as done or not done.
+ */
 
 public class TaskList {
     //Consists of operations involving the modification of the task list

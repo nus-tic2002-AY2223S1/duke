@@ -16,7 +16,12 @@ import static formatting.Helper.userInput;
 import static formatting.Helper.FORMATTER;
 import static storage.Storage.validateStringFilenameUsingIO;
 
-
+/**
+ * The Parser class tokenises the user input and stores them into an ArrayList, <code>remainingTokens</code>.
+ * The tokens will then be parsed sequentially in Duke Main, calling methods in Parser such as parseAddTask() and parseDelete().
+ * The program then executes these tasks based on the information given from <code>remainingTokens</code>.
+ * E.g. "Snooze 3 for 5 mins" postpones the duration of task 3 by 5 minutes if and only if it is a Deadline class.
+ */
 public class Parser {
     static ArrayList<String> remainingTokens;
 
@@ -267,6 +272,7 @@ public class Parser {
                 break;
             default:
                 Nala.nalaConfused();
+                assert false;
 
         }
     }
@@ -286,6 +292,9 @@ public class Parser {
 
         if (startDate.isAfter(endDate)) throw new Exception("Meow :( Start Date/Time cannot be after End Date/Time.");
         else if (startDate.isEqual(endDate)) throw new Exception("Meow :( Start Date/Time cannot be the same as End Date/Time.");
+        else {
+            assert true : startDate.isBefore(endDate);
+        }
     }
 
     public static void parseFind() {
@@ -297,6 +306,7 @@ public class Parser {
         if (remainingTokens.isEmpty()){
             t.showFilteredTodoList(keyword);
         } else {
+            assert false : !remainingTokens.isEmpty();
             System.out.println("Meow! The keyword should only consist of 1 word.");
             return;
         }

@@ -2,6 +2,9 @@ package cat;
 
 import java.util.Random;
 
+/**
+ * Nala is a class, and at the same time, a cat. Click the link to find out more about her (not malware).{@link <a href="https://share.icloud.com/photos/0a8PnKhH3NEpDH3ANZpjpF8yA">...</a>}
+ */
 public class Nala {
     public static void nalaConfused() {
         Random rand = new Random();
