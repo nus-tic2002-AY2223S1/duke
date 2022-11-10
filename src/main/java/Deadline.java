@@ -9,6 +9,7 @@ public class Deadline extends Task {
     public Deadline(String description, String tasktype, String by) {
         super(description, tasktype);
         my_by = by;
+        my_Deadline = ParseDate(my_by);
     }
 
     public void setDeadline(String date) {

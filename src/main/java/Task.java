@@ -1,4 +1,6 @@
 import java.io.*;
+import java.time.LocalDate;
+
 
 abstract class Task {
     protected String description;
@@ -89,6 +91,67 @@ abstract class Task {
     //set method
     public void setIsDone(boolean trueOrFalse){
         this.isDone = trueOrFalse;
+    }
+
+    public LocalDate ParseDate(String date){
+        //find the date if only day of the week is given in the String
+        String[] words = date.split(" ");
+
+        //search for day of the week
+        int valueOfDayMention = 0;
+
+        for(int i = 1; i < words.length; i++){
+            words[i] = words[i].toUpperCase();
+        }
+
+        for(int i = 1; i < words.length; i++){
+            if(words[i].equals("MONDAY")){
+                valueOfDayMention = 1;
+                break;
+            }
+            if(words[i].equals("TUESDAY")){
+                valueOfDayMention = 2;
+                break;
+            }
+            if(words[i].equals("WEDNESDAY")){
+                valueOfDayMention = 3;
+                break;
+            }
+            if(words[i].equals("THURSDAY")){
+                valueOfDayMention = 4;
+                break;
+            }
+            if(words[i].equals("FRIDAY")){
+                valueOfDayMention = 5;
+                break;
+            }
+            if(words[i].equals("SATURDAY")){
+                valueOfDayMention = 6;
+                break;
+            }
+            if(words[i].equals("SUNDAY")){
+                valueOfDayMention = 7;
+                break;
+            }
+        }
+
+        //initialize today
+        LocalDate today = LocalDate.now();
+        int valueOfToday = today.getDayOfWeek().getValue();
+
+        if(valueOfToday == 0){ //parse the date if no dayOfWeek is mentioned
+            return LocalDate.parse(date);
+        }
+
+        //Compare today to valueOfDayMention
+        if( valueOfToday > valueOfDayMention){
+            valueOfDayMention += 7;
+        }
+
+        //next closest day of the week mention in the string
+        LocalDate scheduleDate = today.plusDays(valueOfDayMention - valueOfToday);
+
+        return scheduleDate;
     }
 
     //override

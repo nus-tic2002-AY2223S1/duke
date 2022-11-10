@@ -1,5 +1,6 @@
 import java.io.*;
 import java.nio.file.*;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class TaskList {
@@ -61,6 +62,15 @@ public class TaskList {
         tempFile.renameTo(inputFile);
     }
 
+    public boolean IsFreeTime(LocalDate existingSchedule, LocalDate newSchedule){
+        if(newSchedule.isEqual(existingSchedule)){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public void addTasks(String input) throws DukeException, IOException {
         String[] words = input.split(" ");
         String description = "";
@@ -85,12 +95,33 @@ public class TaskList {
             throw new DukeException();
         }
 
+        //add task based on case, check if the tasks clash with an existing task, for event and todo
         switch (words[0]) {
             case "deadline":
                 myTaskList[task_count] = new Deadline(description, "deadline", date);
-                break;
+                //check date, if clash
+                // int i = 0;
+             //   boolean free_time = true;
+               // while (myTaskList[task_count].equals(myTaskList[i])){ //new task compare with old task, only if the task is a D or E/ if match delete the new task
+               //     free_time = IsFreeTime(myTaskList[task_count].my_taskdate, myTaskList[i].my_taskdate);
+               //     ++i;
+                //}
+               // if(!free_time){
+               //     myTaskList[task_count] = myTaskList[task_count + 1];
+               // }
+              break;
             case "event":
                 myTaskList[task_count] = new Event(description, "event", date);
+                //check date, if clash
+              //  i = 0;
+              //  free_time = true;
+               // while (myTaskList[task_count].equals(myTaskList[i])){ //new task compare with old task, only if the task is a D or E/ if match delete the new task
+               //     free_time = IsFreeTime(myTaskList[task_count].my_taskdate, myTaskList[i].my_taskdate);
+                //    ++i;
+              //  }
+             //   if(!free_time){
+              //      myTaskList[task_count] = myTaskList[task_count + 1];
+              //  }
                 break;
             case "todo":
                 myTaskList[task_count] = new ToDo(description, "todo");
@@ -98,6 +129,8 @@ public class TaskList {
             default:
                 throw new DukeException();
         }
+
+        //write and append only if the task did not clash
 
         String file = "data/tasks.txt";
         String data = myTaskList[task_count].myTaskType + " | " +
@@ -202,4 +235,6 @@ public class TaskList {
             continue;
         }
     }
+
+    //public void viewSchedule()
 }
