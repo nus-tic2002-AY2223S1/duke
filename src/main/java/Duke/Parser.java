@@ -1,12 +1,6 @@
 package Duke;
 
-import Duke.Commands.Command;
-import Duke.Commands.AddCommand;
-import Duke.Commands.ExitCommand;
-import Duke.Commands.MarkCommand;
-import Duke.Commands.ListCommand;
-import Duke.Commands.UnmarkCommand;
-import Duke.Commands.DeleteCommand;
+import Duke.Commands.*;
 import Duke.Tasks.*;
 
 import java.time.LocalDateTime;
@@ -50,6 +44,15 @@ public class Parser {
                 return new UnmarkCommand(target);
             case "delete":
                 return new DeleteCommand(target);
+            case "tag":
+                String tag = getTagging(arguments);
+                if (tag.isEmpty()){
+                    System.out.println("No tagging found, please enter something like \"#fun\" to add tagging");
+                    return null;
+                }
+                return new TagCommand(target, tag);
+            case "find":
+                return new FindCommand(arguments);
             case "todo":
                 return new AddCommand(parseTask(command,arguments));
             case "deadline":
@@ -103,5 +106,14 @@ public class Parser {
         }
         return argumentArr;
     }
+
+    private String getTagging(String argument){
+        if (!argument.contains("#")){
+            return "";
+        }
+        String[] argumentArr = argument.trim().split("#", 2);
+        return "#" + argumentArr[1].trim();
+    }
+
 
 }
