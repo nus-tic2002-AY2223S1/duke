@@ -158,9 +158,31 @@ public class TaskList {
                 if (count == 0)
                     printMessage("No task is found on " + Parser.StringToDate(scheduleDate));
             }
-            else{
+            else
                 printError(INVALID_INPUT);
+    }
+
+    public void findTask(String input, String[] inputSplit) {
+        Integer count = 0;
+        if (!checkEmptyTaskList()) {
+            if (checkValidCommand(inputSplit, input)) {
+                printLine();
+                String findInput = Parser.parseFindInput(input);
+                printMessage(MESSAGE_FIND_TASK);
+                for (Task task : taskList) {
+                    if (task.getDescription().contains(findInput)) {
+                        printMessage(task.toString());
+                        count += 1;
+                    }
+                }
+                if (count < 1) {
+                    printError("There are no matching tasks.");
+                    printLine();
+                }
             }
+            else
+                printError(INVALID_INPUT);
+        }
     }
 
     // check for empty list, return true if list is empty
@@ -239,6 +261,10 @@ public class TaskList {
             // check for bye input format
             if (inputSplit[0].equals("bye") && inputSplit.length == 1)
                 return true;
+            if (inputSplit[0].equals("find")){
+                if (inputSplit.length > 1)
+                    return true;
+            }
 
             else {
                 // print error if input is invalid and return false
@@ -254,6 +280,7 @@ public class TaskList {
             printLine();
             return false;
         }
+        return false;
     }
 
     // check if Event input contains "at", if contains at, return true

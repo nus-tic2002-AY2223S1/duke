@@ -41,6 +41,11 @@ public class Parser {
         return scheduleDate;
     }
 
+    public static String parseFindInput(String input){
+        String findInput = input.substring(5);
+        return findInput;
+    }
+
     // convert input date to LocalDate format
     public static LocalDate StringToDate(String s) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);

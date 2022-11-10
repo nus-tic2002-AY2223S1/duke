@@ -48,23 +48,23 @@ public class Duke {
                     taskList.todoTask(input, inputSplit);
 
                 // deadline task
-                else if (input.startsWith("deadline")) {
+                else if (input.startsWith("deadline"))
                     taskList.deadlineTask(input, inputSplit);
-                }
 
                 // event task
                 else if (input.startsWith("event"))
                     taskList.eventTask(input, inputSplit);
 
                 // delete task
-                else if (input.startsWith("delete")) {
+                else if (input.startsWith("delete"))
                     taskList.deleteTask(input, inputSplit);
-                }
 
                 // view scheduled task for the date
-                else if (input.startsWith("schedule for")) {
+                else if (input.startsWith("schedule for"))
                     taskList.scheduleTask(input, inputSplit);
-                }
+
+                else if (input.startsWith("find"))
+                    taskList.findTask(input, inputSplit);
 
                 // prompt user to enter valid input
                 else
