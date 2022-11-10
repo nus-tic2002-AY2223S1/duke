@@ -121,31 +121,31 @@ abstract class Task
         }
 
         for (String word : words) {
-            if (word.equals("MON")) {
+            if (word.startsWith("MON")) {
                 valueOfDayMention = 1;
                 break;
             }
-            if (word.equals("TUES")) {
+            if (word.startsWith("TUES")) {
                 valueOfDayMention = 2;
                 break;
             }
-            if (word.equals("WED")) {
+            if (word.startsWith("WED")) {
                 valueOfDayMention = 3;
                 break;
             }
-            if (word.equals("THURS")) {
+            if (word.startsWith("THURS")) {
                 valueOfDayMention = 4;
                 break;
             }
-            if (word.equals("FRI")) {
+            if (word.startsWith("FRI")) {
                 valueOfDayMention = 5;
                 break;
             }
-            if (word.equals("SAT")) {
+            if (word.startsWith("SAT")) {
                 valueOfDayMention = 6;
                 break;
             }
-            if (word.equals("SUN")) {
+            if (word.startsWith("SUN")) {
                 valueOfDayMention = 7;
                 break;
             }

@@ -69,7 +69,12 @@ public class TaskList
 
     public boolean IsFreeTime(LocalDate existingSchedule, LocalDate newSchedule)
     {
-        return newSchedule.isEqual(existingSchedule);
+        if(newSchedule.isEqual(existingSchedule)){
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     public void addTasks(String input) throws DukeException, IOException
@@ -109,7 +114,8 @@ public class TaskList
                 int i = 0;
                 boolean free_time = true;
                 while (i < task_count){ //new task compare with old task, only if the task is a D or E/ if match delete the new task
-                    if(myTaskList[i].myTaskType.equals("todo")){
+                    if(myTaskList[i].myTaskType.equals("todo"))
+                    {
                         ++i;
                         continue;
                     }
