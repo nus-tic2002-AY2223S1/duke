@@ -1,4 +1,4 @@
-package taskList;
+package tasklist;
 
 import parser.Parser;
 

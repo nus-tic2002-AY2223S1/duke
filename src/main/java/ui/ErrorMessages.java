@@ -1,7 +1,5 @@
 package ui;
 
-import taskList.TaskList;
-
 public class ErrorMessages {
 
     public static final String TASK_NUMBER_OOB = "!!ERROR!! Task Number out of range. Please enter a valid input.";

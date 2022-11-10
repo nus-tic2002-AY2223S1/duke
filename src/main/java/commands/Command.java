@@ -1,8 +1,6 @@
 package commands;
 
-import storage.Storage;
-import taskList.TaskList;
-import ui.UI;
+import tasklist.TaskList;
 
 public abstract class Command {
     protected Command() {

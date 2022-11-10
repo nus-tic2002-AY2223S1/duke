@@ -1,8 +1,8 @@
 package storage;
 
 import exceptions.InvalidStorageFilePathException;
-import taskList.Task;
-import taskList.TaskList;
+import tasklist.Task;
+import tasklist.TaskList;
 
 import java.io.File;
 import java.io.IOException;

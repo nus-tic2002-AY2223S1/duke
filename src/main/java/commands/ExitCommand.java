@@ -1,6 +1,6 @@
 package commands;
 import storage.Storage;
-import taskList.TaskList;
+import tasklist.TaskList;
 import ui.UI;
 public class ExitCommand extends Command{
     public static final String COMMAND_WORD = "bye";

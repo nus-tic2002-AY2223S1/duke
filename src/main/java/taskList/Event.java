@@ -1,9 +1,8 @@
-package taskList;
+package tasklist;
 
 import parser.Parser;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Event extends Task {
     protected String at;
