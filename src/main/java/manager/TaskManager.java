@@ -85,6 +85,11 @@ public class TaskManager {
         String result = "";
         
         if (cmd.getIndex() != -1) {
+            
+            if (cmd.getIndex() > taskList.size() - 1) {
+                throw new DukeException(ErrorMessage.ERROR_MESSAGE_MARK_INDEX_OUT_OF_RANGE.toString());
+            }
+            
             int index = cmd.getIndex();
             Task t = taskList.get(index);
             
@@ -228,7 +233,7 @@ public class TaskManager {
         } else if (cmd.getDescription().equals("date")) {
             taskList.sort(Task.dateTimeComparator);
         } else {
-            return "☹ OOPS!!! The input sorting method is not found.";
+            throw new DukeException(ErrorMessage.ERROR_MESSAGE_INVALID_SORT_TYPE.toString());
         }
         
         onTaskListChanged();

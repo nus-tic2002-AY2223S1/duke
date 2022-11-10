@@ -8,9 +8,12 @@ public enum ErrorMessage {
     ERROR_MESSAGE_ALREADY_UNMARKED("☹ OOPS!!! This task already been marked as incomplete."),
     ERROR_MESSAGE_DELETE_NOT_NUMBER("☹ OOPS!!! The description of the delete action must be a number."),
     ERROR_MESSAGE_DELETE_INDEX_OUT_OF_RANGE("☹ OOPS!!! The description of a delete action must be a number that is not larger than the list size."),
+    
+    ERROR_MESSAGE_MARK_INDEX_OUT_OF_RANGE("☹ OOPS!!! The description of a mark/unmark action must be a number that is not larger than the list size."),
     ERROR_MESSAGE_DESCRIPTION_EMPTY("☹ OOPS!!! The description of the task cannot be empty."),
     ERROR_MESSAGE_DATETIME_EMPTY("☹ OOPS!!! The due date/time of the task cannot be empty."),
-    ERROR_MESSAGE_INVALID_DATETIME_FORMAT("☹ OOPS!!! The input date time format is incorrect.");
+    ERROR_MESSAGE_INVALID_DATETIME_FORMAT("☹ OOPS!!! The input date time format is incorrect."),
+    ERROR_MESSAGE_INVALID_SORT_TYPE("☹ OOPS!!! The input sorting method is not found.");
     
     private String msg;
     
