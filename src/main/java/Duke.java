@@ -10,13 +10,14 @@ public class Duke {
     private TaskList taskList;
     private UI ui;
 
+
     public Duke() throws InvalidStorageFilePathException, IOException {
         ui = new UI();
         storage = new Storage();
         taskList = new TaskList();
-        Storage.mainCaller();
     }
 
+    //@@author nglihui
     private void start(String[] launchArgs) throws InvalidStorageFilePathException, IOException {
         this.ui = new UI();
         this.taskList = new TaskList();
@@ -74,7 +75,7 @@ public class Duke {
                     UI.printStandardError();
 
                 // to actively store task list
-                Storage.mainCaller();
+                Storage.save(taskList.taskList);
             }
         }
 

@@ -1,63 +1,88 @@
 package storage;
 
-import exceptions.InvalidStorageFilePathException;
-import parser.Parser;
 import tasklist.Task;
-import tasklist.TaskList;
-import ui.UI;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.FileWriter;
+import java.io.*;
+import java.util.ArrayList;
 
 public class Storage {
-    private static TaskList taskList;
+    //    private static TaskList taskList;
+    public static File file;
+    public static String path = homeDirectory() + "/duke/data/duke.txt";
 
-    public static String homeDirectory(){
+    public Storage() {
+        file = new File(path);
+    }
+
+    public static String homeDirectory() {
         String homeDirectory = System.getProperty("user.home");
         return homeDirectory;
     }
 
-    private static void writeLineToFile(String filePath, Task task) throws IOException {
-        // write to file
+    public static void fileExist() {
+        if (!file.exists()) {
+            File f = new File(path);
+            if (!f.exists())
+                f.getParentFile().mkdirs();
+        }
+    }
 
+    public static void save(ArrayList<Task> taskList) {
         try {
-            FileWriter fw = new FileWriter(filePath);
-            fw.write(task.toString() + System.lineSeparator());
-            fw.close();
-        }
-        catch (IOException | NullPointerException e) {
-            System.out.println("1. Something went wrong: " + e.getMessage());
-        }
+            fileExist();
+            assert path != null : "File path cannot be null";
+            FileOutputStream writer = new FileOutputStream(path);
 
-    }
-    public static void main(String[] args) throws InvalidStorageFilePathException, IOException {
-        // create file to file path assuming all users are storing the duke in the user home directory
-        assert homeDirectory() != null;
-        File file = new File(homeDirectory(), "/duke/data/duke.txt");
-        File home = new File(homeDirectory());
-        taskList = new TaskList();
-
-        // if file path does not exist, throw exception
-        if (!home.exists()) {
-            throw new InvalidStorageFilePathException();
-        }
-        else {
-            try {
-
-                for (int i = 0; i < taskList.size(); i++){
-                // write to file
-                    writeLineToFile(String.valueOf(file),taskList.getTaskList().get(i));
-                    UI.printMessage(String.valueOf(taskList.getTaskList().get(i)));}
-//                    writeToFile(String.valueOf(file), taskList);
-            } catch (IOException | NullPointerException e) {
-                System.out.println("Something went wrong: " + e.getMessage());
+            for (Task task : taskList) {
+                writer.write((task.toString() + '\n').getBytes());
             }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    }
-
-    public static void mainCaller() throws InvalidStorageFilePathException, IOException {
-        Storage.main(null);
     }
 }
+
+//    private static void writeLineToFile(String filePath, Task task) throws IOException {
+//        // write to file
+//
+//        try {
+//            FileWriter fw = new FileWriter(filePath);
+//            fw.write(task.toString() + System.lineSeparator());
+//            fw.close();
+//        }
+//        catch (IOException | NullPointerException e) {
+//            System.out.println("1. Something went wrong: " + e.getMessage());
+//        }
+
+//    }
+//    public static void main(String[] args) throws InvalidStorageFilePathException, IOException {
+//        // create file to file path assuming all users are storing the duke in the user home directory
+//        assert homeDirectory() != null;
+//        File file = new File(homeDirectory(), "/duke/data/duke.txt");
+//        File home = new File(homeDirectory());
+//        taskList = new TaskList();
+//
+//        // if file path does not exist, throw exception
+//        if (!home.exists()) {
+//            throw new InvalidStorageFilePathException();
+//        }
+//        else {
+//            try {
+//
+//                for (int i = 0; i < taskList.size(); i++){
+//                // write to file
+//                    writeLineToFile(String.valueOf(file),taskList.getTaskList().get(i));
+//                    UI.printMessage(String.valueOf(taskList.getTaskList().get(i)));}
+////                    writeToFile(String.valueOf(file), taskList);
+//            } catch (IOException | NullPointerException e) {
+//                System.out.println("Something went wrong: " + e.getMessage());
+//            }
+//        }
+//    }
+//
+//    public static void mainCaller() throws InvalidStorageFilePathException, IOException {
+//        Storage.main(null);
+//    }
+
 

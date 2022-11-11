@@ -16,7 +16,7 @@ import static ui.UI.*;
 public class TaskList {
     //contains the task list e.g., it has operations to add/delete tasks in the list
 
-    public static List<Task> taskList = new ArrayList<>();
+    public static ArrayList<Task> taskList = new ArrayList<>();
 
     // to add task into task list and print message
     public void addTask(Task task) {
