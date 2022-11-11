@@ -41,7 +41,7 @@ public class Tasklist {
                     Ui.line();
                 }
             for (int index = 1; index <= tL.size(); index++){
-                System.out.println (index + ". " + tL.get(index-1).toString() + tL.get(index-1).getTask());
+                System.out.println (index + ". " + tL.get(index-1).toString());
             }
         }
     }

@@ -66,7 +66,7 @@ public class Ui {
     public static void addedTask(ArrayList<Task> tl) {
         line();
         System.out.println("Got it. I've added this task:\n");
-        System.out.println(tl.get(tl.size()-1).toString() + tl.get(tl.size()-1).getTask());
+        System.out.println(tl.get(tl.size()-1).toString());
         System.out.println("Now you have " + tl.size() + " tasks in the list.");
         line();
     }
