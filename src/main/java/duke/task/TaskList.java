@@ -140,12 +140,18 @@ public class TaskList {
      */
     public void markTask(String[] lineArray) {
         int inputIndex = Integer.parseInt(lineArray[1]);
+        assert inputIndex > 0;
         int arrayIndex = inputIndex - 1;
-        tasks.get(arrayIndex).setDone(true);
-        System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t Nice! I've marked this task as done:");
-        System.out.println("\t\t " + tasks.get(arrayIndex));
-        System.out.println("\t-----------------------------------------------------------------");
+        if (-1 < arrayIndex && arrayIndex < tasks.size()) {
+            tasks.get(arrayIndex).setDone(true);
+            System.out.println("\t-----------------------------------------------------------------");
+            System.out.println("\t Nice! I've marked this task as done:");
+            System.out.println("\t\t " + tasks.get(arrayIndex));
+            System.out.println("\t-----------------------------------------------------------------");
+        } else {
+            taskListUtility.indexOutOfBound(tasks.size());
+        }
+
     }
 
     /**
@@ -154,12 +160,18 @@ public class TaskList {
      */
     public void unmarkTask(String[] lineArray) {
         int inputIndex = Integer.parseInt(lineArray[1]);
+        assert inputIndex > 0;
         int arrayIndex = inputIndex - 1;
-        tasks.get(arrayIndex).setDone(false);
-        System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t OK, I've marked this task as not done yet:");
-        System.out.println("\t\t " + tasks.get(arrayIndex));
-        System.out.println("\t-----------------------------------------------------------------");
+        if (-1 < arrayIndex && arrayIndex < tasks.size()) {
+            tasks.get(arrayIndex).setDone(false);
+            System.out.println("\t-----------------------------------------------------------------");
+            System.out.println("\t OK, I've marked this task as not done yet:");
+            System.out.println("\t\t " + tasks.get(arrayIndex));
+            System.out.println("\t-----------------------------------------------------------------");
+        } else {
+            taskListUtility.indexOutOfBound(tasks.size());
+        }
+
     }
 
     /**
@@ -168,13 +180,19 @@ public class TaskList {
      */
     public void deleteTask(String[] lineArray) {
         int inputIndex = Integer.parseInt(lineArray[1]);
+        assert inputIndex > 0;
         int arrayIndex = inputIndex - 1;
-        System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t Noted. I've removed this task:");
-        System.out.println("\t\t " + tasks.get(arrayIndex));
-        tasks.remove(arrayIndex);
-        System.out.println("\t Now you have " + tasks.size() + " tasks in the list.");
-        System.out.println("\t-----------------------------------------------------------------");
+        if (-1 < arrayIndex && arrayIndex < tasks.size()) {
+            System.out.println("\t-----------------------------------------------------------------");
+            System.out.println("\t Noted. I've removed this task:");
+            System.out.println("\t\t " + tasks.get(arrayIndex));
+            tasks.remove(arrayIndex);
+            System.out.println("\t Now you have " + tasks.size() + " tasks in the list.");
+            System.out.println("\t-----------------------------------------------------------------");
+        } else {
+            taskListUtility.indexOutOfBound(tasks.size());
+        }
+
     }
 
     /**

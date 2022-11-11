@@ -128,4 +128,11 @@ public class Utility {
         System.out.println("\t-----------------------------------------------------------------");
     }
 
+    public void indexOutOfBound(Integer upperbound) {
+        System.out.println("\t-----------------------------------------------------------------");
+        System.out.println("\t Oops! Invalid task number,");
+        System.out.println("\t please enter a valid task number between 1 and " + upperbound + ".");
+        System.out.println("\t-----------------------------------------------------------------");
+    }
+
 }
