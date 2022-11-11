@@ -1,8 +1,10 @@
 package storage;
 
 import exceptions.InvalidStorageFilePathException;
+import parser.Parser;
 import tasklist.Task;
 import tasklist.TaskList;
+import ui.UI;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +33,7 @@ public class Storage {
     }
     public static void main(String[] args) throws InvalidStorageFilePathException, IOException {
         // create file to file path assuming all users are storing the duke in the user home directory
+        assert homeDirectory() != null;
         File file = new File(homeDirectory(), "/duke/data/duke.txt");
         File home = new File(homeDirectory());
         taskList = new TaskList();
@@ -41,10 +44,12 @@ public class Storage {
         }
         else {
             try {
+
                 for (int i = 0; i < taskList.size(); i++){
                 // write to file
-                    writeLineToFile(String.valueOf(file),taskList.getTaskList().get(i));}
-//                writeToFile(String.valueOf(file), taskList);
+                    writeLineToFile(String.valueOf(file),taskList.getTaskList().get(i));
+                    UI.printMessage(String.valueOf(taskList.getTaskList().get(i)));}
+//                    writeToFile(String.valueOf(file), taskList);
             } catch (IOException | NullPointerException e) {
                 System.out.println("Something went wrong: " + e.getMessage());
             }

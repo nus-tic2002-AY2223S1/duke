@@ -24,6 +24,7 @@ public class Duke {
 
         while (true) {
                 String input = UI.getUserCommand();
+                assert input != null : "User should not input null.";
                 String[] inputSplit = input.split(" ");
 
                 // enter bye to end chat
