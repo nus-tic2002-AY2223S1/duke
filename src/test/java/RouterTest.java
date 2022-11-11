@@ -1,10 +1,17 @@
+import data.DataFileFactory;
 import data.DataInterface;
 import data.FileInfo;
+import data.FileInterface;
 import logic.BotCallback;
+import task.Task;
 import task.TaskInterface;
 import task.Todo;
 import ui.UIInterface;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -150,6 +157,120 @@ public class RouterTest {
         assertEquals(uispy.size, test.size());
     }
 
+    @Test
+    public void unsupportedTaskTypeTest() {
+        UISpy uispy = new UISpy();
+        Router router = new Router(uispy, null, null);
+        boolean checker = uispy.checker;
+        router.unsupportedTaskType();
+        assertEquals(!checker, uispy.checker);
+    }
+
+    @Test
+    public void indexOutOFBoundTest() {
+        UISpy uispy = new UISpy();
+        Router router = new Router(uispy, null, null);
+        boolean checker = uispy.checker;
+        router.indexOutOFBound();
+        assertEquals(!checker, uispy.checker);
+    }
+
+    @Test
+    public void unsupportedFormatTest() {
+        UISpy uispy = new UISpy();
+        Router router = new Router(uispy, null, null);
+        router.unsupportedFormat("unsupported");
+        assertEquals("unsupported", uispy.checkerString);
+    }
+
+    @Test
+    public void goodbyeTest() {
+        UISpy uispy = new UISpy();
+        Router router = new Router(uispy, null, null);
+        boolean checker = uispy.checker;
+        router.goodbye();
+        assertEquals(!checker, uispy.checker);
+    }
+
+    @Test
+    public void loadActiveFileTest() {
+        Todo a = new Todo("asd");
+        UISpy uiSpy = new UISpy();
+        FileDataSpy fileSpy = new FileDataSpy();
+        DataSpy dataSpy = new DataSpy("a", "b");
+        Router router = new Router(uiSpy, dataSpy, fileSpy);
+        router.loadActiveFile();
+        assertEquals(dataSpy.path, fileSpy.active);
+        assertTrue(dataSpy.data.size() == 1);
+        assertEquals(dataSpy.data.get(0).getString(), a.getString());
+    }
+
+    @Test
+    public void addNewFile() {
+        UISpy uiSpy = new UISpy();
+        FileDataSpy fileSpy = new FileDataSpy();
+        DataSpy dataSpy = new DataSpy("a", "b");
+        Router router = new Router(uiSpy, dataSpy, fileSpy);
+        router.addNewFile("nihao");
+        assertEquals(uiSpy.checkerString, "nihao");
+        assertEquals(dataSpy.path, fileSpy.active);
+    }
+
+    @Test
+    public void showAllFilesTest() {
+        UISpy uiSpy = new UISpy();
+        FileDataSpy fileSpy = new FileDataSpy();
+        Router router = new Router(uiSpy,null, fileSpy);
+        router.showAllFiles();
+        FileInfo a = new FileInfo("a", true, "a");
+        assertEquals(a.getAlias(), uiSpy.checkerString);
+    }
+
+    @Test
+    public void getActiveFileTest() {
+        UISpy uiSpy = new UISpy();
+        FileDataSpy fileSpy = new FileDataSpy();
+        Router router = new Router(uiSpy,null, fileSpy);
+        router.getActiveFile();
+        assertEquals(uiSpy.checkerString, fileSpy.active);
+    }
+
+    @Test
+    public void invalidFormatTest() {
+        UISpy uiSpy = new UISpy();
+        Router router = new Router(uiSpy,null, null);
+        router.invalidFormat("cde");
+        assertEquals(uiSpy.checkerString, "cde");
+    }
+
+    @Test
+    public void showInvalidFormatTest() {
+        UISpy uiSpy = new UISpy();
+        Router router = new Router(uiSpy,null, null);
+        router.showInvalidFormat("asd","cde");
+        assertEquals(uiSpy.checkerString, "asdcde");
+    }
+
+    @Test
+    public void showFilteredListTest() {
+        UISpy uiSpy = new UISpy();
+        Router router = new Router(uiSpy,null, null);
+        ArrayList<TaskInterface> a = new ArrayList<>();
+        a.add(new Todo("asd"));
+        router.showFilteredList(a);
+        assertEquals(1, uiSpy.list.size());
+        assertEquals(a.get(0).toString(), uiSpy.list.get(0).toString());
+    }
+
+    @Test
+    public void customErrorTest() {
+        UISpy uiSpy = new UISpy();
+        Router router = new Router(uiSpy,null, null);
+        router.customError("cde");
+        assertEquals(uiSpy.checkerString, "cde");
+    }
+
+
     //MARK: HELPER
     private Router initialize(String name, String path, String folder) {
         UIInterface a = new UISpy();
@@ -205,6 +326,8 @@ public class RouterTest {
         @Override
         public void changeFile(String path) {
             this.path = path;
+            this.data = new ArrayList<>();
+            this.data.add(new Todo("asd"));
         }
     }
 
@@ -212,6 +335,9 @@ public class RouterTest {
         public TaskInterface task;
         public int size;
         public ArrayList<TaskInterface> list = new ArrayList<>();
+
+        public boolean checker = false;
+        public String checkerString = "";
 
         @Override
         public void start() {
@@ -246,27 +372,27 @@ public class RouterTest {
 
         @Override
         public void unsupportedTaskType() {
-
+            this.checker = !this.checker;
         }
 
         @Override
         public void indexOutOFBound() {
-
+            this.checker = !this.checker;
         }
 
         @Override
         public void unsupportedFormat(String text) {
-
+            checkerString = text;
         }
 
         @Override
         public void invalidFormat(String text) {
-
+            checkerString = text;
         }
 
         @Override
         public void goodbye() {
-
+            this.checker = !this.checker;
         }
 
         @Override
@@ -276,17 +402,17 @@ public class RouterTest {
 
         @Override
         public void customError(String text) {
-
+            checkerString = text;
         }
 
         @Override
         public void unexpectedError() {
-
+            checker = !checker;
         }
 
         @Override
         public void addFileSuccess(String text) {
-
+            this.checkerString = text;
         }
 
         @Override
@@ -296,7 +422,7 @@ public class RouterTest {
 
         @Override
         public void showFiles(ArrayList<FileInfo> files) {
-
+            this.checkerString = files.get(0).getAlias();
         }
 
         @Override
@@ -311,17 +437,43 @@ public class RouterTest {
 
         @Override
         public void getActiveFile(String alias) {
-
+            this.checkerString = alias;
         }
 
         @Override
         public void invalidCommandFormat(String valid, String invalid) {
-            
+            this.checkerString = valid + invalid;
         }
 
         @Override
         public void showFilteredList(ArrayList<TaskInterface> lists) {
+            list = lists;
+        }
+    }
 
+    private class FileDataSpy implements FileInterface {
+        String active = "active";
+        @Override
+        public ArrayList<FileInfo> getAllFile() {
+            ArrayList<FileInfo> a = new ArrayList<>();
+            a.add(new FileInfo("a", true, "a"));
+            return a;
+        }
+
+        @Override
+        public boolean setActive(String alias) throws IOException {
+            return false;
+        }
+
+        @Override
+        public FileInfo getActiveFile() throws IOException {
+            return new FileInfo(active, true, active);
+        }
+
+        @Override
+        public boolean addNewFile(String alias) throws IOException {
+            this.active = alias;
+            return true;
         }
     }
 }
