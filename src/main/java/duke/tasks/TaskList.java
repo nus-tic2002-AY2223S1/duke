@@ -46,7 +46,7 @@ public class TaskList {
     }
 
     public void unmarkT(int id, String key) {
-        if (tl.get(id).isDone) {
+        if (!tl.get(id).isDone) {
             Ui.trueMark(key);
         } else {
             tl.get(id).unmark();

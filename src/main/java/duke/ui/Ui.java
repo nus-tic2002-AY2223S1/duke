@@ -67,11 +67,19 @@ public class Ui {
         }
 
         public static void unmarkTask(int id, List<Task> tl) {
-                System.out.println("Nice! I've marked this task as done:");
+                System.out.println("OK, I've marked this task as not done yet:");
                 System.out.println(tl.get(id).getDescription().toString() + "\n"); 
         }
 
         public static void trueMark(String key) {
                 System.out.println("Task is already " + key.toLowerCase() + "ed!\n");
+        }
+
+        public static String eventTimeError() {
+                return"\n\n**Event time should have a start and end time e.g 2-4pm\nConsider using deadline command if there is no end time.**\n";
+        }
+
+        public static String deadlineTimeError() {
+                return"\n\n**Deadline time should only have a single time value e.g 4pm\nConsider using event command if it is a range of time.**\n";
         }
 }
