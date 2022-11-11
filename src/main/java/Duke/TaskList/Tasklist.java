@@ -32,13 +32,9 @@ public class Tasklist {
         switch(command) {
             case "list":
                 if (tl.size() == 0) {
-                    Ui.line();
-                    System.out.println("Your list is empty\n");
-                    Ui.line();
+                    System.out.println("Your list is empty");
                 } else {
-                    Ui.line();
                     System.out.println("Here are the tasks in your list:\n");
-                    Ui.line();
                 }
             for (int index = 1; index <= tL.size(); index++){
                 System.out.println (index + ". " + tL.get(index-1).toString());
@@ -65,13 +61,9 @@ public class Tasklist {
         try {
             tl.get(Integer.parseInt(userInput)-1).markAsDone(status );
             if(status) {
-                Ui.line();
-                System.out.println( "Nice! I've marked this task as done:");
-                Ui.line();
+                System.out.println("Nice! I've marked this task as done:");
             } else {
-                Ui.line();
                 System.out.println("Ok! I've marked this task as not done yet: ");
-                Ui.line();
             }
             System.out.println (tl.get(Integer.parseInt(userInput) - 1).getTask());
         } catch (NumberFormatException e){
@@ -90,7 +82,6 @@ public class Tasklist {
             int idx = Integer.parseInt(userInput)-1;
             String description = tl.get(idx).getTask();
             tl.remove(idx);
-            Ui.line();
             System.out.println("Noted. I've remove this task: \n" + description);
             System.out.println("Now you have " + tl.size() + " tasks in your list.");
         } catch (NumberFormatException e){

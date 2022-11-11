@@ -62,7 +62,6 @@ public class Parser {
         }
         try {
             deadlineDate = LocalDate.parse(date);
-            System.out.println("parsed date " + deadlineDate);
         } catch(DateTimeParseException e) {
             throw new DukeException("Sorry. Date format needs to be YYYY-MM-DD.");
         }
@@ -71,9 +70,6 @@ public class Parser {
     private void getEvent(String detail) throws DukeException {
         String detailSplit[] = detail.split(" /at ", 2);
         String dateTime[] = detailSplit[1].split(" ", 2);
-        System.out.println("detail split " + detailSplit[0]);
-        System.out.println("date." + dateTime[0]);
-        System.out.println("time." + dateTime[1]);
         try {
             eventDate = LocalDate.parse(dateTime[0]);
         } catch (DateTimeParseException e) {
@@ -81,10 +77,8 @@ public class Parser {
         }
 
         String[] start = dateTime[1].split(" - ", 2);
-        System.out.println("start." + start[0]);
-        System.out.println("end." + start[1]);
         if (start.length < 2) {
-            throw new DukeException("Sorry. Time format needs to be 12:00 - 13:00");
+            throw new DukeException("Sorry. Time format needs to be 12:00");
         }
         try {
             eventStart = LocalTime.parse(dateTime[0]);
