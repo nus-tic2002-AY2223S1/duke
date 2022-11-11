@@ -1,4 +1,4 @@
-package duke.tasks;
+package nusduke.tasks;
 
 public class Task {
     protected StringBuilder description;

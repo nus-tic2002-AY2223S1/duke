@@ -1,10 +1,10 @@
-package duke.tasks;
+package nusduke.tasks;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import duke.exceptions.DukeException;
-import duke.ui.Ui;
+import nusduke.exceptions.DukeException;
+import nusduke.ui.Ui;
 
 public class Deadline extends Todo {
     protected LocalDate date;

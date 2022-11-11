@@ -1,6 +1,6 @@
-package duke.tasks;
+package nusduke.tasks;
 
-import duke.ui.Ui;
+import nusduke.ui.Ui;
 
 import java.util.ArrayList;
 import java.util.List;

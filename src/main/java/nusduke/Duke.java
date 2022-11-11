@@ -1,10 +1,10 @@
-package duke;
+package nusduke;
 
 import java.util.Scanner;
 
-import duke.tasks.*;
-import duke.ui.Ui;
-import duke.data.Storage;
+import nusduke.tasks.*;
+import nusduke.ui.Ui;
+import nusduke.data.Storage;
 
 public class Duke {
     public static void main(String[] args) throws Exception {
@@ -89,7 +89,7 @@ public class Duke {
                     Ui.unknown();
             }
 
-            Storage.save("duke/mytasks.txt", list.getList()); 
+            Storage.save("mytasks", list.getList()); 
         }  
     }
 }
