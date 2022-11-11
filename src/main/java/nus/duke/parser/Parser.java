@@ -151,14 +151,14 @@ public class Parser {
      */
     public static boolean hasInputErrors(String userInput) throws MissingKeywordException, EmptyTaskException, InvalidCommandException, MissingDateException {
         String trimmedInput = userInput.trim();
+        String command = getCommand(trimmedInput);
 
-        if (isValidOneWordCommand(trimmedInput)) {
+        if (isValidOneWordCommand(command)) {
             return false;
-        } else if (isValidCommandThatNeedsInput(trimmedInput)) {
+        } else if (isValidCommandThatNeedsInput(command)) {
             throw new EmptyTaskException();
         }
 
-        String command = getCommand(trimmedInput);
         if (isValidCommand(command) == false) {
             throw new InvalidCommandException();
         }
