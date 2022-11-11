@@ -45,6 +45,8 @@ public class Parser {
                 return new DeleteCommand(inputArray[1]);
             case"nextdue":
                 return new NextDueCommand();
+            case"find":
+                return new FindCommand(inputArray[1]);
             default:
 
                 return new ErrorCommand();
