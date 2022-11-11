@@ -18,25 +18,31 @@ public class Storage {
     public static final String STORAGE_FILEPATH = "data/duke.txt";
     protected static String filePath;
     public Storage(String filePath){
-        this.filePath = STORAGE_FILEPATH;
+        this.filePath = filePath;
     }
 
     /** Save the task list to storage file. */
     public void saveList(ArrayList<Task> taskList) {
         try {
+            if (filePath.isEmpty()){
+                filePath = STORAGE_FILEPATH;
+            }
             FileWriter writer = new FileWriter(this.filePath);
             for (Task task : taskList) {
                 if (task instanceof Events) {
-                    writer.write("Event | " + Boolean.toString(task.getStatus())
+                    writer.write("Event | " + task.getStatus()
                             + " | " + task.getDescriptionOnly()
-                            + " | " + ((Events) task).getDatetime() + "\n");
+                            + " | " + ((Events) task).getDueDate()
+                            + " | " + task.getTagging() + "\n");
                 } else if (task instanceof Todo) {
-                    writer.write("Todo | " + Boolean.toString(task.getStatus())
-                            + " | " + task.getDescriptionOnly() + "\n");
-                } else if (task instanceof Deadlines) {
-                    writer.write("Deadline | " + Boolean.toString(task.getStatus())
+                    writer.write("Todo | " + task.getStatus()
                             + " | " + task.getDescriptionOnly()
-                            + " | " + ((Deadlines) task).getDatetime() + "\n");
+                            + " | " + task.getTagging() + "\n");
+                } else if (task instanceof Deadlines) {
+                    writer.write("Deadline | " + task.getStatus()
+                            + " | " + task.getDescriptionOnly()
+                            + " | " + ((Deadlines) task).getDueDate()
+                            + " | " + task.getTagging() + "\n");
                 }
             }
             writer.close();
@@ -60,16 +66,26 @@ public class Storage {
         Scanner myReader = new Scanner(f);
         while (myReader.hasNextLine()) {
             String line = myReader.nextLine();
-            String[] arguments = line.split("\\s\\|\\s");
+            String[] arguments = line.split("\\s\\|");
+            trimArray(arguments);
             switch (arguments[0]) {
                 case "Event":
                     currTask = new Events(arguments[2], arguments[3]);
+                    if (arguments.length > 4){
+                        currTask.addTagging(arguments[4]);
+                    }
                     break;
                 case "Deadline":
                     currTask = new Deadlines(arguments[2], arguments[3]);
+                    if (arguments.length > 4){
+                        currTask.addTagging(arguments[4]);
+                    }
                     break;
                 case "Todo":
                     currTask = new Todo(arguments[2]);
+                    if(arguments.length > 3){
+                        currTask.addTagging(arguments[3]);
+                    }
             }
             if (arguments[1].equals("false")) {
                 currTask.unmarkTask();
@@ -80,5 +96,11 @@ public class Storage {
         }
         myReader.close();
         return listOfTask;
+    }
+
+    private void trimArray(String[] arguments){
+        for (int i = 0; i < arguments.length; i++) {
+            arguments[i] = arguments[i].trim();
+        }
     }
 }

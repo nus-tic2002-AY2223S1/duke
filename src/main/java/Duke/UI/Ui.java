@@ -24,6 +24,13 @@ public class Ui {
         return in.nextLine();
     }
 
+    public boolean getUserConfirmation(String warning) {
+        assert (!warning.isEmpty());
+        System.out.println(warning);
+        System.out.println("(Y/N)");
+        return in.nextLine().equalsIgnoreCase("y");
+    }
+
     public void showWelcomeMessage() {
         printMessage(Messages.LOGO, Messages.MESSAGE_WELCOME);
     }

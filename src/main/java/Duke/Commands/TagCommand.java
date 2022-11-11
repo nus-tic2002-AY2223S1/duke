@@ -15,6 +15,9 @@ public class TagCommand extends Command {
 
     @Override
     public String execute(Storage storage, TaskList taskList) {
+        if (taskList.getSize() < input){
+            return "Task list does not have #" + input + ", please select a number within the task list";
+        }
         Task currTask = taskList.getTask(input-1);
         currTask.addTagging(tag);
         return currTask.getDescription();

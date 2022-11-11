@@ -29,7 +29,6 @@ public class Duke {
         try {
             taskList = new TaskList(storage.loadTasks());
         } catch (IOException io) {
-            //ui.showLoadingError();
             taskList = new TaskList(new ArrayList<>());
         }
         run();
@@ -45,12 +44,18 @@ public class Duke {
     private void loopTillExit() {
         String output;
         do {
-            String userCommand = ui.getUserCommand();
-            Parser p = new Parser();
-            Command c = p.parseCommand(userCommand);
-            output = c.execute(storage, taskList);
-            ui.showResultToUser(output);
-
+            output = "";
+            String userCommand = ui.getUserCommand().toLowerCase();
+            try {
+                Parser p = new Parser();
+                Command c = p.parseCommand(userCommand);
+                if (c != null){
+                    output = c.execute(storage, taskList);
+                    ui.showResultToUser(output);
+                }
+            } catch (Exception e) {
+                ui.printMessage(e.getMessage());
+            }
         } while (!output.equals(Messages.MESSAGE_GOODBYE));
     }
 

@@ -18,7 +18,7 @@ public class FindCommand extends Command {
         ArrayList<Task> listOftask = taskList.getListOfTask();
 
         if(listOftask.isEmpty()){
-            return "Task list is empty, no searchable task";
+            return "Task list is empty, no searchable task\n";
         }
 
         String output="";
@@ -29,7 +29,7 @@ public class FindCommand extends Command {
         }
 
         if (output.isEmpty()){
-            return "No result found";
+            return "No result found\n";
         }
 
         return output;

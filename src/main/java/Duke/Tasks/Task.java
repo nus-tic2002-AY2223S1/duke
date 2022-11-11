@@ -10,11 +10,13 @@ public class Task {
 
     public ArrayList<String> tagging = new ArrayList();
     protected String description;
+    protected String taskType;
     protected boolean isDone = false;
 
 
-    public Task(String description) {
+    public Task(String description, String taskType) {
         this.description = description;
+        this.taskType = taskType;
     }
 
     public String getDescription() {
@@ -56,4 +58,9 @@ public class Task {
         }
         return output;
     }
+
+    public String getTaskType(){
+        return taskType;
+    }
+
 }

@@ -16,6 +16,10 @@ public class MarkCommand extends Command {
 
     @Override
     public String execute(Storage storage, TaskList taskList) {
+        if (taskList.getSize() < input){
+            return "Task list does not have #" + input + ", please select a number within the task list";
+        }
+
         Task currTask = taskList.getTask(input-1);
         currTask.markTask();
         return currTask.getDescription();

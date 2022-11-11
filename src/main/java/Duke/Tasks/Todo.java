@@ -5,7 +5,7 @@ package Duke.Tasks;
  */
 public class Todo extends Task {
     public Todo(String description) {
-        super(description);
+        super(description, "Todo");
     }
     public String getDescription() {
         //String mark = this.getStatus() ? "[X]" : "[ ]";

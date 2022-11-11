@@ -6,14 +6,14 @@ package Duke.Tasks;
 public class Deadlines extends Task {
     protected String due;
     public Deadlines(String description, String due) {
-        super(description);
+        super(description,"Deadlines");
         this.due = due;
     }
     public String getDescription() {
         return "[D]" + super.getDescription() + " (" + due +")";
     }
 
-    public String getDatetime(){
+    public String getDueDate(){
         return due;
     }
 }

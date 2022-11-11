@@ -16,6 +16,9 @@ public class DeleteCommand extends Command {
 
     @Override
     public String execute(Storage storage, TaskList taskList) {
+        if (taskList.getSize() < input){
+            return "Task list does not have #" + input + ", please select a number within the task list";
+        }
         Task currTask = taskList.getTask(input-1);
         String output = "Noted. I've removed this task:\n";
         output = output.concat("  " + currTask.getDescription() + "\n");
