@@ -1,12 +1,12 @@
 T | 1 | read book
-D | 0 | return book | June 6th
+D | 0 | return book | Feb 13 2018 04:00 PM
 T | 1 | join sports club
 T | 1 | Laundry
 T | 1 | Tutorial
 T | 1 | Gym
 E | 1 | project meeting | Mon 2-4pm
-D | 0 | return book | 02/12/1993 1800
-D | 0 | return book | 12/12/1993 1800
-D | 0 | return book | 13/12/1994 1800
-D | 0 | return book | saddas
+D | 0 | return cloths | Feb 13 2003 04:00 PM
+D | 0 | return book | Feb 13 2003 03:59 PM
+D | 0 | return book | Feb 13 2004 05:00 PM
+D | 0 | return book | Feb 13 2064 04:00 PM
 E | 0 | project meeting | Feb 13 2004 04:00 PM

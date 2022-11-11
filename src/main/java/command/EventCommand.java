@@ -9,11 +9,18 @@ import ui.Ui;
 public class EventCommand extends Command{
     private String task;
     private String date;
+
+    /**
+     * EventCommand constructor
+     */
     public EventCommand(String task,String date) {
         this.task=task;
         this.date=date;
 
     }
+    /**
+     * Add event task, display result and save
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         tasks.addTask(new Event(task,date));

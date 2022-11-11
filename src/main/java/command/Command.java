@@ -9,7 +9,9 @@ public class Command{
     protected boolean toExit=false;
 
 
-
+    /**
+     * Check if the program should stop
+     */
     public Boolean isExit(){
 
         return toExit;
