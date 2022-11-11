@@ -41,42 +41,42 @@ public class TaskManager implements BotCallback {
             }
             TaskType taskType = TaskType.getType(type);
             switch (taskType) {
-                case TODO:
-                    Todo todo = new Todo(task);
-                    tasks.add(todo);
-                    router.addSuccess(todo);
-                    break;
-                case EVENT:
+            case TODO:
+                Todo todo = new Todo(task);
+                tasks.add(todo);
+                router.addSuccess(todo);
+                break;
+            case EVENT:
+                try {
+                    String[] events = task.split("/at ");
+                    String work = events[0];
+                    String[] dates = events[1].split("-");
                     try {
-                        String[] events = task.split("/at ");
-                        String work = events[0];
-                        String[] dates = events[1].split("-");
-                        try {
-                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
-                            LocalDateTime startdate = LocalDateTime.parse(dates[0], formatter);
-                            String enddatestring = startdate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd ")) + dates[1];
-                            LocalDateTime enddate = LocalDateTime.parse(enddatestring, formatter);
-                            Event event = new Event(work, startdate, enddate);
-                            tasks.add(event);
-                            router.addSuccess(event);
-                        } catch (Exception e) {
-                            router.customError("please use YYYY/MM/dd HH:mm-HH:mm format. e.g 2022/08/01 20:00-21:00");
-                        }
-                    } catch (IndexOutOfBoundsException e) {
-                        router.customError("Please add when and until after /at e.g /at 2022/08/01 20:00-21:00");
-                    }
-                    break;
-                case DEADLINE:
-                    try {
-                        String[] deadlines = task.split("/by ");
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
-                        Deadline deadline = new Deadline(deadlines[0], LocalDateTime.parse(deadlines[1], formatter));
-                        tasks.add(deadline);
-                        router.addSuccess(deadline);
-                    } catch (IndexOutOfBoundsException e) {
-                        router.customError("Please add /by by yyyy/MM/dd HH:mm format. e.g deadline return book /by 2022/08/01 20:00");
+                        LocalDateTime startdate = LocalDateTime.parse(dates[0], formatter);
+                        String enddatestring = startdate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd ")) + dates[1];
+                        LocalDateTime enddate = LocalDateTime.parse(enddatestring, formatter);
+                        Event event = new Event(work, startdate, enddate);
+                        tasks.add(event);
+                        router.addSuccess(event);
+                    } catch (Exception e) {
+                        router.customError("please use YYYY/MM/dd HH:mm-HH:mm format. e.g 2022/08/01 20:00-21:00");
                     }
-                    break;
+                } catch (IndexOutOfBoundsException e) {
+                    router.customError("Please add when and until after /at e.g /at 2022/08/01 20:00-21:00");
+                }
+                break;
+            case DEADLINE:
+                try {
+                    String[] deadlines = task.split("/by ");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+                    Deadline deadline = new Deadline(deadlines[0], LocalDateTime.parse(deadlines[1], formatter));
+                    tasks.add(deadline);
+                    router.addSuccess(deadline);
+                } catch (IndexOutOfBoundsException e) {
+                    router.customError("Please add /by by yyyy/MM/dd HH:mm format. e.g deadline return book /by 2022/08/01 20:00");
+                }
+                break;
             }
         } catch (UnsupportedTaskType e) {
             router.unsupportedTaskType();

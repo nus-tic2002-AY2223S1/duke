@@ -3,8 +3,6 @@ import logic.BotUseCase;
 import logic.TaskManager;
 import ui.UIDelegate;
 
-import java.util.Scanner;
-
 /**
  * Redirect the command to taskManager where has the logic
  */

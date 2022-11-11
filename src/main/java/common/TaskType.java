@@ -1,5 +1,4 @@
 package common;
-
 import exception.UnsupportedTaskType;
 
 /**
@@ -45,6 +44,7 @@ public enum TaskType {
             throw new UnsupportedTaskType();
         }
     }
+
     /**
      * convert current TaskType to a string key
      * if the type is not supported will return empty
@@ -53,14 +53,14 @@ public enum TaskType {
      */
     public String getKey() {
         switch (this) {
-            case DEADLINE:
-                return "D";
-            case TODO:
-                return "T";
-            case EVENT:
-                return "E";
-            default:
-                return "";
+        case DEADLINE:
+            return "D";
+        case TODO:
+            return "T";
+        case EVENT:
+            return "E";
+        default:
+            return "";
         }
     }
 }

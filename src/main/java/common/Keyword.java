@@ -33,42 +33,42 @@ public enum Keyword {
         Keyword key = Keyword.getKeyword(line);
         String[] list = line.split(" ");
         switch (key) {
-            case Bye:
-            case List:
-            case Files:
-            case Active:
-                return list.length == 1;
-            case Mark:
-            case Unmark:
-            case Delete:
-                return list.length == 2 && list[1].matches("^-?\\d+$");
-            case Load:
-            case Create:
-            case Find:
-                return list.length == 2;
-            case None:
-                return true;
+        case Bye:
+        case List:
+        case Files:
+        case Active:
+            return list.length == 1;
+        case Mark:
+        case Unmark:
+        case Delete:
+            return list.length == 2 && list[1].matches("^-?\\d+$");
+        case Load:
+        case Create:
+        case Find:
+            return list.length == 2;
+        case None:
+            return true;
         }
         return false;
     }
 
     public static String validFormat(Keyword key) {
         switch (key) {
-            case Bye:
-            case List:
-            case Files:
-            case Active:
-                return key.toString() + " doesn't required any parameters. e.g: " + key.toString();
-            case Mark:
-            case Unmark:
-            case Delete:
-                return key.toString() + " required 1 parameter and it must be a number. e.g: " + key.toString() + " 1";
-            case Load:
-            case Create:
-            case Find:
-                return key.toString() + " required 1 parameter and it must be a string. e.g: " + key.toString() + " house";
-            case None:
-                return "";
+        case Bye:
+        case List:
+        case Files:
+        case Active:
+            return key.toString() + " doesn't required any parameters. e.g: " + key.toString();
+        case Mark:
+        case Unmark:
+        case Delete:
+            return key.toString() + " required 1 parameter and it must be a number. e.g: " + key.toString() + " 1";
+        case Load:
+        case Create:
+        case Find:
+            return key.toString() + " required 1 parameter and it must be a string. e.g: " + key.toString() + " house";
+        case None:
+            return "";
         }
         return "";
     }

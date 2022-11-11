@@ -128,18 +128,18 @@ public class DataFileFactory implements DataInterface {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
         TaskType type = TaskType.getTypeByKey(texts[1]);
         switch (type) {
-            case TODO:
-                return new Todo(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]));
-            case DEADLINE:
-                return new Deadline(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]), LocalDateTime.parse(texts[4], formatter));
-            case EVENT:
-                String[] dates = texts[4].split("-");
-                LocalDateTime startdate = LocalDateTime.parse(dates[0], formatter);
-                String enddatestring = startdate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd ")) + dates[1];
-                LocalDateTime enddate = LocalDateTime.parse(enddatestring, formatter);
-                return new Event(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]), startdate, enddate);
-            default:
-                throw new UnsupportedTaskType();
+        case TODO:
+            return new Todo(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]));
+        case DEADLINE:
+            return new Deadline(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]), LocalDateTime.parse(texts[4], formatter));
+        case EVENT:
+            String[] dates = texts[4].split("-");
+            LocalDateTime startdate = LocalDateTime.parse(dates[0], formatter);
+            String enddatestring = startdate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd ")) + dates[1];
+            LocalDateTime enddate = LocalDateTime.parse(enddatestring, formatter);
+            return new Event(Integer.parseInt(texts[2]) == 1, texts[3], Long.parseLong(texts[0]), startdate, enddate);
+        default:
+            throw new UnsupportedTaskType();
         }
     }
 }
