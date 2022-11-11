@@ -16,7 +16,7 @@ public class Event extends Task {
     // event string to print
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (at: " + convertDateFormat(getDate()) + ")";
+        return "[E]" + super.toString() + " (At: " + convertDateFormat(getDate()) + ")";
     }
 
     // convert String date to LocalDate format

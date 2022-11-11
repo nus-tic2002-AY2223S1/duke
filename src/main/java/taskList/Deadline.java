@@ -15,7 +15,7 @@ public class Deadline extends Task {
     // deadline string to print
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + convertDateFormat(getDate()) + ")";
+        return "[D]" + super.toString() + " (By: " + convertDateFormat(getDate()) + ")";
     }
 
     // convert String date to LocalDate format
