@@ -1,0 +1,7 @@
+T | 1 | read book
+D | 0 | return book | June 6th
+T | 1 | join sports club
+T | 1 | Laundry
+T | 1 | Tutorial
+T | 1 | Gym
+E | 1 | project meeting | Mon 2-4pm
