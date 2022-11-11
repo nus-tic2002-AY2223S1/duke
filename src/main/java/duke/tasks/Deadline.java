@@ -1,22 +1,36 @@
 package duke.tasks;
 
-public class Deadline extends Todo {
-    protected String by;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-    public void setBy(String by) {
-        this.by = by;
+public class Deadline extends Todo {
+    protected LocalDate date;
+    protected String time;
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public String getBy() {
-        return by;
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     public Deadline(String d) {
         super(d);
         int dateDiv = d.indexOf("/");
+        String date = d.substring(dateDiv + 4, dateDiv + 14);
+        String t1 = d.substring(dateDiv + 15);
+        LocalDate d1 = LocalDate.parse(date);
         int length = d.length();
-        setBy(d.substring(dateDiv + 4));
-        description.replace(dateDiv, length, "(by: " + by + ")");
-
+        setDate(d1);
+        setTime(t1);
     }
 };

@@ -31,46 +31,47 @@ public class Ui {
         }
 
         public static void unknown() {
-                System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
+                System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(\n");
         }
         
         public static void noSelection() {
-                System.out.println("Selected task does not exist!");
+                System.out.println("Selected task does not exist!\n");
         }
 
         public static void emptyList() {
-                System.out.println("List is empty!");
+                System.out.println("List is empty!\n");
         }
 
         public static void showList(TaskList list) {
-                System.out.println("Here are the task in your list:\n");
+                System.out.println("Here are the task in your list:");
                 for (int i = 1; i <= list.getCount(); i++) {
                         System.out.println(i + ". " + list.getList().get(i-1).getDescription());
                 }
+                System.out.println("");
         }
 
         public static void addTask(Task type, TaskList list) {
                 System.out.println("Got it. I've added this task:");
                 list.addT(type);
                 System.out.println(type.getDescription());
-                System.out.println("Now you have " + list.getCount() + " in the list.");
+                System.out.println("Now you have " + list.getCount() + " in the list.\n");
         }
 
         public static void emptyTask(String key) {
-                System.out.println ("OOPS!!! The description of a " + key + " cannot be empty.");
+                System.out.println ("OOPS!!! The description of a " + key + " cannot be empty.\n");
         }
 
         public static void markTask(int id, List<Task> tl) {
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println(tl.get(id).getDescription().toString()); 
+                System.out.println(tl.get(id).getDescription().toString() + "\n"); 
         }
 
         public static void unmarkTask(int id, List<Task> tl) {
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println(tl.get(id).getDescription().toString()); 
+                System.out.println(tl.get(id).getDescription().toString() + "\n"); 
         }
 
         public static void trueMark(String key) {
-                System.out.println("Task is already " + key.toLowerCase() + "ed!");
+                System.out.println("Task is already " + key.toLowerCase() + "ed!\n");
         }
 }
