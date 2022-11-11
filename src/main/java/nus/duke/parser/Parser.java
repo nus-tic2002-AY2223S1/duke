@@ -59,8 +59,7 @@ public class Parser {
      */
     public static boolean isEmptyTask(String userInput) {
         int idx = userInput.indexOf(SPACE);
-        String str = userInput.substring(idx, userInput.length());
-        if (str.isBlank()) {
+        if (idx == -1){
             return true;
         } else {
             return false;
@@ -132,6 +131,7 @@ public class Parser {
                 command.equals(LegalCommandEnumerations.EVENT.toString()) ||
                 command.equals(LegalCommandEnumerations.MARK.toString()) ||
                 command.equals(LegalCommandEnumerations.UNMARK.toString()) ||
+                command.equals(LegalCommandEnumerations.DELETE.toString()) ||
                 command.equals(LegalCommandEnumerations.FILTER.toString())) {
             return true;
         } else {
@@ -155,19 +155,13 @@ public class Parser {
 
         if (isValidOneWordCommand(command)) {
             return false;
-        } else if (isValidCommandThatNeedsInput(command)) {
-            throw new EmptyTaskException();
         }
 
         if (isValidCommand(command) == false) {
             throw new InvalidCommandException();
         }
 
-        if (isValidCommand(command) == false && isEmptyTask(userInput) == true) {
-            throw new InvalidCommandException();
-        }
-
-        if ((isValidCommand(command) == true) && (isEmptyTask(userInput) == true)) {
+        if ((isValidCommandThatNeedsInput(command) == true) && (isEmptyTask(trimmedInput) == true)) {
             throw new EmptyTaskException();
         }
 
