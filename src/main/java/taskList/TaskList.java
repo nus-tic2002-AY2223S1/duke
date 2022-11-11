@@ -2,22 +2,26 @@ package tasklist;
 
 
 import parser.Parser;
+import storage.Storage;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
+
 import static ui.ErrorMessages.*;
 import static ui.TaskMessages.*;
 import static ui.UI.*;
 
 public class TaskList {
     //contains the task list e.g., it has operations to add/delete tasks in the list
+    public ArrayList<Task> taskList = new ArrayList<>();
 
-    public static ArrayList<Task> taskList = new ArrayList<>();
-
+   
     // to add task into task list and print message
     public void addTask(Task task) {
         taskList.add(task);

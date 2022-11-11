@@ -46,4 +46,5 @@ public abstract class Task {
 
     // get date for event and deadline
     public LocalDate getDate() { return null; }
+
 }
