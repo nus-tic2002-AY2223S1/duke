@@ -1,8 +1,8 @@
 package entities;
 public class Task {
     private String description;
-    private boolean isDone;
-
+    protected boolean isDone;
+    protected char type;
     public Task(String description) {
         this.description = description;
         this.isDone = false;
@@ -21,5 +21,12 @@ public class Task {
         this.isDone = done;
     }
 
+    public char getType() {
+        return type;
+    }
+
+    public String toCommandString(){
+        return " | " + (this.getStatusIcon() == "X" ? "1" : "0") + " | " + this.getDescription();
+    }
 }
 

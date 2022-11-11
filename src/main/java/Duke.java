@@ -1,90 +1,51 @@
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+import command.*;
+import entities.Storage;
 import entities.Task;
-import entities.Deadline;
-import entities.Event;
-import entities.Todo;
+import entities.TaskList;
 import exception.DukeException;
+import parser.Parser;
+import ui.Ui;
 import utils.DukeUtils;
 
-import static command.command.*;
+import static command.Command.*;
 
 public class Duke {
 
     private static final Scanner s = new Scanner(System.in);
+    private Storage storage;
+    private TaskList taskList;
+    private Ui ui;
 
-    public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from YH\n" + logo);
-        System.out.println("    ---------------------------------------");
-        System.out.println("     Hello! I'm Duke\n" +
-                "     What can I do for you?");
-
-        List<Task> tasks = new ArrayList<>();
-        String action, rest;
-
-        whileLoop:
+    public Duke(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        try {
+            taskList = new TaskList(storage.load());
+        } catch (DukeException | FileNotFoundException e) {
+            ui.showLoadingError();
+            taskList = new TaskList();
+        }
+    }
+    public void run() {
+        ui.showWelcome();
         while (true) {
-            String text = s.nextLine();
             try {
-                DukeUtils.validateInput(text);
+                String fullCommand = ui.readCommand();
+                ui.showLine(); // show the divider line ("_______")
+                Parser.parser(fullCommand);
+
             } catch (DukeException e) {
-                DukeUtils.printText(e.getMessage());
-                continue;
-            }
-
-            action = text.split(" ", 2)[0];
-
-            switch (action) {
-                case "bye":
-                    System.out.println("    ---------------------------------------");
-                    System.out.println("    Bye. Hope to see you again soon!");
-                    break whileLoop;
-
-                case "list":
-                    DukeUtils.printList(tasks);
-                    break;
-
-                case "mark":
-                    rest = text.split(" ", 2)[1];
-                    Task t = tasks.get(Integer.parseInt(rest) - 1);
-                    t.updateMark(true);
-                    DukeUtils.printText("Nice! I've marked this task as done:\n " + "    " + t.toString());
-                    break;
-
-                case "unmark":
-                    rest = text.split(" ", 2)[1];
-                    Task unmarkt = tasks.get(Integer.parseInt(rest) - 1);
-                    unmarkt.updateMark(false);
-                    DukeUtils.printText("OK, I've marked this task as not done yet:\n " + "    " + unmarkt.toString());
-                    break;
-
-                case "todo":
-                    createTodo(text, tasks);
-                    break;
-
-                case "deadline":
-                    createDeadline(text, tasks);
-                    break;
-
-                case "event":
-                    createEvent(text, tasks);
-                    break;
-
-                case "delete":
-                    deleteTask(text, tasks);
-                    break;
-
-                default:
-                    tasks.add(new Task(text));
-                    DukeUtils.printText("added: " + text);
+                ui.showError(e.getMessage());
+            } finally {
+                ui.showLine();
             }
         }
+    }
+    public static void main(String[] args) {
+        new Duke("data/duke.txt").run();
     }
 }
