@@ -143,7 +143,7 @@ public class TaskList {
 
     // view task schedule
     public void scheduleTask(String input, String[] inputSplit) {
-            // to check if input is valid
+        // to check if input is valid
         String scheduleDate = Parser.parseScheduleInput(input);
         Integer count = 0;
             if (checkValidCommand(inputSplit, input)) {
@@ -181,6 +181,21 @@ public class TaskList {
             }
             else
                 printError(INVALID_INPUT);
+        }
+    }
+
+    public void fixedDurationTasks(String input, String[] inputSplit) {
+        Integer count = 0;
+        try {
+            if (checkValidCommand(inputSplit, input)) {
+                printLine();
+                addTask(Parser.parseFixedDurationInput(input)); // TO CHANGE!!!!!!
+                printLine();
+            }
+        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException | DateTimeParseException e) {
+            printLine();
+            printError(INVALID_FIXED_DURATION_INPUT);
+            printLine();
         }
     }
 
@@ -230,7 +245,18 @@ public class TaskList {
                 else return true;
             }
 
-            // if taskname is schedule
+            if (inputSplit[0].equals("fixed")) {
+                // check if input contains "at", input format and date format
+                if (!checkFixedContainsAt(input) || inputSplit.length < 2 ) {
+                    printLine();
+                    printError(INVALID_FIXED_DURATION_INPUT);
+                    printLine();
+                    return false;
+                }
+                else return true;
+            }
+
+            // if task name is schedule
             if (inputSplit[0].equals("schedule")){
                 // checks for date format
                 if (!checkDateInput(inputSplit,input)){
@@ -241,18 +267,21 @@ public class TaskList {
                 }
                 else return true;
             }
+
             // if task name is mark
             if (inputSplit[0].equals("mark")) {
                 // check for mark input format
                 if (checkInteger(inputSplit[1]) && inputSplit.length == 2)
                     return true;
             }
+
             // if task name is unmark
             if (inputSplit[0].equals("unmark")) {
                 // check for unmark input format
                 if (checkInteger(inputSplit[1]) && inputSplit.length == 2)
                 return true;
             }
+
             // check for list input format
             if (inputSplit[0].equals("list") && inputSplit.length == 1)
                 return true;
@@ -292,6 +321,12 @@ public class TaskList {
     // check if Deadline input contains "/by", if contains by, return true
     public boolean checkDeadlineContainsBy(String input){
         if (input.contains(" /by "))
+            return true;
+        else return false;
+    }
+
+    public boolean checkFixedContainsAt(String input){
+        if (input.contains(" /needs "))
             return true;
         else return false;
     }

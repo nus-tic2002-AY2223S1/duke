@@ -8,7 +8,7 @@ public class ErrorMessages {
     public static final String INVALID_MARK_INPUT = "!!ERROR!! Invalid mark input.\nPlease enter a valid input (E.g. mark 1).";
     public static final String INVALID_UNMARK_INPUT = "!!ERROR!! Invalid unmark input.\nPlease enter a valid input (E.g. unmark 1).";
     public static final String INVALID_DELETE_INPUT = "!!ERROR!! Invalid Delete input.\nPlease enter a valid input (E.g. delete 1).";
-
+    public static final String INVALID_FIXED_DURATION_INPUT = "!!ERROR!! Invalid Unscheduled tasks with a fixed duration input (E.g. fixed read report /needs 2 hours" ;
     public static final String INVALID_TODO_INPUT = "!!ERROR!! Invalid Todo input.\nPlease enter a valid input (E.g. todo borrow book).";
 
     public static final String LOADING_ERROR = "!!ERROR!! File not found.";

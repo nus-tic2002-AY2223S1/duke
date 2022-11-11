@@ -65,6 +65,9 @@ public class Duke {
                 else if (input.startsWith("find"))
                     taskList.findTask(input, inputSplit);
 
+                else if (input.startsWith("fixed"))
+                    taskList.fixedDurationTasks(input,inputSplit);
+
                 // prompt user to enter valid input
                 else
                     UI.printStandardError();
