@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 public class Deadline extends Task {
     private LocalDate by;
-    private DateTimeFormatter displayDateFormat = DateTimeFormatter.ofPattern("MMM d yyyy");
-    private DateTimeFormatter saveDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("MMM d yyyy");
+    //private DateTimeFormatter saveDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 
     public Deadline(String description, LocalDate by, boolean isDone) {
@@ -16,12 +16,12 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " ( by: " + by +" )";
+        return "[D]" + super.toString() + " ( by: " + by.format(formatDate) +" )";
     }
 
     @Override
     public String saveToFile() {
         int status = isDone ? 1:0;
-        return "D | " + status + " | " + super.description;
+        return "D | " + status + " | " + super.description + " | " + by + "\r";
     }
 }

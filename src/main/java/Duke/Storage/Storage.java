@@ -26,7 +26,7 @@ public class Storage {
         }
     }
 
-    public static void save(String file, Task task) throws IOException {
+    public static void save(String file, Tasklist task) throws IOException {
         FileWriter saveFile = new FileWriter(file);
         ArrayList<Task> taskList = task.getList();
         for(Task tasks:taskList) {
@@ -44,9 +44,7 @@ public class Storage {
             String[] fileArr = loaded.nextLine().split(" \\| ", 5);
             String type = fileArr[0];
             String status = fileArr[1];
-            //String taskPriority = fileArr[2];
-            String description = fileArr[3];
-            String deadline = fileArr[4];
+            String description = fileArr[2];
 
             if(status.equals("1")) {
                 isDone = true;
@@ -59,15 +57,17 @@ public class Storage {
                     taskList.add(new ToDo(description, isDone));
                     break;
                 case "D":
-                    LocalDate dl = LocalDate.parse(fileArr[4]);
+                    LocalDate dl = LocalDate.parse(fileArr[3]);
                     taskList.add(new Deadline(description, dl, isDone));
                     break;
                 case "E":
+                    String deadline = fileArr[3];
                     String[] date = deadline.split(" ",2);
                     LocalDate eDate = LocalDate.parse(date[0]);
-                    String[] startEndTime = deadline.split(" - ");
+                    String[] startEndTime = date[1].split(" - ");
                     LocalTime start = LocalTime.parse(startEndTime[0]);
                     LocalTime end = LocalTime.parse(startEndTime[1]);
+                    taskList.add(new Event(description, eDate, start, end, isDone));
                     break;
                 default:
                     throw new DukeException("Sorry. I do not understand.");

@@ -1,6 +1,7 @@
 package Duke.Ui;
 import Duke.Exception.DukeException;
 import Duke.Parser.*;
+import Duke.Storage.Storage;
 import Duke.TaskList.*;
 
 import static Duke.Duke.*;
@@ -58,9 +59,7 @@ public class Ui {
     }
 
     public static void bye() {
-        line();
         System.out.println("Bye. Hope to see you again soon!");
-        line();
     }
 
     public static void addedTask(ArrayList<Task> tl) {
@@ -76,11 +75,14 @@ public class Ui {
                 case "list":
                     Tasklist.display(Tasklist.getList(), "list");
                     break;
+                case "find":
+                    Tasklist.display(Tasklist.findTask(process.getTaskDesc()), "find");
+                    break;
                 case "mark":
-                    Tasklist.markTask(process.getListIdx(), true);
+                    Tasklist.markTask(userInput, true);
                     break;
                 case "unmark":
-                    Tasklist.markTask(process.getListIdx(), false);
+                    Tasklist.markTask(userInput, false);
                     break;
                 case "delete":
                     Tasklist.deleteTask(process.getListIdx());
@@ -89,7 +91,7 @@ public class Ui {
                     Tasklist.addTodo(new ToDo(process.getTodoDesc(), false));
                     break;
                 case "deadline":
-                    Tasklist.addDeadline(new Deadline(process.getDeadlineDesc(), process.getDatelineDate(),  false));
+                    Tasklist.addDeadline(new Deadline(process.getDeadlineDesc(), process.getDatelineDate(), false));
                     break;
                 case "event":
                     Tasklist.addEvent(new Event(process.getEventDesc(), process.getEventDate(), process.getEventStart(), process.getEventEnd(), false));
@@ -98,6 +100,12 @@ public class Ui {
                     bye();
                     break;
             }
+            if(!process.getCommand().equals("find")) {
+                Storage.save(Storage.getFile().getAbsolutePath(), task);
+            }
+        }
+        catch(IOException e) {
+            throw new DukeException("Sorry,unable to save file.");
         } catch(ArrayIndexOutOfBoundsException e) {
             throw new DukeException("Sorry. I do not understand.");
         }

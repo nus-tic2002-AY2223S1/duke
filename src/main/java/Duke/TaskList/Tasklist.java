@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Tasklist {
     private static ArrayList<Task> tl;
+    private static ArrayList<Task> findTask;
     private static Ui ui = new Ui();
 
     public Tasklist(){
@@ -36,9 +37,17 @@ public class Tasklist {
                 } else {
                     System.out.println("Here are the tasks in your list:\n");
                 }
-            for (int index = 1; index <= tL.size(); index++){
-                System.out.println (index + ". " + tL.get(index-1).toString());
-            }
+                for (int index = 1; index <= tL.size(); index++){
+                    System.out.println (index + ". " + tL.get(index-1).toString());
+                }
+                break;
+            case "find":
+                if(findTask.size() == 0) {
+                    System.out.println("Sorry, there are is no such task in your list.");
+                } else {
+                    System.out.println("These are the tasks that match: ");
+                }
+                break;
         }
     }
 
@@ -59,13 +68,15 @@ public class Tasklist {
 
     public static void markTask(String userInput, boolean status) throws DukeException {
         try {
-            tl.get(Integer.parseInt(userInput)-1).markAsDone(status );
+            String idx[] = userInput.split(" ",2);
+            int markIdx = Integer.parseInt(idx[1]);
+            tl.get(markIdx-1).markAsDone(status);
             if(status) {
                 System.out.println("Nice! I've marked this task as done:");
             } else {
                 System.out.println("Ok! I've marked this task as not done yet: ");
             }
-            System.out.println (tl.get(Integer.parseInt(userInput) - 1).getTask());
+            System.out.println(tl.get(markIdx-1).getTask());
         } catch (NumberFormatException e){
             throw new DukeException("Please indicate task number");
         } catch (IndexOutOfBoundsException e){
@@ -97,5 +108,15 @@ public class Tasklist {
 
     public static ArrayList<Task> getList() {
         return tl;
+    }
+
+    public static ArrayList<Task> findTask (String userInput) {
+        findTask = new ArrayList<Task>();
+        for(Task task:tl) {
+            if(task.description.toLowerCase().contains(userInput)) {
+                findTask.add(task);
+            }
+        }
+        return findTask;
     }
 }

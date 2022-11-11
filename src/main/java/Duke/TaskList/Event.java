@@ -7,10 +7,10 @@ import java.time.format.DateTimeFormatter;
 public class Event extends Task {
     private LocalDate date;
     private LocalTime start, end;
-    private DateTimeFormatter displayDateFormat = DateTimeFormatter.ofPattern("MMM d yyyy");
-    private DateTimeFormatter displayTimeFormat = DateTimeFormatter.ofPattern("HH:mm");
-    private DateTimeFormatter saveDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private DateTimeFormatter saveTimeFormat = DateTimeFormatter.ofPattern("HH:mm");
+    private DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("MMM d yyyy");
+    private DateTimeFormatter displayTime = DateTimeFormatter.ofPattern("HH:mm");
+    private DateTimeFormatter saveDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private DateTimeFormatter saveTime = DateTimeFormatter.ofPattern("HH:mm");
 
     public Event(String description, LocalDate date, LocalTime start, LocalTime end, boolean isDone) {
         super(description);
@@ -22,12 +22,12 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " ( at: " + date + start + end + " ) ";
+        return "[E]" + super.toString() + " ( at: " + date + " from " + start + " to " + end + " ) ";
     }
 
     @Override
     public String saveToFile() {
         int status = isDone ? 1:0;
-        return "E | " + status + " | " + super.description;
+        return "E | " + status + " | " + super.description + " | " + date.format(saveDate) + " " + start.format(saveTime) + " - " + end.format(saveTime) + "\r";
     }
 }

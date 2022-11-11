@@ -9,6 +9,7 @@ import java.time.format.DateTimeParseException;
 public class Parser {
     public static String command;
     public static String listIdx;
+    private String taskDesc;
     private String todoDesc;
     private String deadlineDesc;
     private String eventDesc;
@@ -29,6 +30,12 @@ public class Parser {
 
             case "unmark":
 
+            case "find":
+                if(userInput.length() < 2) {
+                    throw new DukeException("Sorry, you need to provide a keyword to search.");
+                }
+                taskDesc = userInputArr[1];
+                break;
             case "delete":
                 listIdx = userInputArr[1];
                 break;
@@ -70,6 +77,7 @@ public class Parser {
     private void getEvent(String detail) throws DukeException {
         String detailSplit[] = detail.split(" /at ", 2);
         String dateTime[] = detailSplit[1].split(" ", 2);
+        eventDesc = detailSplit[0];
         try {
             eventDate = LocalDate.parse(dateTime[0]);
         } catch (DateTimeParseException e) {
@@ -78,16 +86,16 @@ public class Parser {
 
         String[] start = dateTime[1].split(" - ", 2);
         if (start.length < 2) {
-            throw new DukeException("Sorry. Time format needs to be 12:00");
+            throw new DukeException("Sorry. Time format needs to be for example 10:00 - 13:00");
         }
         try {
-            eventStart = LocalTime.parse(dateTime[0]);
-            eventEnd = LocalTime.parse(dateTime[1]);
+            eventStart = LocalTime.parse(start[0]);
+            eventEnd = LocalTime.parse(start[1]);
             if (eventStart.compareTo(eventEnd) > 0) {
                 throw new DukeException("Sorry. Start time cannot be later than end time.");
             }
         } catch (DateTimeParseException e) {
-            throw new DukeException("Sorry. Time format needs to be HH-mm.");
+            throw new DukeException("Sorry. Time format needs to be HH:mm.");
         }
     }
 
@@ -98,6 +106,8 @@ public class Parser {
     public String getListIdx() {
         return listIdx;
     }
+
+    public String getTaskDesc() { return taskDesc; }
 
     public String getTodoDesc() {
         return todoDesc;
