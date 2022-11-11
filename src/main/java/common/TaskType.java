@@ -8,10 +8,10 @@ public enum TaskType {
     DEADLINE, EVENT, TODO;
 
     /**
-     * convert string to TaskType
+     * Converts string to TaskType
      * if the string is not supported will throw unsupportedTaskType
      *
-     * @return TaskType
+     * @return TaskType the current enum
      * @param type the string version of the task type
      */
     public static TaskType getType(String type) throws UnsupportedTaskType {
@@ -27,10 +27,10 @@ public enum TaskType {
     }
 
     /**
-     * convert a key to TaskType
+     * Converts a key to TaskType
      * if the key is not supported will throw unsupportedTaskType
      *
-     * @return TaskType
+     * @return TaskType the current enum
      * @param key the string key version of the task type
      */
     public static TaskType getTypeByKey(String key) throws UnsupportedTaskType {
@@ -46,10 +46,10 @@ public enum TaskType {
     }
 
     /**
-     * convert current TaskType to a string key
+     * Converts current TaskType to a string key
      * if the type is not supported will return empty
      *
-     * @return String
+     * @return String key
      */
     public String getKey() {
         switch (this) {

@@ -20,7 +20,7 @@ public interface DataInterface {
      */
     public ArrayList<TaskInterface> loadData() throws FileNotFoundException, UnsupportedTaskType;
     /**
-     * Update the specific task from the database or file
+     * Updates the specific task from the database or file
      * if the task is not in database, nothing is happened
      *
      * @return void
@@ -31,7 +31,7 @@ public interface DataInterface {
      */
     public void update(TaskInterface task) throws IOException, UnsupportedTaskType, IndexOutOfBoundsException;
     /**
-     * delete the specific task from the database or file
+     * deletes the specific task from the database or file
      * if the task is not in database, nothing is happened
      *
      * @return void
@@ -41,7 +41,7 @@ public interface DataInterface {
      */
     public void delete(TaskInterface task) throws IOException, IndexOutOfBoundsException;
     /**
-     * add a new task into the database or file
+     * adds a new task into the database or file
      *
      * @return void
      * @param task the new task object
@@ -50,7 +50,7 @@ public interface DataInterface {
     public void add(TaskInterface task) throws IOException;
 
     /**
-     * add a way to change to other existing files
+     * adds a way to change to other existing files
      *
      * @return void
      * @throws IOException couldnt read the file

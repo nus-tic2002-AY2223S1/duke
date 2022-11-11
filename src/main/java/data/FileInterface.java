@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * The interface for storing each saved file name
+ * The interface that can be implemented to have multiple data source
  */
 public interface FileInterface {
     /**
@@ -16,7 +16,7 @@ public interface FileInterface {
     public ArrayList<FileInfo> getAllFile();
 
     /**
-     * Set specific file to an active
+     * Sets specific file to an active
      * if the file couldn't be found, nothing will be return
      *
      * @return boolean if its true means set active successful and if its false means alias is wrong
@@ -24,13 +24,13 @@ public interface FileInterface {
      */
     public boolean setActive(String alias) throws IOException;
     /**
-     * get current active file
+     * gets current active file
      *
      * @return File the active file
      */
     public FileInfo getActiveFile() throws IOException;
     /**
-     * to add a new custom file from user
+     * adds a new custom file from user
      *
      * @return boolean true for add success and false fo add fail
      * @param alias the new alias

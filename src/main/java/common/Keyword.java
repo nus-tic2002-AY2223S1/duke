@@ -1,8 +1,18 @@
 package common;
 
+/**
+ * The enum task type to represent each supported commands other than the task itself like event
+ */
 public enum Keyword {
     Bye, List, Mark, Unmark, Delete, Load, Create, Files, Active, Find, None;
 
+    /**
+     * Converts string to the keyword
+     * if the string is not one of the key, it will return none and add task will handle it
+     *
+     * @return Keyword the current enum
+     * @param key the string version of the keyword
+     */
     public static Keyword getKeyword(String key) {
         if(key.toLowerCase().startsWith("bye")) {
             return Bye;
@@ -29,6 +39,13 @@ public enum Keyword {
         }
     }
 
+    /**
+     * Checks if the format for specific key is valid
+     * it will return false if it is invalid
+     *
+     * @return true for valid and false for invalid
+     * @param line the whole line that user entered
+     */
     public static boolean validateFormat(String line) {
         Keyword key = Keyword.getKeyword(line);
         String[] list = line.split(" ");
@@ -52,6 +69,13 @@ public enum Keyword {
         return false;
     }
 
+    /**
+     * Returns the text of how the valid format should looks like
+     * will only get called for invalid command scenario
+     *
+     * @return the string of how is the valid format
+     * @param key the keyword that user has called
+     */
     public static String validFormat(Keyword key) {
         switch (key) {
         case Bye:

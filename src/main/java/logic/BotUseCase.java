@@ -15,7 +15,7 @@ public abstract class BotUseCase {
      */
     public void start() {};
     /**
-     * get called when add keyword is process successfully
+     * gets called when add keyword is process successfully
      * if the task is not add successful this will not get called
      *
      * @return void
@@ -23,94 +23,94 @@ public abstract class BotUseCase {
      */
     public void addSuccess(TaskInterface task) {};
     /**
-     * get called when show list keyword is process successfully
+     * gets called when show list keyword is process successfully
      *
      * @return void
      * @param lists all the tasks that have been added
      */
     public void showList(ArrayList<TaskInterface> lists){};
     /**
-     * get called when mark or unmark keyword is process successfully
+     * gets called when mark or unmark keyword is process successfully
      *
      * @return void
      * @param task the newly mark or unmark task
      */
     public void markSuccess(TaskInterface task){};
     /**
-     * get called when mark or unmark keyword is process unsuccessfully
+     * gets called when mark or unmark keyword is process unsuccessfully
      *
      * @return void
      * @param task the failed mark or unmark task
      */
     public void markFailed(TaskInterface task){};
     /**
-     * get called when delete keyword is process unsuccessfully
+     * gets called when delete keyword is process unsuccessfully
      *
      * @return void
      * @param task the deleted task
      */
     public void deleteSuccess(TaskInterface task){};
     /**
-     * get called when the keyword is not supported
+     * gets called when the keyword is not supported
      *
      * @return void
      */
     public void unsupportedTaskType(){};
     /**
-     * get called when any retrieve or delete happen on non existing task
+     * gets called when any retrieve or delete happen on non existing task
      *
      * @return void
      */
     public void indexOutOFBound(){};
     /**
-     * get called when the format for specific keyword is empty
+     * gets called when the format for specific keyword is empty
      *
      * @return void
      * @param text the entered command
      */
     public void unsupportedFormat(String text){};
     /**
-     * get called when the format for specific keyword is wrong format
+     * gets called when the format for specific keyword is wrong format
      *
      * @return void
      * @param text the entered command
      */
     public void invalidFormat(String text){};
     /**
-     * get called when the logic determines the error text
+     * gets called when the logic determines the error text
      *
      * @return void
      * @param text the error message from logic
      */
     public void customError(String text){};
     /**
-     * get called when bye command is called
+     * gets called when bye command is called
      *
      * @return void
      */
     public void goodbye(){};
     /**
-     * get called when need to load data from storage
+     * gets called when need to load data from storage
      *
      * @return void
      */
     public void loadData(){};
     /**
-     * get called to load the active file
+     * gets called to load the active file
      *
      * @return void
      */
     public void loadActiveFile(){};
 
     /**
-     * get called to add new storage file
+     * gets called to add new storage file
      *
      * @return void
      */
     public void addNewFile(String alias){};
 
     /**
-     * get called to show all the storage file
+     * gets called to show all the storage file
      *
      * @return void
      */

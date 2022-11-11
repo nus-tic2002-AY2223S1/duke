@@ -10,13 +10,13 @@ import java.util.ArrayList;
  */
 public interface UIInterface {
     /**
-     * Starts the ui to get user input
+     * starts the ui to get user input
      *
      * @return void
      */
     public void start();
     /**
-     * This will get called when the logic successfully add a new task
+     * gets called when the logic successfully add a new task
      * If the task is not add successfuly this function will not get called
      *
      * @return void
@@ -24,7 +24,7 @@ public interface UIInterface {
      */
     public void addSuccess(TaskInterface task);
     /**
-     * This will get called when the logic asks for show all tasks
+     * gets called when the logic asks for show all tasks
      * If there is no task, the lists will be empty
      *
      * @return void
@@ -32,7 +32,7 @@ public interface UIInterface {
      */
     public void showList(ArrayList<TaskInterface> lists);
     /**
-     * This will get called when mark or unmark successfully
+     * gets called when mark or unmark successfully
      * If the task is not mark or unmark successfuly this function will not get called
      *
      * @return void
@@ -40,7 +40,7 @@ public interface UIInterface {
      */
     public void markSuccess(TaskInterface task);
     /**
-     * This will get called when the logic is failed to mark an unmark
+     * gets called when the logic is failed to mark an unmark
      * If the task is mark successfully this function will not get called
      *
      * @return void
@@ -48,7 +48,7 @@ public interface UIInterface {
      */
     public void markFailed(TaskInterface task);
     /**
-     * This will get called when the logic successfully delete a new task
+     * gets called when the logic successfully delete a new task
      * If the task is not delete successfuly this function will not get called
      *
      * @return void
@@ -56,45 +56,45 @@ public interface UIInterface {
      */
     public void deleteSuccess(TaskInterface task);
     /**
-     * get called when the keyword is not supported
+     * gets called when the keyword is not supported
      *
      * @return void
      */
     public void unsupportedTaskType();
     /**
-     * get called when any retrieve or delete happen on non existing task
+     * gets called when any retrieve or delete happen on non existing task
      *
      * @return void
      */
     public void indexOutOFBound();
     /**
-     * get called when the format for specific keyword is empty
+     * gets called when the format for specific keyword is empty
      *
      * @return void
      * @param text the entered command
      */
     public void unsupportedFormat(String text);
     /**
-     * get called when the format for specific keyword is wrong format
+     * gets called when the format for specific keyword is wrong format
      *
      * @return void
      * @param text the entered command
      */
     public void invalidFormat(String text);
     /**
-     * get called when need to show goobye text
+     * gets called when need to show goobye text
      *
      * @return void
      */
     public void goodbye();
     /**
-     * get called when need to show the size of task in the system
+     * gets called when need to show the size of task in the system
      *
      * @return void
      */
     public void displaySize(int size);
     /**
-     * get called when the logic determines the error text
+     * gets called when the logic determines the error text
      *
      * @return void
      * @param text the error message from logic
@@ -102,41 +102,41 @@ public interface UIInterface {
     public void customError(String text);
 
     /**
-     * get called when unexpected exception happen
+     * gets called when unexpected exception happen
      *
      * @return void
      */
     public void unexpectedError();
 
     /**
-     * get called when successfully create new file to save
+     * gets called when successfully create new file to save
      *
      * @return void
      */
     public void addFileSuccess(String text);
     /**
-     * get called when fail to create new file to save due to the alias is exist
+     * gets called when fail to create new file to save due to the alias is exist
      *
      * @return void
      */
     public void addFileFailed(String text);
 
     /**
-     * get called when need to show all the storage files
+     * gets called when need to show all the storage files
      *
      * @return void
      */
     public void showFiles(ArrayList<FileInfo> files);
 
     /**
-     * get called when successfully set active an alias
+     * gets called when successfully set active an alias
      *
      * @return void
      */
     public void setActiveSuccess(String alias);
 
     /**
-     * shows  when failed to set active on an alias
+     * showss when failed to set active on an alias
      *
      * @return void
      */
