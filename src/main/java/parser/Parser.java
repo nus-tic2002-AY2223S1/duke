@@ -1,8 +1,11 @@
 package parser;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import command.*;
 import exceptions.DukeException;
+
 
 public class Parser {
     public static Command parse(String command) {
@@ -16,43 +19,47 @@ public class Parser {
                 return new TodoCommand(task);
 
             case "event":
-                index=command.indexOf(" /at ");
-                task=command.substring(6,index);
-                date=command.split(" /at ")[1];
-                return new EventCommand(task,date);
+                index = command.indexOf(" /at ");
+                task = command.substring(6, index);
+                date = command.split(" /at ")[1];
+                return new EventCommand(task, dateFormat(date));
 
-            case"deadline":
-                index=command.indexOf(" /by ");
-                task=command.substring(9,index);
-                date=command.split(" /by ")[1];
-                return new DeadlineCommand(task,date);
+            case "deadline":
+                index = command.indexOf(" /by ");
+                task = command.substring(9, index);
+                date = command.split(" /by ")[1];
+                dateFormat(date);
+                return new DeadlineCommand(task, dateFormat(date));
 
-            case"list":
+            case "list":
                 return new ListCommand();
 
-            case"bye":
+            case "bye":
                 return new ByeCommand();
-            case"mark":
+            case "mark":
                 return new MarkCommand(inputArray[1]);
             case "unmark":
                 return new UnmarkCommand(inputArray[1]);
 
-            case"delete":
+            case "delete":
                 return new DeleteCommand(inputArray[1]);
             default:
-                try {
-                    throw new DukeException();
 
-                } catch (DukeException e) {
-
-
-                }
-
+                return new ErrorCommand();
 
         }
 
 
-        return null;
     }
+    /**
+    *Pass in date time of format ("dd/MM/yyyy HHmm"), output as ("MMM dd yyyy hh:mm a")
+    */
+    public static String dateFormat(String date) {
+        DateTimeFormatter givenDateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        LocalDateTime givenDate = LocalDateTime.parse(date, givenDateFormat);
+        return givenDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy hh:mm a"));
+
+    }
+
 
 }

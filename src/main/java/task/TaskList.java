@@ -15,12 +15,16 @@ public class TaskList {
 
 
     public ArrayList<Task> tasks=new ArrayList<>();
-
+    /**
+     * Tasklist constructor
+     */
     public TaskList() {
         this.tasks = new ArrayList<>();
 
     }
-
+    /**
+     * Read the text file line by line
+     */
     public TaskList(File f) throws FileNotFoundException  {
         Scanner s = new Scanner(f);
         while (s.hasNext()) {
@@ -29,7 +33,9 @@ public class TaskList {
 
         }
     }
-
+    /**
+     * Create task from the text file
+     */
     public ArrayList<Task> read(String s){
         String [] inputArray=s.split(" \\| ");
 
@@ -64,10 +70,18 @@ public class TaskList {
 
 
     }
+
+    /**
+     * Function to add task
+     */
     public void addTask(Task task){
         tasks.add(task);
 
     }
+
+    /**
+     * Function to delete task
+     */
     public void removeTask(int task){
         tasks.remove(task);
 

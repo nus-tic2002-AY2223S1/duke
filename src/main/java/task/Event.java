@@ -3,11 +3,16 @@ package task;
 
 public class Event extends Task{
 	protected String schedule;
+	/**
+	 * Event task constructor
+	 */
 	public Event(String description,String schedule){
 		super(description);
 		this.schedule=schedule;
 	}
-
+	/**
+	 * simplify to store in text file
+	 */
 	@Override
 	public String toOutput(){
 		String statusIndex="0";
@@ -16,7 +21,9 @@ public class Event extends Task{
 		}
 		return "E | "+statusIndex+" | "+super.toOutput()+" | "+schedule;
 	}
-
+	/**
+	 * For output when list is called
+	 */
 	public String toString() {
 		return "[E]"+super.toString()+" (at: "+schedule+")";
 	}

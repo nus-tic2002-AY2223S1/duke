@@ -5,3 +5,8 @@ T | 1 | Laundry
 T | 1 | Tutorial
 T | 1 | Gym
 E | 1 | project meeting | Mon 2-4pm
+D | 0 | return book | 02/12/1993 1800
+D | 0 | return book | 12/12/1993 1800
+D | 0 | return book | 13/12/1994 1800
+D | 0 | return book | saddas
+E | 0 | project meeting | Feb 13 2004 04:00 PM

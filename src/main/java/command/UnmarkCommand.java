@@ -8,9 +8,15 @@ import ui.Ui;
 
 public class UnmarkCommand extends Command{
     int item;
+    /**
+     * Constructor to get item value
+     */
     public UnmarkCommand(String item){
         this.item=Integer.parseInt(item)-1;
     }
+    /**
+     * Execute unmark, display result and save
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage)throws DukeException {
 
         tasks.tasks.get(item).unmark();

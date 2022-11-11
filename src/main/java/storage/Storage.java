@@ -11,15 +11,21 @@ import java.util.ArrayList;
 
 public class Storage {
     private static  File file;
-
+    /**
+     * Storage constructor to store file
+     */
     public Storage(String filePath){
         this.file= new File(filePath);
     }
-
+    /**
+     * Access file
+     */
     public File load() {
         return file;
     }
-
+    /**
+     * Save task to text file
+     */
     public void save(ArrayList<Task> tasks) throws IOException {
         FileWriter fw=new FileWriter(file);
         String textToAppend="";
