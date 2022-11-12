@@ -162,9 +162,16 @@ public class TaskList {
         // to ensure that list is not empty and whether the input is valid
         if (!checkEmptyTaskList() && checkValidCommand(inputSplit, input)) {
             try {
+                // retrieve index to be marked as done
                 int markedIndex = Integer.parseInt(inputSplit[1]);
+
+                // retrieve task to be marked
                 Task markedTask = taskList.get(markedIndex - 1);
+
+                // mark task as done
                 markedTask.markAsDone();
+
+                // output to indicate task is marked as done
                 ui.UI.printLine();
                 ui.UI.printMessage(MESSAGE_MARKED_TASK + markedTask.getDescription());
                 ui.UI.printLine();
@@ -181,9 +188,16 @@ public class TaskList {
         // to ensure that list is not empty and whether the input is valid
         if (!checkEmptyTaskList() && checkValidCommand(inputSplit, input)) {
             try {
+                // retrieve index to be unmarked
                 int unmarkedIndex = Integer.parseInt(inputSplit[1]);
+
+                // unmark task as done
                 Task unmarkedTask = taskList.get(unmarkedIndex - 1);
+
+                // unmark task
                 unmarkedTask.markAsUndone();
+
+                // output to indicate task is unmarked
                 ui.UI.printLine();
                 ui.UI.printMessage(MESSAGE_UNMARKED_TASK + unmarkedTask.getDescription());
                 ui.UI.printLine();
@@ -198,7 +212,7 @@ public class TaskList {
     // to add todo task into task list and print message
     public void todoTask(String input, String[] inputSplit) {
         try {
-            // to check if the input is valid
+            // to check if input is valid to add task
             if (checkValidCommand(inputSplit, input)) {
                 printLine();
                 addTask(Parser.parseTodoInput(input));
@@ -214,7 +228,7 @@ public class TaskList {
     // to add deadline task into task list and print message
     public void deadlineTask(String input, String[] inputSplit) {
         try {
-            // to check if input is valid
+            // to check if input is valid to add task
             if (checkValidCommand(inputSplit, input)) {
                 printLine();
                 addTask(Parser.parseDeadlineInput(input));
@@ -230,7 +244,7 @@ public class TaskList {
     // to add event task into task list and print message
     public void eventTask(String input, String[] inputSplit) {
         try {
-            // to check if input is valid
+            // to check if input is valid to add task
             if (checkValidCommand(inputSplit, input)) {
                 printLine();
                 addTask(Parser.parseEventInput(input));
@@ -243,9 +257,9 @@ public class TaskList {
         }
     }
 
-    // view task schedule
+    // view task schedule on a certain date
     public void scheduleTask(String input, String[] inputSplit) {
-        // to check if input is valid
+        // to check if input is valid to add task
         String scheduleDate = Parser.parseScheduleInput(input);
         Integer count = 0;
             if (checkValidCommand(inputSplit, input)) {
@@ -263,7 +277,9 @@ public class TaskList {
                 printError(INVALID_INPUT);
     }
 
+    // find tasks according to user input
     public void findTask(String input, String[] inputSplit) {
+        // to check if input is valid to add task
         Integer count = 0;
         if (!checkEmptyTaskList()) {
             if (checkValidCommand(inputSplit, input)) {
@@ -286,8 +302,9 @@ public class TaskList {
         }
     }
 
+    // add Fixed Duration Tasks
     public void fixedDurationTasks(String input, String[] inputSplit) {
-        Integer count = 0;
+        // to check if input is valid to add task
         try {
             if (checkValidCommand(inputSplit, input)) {
                 printLine();
@@ -304,6 +321,7 @@ public class TaskList {
     // check for empty list, return true if list is empty
     public boolean checkEmptyTaskList() {
         if (taskList.isEmpty()) {
+            // print message and return true if task list is empty
             printLine();
             printError(NO_TASK_FOUND);
             printLine();
@@ -391,6 +409,8 @@ public class TaskList {
             // check for bye input format
             if (inputSplit[0].equals("bye") && inputSplit.length == 1)
                 return true;
+
+            // check for find input format
             if (inputSplit[0].equals("find")){
                 if (inputSplit.length > 1)
                     return true;
@@ -492,16 +512,12 @@ public class TaskList {
 
     }
 
-
-    // get task list size
-    public int size() {
-        return taskList.size();
-    }
-
     // get task list
     public List<Task> getTaskList() {
         return this.taskList;
     }
+
+    // when user wishes to exit the program
     public void exit() {
         printBye();
         System.exit(0);

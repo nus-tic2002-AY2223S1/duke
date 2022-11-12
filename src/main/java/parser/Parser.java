@@ -59,13 +59,14 @@ public class Parser {
         else
             UI.printStandardError();
     }
-    // format todo input before it is added
+
+    // format todo input before it is added into task list
     public static Todo parseTodoInput(String input) {
         String todoTask = input.substring(5);
         return new Todo(todoTask);
     }
 
-    // format deadline input before it is added
+    // format deadline input before it is added into task list
     public static Deadline parseDeadlineInput(String input) {
         String[] deadlineItemSplit = (input.substring(9)).split(" /by ");
         String deadlineTask = deadlineItemSplit[0];
@@ -73,23 +74,27 @@ public class Parser {
         return new Deadline(deadlineTask, deadlineBy);
     }
 
-    // format event input before it is added
+    // format event input before it is added into task list
     public static Event parseEventInput(String input){
         String[] eventItemSplit = (input.substring(6)).split(" /at ");
         String eventTask = eventItemSplit[0];
         String eventAt = eventItemSplit[1];
         return new Event(eventTask, eventAt);
     }
+
+    // format schedule input before it is added into task list
     public static String parseScheduleInput(String input){
         String[] scheduleDateSplit = input.split(" ");
         String scheduleDate = scheduleDateSplit[2];
         return scheduleDate;
     }
 
+    // format find input to search for input in the task list
     public static String parseFindInput(String input){
         return input.substring(5);
     }
 
+    // format fixed duration input before it is added into task list
     public static Fixed parseFixedDurationInput (String input){
         String[] fixedItemSplit = (input.substring(6)).split(" /needs ");
         String fixedTask = fixedItemSplit [0];
@@ -108,6 +113,7 @@ public class Parser {
         return d.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
     }
 
+    // convert date retrieved from loaded file to String in task format, so task can be added to task list
     public static String loadDateToString(String s){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy", Locale.ENGLISH);
         LocalDate d = LocalDate.parse(s, formatter);
