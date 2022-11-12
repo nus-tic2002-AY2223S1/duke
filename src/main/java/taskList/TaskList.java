@@ -82,7 +82,7 @@ public class TaskList {
 
     // convert Deadline Task from String to Task
     public void loadDeadlineData(String mark, String input, String date){
-        date = Parser.LoadDateToString(date);
+        date = Parser.loadDateToString(date);
         Deadline loadDeadline = new Deadline(input,date);
         loadMark(mark, loadDeadline);
         taskList.add(loadDeadline);
@@ -91,7 +91,7 @@ public class TaskList {
 
     // convert Event Task from String to Task
     public void loadEventData(String mark, String input, String date){
-        date = Parser.LoadDateToString(date);
+        date = Parser.loadDateToString(date);
         Event loadEvent = new Event(input,date);
         loadMark(mark, loadEvent);
         taskList.add(loadEvent);
@@ -249,15 +249,15 @@ public class TaskList {
         String scheduleDate = Parser.parseScheduleInput(input);
         Integer count = 0;
             if (checkValidCommand(inputSplit, input)) {
-                printMessage("Tasks on: " + Parser.StringToDate(scheduleDate));
+                printMessage("Tasks on: " + Parser.stringToDate(scheduleDate));
                 for (Task task : taskList){
-                    if (Parser.StringToDate(scheduleDate).isEqual(task.getDate())) {
+                    if (Parser.stringToDate(scheduleDate).isEqual(task.getDate())) {
                         printMessage(task.toString());
                         count += 1;
                     }
                 }
                 if (count == 0)
-                    printMessage("No task is found on " + Parser.StringToDate(scheduleDate));
+                    printMessage("No task is found on " + Parser.stringToDate(scheduleDate));
             }
             else
                 printError(INVALID_INPUT);

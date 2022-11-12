@@ -25,12 +25,12 @@ public class Event extends Task {
     // convert String date to LocalDate format
     @Override
     public LocalDate getDate() {
-        return Parser.StringToDate(this.at);
+        return Parser.stringToDate(this.at);
     }
 
     // convert LocalDate to ideal date format
     public String convertDateFormat(LocalDate at){
-        return Parser.DateToString(at);
+        return Parser.dateToString(at);
     }
 
 

@@ -27,9 +27,8 @@ public class Duke {
     }
 
     //@@author nglihui
-    private void start(String[] launchArgs) throws InvalidStorageFilePathException, IOException {
+    private void start() throws InvalidStorageFilePathException, IOException {
         this.ui = new UI();
-
         ui.printIntro();
 
         while (true) {
@@ -44,10 +43,7 @@ public class Duke {
             }
         }
 
-    //    Prints the Goodbye message and exits.
-
-
     public static void main(String... launchArgs) throws InvalidStorageFilePathException, IOException {
-        new Duke().start(launchArgs);
+        new Duke().start();
     }
 }

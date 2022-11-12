@@ -55,7 +55,7 @@ public class Parser {
         else if (input.startsWith("fixed"))
             newTaskList.fixedDurationTasks(input,inputSplit);
 
-            // prompt user to enter valid input
+        // prompt user to enter valid input
         else
             UI.printStandardError();
     }
@@ -98,17 +98,17 @@ public class Parser {
     }
 
     // convert input date to LocalDate format
-    public static LocalDate StringToDate(String s) {
+    public static LocalDate stringToDate(String s) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
         return LocalDate.parse(s, formatter);
     }
 
     // convert LocalDate date to String format
-    public static String DateToString (LocalDate d){
+    public static String dateToString (LocalDate d){
         return d.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
     }
 
-    public static String LoadDateToString(String s){
+    public static String loadDateToString(String s){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy", Locale.ENGLISH);
         LocalDate d = LocalDate.parse(s, formatter);
         return d.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));}

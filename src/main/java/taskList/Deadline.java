@@ -25,12 +25,12 @@ public class Deadline extends Task {
     // convert String date to LocalDate format
     @Override
     public LocalDate getDate() {
-        return Parser.StringToDate(this.by);
+        return Parser.stringToDate(this.by);
     }
 
     // convert LocalDate to ideal date format
     public String convertDateFormat(LocalDate by){
-        return Parser.DateToString(by);
+        return Parser.dateToString(by);
     }
 }
 
