@@ -29,6 +29,9 @@ public class Duke {
         inputCommand();
     }
 
+    /**
+     * Main method that filters input by user and output required data
+     */
     public static void inputCommand() {
         saveToFile();
         Scanner in = new Scanner(System.in);
@@ -138,6 +141,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Add tasks to list.
+     *
+     * @param t indicates task to be added
+     */
     public static void addTask(Task t) {
         tasks.add(t);
 
@@ -146,6 +154,11 @@ public class Duke {
                 System.lineSeparator());
     }
 
+    /**
+     * Remove tasks from list.
+     *
+     * @param t indicates task to be removed
+     */
     public static void removeTask(Task t) {
         tasks.remove(t);
 
@@ -154,6 +167,9 @@ public class Duke {
                 System.lineSeparator());
     }
 
+    /**
+     * A method to save all tasks to file on disk.
+     */
     public static void saveToFile() {
         try {
             File dukeText = new File("data/duke.txt");
@@ -192,7 +208,12 @@ public class Duke {
         }
     }
 
-
+    /**
+     * Take in date value from String and parse them to required Date format.
+     *
+     * @param byWhenText takes in the input from main command
+     * @return date returned in required format [MMM DD YYYY]
+     */
     public static String parseDate(String byWhenText) {
         LocalDate todayDate = LocalDate.now();
         LocalTime timeNow = LocalTime.now();
@@ -239,6 +260,13 @@ public class Duke {
         return byWhenText;
     }
 
+    /**
+     * Take in command String from list command and parse them to determine if input is deadline, event or todo.
+     * Based on the task input, print out the results accordingly.
+     * Input can also filter the tasks based on dates.
+     *
+     * @param wholeCommand takes in the input from main command
+     */
     public static void listCommandParser(String wholeCommand) {
         String taskDescList, taskDateList;
         int listNo = 0;
@@ -324,5 +352,4 @@ public class Duke {
             }
         }
     }
-
 }
