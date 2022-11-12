@@ -12,21 +12,13 @@ import java.util.Scanner;
 
 public class Ui {
 
-    private Tracker tracker;
-    private Storage storage;
     private RequestController controller;
 
     /**
-     * Initialises User Interface with new Storage, Tracker and Request Controller.
+     * Initialises User Interface with new Request Controller.
      */
     public Ui(){
-        try {
-            storage = new Storage();
-            tracker = new Tracker();
-            controller = new RequestController(tracker, storage);
-        } catch (Exception ex){
-            ex.printStackTrace();
-        }
+        controller = new RequestController();
     }
 
     /**

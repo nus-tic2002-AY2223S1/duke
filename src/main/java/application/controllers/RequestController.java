@@ -29,13 +29,14 @@ public class RequestController {
 
     /**
      * Initialises RequestController which is bridge between UI and Domain communication.
-     *
-     * @param tracker Tracker.
-     * @param storage Storage.
      */
-    public RequestController(Tracker tracker, Storage storage) {
-        this.tracker = tracker;
-        this.storage = storage;
+    public RequestController(){
+        try {
+            this.tracker = new Tracker();
+            this.storage = new Storage();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     /**
