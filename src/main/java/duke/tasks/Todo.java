@@ -1,5 +1,7 @@
 package duke.tasks;
 
+import duke.exceptions.DukeException;
+
 public class Todo extends Task {
     protected boolean isDone;
 
@@ -11,7 +13,7 @@ public class Todo extends Task {
         this.isDone = isDone;
     }
     
-    public Todo(String d) {
+    public Todo(String d) throws DukeException {
         super(d);
         isDone = false;
     }

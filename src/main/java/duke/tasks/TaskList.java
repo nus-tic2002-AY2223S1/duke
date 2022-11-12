@@ -6,15 +6,15 @@ import java.util.List;
 import duke.ui.Ui;
 
 public class TaskList {
-    protected static List<Task> tl;
+    protected static List<Task> taskLists;
     protected static int taskId = 1;
 
     public TaskList() {
-        tl = new ArrayList<Task>();
+        taskLists = new ArrayList<Task>();
     }
 
     public int getCount(){
-        return tl.size();
+        return taskLists.size();
     }
 
     public int getTaskId(){
@@ -22,44 +22,44 @@ public class TaskList {
     }
 
     public List<Task> getList() {
-        return tl;
+        return taskLists;
     }
 
     public void addT(Task type) {
-        tl.add(type);
+        taskLists.add(type);
         taskId++;
     }
 
     public Task findTask(int id){
-        return tl.get(taskId);
+        return taskLists.get(taskId);
         //add exception to handle outofrange
     }
 
     public void markT(int id, String key) {
-        if (tl.get(id).isDone) {
+        if (taskLists.get(id).isDone) {
             System.out.println(Ui.trueMark(key));
         } else {
-            tl.get(id).mark();
-            tl.get(id).description.replace(4, 5, "X");
-            Ui.markTask(id, tl);      
+            taskLists.get(id).mark();
+            taskLists.get(id).description.replace(4, 5, "X");
+            Ui.markTask(id, taskLists);      
         } 
     }
 
     public void unmarkT(int id, String key) {
-        if (!tl.get(id).isDone) {
+        if (!taskLists.get(id).isDone) {
             System.out.println(Ui.trueMark(key));
         } else {
-            tl.get(id).unmark();
-            tl.get(id).description.replace(4, 5, " ");
-            Ui.unmarkTask(id, tl);
+            taskLists.get(id).unmark();
+            taskLists.get(id).description.replace(4, 5, " ");
+            Ui.unmarkTask(id, taskLists);
         }
     }
 
     public void deleteTask(int id) {
-        StringBuilder selection = new StringBuilder(tl.get(id-1).description);
+        StringBuilder selection = new StringBuilder(taskLists.get(id-1).description);
         System.out.println("Noted. I've removed this task: ");
         System.out.println(selection.toString());
-        tl.remove(id-1);
+        taskLists.remove(id-1);
         System.out.println("Now you have " + getCount() + " tasks in the list.");
     }
 }

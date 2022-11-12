@@ -1,16 +1,22 @@
 package duke.duke;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import duke.data.Storage;
-import duke.tasks.*;
+import duke.tasks.TaskList;
+import duke.tasks.Task;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Todo;
 import duke.ui.Ui;
+import duke.exceptions.DukeException;
 
 public class Duke {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws DukeException, IOException {
        
         TaskList list = new TaskList();
-        String key, new_input;
+        String key, newInput;
         Scanner in = new Scanner(System.in);
 
         Ui.welcome();
@@ -40,12 +46,12 @@ public class Duke {
             }
 
             else if (key.equalsIgnoreCase("find")) {
-                String keystring = input.substring(input.indexOf(" ") + 1);
+                String keyString = input.substring(input.indexOf(" ") + 1);
                 if (list.getCount() == 0) {
                     Ui.emptyList();
                     continue;
                 }   else {
-                        Ui.findList(keystring, list);
+                        Ui.findList(keyString, list);
                 }
             }
 
@@ -62,6 +68,9 @@ public class Duke {
                 if (list.getCount() == 0) {
                     Ui.emptyList();
                     continue;
+                } else if (list.getCount() < Integer.parseInt(tokens[1])) {
+                    Ui.noSelection();;
+                    continue;
                 }
                 list.markT(Integer.valueOf(tokens[1]) - 1, key);
             }
@@ -69,6 +78,9 @@ public class Duke {
             else if (key.equalsIgnoreCase("unmark")) {
                 if (list.getCount() == 0) {
                     Ui.emptyList();
+                    continue;
+                } else if (list.getCount() < Integer.parseInt(tokens[1])) {
+                    Ui.noSelection();
                     continue;
                 }
                 list.unmarkT(Integer.valueOf(tokens[1]) - 1, key);
@@ -79,8 +91,8 @@ public class Duke {
                     System.out.println(Ui.emptyTask(key));
                     continue;
                 }
-                new_input = input.replace(key, "[T][ ]");
-                Task temp = new Todo(new_input);
+                newInput = input.replace(key, "[T][ ]");
+                Task temp = new Todo(newInput);
                 Ui.addTask(temp, list);
             }
 
@@ -89,8 +101,8 @@ public class Duke {
                     System.out.println(Ui.emptyTask(key));
                     continue;
                 }
-                new_input = input.replace(key, "[D][ ]");
-                Task temp = new Deadline(new_input);
+                newInput = input.replace(key, "[D][ ]");
+                Task temp = new Deadline(newInput);
                 Ui.addTask(temp, list);
             }
 
@@ -99,8 +111,8 @@ public class Duke {
                     System.out.println(Ui.emptyTask(key));
                     continue;
                 }
-                new_input = input.replace(key, "[E][ ]");
-                Task temp = new Event(new_input);
+                newInput = input.replace(key, "[E][ ]");
+                Task temp = new Event(newInput);
                 Ui.addTask(temp, list);
             }
 

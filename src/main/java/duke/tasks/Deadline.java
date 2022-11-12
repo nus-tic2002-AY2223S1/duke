@@ -47,7 +47,8 @@ public class Deadline extends Todo {
             int length = d.length();
             setDate(d1);
             setTime(t1);
-            description.replace(dateDiv, length, "(by: " + d1.format(DateTimeFormatter.ofPattern("MMM d yyyy ")) + t1 + ")");
+            description.replace(dateDiv, length, 
+                                "(by: " + d1.format(DateTimeFormatter.ofPattern("MMM d yyyy ")) + t1 + ")");
         }
     }
 };

@@ -1,11 +1,13 @@
 package duke.tasks;
 
+import duke.exceptions.DukeException;
+
 public class Task {
     protected StringBuilder description;
     protected boolean isDone;
     protected int taskNo = 0;
 
-    public Task(String d) {
+    public Task(String d) throws DukeException {
         this.description = new StringBuilder(d);
         this.isDone = false;
     }
@@ -13,11 +15,11 @@ public class Task {
         return (isDone ? "X" : " ");
     }
 
-    public void setTaskno(int taskNo) {
+    public void setTaskNo(int taskNo) {
         this.taskNo = taskNo;
     }
 
-    public int getTaskno() {
+    public int getTaskNo() {
         return taskNo;
     }
 
