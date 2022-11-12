@@ -13,10 +13,7 @@ public class Duke {
         String key, new_input;
         Scanner in = new Scanner(System.in);
 
-        Ui.showLine();
         Ui.welcome();
-        Ui.showLine();
-
 
         while(true) {
             String input = in.nextLine();
@@ -27,6 +24,10 @@ public class Duke {
                 Ui.bye();
                 in.close();
                 return;
+            }
+
+            else if (key.equalsIgnoreCase("help")) {
+                Ui.printHelp();
             }
 
             else if (key.equalsIgnoreCase("list")) {
@@ -89,7 +90,7 @@ public class Duke {
                     Ui.unknown();
             }
 
-            Storage.save("mytasks", list.getList()); 
+            Storage.save("resources/mytasks.txt", list.getList()); 
         }  
     }
 }

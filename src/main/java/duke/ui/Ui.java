@@ -2,6 +2,7 @@ package duke.ui;
 
 import java.util.List;
 
+import duke.data.Storage;
 import duke.tasks.Task;
 import duke.tasks.TaskList;
 
@@ -16,10 +17,14 @@ public class Ui {
         public Ui () {              
 
         }
-
+        
         public static void welcome() {
+                showLine();
                 System.out.println(logo);
+                showLine();
                 System.out.println("\nHello! I'm Duke\nWhat can I do for you?\n");
+                System.out.println("*To get started, please type in your commannd and press enter.");
+                System.out.println("To check the list of available commands, type help and then press enter*\n");
         }
 
         public static void bye() {
@@ -81,5 +86,9 @@ public class Ui {
 
         public static String deadlineTimeError() {
                 return"\n\n**Deadline time should only have a single time value e.g 4pm\nConsider using event command if it is a range of time.**\n";
+        }
+        
+        public static void printHelp() {
+                Storage.help();
         }
 }
