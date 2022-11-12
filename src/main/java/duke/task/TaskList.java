@@ -64,6 +64,7 @@ public class TaskList {
     public void addDeadLine(String[] lineArray) {
         String descriptionLine = "";
         boolean isDatePresent = false;
+        boolean isTimePresent = false;
         int indexOfDelimiter = 0;
         for (int i = 1; i < lineArray.length; i++) {
             if (lineArray[i].equalsIgnoreCase("/by")) {
@@ -76,19 +77,26 @@ public class TaskList {
         if (isDatePresent) {
             String date = lineArray[indexOfDelimiter+1];
             boolean isValidDate = taskListDateMatcher.matches(date);
-            String time = lineArray[indexOfDelimiter + 2];
-            boolean isValidTime = taskListTimeMatcher.matches(time);
-            if (isValidDate && isValidTime) {
-                String dateTime = date + "T" + time;
-                LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
-                System.out.println("\t-----------------------------------------------------------------");
-                System.out.println("\t " + "Got it. I've added this task: ");
-                tasks.add(new Deadline(descriptionLine, localDateTime));
-                System.out.println("\t\t " + tasks.get(tasks.size() - 1));
-                System.out.println("\t " + "Now you have " + tasks.size() + " tasks in the list.");
-                System.out.println("\t-----------------------------------------------------------------");
+            if (lineArray.length - indexOfDelimiter > 2) {
+                isTimePresent = true;
+            }
+            if (isTimePresent) {
+                String time = lineArray[indexOfDelimiter + 2];
+                boolean isValidTime = taskListTimeMatcher.matches(time);
+                if (isValidDate && isValidTime) {
+                    String dateTime = date + "T" + time;
+                    LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
+                    System.out.println("\t-----------------------------------------------------------------");
+                    System.out.println("\t " + "Got it. I've added this task: ");
+                    tasks.add(new Deadline(descriptionLine, localDateTime));
+                    System.out.println("\t\t " + tasks.get(tasks.size() - 1));
+                    System.out.println("\t " + "Now you have " + tasks.size() + " tasks in the list.");
+                    System.out.println("\t-----------------------------------------------------------------");
+                } else {
+                    taskListUtility.invalidDeadlineDateTime();
+                }
             } else {
-                taskListUtility.invalidDeadlineDate();
+                taskListUtility.deadlineTimeNotPresent();
             }
         } else {
             taskListUtility.deadlineDateNotPresent();
@@ -102,6 +110,7 @@ public class TaskList {
     public void addEvent(String[] lineArray) {
         String descriptionLine = "";
         boolean isDatePresent = false;
+        boolean isTimePresent = false;
         int indexOfDelimiter = 0;
         for (int i = 1; i < lineArray.length; i++) {
             if (lineArray[i].equalsIgnoreCase("/at")) {
@@ -114,21 +123,27 @@ public class TaskList {
         if (isDatePresent) {
             String date = lineArray[indexOfDelimiter+1];
             boolean isValidDate = taskListDateMatcher.matches(date);
-            String time = lineArray[indexOfDelimiter + 2];
-            boolean isValidTime = taskListTimeMatcher.matches(time);
-            if (isValidDate && isValidTime) {
-                String dateTime = date + "T" + time;
-                LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
-                System.out.println("\t-----------------------------------------------------------------");
-                System.out.println("\t " + "Got it. I've added this task: ");
-                tasks.add(new Event(descriptionLine, localDateTime));
-                System.out.println("\t\t " + tasks.get(tasks.size()-1));
-                System.out.println("\t " + "Now you have " + tasks.size() + " tasks in the list.");
-                System.out.println("\t-----------------------------------------------------------------");
-            } else {
-                taskListUtility.invalidEventDate();
+            if (lineArray.length - indexOfDelimiter > 2) {
+                isTimePresent = true;
             }
-
+            if (isTimePresent) {
+                String time = lineArray[indexOfDelimiter + 2];
+                boolean isValidTime = taskListTimeMatcher.matches(time);
+                if (isValidDate && isValidTime) {
+                    String dateTime = date + "T" + time;
+                    LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
+                    System.out.println("\t-----------------------------------------------------------------");
+                    System.out.println("\t " + "Got it. I've added this task: ");
+                    tasks.add(new Event(descriptionLine, localDateTime));
+                    System.out.println("\t\t " + tasks.get(tasks.size()-1));
+                    System.out.println("\t " + "Now you have " + tasks.size() + " tasks in the list.");
+                    System.out.println("\t-----------------------------------------------------------------");
+                } else {
+                    taskListUtility.invalidEventDateTime();
+                }
+            } else {
+                taskListUtility.eventTimeNotPresent();
+            }
         } else {
             taskListUtility.eventDateNotPresent();
         }
@@ -226,13 +241,19 @@ public class TaskList {
 
     public void findTask(String keyword) {
         int count = 1;
+        boolean ifContains = false;
         System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t " + "Here are the matching task(s) in your list:");
+        System.out.println("\t Here are the search result(s):");
         for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).description.contains(keyword)) {
+            if (tasks.get(i).description.contains(keyword.toUpperCase())) {
+                ifContains = true;
                 count += i;
                 System.out.println("\t " + count + ". " + tasks.get(i));
+                count = 1;
             }
+        }
+        if (!ifContains) {
+            System.out.println("\t Oops! No match found!");
         }
         System.out.println("\t-----------------------------------------------------------------");
     }

@@ -8,12 +8,12 @@ public class Deadline extends Task {
     private LocalDateTime by;
 
     public Deadline(String description, LocalDateTime by) {
-        super(description);
+        super(description.toUpperCase());
         this.by = by;
     }
 
     public Deadline(String description) {
-        super(description);
+        super(description.toUpperCase());
     }
 
     @Override

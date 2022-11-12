@@ -8,12 +8,12 @@ public class Event extends Task {
     private LocalDateTime at;
 
     public Event(String description, LocalDateTime at) {
-        super(description);
+        super(description.toUpperCase());
         this.at = at;
     }
 
     public Event(String description) {
-        super(description);
+        super(description.toUpperCase());
     }
 
     @Override

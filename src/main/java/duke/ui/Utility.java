@@ -41,21 +41,23 @@ public class Utility {
 
     public void invalidDescription(String keyword) {
         System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t " + "The description of the " + keyword +  " keyword cannot be empty.");
+        System.out.println("\t The description of the " + keyword +  " keyword cannot be empty. Kindly re-enter the command.");
+        System.out.println("\t Use the 'help' command to open the help page to read instructions");
+        System.out.println("\t Use the 'syntax <keyword>' command to view examples of valid keyword syntax, e.g syntax deadline");
         System.out.println("\t-----------------------------------------------------------------");
     }
 
     public void invalidSearchTermWord(String keyword) {
         System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t " + "The search term word of the " + keyword +  " keyword cannot be empty.");
+        System.out.println("\t The search term word of the " + keyword +  " keyword cannot be empty.");
         System.out.println("\t-----------------------------------------------------------------");
     }
 
     public void invalidCommand() {
         System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t " + "Invalid command or keyword syntax");
-        System.out.println("\t " + "Use the 'help' command to open the help page to read instructions");
-        System.out.println("\t " + "Use the 'syntax <keyword>' command to view examples of valid keyword syntax, e.g syntax deadline");
+        System.out.println("\t Invalid command or keyword syntax. Kindly re-enter the command.");
+        System.out.println("\t Use the 'help' command to open the help page to read instructions");
+        System.out.println("\t Use the 'syntax <keyword>' command to view examples of valid keyword syntax, e.g syntax deadline");
         System.out.println("\t-----------------------------------------------------------------");
     }
 
@@ -94,7 +96,16 @@ public class Utility {
 
     public void deadlineDateNotPresent() {
         System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t Oops! Date and time not present or missing '/by' command, please re-enter deadline task with the date and time in the following format:");
+        System.out.println("\t Oops! Date not present or missing '/by' command, please re-enter deadline task with the date and time in the following format:");
+        System.out.println("\t Syntax  : <keyword> <description> /by <yyyy-mm-dd hh:mm:ss>");
+        System.out.println("\t Example : deadline complete homework /by 2022-10-19 23:59:59");
+        System.out.println("\t Example : /d complete homework /by 2022-10-19 23:59:59");
+        System.out.println("\t-----------------------------------------------------------------");
+    }
+
+    public void deadlineTimeNotPresent() {
+        System.out.println("\t-----------------------------------------------------------------");
+        System.out.println("\t Oops! Time not present, please re-enter deadline task with the date and time in the following format:");
         System.out.println("\t Syntax  : <keyword> <description> /by <yyyy-mm-dd hh:mm:ss>");
         System.out.println("\t Example : deadline complete homework /by 2022-10-19 23:59:59");
         System.out.println("\t Example : /d complete homework /by 2022-10-19 23:59:59");
@@ -110,18 +121,27 @@ public class Utility {
         System.out.println("\t-----------------------------------------------------------------");
     }
 
-    public void invalidDeadlineDate() {
+    public void eventTimeNotPresent() {
         System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t Oops! Invalid date syntax, please re-enter deadline task with the date and time in the following format:");
+        System.out.println("\t Oops! Time not present, please re-enter event task with the date and time in the following format:");
+        System.out.println("\t Syntax  : <keyword alias> /at <yyyy-mm-dd hh:mm:ss>");
+        System.out.println("\t Example : event attend wedding /at 2022-10-20 19:00:00");
+        System.out.println("\t Example : /e attend wedding /at 2022-10-20 19:00:00");
+        System.out.println("\t-----------------------------------------------------------------");
+    }
+
+    public void invalidDeadlineDateTime() {
+        System.out.println("\t-----------------------------------------------------------------");
+        System.out.println("\t Oops! Invalid date or time, please re-enter deadline task with the date and time in the following format:");
         System.out.println("\t Syntax  : <keyword> <description> /by <yyyy-mm-dd hh:mm:ss>");
         System.out.println("\t Example : deadline complete homework /by 2022-10-19 23:59:59");
         System.out.println("\t Example : /d complete homework /by 2022-10-19 23:59:59");
         System.out.println("\t-----------------------------------------------------------------");
     }
 
-    public void invalidEventDate() {
+    public void invalidEventDateTime() {
         System.out.println("\t-----------------------------------------------------------------");
-        System.out.println("\t Oops! Invalid date syntax, please re-enter event task with the date and time in the following format:");
+        System.out.println("\t Oops! Invalid date or time, please re-enter event task with the date and time in the following format:");
         System.out.println("\t Syntax  : <keyword alias> /at <yyyy-mm-dd hh:mm:ss>");
         System.out.println("\t Example : event attend wedding /at 2022-10-20 19:00:00");
         System.out.println("\t Example : /e attend wedding /at 2022-10-20 19:00:00");
@@ -131,7 +151,7 @@ public class Utility {
     public void indexOutOfBound(Integer upperbound) {
         System.out.println("\t-----------------------------------------------------------------");
         System.out.println("\t Oops! Invalid task number,");
-        System.out.println("\t please enter a valid task number between 1 and " + upperbound + ".");
+        System.out.println("\t please enter a valid task number from 1 to " + upperbound + ".");
         System.out.println("\t-----------------------------------------------------------------");
     }
 

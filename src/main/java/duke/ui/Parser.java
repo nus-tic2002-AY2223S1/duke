@@ -50,7 +50,7 @@ public class Parser {
                 parserTaskList.markTask(lineArray);
                 parserTaskList.saveTaskList(parserRepo.getFileDirectory());
             } else if (commandLine.equalsIgnoreCase("unmark")) {
-                parserTaskList.unmarkTask(lineArray);
+               parserTaskList.unmarkTask(lineArray);
                 parserTaskList.saveTaskList(parserRepo.getFileDirectory());
             } else if (commandLine.equalsIgnoreCase("list")) {
                 parserTaskList.listTask();

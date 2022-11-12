@@ -13,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RepositoryTest {
 
     String repoDirectory = "./data/";
-    String repoFileName = "textUiTest.txt";
+    String repoFileName = "myList.txt";
 
     @Test
     public void testGetFileDirectory() {
-        assertEquals("./data/textUiTest.txt", new Repository(repoDirectory, repoFileName).getFileDirectory());
+        assertEquals("./data/myList.txt", new Repository(repoDirectory, repoFileName).getFileDirectory());
     }
 
     @Test
