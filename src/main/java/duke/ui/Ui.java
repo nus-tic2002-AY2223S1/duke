@@ -1,9 +1,9 @@
-package nusduke.ui;
-
-import nusduke.tasks.Task;
-import nusduke.tasks.TaskList;
+package duke.ui;
 
 import java.util.List;
+
+import duke.tasks.Task;
+import duke.tasks.TaskList;
 
 public class Ui {
 
@@ -57,8 +57,8 @@ public class Ui {
                 System.out.println("Now you have " + list.getCount() + " in the list.\n");
         }
 
-        public static void emptyTask(String key) {
-                System.out.println ("OOPS!!! The description of a " + key + " cannot be empty.\n");
+        public static String emptyTask(String key) {
+                return "OOPS!!! The description of a " + key.toLowerCase() + " cannot be empty.\n";
         }
 
         public static void markTask(int id, List<Task> tl) {
@@ -71,8 +71,8 @@ public class Ui {
                 System.out.println(tl.get(id).getDescription().toString() + "\n"); 
         }
 
-        public static void trueMark(String key) {
-                System.out.println("Task is already " + key.toLowerCase() + "ed!\n");
+        public static String trueMark(String key) {
+                return "Task is already " + key.toLowerCase() + "ed!\n";
         }
 
         public static String eventTimeError() {

@@ -1,10 +1,10 @@
-package nusduke;
+package duke.duke;
 
 import java.util.Scanner;
 
-import nusduke.tasks.*;
-import nusduke.ui.Ui;
-import nusduke.data.Storage;
+import duke.data.Storage;
+import duke.tasks.*;
+import duke.ui.Ui;
 
 public class Duke {
     public static void main(String[] args) throws Exception {
@@ -57,7 +57,7 @@ public class Duke {
 
             else if (key.equalsIgnoreCase("todo")) {
                 if (tokens[1].isEmpty()) {
-                    Ui.emptyTask(key);
+                    System.out.println(Ui.emptyTask(key));
                     continue;
                 }
                 new_input = input.replace(key, "[T][ ]");
@@ -67,7 +67,7 @@ public class Duke {
 
             else if (key.equalsIgnoreCase("deadline")) {
                 if (tokens[1].isEmpty()) {
-                    Ui.emptyTask(key);
+                    System.out.println(Ui.emptyTask(key));
                     continue;
                 }
                 new_input = input.replace(key, "[D][ ]");
@@ -77,7 +77,7 @@ public class Duke {
 
             else if (key.equalsIgnoreCase("event")) {
                 if (tokens[1].isEmpty()) {
-                    Ui.emptyTask(key);
+                    System.out.println(Ui.emptyTask(key));
                     continue;
                 }
                 new_input = input.replace(key, "[E][ ]");

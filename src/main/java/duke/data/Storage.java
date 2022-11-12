@@ -1,11 +1,11 @@
-package nusduke.data;
+package duke.data;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import nusduke.tasks.Task;
+import duke.tasks.Task;
 
 public class Storage {
 

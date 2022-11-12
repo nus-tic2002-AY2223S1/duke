@@ -1,9 +1,9 @@
-package nusduke.tasks;
-
-import nusduke.ui.Ui;
+package duke.tasks;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import duke.ui.Ui;
 
 public class TaskList {
     protected static List<Task> tl;
@@ -37,7 +37,7 @@ public class TaskList {
 
     public void markT(int id, String key) {
         if (tl.get(id).isDone) {
-            Ui.trueMark(key);
+            System.out.println(Ui.trueMark(key));
         } else {
             tl.get(id).mark();
             tl.get(id).description.replace(4, 5, "X");
@@ -47,7 +47,7 @@ public class TaskList {
 
     public void unmarkT(int id, String key) {
         if (!tl.get(id).isDone) {
-            Ui.trueMark(key);
+            System.out.println(Ui.trueMark(key));
         } else {
             tl.get(id).unmark();
             tl.get(id).description.replace(4, 5, " ");
