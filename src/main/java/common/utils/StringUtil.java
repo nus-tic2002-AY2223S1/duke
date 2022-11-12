@@ -153,10 +153,12 @@ public class StringUtil {
         try {
             List<String> words = new ArrayList<>(Arrays.asList(sentence.split("\\s+")));
             String updateDesc = "";
-            if (getUpdateEnumTypeFromString(sentence) == desc) {
-                updateDesc = words.get(2); // updateTypeEnum is position 2 - (1 from command)
-            } else {
-                updateDesc = words.get(2) + " " + words.get(3); // updateTypeEnum is position 3 and 5 - (1 from command)
+            if (getUpdateEnumTypeFromString(sentence) == desc) { // desc
+                for (int i = 2; i < words.size(); i++) { // updateTypeEnum is position 2 - (1 from command)
+                    updateDesc += words.get(i) + SPACE;
+                }
+            } else { // date
+                updateDesc = words.get(2) + SPACE + words.get(3); // updateTypeEnum is position 3 and 5 - (1 from command)
             }
             return updateDesc;
         } catch (IndexOutOfBoundsException e) {
