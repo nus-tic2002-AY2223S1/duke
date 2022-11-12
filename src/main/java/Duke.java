@@ -8,8 +8,6 @@ import java.io.FileWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-
 
 public class Duke {
     private static final List<Task> tasks = new ArrayList<>();
@@ -84,8 +82,6 @@ public class Duke {
                         if (element.toString().contains(findItem)) {
                             listNo++;
                             System.out.println(listNo + "." + element);
-                        } else {
-                            continue;
                         }
                     }
                     System.out.println();
@@ -306,8 +302,6 @@ public class Duke {
                         if (element.toString().contains("[E]") && element.toString().contains(taskDateList)) {
                             listNo++;
                             System.out.println(listNo + "." + element);
-                        } else {
-                            continue;
                         }
                     }
                     System.out.println();
@@ -318,8 +312,6 @@ public class Duke {
                         if (element.toString().contains("[D]") && element.toString().contains(taskDateList)) {
                             listNo++;
                             System.out.println(listNo + "." + element);
-                        } else {
-                            continue;
                         }
                     }
                     System.out.println();
@@ -339,8 +331,7 @@ public class Duke {
                         if (element.toString().contains("[T]")) {
                             listNo++;
                             System.out.println(listNo + "." + element);
-                        } else
-                            continue;
+                        }
                     }
                     System.out.println();
                     break;
@@ -350,8 +341,6 @@ public class Duke {
                         if (element.toString().contains("[E]")) {
                             listNo++;
                             System.out.println(listNo + "." + element);
-                        } else {
-                            continue;
                         }
                     }
                     System.out.println();
@@ -362,8 +351,6 @@ public class Duke {
                         if (element.toString().contains("[D]")) {
                             listNo++;
                             System.out.println(listNo + "." + element);
-                        } else {
-                            continue;
                         }
                     }
                     System.out.println();
