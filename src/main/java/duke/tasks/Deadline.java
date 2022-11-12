@@ -29,12 +29,21 @@ public class Deadline extends Todo {
     public Deadline(String d) throws DukeException {
         super(d);
         int dateDiv = d.indexOf("/");
+        String formatDate = "";
         String date = d.substring(dateDiv + 4, dateDiv + 14);
+        if (date.contains("/")) {
+            formatDate = date.replaceAll("/", "-");
+        }
         String t1 = d.substring(dateDiv + 15);
         if (t1.contains("-")) {
             throw new DukeException(Ui.deadlineTimeError());
         } else {
-            LocalDate d1 = LocalDate.parse(date);
+            LocalDate d1;
+            if (formatDate.isEmpty()) { 
+                d1 = LocalDate.parse(date);
+            } else {
+                d1 = LocalDate.parse(formatDate);
+            }
             int length = d.length();
             setDate(d1);
             setTime(t1);
