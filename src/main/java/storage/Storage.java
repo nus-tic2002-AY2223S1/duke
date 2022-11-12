@@ -1,3 +1,10 @@
+package storage;
+
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Task;
+import tasks.Todo;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -7,23 +14,24 @@ import java.util.Scanner;
 
 // load tasks from file and save tasks in file
 public class Storage {
-    private static File f;
-    private static String filePath;
-    private static FileWriter fw;
+    private File f;
+    private String filePath;
+    private FileWriter fw;
 
     public Storage(String filePath) {
         this.filePath = filePath;
         f = new File(filePath);
     }
 
-    public static void checkDir(File f) {
+    public void checkDir(File f) {
         if(!f.exists()) {
             File dir = new File("data");
             dir.mkdir();
         }
     }
 
-    public static void saveFile(ArrayList<Task> list) throws IOException {
+    public void saveFile(ArrayList<Task> list) throws IOException {
+        FileWriter fw;
         fw = new FileWriter(filePath);
         String toPrint = "";
         for (int i = 0; i < list.size(); i++) {
@@ -36,7 +44,7 @@ public class Storage {
         fw.close();
     }
 
-    public static ArrayList<Task> loadFile() throws FileNotFoundException {
+    public ArrayList<Task> loadFile() throws FileNotFoundException {
         checkDir(f);
         int count = 0;
         ArrayList<Task> list = new ArrayList<Task>();

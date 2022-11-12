@@ -1,38 +1,40 @@
+package userinterface;
+
+import tasks.Task;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
-    private static String logo = " _______ ______ ___  ___ ______\n"
+    private String logo = " _______ ______ ___  ___ ______\n"
             + "|_______|  __  |   \\/   |  __  |\n"
             + "   | |  | |  | |  |\\/|  | |  | |\n"
             + "   | |  | |__| |  |  |  | |__| |\n"
             + "   |_|  |______|__|  |__|______|\n";
-    private static String greet = "Hello! Tomo here.\nWhat's up? ^_^";
-    private static Scanner in;
+    private String greet = "Hello! Tomo here.\nWhat's up? ^_^";
+    private Scanner in;
 
-    public Ui() {
-
+    public void welcome() {
+        printBox(logo + "\n" + greet);
     }
 
-    public static void welcome() {
-        System.out.println(logo);
-        printBox(greet);
+    public void goodbye() {
+        printBox("See you ^_^");
     }
 
-
-    public static String userInput() {
+    public String readCommand() {
         in = new Scanner(System.in);
         String input = in.nextLine();
         return input;
     }
 
-    public static void printBox(String words) {
+    public void printBox(String words) {
         System.out.println("_____________________________________________");
         System.out.println(words);
         System.out.println("_____________________________________________");
     }
 
-    public static void printArray(ArrayList<Task> list, int length) {
+    public void printArray(ArrayList<Task> list, int length) {
         String toPrint = "Checklist:";
         for (int i = 0; i < length; i++) {
             int n = i+1;

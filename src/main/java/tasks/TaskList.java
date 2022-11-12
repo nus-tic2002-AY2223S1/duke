@@ -1,7 +1,9 @@
+package tasks;
+
 import java.util.ArrayList;
 
 public class TaskList {
-    private static ArrayList<Task> list;
+    private ArrayList<Task> list;
     //private static int count;
 
     public TaskList(ArrayList<Task> list) {
@@ -17,7 +19,7 @@ public class TaskList {
     }
 
     public String getTask(int i) {
-        return list.get(i).getTask();
+        return list.get(i-1).getTask();
     }
 
     public int size() {
@@ -45,10 +47,10 @@ public class TaskList {
     }
 
     public void done(int i) {
-        list.get(i).setStatus(true);
+        list.get(i-1).setStatus(true);
     }
 
     public void undone(int i) {
-        list.get(i).setStatus(false);
+        list.get(i-1).setStatus(false);
     }
 }

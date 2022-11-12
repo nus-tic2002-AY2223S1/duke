@@ -1,7 +1,2 @@
-T|0|homework
-D|0|report|by tmr|
-E|1|presentation|at 11 Nov|
-T|0|smile
-D|0|:)|by today|
-E|0|:(|at tomorrow|
-T|0|this
+D|0|TIC2002 project|by 13 Nov 2022|
+E|0|exam|at NUS, 30 Nov 2022|
