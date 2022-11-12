@@ -117,6 +117,9 @@ public class Tasklist {
                 findTask.add(task);
             }
         }
+        if(!findTask.isEmpty()) {
+            System.out.println(findTask);
+        }
         return findTask;
     }
 }

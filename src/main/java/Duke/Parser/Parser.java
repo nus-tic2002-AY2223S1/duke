@@ -1,10 +1,12 @@
 package Duke.Parser;
 import Duke.Exception.DukeException;
+import Duke.TaskList.Task;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 
 public class Parser {
     public static String command;
@@ -54,7 +56,6 @@ public class Parser {
                 }
         }
     }
-
     private void getTodo(String detail) throws DukeException {
         todoDesc = detail;
     }
