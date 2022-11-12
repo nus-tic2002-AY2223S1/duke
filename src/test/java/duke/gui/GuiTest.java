@@ -7,6 +7,7 @@ import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
+import duke.impl.Storage;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -16,6 +17,7 @@ public class GuiTest {
     @Start
     private void start(Stage stage) {
         MainWindow.clearChat();
+        Storage.deleteCache();
         Main m = new Main();
         m.start(stage);
     }

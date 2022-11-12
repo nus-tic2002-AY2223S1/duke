@@ -159,7 +159,8 @@ public class DateProcessorCnTest {
     @Test
     public void processDateTimeNoTimeTest() {
         String s = "1/4/1999";
-        DukeException expected = new DukeException("! 日期/时间格式无效。 日期时间格式必须是 dd/mm/yyyy HHmm。");
+        DukeException expected =
+                new DukeException("! 日期/时间格式无效。 日期时间格式必须是 dd/mm/yyyy HHmm。");
         try {
             d.processDateTime(s);
         } catch (DukeException e) {
@@ -409,8 +410,9 @@ public class DateProcessorCnTest {
     @Test
     public void processDateTimRangeDateTimeToDateTest() {
         String s = "1/4/1999 2359 - 2/4/1999";
-        DukeException expected = new DukeException("! 区间格式无效。 开始和结束格式必须一致。区间格式必须是"
-                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm。");
+        DukeException expected =
+                new DukeException("! 区间格式无效。 开始和结束格式必须一致。区间格式必须是"
+                        + "\n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm。");
         try {
             d.processDateTimeRange(s);
         } catch (DukeException e) {
@@ -421,8 +423,9 @@ public class DateProcessorCnTest {
     @Test
     public void processDateTimRangeDateToDateTimeTest() {
         String s = "1/4/1999 - 2/4/1999 0000";
-        DukeException expected = new DukeException("! 区间格式无效。 开始和结束格式必须一致。区间格式必须是"
-                + "\n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm。");
+        DukeException expected =
+                new DukeException("! 区间格式无效。 开始和结束格式必须一致。区间格式必须是"
+                        + "\n\tdd/mm/yyyy - dd/mm/yyyy \n\tdd/mm/yyyy HHmm - dd/mm/yyyy HHmm。");
         try {
             d.processDateTimeRange(s);
         } catch (DukeException e) {

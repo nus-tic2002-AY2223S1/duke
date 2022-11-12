@@ -87,6 +87,7 @@ tasks.withType(Test) {
 
 apply plugin: 'java'
 apply plugin: 'jacoco'
+compileJava.options.encoding = 'UTF-8'
 
 jacocoTestReport {
     reports {
@@ -100,4 +101,8 @@ check.dependsOn jacocoTestReport
 javafx {
     version = "19"
     modules = ['javafx.controls', 'javafx.fxml']
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }

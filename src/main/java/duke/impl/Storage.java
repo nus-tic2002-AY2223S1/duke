@@ -39,4 +39,16 @@ public class Storage {
     public String getPath() {
         return this.path;
     }
+
+    /**
+     * Helper function to clear task cache. For UT usage.
+     */
+    public static void deleteCache() {
+        File myObj = new File("data/save/output");
+        if (myObj.delete()) {
+            System.out.println("Deleted the file: " + myObj.getName());
+        } else {
+            System.out.println("Failed to delete the file.");
+        }
+    }
 }
