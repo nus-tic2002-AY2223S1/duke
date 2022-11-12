@@ -261,20 +261,20 @@ public class TaskList {
     public void scheduleTask(String input, String[] inputSplit) {
         // to check if input is valid to add task
         String scheduleDate = Parser.parseScheduleInput(input);
-        Integer count = 0;
+        try {
             if (checkValidCommand(inputSplit, input)) {
                 printMessage("Tasks on: " + Parser.stringToDate(scheduleDate));
-                for (Task task : taskList){
-                    if (Parser.stringToDate(scheduleDate).isEqual(task.getDate())) {
-                        printMessage(task.toString());
-                        count += 1;
+                    for (int i = 0; i < taskList.size(); i++) {
+                        if (Parser.stringToDate(scheduleDate).equals(getTaskList().get(i).getDate()))
+                            printMessage(getTaskList().get(i).toString());
                     }
                 }
-                if (count == 0)
-                    printMessage("No task is found on " + Parser.stringToDate(scheduleDate));
-            }
-            else
-                printError(INVALID_INPUT);
+            } catch (Exception e){
+            printMessage(INVALID_INPUT + "\n" + e.getMessage());
+        }
+        if (taskList.size() == 0)
+            printMessage("No task is found on " + Parser.stringToDate(scheduleDate));
+        printLine();
     }
 
     // find tasks according to user input
@@ -294,12 +294,12 @@ public class TaskList {
                 }
                 if (count < 1) {
                     printError("There are no matching tasks.");
-                    printLine();
                 }
             }
             else
                 printError(INVALID_INPUT);
         }
+        printLine();
     }
 
     // add Fixed Duration Tasks
@@ -379,24 +379,20 @@ public class TaskList {
             // if task name is schedule
             if (inputSplit[0].equals("schedule")){
                 // checks for date format
-                if (!checkDateInput(inputSplit,input)){
-                    printLine();
-                    printError(INVALID_INPUT);
-                    printLine();
-                    return false;
+                if (checkDateInput(inputSplit,input)){
+                    return true;
                 }
-                else return true;
             }
 
             // if task name is mark
-            if (inputSplit[0].equals("mark")) {
+            if (inputSplit[0].equals("done")) {
                 // check for mark input format
                 if (checkInteger(inputSplit[1]) && inputSplit.length == 2)
                     return true;
             }
 
             // if task name is unmark
-            if (inputSplit[0].equals("unmark")) {
+            if (inputSplit[0].equals("undone")) {
                 // check for unmark input format
                 if (checkInteger(inputSplit[1]) && inputSplit.length == 2)
                 return true;
@@ -478,17 +474,14 @@ public class TaskList {
                     return at.matches(datePattern);
             }
             if (inputSplit[0].equals("schedule")) {
-                String scheduleDate = inputSplit[2];
+                String scheduleDate = inputSplit[1];
                 if (validateDateFormat(scheduleDate))
                     return scheduleDate.matches(datePattern);
             }
             return false;
         }
 
-        catch (IllegalArgumentException e){
-            printLine();
-            printError(INVALID_INPUT);
-            printLine();
+        catch (IllegalArgumentException | NullPointerException e){
             return false;
         }
     }
@@ -504,7 +497,7 @@ public class TaskList {
         /* Date format is invalid */
         catch (ParseException e)
         {
-            System.out.println(input+" is an INVALID Date format");
+            System.out.println(input+" is an INVALID Date. Please enter date in dd-MM-yyyy.");
             return false;
         }
         /* Return true if date format is valid */

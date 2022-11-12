@@ -22,11 +22,11 @@ public class Parser {
             newTaskList.listTask(inputSplit, input);
 
             // mark items
-        else if (input.startsWith("mark"))
+        else if (input.startsWith("done"))
             newTaskList.markTask(inputSplit, input);
 
             // unmarked items
-        else if (input.startsWith("unmark"))
+        else if (input.startsWith("undone"))
             newTaskList.unmarkTask(inputSplit, input);
 
             // to do task
@@ -46,7 +46,7 @@ public class Parser {
             newTaskList.deleteTask(input, inputSplit);
 
             // view scheduled task for the date
-        else if (input.startsWith("schedule for"))
+        else if (input.startsWith("schedule"))
             newTaskList.scheduleTask(input, inputSplit);
 
         else if (input.startsWith("find"))
@@ -85,7 +85,7 @@ public class Parser {
     // format schedule input before it is added into task list
     public static String parseScheduleInput(String input){
         String[] scheduleDateSplit = input.split(" ");
-        String scheduleDate = scheduleDateSplit[2];
+        String scheduleDate = scheduleDateSplit[1];
         return scheduleDate;
     }
 
