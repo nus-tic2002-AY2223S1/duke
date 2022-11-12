@@ -22,8 +22,6 @@ import static common.enums.CommandEnum.todo;
 import static common.enums.UpdateTypeEnum.desc;
 import static logic.validators.Validator.dateTimeRegex;
 
-;
-
 public class StringUtil {
     /**
      * Return the first word of the sentence
