@@ -23,14 +23,19 @@ public class TaskList {
     //Performs add/remove task operations for all task types.
     //Shows to do list
 
-    private static ArrayList<Task> TaskList;
+    static ArrayList<Task> TaskList;
     private static TaskList instance = null;
+
+
 
     //constructor
     private TaskList() {
         TaskList = new ArrayList<>();
     }
 
+    public static ArrayList<Task> getTaskList() {
+        return TaskList;
+    }
 
     public static TaskList getInstance(){
         if (instance == null){
