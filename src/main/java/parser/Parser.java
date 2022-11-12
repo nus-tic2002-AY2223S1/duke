@@ -1,10 +1,8 @@
 
 package parser;
 
-import tasklist.Deadline;
-import tasklist.Event;
-import tasklist.Fixed;
-import tasklist.Todo;
+import tasklist.*;
+import ui.UI;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +10,55 @@ import java.util.Locale;
 
 public class Parser {
 
+    public static void parse(String input, TaskList newTaskList){
+        String[] inputSplit = input.split(" ");
+
+        // enter bye to end chat
+        if (input.equals("bye"))
+            newTaskList.exit();
+
+            // to list all items
+        else if (input.equals("list"))
+            newTaskList.listTask(inputSplit, input);
+
+            // mark items
+        else if (input.startsWith("mark"))
+            newTaskList.markTask(inputSplit, input);
+
+            // unmarked items
+        else if (input.startsWith("unmark"))
+            newTaskList.unmarkTask(inputSplit, input);
+
+            // to do task
+        else if (input.startsWith("todo"))
+            newTaskList.todoTask(input, inputSplit);
+
+            // deadline task
+        else if (input.startsWith("deadline"))
+            newTaskList.deadlineTask(input, inputSplit);
+
+            // event task
+        else if (input.startsWith("event"))
+            newTaskList.eventTask(input, inputSplit);
+
+            // delete task
+        else if (input.startsWith("delete"))
+            newTaskList.deleteTask(input, inputSplit);
+
+            // view scheduled task for the date
+        else if (input.startsWith("schedule for"))
+            newTaskList.scheduleTask(input, inputSplit);
+
+        else if (input.startsWith("find"))
+            newTaskList.findTask(input, inputSplit);
+
+        else if (input.startsWith("fixed"))
+            newTaskList.fixedDurationTasks(input,inputSplit);
+
+            // prompt user to enter valid input
+        else
+            UI.printStandardError();
+    }
     // format todo input before it is added
     public static Todo parseTodoInput(String input) {
         String todoTask = input.substring(5);

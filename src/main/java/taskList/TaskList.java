@@ -3,6 +3,7 @@ package tasklist;
 
 import parser.Parser;
 import storage.Storage;
+import ui.UI;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -500,6 +501,10 @@ public class TaskList {
     // get task list
     public List<Task> getTaskList() {
         return this.taskList;
+    }
+    public void exit() {
+        printBye();
+        System.exit(0);
     }
 }
 
