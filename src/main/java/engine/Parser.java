@@ -2,7 +2,6 @@ package engine;
 
 import cat.Nala;
 import storage.Storage;
-import task.Deadline;
 import task.Event;
 import task.Todo;
 
@@ -11,9 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static formatting.Helper.separator;
-import static formatting.Helper.userInput;
-import static formatting.Helper.FORMATTER;
+import static formatting.Helper.*;
 import static storage.Storage.validateStringFilenameUsingIO;
 
 /**
