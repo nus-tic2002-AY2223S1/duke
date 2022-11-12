@@ -30,11 +30,6 @@ public class TaskList {
         taskId++;
     }
 
-    public Task findTask(int id){
-        return taskLists.get(taskId);
-        //add exception to handle outofrange
-    }
-
     public void markT(int id, String key) {
         if (taskLists.get(id).isDone) {
             System.out.println(Ui.trueMark(key));
@@ -61,5 +56,13 @@ public class TaskList {
         System.out.println(selection.toString());
         taskLists.remove(id-1);
         System.out.println("Now you have " + getCount() + " tasks in the list.");
+    }
+
+    public boolean checkListNo(String keyValue) {
+        if(keyValue.isEmpty() || keyValue.equals("0") || Integer.parseInt(keyValue) > getCount()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -41,7 +41,7 @@ public class Ui {
         
         public static void noSelection() {
             System.out.println("Selected task does not exist!"
-                               + "Consider checking tasks with the list command and try again.\n");
+                               + " Consider checking tasks with the list command and try again.\n");
         }
 
         public static void emptyList() {
@@ -95,12 +95,12 @@ public class Ui {
 
         public static String eventTimeError() {
             return"\n\n**Event time should have a start and end time e.g 2-4pm.\n"
-                   + "Consider using deadline command if there is no end time.**\n";
+                   + " Consider using deadline command if there is no end time.**\n";
         }
 
         public static String deadlineTimeError() {
             return"\n\n**Deadline time should only have a single time value e.g 6pm.\n"
-                   + "Consider using event command if it is a range of time.**\n";
+                   + " Consider using event command if it is a range of time.**\n";
         }
         
         public static void printHelp() {
