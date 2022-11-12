@@ -14,5 +14,6 @@ public class Fixed extends Task {
         return "[F]" + super.toString() + " (Time Required: " + this.needs + ")";
     }
 
-
+    @Override
+    public String toOutput(){return "F" + super.toOutput() + ";"+this.needs;}
 }

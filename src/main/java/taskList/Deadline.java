@@ -18,6 +18,10 @@ public class Deadline extends Task {
         return "[D]" + super.toString() + " (By: " + convertDateFormat(getDate()) + ")";
     }
 
+    @Override
+    public String toOutput() {
+        return "D" + super.toOutput() + ";" + convertDateFormat(getDate());
+    }
     // convert String date to LocalDate format
     @Override
     public LocalDate getDate() {

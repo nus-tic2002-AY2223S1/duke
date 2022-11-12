@@ -5,6 +5,7 @@ import parser.Parser;
 import storage.Storage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeParseException;
@@ -20,9 +21,99 @@ import static ui.UI.*;
 public class TaskList {
     //contains the task list e.g., it has operations to add/delete tasks in the list
     public ArrayList<Task> taskList = new ArrayList<>();
+    public TaskList() {
+        taskList = new ArrayList<>();
+    }
 
-   
-    // to add task into task list and print message
+    // read task from text file and load tasks into task list
+    public TaskList(File file) {
+        try {
+            Scanner sc = new Scanner(file);
+
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                loadTask(line);
+            }
+            printLine();
+            printMessage("All tasks have been loaded from " + Storage.path);
+            printLine();
+        } catch (Exception e) {
+            System.out.println("Problem to open " + Storage.path+"\n"+e.getMessage());
+
+        }
+    }
+
+    // retrieve task from text file, get task type to convert to load tasks into tasklist
+    public void loadTask(String line){
+        try {
+            // text file is split with ; delimeter
+            String[] lineSplit = line.split(";");
+            String taskName = lineSplit[0];
+            // T for Todo Tasks
+            if (taskName.equals("T"))
+                loadTodoData(lineSplit[1], lineSplit[2]);
+
+            // D for Deadline Tasks
+            if (taskName.equals("D"))
+                loadDeadlineData(lineSplit[1], lineSplit[2], lineSplit[3]);
+
+            // E for Event Tasks
+            if (taskName.equals("E"))
+                loadEventData(lineSplit[1], lineSplit[2], lineSplit[3]);
+
+            // F for Fixed Duration Tasks
+            if (taskName.equals("F"))
+                loadFixedData(lineSplit[1], lineSplit[2], lineSplit[3]);
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+            printError(LOADING_ERROR + "ERROR ERROR");
+        }
+
+    }
+
+    // convert Todo Task from String to Task
+    public void loadTodoData(String mark, String input){
+        Todo loadTodo = new Todo(input);
+        loadMark(mark, loadTodo);
+        taskList.add(loadTodo);
+        printMessage(loadTodo.toString() + " has been added.");
+    }
+
+    // convert Deadline Task from String to Task
+    public void loadDeadlineData(String mark, String input, String date){
+        date = Parser.LoadDateToString(date);
+        Deadline loadDeadline = new Deadline(input,date);
+        loadMark(mark, loadDeadline);
+        taskList.add(loadDeadline);
+        printMessage(loadDeadline.toString() + " has been added.");
+    }
+
+    // convert Event Task from String to Task
+    public void loadEventData(String mark, String input, String date){
+        date = Parser.LoadDateToString(date);
+        Event loadEvent = new Event(input,date);
+        loadMark(mark, loadEvent);
+        taskList.add(loadEvent);
+        printMessage(loadEvent.toString() + " has been added.");
+    }
+
+    // convert Fixed Duration Task from String to Task
+    public void loadFixedData(String mark, String input, String time){
+        Fixed loadFixed = new Fixed(input,time );
+        loadMark(mark, loadFixed);
+        taskList.add(loadFixed);
+        printMessage(loadFixed.toString() + " has been added.");
+    }
+
+    // check whether task in text file loaded is marked or unmarked
+    public void loadMark(String mark, Task task){
+        if (mark.equals("1"))
+            task.markAsDone();
+        if (mark.equals("0"))
+            task.markAsUndone();
+    }
+
+    // adds task into task list and print message
     public void addTask(Task task) {
         taskList.add(task);
         printMessage(MESSAGE_TASK_ADDED);
@@ -73,6 +164,9 @@ public class TaskList {
                 int markedIndex = Integer.parseInt(inputSplit[1]);
                 Task markedTask = taskList.get(markedIndex - 1);
                 markedTask.markAsDone();
+                ui.UI.printLine();
+                ui.UI.printMessage(MESSAGE_MARKED_TASK + markedTask.getDescription());
+                ui.UI.printLine();
             } catch (IndexOutOfBoundsException e) {
                 printLine();
                 printError(TASK_NUMBER_OOB);
@@ -89,6 +183,9 @@ public class TaskList {
                 int unmarkedIndex = Integer.parseInt(inputSplit[1]);
                 Task unmarkedTask = taskList.get(unmarkedIndex - 1);
                 unmarkedTask.markAsUndone();
+                ui.UI.printLine();
+                ui.UI.printMessage(MESSAGE_UNMARKED_TASK + unmarkedTask.getDescription());
+                ui.UI.printLine();
             } catch (IndexOutOfBoundsException e) {
                 printLine();
                 printError(TASK_NUMBER_OOB);

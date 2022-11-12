@@ -18,6 +18,9 @@ public class Event extends Task {
     public String toString() {
         return "[E]" + super.toString() + " (At: " + convertDateFormat(getDate()) + ")";
     }
+    public String toOutput() {
+        return "E" + super.toOutput() + ";" + convertDateFormat(getDate());
+    }
 
     // convert String date to LocalDate format
     @Override

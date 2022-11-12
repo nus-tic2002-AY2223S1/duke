@@ -7,13 +7,16 @@ import java.util.ArrayList;
 
 public class Storage {
     //    private static TaskList taskList;
-    public static File file;
     public static String path = homeDirectory() + "/duke/data/duke.txt";
 
-    public Storage() {
-        file = new File(path);
-    }
+    public static File file;
 
+    public Storage(String filePath) {
+        file = new File(filePath);
+    }
+    public static File load() throws FileNotFoundException {
+        return file;
+    }
     public static String homeDirectory() {
         String homeDirectory = System.getProperty("user.home");
         return homeDirectory;
@@ -34,7 +37,7 @@ public class Storage {
             FileOutputStream writer = new FileOutputStream(path);
 
             for (Task task : taskList) {
-                writer.write((task.toString() + '\n').getBytes());
+                writer.write((task.toOutput() + '\n').getBytes());
             }
             writer.close();
         } catch (IOException e) {

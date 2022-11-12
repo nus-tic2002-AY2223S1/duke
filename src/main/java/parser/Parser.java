@@ -12,9 +12,6 @@ import java.util.Locale;
 
 public class Parser {
 
-    // try to add the commands here to parse
-    // update storage to kt way
-
     // format todo input before it is added
     public static Todo parseTodoInput(String input) {
         String todoTask = input.substring(5);
@@ -47,7 +44,7 @@ public class Parser {
     }
 
     public static Fixed parseFixedDurationInput (String input){
-        String[] fixedItemSplit = (input.substring(5)).split(" /needs ");
+        String[] fixedItemSplit = (input.substring(6)).split(" /needs ");
         String fixedTask = fixedItemSplit [0];
         String fixedNeeds = fixedItemSplit[1];
         return new Fixed(fixedTask, fixedNeeds);
@@ -63,4 +60,10 @@ public class Parser {
     public static String DateToString (LocalDate d){
         return d.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
     }
+
+    public static String LoadDateToString(String s){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy", Locale.ENGLISH);
+        LocalDate d = LocalDate.parse(s, formatter);
+        return d.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));}
+
 }
