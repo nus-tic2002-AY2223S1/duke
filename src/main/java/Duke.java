@@ -1,10 +1,18 @@
+import data.*;
+import logic.BotUseCase;
+import ui.gui.DukeGUI;
+import ui.UIInterface;
+
+
 public class Duke {
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+        Bot bot = new Bot();
+        UIInterface ui = new DukeGUI("Duke", bot);
+        FileInterface fileData = new FileFactory("dukefile.txt");
+        DataInterface data = new DataFileFactory("dukefile.txt", "duke-data");
+        BotUseCase router = new Router(ui, data, fileData);
+        bot.setup(router);
+        bot.start();
+
     }
 }
