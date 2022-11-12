@@ -50,19 +50,18 @@ public class Ui {
 
         public static void showList(TaskList list) {
             System.out.println("Here are the task in your list:");
-            for (int i = 1; i <= list.getCount(); i++) {
-                list.getList().get(i-1).setTaskNo(i);
-                System.out.println(i + ". " + list.getList().get(i-1).getDescription());
+            for (int i = 0; i < list.getCount(); i++) {
+                System.out.println(list.getList().get(i).getTaskNo() + ". " + list.getList().get(i).getDescription());
             }
             System.out.println();
         }
 
         public static void findList(String keyword, TaskList list) {
             System.out.println("Here are the matching tasks in your list:");
-            for (int i = 1; i <= list.getCount(); i++) {
-                if (list.getList().get(i-1).getDescription().contains(keyword)) {
-                    System.out.println(list.getList().get(i-1).getTaskNo() + ". " 
-                                       + list.getList().get(i-1).getDescription());
+            for (int i = 0; i < list.getCount(); i++) {
+                if (list.getList().get(i).getDescription().contains(keyword)) {
+                    System.out.println(list.getList().get(i).getTaskNo() + ". " 
+                                       + list.getList().get(i).getDescription());
                     }
                 }
             System.out.println();

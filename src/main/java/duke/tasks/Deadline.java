@@ -2,11 +2,13 @@ package duke.tasks;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 
 import duke.exceptions.DukeException;
 import duke.ui.Ui;
 
 public class Deadline extends Todo {
+    
     protected LocalDate date;
     protected String time;
 
@@ -51,4 +53,15 @@ public class Deadline extends Todo {
                                 "(by: " + d1.format(DateTimeFormatter.ofPattern("MMM d yyyy ")) + t1 + ")");
         }
     }
+
+    // public void sortList(TaskList list, LocalDate d1, LocalDate d2) {
+    //     for (int i = 1; i <= list.getCount(); i++) {
+    //         list.getList().get(i-1).setTaskNo(i);
+    //         System.out.println(i + ". " + list.getList().get(i-1).getDescription());
+    //     }
+
+    //     if (d1.isAfter(d2)) {
+    //         Collections.swap(list, )
+    //     }
+    // }
 };

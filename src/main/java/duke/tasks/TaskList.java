@@ -6,8 +6,9 @@ import java.util.List;
 import duke.ui.Ui;
 
 public class TaskList {
+
     protected static List<Task> taskLists;
-    protected static int taskId = 1;
+    protected int taskId = 0;
 
     public TaskList() {
         taskLists = new ArrayList<Task>();
@@ -26,8 +27,9 @@ public class TaskList {
     }
 
     public void addT(Task type) {
-        taskLists.add(type);
         taskId++;
+        type.setTaskNo(taskId);
+        taskLists.add(type);
     }
 
     public void markT(int id, String key) {
@@ -55,6 +57,10 @@ public class TaskList {
         System.out.println("Noted. I've removed this task: ");
         System.out.println(selection.toString());
         taskLists.remove(id-1);
+        //resets the numbering for tasks
+        for (int i = 0; i < getCount(); i++) {
+            taskLists.get(i).setTaskNo(i+1);
+        }
         System.out.println("Now you have " + getCount() + " tasks in the list.");
     }
 

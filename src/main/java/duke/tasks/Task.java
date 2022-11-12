@@ -3,9 +3,10 @@ package duke.tasks;
 import duke.exceptions.DukeException;
 
 public class Task {
+
     protected StringBuilder description;
     protected boolean isDone;
-    protected int taskNo = 0;
+    protected int taskNo;
 
     public Task(String d) throws DukeException {
         this.description = new StringBuilder(d);
@@ -15,8 +16,8 @@ public class Task {
         return (isDone ? "X" : " ");
     }
 
-    public void setTaskNo(int taskNo) {
-        this.taskNo = taskNo;
+    public void setTaskNo(int taskId) {
+        taskNo = taskId;
     }
 
     public int getTaskNo() {
