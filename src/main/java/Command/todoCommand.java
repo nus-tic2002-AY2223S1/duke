@@ -10,6 +10,7 @@ public class todoCommand extends Command{
     public todoCommand(String taskdetails){
         this.todoDetails = taskdetails;
     }
+
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         System.out.println(todoDetails);

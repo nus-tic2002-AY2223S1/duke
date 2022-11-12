@@ -5,11 +5,8 @@ import Entity.Task;
 import java.util.ArrayList;
 
 public class TaskList {
-//    private static ArrayList<Task> tasks;
-//    private static int taskCount = 0;
-//    private static TaskList theOne = null;
+
     private static ArrayList<Task> tasks;
-//    private int taskCount = 0;
 
     public TaskList(ArrayList<Task> taskdetails) {
         tasks = taskdetails;
@@ -18,20 +15,6 @@ public class TaskList {
     public TaskList(){
         tasks = new ArrayList<Task>();
     }
-//    public static TaskList getInstance() {
-//        if (theOne == null) {
-//            theOne = new TaskList();
-//        }
-//        return theOne;
-//    }
-
-//    public static void init(ArrayList<Task> inputTask) {
-//        if (tasks == null) {
-//            tasks = new ArrayList<Task>();
-//        } else {
-//            tasks = inputTask;
-//        }
-//    }
 
     public void addTask(Task t) {
         tasks.add(t);
@@ -54,13 +37,31 @@ public class TaskList {
         }
     }
 
+    public void findTasks(String keyword){
+        ArrayList<Task> result = new ArrayList<Task>();
+
+        for (Task task : tasks) {
+            if (task.getDescription().contains(keyword)) {
+                result.add(task);}
+        }
+        if(result.size()>0){
+            for (int i = 0; i < result.size(); i++) {
+                System.out.print("\t " + (i + 1) + ".");
+                result.get(i).print();
+            }
+        }else{
+            System.out.println("\tSorry, we didn't find any tasks contains keyword:"+keyword);
+        }
+
+    }
+
+
     public void printTasks() {
         System.out.println("\t Here are the tasks in your list:");
         ArrayList<Task> temp = tasks;
         for (int i = 0; i < tasks.size(); i++) {
             System.out.print("\t " + (i + 1) + ".");
             getTasks(i).print();
-//            tasks.get(i).print();
         }
     }
 

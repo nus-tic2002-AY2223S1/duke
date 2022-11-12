@@ -15,6 +15,7 @@ public class Parser {
     private String deadlinePattern = "(deadline) ([\\S\\s]*)(\\/by) ([\\S\\s]*)";
     private String eventPattern = "(event) ([\\S\\s]*)(\\/at )(\\d{4}-\\d{2}-\\d{2}) ([\\S\\s]*)";
     private String deletePattern = "(delete)\\s*(\\d+)";
+    private String findPattern = "(find) ([\\S\\s]*)";
 
 
     public Command parse(String input){
@@ -93,6 +94,15 @@ public class Parser {
             case "help":
                 return new helpCommand();
 //              throw new UnknownException("I dont understand that, if you need help");
+
+            case "find":
+                r = Pattern.compile(findPattern);
+                m = r.matcher(fullInput);
+                if (m.find()) {
+                    return new findCommand(m.group(2));
+                }else{
+                    throw new LackDetailsException(fullInput);
+                }
 
             default:
                 throw new CommandInvalidException("Invalid Command! Please enter again, you may key \"help\" to see a command example");

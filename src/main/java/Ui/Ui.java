@@ -15,6 +15,9 @@ public class Ui {
         System.out.println(greeting);
     }
 
+    public void printFind(){
+        System.out.println("\tHere are the matching tasks in your list:");
+    }
     public void showLine() {
         System.out.println(line);
     }
