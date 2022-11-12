@@ -34,4 +34,7 @@ Build into OSX App
 
 - Using [jar2app](https://github.com/dante-biase/jar2app)
 - `brew install dante-biase/x2x/jar2app`
-- `jar2app build/libs/duke.jar -i src/main/resources/images/duke.icns -n "Duke`
+- `jar2app build/libs/duke.jar -i src/main/resources/images/duke.icns -n "Duke"`
+
+- Using [Another jar2app](https://github.com/Jorl17/jar2app)
+- From jar2app clone dir: `jar2app ~/duke/build/libs/duke.jar -i ~/duke/src/main/resources/images/duke.icns`
