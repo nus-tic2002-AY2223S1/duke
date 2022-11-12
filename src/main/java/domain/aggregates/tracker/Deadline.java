@@ -95,7 +95,7 @@ public class Deadline extends Task{
     public boolean compare(LocalDate start, LocalDate end) {
         LocalDate dueDateTime = this.dueDateTime.toLocalDate();
         if(end == null) {
-            return dueDateTime.isEqual(start);
+            return (dueDateTime.isAfter(start) || dueDateTime.isEqual(start));
         }
         return (dueDateTime.isAfter(start) || dueDateTime.isEqual(start)) && (dueDateTime.isBefore(end) || dueDateTime.isEqual(end));
     }
