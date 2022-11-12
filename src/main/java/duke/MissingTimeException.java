@@ -1,3 +1,4 @@
+package duke;
 public class MissingTimeException extends Exception {
     public MissingTimeException() {
         super("Event or Deadline Require time as a second argument.\n"+
