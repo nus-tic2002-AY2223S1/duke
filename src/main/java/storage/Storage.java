@@ -73,10 +73,12 @@ public class Storage {
             try{
                 Files.write(directory,newFileList);
                 System.out.println(fileName+".txt has been populated!");
+                return;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        System.out.println(fileName+".txt failed to populate. Please ensure that the DUKEFILEPATH and DUKEDIRECTORY() has the same file path (Helper class)");
     }
 
     public boolean checkExistence(){

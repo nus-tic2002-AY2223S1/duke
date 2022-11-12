@@ -14,12 +14,12 @@ public class Helper {
     //helper class for formatting
 
     public static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern ("d/MM/yyyy HHmm");
-    public static String DUKEFILEPATH = System.getProperty("user.home") + File.separator + "OneDrive" + File.separator + "Desktop" + File.separator + "dukeFile";
+    public static String DUKEFILEPATH = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "dukeFile";
 
     public static Path DUKEDIRECTORY() {
         Storage s = Storage.getInstance();
         String fileNameTxt = s.getFileName().concat(".txt");
-        Path directory = Paths.get(System.getProperty("user.home"),"OneDrive", "Desktop", "dukeFile",fileNameTxt);
+        Path directory = Paths.get(System.getProperty("user.home"), "Desktop", "dukeFile",fileNameTxt);
 
         return directory;
     }
