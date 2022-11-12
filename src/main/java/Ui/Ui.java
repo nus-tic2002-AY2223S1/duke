@@ -8,8 +8,9 @@ public class Ui {
     public static String line = "\t____________________________________________________________";
 
     public void showWelcome() {
-        String greeting = line + "\n\tHello! I'm Duke\n" +
-                "\tWhat can I do for you?\n"
+        String greeting = line + "\n\tHello! I'm Duke,your personal planner.\n" +
+                "\tWhat can I do for you?\n"+
+                "\t(Hint!: You can key \"help\" to explore more. Enjoy~~ :))\n"
                 +line;
         System.out.println(greeting);
     }

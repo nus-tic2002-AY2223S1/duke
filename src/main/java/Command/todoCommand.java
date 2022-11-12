@@ -14,6 +14,7 @@ public class todoCommand extends Command{
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         System.out.println(todoDetails);
         tasks.addTask(new Todo(todoDetails));
+        storage.persist(tasks);
 //        System.out.println("execute addtask command");
     }
 

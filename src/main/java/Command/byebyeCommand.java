@@ -13,7 +13,7 @@ public class byebyeCommand extends Command{
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        System.out.println("\tBye. Hope to see you again soon!");
+        System.out.println("\tBye~~ Hope to see you again soon!");
 //        storage.deleteFile();
 //        System.exit(0);
     }
