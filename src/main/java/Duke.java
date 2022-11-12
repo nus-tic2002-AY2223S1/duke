@@ -1,10 +1,14 @@
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
 import java.io.FileWriter;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 
 public class Duke {
@@ -24,7 +28,8 @@ public class Duke {
 
         inputCommand();
     }
-    public static void inputCommand(){
+
+    public static void inputCommand() {
         saveToFile();
         Scanner in = new Scanner(System.in);
         String command = in.nextLine();
@@ -32,20 +37,25 @@ public class Duke {
         try {
             if (command.replaceAll("\\s+", "").equalsIgnoreCase("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
-            } else if (command.replaceAll("\\s+", "").equalsIgnoreCase("list")) {
-                int listNo = 0;
-                System.out.println("Here are the tasks in your list:");
+            } else if (command.toLowerCase().startsWith("list")) {
+                if (command.replaceAll("\\s+", "").equalsIgnoreCase("list")) {
+                    int listNo = 0;
+                    System.out.println("Here are the tasks in your list:");
 
-                for (Task element : tasks) {
-                    listNo++;
-                    if (element == null) {
-                        System.out.println();
-                        break;
-                    } else
-                        System.out.println(listNo + "." + element);
+                    for (Task element : tasks) {
+                        listNo++;
+                        if (element == null) {
+                            System.out.println();
+                            break;
+                        } else
+                            System.out.println(listNo + "." + element);
+                    }
+                    System.out.println();
+                    inputCommand();
+                } else {
+                    listCommandParser(command);
+                    inputCommand();
                 }
-                System.out.println();
-                inputCommand();
             } else if (command.toLowerCase().startsWith("mark")) {
                 try {
                     // -5 index for "mark "
@@ -103,7 +113,7 @@ public class Duke {
                     String taskName = command.substring(9, split - 1);
                     String byWhen = command.substring(split + 4);
 
-                    addTask(new Deadline(taskName, byWhen));
+                    addTask(new Deadline(taskName, parseDate(byWhen)));
                 } catch (StringIndexOutOfBoundsException e) {
                     System.out.println("☹ OOPS!!! The description of a deadline cannot be empty." + System.lineSeparator());
                 }
@@ -114,7 +124,7 @@ public class Duke {
                     String taskName = command.substring(6, split - 1);
                     String byWhen = command.substring(split + 4);
 
-                    addTask(new Event(taskName, byWhen));
+                    addTask(new Event(taskName, parseDate(byWhen)));
                 } catch (StringIndexOutOfBoundsException e) {
                     System.out.println("☹ OOPS!!! The description of an event cannot be empty." + System.lineSeparator());
                 }
@@ -122,13 +132,13 @@ public class Duke {
             } else {
                 throw new DukeException();
             }
-        } catch (DukeException e) {
+        } catch (DukeException | IllegalArgumentException | StringIndexOutOfBoundsException e) {
             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(" + System.lineSeparator());
             inputCommand();
         }
     }
 
-    public static void addTask(Task t){
+    public static void addTask(Task t) {
         tasks.add(t);
 
         System.out.println("Got it. I've added this task:" + System.lineSeparator() +
@@ -144,7 +154,7 @@ public class Duke {
                 System.lineSeparator());
     }
 
-    public static void saveToFile(){
+    public static void saveToFile() {
         try {
             File dukeText = new File("data/duke.txt");
             dukeText.getParentFile().mkdirs();
@@ -161,8 +171,6 @@ public class Duke {
 
                 if (markType == 'X') {
                     intMarkType = 1;
-                } else {
-                    intMarkType = 0;
                 }
 
                 if (taskType == 'T') {
@@ -183,4 +191,138 @@ public class Duke {
             System.out.println("Unable to save to file. Please check if directory and file exists.");
         }
     }
+
+
+    public static String parseDate(String byWhenText) {
+        LocalDate todayDate = LocalDate.now();
+        LocalTime timeNow = LocalTime.now();
+
+        byWhenText = byWhenText.replaceAll("\\s+", "");
+
+        if (byWhenText.length() < 11) {
+            try {
+                LocalDate deadlineDate = LocalDate.parse(byWhenText);
+
+                if (deadlineDate.isBefore(todayDate)) {
+                    System.out.println("Date cannot be in the past.");
+                    inputCommand();
+                } else {
+                    byWhenText = deadlineDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Please enter a valid date in this format: [YYYY-MM-DD]" + System.lineSeparator());
+                inputCommand();
+            }
+        } else if (byWhenText.length() > 11) {
+            try {
+                String byWhenTextDate = byWhenText.substring(0, 10);
+                String byWhenTextTime = byWhenText.substring(10);
+
+                LocalDate deadlineDate = LocalDate.parse(byWhenTextDate);
+                LocalTime deadlineTime = LocalTime.parse(byWhenTextTime.replaceAll("\\s+", ""));
+
+                if (deadlineDate.isBefore(todayDate)) {
+                    System.out.println("Date cannot be in the past." + System.lineSeparator());
+                    inputCommand();
+                } else if (deadlineDate.isEqual(todayDate) && deadlineTime.isBefore(timeNow)) {
+                    System.out.println("Time cannot be in the past." + System.lineSeparator());
+                    inputCommand();
+                } else {
+                    byWhenText = deadlineDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + " "
+                            + deadlineTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Please enter a valid date and/or time in this format: [YYYY-MM-DD HH:mm]" + System.lineSeparator());
+                inputCommand();
+            }
+        }
+        return byWhenText;
+    }
+
+    public static void listCommandParser(String wholeCommand) {
+        String taskDescList, taskDateList;
+        int listNo = 0;
+
+        if (wholeCommand.matches(".*\\d.*")) {
+            taskDescList = wholeCommand.replaceAll("\\s+", "").substring(4, wholeCommand.length() - 12);
+            taskDateList = wholeCommand.replaceAll("\\s", "").substring(wholeCommand.length() - 12);
+            taskDateList = parseDate(taskDateList);
+
+            CommandType c = CommandType.valueOf(taskDescList);
+            switch (c) {
+                case event:
+                    System.out.println("Event List For " + taskDateList);
+                    for (Task element : tasks) {
+                        if (element.toString().contains("[E]") && element.toString().contains(taskDateList)) {
+                            listNo++;
+                            System.out.println(listNo + "." + element);
+                        } else {
+                            continue;
+                        }
+                    }
+                    System.out.println();
+                    break;
+                case deadline:
+                    System.out.println("Deadline List For " + taskDateList);
+                    for (Task element : tasks) {
+                        if (element.toString().contains("[D]") && element.toString().contains(taskDateList)) {
+                            listNo++;
+                            System.out.println(listNo + "." + element);
+                        } else {
+                            continue;
+                        }
+                    }
+                    System.out.println();
+                    break;
+                default:
+                    System.out.println("Invalid input, please try again." + System.lineSeparator());
+                    break;
+            }
+
+        } else {
+            taskDescList = wholeCommand.replaceAll("\\s+", "").substring(4);
+            CommandType c = CommandType.valueOf(taskDescList);
+            switch (c) {
+                case todo:
+                    System.out.println("Todo List");
+                    for (Task element : tasks) {
+                        if (element.toString().contains("[T]")) {
+                            listNo++;
+                            System.out.println(listNo + "." + element);
+                        } else
+                            continue;
+                    }
+                    System.out.println();
+                    break;
+                case event:
+                    System.out.println("Event List");
+                    for (Task element : tasks) {
+                        if (element.toString().contains("[E]")) {
+                            listNo++;
+                            System.out.println(listNo + "." + element);
+                        } else {
+                            continue;
+                        }
+                    }
+                    System.out.println();
+                    break;
+                case deadline:
+                    System.out.println("Deadline List");
+                    for (Task element : tasks) {
+                        if (element.toString().contains("[D]")) {
+                            listNo++;
+                            System.out.println(listNo + "." + element);
+                        } else {
+                            continue;
+                        }
+                    }
+                    System.out.println();
+                    break;
+                default:
+                    System.out.println("Invalid input, please try again." + System.lineSeparator());
+                    break;
+            }
+        }
+    }
+
 }
