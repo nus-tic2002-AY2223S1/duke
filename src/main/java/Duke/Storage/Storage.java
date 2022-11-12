@@ -15,18 +15,28 @@ import java.util.Scanner;
 public class Storage {
 
     /** Default file path used if the user doesn't provide the file name. */
-    public static final String STORAGE_FILEPATH = "data/duke.txt";
+    public static final String STORAGE_FILEPATH = "C:/Users/User/Documents/duke/data/duke.txt";
     protected static String filePath;
+
+    /**
+     *  Constructor of Storage
+     *
+     * @param filePath is the filepath to save or load data from
+     */
     public Storage(String filePath){
         this.filePath = filePath;
     }
 
-    /** Save the task list to storage file. */
+    /**
+     *  Save the task list to storage file
+     *
+     * @param taskList to be saved to the storage file
+     */
     public void saveList(ArrayList<Task> taskList) {
         try {
-            if (filePath.isEmpty()){
-                filePath = STORAGE_FILEPATH;
-            }
+            File directory = new File(filePath.substring(0,filePath.lastIndexOf("/")+1));
+            assert (directory.exists());
+
             FileWriter writer = new FileWriter(this.filePath);
             for (Task task : taskList) {
                 if (task instanceof Events) {
@@ -54,13 +64,25 @@ public class Storage {
     /**
      * Loads the task list from this storage file, and then returns it.
      * Returns an empty task list if the file does not exist, or is not a regular file.
+     *
+     * @return a task list with the loaded data from filepath
      */
     public ArrayList<Task> loadTasks() throws IOException {
+        if (filePath.isEmpty()){
+            filePath = STORAGE_FILEPATH;
+        }
         Task currTask = null;
         ArrayList<Task> listOfTask = new ArrayList<>();
-
         File f = new File(filePath);
-        if(!f.exists()) {
+        File directory = new File(f.getAbsolutePath().substring(0,f.getAbsolutePath().lastIndexOf("\\")+1));
+
+        if(!directory.exists()){
+            if(!directory.mkdir()){
+                throw new IOException("Parent directory does not exist: " + directory.getAbsolutePath());
+            }
+        }
+
+        if(!f.exists() || !f.getPath().contains(".txt")) {
             return listOfTask;
         }
         Scanner myReader = new Scanner(f);
@@ -98,6 +120,11 @@ public class Storage {
         return listOfTask;
     }
 
+    /**
+     * To trim all String element in a String array
+     *
+     * @param arguments is the String array to be trimmed
+     */
     private void trimArray(String[] arguments){
         for (int i = 0; i < arguments.length; i++) {
             arguments[i] = arguments[i].trim();

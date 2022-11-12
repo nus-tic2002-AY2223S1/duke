@@ -6,13 +6,28 @@ import Duke.Tasks.Task;
 
 import java.util.ArrayList;
 
+/**
+ * To find tasks with a certain keyword from the task list.
+ */
 public class FindCommand extends Command {
     private final String search;
 
+    /**
+     *  Constructor of FindCommand
+     *
+     * @param search is the keyword to find the task description which contains it
+     */
     public FindCommand(String search) {
         this.search = search;
     }
 
+    /**
+     *  execute of FindCommand
+     *
+     * @param storage will store task list data to hard disk
+     * @param taskList to find all task with keyword
+     * @return a string to show user of the search result
+     */
     @Override
     public String execute(Storage storage, TaskList taskList) {
         ArrayList<Task> listOftask = taskList.getListOfTask();

@@ -10,13 +10,28 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * To find out how much time is left till due date for a selected task
+ */
 public class TimeCommand extends Command {
     private final int input;
 
+    /**
+     *  Constructor of TimeCommand
+     *
+     * @param input is the task # selected to find out time left till due date
+     */
     public TimeCommand(int input) {
         this.input = input;
     }
 
+    /**
+     *  execute of TimeCommand
+     *
+     * @param storage will store task list data to hard disk
+     * @param taskList to retrieve task to mark as complete
+     * @return a string to show user of the time left till due date for the selected task
+     */
     @Override
     public String execute(Storage storage, TaskList taskList) {
         if (taskList.getSize() < input){
@@ -28,7 +43,7 @@ public class TimeCommand extends Command {
         String output = currTask.getDescription();
 
         if(currTask.getTaskType().equals("Todo")){
-            return output.concat(" - Todo does not have a due date");
+            return output.concat(" - Does not have a due date");
         }
 
         if(currTask.getTaskType().equals("Events")){
@@ -38,7 +53,7 @@ public class TimeCommand extends Command {
         }
 
         if(dueDate.equals("no due date")){
-            return output.concat(" - does not have a due date");
+            return output.concat(" - Does not have a due date");
         }
 
         Date date1;
@@ -51,7 +66,7 @@ public class TimeCommand extends Command {
         long difference =  date1.getTime() - date2.getTime();
 
         if (difference < 1){
-            return output.concat(" - The task is overdue!") ;
+            return output.concat(" - Task is overdue!") ;
         }
 
         long diffMinutes = difference / (60 * 1000) % 60;

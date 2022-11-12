@@ -22,15 +22,21 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+
+/**
+ *  Parser class help to parse user's command
+ */
 public class Parser {
 
     /**
-     * Parses user input into command for execution.
+     *  Parses user input into command for execution.
+     *
+     * @param userInput is the full user's command to be parsed
+     * @return a Command to be executed
      */
-
     public Command parseCommand(String userInput) throws InvalidTaskCommand, DateTimeException {
 
-        String[] input = userInput.split(" ", 2);
+        String[] input = userInput.toLowerCase().split(" ", 2);
 
         final String command = input[0];
         String arguments = "";
@@ -102,10 +108,11 @@ public class Parser {
     }
 
     /**
-     *  Parse command to add task to task list like:
-     *  todo borrow book
-     *  deadline return book /by 2/12/2019 1800
-     *  event project meeting /at 5/10/2019 1000
+     *  Parse command to add task command and identify if the task is todo, deadline or event
+     *
+     * @param command user's command like "todo, deadline, event"
+     * @param argument user's parameter for the command like "return book /by 2/12/2019 1800, project meeting /at 5/10/2019 1000"
+     * @return the task in their respective class
      */
     private Task parseTask(String command, String argument){
         String[] argumentArr = parseDueDate(argument);
@@ -125,6 +132,9 @@ public class Parser {
      *  Parse due date and return String datetime in "d MMM yyyy HH:mm" format, example:
      *  2/12/2019 1800 -> 2 Dec 2019 18:00
      *  5/10/2019 1000 -> 5 Oct 2019 10:00
+     *
+     * @param argument user's parameter for the command like "return book /by 2/12/2019 1800, project meeting /at 5/10/2019 1000"
+     * @return the parsed date time format
      */
     private String[] parseDueDate(String argument) throws DateTimeException {
         try {
@@ -144,6 +154,13 @@ public class Parser {
         }
     }
 
+
+    /**
+     *  Retrieve tagging word with # from the command
+     *
+     * @param argument user's parameter for the command
+     * @return the tagging word
+     */
     private String getTagging(String argument){
         if (!argument.contains("#")){
             return "";

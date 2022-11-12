@@ -8,30 +8,58 @@ import java.util.ArrayList;
 public class TaskList {
     private ArrayList<Task> taskList;
 
-    /** Constructs a task list with task. */
+    /**
+     *  Constructor of TaskList
+     *
+     * @param taskList is an ArrayList of task to store task
+     */
     public TaskList(ArrayList<Task> taskList) {
         this.taskList = taskList;
     }
 
-    /** Adds a task to the task list. */
+
+    /**
+     *  To add a task to the TaskList
+     *
+     * @param task to be added to the TaskList
+     */
     public void addTask(Task task) {
         taskList.add(task);
     }
 
-    /** Get size of task list. */
+    /**
+     * To get size of TaskList
+     *
+     * @return an Int which contains the size of TaskList
+     */
     public int getSize() {
         return taskList.size();
     }
 
-
-    /** Remove a task from task list. */
+    /**
+     *  To remove a task from TaskList
+     *
+     * @param task to be removed from the TaskList
+     */
     public void removeTask(Task task) {
         taskList.remove(task);
     }
 
+    /**
+     *  To retrieve a task from TaskList base on position
+     *
+     * @param selection is the position of task to be retrieved from the TaskList
+     * @return the Task which is retrieved from the TaskList
+     */
     public Task getTask(int selection){
         return taskList.get(selection);
     }
+
+    /**
+     *  To retrieve all task from TaskList
+     *
+     * @return an ArrayList which contains all Tasks from the TaskList
+     */
     public ArrayList<Task> getListOfTask(){
         return taskList;
     }
