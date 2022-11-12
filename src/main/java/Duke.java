@@ -73,6 +73,28 @@ public class Duke {
                     System.out.println("☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
                 }
                 inputCommand();
+            } else if (command.toLowerCase().startsWith("find")) {
+                try {
+                    // -5 index for "find "
+                    String findItem = command.substring(5);
+                    int listNo = 0;
+
+                    System.out.println("Here are the matching tasks in your list:");
+                    for (Task element : tasks) {
+                        if (element.toString().contains(findItem)) {
+                            listNo++;
+                            System.out.println(listNo + "." + element);
+                        } else {
+                            continue;
+                        }
+                    }
+                    System.out.println();
+                } catch (StringIndexOutOfBoundsException | NumberFormatException e) {
+                    System.out.println("☹ OOPS!!! Please indicate task to mark." + System.lineSeparator());
+                } catch (IndexOutOfBoundsException | NullPointerException e) {
+                    System.out.println("☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
+                }
+                inputCommand();
             } else if (command.toLowerCase().startsWith("unmark")) {
                 try {
                     // -7 index for "unmark "
