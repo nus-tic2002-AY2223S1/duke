@@ -32,8 +32,8 @@ public class RequestController {
      */
     public RequestController(){
         try {
-            this.tracker = new Tracker();
             this.storage = new Storage();
+            this.tracker = new Tracker();
         } catch (Exception ex){
             ex.printStackTrace();
         }
