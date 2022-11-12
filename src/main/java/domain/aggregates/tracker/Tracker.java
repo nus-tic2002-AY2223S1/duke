@@ -173,14 +173,19 @@ public class Tracker {
      * @throws DukeValidationException if new date time is empty.
      * @throws DukeArgumentException if invalid date string argument passed.
      */
-    public boolean hasItemSnoozed(int id, String newDateTime, boolean isNewDateTimeSpecified) throws DukeValidationException, DukeArgumentException, DukeNotFoundException {
+    public boolean hasItemSnoozed(int id, String newDateTime, boolean isNewDateTimeSpecified) throws DukeValidationException, DukeArgumentException, DukeNotFoundException, DukeExistedException {
         Task task = _taskRepository.validateTask(tasks, id);
         if(task != null){
-            task.postpone(newDateTime, isNewDateTimeSpecified);
             if(CommonHelper.isEmptyOrNull(newDateTime) && !isNewDateTimeSpecified) {
+                task.postpone(newDateTime, false);
                 CommonHelper.printMessage(MessageConstants.DEFAULT_SNOOZE_TASK);
             } else {
-                CommonHelper.printMessage(MessageConstants.SNOOZE_TASK);
+                if(tasks.stream().filter(x -> x.find(newDateTime) && x.getName().equals(task.getName()) && x.getId() != id).count() > 0)
+                    throw new DukeExistedException(MessageConstants.TASK_EXISTED_ERROR);
+                else{
+                    task.postpone(newDateTime, isNewDateTimeSpecified);
+                    CommonHelper.printMessage(MessageConstants.SNOOZE_TASK);
+                }
             }
             printTask(task);
             return true;

@@ -6,6 +6,7 @@ import domain.exceptions.DukeArgumentException;
 import domain.exceptions.DukeFileException;
 import domain.exceptions.DukeNotFoundException;
 import domain.exceptions.DukeValidationException;
+import domain.exceptions.DukeExistedException;
 
 public class SnoozeTaskCommand extends Command{
 
@@ -35,7 +36,7 @@ public class SnoozeTaskCommand extends Command{
      * Applicable for Event and Deadline task type only.
      */
     @Override
-    public void execute() throws DukeFileException, DukeValidationException, DukeNotFoundException, DukeArgumentException {
+    public void execute() throws DukeFileException, DukeValidationException, DukeNotFoundException, DukeArgumentException, DukeExistedException {
         if(this.tracker.hasItemSnoozed(id, newDateTime, isNewDateTimeSpecified)) {
             this.storage.override(tracker.tasks);
         }

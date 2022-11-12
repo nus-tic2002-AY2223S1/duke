@@ -145,8 +145,9 @@ public class RequestController {
      * @throws DukeValidationException if date is empty.
      * @throws DukeFileException if unable to save changes to local file.
      * @throws DukeArgumentException if invalid arguments passed.
+     * @throws DukeExistedException if duplicates are added
      */
-    public void snooze(int id, String date, boolean isDateSpecified) throws DukeValidationException, DukeNotFoundException, DukeFileException, DukeArgumentException {
+    public void snooze(int id, String date, boolean isDateSpecified) throws DukeValidationException, DukeNotFoundException, DukeFileException, DukeArgumentException, DukeExistedException {
         SnoozeTaskCommand command = new SnoozeTaskCommand(tracker, storage, id, date, isDateSpecified);
         command.execute();
     }

@@ -75,7 +75,7 @@ public class Deadline extends Task{
             return false;
         }
         Deadline deadline = (Deadline) obj;
-        return deadline.shortName.equals(this.shortName) && deadline.name.equals(this.name) && deadline.dueDateTime.equals(this.dueDateTime);
+        return deadline.shortName.equals(this.shortName) && (deadline.name.toLowerCase()).equals(this.name.toLowerCase()) && deadline.dueDateTime.equals(this.dueDateTime);
     }
 
     /**

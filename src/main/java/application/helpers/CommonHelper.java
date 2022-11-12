@@ -28,7 +28,9 @@ public class CommonHelper {
                 formatted[1] = input.substring(idx+1).trim();
             }
         }
-        else {
+        else if(idx == 0) {
+            formatted[1] = input.replace("/", "").trim();
+        } else {
             formatted[0] = input.replace("/", "").trim();
         }
         return formatted;

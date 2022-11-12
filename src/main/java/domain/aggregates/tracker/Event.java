@@ -75,7 +75,7 @@ public class Event extends Task{
             return false;
         }
         Event event = (Event)obj;
-        return event.shortName.equals(this.shortName) && event.name.equals(this.name) && event.startDateTime.equals(this.startDateTime);
+        return event.shortName.equals(this.shortName) && (event.name.toLowerCase()).equals(this.name.toLowerCase()) && event.startDateTime.equals(this.startDateTime);
     }
 
     /**
@@ -95,7 +95,7 @@ public class Event extends Task{
     public boolean compare(LocalDate start, LocalDate end) {
         LocalDate startDateTime = this.startDateTime.toLocalDate();
         if(end == null) {
-            return startDateTime.isEqual(start);
+            return startDateTime.isAfter(start) || startDateTime.isEqual(start);
         }
         return (startDateTime.isAfter(start) || startDateTime.isEqual(start)) && (startDateTime.isBefore(end) || startDateTime.isEqual(end));
     }

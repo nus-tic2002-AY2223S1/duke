@@ -54,7 +54,7 @@ public class Todo extends Task {
             return false;
         }
         Todo todo = (Todo) obj;
-        return todo.shortName.equals(this.shortName) && todo.name.equals(this.name);
+        return todo.shortName.equals(this.shortName) && (todo.name.toLowerCase()).equals(this.name.toLowerCase());
     }
 
     /**
