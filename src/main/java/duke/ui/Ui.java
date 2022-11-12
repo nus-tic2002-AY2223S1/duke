@@ -50,9 +50,20 @@ public class Ui {
         public static void showList(TaskList list) {
                 System.out.println("Here are the task in your list:");
                 for (int i = 1; i <= list.getCount(); i++) {
+                        list.getList().get(i-1).setTaskno(i);
                         System.out.println(i + ". " + list.getList().get(i-1).getDescription());
                 }
-                System.out.println("");
+                System.out.println();
+        }
+
+        public static void findList(String keyword, TaskList list) {
+                System.out.println("Here are the matching tasks in your list:");
+                for (int i = 1; i <= list.getCount(); i++) {
+                        if (list.getList().get(i-1).getDescription().contains(keyword)) {
+                                System.out.println(list.getList().get(i-1).getTaskno() + ". " + list.getList().get(i-1).getDescription());
+                        }
+                }
+                System.out.println();
         }
 
         public static void addTask(Task type, TaskList list) {
@@ -90,5 +101,6 @@ public class Ui {
         
         public static void printHelp() {
                 Storage.help();
+                System.out.println();
         }
 }

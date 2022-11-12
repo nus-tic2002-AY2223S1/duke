@@ -3,6 +3,7 @@ package duke.tasks;
 public class Task {
     protected StringBuilder description;
     protected boolean isDone;
+    protected int taskNo = 0;
 
     public Task(String d) {
         this.description = new StringBuilder(d);
@@ -10,6 +11,14 @@ public class Task {
     }
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
+    }
+
+    public void setTaskno(int taskNo) {
+        this.taskNo = taskNo;
+    }
+
+    public int getTaskno() {
+        return taskNo;
     }
 
     public void mark() {

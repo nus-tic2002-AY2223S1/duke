@@ -39,6 +39,16 @@ public class Duke {
                 }
             }
 
+            else if (key.equalsIgnoreCase("find")) {
+                String keystring = input.substring(input.indexOf(" ") + 1);
+                if (list.getCount() == 0) {
+                    Ui.emptyList();
+                    continue;
+                }   else {
+                        Ui.findList(keystring, list);
+                }
+            }
+
             else if (key.equalsIgnoreCase("delete")) {
                 if (tokens[1].isEmpty() || Integer.parseInt(tokens[1]) > list.getCount()) {
                     Ui.noSelection();
@@ -49,11 +59,19 @@ public class Duke {
             }
 
             else if (key.equalsIgnoreCase("mark")) {
+                if (list.getCount() == 0) {
+                    Ui.emptyList();
+                    continue;
+                }
                 list.markT(Integer.valueOf(tokens[1]) - 1, key);
             }
 
             else if (key.equalsIgnoreCase("unmark")) {
-                    list.unmarkT(Integer.valueOf(tokens[1]) - 1, key);
+                if (list.getCount() == 0) {
+                    Ui.emptyList();
+                    continue;
+                }
+                list.unmarkT(Integer.valueOf(tokens[1]) - 1, key);
             }
 
             else if (key.equalsIgnoreCase("todo")) {
@@ -87,9 +105,8 @@ public class Duke {
             }
 
             else {
-                    Ui.unknown();
+                Ui.unknown();
             }
-
             Storage.save("resources/mytasks.txt", list.getList()); 
         }  
     }
