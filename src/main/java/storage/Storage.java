@@ -64,7 +64,7 @@ public class Storage {
 
         if (directoryExists) {
             TaskList t = TaskList.getInstance();
-
+            newFileList.clear();
             int taskListSize = t.getTLSize();
             for (int i = 0; i < taskListSize; i++) {
                 newFileList.add(t.getTodoListRow(i));
@@ -73,12 +73,14 @@ public class Storage {
             try{
                 Files.write(directory,newFileList);
                 System.out.println(fileName+".txt has been populated!");
+                newFileList.clear();
                 return;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         System.out.println(fileName+".txt failed to populate. Please ensure that the DUKEFILEPATH and DUKEDIRECTORY() has the same file path (Helper class)");
+        newFileList.clear();
     }
 
     public boolean checkExistence(){
