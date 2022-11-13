@@ -1,0 +1,12 @@
+sleep
+eat
+drink
+list
+mark 1
+mark 1
+list
+unmark 1
+unmark 1
+list
+
+bye
