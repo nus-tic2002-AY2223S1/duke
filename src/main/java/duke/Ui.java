@@ -148,7 +148,9 @@ public class Ui implements AutoCloseable {
         System.out.println( logo);
         print(
                 "Hello! I'm Anyer.\n"
-                 + "What can I do for you?"
+                 + "What can I do for you?\n"
+                + "When input a deadlinedate (& time), please use format like /by '2022-01-20 23:59'.\n"
+                +"When input a eventdate (& time), please use format like /at '2022-01-20 23:59' /to '2022-01-20 23:59'."
         );
         printLine();
     }
