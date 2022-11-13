@@ -372,7 +372,7 @@ public class DateProcessorEnTest {
     @Test
     public void processDateTimRangeNoSeparatorNoSpaceTest() {
         String s = "2/4/19993/4/1999";
-        DukeException expected = new DukeException("! Date range should be separated by '-'");
+        DukeException expected = new DukeException("! Invalid year format. Year has to be yyyy.");
         try {
             d.processDateTimeRange(s);
         } catch (DukeException e) {

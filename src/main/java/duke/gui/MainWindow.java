@@ -193,7 +193,7 @@ public class MainWindow extends AnchorPane {
         String[] ss = input.split(" ");
         if (ss.length == 2
                 && Objects.equals(ss[0], "restore")
-                && Objects.equals(response, "Successfully restored record.")) {
+                && Objects.equals(response, "✔ Successfully restored record.")) {
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input, userImage, 0),
                     DialogBox.getDukeDialog(response, dukeImage, 0)
