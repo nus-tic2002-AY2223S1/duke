@@ -11,7 +11,7 @@ public class Duke {
 
         Ui.printBanner();
         input = scanner.nextLine();
-        while(!input.equals(Parser.EXIT_COMMAND)){
+        while(!(input.equals(Parser.EXIT_COMMAND)||input.equals(Parser.BYE_COMMAND))){
             try{
                 Parser.executeCommand(input);
             }

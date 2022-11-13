@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
@@ -12,11 +13,13 @@ public class Storage {
     public static void importTasks() {
         //if dir exists open it else create it
         Path path = Paths.get("data"+ File.separatorChar+"saveFile.txt");
+        Path path2 = Paths.get("data"+ File.separatorChar+"archiveFile.txt");
         boolean directoryExists = Files.exists(path);
         if (!directoryExists) {
             try{
                 Files.createDirectories(Paths.get("data"));
                 Files.createFile(path);
+                Files.createFile(path2);
             }
             catch (IOException e) {
                 System.out.println(e.getMessage());
@@ -65,13 +68,26 @@ public class Storage {
         if (done){task.markAsDone();}
         Tasklist.add(task);
     }
-    public static void  saveToFile()throws Exception{
-        Path path = Paths.get("data"+ File.separatorChar+"saveFile.txt");
-        FileWriter writer = new FileWriter(path.toFile());
-        for (int i = 0; i < Tasklist.size();i++){
-            writer.write(Tasklist.tasks.get(i).toFile());
+    public static void  saveToFile(){
+    }
+
+    public static void archive() {
+        Path path = Paths.get("data"+ File.separatorChar+"archiveFile.txt");
+        boolean fileExists = java.nio.file.Files.exists(path);
+        if (!fileExists) {
+            System.out.println("File Dont Exist for Some Reason");
+            return;
         }
-        writer.close();
+        try {
+            FileWriter writer = new FileWriter(path.toFile());
+            for (int i = 0; i < Tasklist.size(); i++) {
+                writer.write(Tasklist.tasks.get(i).toFile());
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        Tasklist.tasks = new ArrayList<>(100);
     }
 }
 

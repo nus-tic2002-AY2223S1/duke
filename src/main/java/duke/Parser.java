@@ -1,7 +1,8 @@
 package duke;
 
 public class Parser {
-    public static final String EXIT_COMMAND  ="bye";
+    public static final String BYE_COMMAND  ="bye";
+    public static final String EXIT_COMMAND  ="exit";
     public static final String LIST_COMMAND  ="list";
     public static final String MARK_COMMAND  ="mark";
     public static final String UNMARK_COMMAND  ="unmark";
@@ -9,6 +10,8 @@ public class Parser {
     public static final String DEADLINE_COMMAND  ="deadline";
     public static final String EVENT_COMMAND  ="event";
     public static final String DELETE_COMMAND  ="delete";
+    public static final String FIND_COMMAND  ="find";
+    public static final String ARCHIVE_COMMAND  ="archive";
 
     public static void executeCommand( String command)
             throws UnknownCommandException, EmptyDescriptionException,MissingTimeException,InvalidDeleteOptionException{
@@ -16,6 +19,13 @@ public class Parser {
         String[] commandArgs;
         Task t = null;
         switch(inputs[0]){
+            case ARCHIVE_COMMAND:
+                Storage.archive();
+                Ui.listTasks();
+                return;
+            case FIND_COMMAND:
+                Tasklist.find(inputs[1]);
+                return;
             case LIST_COMMAND :
                 Ui.listTasks();
                 break;
@@ -49,11 +59,13 @@ public class Parser {
                 break;
             case EXIT_COMMAND:
                 break;
+            case BYE_COMMAND:
+                break;
             default:
                 throw new UnknownCommandException();
         }
         if (t != null){
-            Ui.printTaskAddAcknowledge(t, Tasklist.tasks.size());
+            Ui.printTaskAddAcknowledge(t, Tasklist.size());
         }
         try{Storage.saveToFile();}
         catch (Exception e) {

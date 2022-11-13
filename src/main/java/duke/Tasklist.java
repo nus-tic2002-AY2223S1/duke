@@ -9,6 +9,30 @@ public class Tasklist {
         Storage.importTasks();
     }
 
+    protected static List<Task> search(String candidate){
+       List<Task>tasks =  Tasklist.tasks;
+        List<Task>result = new ArrayList<>(100);
+       int size = Tasklist.size();
+       for (int i = 0 ; i < size;i++){
+           Task task = tasks.get(i);
+           String description = task.description;
+            if (description.contains(candidate)){
+                result.add(task);
+            }
+       }
+       return result;
+    }
+
+    public static void find(String input){
+        List<Task>results = search(input);
+        Ui.printDivider();
+        System.out.println("\tHere are the tasks in your list:");
+        for (int i = 0; i < results.size(); i++) {
+            System.out.println("\t"+ (i + 1)+". "+results.get(i).toString());
+        }
+        Ui.printDivider();
+    }
+
     public static void mark(String taskIndex){
         Task task = Tasklist.get(Integer.parseInt(taskIndex) - 1);
         Ui.printDivider();
