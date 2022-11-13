@@ -139,7 +139,7 @@ public class TaskList {
                 printError(TASK_NUMBER_OOB);
                 listTask(inputSplit, input);
             }
-        } else printError(INVALID_DELETE_INPUT);
+        }
     }
 
     // to print the list of task
@@ -260,20 +260,25 @@ public class TaskList {
     // view task schedule on a certain date
     public void scheduleTask(String input, String[] inputSplit) {
         // to check if input is valid to add task
-        String scheduleDate = Parser.parseScheduleInput(input);
+        boolean taskFound = false;
         try {
             if (checkValidCommand(inputSplit, input)) {
+                String scheduleDate = Parser.parseScheduleInput(input);
                 printMessage("Tasks on: " + Parser.stringToDate(scheduleDate));
                     for (int i = 0; i < taskList.size(); i++) {
-                        if (Parser.stringToDate(scheduleDate).equals(getTaskList().get(i).getDate()))
+                        if (Parser.stringToDate(scheduleDate).equals(getTaskList().get(i).getDate())) {
                             printMessage(getTaskList().get(i).toString());
+                            taskFound = true;
+                        }
                     }
                 }
             } catch (Exception e){
-            printMessage(INVALID_INPUT + "\n" + e.getMessage());
+            printLine();
+            printError(INVALID_SCHEDULE_INPUT);
+            printLine();
         }
-        if (taskList.size() == 0)
-            printMessage("No task is found on " + Parser.stringToDate(scheduleDate));
+        if (taskList.size() == 0 || !taskFound )
+            printMessage("No task is found on " + Parser.stringToDate(Parser.parseScheduleInput(input)));
         printLine();
     }
 
@@ -334,9 +339,16 @@ public class TaskList {
     public boolean checkValidCommand(String[] inputSplit, String input) {
         try {
             // if task name is delete, checks format of input
-            if (inputSplit[0].equals("delete") && checkInteger(inputSplit[1])
-                    && inputSplit.length == 2)
-                return true;
+            if (inputSplit[0].equals("delete")) {
+                if (checkInteger(inputSplit[1]) && inputSplit.length == 2)
+                    return true;
+                else {
+                    printLine();
+                    printError(INVALID_DELETE_INPUT);
+                    printLine();
+                    return false;
+                }
+            }
 
             // if task name is delete and format of input
             if (inputSplit[0].equals("todo") && inputSplit.length > 1)
@@ -379,9 +391,14 @@ public class TaskList {
             // if task name is schedule
             if (inputSplit[0].equals("schedule")){
                 // checks for date format
-                if (checkDateInput(inputSplit,input)){
-                    return true;
+                if (!checkDateInput(inputSplit,input ) || inputSplit.length != 2 ){
+                    printLine();
+                    printError(INVALID_SCHEDULE_INPUT);
+                    printLine();
+                    return false;
                 }
+                else
+                    return true;
             }
 
             // if task name is mark
@@ -474,7 +491,7 @@ public class TaskList {
                     return at.matches(datePattern);
             }
             if (inputSplit[0].equals("schedule")) {
-                String scheduleDate = inputSplit[1];
+                String scheduleDate = input.substring(9);
                 if (validateDateFormat(scheduleDate))
                     return scheduleDate.matches(datePattern);
             }
