@@ -75,6 +75,7 @@ public class Storage {
             for (int i = 0; i < Tasklist.size(); i++) {
                 writer.write(Tasklist.tasks.get(i).toFile());
             }
+            writer.close();
         }catch (IOException e) {
             System.out.println(e.getMessage());
         }
