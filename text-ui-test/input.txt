@@ -1,11 +1,16 @@
-todo read
-event meeting /at Monday 2pm-3pm
-event work /at Monday to Friday
+help
+todo pay bills
+deadline duke project /by 2022-11-13 23:59
+event work meeting /at 2022-11-14 14:00
+event run errands /at 2022-11-15 12:00 /weekly
 mark 1
-deadline do homework /by Sunday 2359
-unmark 1
+deadline TIC2901 project /at 2022-11-14 23:59
 mark 2
 list
-todo sleep
+unmark 2
+todo sleep /daily
 delete 3
+find project
+update 1 desc pay phone bills
+update 3 date 2022-11-25 12:00
 bye
