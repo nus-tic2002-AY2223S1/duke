@@ -1,13 +1,13 @@
- _________________________________________________________________________________
-|										  |
-| This are the list of available commands:					  |
-|										  |
-| list - shows the current task list.						  |
-| todo <taskname> - adds a todo task to the list.				  |
-| deadline <taskname> \by <YYYY-MM-DD> <time> - adds a deadline task to the list. |
-| event <taskname> \at <YYYY-MM-DD> <time> -adds a event task to the list.	  |
-| mark <tasknumber> - marks the selected task as completed with a X.		  |
-| unmark <tasknumber> - unmarks the selected task as uncompleted with a X.	  |
-| delete <tasknumber> - delete the selected task.				  |				
-| bye - exits the program.							  |
-|_________________________________________________________________________________|
+ ____________________________________________________________________________________________
+|										  	     |
+| This are the list of available commands:					  	     |
+|										  	     |
+| list - shows the current task list.						  	     |
+| todo <taskname> - adds a todo task to the list.				  	     |
+| deadline <taskname> \<preposition> <YYYY-MM-DD> <time> - adds a deadline task to the list. |
+| event <taskname> \<preposition> <YYYY-MM-DD> <time> -adds a event task to the list.	     |
+| mark <tasknumber> - marks the selected task as completed with a X.		 	     |
+| unmark <tasknumber> - unmarks the selected task as uncompleted with a X.	 	     |
+| delete <tasknumber> - delete the selected task.					     |				
+| bye - exits the program.							  	     |
+|____________________________________________________________________________________________|

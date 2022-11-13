@@ -26,7 +26,6 @@ public class Storage {
     }
 
     public static void save(String filePath, List<Task> list) throws IOException {
-        // write to file
         FileWriter fw = new FileWriter(filePath);
         for (int i = 0; i < list.size(); i++) {
             try {

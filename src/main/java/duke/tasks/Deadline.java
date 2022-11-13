@@ -2,13 +2,11 @@ package duke.tasks;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 
 import duke.exceptions.DukeException;
-import duke.ui.Ui;
 
 public class Deadline extends Todo {
-    
+
     protected LocalDate date;
     protected String time;
 
@@ -36,32 +34,19 @@ public class Deadline extends Todo {
         if (date.contains("/")) {
             formatDate = date.replaceAll("/", "-");
         }
+        assert date == "\\d{4}-\\d{2}-\\d{2}";
         String t1 = d.substring(dateDiv + 15);
-        if (t1.contains("-")) {
-            throw new DukeException(Ui.deadlineTimeError());
+        LocalDate d1;
+        if (formatDate.isEmpty()) { 
+            d1 = LocalDate.parse(date);
         } else {
-            LocalDate d1;
-            if (formatDate.isEmpty()) { 
-                d1 = LocalDate.parse(date);
-            } else {
-                d1 = LocalDate.parse(formatDate);
-            }
-            int length = d.length();
-            setDate(d1);
-            setTime(t1);
-            description.replace(dateDiv, length, 
-                                "(by: " + d1.format(DateTimeFormatter.ofPattern("MMM d yyyy ")) + t1 + ")");
+            d1 = LocalDate.parse(formatDate);
         }
+        //assertFalse(d1.toString().isEmpty());
+        int length = d.length();
+        setDate(d1);
+        setTime(t1);
+        description.replace(dateDiv, length, 
+                            "(by: " + d1.format(DateTimeFormatter.ofPattern("MMM d yyyy ")) + t1 + ")");
     }
-
-    // public void sortList(TaskList list, LocalDate d1, LocalDate d2) {
-    //     for (int i = 1; i <= list.getCount(); i++) {
-    //         list.getList().get(i-1).setTaskNo(i);
-    //         System.out.println(i + ". " + list.getList().get(i-1).getDescription());
-    //     }
-
-    //     if (d1.isAfter(d2)) {
-    //         Collections.swap(list, )
-    //     }
-    // }
 };

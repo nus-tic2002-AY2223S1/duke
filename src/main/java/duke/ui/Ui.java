@@ -49,6 +49,7 @@ public class Ui {
         }
 
         public static void showList(TaskList list) {
+            assert list.getCount() != 0;
             System.out.println("Here are the task in your list:");
             for (int i = 0; i < list.getCount(); i++) {
                 System.out.println(list.getList().get(i).getTaskNo() + ". " + list.getList().get(i).getDescription());
@@ -56,15 +57,28 @@ public class Ui {
             System.out.println();
         }
 
+        /**
+         * Search the current list on the user string input
+         * specified afterthe keyword.
+         * @param keyword The input string that is to be searched.  
+         *                Can be a single word or a long string.
+         * @param list    The current list.
+         */
         public static void findList(String keyword, TaskList list) {
+            assert list.getCount() != 0;
+            boolean found = false;
             System.out.println("Here are the matching tasks in your list:");
             for (int i = 0; i < list.getCount(); i++) {
                 if (list.getList().get(i).getDescription().contains(keyword)) {
                     System.out.println(list.getList().get(i).getTaskNo() + ". " 
                                        + list.getList().get(i).getDescription());
+                    found = true;
                     }
-                }
-            System.out.println();
+            }
+            if (!found) {
+                System.out.println("None found! Try again with another keyword :(");
+            }
+        System.out.println();
         }
 
         public static void addTask(Task type, TaskList list) {
