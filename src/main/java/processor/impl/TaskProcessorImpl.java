@@ -22,11 +22,13 @@ import static utils.Messages.alreadyDoneMsg;
 import static utils.Messages.alreadyNotDoneMsg;
 import static utils.Messages.markDoneMsg;
 import static utils.Messages.markUndoneMsg;
+import static utils.Messages.searchQueryMsg;
 import static utils.Messages.taskRemovedMsg;
 import static utils.Messages.updatedDeadlineDateMsg;
 import static utils.Mouth.speak;
 import static utils.TaskUtil.getTaskFromTaskList;
 import static utils.TaskUtil.getTaskIndexFromUserInput;
+import static utils.TaskUtil.removeFirstWord;
 
 public class TaskProcessorImpl implements TaskProcessor {
     @Override
@@ -95,6 +97,12 @@ public class TaskProcessorImpl implements TaskProcessor {
                 speak(UPDATE_DEADLINE_IS_NOT_DEADLINE_ERR_MSG);
             }
         });
+    }
+
+    @Override
+    public void findTask(String userInput, TaskList taskList) {
+        String query = removeFirstWord(userInput);
+        speak(searchQueryMsg(), taskList.findTasks(query));
     }
 
     private void addTask(Task task, TaskList taskList) {

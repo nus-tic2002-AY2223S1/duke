@@ -19,7 +19,7 @@ delete 5
 delete 5
 list
 postpone 2 /to 2022-06-07
-list
+find book
 
 ======== unhappy path todo ========
 todo
@@ -82,6 +82,10 @@ postpone return book /to 2099-00-12
 postpone return book /to 2099-0-12
 postpone return book /to 2099-00-00
 postpone return book /to 0000-00-00
+
+======== unhappy path find ========
+find girlfriend
+find A+
 
 ======== clear all data ========
 delete 1

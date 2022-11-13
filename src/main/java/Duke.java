@@ -58,6 +58,9 @@ public class Duke {
                 case "postpone":
                     taskProcessor.postponeDeadline(userInput, taskList);
                     break;
+                case "find":
+                    taskProcessor.findTask(userInput, taskList);
+                    break;
                 case "help":
                     speak(HELP);
                     break;

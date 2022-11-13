@@ -32,4 +32,8 @@ public class Messages {
         return "The deadline has been updated.\n" + deadline.toString();
     }
 
+    public static String searchQueryMsg() {
+        return "Here are the matching tasks in your list:\n";
+    }
+
 }

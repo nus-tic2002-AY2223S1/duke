@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class TaskList {
     private List<Task> taskList;
@@ -52,5 +53,11 @@ public class TaskList {
             return Optional.of(deadline);
         }
         return Optional.empty();
+    }
+
+    public List<Task> findTasks(String query) {
+        return taskList.stream()
+                .filter(task -> task.getDescription().contains(query))
+                .collect(Collectors.toList());
     }
 }
