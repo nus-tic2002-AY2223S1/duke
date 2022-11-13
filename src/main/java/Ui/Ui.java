@@ -8,7 +8,14 @@ public class Ui {
     public static String line = "\t____________________________________________________________";
 
     public void showWelcome() {
-        String greeting = line + "\n\tHello! I'm Duke,your personal planner.\n" +
+        String greeting =
+                line +
+                "\n\t___         ___        \n" +
+                "\t|  _ \\ _   _| | _____ \n" +
+                "\t| | | | | | | |/ / _ \\\n" +
+                "\t| |_| | |_| |   <  __/\n" +
+                "\t|____/ \\__,_|_|\\_\\___|"+
+                "\n\tHello! I'm Duke,your personal planner.\n" +
                 "\tWhat can I do for you?\n"+
                 "\t(Hint!: You can key \"help\" to explore more. Enjoy~~ :))\n"
                 +line;

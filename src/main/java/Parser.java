@@ -17,12 +17,24 @@ public class Parser {
     private String deletePattern = "(delete)\\s*(\\d+)";
     private String findPattern = "(find) ([\\S\\s]*)";
 
-
+/*
+* return ParseCommand
+* The input refers to the user's input.
+* This method will split the user input into two parts by space.
+* 1st Word and cover to lowercase.
+* whole input but will clean the extra spces before and after the input.
+* @return paseCommand(xx,xx);
+ */
     public Command parse(String input){
         String[] arrayOfInput = input.trim().split(" ",2);
-        return parseCommand(arrayOfInput[0].toLowerCase(),input);
+        return parseCommand(arrayOfInput[0].toLowerCase(),input.trim());
     }
 
+/*
+* returns relevant Commands based on the user input
+* the commandName refers to the 1st word of user input.
+* The fullInput refers to the whole user input.
+ */
     private Command parseCommand(String commandName,String fullInput) {
         if (commandName.equalsIgnoreCase("bye")) {
             return new byebyeCommand();
