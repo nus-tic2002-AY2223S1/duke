@@ -23,6 +23,18 @@ public class ErrorMessages {
                     "DEADLINE must have due date after \"/by\"";
     public static final String CREATE_DEADLINE_INVALID_DATE_ERR_MSG =
             CREATE_DEADLINE_ERR_MSG + "\nDEADLINE DATE must be in the format \"yyyy-mm-dd\" (e.g. 1995-12-26)";
+    public static final String UPDATE_DEADLINE_ERR_MSG =
+            "DEADLINE was NOT updated successfully";
+    public static final String UPDATE_DEADLINE_NO_TO_ERR_MSG =
+            UPDATE_DEADLINE_ERR_MSG + "\nDEADLINE must have \"/to\"";
+    public static final String UPDATE_DEADLINE_MORE_THAN_ONE_TO_ERR_MSG =
+            UPDATE_DEADLINE_ERR_MSG + "\nDEADLINE must have ONLY ONE \"/to\"";
+    public static final String UPDATE_DEADLINE_NO_TO_DETAILS_ERR_MSG =
+            UPDATE_DEADLINE_ERR_MSG + "\n" +
+                    "DEADLINE must have index before \"/to\"\n" +
+                    "DEADLINE must have due date after \"/to\"";
+    public static final String UPDATE_DEADLINE_IS_NOT_DEADLINE_ERR_MSG =
+            UPDATE_DEADLINE_ERR_MSG + "\nTask selected is NOT a deadline";
     public static final String CREATE_EVENT_ERR_MSG =
             "EVENT was NOT created successfully";
     public static final String CREATE_EVENT_NO_AT_ERR_MSG =

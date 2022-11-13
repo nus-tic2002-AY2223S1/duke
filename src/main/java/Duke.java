@@ -1,7 +1,7 @@
 import domain.TaskList;
 import processor.MemoryProcessor;
 import processor.TaskProcessor;
-import processor.impl.MemoryProcesserImpl;
+import processor.impl.MemoryProcessorImpl;
 import processor.impl.TaskProcessorImpl;
 
 import java.util.Scanner;
@@ -20,7 +20,7 @@ public class Duke {
         Scanner scanner = new Scanner(System.in);
         TaskList taskList = new TaskList();
         TaskProcessor taskProcessor = new TaskProcessorImpl();
-        MemoryProcessor memoryProcessor = new MemoryProcesserImpl();
+        MemoryProcessor memoryProcessor = new MemoryProcessorImpl();
 
         System.out.println(LOGO);
         speak(GREETING);
@@ -54,6 +54,9 @@ public class Duke {
                     break;
                 case "delete":
                     taskProcessor.deleteTask(userInput, taskList);
+                    break;
+                case "postpone":
+                    taskProcessor.postponeDeadline(userInput, taskList);
                     break;
                 case "help":
                     speak(HELP);

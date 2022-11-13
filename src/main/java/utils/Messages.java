@@ -1,5 +1,6 @@
 package utils;
 
+import domain.task.Deadline;
 import domain.task.Task;
 
 public class Messages {
@@ -25,6 +26,10 @@ public class Messages {
 
     public static String taskRemovedMsg(Task task) {
         return "The following task has been removed:\n" + task;
+    }
+
+    public static String updatedDeadlineDateMsg(Deadline deadline) {
+        return "The deadline has been updated.\n" + deadline.toString();
     }
 
 }

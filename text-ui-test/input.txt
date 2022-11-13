@@ -18,6 +18,8 @@ list
 delete 5
 delete 5
 list
+postpone 2 /to 2022-06-07
+list
 
 ======== unhappy path todo ========
 todo
@@ -65,6 +67,21 @@ unmark 5
 delete read book
 delete 200
 delete 99999999
+
+======== unhappy path postpone ========
+postpone
+postpone /to
+postpone      /to
+postpone asdf /to
+postpone /to asdfsdf
+postpone     /to asdfsdfdsf
+postpone asdf /to asdf /to asdf
+postpone return book /to 2099-31-12
+postpone return book /to 2099-12-50
+postpone return book /to 2099-00-12
+postpone return book /to 2099-0-12
+postpone return book /to 2099-00-00
+postpone return book /to 0000-00-00
 
 ======== clear all data ========
 delete 1

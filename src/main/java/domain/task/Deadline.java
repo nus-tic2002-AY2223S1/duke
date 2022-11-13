@@ -27,4 +27,8 @@ public class Deadline extends Task {
     public String toString() {
         return "[D]" + super.toString() + " (by: " + getFormattedByDate() + ")";
     }
+
+    public void setBy(LocalDate by) {
+        this.by = by;
+    }
 }

@@ -26,5 +26,8 @@ public class CommonStrings {
 
     public static final String AT = "/at";
     public static final String BY = "/by";
+
+    public static final String TO = "/to";
     public static final String PIPE = " | ";
+    public static final String PATH_FROM_DISK = "data\\cliftonIsJavaPro.txt";
 }

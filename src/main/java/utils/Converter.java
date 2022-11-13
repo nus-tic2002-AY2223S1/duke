@@ -1,5 +1,6 @@
 package utils;
 
+import domain.dto.PostponeDeadlineDto;
 import domain.task.Deadline;
 import domain.task.Event;
 import domain.task.Todo;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 import static utils.CommonStrings.AT;
 import static utils.CommonStrings.BY;
+import static utils.CommonStrings.TO;
 import static utils.ErrorMessages.CREATE_DEADLINE_ERR_MSG;
 import static utils.ErrorMessages.CREATE_DEADLINE_INVALID_DATE_ERR_MSG;
 import static utils.ErrorMessages.CREATE_DEADLINE_MORE_THAN_ONE_BY_ERR_MSG;
@@ -25,6 +27,10 @@ import static utils.ErrorMessages.CREATE_EVENT_NO_AT_DETAILS_ERR_MSG;
 import static utils.ErrorMessages.CREATE_EVENT_NO_AT_ERR_MSG;
 import static utils.ErrorMessages.CREATE_TODO_ERR_MSG;
 import static utils.ErrorMessages.CREATE_TODO_NO_DESCRIPTION_ERR_MSG;
+import static utils.ErrorMessages.UPDATE_DEADLINE_ERR_MSG;
+import static utils.ErrorMessages.UPDATE_DEADLINE_MORE_THAN_ONE_TO_ERR_MSG;
+import static utils.ErrorMessages.UPDATE_DEADLINE_NO_TO_DETAILS_ERR_MSG;
+import static utils.ErrorMessages.UPDATE_DEADLINE_NO_TO_ERR_MSG;
 import static utils.Mouth.speak;
 import static utils.TaskUtil.isNullOrEmpty;
 import static utils.TaskUtil.removeFirstWord;
@@ -62,6 +68,25 @@ public class Converter {
             speak(CREATE_DEADLINE_INVALID_DATE_ERR_MSG);
         } catch (Exception e) {
             speak(CREATE_DEADLINE_ERR_MSG);
+        }
+        return Optional.empty();
+    }
+
+    public static Optional<PostponeDeadlineDto> getPostponeDeadlineFromUserInput(String userInput) {
+        userInput = removeFirstWord(userInput);
+        try {
+            String[] deadlineInputs = splitStrings(userInput, TO);
+            int index = Integer.parseInt(deadlineInputs[0]) - 1; // index is one less
+            LocalDate deadlineDate = LocalDate.parse(deadlineInputs[1]);
+            return Optional.of(new PostponeDeadlineDto(index, deadlineDate));
+        } catch (MissingSlashCommandException e) {
+            speak(UPDATE_DEADLINE_NO_TO_ERR_MSG);
+        } catch (MoreThanOneSlashCommandException e) {
+            speak(UPDATE_DEADLINE_MORE_THAN_ONE_TO_ERR_MSG);
+        } catch (MissingSlashCommandDetailsException | ArrayIndexOutOfBoundsException e) {
+            speak(UPDATE_DEADLINE_NO_TO_DETAILS_ERR_MSG);
+        } catch (Exception e) {
+            speak(UPDATE_DEADLINE_ERR_MSG);
         }
         return Optional.empty();
     }

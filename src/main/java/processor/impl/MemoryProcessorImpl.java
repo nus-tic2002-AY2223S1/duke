@@ -21,11 +21,10 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import static utils.CommonStrings.PATH_FROM_DISK;
 import static utils.CommonStrings.PIPE;
 
-public class MemoryProcesserImpl implements MemoryProcessor {
-    private static final String PATH_FROM_DISK = "data\\cliftonIsJavaPro.txt";
-
+public class MemoryProcessorImpl implements MemoryProcessor {
     @Override
     public void save(TaskList taskList) {
         String rows = taskList.getTaskList().stream()
@@ -87,7 +86,7 @@ public class MemoryProcesserImpl implements MemoryProcessor {
         } else if (task instanceof Todo) {
             appendTodoDetails((Todo) task, builder);
         } else {
-            return "Error..."; // todo: put string into common strings, think of good err msg
+            return "Error...";
         }
         return builder.toString();
     }

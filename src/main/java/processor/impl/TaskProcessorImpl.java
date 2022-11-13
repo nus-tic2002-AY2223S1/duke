@@ -1,28 +1,35 @@
 package processor.impl;
 
 import domain.TaskList;
+import domain.task.Deadline;
 import domain.task.Task;
 import exceptions.InvalidIntegerException;
 import processor.TaskProcessor;
 
+import java.util.Optional;
+
 import static utils.Converter.getDeadlineFromUserInput;
 import static utils.Converter.getEventFromUserInput;
+import static utils.Converter.getPostponeDeadlineFromUserInput;
 import static utils.Converter.getTodoFromUserInput;
 import static utils.ErrorMessages.INVALID_INTEGER_ERR_MSG;
 import static utils.ErrorMessages.NUMBER_OUT_OF_RANGE_ERR_MSG;
 import static utils.ErrorMessages.UNKNOWN_ERR_MSG;
+import static utils.ErrorMessages.UPDATE_DEADLINE_ERR_MSG;
+import static utils.ErrorMessages.UPDATE_DEADLINE_IS_NOT_DEADLINE_ERR_MSG;
 import static utils.Messages.addedTaskMsg;
 import static utils.Messages.alreadyDoneMsg;
 import static utils.Messages.alreadyNotDoneMsg;
 import static utils.Messages.markDoneMsg;
 import static utils.Messages.markUndoneMsg;
 import static utils.Messages.taskRemovedMsg;
+import static utils.Messages.updatedDeadlineDateMsg;
 import static utils.Mouth.speak;
 import static utils.TaskUtil.getTaskFromTaskList;
 import static utils.TaskUtil.getTaskIndexFromUserInput;
 
 public class TaskProcessorImpl implements TaskProcessor {
-
+    @Override
     public void markTask(String userInput, TaskList taskList) {
         getTaskFromTaskList(taskList, userInput).ifPresent(task -> {
             if (task.isDone()) {
@@ -34,7 +41,7 @@ public class TaskProcessorImpl implements TaskProcessor {
             }
         });
     }
-
+    @Override
     public void unmarkTask(String userInput, TaskList taskList) {
         getTaskFromTaskList(taskList, userInput).ifPresent(task -> {
             if (!task.isDone()) {
@@ -47,19 +54,22 @@ public class TaskProcessorImpl implements TaskProcessor {
         });
     }
 
-
+    @Override
     public void addTodo(String userInput, TaskList taskList) {
         getTodoFromUserInput(userInput).ifPresent(todo -> addTask(todo, taskList));
     }
 
+    @Override
     public void addDeadline(String userInput, TaskList taskList) {
         getDeadlineFromUserInput(userInput).ifPresent(deadline -> addTask(deadline, taskList));
     }
 
+    @Override
     public void addEvent(String userInput, TaskList taskList) {
         getEventFromUserInput(userInput).ifPresent(event -> addTask(event, taskList));
     }
 
+    @Override
     public void deleteTask(String userInput, TaskList taskList) {
         try {
             int index = getTaskIndexFromUserInput(userInput);
@@ -73,6 +83,18 @@ public class TaskProcessorImpl implements TaskProcessor {
         } catch (Exception e) {
             speak(UNKNOWN_ERR_MSG);
         }
+    }
+
+    @Override
+    public void postponeDeadline(String userInput, TaskList taskList) {
+        getPostponeDeadlineFromUserInput(userInput).ifPresent(dto -> {
+            Optional<Deadline> deadline = taskList.postponeDeadline(dto.getIndex(), dto.getPostponeToDate());
+            if (deadline.isPresent()) {
+                speak(updatedDeadlineDateMsg(deadline.get()));
+            } else {
+                speak(UPDATE_DEADLINE_IS_NOT_DEADLINE_ERR_MSG);
+            }
+        });
     }
 
     private void addTask(Task task, TaskList taskList) {
