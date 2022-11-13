@@ -1,7 +1,209 @@
-Hello from
+Using ./data/ directory,
+Opening myList.txt file.
+-----------------------------------------------------------------------------------------
+List of commands
+  - help                  | open the help page
+  - syntax <keyword>      | display an example of a correct keyword syntax
+  - list                  | list all task stored
+  - bye                   | ends the application
+  - delete <task No.>     | delete a specific task by task number
+  - mark   <task No.>     | mark a specific task by task number
+  - unmark <task No.>     | unmark a specific task by task number
+
+List of keywords and syntax
+  - todo                  | <keyword> <description>
+  - deadline              | <keyword> <description> /by <yyyy-mm-dd hh:mm:ss>
+  - event                 | <keyword> <description> /at <yyyy-mm-dd hh:mm:ss>
+  - find                  | <keyword> <word>
+
+List of keywords alias and syntax
+  - /t                    | <keyword alias> <description>
+  - /d                    | <keyword alias> /by <yyyy-mm-dd hh:mm:ss>
+  - /e                    | <keyword alias> /at <yyyy-mm-dd hh:mm:ss>
+-----------------------------------------------------------------------------------------
+System booting up...
  ____        _        
 |  _ \ _   _| | _____ 
 | | | | | | | |/ / _ \
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 
+	-----------------------------------------------------------------
+	 Hello! I'm Duke
+	 What can I do for you?
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 The list is empty
+	-----------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+List of commands
+  - help                  | open the help page
+  - syntax <keyword>      | display an example of a correct keyword syntax
+  - list                  | list all task stored
+  - bye                   | ends the application
+  - delete <task No.>     | delete a specific task by task number
+  - mark   <task No.>     | mark a specific task by task number
+  - unmark <task No.>     | unmark a specific task by task number
+
+List of keywords and syntax
+  - todo                  | <keyword> <description>
+  - deadline              | <keyword> <description> /by <yyyy-mm-dd hh:mm:ss>
+  - event                 | <keyword> <description> /at <yyyy-mm-dd hh:mm:ss>
+  - find                  | <keyword> <word>
+
+List of keywords alias and syntax
+  - /t                    | <keyword alias> <description>
+  - /d                    | <keyword alias> /by <yyyy-mm-dd hh:mm:ss>
+  - /e                    | <keyword alias> /at <yyyy-mm-dd hh:mm:ss>
+-----------------------------------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Got it. I've added this task: 
+		 [T][ ]  BUY GROCERIES FROM NTUC AT BEDOK CENTRAL
+	 Now you have 1 tasks in the list.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Invalid command or keyword syntax. Kindly re-enter the command.
+	 Use the 'help' command to open the help page to read instructions
+	 Use the 'syntax <keyword>' command to view examples of valid keyword syntax, e.g syntax deadline
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Syntax  : <keyword> <description> /by <yyyy-mm-dd hh:mm:ss>
+	 Example : deadline complete homework /by 2022-10-19 23:59:59
+	 Syntax  : <keyword alias> <description> /by <yyyy-mm-dd hh:mm:ss>
+	 Example : /d complete homework /by 2022-10-19 23:59:59
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Got it. I've added this task: 
+		 [D][ ]  SUBMIT DUKE PROJECT (by: Sun, 13 Nov 2022 23:59:59)
+	 Now you have 2 tasks in the list.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Got it. I've added this task: 
+		 [E][ ]  GYNAE APPOINTMENT (at: Fri, 25 Nov 2022 10:30:00)
+	 Now you have 3 tasks in the list.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 1. [T][ ]  BUY GROCERIES FROM NTUC AT BEDOK CENTRAL
+	 2. [D][ ]  SUBMIT DUKE PROJECT (by: Sun, 13 Nov 2022 23:59:59)
+	 3. [E][ ]  GYNAE APPOINTMENT (at: Fri, 25 Nov 2022 10:30:00)
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Got it. I've added this task: 
+		 [T][ ]  BUY MEDICINE FROM DR KAU'S CLINIC AT BEDOK SOUTH ROAD
+	 Now you have 4 tasks in the list.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Oops! Invalid date or time, please re-enter deadline task with the date and time in the following format:
+	 Syntax  : <keyword> <description> /by <yyyy-mm-dd hh:mm:ss>
+	 Example : deadline complete homework /by 2022-10-19 23:59:59
+	 Example : /d complete homework /by 2022-10-19 23:59:59
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Got it. I've added this task: 
+		 [D][ ]  SUBMIT MEDICAL CLAIMS (by: Wed, 30 Nov 2022 11:00:00)
+	 Now you have 5 tasks in the list.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Oops! Date and time not present or missing '/at' command, please re-enter event task with the date and time in the following format:
+	 Syntax  : <keyword alias> /at <yyyy-mm-dd hh:mm:ss>
+	 Example : event attend wedding /at 2022-10-20 19:00:00
+	 Example : /e attend wedding /at 2022-10-20 19:00:00
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Oops! Date and time not present or missing '/at' command, please re-enter event task with the date and time in the following format:
+	 Syntax  : <keyword alias> /at <yyyy-mm-dd hh:mm:ss>
+	 Example : event attend wedding /at 2022-10-20 19:00:00
+	 Example : /e attend wedding /at 2022-10-20 19:00:00
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Syntax  : <keyword> <description> /at <yyyy-mm-dd hh:mm:ss>
+	 Example : event attend wedding /at 2022-10-20 19:00:00
+	 Syntax  : <keyword alias> <description> /at <yyyy-mm-dd hh:mm:ss>
+	 Example : /e attend wedding /at 2022-10-20 19:00:00
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Got it. I've added this task: 
+		 [E][ ]  PROJECT CONSULTATION APPOINTMENT (at: Mon, 05 Dec 2022 09:00:00)
+	 Now you have 6 tasks in the list.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Nice! I've marked this task as done:
+		 [T][X]  BUY GROCERIES FROM NTUC AT BEDOK CENTRAL
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Nice! I've marked this task as done:
+		 [E][X]  PROJECT CONSULTATION APPOINTMENT (at: Mon, 05 Dec 2022 09:00:00)
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 1. [T][X]  BUY GROCERIES FROM NTUC AT BEDOK CENTRAL
+	 2. [D][ ]  SUBMIT DUKE PROJECT (by: Sun, 13 Nov 2022 23:59:59)
+	 3. [E][ ]  GYNAE APPOINTMENT (at: Fri, 25 Nov 2022 10:30:00)
+	 4. [T][ ]  BUY MEDICINE FROM DR KAU'S CLINIC AT BEDOK SOUTH ROAD
+	 5. [D][ ]  SUBMIT MEDICAL CLAIMS (by: Wed, 30 Nov 2022 11:00:00)
+	 6. [E][X]  PROJECT CONSULTATION APPOINTMENT (at: Mon, 05 Dec 2022 09:00:00)
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Oops! Invalid task number,
+	 please enter a valid task number from 1 to 6.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Oops! Invalid task number,
+	 please enter a valid task number from 1 to 6.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 OK, I've marked this task as not done yet:
+		 [E][ ]  PROJECT CONSULTATION APPOINTMENT (at: Mon, 05 Dec 2022 09:00:00)
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Here are the search result(s):
+	 2. [D][ ]  SUBMIT DUKE PROJECT (by: Sun, 13 Nov 2022 23:59:59)
+	 5. [D][ ]  SUBMIT MEDICAL CLAIMS (by: Wed, 30 Nov 2022 11:00:00)
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 The search term word of the find keyword cannot be empty.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 1. [T][X]  BUY GROCERIES FROM NTUC AT BEDOK CENTRAL
+	 2. [D][ ]  SUBMIT DUKE PROJECT (by: Sun, 13 Nov 2022 23:59:59)
+	 3. [E][ ]  GYNAE APPOINTMENT (at: Fri, 25 Nov 2022 10:30:00)
+	 4. [T][ ]  BUY MEDICINE FROM DR KAU'S CLINIC AT BEDOK SOUTH ROAD
+	 5. [D][ ]  SUBMIT MEDICAL CLAIMS (by: Wed, 30 Nov 2022 11:00:00)
+	 6. [E][ ]  PROJECT CONSULTATION APPOINTMENT (at: Mon, 05 Dec 2022 09:00:00)
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Oops! Invalid task number,
+	 please enter a valid task number from 1 to 6.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Noted. I've removed this task:
+		 [T][X]  BUY GROCERIES FROM NTUC AT BEDOK CENTRAL
+	 Now you have 5 tasks in the list.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Noted. I've removed this task:
+		 [E][ ]  PROJECT CONSULTATION APPOINTMENT (at: Mon, 05 Dec 2022 09:00:00)
+	 Now you have 4 tasks in the list.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Noted. I've removed this task:
+		 [T][ ]  BUY MEDICINE FROM DR KAU'S CLINIC AT BEDOK SOUTH ROAD
+	 Now you have 3 tasks in the list.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Noted. I've removed this task:
+		 [E][ ]  GYNAE APPOINTMENT (at: Fri, 25 Nov 2022 10:30:00)
+	 Now you have 2 tasks in the list.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Noted. I've removed this task:
+		 [D][ ]  SUBMIT MEDICAL CLAIMS (by: Wed, 30 Nov 2022 11:00:00)
+	 Now you have 1 tasks in the list.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Noted. I've removed this task:
+		 [D][ ]  SUBMIT DUKE PROJECT (by: Sun, 13 Nov 2022 23:59:59)
+	 Now you have 0 tasks in the list.
+	-----------------------------------------------------------------
+	-----------------------------------------------------------------
+	 Bye. Hope to see you again soon!
+	-----------------------------------------------------------------

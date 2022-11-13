@@ -1,0 +1,32 @@
+list
+help
+todo Buy groceries from NTUC at Bedok Central
+Submit duke project /by 2022-11-13 23:59:59
+syntax deadline
+deadline Submit duke project /by 2022-11-13 23:59:59
+event Gynae appointment /at 2022-11-25 10:30:00
+list
+todo Buy Medicine from Dr Kau's clinic at Bedok South Road
+/d Submit medical claims /by 2022-11-31 11:00:00
+/d Submit medical claims /by 2022-11-30 11:00:00
+/e Project consultation appointment 
+/e Project consultation appointment 2022/12/05 09:00:00
+syntax event
+/e Project consultation appointment /at 2022-12-05 09:00:00
+mark 1
+mark 6
+list
+mark 7
+unmark 7
+unmark 6
+find submit
+find
+list
+delete 7
+delete 1
+delete 5
+delete 3
+delete 2
+delete 2
+delete 1
+bye
