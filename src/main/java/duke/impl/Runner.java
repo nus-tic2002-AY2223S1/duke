@@ -214,7 +214,7 @@ public class Runner {
             throw new DukeException(ui.printNoArchiveFileFoundError());
         }
 
-        int i = Integer.parseInt(s);
+        int i = Integer.parseInt(s) - 1;
         if (i < 0 || i >= archiveSize) {
             throw new DukeException(ui.printGetArchiveIndexErrorMessage(archiveSize));
         }
@@ -361,7 +361,7 @@ public class Runner {
         String path = "";
         Files.createDirectories(Paths.get(ARCHIVE_CACHE_DIR));
         Scanner scn = new Scanner(new File(ARCHIVE_CACHE_FILE_PATH));
-        while (selection > 0 && scn.hasNext()) {
+        while (selection >= 0 && scn.hasNext()) {
             path = scn.nextLine();
             selection--;
         }

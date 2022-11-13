@@ -162,9 +162,7 @@ public class DateProcessor {
                     throw new DukeException(ui.printInvalidTimeRangeFormat());
                 }
             }
-            if (!s.contains("-")) {
-                throw new DukeException(ui.printInvalidTDateSeparatorFormat());
-            }
+
             //all day event
             // 1/1/1999 0000 - 1/1/1999 2359
             long timeFrom;
@@ -184,7 +182,9 @@ public class DateProcessor {
             return new long[]{timeFrom, timeFrom + 86399};
         }
 
-
+        if (!s.contains("-")) {
+            throw new DukeException(ui.printInvalidTDateSeparatorFormat());
+        }
         String[] parsedDateFrom = parsedRange[0].trim().split(" ", 2);
         String[] parsedDateTo = parsedRange[1].trim().split(" ", 2);
 
