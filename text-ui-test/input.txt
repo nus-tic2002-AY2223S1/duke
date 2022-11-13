@@ -1,0 +1,16 @@
+help
+todo pay bills
+deadline duke project /by 2022-11-13 23:59
+event work meeting /at 2022-11-14 14:00
+event run errands /at 2022-11-15 12:00 /weekly
+mark 1
+deadline TIC2901 project /at 2022-11-14 23:59
+mark 2
+list
+unmark 2
+todo sleep /daily
+delete 3
+find project
+update 1 desc pay phone bills
+update 3 date 2022-11-25 12:00
+bye

@@ -1,0 +1,5 @@
+D|0|duke project report|Nov 13 2022 23:59
+E|1|work meeting|Nov 30 2022 15:00
+T|0|pay bills|monthly
+E|0|gym session|Dec 30 2022 18:00|weekly
+D|0|sleeping|Nov 14 2022 23:59|daily

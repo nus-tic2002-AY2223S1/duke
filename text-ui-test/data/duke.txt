@@ -1,0 +1,4 @@
+T|1|pay phone bills 
+D|0|duke project|Nov 13 2022 23:59
+E|0|run errands|Nov 25 2022 12:00|weekly
+T|0|sleep|daily
