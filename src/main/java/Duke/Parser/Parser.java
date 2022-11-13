@@ -46,63 +46,73 @@ public class Parser {
 
         try {
             switch (command) {
-                case "bye":
-                    return new ExitCommand();
-                case "list":
-                    return new ListCommand(arguments);
-                case "mark":
-                    if (arguments.isEmpty())
-                        throw new InvalidTaskCommand("Please enter a correct command for Mark, for example \"mark 2\"");
-                    return new MarkCommand(Integer.parseInt(arguments));
-                case "unmark":
-                    if (arguments.isEmpty())
-                        throw new InvalidTaskCommand("Please enter a correct command for Unmark, for example \"unmark 2\"");
-                    return new UnmarkCommand(Integer.parseInt(arguments));
-                case "delete":
-                    if (arguments.isEmpty())
-                        throw new InvalidTaskCommand("Please enter a correct command for Delete, for example \"delete 2\"");
-                    Ui ui = new Ui();
-                    if (arguments.equals("all")){
-                        if (ui.getUserConfirmation("Are you sure you want to delete all task?")){
-                            return new DeleteAllCommand();
-                        } else {
-                            return null;
-                        }
+            case "bye":
+                return new ExitCommand();
+            case "list":
+                return new ListCommand(arguments);
+            case "mark":
+                if (arguments.isEmpty()){
+                    throw new InvalidTaskCommand("Please enter a correct command for Mark, for example \"mark 2\"");
+                }
+                return new MarkCommand(Integer.parseInt(arguments));
+            case "unmark":
+                if (arguments.isEmpty()){
+                    throw new InvalidTaskCommand("Please enter a correct command for Unmark, for example \"unmark 2\"");
+                }
+                return new UnmarkCommand(Integer.parseInt(arguments));
+            case "delete":
+                if (arguments.isEmpty()){
+                    throw new InvalidTaskCommand("Please enter a correct command for Delete, for example \"delete 2\"");
+                }
+                Ui ui = new Ui();
+                if (arguments.equals("all")){
+                    if (ui.getUserConfirmation("Are you sure you want to delete all task?")){
+                        return new DeleteAllCommand();
+                    } else {
+                        return null;
                     }
-                    if (ui.getUserConfirmation("Are you sure you want to delete task #"+arguments+"?")){
-                        return new DeleteCommand(Integer.parseInt(arguments));
-                    }
-                    return null;
-                case "tag":
-                    String[] tagInput = arguments.split(" ", 2);
-                    if (tagInput.length < 2)
-                        throw new InvalidTaskCommand("Please enter a correct command for Tag, for example \"tag 2 #fun\"");
-                    String tag = getTagging(tagInput[1]);
-                    if (tag.isEmpty())
-                        throw new InvalidTaskCommand("Please enter a correct command for Tag, for example \"tag 2 #fun\"");
-                    return new TagCommand(Integer.parseInt(tagInput[0]), tag);
-                case "find":
-                    if (arguments.isEmpty())
-                        throw new InvalidTaskCommand("Please enter a correct command for Find, for example \"find book\"");
-                    return new FindCommand(arguments);
-                case "time":
-                    if (arguments.isEmpty())
-                        throw new InvalidTaskCommand("Please enter a correct command for Time, for example \"time 2\"");
-                    return new TimeCommand(Integer.parseInt(arguments));
-                case "todo":
-                    if (arguments.isEmpty())
-                        throw new InvalidTaskCommand("Please enter a correct command for Todo, for example \"todo borrow book\"");
-                    return new AddCommand(parseTask(command,arguments));
-                case "deadline":
-                    if (arguments.isEmpty())
-                        throw new InvalidTaskCommand("Please enter a correct command for Deadline, for example \"deadline return book /by 2/12/2019 1800\"");
-                    return new AddCommand(parseTask(command,arguments));
-                case "event":
-                    if (arguments.isEmpty())
-                        throw new InvalidTaskCommand("Please enter a correct command for Event, for example \"event project meeting /at 5/10/2019 1000\"");
-                    return new AddCommand(parseTask(command,arguments));
-                default:
-                    throw new InvalidTaskCommand("Please enter a correct command");
+                }
+                if (ui.getUserConfirmation("Are you sure you want to delete task #"+arguments+"?")){
+                    return new DeleteCommand(Integer.parseInt(arguments));
+                }
+                return null;
+            case "tag":
+                String[] tagInput = arguments.split(" ", 2);
+                if (tagInput.length < 2){
+                    throw new InvalidTaskCommand("Please enter a correct command for Tag, for example \"tag 2 #fun\"");
+                }
+                String tag = getTagging(tagInput[1]);
+                if (tag.isEmpty()){
+                    throw new InvalidTaskCommand("Please enter a correct command for Tag, for example \"tag 2 #fun\"");
+                }
+                return new TagCommand(Integer.parseInt(tagInput[0]), tag);
+            case "find":
+                if (arguments.isEmpty()){
+                    throw new InvalidTaskCommand("Please enter a correct command for Find, for example \"find book\"");
+                }
+                return new FindCommand(arguments);
+            case "time":
+                if (arguments.isEmpty()){
+                    throw new InvalidTaskCommand("Please enter a correct command for Time, for example \"time 2\"");
+                }
+                return new TimeCommand(Integer.parseInt(arguments));
+            case "todo":
+                if (arguments.isEmpty()){
+                    throw new InvalidTaskCommand("Please enter a correct command for Todo, for example \"todo borrow book\"");
+                }
+                return new AddCommand(parseTask(command,arguments));
+            case "deadline":
+                if (arguments.isEmpty()){
+                    throw new InvalidTaskCommand("Please enter a correct command for Deadline, for example \"deadline return book /by 2/12/2019 1800\"");
+                }
+                return new AddCommand(parseTask(command,arguments));
+            case "event":
+                if (arguments.isEmpty()){
+                    throw new InvalidTaskCommand("Please enter a correct command for Event, for example \"event project meeting /at 5/10/2019 1000\"");
+                }
+                return new AddCommand(parseTask(command,arguments));
+            default:
+                throw new InvalidTaskCommand("Please enter a correct command");
             }
         } catch (NumberFormatException e) {
             throw new InvalidTaskCommand("Please ensure parameter of command is valid");
@@ -119,14 +129,14 @@ public class Parser {
     private Task parseTask(String command, String argument){
         String[] argumentArr = parseDueDate(argument);
         switch (command){
-            case "todo":
-                return new Todo(argumentArr[0]);
-            case "deadline":
-                return new Deadlines(argumentArr[0],argumentArr[1]);
-            case "event":
-                return new Events(argumentArr[0],argumentArr[1]);
-            default:
-                return null;
+        case "todo":
+            return new Todo(argumentArr[0]);
+        case "deadline":
+            return new Deadlines(argumentArr[0],argumentArr[1]);
+        case "event":
+            return new Events(argumentArr[0],argumentArr[1]);
+        default:
+            return null;
         }
     }
 

@@ -39,8 +39,9 @@ public class FindCommand extends Command {
         String output="";
 
         for (int i = 0; i < taskList.getSize(); i++) {
-            if (taskList.getTask(i).getDescriptionOnly().contains(search))
+            if (taskList.getTask(i).getDescriptionOnly().contains(search)){
                 output = output.concat(i+1 + ". " + taskList.getTask(i).getDescription() + "\n");
+            }
         }
 
         if (output.isEmpty()){
