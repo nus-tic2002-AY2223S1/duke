@@ -20,8 +20,8 @@ public class FileManager {
     /**
      * Return writes file content in duke.txt
      *
-     * @throws  FileException
      * @param   chat
+     * @throws  FileException
      */
     public static void writeFile(Chat chat) throws FileException {
         try {

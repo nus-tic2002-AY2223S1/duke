@@ -24,7 +24,7 @@ import ui.ConsoleUi;
 public class Parser {
     public Parser() {}
     /**
-     * Return parse chat
+     * Return parse chat conversation such as deadline, event, todo, bye, delete, find, help, list, mark, unmark and update commands
      *
      * @param   ui
      * @param   chat

@@ -45,7 +45,7 @@ public class CommonConstant {
             "| 6   | unmark <task_no>                                | Unmark specified task                 | unmark 1                                     |\n" +
             "| 7   | delete <task_no>                                | Delete specified task                 | delete 1                                     |\n" +
             "| 8   | find <keyword>                                  | Find keyword in task list             | find meeting                                 |\n" +
-            "| 9   | update <task_no> desc/date <update_desc>        | Update task by desc/date              | update 1 date 2022-12-31 10:30               |\n" +
+            "| 9   | update <task_no> desc/date <task_details>       | Update task by desc/date              | update 1 date 2022-12-31 10:30               |\n" +
             "| 10  | bye                                             | Exit duke bot                         | bye                                          |\n" +
             "-----------------------------------------------------------------------------------------------------------------------------------------------\n" +
             "Notes:\n" +
