@@ -5,6 +5,9 @@ import tasklist.Task;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Represents the file used to store duke task list data.
+ */
 public class Storage {
     //    private static TaskList taskList;
     public static String path = homeDirectory() + "/duke/data/duke.txt";

@@ -8,6 +8,12 @@ import ui.UI;
 
 import static ui.ErrorMessages.*;
 
+
+/**
+ * Entry point of the Duke application.
+ * Initializes the application and starts the interaction with the user.
+ */
+
 public class Duke {
     private Storage storage;
     private TaskList newTaskList;

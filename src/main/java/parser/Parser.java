@@ -9,8 +9,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+/**
+ * Parses user input.
+ */
+
 public class Parser {
 
+    /**
+     * Parses user input for execution.
+     *
+     * @param input full user input string
+     * run the task based on the user input
+     */
     public static void parse(String input, TaskList newTaskList){
         try {
             String[] inputSplit = input.split(" ");
@@ -57,9 +67,12 @@ public class Parser {
             else if (input.startsWith("fixed"))
                 newTaskList.fixedDurationTasks(input, inputSplit);
 
-                // prompt user to enter valid input
-            else
+            // prompt user to enter valid input
+            else {
+                UI.printLine();
                 UI.printStandardError();
+                UI.printLine();
+            }
         }
         catch (Exception e){
         }

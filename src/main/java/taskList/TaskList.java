@@ -350,7 +350,7 @@ public class TaskList {
                 }
             }
 
-            // if task name is delete and format of input
+            // if task name is todo and format of input
             if (inputSplit[0].equals("todo") && inputSplit.length > 1)
                 return true;
 
