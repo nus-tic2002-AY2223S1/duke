@@ -30,9 +30,17 @@ public class Parser {
                 Ui.listTasks();
                 break;
             case MARK_COMMAND:
+                if (inputs.length == 1){
+                    System.out.println("Mark and Unmark need an index");
+                    return;
+                }
                 Tasklist.mark(inputs[1]);
                 break;
             case UNMARK_COMMAND:
+                if (inputs.length == 1){
+                    System.out.println("Mark and Unmark need an index");
+                    return;
+                }
                 Tasklist.unmark(inputs[1]);
                 break;
             case TODO_COMMAND:
