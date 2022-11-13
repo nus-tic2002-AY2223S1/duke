@@ -37,6 +37,7 @@ public class TaskUtil {
     public static String getFirstWord(String sentence) {
         try {
             String[] arr = sentence.split(" ", 2);
+            assert(!arr[0].isBlank());
             return arr[0];
         } catch (Exception e) {
             return "";

@@ -57,6 +57,7 @@ public class Converter {
         try {
             String[] deadlineInputs = splitStrings(userInput, BY);
             LocalDate deadlineDate = LocalDate.parse(deadlineInputs[1]);
+            assert(!deadlineInputs[0].isBlank());
             return Optional.of(new Deadline(deadlineInputs[0], deadlineDate));
         } catch (MissingSlashCommandException e) {
             speak(CREATE_DEADLINE_NO_BY_ERR_MSG);
@@ -72,6 +73,11 @@ public class Converter {
         return Optional.empty();
     }
 
+    /**
+     * gets dto of postpone deadline from a user's input
+     * @param userInput - string that user has input. should contain the first word "postpone".
+     * @return - dto for postponeDeadline, from which index and newDate can be parsed.
+     */
     public static Optional<PostponeDeadlineDto> getPostponeDeadlineFromUserInput(String userInput) {
         userInput = removeFirstWord(userInput);
         try {

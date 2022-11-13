@@ -137,6 +137,11 @@ public class MemoryProcessorImpl implements MemoryProcessor {
         }
     }
 
+    /**
+     * gets an event object mapped into task to populate taskList
+     * @param row - string taken from saved tasks
+     * @return - if optional empty is returned, there is some issue with the saved task.
+     */
     private Optional<Task> getEventFromRow(String row) {
         String[] taskRowDto = split(row);
         if (taskRowDto.length < 4) {
