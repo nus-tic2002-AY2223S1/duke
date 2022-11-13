@@ -33,7 +33,7 @@ public class DeleteCommand extends Command {
                     throw new InvalidInputException(InputExceptionType.INDEX_OUT_OF_BOUND);
                 }
 
-                Task task = tasks.remove(index - 1);
+                Task task = tasks.deleteTask(index - 1);
                 ui.print("Sure! I've removed this task:");
                 ui.print("\t" + task);
             } catch (NumberFormatException e) {
