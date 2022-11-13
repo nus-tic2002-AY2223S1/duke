@@ -43,6 +43,7 @@ public class Duke {
         try {
             if (command.replaceAll("\\s+", "").equalsIgnoreCase("bye")) {
                 System.out.println(System.lineSeparator() + "Bye. Hope to see you again soon!");
+                System.exit(0);
             } else if (command.toLowerCase().startsWith("list")) {
                 if (command.replaceAll("\\s+", "").equalsIgnoreCase("list")) {
                     int listNo = 0;
