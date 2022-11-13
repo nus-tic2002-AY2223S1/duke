@@ -2,6 +2,8 @@ package duke.tasks;
 
 import java.io.IOException;
 
+import duke.utils.DateProcessor;
+
 /**
  * Inherited Task for Event
  */
@@ -44,13 +46,22 @@ public class Event extends Task {
             return label + super.toString();
         }
 
+        String overdue = "";
+
         if (this.to == 0) {
+            if (DateProcessor.getTimeNow() >= this.due && !this.isDone) {
+                overdue = " - Overdue";
+            }
             return label + super.toString()
-                    + " (" + d.unixToString(this.due) + ")";
+                    + " (" + d.unixToString(this.due) + ")" + overdue;
+        }
+
+        if (DateProcessor.getTimeNow() >= this.to && !this.isDone) {
+            overdue = " - Overdue";
         }
         return label + super.toString()
                 + " (" + d.unixToString(this.due)
-                + " ~ " + d.unixToString(this.to) + ")";
+                + " ~ " + d.unixToString(this.to) + ")" + overdue;
     }
 
     @Override

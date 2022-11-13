@@ -538,7 +538,7 @@ public class Runner {
         Files.createDirectories(Paths.get(ARCHIVE_DIR));
         File[] listOfFiles = new File(ARCHIVE_DIR).listFiles();
         assert listOfFiles != null : ui.printNoArchiveFileFoundError();
-        return listOfFiles.length - 1;
+        return listOfFiles.length;
     }
 
     protected String processRestore(String[] s) {

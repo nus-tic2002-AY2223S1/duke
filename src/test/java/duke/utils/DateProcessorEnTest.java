@@ -150,18 +150,62 @@ public class DateProcessorEnTest {
 
     @Test
     public void processDateTimeValidTest() throws DukeException {
-        String s = "1/4/1999 0000";
-        long expected = 922896000;
+        String s = "1/4/2023 0000";
+        long expected = 1680278400;
         long actual = d.processDateTime(s);
         assertEquals(expected, actual);
     }
 
     @Test
     public void processDateTimeNoTimeTest() {
-        String s = "1/4/1999";
+        String s = "1/4/2023";
         DukeException expected = new DukeException("! Invalid date/time format. Date time has to be dd/mm/yyyy HHmm.");
         try {
             d.processDateTime(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimeDateInThePastTest() {
+        String s = "1/4/2022";
+        DukeException expected = new DukeException("! You are ahead of time. The date is in the past!");
+        try {
+            d.processDateTime(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimeDateTimeInThePastTest() {
+        String s = "1/4/2022 0000";
+        DukeException expected = new DukeException("! You are ahead of time. The date is in the past!");
+        try {
+            d.processDateTime(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimeDateRangeInThePastTest() {
+        String s = "1/4/1999 - 2/4/1999";
+        DukeException expected = new DukeException("! You are ahead of time. The date is in the past!");
+        try {
+            d.processDateTimeRange(s);
+        } catch (DukeException e) {
+            assertEquals(expected.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void processDateTimeDateTimeRangeInThePastTest() {
+        String s = "1/4/1999 0000 - 2/4/1999 0000";
+        DukeException expected = new DukeException("! You are ahead of time. The date is in the past!");
+        try {
+            d.processDateTimeRange(s);
         } catch (DukeException e) {
             assertEquals(expected.getMessage(), e.getMessage());
         }
@@ -291,7 +335,7 @@ public class DateProcessorEnTest {
 
     @Test
     public void processDateTimRangeNoEndDateTest() {
-        String s = "2/4/1999-";
+        String s = "2/4/2023-";
         DukeException expected = new DukeException("! Invalid date format. Date time has to be dd/mm/yyyy.");
         try {
             d.processDateTimeRange(s);
@@ -386,7 +430,7 @@ public class DateProcessorEnTest {
 
     @Test
     public void processDateTimRangeTimeToTimeInvalidEndBeforeStartTest() {
-        String s = "1/4/1999 2359 - 1/4/1999 0000";
+        String s = "1/4/2023 2359 - 1/4/2023 0000";
         DukeException expected = new DukeException("! End is earlier than start. Time travel is not allowed.");
         try {
             d.processDateTimeRange(s);
@@ -397,7 +441,7 @@ public class DateProcessorEnTest {
 
     @Test
     public void processDateTimRangeTimeToTimeIdenticalTest() {
-        String s = "2/4/1999 0000 - 2/4/1999 0000";
+        String s = "2/4/2023 0000 - 2/4/2023 0000";
         DukeException expected = new DukeException("! Start and end are the same.");
         try {
             d.processDateTimeRange(s);

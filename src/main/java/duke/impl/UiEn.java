@@ -87,7 +87,8 @@ public class UiEn extends Ui {
         ERROR_DATE_END_BEFORE_START_ERROR("End is earlier than start. Time travel is not allowed."),
         ERROR_DATE_START_EQUALS_END_ERROR("Start and end are the same."),
 
-        ERROR_TOO_MANY_TIME_RANGES_ERROR("You can only specify one range.");
+        ERROR_TOO_MANY_TIME_RANGES_ERROR("You can only specify one range."),
+        ERROR_TIME_IS_IN_THE_PAST("You are ahead of time. The date is in the past!");
 
         public final String text;
 
@@ -468,5 +469,10 @@ public class UiEn extends Ui {
     @Override
     public String getHeader() {
         return UiLabel.LABEL_HEADER.getText();
+    }
+
+    @Override
+    public String printTimeIsInThePastError() {
+        return sendGenericWarning(UiMessage.ERROR_TIME_IS_IN_THE_PAST.getText());
     }
 }

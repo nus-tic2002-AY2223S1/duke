@@ -86,7 +86,8 @@ public class UiCn extends Ui {
         ERROR_PARSE_EXCEPTION("我不理解这个日期。 %s"),
         ERROR_DATE_END_BEFORE_START_ERROR("结束早于开始。穿越时空不被允许。"),
         ERROR_DATE_START_EQUALS_END_ERROR("开始和结束时间相同。"),
-        ERROR_TOO_MANY_TIME_RANGES_ERROR("只接受指定一个区间。");
+        ERROR_TOO_MANY_TIME_RANGES_ERROR("只接受指定一个区间。"),
+        ERROR_TIME_IS_IN_THE_PAST("此日期已成过去！");
 
         public final String text;
 
@@ -460,5 +461,10 @@ public class UiCn extends Ui {
     @Override
     public String getHeader() {
         return UiLabel.LABEL_HEADER.getText();
+    }
+
+    @Override
+    public String printTimeIsInThePastError() {
+        return sendGenericWarning(UiMessage.ERROR_TIME_IS_IN_THE_PAST.getText());
     }
 }
