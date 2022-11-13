@@ -75,6 +75,8 @@ public class Parser {
                     return null;
                 case "tag":
                     String[] tagInput = arguments.split(" ", 2);
+                    if (tagInput.length < 2)
+                        throw new InvalidTaskCommand("Please enter a correct command for Tag, for example \"tag 2 #fun\"");
                     String tag = getTagging(tagInput[1]);
                     if (tag.isEmpty())
                         throw new InvalidTaskCommand("Please enter a correct command for Tag, for example \"tag 2 #fun\"");
@@ -165,8 +167,8 @@ public class Parser {
         if (!argument.contains("#")){
             return "";
         }
-        assert (argument.contains("#"));
         String[] argumentArr = argument.trim().split("#", 2);
+        assert (argumentArr.length > 1);
         return "#" + argumentArr[1].trim();
     }
 }

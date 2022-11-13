@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Storage {
 
     /** Default file path used if the user doesn't provide the file name. */
-    public static final String STORAGE_FILEPATH = "C:/Users/User/Documents/duke/data/duke.txt";
+    public static final String STORAGE_FILEPATH = "data/duke.txt";
     protected static String filePath;
 
     /**
@@ -36,7 +36,6 @@ public class Storage {
         try {
             File directory = new File(filePath.substring(0,filePath.lastIndexOf("/")+1));
             assert (directory.exists());
-
             FileWriter writer = new FileWriter(this.filePath);
             for (Task task : taskList) {
                 if (task instanceof Events) {

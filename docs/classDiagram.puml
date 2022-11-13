@@ -1,0 +1,72 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor LOGIC_COLOR_T4
+skinparam classBackgroundColor LOGIC_COLOR
+skinparam groupInheritance 2
+
+package Class_Diagram {
+
+Class Duke
+Class Parser
+Class Storage
+Class Tasklist
+Class Ui
+
+Class InvalidTaskCommand
+Class Messages
+
+Class HiddenOutside #FFFFFF
+HiddenOutside .up.> Messages
+
+
+Class Task
+together {
+    Class Deadlines
+    Class Events
+    Class Todo
+}
+
+abstract Class Command
+together {
+    Class AddCommand
+    Class DeleteAllCommand
+    Class DeleteCommand
+    Class ExitCommand
+    Class FindCommand
+    Class ListCommand
+    Class MarkCommand
+    Class TagCommand
+    Class TimeCommand
+    Class UnmarkCommand
+}
+
+
+Duke --> Ui
+Duke --> Storage
+Duke --> Tasklist
+Duke ..> Parser
+Duke ..> Command
+Parser ..> Command
+Parser ..> Task
+Parser ..> Ui
+Storage ..> Task
+Tasklist *-- Task
+
+
+Command <|-- AddCommand
+Command <|-- DeleteAllCommand
+Command <|-- DeleteCommand
+Command <|-- ExitCommand
+Command <|-- FindCommand
+Command <|-- ListCommand
+Command <|-- MarkCommand
+Command <|-- TagCommand
+Command <|-- TimeCommand
+Command <|-- UnmarkCommand
+
+Task <|-- Deadlines
+Task <|-- Events
+Task <|-- Todo
+
+@enduml

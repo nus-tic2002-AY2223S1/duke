@@ -55,8 +55,7 @@ public class Duke {
             output = "";
             String userCommand = ui.getUserCommand();
             try {
-                Parser p = new Parser();
-                Command c = p.parseCommand(userCommand);
+                Command c = new Parser().parseCommand(userCommand);
                 if (c != null){
                     output = c.execute(storage, taskList);
                     ui.showResultToUser(output);
