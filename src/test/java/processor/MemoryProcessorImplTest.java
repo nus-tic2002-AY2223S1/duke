@@ -19,11 +19,11 @@ import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static utils.CommonStrings.PATH_FROM_DISK;
+import static utils.CommonStrings.PATH_FROM_DISK_TO_TXT_FILE;
 
 public class MemoryProcessorImplTest {
     private final MemoryProcessor memoryProcessor = new MemoryProcessorImpl();
-    private final File file = new File(PATH_FROM_DISK);
+    private final File file = new File(PATH_FROM_DISK_TO_TXT_FILE);
     @BeforeEach
     public void before() {
         // delete file

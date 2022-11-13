@@ -21,7 +21,8 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static utils.CommonStrings.PATH_FROM_DISK;
+import static utils.CommonStrings.PATH_FOLDER_NAME;
+import static utils.CommonStrings.PATH_FROM_DISK_TO_TXT_FILE;
 import static utils.CommonStrings.PIPE;
 
 public class MemoryProcessorImpl implements MemoryProcessor {
@@ -30,15 +31,13 @@ public class MemoryProcessorImpl implements MemoryProcessor {
         String rows = taskList.getTaskList().stream()
                 .map(this::getRowFromTask)
                 .collect(Collectors.joining("\n"));
-        // System.out.println("\n\n\nrows saved:"); todo change this to log line
-        // System.out.println(rows); todo change this to log line
         writeToFile(rows);
     }
 
     @Override
     public void load(TaskList taskList) {
         // pass the path to the file as a parameter
-        File file = new File(PATH_FROM_DISK);
+        File file = new File(PATH_FROM_DISK_TO_TXT_FILE);
         Scanner sc;
         try {
             sc = new Scanner(file);
@@ -55,25 +54,25 @@ public class MemoryProcessorImpl implements MemoryProcessor {
 
     private void writeToFile(String rows) {
         // Creating an instance of file
-        Path path
-                = Paths.get(PATH_FROM_DISK);
+        Path path = Paths.get(PATH_FROM_DISK_TO_TXT_FILE);
+        Path folderPath = Paths.get(PATH_FOLDER_NAME);
 
         // Converting string to byte array
         // using getBytes() method
         byte[] arr = rows.getBytes();
 
-        // Try block to check for exceptions
+        // create directory
         try {
-            // Now calling Files.write() method using path
-            // and byte array
+            Files.createDirectories(folderPath);
+        } catch(IOException e) {
+            // do nothing, folder is already created
+        }
+        // write a file
+        try {
             Files.write(path, arr);
         }
-
-        // Catch block to handle the exceptions
         catch (IOException ex) {
-            // Print message as exception occurred when
-            // invalid path of local machine is passed
-            System.out.print("Invalid Path");
+            System.out.print("Some error occurred while writing into file...");
         }
     }
 
@@ -108,7 +107,7 @@ public class MemoryProcessorImpl implements MemoryProcessor {
     private Optional<Task> getTodoFromRow(String row) {
         String[] taskRowDto = split(row);
         if (taskRowDto.length < 3) {
-            Mouth.speak("TODO from mem is missing details: " + row); // todo change this to log line, errormsg
+            Mouth.speak("TODO from mem is missing details: " + row);
             return Optional.empty();
         }
         try {
@@ -116,7 +115,7 @@ public class MemoryProcessorImpl implements MemoryProcessor {
             markTaskDoneFromRow(taskRowDto[1], todo);
             return Optional.of(todo);
         } catch (EmptyDescriptionException e) {
-            Mouth.speak("TODO from mem is missing description details: " + row); // todo change this to log line, errormsg
+            Mouth.speak("TODO from mem is missing description details: " + row);
             return Optional.empty();
         }
     }
@@ -124,7 +123,7 @@ public class MemoryProcessorImpl implements MemoryProcessor {
     private Optional<Task> getDeadlineFromRow(String row) {
         String[] taskRowDto = split(row);
         if (taskRowDto.length < 4) {
-            Mouth.speak("Deadline from mem is missing details: " + row); // todo change this to log line, errormsg
+            Mouth.speak("Deadline from mem is missing details: " + row);
             return Optional.empty();
         }
         try {
@@ -133,7 +132,7 @@ public class MemoryProcessorImpl implements MemoryProcessor {
             markTaskDoneFromRow(taskRowDto[1], deadline);
             return Optional.of(deadline);
         } catch (EmptyDescriptionException e) {
-            Mouth.speak("Deadline from mem is missing description details: " + row); // todo change this to log line, errormsg
+            Mouth.speak("Deadline from mem is missing description details: " + row);
             return Optional.empty();
         }
     }
@@ -141,7 +140,7 @@ public class MemoryProcessorImpl implements MemoryProcessor {
     private Optional<Task> getEventFromRow(String row) {
         String[] taskRowDto = split(row);
         if (taskRowDto.length < 4) {
-            Mouth.speak("Event from mem is missing details: " + row); // todo change this to log line, errormsg
+            Mouth.speak("Event from mem is missing details: " + row);
             return Optional.empty();
         }
         try {
@@ -149,7 +148,7 @@ public class MemoryProcessorImpl implements MemoryProcessor {
             markTaskDoneFromRow(taskRowDto[1], event);
             return Optional.of(event);
         } catch (EmptyDescriptionException e) {
-            Mouth.speak("Event from mem is missing description details: " + row); // todo change this to log line, errormsg
+            Mouth.speak("Event from mem is missing description details: " + row);
             return Optional.empty();
         }
     }
@@ -160,7 +159,7 @@ public class MemoryProcessorImpl implements MemoryProcessor {
         } else if (Objects.equals(markDoneIndicatorFromRow, "0")) {
             task.markNotDone(); // actually not required but yeah just be safe
         } else {
-            Mouth.speak("Task from mem is neither marked nor unmarked: " + task); // todo change this to log line, errormsg
+            Mouth.speak("Task from mem is neither marked nor unmarked: " + task);
         }
     }
 

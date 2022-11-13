@@ -29,5 +29,6 @@ public class CommonStrings {
 
     public static final String TO = "/to";
     public static final String PIPE = " | ";
-    public static final String PATH_FROM_DISK = "data\\cliftonIsJavaPro.txt";
+    public static final String PATH_FROM_DISK_TO_TXT_FILE = "data\\cliftonIsJavaPro.txt";
+    public static final String PATH_FOLDER_NAME = "data";
 }
