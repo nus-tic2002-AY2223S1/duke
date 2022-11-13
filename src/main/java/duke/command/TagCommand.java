@@ -36,7 +36,6 @@ public class TagCommand extends Command {
         task.tagD();
         tasks.setTask(index-1,task);
         tasks.get(index-1);
-        ui.printNewTask(tasks);
         ui.print("Nice! I've add tag to this task:");
         ui.print("\t" + task);
     }
