@@ -17,7 +17,8 @@ public class EventCommandTest {
         Event res = (Event) s.tasks.get(0);
         Assertions.assertEquals("go home", res.getDescription());
         Assertions.assertFalse(res.isDone());
-        Assertions.assertEquals(LocalDateTime.of(2022, 10, 10, 0, 0), res.getAt());
+        Assertions.assertEquals(LocalDateTime.of(2022, 10,
+                10, 0, 0), res.getAt());
     }
 
 }

@@ -25,4 +25,16 @@ test {
         showStandardStreams = false
     }
 }
+jar {
+    manifest {
+        attributes 'Main-Class': 'Duke'
+    }
+}
+application {
+    mainClassName = "seedu.duke.Duke"
+}
+
+run{
+    standardInput = System.in
+}
 

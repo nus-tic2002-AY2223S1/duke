@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -23,8 +26,7 @@ public class Storage extends TaskList {
      * Storage object constructor
      */
     private Storage() {
-        String dir = System.getProperty("user.dir");
-        this.filePath = dir + "/data/duke.txt";
+        this.filePath = "data/duke.txt";
         create();
     }
 
@@ -33,9 +35,12 @@ public class Storage extends TaskList {
      */
     public void create() {
         try {
+            Path p = Paths.get(this.filePath);
+            Files.createDirectories(p.getParent());
             File file = new File(this.filePath);
             if (!file.exists()) file.createNewFile();
         } catch (IOException e) {
+            System.out.println("hahahahah: "+ this.filePath);
             throw new DukeException("☹ OOPS!!! File create error.");
         }
     }

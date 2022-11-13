@@ -6,6 +6,7 @@ import exceptions.DukeException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class EventCommand extends Command{
 
@@ -21,8 +22,12 @@ public class EventCommand extends Command{
 
         String inputBody = CommandParser.getCommandBody(inputs);
         String[] eventDesc = CommandParser.getEventDetails(inputBody);
-        Event event = new Event(eventDesc[0], LocalDateTime.parse(eventDesc[1].trim(),
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-        instance.addTask(event);
+        try {
+            Event event = new Event(eventDesc[0], LocalDateTime.parse(eventDesc[1].trim(),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+            instance.addTask(event);
+        } catch (DukeException | DateTimeParseException err) {
+            throw new DukeException("☹ OOPS!!! Invalid date time format, please use yyyy-MM-dd hh:mm.");
+        }
     }
 }
