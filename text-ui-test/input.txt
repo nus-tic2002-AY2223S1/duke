@@ -1,0 +1,103 @@
+======== happy path ========
+help
+list
+todo read book
+mark 1
+deadline return book /by 2022-06-06
+event project meeting /at Aug 6th 2-4pm
+todo join sports club
+mark 4
+todo borrow book
+mark 5
+unmark 4
+unmark 5
+mark 4
+deadline return book /by 2099-12-31
+event project meeting /at Mon 2-4pm
+list
+delete 5
+delete 5
+list
+postpone 2 /to 2022-06-07
+find book
+
+======== unhappy path todo ========
+todo
+todo
+
+======== unhappy path deadline ========
+deadline
+deadline /by
+deadline      /by
+deadline asdf /by
+deadline /by asdfsdf
+deadline     /by asdfsdfdsf
+deadline asdf /by asdf /by asdf
+deadline return book /by 2099-31-12
+deadline return book /by 2099-12-50
+deadline return book /by 2099-00-12
+deadline return book /by 2099-0-12
+deadline return book /by 2099-00-00
+deadline return book /by 0000-00-00
+
+======== unhappy path event ========
+event
+event /at
+event      /at
+event asdf /at
+event /at asdfsdf
+event     /at asdfsdfdsf
+event asdf /at asdf /at asdf
+
+======== unhappy path mark ========
+mark read book
+mark 200
+mark 99999999
+mark 4
+mark 1
+
+======== unhappy path unmark ========
+unmark read book
+unmark 200
+unmark 99999999
+unmark 2
+unmark 5
+
+======== unhappy path delete ========
+delete read book
+delete 200
+delete 99999999
+
+======== unhappy path postpone ========
+postpone
+postpone /to
+postpone      /to
+postpone asdf /to
+postpone /to asdfsdf
+postpone     /to asdfsdfdsf
+postpone asdf /to asdf /to asdf
+postpone return book /to 2099-31-12
+postpone return book /to 2099-12-50
+postpone return book /to 2099-00-12
+postpone return book /to 2099-0-12
+postpone return book /to 2099-00-00
+postpone return book /to 0000-00-00
+
+======== unhappy path find ========
+find girlfriend
+find A+
+
+======== clear all data ========
+delete 1
+delete 1
+delete 1
+delete 1
+delete 1
+delete 1
+delete 1
+delete 1
+delete 1
+delete 1
+
+
+bye

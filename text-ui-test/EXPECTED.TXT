@@ -1,7 +1,414 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+________                 .__  __  .__     
+\______ \ _____    _____ |__|/  |_|  |__  
+ |    |  \\__  \  /     \|  \   __\  |  \ 
+ |    `   \/ __ \|  Y Y  \  ||  | |   Y  \
+/_______  (____  /__|_|  /__||__| |___|  /
+        \/     \/      \/              \/ 
+    _____________________________________________________________
+     Damith here.
+     What's your problem?
+    _____________________________________________________________
+    _____________________________________________________________
+     Task List is Empty
+    _____________________________________________________________
+    _____________________________________________________________
+     Everybody needs help sometimes. Just enter "help" :D
+     This is what you entered:
+     ======== happy path ========
+    _____________________________________________________________
+    _____________________________________________________________
+     commands:
+     help: ask and you shall receive
+     list: list all tasks
+     todo <task>: create a new todo
+     deadline <task> /by <deadline>: create a task with a deadline
+     event <task> /at <datetime>: create an event happening at some date and time
+     mark <number>: mark task <number> as completed
+     unmark <number>: mark task <number> as not completed
+     delete <number>: delete task <number>
+    _____________________________________________________________
+    _____________________________________________________________
+     Task List is Empty
+    _____________________________________________________________
+    _____________________________________________________________
+     Got it. I've added this task:
+     [T][ ] read book
+     Now you have 1 tasks in the list.
+    _____________________________________________________________
+    _____________________________________________________________
+     OK, I've marked this task as done:
+     [T][X] read book
+    _____________________________________________________________
+    _____________________________________________________________
+     Got it. I've added this task:
+     [D][ ] return book (by: Jun 06 2022)
+     Now you have 2 tasks in the list.
+    _____________________________________________________________
+    _____________________________________________________________
+     Got it. I've added this task:
+     [E][ ] project meeting (at: Aug 6th 2-4pm)
+     Now you have 3 tasks in the list.
+    _____________________________________________________________
+    _____________________________________________________________
+     Got it. I've added this task:
+     [T][ ] join sports club
+     Now you have 4 tasks in the list.
+    _____________________________________________________________
+    _____________________________________________________________
+     OK, I've marked this task as done:
+     [T][X] join sports club
+    _____________________________________________________________
+    _____________________________________________________________
+     Got it. I've added this task:
+     [T][ ] borrow book
+     Now you have 5 tasks in the list.
+    _____________________________________________________________
+    _____________________________________________________________
+     OK, I've marked this task as done:
+     [T][X] borrow book
+    _____________________________________________________________
+    _____________________________________________________________
+     Nice! I've marked this task as not done yet:
+     [T][ ] join sports club
+    _____________________________________________________________
+    _____________________________________________________________
+     Nice! I've marked this task as not done yet:
+     [T][ ] borrow book
+    _____________________________________________________________
+    _____________________________________________________________
+     OK, I've marked this task as done:
+     [T][X] join sports club
+    _____________________________________________________________
+    _____________________________________________________________
+     Got it. I've added this task:
+     [D][ ] return book (by: Dec 31 2099)
+     Now you have 6 tasks in the list.
+    _____________________________________________________________
+    _____________________________________________________________
+     Got it. I've added this task:
+     [E][ ] project meeting (at: Mon 2-4pm)
+     Now you have 7 tasks in the list.
+    _____________________________________________________________
+    _____________________________________________________________
+     1: [T][X] read book
+     2: [D][ ] return book (by: Jun 06 2022)
+     3: [E][ ] project meeting (at: Aug 6th 2-4pm)
+     4: [T][X] join sports club
+     5: [T][ ] borrow book
+     6: [D][ ] return book (by: Dec 31 2099)
+     7: [E][ ] project meeting (at: Mon 2-4pm)
+    _____________________________________________________________
+    _____________________________________________________________
+     The following task has been removed:
+     [T][ ] borrow book
+    _____________________________________________________________
+    _____________________________________________________________
+     The following task has been removed:
+     [D][ ] return book (by: Dec 31 2099)
+    _____________________________________________________________
+    _____________________________________________________________
+     1: [T][X] read book
+     2: [D][ ] return book (by: Jun 06 2022)
+     3: [E][ ] project meeting (at: Aug 6th 2-4pm)
+     4: [T][X] join sports club
+     5: [E][ ] project meeting (at: Mon 2-4pm)
+    _____________________________________________________________
+    _____________________________________________________________
+     The deadline has been updated.
+     [D][ ] return book (by: Jun 07 2022)
+    _____________________________________________________________
+    _____________________________________________________________
+     Here are the matching tasks in your list:
 
+     1: [T][X] read book
+     2: [D][ ] return book (by: Jun 07 2022)
+    _____________________________________________________________
+    _____________________________________________________________
+     Everybody needs help sometimes. Just enter "help" :D
+     This is what you entered:
+     ======== unhappy path todo ========
+    _____________________________________________________________
+    _____________________________________________________________
+     TODO was NOT created successfully
+     TODO must have a description
+    _____________________________________________________________
+    _____________________________________________________________
+     TODO was NOT created successfully
+     TODO must have a description
+    _____________________________________________________________
+    _____________________________________________________________
+     Everybody needs help sometimes. Just enter "help" :D
+     This is what you entered:
+     ======== unhappy path deadline ========
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE must have "/by"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE must have description before "/by"
+     DEADLINE must have due date after "/by"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE must have description before "/by"
+     DEADLINE must have due date after "/by"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE must have description before "/by"
+     DEADLINE must have due date after "/by"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE must have description before "/by"
+     DEADLINE must have due date after "/by"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE must have description before "/by"
+     DEADLINE must have due date after "/by"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE must have ONLY ONE "/by"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE DATE must be in the format "yyyy-mm-dd" (e.g. 1995-12-26)
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE DATE must be in the format "yyyy-mm-dd" (e.g. 1995-12-26)
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE DATE must be in the format "yyyy-mm-dd" (e.g. 1995-12-26)
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE DATE must be in the format "yyyy-mm-dd" (e.g. 1995-12-26)
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE DATE must be in the format "yyyy-mm-dd" (e.g. 1995-12-26)
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     DEADLINE DATE must be in the format "yyyy-mm-dd" (e.g. 1995-12-26)
+    _____________________________________________________________
+    _____________________________________________________________
+     Everybody needs help sometimes. Just enter "help" :D
+     This is what you entered:
+     ======== unhappy path event ========
+    _____________________________________________________________
+    _____________________________________________________________
+     EVENT was NOT created successfully
+     EVENT must have "/at"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     EVENT must have description before "/at"
+     EVENT must have duration after "/at"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     EVENT must have description before "/at"
+     EVENT must have duration after "/at"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     EVENT must have description before "/at"
+     EVENT must have duration after "/at"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     EVENT must have description before "/at"
+     EVENT must have duration after "/at"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT created successfully
+     EVENT must have description before "/at"
+     EVENT must have duration after "/at"
+    _____________________________________________________________
+    _____________________________________________________________
+     EVENT was NOT created successfully
+     EVENT must have ONLY ONE "/at"
+    _____________________________________________________________
+    _____________________________________________________________
+     Everybody needs help sometimes. Just enter "help" :D
+     This is what you entered:
+     ======== unhappy path mark ========
+    _____________________________________________________________
+    _____________________________________________________________
+     Please input a valid integer.
+    _____________________________________________________________
+    _____________________________________________________________
+     Please input a number that is within the range of tasks
+    _____________________________________________________________
+    _____________________________________________________________
+     Please input a number that is within the range of tasks
+    _____________________________________________________________
+    _____________________________________________________________
+     ??? Hello??
+     [T][X] join sports club
+     Already marked as done la... zzz...
+    _____________________________________________________________
+    _____________________________________________________________
+     ??? Hello??
+     [T][X] read book
+     Already marked as done la... zzz...
+    _____________________________________________________________
+    _____________________________________________________________
+     Everybody needs help sometimes. Just enter "help" :D
+     This is what you entered:
+     ======== unhappy path unmark ========
+    _____________________________________________________________
+    _____________________________________________________________
+     Please input a valid integer.
+    _____________________________________________________________
+    _____________________________________________________________
+     Please input a number that is within the range of tasks
+    _____________________________________________________________
+    _____________________________________________________________
+     Please input a number that is within the range of tasks
+    _____________________________________________________________
+    _____________________________________________________________
+     ??? Hello??
+     [D][ ] return book (by: Jun 07 2022)
+     Already marked as not done la... zzz...
+    _____________________________________________________________
+    _____________________________________________________________
+     ??? Hello??
+     [E][ ] project meeting (at: Mon 2-4pm)
+     Already marked as not done la... zzz...
+    _____________________________________________________________
+    _____________________________________________________________
+     Everybody needs help sometimes. Just enter "help" :D
+     This is what you entered:
+     ======== unhappy path delete ========
+    _____________________________________________________________
+    _____________________________________________________________
+     Please input a valid integer.
+    _____________________________________________________________
+    _____________________________________________________________
+     Please input a number that is within the range of tasks
+    _____________________________________________________________
+    _____________________________________________________________
+     Please input a number that is within the range of tasks
+    _____________________________________________________________
+    _____________________________________________________________
+     Everybody needs help sometimes. Just enter "help" :D
+     This is what you entered:
+     ======== unhappy path postpone ========
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT updated successfully
+     DEADLINE must have "/to"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT updated successfully
+     DEADLINE must have index before "/to"
+     DEADLINE must have due date after "/to"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT updated successfully
+     DEADLINE must have index before "/to"
+     DEADLINE must have due date after "/to"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT updated successfully
+     DEADLINE must have index before "/to"
+     DEADLINE must have due date after "/to"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT updated successfully
+     DEADLINE must have index before "/to"
+     DEADLINE must have due date after "/to"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT updated successfully
+     DEADLINE must have index before "/to"
+     DEADLINE must have due date after "/to"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT updated successfully
+     DEADLINE must have ONLY ONE "/to"
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT updated successfully
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT updated successfully
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT updated successfully
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT updated successfully
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT updated successfully
+    _____________________________________________________________
+    _____________________________________________________________
+     DEADLINE was NOT updated successfully
+    _____________________________________________________________
+    _____________________________________________________________
+     Everybody needs help sometimes. Just enter "help" :D
+     This is what you entered:
+     ======== unhappy path find ========
+    _____________________________________________________________
+    _____________________________________________________________
+     Task List is Empty
+     Here are the matching tasks in your list:
+
+    _____________________________________________________________
+    _____________________________________________________________
+     Task List is Empty
+     Here are the matching tasks in your list:
+
+    _____________________________________________________________
+    _____________________________________________________________
+     Everybody needs help sometimes. Just enter "help" :D
+     This is what you entered:
+     ======== clear all data ========
+    _____________________________________________________________
+    _____________________________________________________________
+     The following task has been removed:
+     [T][X] read book
+    _____________________________________________________________
+    _____________________________________________________________
+     The following task has been removed:
+     [D][ ] return book (by: Jun 07 2022)
+    _____________________________________________________________
+    _____________________________________________________________
+     The following task has been removed:
+     [E][ ] project meeting (at: Aug 6th 2-4pm)
+    _____________________________________________________________
+    _____________________________________________________________
+     The following task has been removed:
+     [T][X] join sports club
+    _____________________________________________________________
+    _____________________________________________________________
+     The following task has been removed:
+     [E][ ] project meeting (at: Mon 2-4pm)
+    _____________________________________________________________
+    _____________________________________________________________
+     Please input a number that is within the range of tasks
+    _____________________________________________________________
+    _____________________________________________________________
+     Please input a number that is within the range of tasks
+    _____________________________________________________________
+    _____________________________________________________________
+     Please input a number that is within the range of tasks
+    _____________________________________________________________
+    _____________________________________________________________
+     Please input a number that is within the range of tasks
+    _____________________________________________________________
+    _____________________________________________________________
+     Please input a number that is within the range of tasks
+    _____________________________________________________________
+    _____________________________________________________________
+     zzz stop wasting my time
+    _____________________________________________________________
