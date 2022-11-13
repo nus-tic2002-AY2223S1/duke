@@ -68,7 +68,16 @@ public class Storage {
         if (done){task.markAsDone();}
         Tasklist.add(task);
     }
-    public static void  saveToFile(){
+    public static void  saveToFile() {
+        Path path = Paths.get("data"+ File.separatorChar+"saveFile.txt");
+        try {
+            FileWriter writer = new FileWriter(path.toFile());
+            for (int i = 0; i < Tasklist.size(); i++) {
+                writer.write(Tasklist.tasks.get(i).toFile());
+            }
+        }catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void archive() {
