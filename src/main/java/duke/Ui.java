@@ -1,6 +1,10 @@
 package duke;
 import java.util.Scanner;
 
+/**
+ * This Ui class handles all user input/output and has the necessary formatting functionality.
+ * It should be closed properly at the end of the program using close().
+ */
 public class Ui implements AutoCloseable {
     public static final String LONG_LINE = "------------------------------------------------------------";
     // Default indentation is 8 whitespaces
@@ -12,21 +16,45 @@ public class Ui implements AutoCloseable {
     protected String indent;
     protected Scanner scanner;
 
+    /**
+     * Constructor of Ui class
+     * When no arguments are supplied, default indent and locale setting are used
+     */
     public Ui() {
         this(DEFAULT_INDENT_CHARACTER, DEFAULT_INDENT_COUNT);
     }
 
+    /**
+     * Constructor of Ui class
+     * @param indentCharacter The specific character for indentation
+     * @param indentCount Number of `indentCharacter` to be used for indentation
+     */
     public Ui(char indentCharacter, int indentCount) {
         indent = new String(new char[indentCount]).replace('\0', indentCharacter);
         scanner = new Scanner(System.in);
     }
 
+    /**
+     * Close the scanner instance initialized in constructor
+     */
     @Override
     public void close() {
         scanner.close();
         scanner = null;
     }
 
+    /**
+     * Welcome text for the Gui
+     */
+    public String showWelcome() {
+        return "Hello! I'm Anyer\nWhat can I do for you?";
+    }
+
+
+    /**
+     * Read a line (delimited by EOL characters)
+     * @return the line in the format of a string
+     */
     public String read() {
         if (scanner == null || !scanner.hasNextLine()) {
             return null;
@@ -41,6 +69,9 @@ public class Ui implements AutoCloseable {
         }
     }
 
+    /**
+     * Print a message for a successful insertion of task
+     */
     // Print a message for a successful insertion of task
     public void printNewTask(TaskList tasks) {
         int size = tasks.size();
@@ -51,10 +82,17 @@ public class Ui implements AutoCloseable {
         );
     }
 
+    /**
+     * Print out an ordinary task list (with no additional information)
+     * @param tasks The task list to be printed
+     */
     public void printTaskList(TaskList tasks) {
         printTaskList(tasks, null);
     }
 
+    /**
+     * Print out a task list, showing the at/by time specified
+     */
     public void printTaskList(TaskList tasks, DateTime dateTime) {
         if (tasks.size() == 0) {
             print("You don't have a task in your list!");
@@ -70,10 +108,18 @@ public class Ui implements AutoCloseable {
         }
     }
 
+    /**
+     * Print a long horizontal line
+     */
     public void printLine() {
         print(LONG_LINE);
     }
 
+    /**
+     * Print an exception related to save-file loading exception
+     * @param filepath Path of the save-file
+     * @param e The exception object
+     */
     public void printLoadSaveException(String filepath, Exception e) {
         printException(e);
         print(
@@ -86,6 +132,10 @@ public class Ui implements AutoCloseable {
     public void printException(Exception e) {
         print("Oops! " + e.getMessage());
     }
+
+    /**
+     * Print a welcome message
+     */
     public void printWelcome() {
         String logo =
 

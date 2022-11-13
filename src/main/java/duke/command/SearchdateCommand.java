@@ -6,11 +6,14 @@ import java.util.HashMap;
 import duke.DateTime;
 import duke.TaskList;
 import duke.Ui;
+import duke.exception.DukeException;
 import duke.exception.InvalidInputException;
 import duke.exception.InvalidInputException.InputExceptionType;
 import duke.task.Task;
 
-// Find tasks at a specific date and print out the list
+/**
+ * Find tasks at a specific date and print out the list
+ */
 public class SearchdateCommand extends Command {
     public SearchdateCommand(Ui ui, TaskList tasks, HashMap<String, String> arguments) {
         super(ui, tasks, arguments);
@@ -35,5 +38,10 @@ public class SearchdateCommand extends Command {
         } catch (DateTimeParseException e) {
             throw new InvalidInputException(InputExceptionType.MALFORMED_DATE, e);
         }
+    }
+
+    @Override
+    public String executeGui() throws DukeException, InvalidInputException {
+        return null;
     }
 }

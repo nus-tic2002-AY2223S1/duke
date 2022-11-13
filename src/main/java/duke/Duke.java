@@ -1,14 +1,24 @@
 package duke;
 
-import java.util.Scanner;
 import duke.command.Command;
+import duke.exception.DukeException;
+import duke.exception.InvalidInputException;
+import duke.exception.SaveException;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+
+/**
+ * Main class of the program with the entry function
+ */
 public class Duke {
     public static final String DEFAULT_SAVE_PATH = "duke.save";
     public static final String SAVE_PATH = "duke.save";
     protected TaskList tasks;
     protected Ui ui;
     protected Parser parser;
-
+    protected HashMap<String, String> arguments;
     public Duke(String filepath) {
         ui = new Ui();
         Storage storage = new Storage(filepath);
@@ -46,6 +56,10 @@ public class Duke {
         ui.close();
     }
 
+    /**
+     * Program entry point
+     * @param args Command line arguments provided
+     */
         public static void main(String[] args) {
             String filepath = DEFAULT_SAVE_PATH;
             if (args.length > 0) {
@@ -54,5 +68,15 @@ public class Duke {
             }
             new Duke(filepath).run();
         }
+
+    public String getR(String fullCommand) throws InvalidInputException, SaveException, IOException, DukeException {
+        try {
+            Command cmd = parser.parse(fullCommand);
+            return cmd.executeGui();
+
+        } catch (InvalidInputException | DukeException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

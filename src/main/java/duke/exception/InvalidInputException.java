@@ -1,5 +1,8 @@
 package duke.exception;
 
+/**
+ * Exception to be thrown when there is a problem to parse the user-input command
+ */
 @SuppressWarnings("serial")
 public class InvalidInputException extends Exception {
     public static enum InputExceptionType {

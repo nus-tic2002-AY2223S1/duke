@@ -1,5 +1,9 @@
 package duke.exception;
 
+
+/**
+ * Exception to be thrown when a problem is encountered during save file loading/saving process
+ */
 @SuppressWarnings("serial")
 public class SaveException extends Exception {
     public static enum SaveExceptionType {
