@@ -26,6 +26,10 @@ public class Deadline extends Todo {
         return time;
     }
 
+    /**
+    * Creates a new Deadline with the given string.
+    * The string should include the task brackets, description, date and time.
+    */
     public Deadline(String d) throws DukeException {
         super(d);
         int dateDiv = d.indexOf("/");

@@ -13,6 +13,7 @@ public class Event extends Deadline {
         description.replace(dateDiv+1, dateDiv+3, "at");
         
         String t1 = d.substring(dateDiv + 15);
+        //checks if event consist of a start and end time.
         if (!t1.contains("-")) {
             throw new DukeException(Ui.eventTimeError());
         } else {
