@@ -1,3 +1,3 @@
 ./gradlew clean
 ./gradlew build
-java -jar ${PWD}/build/libs/duke.jar
+java -jar ${PWD}/build/libs/Rina.jar
