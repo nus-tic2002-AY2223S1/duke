@@ -16,12 +16,13 @@ public class NextDueCommand extends Command {
         String s;
         int id = -1;
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MMM dd yyyy hh:mm a");
+        LocalDateTime current=LocalDateTime.now();
         LocalDateTime earliest = LocalDateTime.parse("Dec 28 9999 11:59 PM", format);
         for (int i = 0; i < tasks.tasks.size(); i++) {
             s = tasks.tasks.get(i).toOutput();
-            if (s.split(" \\| ")[0].equals("D")) {
+            if (s.split(" \\| ")[0].equals("D")&& !tasks.tasks.get(i).getStatusIcon().equals("X")) {
                 LocalDateTime temp = LocalDateTime.parse(s.split(" \\| ")[3], format);
-                if (temp.isBefore(earliest)) {
+                if (temp.isBefore(earliest)&&temp.isAfter(current)) {
                     earliest = temp;
                     id = i;
                 }

@@ -9,8 +9,15 @@ public class Ui {
     }
 
     public void showWelcome() {
-
-        System.out.println("Hello! I'm Duke. \nWhat can I do for you?\n");
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println("______________________________________________________");
+        System.out.println(logo);
+        System.out.println("Hello! I'm Duke. \nWhat can I do for you?");
+        System.out.println("______________________________________________________");
     }
 
     public String readCommand(){

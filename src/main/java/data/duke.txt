@@ -1,12 +1,11 @@
-T | 1 | read book
-D | 0 | return book | Feb 13 2018 04:00 PM
-T | 1 | join sports club
-T | 1 | Laundry
-T | 1 | Tutorial
+D | 0 | Telco bill | Feb 22 2022 03:59 PM
+D | 0 | Project report | May 22 2022 11:59 PM
+E | 0 | project meeting | Sep 17 2022 02:00 PM
+E | 0 | Birthday party | Dec 11 2022 07:00 PM
+E | 0 | Gathering | Dec 15 2022 09:00 AM
+D | 1 | return Car | Feb 13 2023 04:00 PM
+T | 0 | read book
+T | 0 | laundry
+T | 0 | Tutorial 3.1
 T | 1 | Gym
-E | 1 | project meeting | Mon 2-4pm
-D | 0 | return cloths | Feb 13 2003 04:00 PM
-D | 0 | return book | Feb 13 2003 03:59 PM
-D | 0 | return book | Feb 13 2004 05:00 PM
-D | 0 | return book | Feb 13 2064 04:00 PM
-E | 0 | project meeting | Feb 13 2004 04:00 PM
+D | 0 | car wash | Dec 22 2022 12:00 PM

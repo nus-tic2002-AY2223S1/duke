@@ -11,6 +11,13 @@ public class Event extends Task{
 		this.schedule=schedule;
 	}
 	/**
+	 * Get date time
+	 */
+	public String getDateTime(){
+
+		return schedule;
+	}
+	/**
 	 * simplify to store in text file
 	 */
 	@Override

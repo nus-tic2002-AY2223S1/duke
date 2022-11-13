@@ -14,6 +14,12 @@ public class Deadline extends Task {
         this.by = by;
     }
     /**
+     * Get datetime
+     */
+    public String getDateTime(){
+        return by;
+    }
+    /**
      * simplify to store in text file
      */
     @Override
