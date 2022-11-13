@@ -68,6 +68,9 @@ public class DukeUtils {
                 if (text.split(" ", 2).length < 2) {
                     throw new DukeException("☹ OOPS!!! The description of a deadline cannot be empty.");
                 }
+                if (!text.contains("/")) {
+                    throw new DukeException("☹ OOPS!!! The date of a deadline cannot be empty.");
+                }
                 break;
             case "todo":
                 if (text.split(" ", 2).length < 2) {
@@ -78,10 +81,23 @@ public class DukeUtils {
                 if (text.split(" ", 2).length < 2) {
                     throw new DukeException("☹ OOPS!!! The description of a event cannot be empty.");
                 }
+                if (!text.contains("/")) {
+                    throw new DukeException("☹ OOPS!!! The date of a event cannot be empty.");
+                }
                 break;
             case "delete":
                 if (text.split(" ", 2).length < 2) {
                     throw new DukeException("☹ OOPS!!! The delete task number cannot be empty.");
+                }
+                break;
+            case "mark":
+                if (text.split(" ", 2).length < 2) {
+                    throw new DukeException("☹ OOPS!!! The mark task number cannot be empty.");
+                }
+                break;
+            case "unmark":
+                if (text.split(" ", 2).length < 2) {
+                    throw new DukeException("☹ OOPS!!! The unmark task number cannot be empty.");
                 }
                 break;
             default:
