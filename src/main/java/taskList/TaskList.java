@@ -265,9 +265,9 @@ public class TaskList {
             if (checkValidCommand(inputSplit, input)) {
                 String scheduleDate = Parser.parseScheduleInput(input);
                 printMessage("Tasks on: " + Parser.stringToDate(scheduleDate));
-                    for (int i = 0; i < taskList.size(); i++) {
-                        if (Parser.stringToDate(scheduleDate).equals(getTaskList().get(i).getDate())) {
-                            printMessage(getTaskList().get(i).toString());
+                    for (Task task : taskList) {
+                        if (Parser.stringToDate(scheduleDate).equals(task.getDate())) {
+                            printTask(String.valueOf(task));
                             taskFound = true;
                         }
                     }
@@ -293,18 +293,15 @@ public class TaskList {
                 printMessage(MESSAGE_FIND_TASK);
                 for (Task task : taskList) {
                     if (task.getDescription().contains(findInput)) {
-                        printMessage(task.toString());
+                        printTask(String.valueOf(task));
                         count += 1;
                     }
                 }
-                if (count < 1) {
+                if (count == 0)
                     printError("There are no matching tasks.");
-                }
+                printLine();
             }
-            else
-                printError(INVALID_INPUT);
         }
-        printLine();
     }
 
     // add Fixed Duration Tasks
@@ -427,6 +424,8 @@ public class TaskList {
             if (inputSplit[0].equals("find")){
                 if (inputSplit.length > 1)
                     return true;
+                if (inputSplit[1] == null)
+                    return false;
             }
 
             else {
