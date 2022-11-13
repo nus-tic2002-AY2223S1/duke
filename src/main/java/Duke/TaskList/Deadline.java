@@ -5,8 +5,6 @@ import java.time.format.DateTimeFormatter;
 public class Deadline extends Task {
     private LocalDate by;
     private DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("MMM d yyyy");
-    //private DateTimeFormatter saveDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
 
     public Deadline(String description, LocalDate by, boolean isDone) {
         super(description);

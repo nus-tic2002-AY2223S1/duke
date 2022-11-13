@@ -25,6 +25,9 @@ public class Ui {
         System.out.println("\n_______________________________________________________________________________________________\n");
     }
 
+    /**
+     * hello method is to output the initial message the user sees upon interaction with the program
+     */
     public static void hello() {
         String logo = "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠔⠋⠀⠐⠈⠉⠉⠉⠀⠀⠀⠉⠓⢄⠀⣀⠄⠚⠙⠉⠁⠀⠉⠉⠉⠁⠂⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠐⣜⣦⠀⠀⠀⠀⠀⠀⠀⠀\n" +
@@ -62,12 +65,22 @@ public class Ui {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
+    /**
+     * addedTask method is to print out the success of adding a task
+     * @param tl is an arraylist
+     */
     public static void addedTask(ArrayList<Task> tl) {
         System.out.println("Got it. I've added this task:\n");
         System.out.println(tl.get(tl.size()-1).toString());
         System.out.println("Now you have " + tl.size() + " tasks in the list.");
     }
 
+    /**
+     * input method is to take in the user input and finding out which command did the user enter
+     * @param task is a TaskList to be displayed
+     * @param userInput is the input the user has entered
+     * @throws DukeException
+     */
     public static void input (Tasklist task, String userInput) throws DukeException {
         Parser process = new Parser(userInput);
         try {
@@ -111,6 +124,9 @@ public class Ui {
         }
     }
 
+    /**
+     * @param error is the error message to be printed out
+     */
     public static void error(String error) {
         System.out.println(error);
     }

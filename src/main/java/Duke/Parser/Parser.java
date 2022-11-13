@@ -20,6 +20,11 @@ public class Parser {
     private LocalTime eventStart;
     private LocalTime eventEnd;
 
+    /**
+     * Parser method takes in the user input and runs specific methods according to which command the user has entered
+     * @param userInput is the input the user has entered
+     * @throws DukeException
+     */
     public Parser(String userInput) throws DukeException {
         boolean oneWord = false;
         String[] userInputArr = userInput.split(" ",2);
@@ -56,10 +61,21 @@ public class Parser {
                 }
         }
     }
+
+    /**
+     * getTodo method is to get the description of Todo
+     * @param detail
+     * @throws DukeException
+     */
     private void getTodo(String detail) throws DukeException {
         todoDesc = detail;
     }
 
+    /**
+     * getDeadline method is to get the description of Deadline
+     * @param detail
+     * @throws DukeException
+     */
     private void getDeadline(String detail) throws DukeException {
         String detailSplit[] = detail.split(" /by ", 2);
         deadlineDesc = detailSplit[0];
@@ -75,6 +91,11 @@ public class Parser {
         }
     }
 
+    /**
+     * getEvent method is to get the description of Event
+     * @param detail
+     * @throws DukeException
+     */
     private void getEvent(String detail) throws DukeException {
         String detailSplit[] = detail.split(" /at ", 2);
         String dateTime[] = detailSplit[1].split(" ", 2);

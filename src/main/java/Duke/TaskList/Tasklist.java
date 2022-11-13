@@ -23,6 +23,11 @@ public class Tasklist {
         tl.addAll(list);
     }
 
+    /**
+     * display method prints out the current list or find a specific task depending on the user's command
+     * @param tL is the TaskList to be displayed
+     * @param command is the user input command
+     */
     public static void display (ArrayList<Task> tL, String command) {
         if (command == "") {
             Ui.line();
@@ -51,21 +56,39 @@ public class Tasklist {
         }
     }
 
+    /**
+     * addTodo method adds a new ToDo in the list
+     * @param todo is the task to be added
+     */
     public static void addTodo(ToDo todo) {
         tl.add(todo);
         Ui.addedTask(tl);
     }
 
+    /**
+     * addDeadline adds a new Deadline
+     * @param deadline is the task to be added
+     */
     public static void addDeadline(Deadline deadline) {
         tl.add(deadline);
         Ui.addedTask(tl);
     }
 
+    /**
+     * addEvent method adds a new Deadline
+     * @param event is the task to be added
+     */
     public static void addEvent(Event event) {
         tl.add(event);
         Ui.addedTask(tl);
     }
 
+    /**
+     * markTask method marks a task as done/undone based on whether or not it is already marked as done/undone in the list
+     * @param userInput is the userInput to mark which task is done/undone
+     * @param status is the status of the task to be marked done/undone
+     * @throws DukeException
+     */
     public static void markTask(String userInput, boolean status) throws DukeException {
         try {
             String idx[] = userInput.split(" ",2);
@@ -88,6 +111,11 @@ public class Tasklist {
         }
     }
 
+    /**
+     * deleteTask method deletes a task from the list
+     * @param userInput is the task to be deleted
+     * @throws DukeException
+     */
     public static void deleteTask(String userInput) throws DukeException {
         try {
             int idx = Integer.parseInt(userInput)-1;
@@ -106,6 +134,10 @@ public class Tasklist {
         }
     }
 
+    /**
+     * getList method returns the TaskList
+     * @return
+     */
     public static ArrayList<Task> getList() {
         return tl;
     }

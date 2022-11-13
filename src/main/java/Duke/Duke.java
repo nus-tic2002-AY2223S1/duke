@@ -39,7 +39,6 @@ public class Duke {
                 userInput = Ui.getUserInput().nextLine();
                 Ui.line();
                 Ui.input(tl, userInput);
-
                 if(userInput.equalsIgnoreCase("bye")) {
                     end = true;
                 }

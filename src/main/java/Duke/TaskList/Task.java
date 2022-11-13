@@ -25,10 +25,18 @@ public abstract class Task {
         this.isDone = status;
     }
 
+    /**
+     * getStatudIcon method is to return the status of the task (done or not done)
+     * @return
+     */
     public String getStatusIcon() {
         return (isDone ? "\u2713" : "\u2718");
     }
 
+    /**
+     * toString method prints out the status of the task and the descrption
+     * @return
+     */
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;

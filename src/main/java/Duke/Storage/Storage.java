@@ -17,6 +17,11 @@ import javax.lang.model.type.ArrayType;
 public class Storage {
     private static File file;
 
+    /**
+     * Storage method is to store the tasklist in a txt file
+     * @param fileName
+     * @throws IOException
+     */
     public Storage (String fileName) throws IOException {
         file = new File(fileName);
         if (file.createNewFile()){
@@ -26,6 +31,12 @@ public class Storage {
         }
     }
 
+    /**
+     * save method is to save the arraylist of the tasklist into the txt file
+     * @param file
+     * @param task
+     * @throws IOException
+     */
     public static void save(String file, Tasklist task) throws IOException {
         FileWriter saveFile = new FileWriter(file);
         ArrayList<Task> taskList = task.getList();
@@ -35,6 +46,12 @@ public class Storage {
         saveFile.close();
     }
 
+    /**
+     * load method is to load the user's previously created tasklist
+     * @return
+     * @throws DukeException
+     * @throws FileNotFoundException
+     */
     public List<Task> load() throws DukeException, FileNotFoundException {
         boolean isDone;
         List<Task> taskList = new ArrayList<>();
@@ -76,6 +93,10 @@ public class Storage {
         return taskList;
     }
 
+    /**
+     * getFile method returns the file object
+     * @return
+     */
     public static File getFile(){
         return file;
     }
