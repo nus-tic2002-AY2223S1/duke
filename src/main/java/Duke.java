@@ -42,11 +42,11 @@ public class Duke {
 
         try {
             if (command.replaceAll("\\s+", "").equalsIgnoreCase("bye")) {
-                System.out.println("Bye. Hope to see you again soon!");
+                System.out.println(System.lineSeparator() + "Bye. Hope to see you again soon!");
             } else if (command.toLowerCase().startsWith("list")) {
                 if (command.replaceAll("\\s+", "").equalsIgnoreCase("list")) {
                     int listNo = 0;
-                    System.out.println("Here are the tasks in your list:");
+                    System.out.println(System.lineSeparator() + "Here are the tasks in your list:");
 
                     for (Task element : tasks) {
                         listNo++;
@@ -68,12 +68,12 @@ public class Duke {
                     int taskNo = Integer.parseInt(command.substring(5)) - 1;
                     tasks.get(taskNo).markAsDone(true);
 
-                    System.out.println("Nice! I've marked this task as done:" + System.lineSeparator()
+                    System.out.println(System.lineSeparator() + "Nice! I've marked this task as done:" + System.lineSeparator()
                             + tasks.get(taskNo).toString() + System.lineSeparator());
                 } catch (StringIndexOutOfBoundsException | NumberFormatException e) {
-                    System.out.println("☹ OOPS!!! Please indicate task to mark." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "☹ OOPS!!! Please indicate task to mark." + System.lineSeparator());
                 } catch (IndexOutOfBoundsException | NullPointerException e) {
-                    System.out.println("☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
                 }
                 inputCommand();
             } else if (command.toLowerCase().startsWith("find")) {
@@ -82,7 +82,7 @@ public class Duke {
                     String findItem = command.substring(5);
                     int listNo = 0;
 
-                    System.out.println("Here are the matching tasks in your list:");
+                    System.out.println(System.lineSeparator() + "Here are the matching tasks in your list:");
                     for (Task element : tasks) {
                         if (element.toString().contains(findItem)) {
                             listNo++;
@@ -91,9 +91,9 @@ public class Duke {
                     }
                     System.out.println();
                 } catch (StringIndexOutOfBoundsException | NumberFormatException e) {
-                    System.out.println("☹ OOPS!!! Please indicate task to mark." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "☹ OOPS!!! Please indicate task to mark." + System.lineSeparator());
                 } catch (IndexOutOfBoundsException | NullPointerException e) {
-                    System.out.println("☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
                 }
                 inputCommand();
             } else if (command.toLowerCase().startsWith("unmark")) {
@@ -102,12 +102,12 @@ public class Duke {
                     int taskNo = Integer.parseInt(command.substring(7)) - 1;
                     tasks.get(taskNo).markAsDone(false);
 
-                    System.out.println("OK, I've marked this task as not done yet:" + System.lineSeparator()
+                    System.out.println(System.lineSeparator() + "OK, I've marked this task as not done yet:" + System.lineSeparator()
                             + tasks.get(taskNo).toString() + System.lineSeparator());
                 } catch (StringIndexOutOfBoundsException | NumberFormatException e) {
-                    System.out.println("☹ OOPS!!! Please indicate task to unmark." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "☹ OOPS!!! Please indicate task to unmark." + System.lineSeparator());
                 } catch (IndexOutOfBoundsException | NullPointerException e) {
-                    System.out.println("☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
                 }
                 inputCommand();
             } else if (command.startsWith("delete")) {
@@ -116,9 +116,9 @@ public class Duke {
                     int taskNo = Integer.parseInt(command.substring(7)) - 1;
                     removeTask(tasks.get(taskNo));
                 } catch (StringIndexOutOfBoundsException | NumberFormatException e) {
-                    System.out.println("☹ OOPS!!! Please indicate task to delete." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "☹ OOPS!!! Please indicate task to delete." + System.lineSeparator());
                 } catch (IndexOutOfBoundsException | NullPointerException e) {
-                    System.out.println("☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "☹ OOPS!!! Task not found or invalid. Please try again." + System.lineSeparator());
                 }
                 inputCommand();
             } else if (command.startsWith("todo")) {
@@ -130,7 +130,7 @@ public class Duke {
                         addTask(new Todo(taskName));
                     }
                 } catch (StringIndexOutOfBoundsException | DukeException e) {
-                    System.out.println("☹ OOPS!!! The description of a todo cannot be empty." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "☹ OOPS!!! The description of a todo cannot be empty." + System.lineSeparator());
                 }
                 inputCommand();
             } else if (command.startsWith("deadline")) {
@@ -141,7 +141,7 @@ public class Duke {
 
                     addTask(new Deadline(taskName, parseDate(byWhen)));
                 } catch (StringIndexOutOfBoundsException e) {
-                    System.out.println("☹ OOPS!!! The description of a deadline cannot be empty." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "☹ OOPS!!! The description of a deadline cannot be empty." + System.lineSeparator());
                 }
                 inputCommand();
             } else if (command.startsWith("event")) {
@@ -152,14 +152,14 @@ public class Duke {
 
                     addTask(new Event(taskName, parseDate(byWhen)));
                 } catch (StringIndexOutOfBoundsException e) {
-                    System.out.println("☹ OOPS!!! The description of an event cannot be empty." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "☹ OOPS!!! The description of an event cannot be empty." + System.lineSeparator());
                 }
                 inputCommand();
             } else {
                 throw new DukeException();
             }
         } catch (DukeException | IllegalArgumentException | StringIndexOutOfBoundsException e) {
-            System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(" + System.lineSeparator());
+            System.out.println(System.lineSeparator() + "☹ OOPS!!! I'm sorry, but I don't know what that means :-(" + System.lineSeparator());
             inputCommand();
         }
     }
@@ -172,7 +172,7 @@ public class Duke {
     public static void addTask(Task t) {
         tasks.add(t);
 
-        System.out.println("Got it. I've added this task:" + System.lineSeparator() +
+        System.out.println(System.lineSeparator() + "Got it. I've added this task:" + System.lineSeparator() +
                 t.toString() + System.lineSeparator() + "Now you have " + tasks.size() + " task(s) in the list." +
                 System.lineSeparator());
     }
@@ -185,7 +185,7 @@ public class Duke {
     public static void removeTask(Task t) {
         tasks.remove(t);
 
-        System.out.println("Noted. I've removed this task:" + System.lineSeparator() +
+        System.out.println(System.lineSeparator() + "Noted. I've removed this task:" + System.lineSeparator() +
                 t.toString() + System.lineSeparator() + "Now you have " + tasks.size() + " task(s) in the list." +
                 System.lineSeparator());
     }
@@ -227,7 +227,7 @@ public class Duke {
             }
             dukeTextWrite.close();
         } catch (IOException e) {
-            System.out.println("Unable to save to file. Please check if directory and file exists.");
+            System.out.println(System.lineSeparator() + "Unable to save to file. Please check if directory and file exists.");
         }
     }
 
@@ -248,13 +248,13 @@ public class Duke {
                 LocalDate deadlineDate = LocalDate.parse(byWhenText);
 
                 if (deadlineDate.isBefore(todayDate)) {
-                    System.out.println("Date cannot be in the past.");
+                    System.out.println(System.lineSeparator() + "Date cannot be in the past.");
                     inputCommand();
                 } else {
                     byWhenText = deadlineDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
                 }
             } catch (DateTimeParseException e) {
-                System.out.println("Please enter a valid date in this format: [YYYY-MM-DD]" + System.lineSeparator());
+                System.out.println(System.lineSeparator() + "Please enter a valid date in this format: [YYYY-MM-DD]" + System.lineSeparator());
                 inputCommand();
             }
         } else if (byWhenText.matches(".*\\d.*") && byWhenText.length() > 11) {
@@ -266,17 +266,17 @@ public class Duke {
                 LocalTime deadlineTime = LocalTime.parse(byWhenTextTime.replaceAll("\\s+", ""));
 
                 if (deadlineDate.isBefore(todayDate)) {
-                    System.out.println("Date cannot be in the past." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "Date cannot be in the past." + System.lineSeparator());
                     inputCommand();
                 } else if (deadlineDate.isEqual(todayDate) && deadlineTime.isBefore(timeNow)) {
-                    System.out.println("Time cannot be in the past." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "Time cannot be in the past." + System.lineSeparator());
                     inputCommand();
                 } else {
                     byWhenText = deadlineDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + " "
                             + deadlineTime.format(DateTimeFormatter.ofPattern("HH:mm"));
                 }
             } catch (DateTimeParseException e) {
-                System.out.println("Please enter a valid date and/or time in this format: [YYYY-MM-DD HH:mm]" + System.lineSeparator());
+                System.out.println(System.lineSeparator() + "Please enter a valid date and/or time in this format: [YYYY-MM-DD HH:mm]" + System.lineSeparator());
                 inputCommand();
             }
         } else {
@@ -379,7 +379,7 @@ public class Duke {
                         break;
                 }
             } catch (DateTimeParseException e) {
-                System.out.println("Please enter a valid date and/or time in this format: [YYYY-MM-DD HH:mm]" + System.lineSeparator());
+                System.out.println(System.lineSeparator() + "Please enter a valid date and/or time in this format: [YYYY-MM-DD HH:mm]" + System.lineSeparator());
                 inputCommand();
             }
         }
@@ -405,7 +405,7 @@ public class Duke {
             CommandType c = CommandType.valueOf(taskDescList);
             switch (c) {
                 case event:
-                    System.out.println("Event List For " + taskDateList);
+                    System.out.println(System.lineSeparator() + "Event List For " + taskDateList);
                     for (Task element : tasks) {
                         if (element.toString().contains("[E]") && element.toString().contains(taskDateList)) {
                             listNo++;
@@ -415,7 +415,7 @@ public class Duke {
                     System.out.println();
                     break;
                 case deadline:
-                    System.out.println("Deadline List For " + taskDateList);
+                    System.out.println(System.lineSeparator() + "Deadline List For " + taskDateList);
                     for (Task element : tasks) {
                         if (element.toString().contains("[D]") && element.toString().contains(taskDateList)) {
                             listNo++;
@@ -425,7 +425,7 @@ public class Duke {
                     System.out.println();
                     break;
                 default:
-                    System.out.println("Invalid input, please try again." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "Invalid input, please try again." + System.lineSeparator());
                     break;
             }
 
@@ -434,7 +434,7 @@ public class Duke {
             CommandType c = CommandType.valueOf(taskDescList);
             switch (c) {
                 case todo:
-                    System.out.println("Todo List");
+                    System.out.println(System.lineSeparator() + "Todo List");
                     for (Task element : tasks) {
                         if (element.toString().contains("[T]")) {
                             listNo++;
@@ -444,7 +444,7 @@ public class Duke {
                     System.out.println();
                     break;
                 case event:
-                    System.out.println("Event List");
+                    System.out.println(System.lineSeparator() + "Event List");
                     for (Task element : tasks) {
                         if (element.toString().contains("[E]")) {
                             listNo++;
@@ -454,7 +454,7 @@ public class Duke {
                     System.out.println();
                     break;
                 case deadline:
-                    System.out.println("Deadline List");
+                    System.out.println(System.lineSeparator() + "Deadline List");
                     for (Task element : tasks) {
                         if (element.toString().contains("[D]")) {
                             listNo++;
@@ -464,7 +464,7 @@ public class Duke {
                     System.out.println();
                     break;
                 default:
-                    System.out.println("Invalid input, please try again." + System.lineSeparator());
+                    System.out.println(System.lineSeparator() + "Invalid input, please try again." + System.lineSeparator());
                     break;
             }
         }
