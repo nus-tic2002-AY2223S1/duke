@@ -24,6 +24,9 @@ public class Parser {
                 Ui.listTasks();
                 return;
             case FIND_COMMAND:
+                if (inputs.length == 1){
+                    Ui.listTasks();
+                }
                 Tasklist.find(inputs[1]);
                 return;
             case LIST_COMMAND :
