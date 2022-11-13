@@ -128,7 +128,7 @@ public class TaskList {
         return splitFurther;
     }
     /**
-     * Separate the description and date/time or task before for DoAfter task type loaded from .txt file.
+     * Separate the description and date/time for task before for DoAfter task type loaded from .txt file.
      *
      * @param description that contains the task description of a DoAfter type loaded from the .txt file.
      * @return an array of string contains the split descriptions.

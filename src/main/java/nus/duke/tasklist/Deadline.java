@@ -7,8 +7,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class Deadline extends Task {
 
-    protected String preposition;
-    static private LocalDateTime dateAndTime;
+    private String preposition;
+    private LocalDateTime dateAndTime;
     /**
      * Constructor for Deadline task type.
      */

@@ -17,7 +17,7 @@ public class Messages {
             + "Wakanda forever! I'm Winston Duke\n"
             + "What can I do for you?\n";
     public static final String MESSAGE_EMPTY_INPUT = "Empty input detected, please re-enter\n";
-    public static final String MESSAGE_INDEX_NOT_NUMBER = "Index must be numbers!";
+    public static final String MESSAGE_INDEX_NOT_NUMBER = "Index must be numbers!\n";
     public static final String MESSAGE_NO_TASK_DESCRIPTION = "Task description cannot be empty!\n";
     public static final String MESSAGE_NO_TASK_IN_LIST = "There is 0 tasks in the list. "
             + "Please use keyword: todo, deadlines or events to add task if you wish to.\n";

@@ -57,7 +57,7 @@ public abstract class Task {
     }
 
     public void printTask(){
-        System.out.print(this.toString(1) + "\n");
+        System.out.print(toString(1) + "\n");
         }
     /**
      * Format task for displaying purpose.

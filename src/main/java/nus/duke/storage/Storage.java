@@ -75,8 +75,7 @@ public class Storage {
             throw new DukeException(e.getMessage());
         }
         for (int i = 0; i < toSave.getListCount(); i++){
-            Task task = (Task) toSave.getList().get(i);
-            toWrite = task.toString(2) + "\n";
+            toWrite = toSave.getList().get(i).toString(2) + "\n";
             try {
                 Files.write(path, toWrite.getBytes(), StandardOpenOption.APPEND);
             } catch (IOException e){

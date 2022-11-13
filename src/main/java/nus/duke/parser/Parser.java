@@ -159,7 +159,6 @@ public class Parser {
         try {
             checkDescription(split);
             description = splitDescription(split[1]);
-            assert description.size() <= 4 : "user command for Deadline should only be split to arraylist of size < 5." ;
             description = checkDateAndTime(split[0], description);
         } catch (DukeException e){
             throw new DukeException(e.getMessage());

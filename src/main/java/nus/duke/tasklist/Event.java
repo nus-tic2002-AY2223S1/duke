@@ -3,9 +3,9 @@ package nus.duke.tasklist;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 public class Event extends Task{
-    protected String preposition;
-    static private LocalDateTime dateAndTime1;
-    static private LocalDateTime dateAndTime2;
+    private String preposition;
+    private LocalDateTime dateAndTime1;
+    private LocalDateTime dateAndTime2;
     /**
      * Constructor for Event task type.
      */
