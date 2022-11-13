@@ -1,9 +1,26 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 repositories {
     mavenCentral()
+}
+
+application {
+    mainClassName = "duke.entry.Duke"
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "duke.entry.Duke"
+    }
+
+    from {
+        configurations.compileClasspath.filter{ it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    exclude 'META-INF/*.RSA','META-INF/*.SF','META-INF/*.DSA'
 }
 
 dependencies {
