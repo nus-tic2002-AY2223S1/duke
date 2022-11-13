@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 public class Tasklist {
     public static List<Task> tasks  = new ArrayList<>(100);
+
     public Tasklist(){
     }
     public static void initialize(){
