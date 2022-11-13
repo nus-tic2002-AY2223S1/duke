@@ -15,5 +15,7 @@ public class Fixed extends Task {
     }
 
     @Override
-    public String toOutput(){return "F" + super.toOutput() + ";"+this.needs;}
+    public String toOutput() {
+        return "F" + super.toOutput() + ";" + this.needs;
+    }
 }

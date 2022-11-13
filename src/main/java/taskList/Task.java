@@ -2,9 +2,7 @@ package tasklist;
 
 import java.time.LocalDate;
 
-import static ui.TaskMessages.*;
-
-public abstract class Task {
+public class Task {
     protected String description;
     protected boolean isDone;
 
@@ -13,7 +11,7 @@ public abstract class Task {
         this.isDone = false;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return this.description;
     }
 
@@ -24,16 +22,16 @@ public abstract class Task {
     }
 
     // return isDone is true if task is "mark" and print message
-    public void markAsDone(){
-        this.isDone=true;
+    public void markAsDone() {
+        this.isDone = true;
     }
 
     // return isDone is false if task is "unmark" and print message
-    public void markAsUndone(){
-        this.isDone=false;
+    public void markAsUndone() {
+        this.isDone = false;
     }
 
-    public String getStatusOutput(){
+    public String getStatusOutput() {
         if (this.getStatusIcon().equals("X"))
             return "1";
         else return "0";
@@ -44,9 +42,13 @@ public abstract class Task {
         return "[" + this.getStatusIcon() + "]   " + this.getDescription();
     }
 
-    public String toOutput(){ return ";" + this.getStatusOutput() + ";" + this.getDescription(); }
+    public String toOutput() {
+        return ";" + this.getStatusOutput() + ";" + this.getDescription();
+    }
 
     // get date for event and deadline
-    public LocalDate getDate() { return null; }
+    public LocalDate getDate() {
+        return null;
+    }
 
 }

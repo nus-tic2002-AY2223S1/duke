@@ -22,6 +22,7 @@ public class Deadline extends Task {
     public String toOutput() {
         return "D" + super.toOutput() + ";" + convertDateFormat(getDate());
     }
+
     // convert String date to LocalDate format
     @Override
     public LocalDate getDate() {
@@ -29,7 +30,7 @@ public class Deadline extends Task {
     }
 
     // convert LocalDate to ideal date format
-    public String convertDateFormat(LocalDate by){
+    public String convertDateFormat(LocalDate by) {
         return Parser.dateToString(by);
     }
 }

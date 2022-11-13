@@ -1,12 +1,12 @@
-import java.io.IOException;
-
 import exceptions.InvalidStorageFilePathException;
 import parser.Parser;
 import storage.Storage;
-import tasklist.*;
+import tasklist.TaskList;
 import ui.UI;
 
-import static ui.ErrorMessages.*;
+import java.io.IOException;
+
+import static ui.ErrorMessages.LOADING_ERROR;
 
 
 /**
@@ -15,7 +15,7 @@ import static ui.ErrorMessages.*;
  */
 
 public class Duke {
-    private Storage storage;
+    private final Storage storage;
     private TaskList newTaskList;
     private UI ui;
 
@@ -25,8 +25,7 @@ public class Duke {
         storage = new Storage(Storage.path);
         try {
             newTaskList = new TaskList(Storage.load());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             UI.printMessage(LOADING_ERROR);
             newTaskList = new TaskList();
         }
@@ -35,19 +34,19 @@ public class Duke {
     //@@author nglihui
     private void start() throws InvalidStorageFilePathException, IOException {
         this.ui = new UI();
-        ui.printIntro();
+        UI.printIntro();
 
         while (true) {
-                String input = UI.getUserCommand();
-                assert input != null : "User should not input null.";
+            String input = UI.getUserCommand();
+            assert input != null : "User should not input null.";
 
-                // check input to run task
-                Parser.parse(input, newTaskList);
+            // check input to run task
+            Parser.parse(input, newTaskList);
 
-                // to actively store task list
-                Storage.save(newTaskList.taskList);
-            }
+            // to actively store task list
+            Storage.save(newTaskList.taskList);
         }
+    }
 
     public static void main(String... launchArgs) throws InvalidStorageFilePathException, IOException {
         new Duke().start();

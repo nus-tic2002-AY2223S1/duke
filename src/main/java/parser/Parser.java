@@ -1,8 +1,6 @@
-
 package parser;
 
 import tasklist.*;
-import ui.ErrorMessages;
 import ui.UI;
 
 import java.time.LocalDate;
@@ -19,9 +17,9 @@ public class Parser {
      * Parses user input for execution.
      *
      * @param input full user input string
-     * run the task based on the user input
+     *              run the task based on the user input
      */
-    public static void parse(String input, TaskList newTaskList){
+    public static void parse(String input, TaskList newTaskList) {
         try {
             String[] inputSplit = input.split(" ");
 
@@ -67,14 +65,13 @@ public class Parser {
             else if (input.startsWith("fixed"))
                 newTaskList.fixedDurationTasks(input, inputSplit);
 
-            // prompt user to enter valid input
+                // prompt user to enter valid input
             else {
                 UI.printLine();
                 UI.printStandardError();
                 UI.printLine();
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
         }
     }
 
@@ -93,7 +90,7 @@ public class Parser {
     }
 
     // format event input before it is added into task list
-    public static Event parseEventInput(String input){
+    public static Event parseEventInput(String input) {
         String[] eventItemSplit = (input.substring(6)).split(" /at ");
         String eventTask = eventItemSplit[0];
         String eventAt = eventItemSplit[1];
@@ -101,21 +98,21 @@ public class Parser {
     }
 
     // format schedule input before it is added into task list
-    public static String parseScheduleInput(String input){
+    public static String parseScheduleInput(String input) {
         String[] scheduleDateSplit = input.split(" ");
         String scheduleDate = scheduleDateSplit[1];
         return scheduleDate;
     }
 
     // format find input to search for input in the task list
-    public static String parseFindInput(String input){
+    public static String parseFindInput(String input) {
         return input.substring(5);
     }
 
     // format fixed duration input before it is added into task list
-    public static Fixed parseFixedDurationInput (String input){
+    public static Fixed parseFixedDurationInput(String input) {
         String[] fixedItemSplit = (input.substring(6)).split(" /needs ");
-        String fixedTask = fixedItemSplit [0];
+        String fixedTask = fixedItemSplit[0];
         String fixedNeeds = fixedItemSplit[1];
         return new Fixed(fixedTask, fixedNeeds);
     }
@@ -127,14 +124,15 @@ public class Parser {
     }
 
     // convert LocalDate date to String format
-    public static String dateToString (LocalDate d){
+    public static String dateToString(LocalDate d) {
         return d.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
     }
 
     // convert date retrieved from loaded file to String in task format, so task can be added to task list
-    public static String loadDateToString(String s){
+    public static String loadDateToString(String s) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy", Locale.ENGLISH);
         LocalDate d = LocalDate.parse(s, formatter);
-        return d.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));}
+        return d.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    }
 
 }

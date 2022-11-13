@@ -6,7 +6,6 @@ import java.time.LocalDate;
 
 public class Event extends Task {
     protected String at;
-    protected LocalDate localDate;
 
     public Event(String description, String at) {
         super(description);
@@ -18,6 +17,7 @@ public class Event extends Task {
     public String toString() {
         return "[E]" + super.toString() + " (At: " + convertDateFormat(getDate()) + ")";
     }
+
     public String toOutput() {
         return "E" + super.toOutput() + ";" + convertDateFormat(getDate());
     }
@@ -29,7 +29,7 @@ public class Event extends Task {
     }
 
     // convert LocalDate to ideal date format
-    public String convertDateFormat(LocalDate at){
+    public String convertDateFormat(LocalDate at) {
         return Parser.dateToString(at);
     }
 

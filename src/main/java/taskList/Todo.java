@@ -1,7 +1,7 @@
 package tasklist;
 
 public class Todo extends Task {
-    public Todo(String description){
+    public Todo(String description) {
         super(description);
     }
 
@@ -12,5 +12,7 @@ public class Todo extends Task {
     }
 
     @Override
-    public String toOutput(){return "T" + super.toOutput();}
+    public String toOutput() {
+        return "T" + super.toOutput();
+    }
 }
