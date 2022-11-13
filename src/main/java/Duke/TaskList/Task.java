@@ -34,7 +34,7 @@ public abstract class Task {
     }
 
     /**
-     * toString method prints out the status of the task and the descrption
+     * toString method prints out the status of the task and the description
      * @return
      */
     @Override
