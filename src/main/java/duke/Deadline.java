@@ -12,6 +12,7 @@ public class Deadline extends Task {
             parsedDate = LocalDate.parse(by.trim());
             this.byDate = parsedDate;
         }catch( Exception e){
+            System.out.println(e.getMessage());
         }
 
         this.by = by;
@@ -19,13 +20,18 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: " + dateToString() + ")";
     }
     @Override
-    public String toFile() { return("D | "+(super.isDone? 1:0)+" | "+super.description+" | "+dateToString()+"\n");}
+    public String toFile() { return("D | "+(super.isDone? 1:0)+" | "+super.description+" | "+dateSaveFormat()+"\n");}
 
     public String dateToString(){
         if (byDate == null){return by;}
         return byDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+    }
+
+    public String dateSaveFormat(){
+        if (byDate == null){return by;}
+        return byDate.toString();
     }
 }
