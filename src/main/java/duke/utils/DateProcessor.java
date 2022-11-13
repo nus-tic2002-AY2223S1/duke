@@ -89,7 +89,11 @@ public class DateProcessor {
         //only date
         if (parsed.length == 1) {
             try {
-                return dateToUnix(parsed[0]);
+                long date = dateToUnix(parsed[0]);
+                if (getTimeNow() >= date) {
+                    throw new DukeException(ui.printTimeIsInThePastError());
+                }
+                return date;
             } catch (DukeException e) {
                 throw new DukeException(e.getMessage());
             }
@@ -100,7 +104,11 @@ public class DateProcessor {
         }
 
         try {
-            return dateTimeToUnix(concatDateTime(parsed[0], parsed[1]));
+            long dateTime = dateTimeToUnix(concatDateTime(parsed[0], parsed[1]));
+            if (getTimeNow() >= dateTime) {
+                throw new DukeException(ui.printTimeIsInThePastError());
+            }
+            return dateTime;
         } catch (DukeException e) {
             throw new DukeException(e.getMessage());
         }
@@ -143,7 +151,13 @@ public class DateProcessor {
         if (parsedRange.length == 1) {
             if (s.contains(" ")) {
                 try {
-                    return new long[]{processDateTime(parsedRange[0])};
+                    long[] processedDateTime = new long[]{processDateTime(parsedRange[0])};
+
+                    if (getTimeNow() >= processedDateTime[0]) {
+                        throw new DukeException(ui.printTimeIsInThePastError());
+                    }
+
+                    return processedDateTime;
                 } catch (DukeException e) {
                     throw new DukeException(ui.printInvalidTimeRangeFormat());
                 }
@@ -163,6 +177,10 @@ public class DateProcessor {
             if (timeFrom == -1) {
                 return null;
             }
+
+            if (getTimeNow() >= timeFrom + 86399) {
+                throw new DukeException(ui.printTimeIsInThePastError());
+            }
             return new long[]{timeFrom, timeFrom + 86399};
         }
 
@@ -178,6 +196,9 @@ public class DateProcessor {
                 timeEnd = processDate(parsedDateTo[0].trim());
 
                 if (timeEnd - timeStart == 0) {
+                    if (getTimeNow() >= timeStart) {
+                        throw new DukeException(ui.printTimeIsInThePastError());
+                    }
                     return new long[]{timeStart};
                 }
 
@@ -186,6 +207,9 @@ public class DateProcessor {
                 }
             } catch (DukeException e) {
                 throw new DukeException(e.getMessage());
+            }
+            if (getTimeNow() >= timeEnd + 86399) {
+                throw new DukeException(ui.printTimeIsInThePastError());
             }
             return new long[]{timeStart, timeEnd + 86399};
         }
@@ -209,6 +233,11 @@ public class DateProcessor {
         if (timeTo - timeFrom < 0) {
             throw new DukeException(ui.printDateStartBeforeEndError());
         }
+
+        if (getTimeNow() >= timeTo) {
+            throw new DukeException(ui.printTimeIsInThePastError());
+        }
+
         return new long[]{timeFrom, timeTo};
     }
 

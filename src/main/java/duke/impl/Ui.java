@@ -200,4 +200,6 @@ public abstract class Ui {
     public abstract String getEventHeader();
 
     public abstract String getHeader();
+
+    public abstract String printTimeIsInThePastError();
 }

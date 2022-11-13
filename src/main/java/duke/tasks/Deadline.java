@@ -2,6 +2,8 @@ package duke.tasks;
 
 import java.io.IOException;
 
+import duke.utils.DateProcessor;
+
 /**
  * Inherited Task for Deadline
  */
@@ -29,10 +31,14 @@ public class Deadline extends Task {
         }
 
         String label = String.format("\t%s", ui.getDeadlineLabel());
+        String overdue = "";
 
+        if (DateProcessor.getTimeNow() >= this.due && !this.isDone) {
+            overdue = " - Overdue";
+        }
         return (this.due == 0
                 ? label + super.toString()
-                : label + super.toString() + " (" + ui.getHeader() + d.unixToString(this.due) + ")");
+                : label + super.toString() + " (" + ui.getHeader() + d.unixToString(this.due) + ")" + overdue);
     }
 
     @Override
