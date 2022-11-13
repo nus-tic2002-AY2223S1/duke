@@ -7,6 +7,7 @@ public class Event extends Task{
     protected LocalDate atDate;
     public Event(String description,String at) {
         super(description);
+        assert !this.description.equals("");
         LocalDate parsedDate;
         try {
             parsedDate = LocalDate.parse(at.trim());
@@ -14,6 +15,7 @@ public class Event extends Task{
         }catch( Exception e){
             System.out.println(e.getLocalizedMessage());
         }
+        assert !at.equals("");
         this.at = at;
     }
 

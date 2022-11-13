@@ -7,6 +7,7 @@ public class Deadline extends Task {
     protected LocalDate byDate;
     public Deadline(String description, String by) {
         super(description);
+        assert !this.description.equals("");
         LocalDate parsedDate;
         try {
             parsedDate = LocalDate.parse(by.trim());
@@ -14,7 +15,7 @@ public class Deadline extends Task {
         }catch( Exception e){
             System.out.println(e.getMessage());
         }
-
+        assert !by.equals("");
         this.by = by;
     }
 
