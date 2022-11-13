@@ -6,21 +6,31 @@ import nus.duke.parser.*;
 import nus.duke.storage.Storage;
 import nus.duke.tasklist.TaskList;
 import nus.duke.ui.Ui;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+import javafx.scene.layout.Region;
 
 
 /**
  * Entry point of the Address nus-Duke application.
  * Initializes the application and starts the interaction with the user.
  */
-public class Duke {
-
+public class Duke{
     /** Version info of the program. */
-    public static final String VERSION = "Duke Level 7 - Version 1.0";
+    public static final String VERSION = "Duke Level 10 - Version 1.0";
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
     /** Initiation of Duke.  */
+    //public Duke(){}
     public Duke(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -31,6 +41,7 @@ public class Duke {
             tasks = new TaskList();
         }
     }
+
 
     /** Runs the program until termination.  */
     public void run() {

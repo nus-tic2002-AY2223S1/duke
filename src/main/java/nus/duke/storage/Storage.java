@@ -56,6 +56,7 @@ public class Storage {
      * Save TaskList to the .txt file when there is a change to the TaskList, E.g. adding or deleting tasks.
      * Create new file when the file path provided is invalid or the file format is incorrect.
      *
+     * @param toSave is the TaskList that should be written into the .txt file.
      * @throws DukeException when creating new .txt file failed or when writing to file failed.
      */
     public void save (TaskList toSave) throws DukeException {

@@ -38,11 +38,12 @@ public class Messages {
     public static final String MESSAGE_WRONG_EVENT_DATE_TIME_FORMAT =
             "Please use the below format for event slot:\n"
                     + Ui.getLinePrefix() + "1. DD/MM/YYYY hhmm-hhmm\n"
-                    + Ui.getLinePrefix() + "2. DD/MM/YYYY hhmm-DD/MM/YYYY hhmm\n"
-                    + Ui.getLinePrefix() + "3. DD/MM/YYYY-DD/MM/YYYY\n";
+                    + Ui.getLinePrefix() + "2. coming weekday hhmm-hhmm e.g. tuesday 1800-2000\n"
+                    + Ui.getLinePrefix() + "3. DD/MM/YYYY hhmm-DD/MM/YYYY hhmm\n"
+                    + Ui.getLinePrefix() + "4. DD/MM/YYYY-DD/MM/YYYY\n";
     public static final String MESSAGE_WRONG_DEADLINE_DATE_TIME_FORMAT = "Please use the below format for deadline:\n"
-            + Ui.getLinePrefix() + "1. DD/MM/YYYY\n"
-            + Ui.getLinePrefix() + "2. DD/MM/YYYY hhmm\n";
+            + Ui.getLinePrefix() + "1. DD/MM/YYYY or coming weekday e.g. tuesday\n"
+            + Ui.getLinePrefix() + "2. DD/MM/YYYY hhmm or coming weekday hhmm e.g. tuesday 1800\n";
 
     public static final String MESSAGE_DOAFTER_FORMAT = "Wrong DoAfter command format, please use the below format:\n"
             + Ui.getLinePrefix() + "1. _____(task description)_____ after _____(task before)_____\n"

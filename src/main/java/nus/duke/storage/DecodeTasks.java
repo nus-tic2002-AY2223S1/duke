@@ -5,6 +5,7 @@ public class DecodeTasks {
     /**
      * Parse the tasks from the tasks.txt and split the task into Parser processable format.
      *
+     * @param task is a raw String of the task loaded from the .txt file.
      * @return Array of Strings with task type, marking status and task description.
      */
     public static String[] decodeTasks (String task){

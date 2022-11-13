@@ -87,6 +87,8 @@ public class TaskList {
                 listCount ++;
                 break;
             default:
+                //Only tasks with case "T" ,"D", "E" and "A" should be loaded from a .txt file.
+                assert false : task[0];
                 return;
         }
         if (task[1].equals("X")){
@@ -96,6 +98,9 @@ public class TaskList {
     }
     /**
      * Separate the description and date/time for deadline task type loaded from .txt file.
+     *
+     * @param description that contains the task description of a deadline type loaded from the .txt file.
+     * @return an array of string contains the split descriptions.
      */
     public static ArrayList<String> splitDescriptionTimeForDeadline (String description) {
         String[] split = description.split(" \\(", 2);
@@ -107,6 +112,9 @@ public class TaskList {
     }
     /**
      * Separate the description and date/time for event task type loaded from .txt file.
+     *
+     * @param description that contains the task description of a event type loaded from the .txt file.
+     * @return an array of string contains the split descriptions.
      */
     public static ArrayList<String> splitDescriptionTimeForEvent(String description) {
         String[] split = description.split(" \\(", 2);
@@ -121,6 +129,9 @@ public class TaskList {
     }
     /**
      * Separate the description and date/time or task before for DoAfter task type loaded from .txt file.
+     *
+     * @param description that contains the task description of a DoAfter type loaded from the .txt file.
+     * @return an array of string contains the split descriptions.
      */
     public static ArrayList<String> splitDescriptionTimeForDoAfter (String description) {
         String[] split = description.split(" \\(", 2);

@@ -173,7 +173,8 @@ public class Command {
                 }
                 break;
             default:
-                throw new DukeException(Messages.MESSAGE_NOT_A_TASK);
+                //command variable will only contain the above values.
+                assert false : command;
         }
     }
     /**
@@ -259,6 +260,8 @@ public class Command {
                 }
                 break;
             default:
+                //Only command with case "todo" ,"deadline", "event" and "DoAfter" should invoke this method.
+                assert false : command;
         }
         tasks.changeListCount("+");
         storage.save(tasks);
@@ -310,6 +313,8 @@ public class Command {
                     }
                     break;
                 default:
+                    //Only command with case "todo" ,"deadline" and "event" should invoke this method.
+                    assert false : command;
                     return;
             }
         }

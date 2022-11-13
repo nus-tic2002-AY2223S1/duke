@@ -4,15 +4,17 @@ package nus.duke.parser;
 import nus.duke.data.DukeException;
 import nus.duke.ui.Messages;
 
-import javax.swing.text.DateFormatter;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Parser {
 
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public static final String DEFAULT_TIME = "23:59:59";
     public static final String DEFAULT_START_TIME = "00:00:00";
     /**
@@ -81,11 +83,17 @@ public class Parser {
         }
         String reformedCommand = split[0] + "/after" + split[1];
         description = splitDescription(reformedCommand);
+        assert description.size() <= 4 : "user command for DoAfter should only be split to arraylist of size < 5." ;
         if (description.size() < 3){
             throw new DukeException(Messages.MESSAGE_DOAFTER_FORMAT);
         }
-        if (description.size() <= 4 && isDate(description.get(2))) {
+        int dayOfWeek = dayOfWeek(description.get(2));
+        assert dayOfWeek <= 7 && dayOfWeek >=0 : "value of dayOfWeek should be in between 0-7";
+        if (description.size() <= 4 && (isDate(description.get(2)) || dayOfWeek != 0)) {
             if (description.size() == 3) {
+                if (dayOfWeek !=0) {
+                    description.set(2, formatNaturalDate(description.get(2)));
+                }
                 userInput = new Command("DoAfter", description.get(0), description.get(2).replace("/", "-"), DEFAULT_TIME);
             } else {
                 try {
@@ -151,6 +159,7 @@ public class Parser {
         try {
             checkDescription(split);
             description = splitDescription(split[1]);
+            assert description.size() <= 4 : "user command for Deadline should only be split to arraylist of size < 5." ;
             description = checkDateAndTime(split[0], description);
         } catch (DukeException e){
             throw new DukeException(e.getMessage());
@@ -177,6 +186,7 @@ public class Parser {
         try {
             checkDescription(split);
             description = splitDescription(split[1]);
+            assert description.size() <= 6 : "user command for Event should only be split to an arraylist of size < 7." ;
             description = checkDateAndTime(split[0], description);
         } catch (DukeException e){
             throw new DukeException(e.getMessage());
@@ -275,7 +285,11 @@ public class Parser {
      * @return An ArrayList of the fully split and formatted description for deadline.
      */
     public static ArrayList<String> FormatDateAndTimeForDeadline(ArrayList<String> description) throws DukeException {
-
+        int dayOfWeek = dayOfWeek(description.get(2));
+        assert dayOfWeek <= 7 && dayOfWeek >=0 : "value of dayOfWeek should be in between 0-7";
+        if (dayOfWeek != 0){
+            description.set(2, formatNaturalDate(description.get(2)));
+        }
         description.set(2,description.get(2).replace("/", "-"));
         if (description.size() == 4) {
             description.set(3, formatTime(description.get(3)));
@@ -299,6 +313,11 @@ public class Parser {
                 break;
             case 4:
                 split = description.get(3).split("-", 2);
+                int dayOfWeek = dayOfWeek(description.get(2));
+                assert dayOfWeek <= 7 && dayOfWeek >=0 : "value of dayOfWeek should be in between 0-7";
+                if (dayOfWeek != 0){
+                    description.set(2, formatNaturalDate(description.get(2)));
+                }
                 description.set(2, description.get(2).replace("/", "-"));
                 description.set(3, formatTime(split[0]));
                 description.add(formatTime(split[1]));
@@ -339,6 +358,7 @@ public class Parser {
     /**
      * Format the time in a HH:mm:ss format.
      *
+     * @return A string of time in HH:mm:ss.
      */
     public static String formatTime(String timeString) throws DukeException {
         int time;
@@ -353,6 +373,60 @@ public class Parser {
         minute = (time - hour * 100) % 60;
         timeString = String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + "00";
         return timeString;
+    }
+
+    /**
+     * Format the string in day of week format, e.g. mon, monday etc. to a date sting in the format
+     * of "dd/MM/yyyy".
+     *
+     * @return A string of date in dd/MM/yyyy format.
+     */
+    public static String formatNaturalDate(String naturalDate) {
+        int dayOfWeek = dayOfWeek(naturalDate);
+        LocalDate current = LocalDate.now();
+        current = current.with(TemporalAdjusters.next(DayOfWeek.of(dayOfWeek)));
+        String nextDate = current.format(DATE_FORMATTER);
+        return nextDate;
+    }
+    /**
+     * Take in a string value and check if it is a day of week.
+     *
+     * @return An integer value from 1 to 7, which represents Monday, Tuesday ... Sunday respectively.
+     */
+    public static int dayOfWeek(String naturalDate) {
+        naturalDate = naturalDate.toUpperCase();
+        int dayOfWeek = 0;
+        switch (naturalDate) {
+            case "MON":
+            case "MONDAY":
+                dayOfWeek = 1;
+                break;
+            case "TUE":
+            case "TUESDAY":
+                dayOfWeek = 2;
+                break;
+            case "WED":
+            case "WEDNESDAY":
+                dayOfWeek = 3;
+                break;
+            case "THUR":
+            case "THURSDAY":
+                dayOfWeek = 4;
+                break;
+            case "FRI":
+            case "FRIDAY":
+                dayOfWeek = 5;
+                break;
+            case "SAT":
+            case "SATURDAY":
+                dayOfWeek = 6;
+                break;
+            case "SUN":
+            case "SUNDAY":
+                dayOfWeek = 7;
+                break;
+        }
+        return dayOfWeek;
     }
     /**
      * Check if a given string is a date in "dd/MM/yyyy" format.
