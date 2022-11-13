@@ -69,7 +69,7 @@ public class Ui {
             boolean found = false;
             System.out.println("Here are the matching tasks in your list:");
             for (int i = 0; i < list.getCount(); i++) {
-                if (list.getList().get(i).getDescription().contains(keyword)) {
+                if (list.getList().get(i).getDescription().contains(keyword.toLowerCase())) {
                     System.out.println(list.getList().get(i).getTaskNo() + ". " 
                                        + list.getList().get(i).getDescription());
                     found = true;

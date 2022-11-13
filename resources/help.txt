@@ -8,6 +8,7 @@
 | event <taskname> \<preposition> <YYYY-MM-DD> <time> -adds a event task to the list.	     |
 | mark <tasknumber> - marks the selected task as completed with a X.		 	     |
 | unmark <tasknumber> - unmarks the selected task as uncompleted with a X.	 	     |
-| delete <tasknumber> - delete the selected task.					     |				
+| delete <tasknumber> - delete the selected task.					     |
+| find <String> - find tasks from the list that contains the string.			     |
 | bye - exits the program.							  	     |
 |____________________________________________________________________________________________|
