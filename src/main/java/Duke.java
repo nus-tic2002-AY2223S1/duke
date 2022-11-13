@@ -1,5 +1,8 @@
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.format.DateTimeParseException;
+import java.time.format.TextStyle;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +11,8 @@ import java.io.FileWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 
 public class Duke {
     private static final List<Task> tasks = new ArrayList<>();
@@ -238,7 +243,7 @@ public class Duke {
 
         byWhenText = byWhenText.replaceAll("\\s+", "");
 
-        if (byWhenText.length() < 11) {
+        if (byWhenText.matches(".*\\d.*") && byWhenText.length() < 11) {
             try {
                 LocalDate deadlineDate = LocalDate.parse(byWhenText);
 
@@ -252,7 +257,7 @@ public class Duke {
                 System.out.println("Please enter a valid date in this format: [YYYY-MM-DD]" + System.lineSeparator());
                 inputCommand();
             }
-        } else if (byWhenText.length() > 11) {
+        } else if (byWhenText.matches(".*\\d.*") && byWhenText.length() > 11) {
             try {
                 String byWhenTextDate = byWhenText.substring(0, 10);
                 String byWhenTextTime = byWhenText.substring(10);
@@ -269,6 +274,109 @@ public class Duke {
                 } else {
                     byWhenText = deadlineDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + " "
                             + deadlineTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Please enter a valid date and/or time in this format: [YYYY-MM-DD HH:mm]" + System.lineSeparator());
+                inputCommand();
+            }
+        } else {
+            try {
+                String byWhenTextDay = byWhenText.substring(0, 3);
+                String byWhenTextTime;
+
+                DayOfWeek dow;
+                DayOfWeek todayDay = todayDate.getDayOfWeek();
+                LocalDate nextNearestDate;
+                LocalTime byWhenTime;
+                Locale locale = Locale.getDefault();
+
+                switch (byWhenTextDay.toLowerCase()) {
+                    case "mon":
+                        dow = DayOfWeek.MONDAY;
+                        byWhenTextDay = dow.getDisplayName(TextStyle.FULL, locale);
+
+                        if (todayDay.equals(byWhenTextDay)) {
+                            byWhenText = todayDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                        } else {
+                            TemporalAdjuster adj = TemporalAdjusters.next(dow);
+                            nextNearestDate = todayDate.with(adj);
+                            byWhenText = nextNearestDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                        }
+                        break;
+                    case "tue":
+                        dow = DayOfWeek.TUESDAY;
+                        byWhenTextDay = dow.getDisplayName(TextStyle.FULL, locale);
+
+                        if (todayDay.equals(byWhenTextDay)) {
+                            byWhenText = todayDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                        } else {
+                            TemporalAdjuster adj = TemporalAdjusters.next(dow);
+                            nextNearestDate = todayDate.with(adj);
+                            byWhenText = nextNearestDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                        }
+                        break;
+                    case "wed":
+                        dow = DayOfWeek.WEDNESDAY;
+                        byWhenTextDay = dow.getDisplayName(TextStyle.FULL, locale);
+
+                        if (todayDay.equals(byWhenTextDay)) {
+                            byWhenText = todayDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                        } else {
+                            TemporalAdjuster adj = TemporalAdjusters.next(dow);
+                            nextNearestDate = todayDate.with(adj);
+                            byWhenText = nextNearestDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                        }
+                        break;
+                    case "thu":
+                        dow = DayOfWeek.THURSDAY;
+                        byWhenTextDay = dow.getDisplayName(TextStyle.FULL, locale);
+
+                        if (todayDay.equals(byWhenTextDay)) {
+                            byWhenText = todayDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                        } else {
+                            TemporalAdjuster adj = TemporalAdjusters.next(dow);
+                            nextNearestDate = todayDate.with(adj);
+                            byWhenText = nextNearestDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                        }
+                        break;
+                    case "fri":
+                        dow = DayOfWeek.FRIDAY;
+                        byWhenTextDay = dow.getDisplayName(TextStyle.FULL, locale);
+
+                        if (todayDay.equals(byWhenTextDay)) {
+                            byWhenText = todayDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                        } else {
+                            TemporalAdjuster adj = TemporalAdjusters.next(dow);
+                            nextNearestDate = todayDate.with(adj);
+                            byWhenText = nextNearestDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                        }
+                        break;
+                    case "sat":
+                        dow = DayOfWeek.SATURDAY;
+                        byWhenTextDay = dow.getDisplayName(TextStyle.FULL, locale);
+
+                        if (todayDay.equals(byWhenTextDay)) {
+                            byWhenText = todayDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                        } else {
+                            TemporalAdjuster adj = TemporalAdjusters.next(dow);
+                            nextNearestDate = todayDate.with(adj);
+                            byWhenText = nextNearestDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                        }
+                        break;
+                    case "sun":
+                        dow = DayOfWeek.SUNDAY;
+                        byWhenTextDay = dow.getDisplayName(TextStyle.FULL, locale);
+
+                        if (todayDay.equals(byWhenTextDay)) {
+                            byWhenText = todayDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                        } else {
+                            TemporalAdjuster adj = TemporalAdjusters.next(dow);
+                            nextNearestDate = todayDate.with(adj);
+                            byWhenText = nextNearestDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                        }
+                        break;
+                    default:
+                        break;
                 }
             } catch (DateTimeParseException e) {
                 System.out.println("Please enter a valid date and/or time in this format: [YYYY-MM-DD HH:mm]" + System.lineSeparator());
