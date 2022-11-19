@@ -1,6 +1,10 @@
+import java.time.LocalDate;
+
 public class Task {
     protected String description;
     protected boolean isDone;
+
+    //protected LocalDate dat;
 
     public Task(String description) {
         this.description = description;
@@ -32,6 +36,11 @@ public class Task {
     public String toString() {
 
         return "["+ getStatusIcon()+"] "+ description;
+    }
+
+    public LocalDate toDate(String da){
+        LocalDate dat= LocalDate.parse(da);
+        return dat;
     }
 }
 

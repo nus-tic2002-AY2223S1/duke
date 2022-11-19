@@ -240,6 +240,20 @@ public class Duke {
                     System.out.println("Now you have " + j + " tasks in your list\n");
                 }
 
+                else if(temp.substring(0, 4).equals("find")){
+
+                    String find= temp.substring(5);
+                    int l=0;
+                    System.out.println("Here are the results of your search:");
+                    while(l<j){
+
+                        if(tasks.get(l).description.contains(find)){
+                            System.out.println(l + 1 + ". " + tasks.get(l));
+                        }
+                        l++;
+                    }
+                    System.out.println("End of result");
+                }
 
                 else {
                     System.out.println("Type bye to exit or check your input and try again.\n");
