@@ -85,8 +85,12 @@ public class Duke {
     public static int readt(ArrayList<Task>tasks) {
        int count=0;
        try {
+           String homePath = System.getProperty("user.home");
+           String fileName = "DukeText.txt";
+           String filePath = homePath + File.separator + fileName;
+           System.out.println("filePath = " + filePath);
 
-             count= printFileContents("/Users/nikhilshankar/Duke Test/DukeText.txt", tasks);
+             count= printFileContents(filePath, tasks);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
@@ -301,7 +305,11 @@ public class Duke {
         }
 
         //write to file
-        String file1= "/Users/nikhilshankar/Duke Test/DukeText.txt";
+        //String file1= "/Users/nikhilshankar/Duke Test/DukeText.txt";
+        String homePath = System.getProperty("user.home");
+        String fileName = "DukeText.txt";
+        String filePath = homePath + File.separator + fileName;
+        System.out.println("filePath = " + filePath);
         int k=0;
         String line2="Duke Task List:";
         while(k<j) {
@@ -316,7 +324,7 @@ public class Duke {
             k++;
         }
         try {
-            writeToFile(file1,line2 );
+            writeToFile(filePath,line2 );
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e.getMessage());
         }
