@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 
@@ -12,43 +14,85 @@ public class Duke {
 
 
     //Read from File
-  /*  private static void printFileContents(String filePath) throws FileNotFoundException {
-        File f = new File(filePath); // create a File for the given file path
+   private static int printFileContents(String filePath, ArrayList<Task>tasks) throws FileNotFoundException {
+
+       File f = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
+       int count=0;
         while (s.hasNext()) {
             String re= s.nextLine();
-            if(re.substring(0)=="["){
+            //System.out.println("reading lines");
+            if(re.substring(0,1).equals("[")){
 
-                if(re.substring(1)=="T"){
+                if(re.substring(1,2).equals("T")){
 
-                    //tasks.add(new Todo(temp.substring(5)));
 
+                    tasks.add(new Todo(re.substring(7)));
+                    if(re.charAt(4)=='X'){
+                        tasks.get(count).markAsDone();
+                    }
+                    count++;
                 }
 
-                else if(re.substring(1)=="D"){
+                else if(re.substring(1,2).equals("D")){
 
+                    //System.out.println("Task deadline found, adding in");
+                    int Stindex = 7;
+                    int index= re.indexOf("by")+4;
+                    int endex= re.indexOf(')');
 
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyy");
+                    String date = re.substring(index,endex);
 
+                    LocalDate localDate = LocalDate.parse(date, formatter);
+                    date=localDate.toString();
+
+                    tasks.add(new Deadline(re.substring(Stindex, index-6), date));
+                    if(re.charAt(4)=='X'){
+                        tasks.get(count).markAsDone();
+                    }
+                    count++;
                 }
 
-                else if(re.substring(1)=="E"){
+                else if(re.substring(1,2).equals("E")){
 
+                    //System.out.println("Task event found, adding in");
+                    int Stindex = 7;
+                    int index= re.indexOf("at")+4;
+                    int endex= re.indexOf(')');
 
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyy");
+                    String date = re.substring(index,endex);
 
+                    LocalDate localDate = LocalDate.parse(date, formatter);
+                    date=localDate.toString();
+
+                    tasks.add(new Event(re.substring(Stindex, index-6), date));
+
+                    if(re.charAt(4)=='X'){
+                        tasks.get(count).markAsDone();
+                    }
+
+                    count++;
                 }
             }
         }
+       System.out.println("Saved Tasks add to the list successfully!!!");
+        return count;
     }
 
 
-    public static void readt() {
-        try {
-            printFileContents("/Users/nikhilshankar/Duke Test/DukeText.txt");
+    public static int readt(ArrayList<Task>tasks) {
+       int count=0;
+       try {
+
+             count= printFileContents("/Users/nikhilshankar/Duke Test/DukeText.txt", tasks);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
+        return count;
     }
-*/
+
 
 
     private static void writeToFile(String filePath, String textToAdd) throws IOException {
@@ -57,18 +101,17 @@ public class Duke {
         fw.close();
     }
 
-
+    //checking if the task has description
     static void validate(String s, String tas) throws DukeException {
         if (s.equals(tas)) {
 
             // throw an object of user defined exception
             throw new DukeException(); //tas+ " cannot be empty. Please try again");
         }
-        //else {
-          //  System.out.println("Correct input!");
-       // }
+
     }
 
+    //checking if a data has been given
     static void validateDate(int ind) throws DukeException2 {
         if (ind==-1) {throw new DukeException2();}
     }
@@ -80,8 +123,8 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-        System.out.println("Hello there! I'm Duke\nWhat's on your mind today?");
-        //String[] com= new String[100];
+        System.out.println("Hello there! I'm Duke\nPlease wait while I check for saved tasks.\n");
+
         Task[] t= new Task[10];
         ArrayList<Task>tasks= new ArrayList<>();
         String temp;
@@ -89,7 +132,9 @@ public class Duke {
         int i=1;
         int j=0;
         //Read the existing text file here using a function. Bring back the edited string here to be added into Task
-
+        System.out.println("Checking for saved data.................\n...............\n.............");
+        j=readt(tasks);
+        System.out.println("\nYou're all set! \nSo, What's on your mind today?");
         while(i==1){
             Scanner in = new Scanner(System.in);
             temp = in.nextLine();
@@ -97,16 +142,11 @@ public class Duke {
             try {                                           //try new
 
 
-
+                //display list content
                 if (temp.equals("list")) {
                     System.out.println("\nContent of your List\n");
 
-            /*        for (int k = 0; k < j; k++) {
-                        //    System.out.println(k+1 + ". ["+t[k].getStatusIcon()+"] " + t[k].getDescription() +"\n");
-                        System.out.println(k + 1 + ". " + t[k]);
 
-                    }
-                    System.out.println("\nEnd of list\n");*/
 
                     // below new array list***************************************
                     //System.out.println("\nBELOW IS THE NEW LIST ARRAY\n");
@@ -120,6 +160,7 @@ public class Duke {
 
                 }
 
+                //end loop and close program
                 else if (temp.equals("bye")) {
                     i = 0;
                 }
@@ -127,8 +168,7 @@ public class Duke {
                 else if (temp.substring(0, 3).equals("unm")) {
                     //unmark
                     int num = Integer.parseInt(temp.substring(7));
-                //    t[num - 1].markAsUndone();
-                //    System.out.println(t[num - 1] + "\n");
+
 
                     //below array list****************************************
 
@@ -139,12 +179,12 @@ public class Duke {
                 else if (temp.substring(0, 3).equals("mar")) {
                     //mark
                     int num = Integer.parseInt(temp.substring(5));
-                //    t[num - 1].markAsDone();
-                //    System.out.println(t[num - 1] + "\n");
+
 
                     //below array list****************************************
-                //    System.out.println("\nBELOW IS THE NEW LIST ARRAY\n");
+
                     tasks.get(num-1).markAsDone();
+                    System.out.println("Awesome! The task has been marked done!\n");
                     System.out.println(tasks.get(num - 1) + "\n");
 
                 }
@@ -154,14 +194,14 @@ public class Duke {
                     ts="todo";
                     validate(temp, temp.substring(0, 4)); //Check if todo is empty
 
-                //    t[j] = new Todo(temp.substring(5));
+
                     j++;
 
-                //    System.out.println(t[j - 1]);
+
 
 
                     //below array list****************************************
-                //    System.out.println("\nBELOW IS THE NEW LIST ARRAY\n");
+
                     tasks.add(new Todo(temp.substring(5)));
                     System.out.println("The task has been successfully added to your list!");
                     System.out.println(tasks.get(j-1));
@@ -178,16 +218,10 @@ public class Duke {
                     validateDate(index);
 
 
-                    //t[j] = new Event(temp.substring(6, index), temp.substring(index + 1));
-
                     j++;
 
-                //    System.out.println("The task has been successfully added to your list!");
-                //    System.out.println(t[j - 1]);
-                //    System.out.println("Now you have " + j + " tasks in your list\n");
-
                     //below array list****************************************
-                //    System.out.println("\nBELOW IS THE NEW LIST ARRAY\n");
+
 
                     tasks.add(new Event(temp.substring(6, index), temp.substring(index + 1)));
                     System.out.println("The task has been successfully added to your list!");
@@ -224,13 +258,9 @@ public class Duke {
                     int index = temp.indexOf('/');
                     validateDate(index);
 
-                //    t[j] = new Deadline(temp.substring(9, index), temp.substring(index + 1));
 
                     j++;
 
-                //    System.out.println("The task has been successfully added to your list!");
-                //    System.out.println(t[j - 1]);
-                //    System.out.println("Now you have " + j + " tasks in your list\n");
 
                     //below array list****************************************
                 //    System.out.println("\nBELOW IS THE NEW LIST ARRAY\n");
@@ -255,16 +285,17 @@ public class Duke {
                     System.out.println("End of result");
                 }
 
+                //
                 else {
                     System.out.println("Type bye to exit or check your input and try again.\n");
                 }
-
+            //exceptions
             } catch (IndexOutOfBoundsException e){              //Catch
                 System.out.println("oopss!! Please check your input and try again or type bye to exit.\n");
             } catch (DukeException e){
                 System.out.println("Error : "+ ts + " cannot be empty. Please try again\n");//+ e);
             }catch (DukeException2 e){
-                System.out.println("Error : For "+ ts + " Please enter by/at after / and try again\n");//+ e);
+                System.out.println("Error : For "+ ts + " Please enter date (Format:yyyy-mm-dd) after / and try again\n");//+ e);
             }
 
         }
