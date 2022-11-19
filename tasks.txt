@@ -1,0 +1,11 @@
+[E][X] go gym (at: 13-11-2022 18:00:00-13-11-2022 20:00:00)
+[T][ ] read book
+[A][ ] return book (After: 12-12-2022 23:59:59)
+[A][ ] watch movie (After: 12-12-2022 18:00:00)
+[A][ ] borrow book (After: 14-11-2022 23:59:59)
+[D][ ] submit assignment (by: 14-11-2022 18:00:00)
+[E][ ] go jogging (at: 13-11-2022 18:00:00-13-11-2022 20:00:00)
+[D][ ] submit assignment (by: 14-11-2022 18:00:00)
+[E][ ] jogging at PP (at: 13-11-2022 18:00:00-13-11-2022 20:00:00)
+[D][ ] submit slide (by: 14-11-2022 18:00:00)
+[A][ ] return book (After: 14-11-2022 23:59:59)
