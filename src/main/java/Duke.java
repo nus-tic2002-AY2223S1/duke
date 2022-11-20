@@ -149,7 +149,10 @@ public class Duke {
         System.out.println("Checking for saved data.................\n...............\n.............");
         j=readt(tasks);
         System.out.println("\nYou're all set! \nSo, What's on your mind today?\n");
+        System.out.println("Below are the list of things you can do\n");
+        System.out.println("1.Add Tasks:\n i.todo Task Name\n ii.deadline Task Name/Date\n iii.event Task_Name/Date\n2.Display List of Tasks- list\n3.Find Task- find keyword\n4.Delete Task- delete number\n5.Mark/Unmark Task- mark/unmark number\n");
         while(i==1){
+            System.out.println("Waiting for your command....\n");
             Scanner in = new Scanner(System.in);
             temp = in.nextLine();
 
