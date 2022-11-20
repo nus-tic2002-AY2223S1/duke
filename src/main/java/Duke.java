@@ -1,3 +1,4 @@
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.Scanner;
 public class Duke {
 
 
-    //Read from File
+    //Read from Existing File and update list
    private static int printFileContents(String filePath, ArrayList<Task>tasks) throws FileNotFoundException {
 
        File f = new File(filePath); // create a File for the given file path
@@ -103,6 +104,7 @@ public class Duke {
         FileWriter fw = new FileWriter(filePath);
         fw.write(textToAdd);
         fw.close();
+        System.out.println("\nTasks saved Successfully!!");
     }
 
     //checking if the task has description
@@ -118,6 +120,14 @@ public class Duke {
     //checking if a data has been given
     static void validateDate(int ind) throws DukeException2 {
         if (ind==-1) {throw new DukeException2();}
+
+    }
+
+    //checking if the date is given in correct format
+    static void validateDate2(String date) throws DateTimeParseException {
+
+       LocalDate d1= LocalDate.parse(date);
+
     }
 
     public static void main(String[] args) {
@@ -138,7 +148,7 @@ public class Duke {
         //Read the existing text file here using a function. Bring back the edited string here to be added into Task
         System.out.println("Checking for saved data.................\n...............\n.............");
         j=readt(tasks);
-        System.out.println("\nYou're all set! \nSo, What's on your mind today?");
+        System.out.println("\nYou're all set! \nSo, What's on your mind today?\n");
         while(i==1){
             Scanner in = new Scanner(System.in);
             temp = in.nextLine();
@@ -207,9 +217,11 @@ public class Duke {
                     //below array list****************************************
 
                     tasks.add(new Todo(temp.substring(5)));
+                    System.out.println("----------~~~~~~~~-----------");
                     System.out.println("The task has been successfully added to your list!");
                     System.out.println(tasks.get(j-1));
                     System.out.println("Now you have " + j + " tasks in your list\n");
+                    System.out.println("----------~~~~~~~~-----------");
 
                 }
 
@@ -220,7 +232,7 @@ public class Duke {
 
                     int index = temp.indexOf('/');
                     validateDate(index);
-
+                    validateDate2(temp.substring(index+1));
 
                     j++;
 
@@ -228,9 +240,11 @@ public class Duke {
 
 
                     tasks.add(new Event(temp.substring(6, index), temp.substring(index + 1)));
+                    System.out.println("----------~~~~~~~~-----------");
                     System.out.println("The task has been successfully added to your list!");
                     System.out.println(tasks.get(j-1));
                     System.out.println("Now you have " + j + " tasks in your list\n");
+                    System.out.println("----------~~~~~~~~-----------");
                 }
 
                 else if (temp.substring(0, 6).equals("delete")) {
@@ -261,6 +275,7 @@ public class Duke {
 
                     int index = temp.indexOf('/');
                     validateDate(index);
+                    validateDate2(temp.substring(index+1));
 
 
                     j++;
@@ -269,9 +284,11 @@ public class Duke {
                     //below array list****************************************
                 //    System.out.println("\nBELOW IS THE NEW LIST ARRAY\n");
                     tasks.add(new Deadline(temp.substring(9, index), temp.substring(index + 1)));
+                    System.out.println("----------~~~~~~~~-----------");
                     System.out.println("The task has been successfully added to your list!");
                     System.out.println(tasks.get(j-1));
                     System.out.println("Now you have " + j + " tasks in your list\n");
+                    System.out.println("----------~~~~~~~~-----------");
                 }
 
                 else if(temp.substring(0, 4).equals("find")){
@@ -299,12 +316,15 @@ public class Duke {
             } catch (DukeException e){
                 System.out.println("Error : "+ ts + " cannot be empty. Please try again\n");//+ e);
             }catch (DukeException2 e){
-                System.out.println("Error : For "+ ts + " Please enter date (Format:yyyy-mm-dd) after / and try again\n");//+ e);
+                System.out.println("Error : For "+ ts + " Please enter date (Format:yyyy-mm-dd) after '/' and try again\n");//+ e);
+            }catch (DateTimeParseException e){
+                System.out.println("Error : For "+ ts + " Please enter date using correct Format:yyyy-mm-dd and try again\n");
             }
 
         }
 
         //write to file
+        System.out.println("Saving your tasks........\n");
         //String file1= "/Users/nikhilshankar/Duke Test/DukeText.txt";
         String homePath = System.getProperty("user.home");
         String fileName = "DukeText.txt";
