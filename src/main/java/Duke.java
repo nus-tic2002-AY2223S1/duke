@@ -12,7 +12,14 @@ public class Duke {
     private Tasklist tasks;
     private Ui ui;
 
-    /** Load files */
+    /**
+     * Creation of a new tasklist.
+     * User can choose to either import existing tasks from the default file (data/duke.txt)
+     * or to import from another file name of choice
+     *
+     * @param filePath Location of file to be imported
+     * @throws IOException If filePath doesn't exist.
+     */
     public Duke (String filePath) {
         ui = new Ui();
         ui.showWelcome();
@@ -28,9 +35,16 @@ public class Duke {
             Storage.filePath = "data/duke.txt";
             System.out.println(Ui.ERROR_FILENOTFOUND + "\n" + Ui.UI_DIVIDER);
             tasks = new Tasklist();
+            assert !Storage.filePath.isBlank() : "filePath cannot be blank, required for saving of file";
         }
     }
 
+    /**
+     * Main program.
+     * Capture user input, parse the input and execute the required action.
+     *
+     * @throws DukeException If any of the steps fails.
+     */
     public void run() {
         boolean isExit = false;
 

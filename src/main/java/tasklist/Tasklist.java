@@ -2,12 +2,13 @@ package tasklist;
 
 import ui.Ui;
 
+import java.time.DateTimeException;
 import java.util.*;
 
 public class Tasklist {
 
     public static ArrayList<Task> tasklist;
-    public static int listCount;
+    public static int listCount = 0;
 
     public Tasklist(){
         tasklist = new ArrayList<Task>();
@@ -24,7 +25,12 @@ public class Tasklist {
 
     public static ArrayList<Task> getTasklist () { return tasklist; }
 
-    public void printTasklist(){
+    /**
+     * Print all tasks in the tasklist
+     *
+     * @throws NoSuchElementException If there are no tasks captured in the tasklist
+     */
+    public static void printTasklist(){
         try {
             if(listCount == 0){
                 throw new NoSuchElementException();
@@ -43,14 +49,19 @@ public class Tasklist {
         }
     }
 
-    public void printTask(int i){
+    public static void printTask(int i){
         System.out.println("  [" + tasklist.get(i).getTypeTask() + "]" +
                 "[" + tasklist.get(i).getDone() + "] " +
                 tasklist.get(i).getDescription() + " " +
                 tasklist.get(i).getString());
     }
 
-    public void findTasklist(String find){
+    /**
+     * Find all tasks that matches the keyword in the tasklist
+     *
+     * @throws NoSuchElementException If there are no tasks that matches the keyword
+     */
+    public static void findTasklist(String find){
         boolean printed = false;
 
         try {
@@ -71,11 +82,17 @@ public class Tasklist {
                 throw new NoSuchElementException();
             }
         } catch (NoSuchElementException e) {
-            System.out.println(Ui.ERROR_NOMATCHES + "\n" + Ui.UI_DIVIDER);
+            System.out.println(Ui.ERROR_NOMATCHES);
         }
     }
 
-    public void dueTasklist(String due){
+    /**
+     * Find all tasks that matches the duedate in the tasklist
+     *
+     * @throws NoSuchElementException If there are no tasks that matches the duedate
+     * @throws DateTimeException If datetime entered is in wrong format
+     */
+    public static void dueTasklist(String due){
         boolean printed = false;
 
         try {
@@ -96,19 +113,21 @@ public class Tasklist {
             }
         } catch (NoSuchElementException e) {
             System.out.println(Ui.ERROR_NOMATCHES);
+        } catch (DateTimeException e) {
+            System.out.println(Ui.ERROR_INVALID_DATETIME);
         }
     }
 
-    public void printAdded(int index){
+    public static void printAdded(int index){
         System.out.println(Ui.REPLY_ADD_TASK);
         printTask(index);
         System.out.println("Now you have " + (index+1) + " tasks in the list");
     }
 
-    public void printDeleted(int index){
+    public static void printDeleted(int index){
         System.out.println(Ui.REPLY_REMOVE_TASK);
-        printTask(index-1);
-        System.out.println("Now you have " + (index) + " tasks in the list");
+        printTask(index);
+        System.out.println("Now you have " + (listCount-1) + " tasks in the list");
     }
 
     public static void printLoaded(int index){
@@ -118,7 +137,7 @@ public class Tasklist {
                 tasklist.get(index).getString());
     }
 
-    public void addTodo(String description){
+    public static void addTodo(String description){
         tasklist.add(new Todo(description));
         printAdded(listCount);
         listCount++;
@@ -129,7 +148,7 @@ public class Tasklist {
         listCount++;
     }
 
-    public void addEvent(String description, String at){
+    public static void addEvent(String description, String at){
         tasklist.add(new Event(description, at));
         printAdded(listCount);
         listCount++;
@@ -140,7 +159,7 @@ public class Tasklist {
         listCount++;
     }
 
-    public void addDeadline(String description, String by){
+    public static void addDeadline(String description, String by){
         tasklist.add(new Deadline(description, by));
         printAdded(listCount);
         listCount++;
@@ -151,13 +170,13 @@ public class Tasklist {
         listCount++;
     }
 
-    public void removeTask(int index){
-        printDeleted(listCount-1);
-        tasklist.remove(index-1);
+    public static void removeTask(int index){
+        printDeleted(index);
+        tasklist.remove(index);
         listCount--;
     }
 
-    public void markDone(int index){
+    public static void markDone(int index){
         tasklist.get(index).markDone();
         System.out.println(Ui.REPLY_MARK_DONE);
         printTask(index);
@@ -167,13 +186,13 @@ public class Tasklist {
         tasklist.get(index).markDone();
     }
 
-    public void unmarkDone(int index){
+    public static void unmarkDone(int index){
         tasklist.get(index).unmarkDone();
         System.out.println(Ui.REPLY_UNMARK_DONE);
         printTask(index);
     }
 
-    public void postponeTask(int index, String to){
+    public static void postponeTask(int index, String to){
           System.out.println(Ui.REPLY_POSTPONE);
           tasklist.get(index).setDate(to);
           printTask(index);

@@ -11,12 +11,25 @@ import java.io.IOException;
 
 public class Command {
 
-    private String command;
+    public String command;
     private String description;
     private String dateTime;
     private int index;
     private Character type;
     private boolean isExit = false;
+
+    /**
+     * Represents a command entered by the user.
+     *
+     * @param command Action required for the comment eg. List, delete, mark
+     * @param description Description of the action/task eg. Read book
+     * @param type Task type eg. D for deadline, E for event
+     * @param datetime Datetime associated for time sensitive tasks eg. deadline due by 22Nov22
+     * @param index Order of task to be actioned on among the tasklist
+     * @throws SizeLimitExceededException If tasklist holds max number of tasks (Limit: 100 tasks)
+     * @throws IllegalArgumentException When entered command action is not a recognised action
+     * @throws IOException When there are missing arguments for the command
+     */
 
     /** Create command with command */
     public Command (String command) {
@@ -72,46 +85,23 @@ public class Command {
             }
 
             switch (this.command.trim().toLowerCase()) {
-                case "bye":
-                    byeCommand(ui);
-                    break;
-                case "list":
-                    listCommand(tasklist);
-                    break;
-                case "todo":
-                    todoCommand(tasklist, this.description);
-                    break;
-                case "event":
-                    eventCommand(tasklist, this.description, this.dateTime);
-                    break;
-                case "deadline":
-                    deadlineCommand(tasklist, this.description, this.dateTime);
-                    break;
-                case "mark":
-                    markCommand(tasklist, this.index - 1);
-                    break;
-                case "unmark":
-                    unmarkCommand(tasklist, this.index - 1);
-                    break;
-                case "delete":
-                    deleteCommand(tasklist, this.index);
-                    break;
-                case "find":
-                    findCommand(tasklist, this.description);
-                    break;
-                case "due":
-                    dueCommand(tasklist, this.description);
-                    break;
-                case "postpone":
-                    postponeCommand(tasklist, this.index - 1, this.dateTime);
-                    break;
-                default:
-                    throw new IllegalArgumentException();
+                case "bye" -> byeCommand(ui);
+                case "list" -> listCommand(tasklist);
+                case "todo" -> todoCommand(tasklist, this.description);
+                case "event" -> eventCommand(tasklist, this.description, this.dateTime);
+                case "deadline" -> deadlineCommand(tasklist, this.description, this.dateTime);
+                case "mark" -> markCommand(tasklist, this.index - 1);
+                case "unmark" -> unmarkCommand(tasklist, this.index - 1);
+                case "delete" -> deleteCommand(tasklist, this.index);
+                case "find" -> findCommand(tasklist, this.description);
+                case "due" -> dueCommand(tasklist, this.description);
+                case "postpone" -> postponeCommand(tasklist, this.index - 1, this.dateTime);
+                default -> throw new IllegalArgumentException();
             }
 
         } catch (SizeLimitExceededException e) {
             System.out.println(Ui.ERROR_MAXTASKLISTSIZE);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             System.out.println(Ui.ERROR_INVALID_COMMAND + "\n" + Ui.UI_DIVIDER);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -126,6 +116,21 @@ public class Command {
 
     public boolean isExit(){
         return this.isExit;
+    }
+    public String getCommand(){
+        return this.command;
+    }
+    public String getDescription(){
+        return this.description;
+    }
+    public int getIndex(){
+        return this.index;
+    }
+    public String getDateTime(){
+        return this.dateTime;
+    }
+    public char getType(){
+        return this.type;
     }
 
     public static void listCommand(Tasklist tasklist){
@@ -158,7 +163,7 @@ public class Command {
     }
 
     public static void deleteCommand(Tasklist tasklist, int index) throws IOException {
-        tasklist.removeTask(index);
+        tasklist.removeTask(index-1);
         Storage.saveFile();
     }
 

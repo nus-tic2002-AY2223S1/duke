@@ -15,8 +15,11 @@ public class Event extends Task {
     public String getTask(){
         return this.typeTask + " | " + (super.isDone ? "1" : "0") + " | " + super.getDescription() + " | " + this.at;
     }
+    public String getAt(){
+        return this.at;
+    }
     public boolean matchDue(String duedate){
-        return this.at.equals(duedate);
+        return this.at.contains(duedate);
     }
     public void setDate(String newdate){
         this.at = newdate;

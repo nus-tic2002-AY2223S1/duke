@@ -2,8 +2,8 @@ package tasklist;
 
 public class Task {
     private String description;
-    Boolean isDone;
-    protected String typeTask;
+    public Boolean isDone;
+    public String typeTask;
 
     public Task(String description){
         this.description = description;
@@ -17,10 +17,14 @@ public class Task {
     public String getDone(){
         return (this.isDone ? "X" : " ");
     }
-    public String getTypeTask(){
-        return this.typeTask;
-    }
+    public String getTypeTask(){ return this.typeTask; }
     public String getString(){
+        return "";
+    }
+    public String getBy(){
+        return "";
+    }
+    public String getAt(){
         return "";
     }
     public String getTask() { return ""; }
