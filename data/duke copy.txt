@@ -1,0 +1,4 @@
+T;1;buy poly mailers and stamps for postage
+D;1;mail 11/11 parcels;Nov 18 2022
+E;1;11/11 sales;Nov 11 2022
+F;0;stock taking for sales;1 week

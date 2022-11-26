@@ -1,0 +1,11 @@
+E;0;11/11 sales;Nov 11 2022
+F;0;stock taking for sales;1 week
+F;0;read sales report;2 hours
+T;0;review items to put up for 11/11 sales
+D;0;add items into sales section for 11/11 sales;Nov 09 2022
+E;0;end of 11/11 sales;Nov 13 2022
+F;0;review customers' reviews;4 hours
+E;0;11/11 project;Nov 01 2022
+D;0;return book;Jan 01 2022
+F;0;read report;2 hours
+E;0;project meeting;Jan 01 2022
