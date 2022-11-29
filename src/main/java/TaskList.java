@@ -2,6 +2,12 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+/**
+ * Represents a list of tasks
+ * contain the function for the manipulation of the list
+ * such as adding, deleting, finding task to the list
+ */
+
 public class TaskList
 {
     public int task_count;

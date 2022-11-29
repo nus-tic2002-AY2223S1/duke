@@ -1,5 +1,11 @@
 import java.io.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+/**
+ * Represents the task
+ * contain the function for the manipulation of the task
+ */
 
 abstract class Task
 {
@@ -156,8 +162,11 @@ abstract class Task
         int valueOfToday = today.getDayOfWeek().getValue();
 
         if(valueOfDayMention == 0)
-        { //parse the date if no dayOfWeek is mentioned
-            return LocalDate.parse(date);
+        { //parse the date if no dayOfWeek is mentioned, change the format
+            String parseDate = date.replaceAll("/", "-");
+
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            return LocalDate.parse(parseDate.trim(),dtf);
         }
 
         //Compare today to valueOfDayMention

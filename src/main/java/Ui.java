@@ -1,5 +1,10 @@
 import java.util.Scanner;
 
+/**
+ * Represents the display between the user and chatbot
+ *
+ */
+
 public class Ui
 {
     //constructor

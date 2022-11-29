@@ -1,0 +1,7 @@
+todo | true | attend class 
+todo | false | go home 
+event | false | project meeting  | Mon 2-4pm
+deadline | false | return book  | 02/12/2019
+deadline | false | submit project  | Sunday 
+event | false | karaoke  | Fri 7pm 
+event | false | karaoke session  | 02/12/2022 
