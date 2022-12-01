@@ -2,8 +2,6 @@ package config;
 
 public class ConfigParser {
 
-    // String newLine = System.getProperty("line.separator");
-
     public static String LOGO_CONST =
               "  _____    ____       \n"
             + " |__  /___|  _ \\ ___  \n"
