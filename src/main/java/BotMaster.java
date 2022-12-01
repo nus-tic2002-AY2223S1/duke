@@ -8,7 +8,7 @@ public class BotMaster {
     private String botName;
     private String messageDelimiter;
 
-    private List<String> botPocket;
+    private List<Task> botPocket;
 
     public BotMaster(String name, String delimiter) {
         this.botName = name;
@@ -26,15 +26,33 @@ public class BotMaster {
     public void displayMessage(String inputStr) {
         showLine(this.messageDelimiter);
         System.out.println(singleTab + addedConstant +  inputStr);
-        botPocket.add(inputStr);
+        botPocket.add(new Task(inputStr));
+        showLine(this.messageDelimiter);
+    }
+
+    public void markTask(String position) {
+        showLine(this.messageDelimiter);
+        System.out.println(singleTab + markedMessage);
+        botPocket.get(Integer.valueOf(position)-1).markTask(true);
+        Task selectedTask = botPocket.get(Integer.valueOf(position)-1);
+        System.out.println(singleTab + "  " + selectedTask.toString());
+        showLine(this.messageDelimiter);
+    }
+
+    public void unmarkTask(String position) {
+        showLine(this.messageDelimiter);
+        System.out.println(singleTab + unmarkedMessage);
+        botPocket.get(Integer.valueOf(position)-1).markTask(false);
+        Task selectedTask = botPocket.get(Integer.valueOf(position)-1);
+        System.out.println(singleTab + "  " + selectedTask.toString());
         showLine(this.messageDelimiter);
     }
 
     public void displayPocket(){
         showLine(this.messageDelimiter);
         int counter = 1;
-        for (String item: botPocket) {
-            System.out.println(singleTab + counter + ". " + item);
+        for (Task item: botPocket) {
+            System.out.println(singleTab + counter + "." + item.toString());
             counter++;
         }
         showLine(this.messageDelimiter);

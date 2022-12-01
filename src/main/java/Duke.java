@@ -15,15 +15,28 @@ public class Duke {
         Scanner inputText = new Scanner(System.in);
         while (inputText.hasNext()) {
             String parseInput = (inputText.nextLine()).toLowerCase();
-            switch (parseInput) {
-                case byeConstant:
+            if (parseInput.startsWith(markConstant) || parseInput.startsWith(unmarkConstant)) {
+                // handle mark and unmark
+                String command = parseInput.split(" ")[0];
+                String position = parseInput.split(" ")[1];
+                if (command.equalsIgnoreCase(markConstant)) {
+                    myBot.markTask(position);
+                }
+                else {
+                    myBot.unmarkTask(position);
+                }
+            }
+            else {
+                if (parseInput.equalsIgnoreCase(byeConstant)) {
                     myBot.termination();
                     return;
-                case listConstant:
+                }
+                else if (parseInput.equalsIgnoreCase(listConstant)) {
                     myBot.displayPocket();
-                    continue;
-                default:
+                }
+                else {
                     myBot.displayMessage(parseInput);
+                }
             }
         }
 
