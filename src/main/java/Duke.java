@@ -1,5 +1,6 @@
 import static config.ConfigParser.*;
 import static config.CommonUtil.*;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -18,6 +19,9 @@ public class Duke {
                 case byeConstant:
                     myBot.termination();
                     return;
+                case listConstant:
+                    myBot.displayPocket();
+                    continue;
                 default:
                     myBot.displayMessage(parseInput);
             }

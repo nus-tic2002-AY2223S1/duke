@@ -6,6 +6,8 @@ public class CommonUtil {
     public static String dashLine = "------------------------------------------------------------";
     public static String singleTab = "\t";
     public static final String byeConstant = "bye";
+    public static final String addedConstant = "added: ";
+    public static final String listConstant = "list";
     public static String byeGreeting = "Bye. Hope to see you again soon!";
 
     public static void showLine(String object) {
